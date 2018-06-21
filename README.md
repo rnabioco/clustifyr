@@ -7,7 +7,7 @@ Classify cell types in single-cell RNA sequencing expeirments using reference bu
 
 ## Workflow
 
-1. Load a single-cell RNA-seq data set (`SparseMatrix` or `data.frame`)
+1. Load a single-cell RNA-seq data set (`SparseMatrix` or `data.frame`). Normalize (?) with `scran`.
 
 1. Load the reference data type (i.e., bulk RNA-seq data, a gene set (ordered or unordered))
 
