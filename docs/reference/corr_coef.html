@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • RClusterCT</title>
+<title>Correlation function — corr_coef • RClusterCT</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,7 +30,14 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Correlation function — corr_coef" />
+
+<meta property="og:description" content="candidate scoring methods for similarity.
+score must be between -1 and 1.
+completely positively correlated
+-1. completely negatively correlated
+" />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -46,7 +53,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -104,84 +111,50 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Correlation function</h1>
+    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/RClusterCT/blob/master/R/compute_similarity.R'><code>R/compute_similarity.R</code></a></small>
+    <div class="hidden name"><code>corr_coef.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    
+    <p>candidate scoring methods for similarity.
+score must be between -1 and 1.</p><ol>
+<li><p>completely positively correlated
+-1. completely negatively correlated</p></li>
+</ol>
+    
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
-
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="compute_similarity.html">compute_similarity()</a></code> </p>
-        </td>
-        <td><p>Compute similarity between two vectors</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="corr_coef.html">corr_coef()</a></code> </p>
-        </td>
-        <td><p>Correlation function</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="kl_divergence.html">kl_divergence()</a></code> </p>
-        </td>
-        <td><p>KL divergence</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pbmc4k_matrix.html">pbmc4k_matrix</a></code> </p>
-        </td>
-        <td><p>Matrix of single-cell RNA-seq PBMCs.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pbmc4k_meta.html">pbmc4k_meta</a></code> </p>
-        </td>
-        <td><p>Meta-data for single-cell RNA-seq PBMCs.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pbmc_bulk_matrix.html">pbmc_bulk_matrix</a></code> </p>
-        </td>
-        <td><p>Bulk RNA-Seq data from sorted populations isolated from PBMCs.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot_tsne.html">plot_tsne()</a></code> </p>
-        </td>
-        <td><p>Plot a t-SNE colored by feature.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="select_gene_subset.html">select_gene_subset()</a></code> </p>
-        </td>
-        <td><p>pick and sort genes</p></td>
-      </tr>
-    </tbody>
+    <pre class="usage"><span class='fu'>corr_coef</span>(<span class='no'>vec1</span>, <span class='no'>vec2</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"pearson"</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>vec1</th>
+      <td><p>test vector</p></td>
+    </tr>
+    <tr>
+      <th>vec2</th>
+      <td><p>reference vector</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>pearson, spearman, cosine</p></td>
+    </tr>
     </table>
-  </div>
+    
 
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
-    </ul>
+      <li><a href="#arguments">Arguments</a></li>
+                </ul>
+
   </div>
 </div>
 
