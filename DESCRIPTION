@@ -1,11 +1,21 @@
 Package: RClusterCT
 Version: 0.0.0.9000
-Title: What the Package Does (One Line, Title Case)
-Description: What the package does (one paragraph).
-Authors@R: person("First", "Last", , "first.last@example.com", c("aut", "cre"))
-License: What license it uses
+Title: Classification of Cell Types in Single-Cell RNA Sequencing Data
+Description: Classify cells from single-cell RNA sequencing data using bulk
+  RNA-seq reference data.
+Authors@R: c(
+  person("Kent", "Riemondy", , "blah@gmail.com", role = c("aut", "cre")),
+  person("Austin", "Gillen", , "blah@gmail.com", role = c("aut")),
+  person("Rui", "Fu", , "blah@gmail.com", role = c("aut")),
+  person("Jay", "Hesselberth", , "blah@gmail.com", role = c("aut")),
+  person("Yue", "Hao", , "blah@gmail.com", role = c("aut")),
+  person("Chengzhe", "Tian", , "blah@gmail.com", role = c("aut")),
+  person("M.", "Day", , "blah@gmail.com", role = c("aut"))
+  )
+License: MIT
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
 Roxygen: list(markdown = TRUE)
+BugReports: https://github.com/NCBI-Hackathons/RClusterCT
 RoxygenNote: 6.0.1
