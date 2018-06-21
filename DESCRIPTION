@@ -24,4 +24,5 @@ Suggests:
 Imports: 
     tibble,
     ggplot2,
-    entropy
+    entropy,
+    Matrix
