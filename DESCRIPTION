@@ -23,4 +23,5 @@ Suggests:
     testthat
 Imports: 
     tibble,
-    ggplot2
+    ggplot2,
+    entropy
