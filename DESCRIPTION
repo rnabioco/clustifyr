@@ -21,3 +21,6 @@ BugReports: https://github.com/NCBI-Hackathons/RClusterCT
 RoxygenNote: 6.0.1
 Suggests: 
     testthat
+Imports: 
+    tibble,
+    ggplot2
