@@ -1,0 +1,42 @@
+---
+title: 'rclustr overview'
+date: '`r Sys.Date()`'
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 3
+    vignette: >
+      %\VignetteIndexEntry{rclustr-overview}
+      %\VignetteEngine{knitr::rmarkdown}
+      %\VignetteEncoding{UTF-8}
+---
+
+```{r knitr_opts, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = "center"
+)
+```
+
+```{r init, echo = FALSE, message = FALSE}
+library(RClusterCT)
+```
+
+## Why use RClusterCT?
+
+## Simple Example
+
+```{r}
+
+# test correlation function
+# remember to execute functions at the end of the document
+data("pbmc4k_avg");
+data("pbmc_bulk_matrix");
+gene_constraints <- list(rownames(pbmc4k_avg), rownames(pbmc_bulk_matrix));
+pbmc4k_avg <- select_gene_subset(pbmc4k_avg, gene_constraints);
+pbmc_bulk_matrix <- select_gene_subset(pbmc_bulk_matrix, gene_constraints);
+compute_similarity(pbmc4k_avg[,"1"], 
+                   pbmc_bulk_matrix[,"primary human monocytes rep 1"], kl_divergence)
+
+```
