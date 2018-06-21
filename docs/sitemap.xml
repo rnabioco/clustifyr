@@ -3,4 +3,10 @@
   <url>
     <loc>http://ncbi-hackathons.github.io/RClusterCT/index.html</loc>
   </url>
+  <url>
+    <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/pbmc4k_matrix.html</loc>
+  </url>
+  <url>
+    <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/pbmc4k_meta.html</loc>
+  </url>
 </urlset>
