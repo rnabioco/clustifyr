@@ -8,7 +8,7 @@
 \describe{
 }}
 \source{
-\url{google.com}
+\link{google.com}
 }
 \usage{
 pbmc4k_matrix
