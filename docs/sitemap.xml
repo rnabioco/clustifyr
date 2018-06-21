@@ -4,9 +4,36 @@
     <loc>http://ncbi-hackathons.github.io/RClusterCT/index.html</loc>
   </url>
   <url>
+    <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/compute_similarity.html</loc>
+  </url>
+  <url>
+    <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/corr_coef.html</loc>
+  </url>
+  <url>
+    <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/kl_divergence.html</loc>
+  </url>
+  <url>
     <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/pbmc4k_matrix.html</loc>
   </url>
   <url>
     <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/pbmc4k_meta.html</loc>
+  </url>
+  <url>
+    <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/pbmc5_matrix.html</loc>
+  </url>
+  <url>
+    <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/pbmc5_meta.html</loc>
+  </url>
+  <url>
+    <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/pbmc_bulk_matrix.html</loc>
+  </url>
+  <url>
+    <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/plot_tsne.html</loc>
+  </url>
+  <url>
+    <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/select_gene_subset.html</loc>
+  </url>
+  <url>
+    <loc>http://ncbi-hackathons.github.io/RClusterCT/articles/overview.html</loc>
   </url>
 </urlset>
