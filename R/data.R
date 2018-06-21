@@ -19,3 +19,13 @@
 #'
 #' @source [google.com]
 "pbmc4k_meta"
+
+#' Bulk RNA-Seq data from sorted populations isolated from PBMCs.
+#'
+#'
+#' @format A read count matrix with 14 variables:
+#' \describe{
+#' }
+#'
+#' @source ["SRP051688"]
+"pbmc_bulk_matrix"
