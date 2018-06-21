@@ -5,7 +5,11 @@ data("pbmc_bulk_matrix");
 gene_constraints <- list(rownames(pbmc4k_avg), rownames(pbmc_bulk_matrix));
 pbmc4k_avg <- select_gene_subset(pbmc4k_avg, gene_constraints);
 pbmc_bulk_matrix <- select_gene_subset(pbmc_bulk_matrix, gene_constraints);
+<<<<<<< HEAD
 compute_similarity(pbmc4k_avg[,"1"], pbmc_bulk_matrix[,"primary human monocytes rep 1"], kl_divergence)
+=======
+compute_similarity(pbmc4k_avg[,"1"], pbmc_bulk_matrix[,"primary human monocytes rep 1"], corr_coef, "pearson")
+>>>>>>> 98c4c9f100f24c9f80105d98e143738df039f87b
 
 # pick and sort genes
 # expr_matrix: expression matrix with row names as the gene names (short name for now)
@@ -45,13 +49,23 @@ corr_coef <- function(vec1, vec2, method="pearson") {
   ));
 }
 # use package entropy to compute kl divergence
+<<<<<<< HEAD
 kl_divergence <- function(vec1, vec2, if_logcounts=FALSE, total_reads=1000, max_KL=1) {
+=======
+kl_divergence <- function(vec1, vec2, method="plugin", if_logcounts=FALSE, total_reads=1000, max_KL=1) {
+>>>>>>> 98c4c9f100f24c9f80105d98e143738df039f87b
   library(entropy); # load entropy library
   if (if_logcounts) {
     vec1 <- exp(vec1); vec2 <- exp(vec2);
   }
   count1 <- round(vec1*total_reads/sum(vec1)); count2 <- round(vec2*total_reads/sum(vec2));
+<<<<<<< HEAD
   est_KL <- KL.shrink(count1, count2, unit="log2")
+=======
+  est_KL <- switch(method,
+                   empirical=KL.empirical(count1, count2, unit="log2"),
+                   shrink=KL.shrink(count1, count2, unit="log2"))
+>>>>>>> 98c4c9f100f24c9f80105d98e143738df039f87b
   return((max_KL-est_KL)/max_KL*2-1);
 }
 
