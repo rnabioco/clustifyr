@@ -6,7 +6,7 @@
 #' \describe{
 #' }
 #'
-#' @source \url{google.com}
+#' @source [google.com]
 "pbmc4k_matrix"
 
 #' Meta-data for single-cell RNA-seq PBMCs.
@@ -17,5 +17,5 @@
 #' \describe{
 #' }
 #'
-#' @source \url{google.com}
+#' @source [google.com]
 "pbmc4k_meta"
