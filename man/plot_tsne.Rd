@@ -4,7 +4,8 @@
 \alias{plot_tsne}
 \title{Plot a t-SNE colored by feature.}
 \usage{
-plot_tsne(data, x = "tSNE_1", y = "tSNE_2", feature)
+plot_tsne(data, x = "tSNE_1", y = "tSNE_2", feature, legend_name = "",
+  cols = pretty_palette, pt_size = 0.25)
 }
 \arguments{
 \item{data}{input data}

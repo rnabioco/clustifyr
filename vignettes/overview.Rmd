@@ -33,12 +33,24 @@ library(RClusterCT)
 # remember to execute functions at the end of the document
 data("pbmc4k_avg");
 data("pbmc_bulk_matrix");
-gene_constraints <- list(rownames(pbmc4k_avg), rownames(pbmc_bulk_matrix));
+gene_constraints <- list(pbmc4k_vargenes, rownames(pbmc_bulk_matrix));
 pbmc4k_avg <- select_gene_subset(pbmc4k_avg, gene_constraints);
 pbmc_bulk_matrix <- select_gene_subset(pbmc_bulk_matrix, gene_constraints);
-compute_similarity(pbmc4k_avg[,"1"], 
-                   pbmc_bulk_matrix[,"primary human monocytes rep 1"], kl_divergence)
 
+out <- lapply(colnames(pbmc4k_avg),
+       function(x){
+         per_col <- lapply(colnames(pbmc_bulk_matrix),
+                function(y){
+                  compute_similarity(pbmc4k_avg[,x], 
+                   pbmc_bulk_matrix[,y], corr_coef,
+                   method = "spearman")})
+         do.call(cbind, per_col)
+       })
+
+res <- do.call(rbind, out)
+rownames(res) <- colnames(pbmc4k_avg)
+colnames(res) <- colnames(pbmc_bulk_matrix)
+res[1:10, 1:10]
 ```
 
 
