@@ -4,10 +4,19 @@
     <loc>http://ncbi-hackathons.github.io/RClusterCT/index.html</loc>
   </url>
   <url>
+    <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/RClusterCT.html</loc>
+  </url>
+  <url>
+    <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/average_clusters.html</loc>
+  </url>
+  <url>
     <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/compute_similarity.html</loc>
   </url>
   <url>
     <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/corr_coef.html</loc>
+  </url>
+  <url>
+    <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/getPCAGenes.html</loc>
   </url>
   <url>
     <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/kl_divergence.html</loc>
@@ -28,12 +37,24 @@
     <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/pbmc_bulk_matrix.html</loc>
   </url>
   <url>
+    <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/permutation_similarity.html</loc>
+  </url>
+  <url>
+    <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/plot_cor.html</loc>
+  </url>
+  <url>
     <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/plot_tsne.html</loc>
   </url>
   <url>
     <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/select_gene_subset.html</loc>
   </url>
   <url>
+    <loc>http://ncbi-hackathons.github.io/RClusterCT/articles/exploratory_pca.html</loc>
+  </url>
+  <url>
     <loc>http://ncbi-hackathons.github.io/RClusterCT/articles/overview.html</loc>
+  </url>
+  <url>
+    <loc>http://ncbi-hackathons.github.io/RClusterCT/articles/recount_data.html</loc>
   </url>
 </urlset>

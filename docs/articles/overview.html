@@ -52,7 +52,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/exploratory_pca.html">Exploratory PCA</a>
+    </li>
+    <li>
       <a href="../articles/overview.html">rclustr overview</a>
+    </li>
+    <li>
+      <a href="../articles/recount_data.html">RClusterCT overview</a>
     </li>
   </ul>
 </li>
@@ -78,7 +84,7 @@
     <div class="page-header toc-ignore">
       <h1>rclustr overview</h1>
             
-            <h4 class="date">2018-06-21</h4>
+            <h4 class="date">2018-06-22</h4>
       
       <small class="dont-index">Source: <a href="http://github.com/NCBI-Hackathons/RClusterCT/blob/master/vignettes/overview.Rmd"><code>vignettes/overview.Rmd</code></a></small>
       <div class="hidden name"><code>overview.Rmd</code></div>
@@ -87,6 +93,13 @@
 
     
     
+<pre><code>#&gt; Warning: replacing previous import 'dplyr::vars' by 'ggplot2::vars' when
+#&gt; loading 'RClusterCT'
+#&gt; Warning: replacing previous import 'cowplot::ggsave' by 'ggplot2::ggsave'
+#&gt; when loading 'RClusterCT'
+#&gt; Warning: replacing previous import 'Matrix::expand' by 'tidyr::expand' when
+#&gt; loading 'RClusterCT'
+#&gt; Warning: package 'Matrix' was built under R version 3.4.4</code></pre>
 <div id="why-use-rclusterct" class="section level2">
 <h2 class="hasAnchor">
 <a href="#why-use-rclusterct" class="anchor"></a>Why use RClusterCT?</h2>
@@ -94,23 +107,179 @@
 <div id="simple-example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#simple-example" class="anchor"></a>Simple Example</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co"># test correlation function</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co"># remember to execute functions at the end of the document</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">data</span>(<span class="st">"pbmc4k_avg"</span>);</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">data</span>(<span class="st">"pbmc_bulk_matrix"</span>);</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">gene_constraints &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">rownames</span>(pbmc4k_avg), <span class="kw">rownames</span>(pbmc_bulk_matrix));</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">pbmc4k_avg &lt;-<span class="st"> </span><span class="kw"><a href="../reference/select_gene_subset.html">select_gene_subset</a></span>(pbmc4k_avg, gene_constraints);</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">pbmc_bulk_matrix &lt;-<span class="st"> </span><span class="kw"><a href="../reference/select_gene_subset.html">select_gene_subset</a></span>(pbmc_bulk_matrix, gene_constraints);</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="kw"><a href="../reference/compute_similarity.html">compute_similarity</a></span>(pbmc4k_avg[,<span class="st">"1"</span>], </a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">                   pbmc_bulk_matrix[,<span class="st">"primary human monocytes rep 1"</span>], kl_divergence)</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">#&gt; Estimating optimal shrinkage intensity lambda.freq (frequencies): 0.1342 </span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">#&gt; Estimating optimal shrinkage intensity lambda.freq (frequencies): 0.2762</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">#&gt; [1] -4.861795</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">#&gt; attr(,"lambda.freqs1")</span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">#&gt; [1] 0.1341986</span></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">#&gt; attr(,"lambda.freqs2")</span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">#&gt; [1] 0.2762019</span></a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load pacakge data</span>
+<span class="kw">data</span>(<span class="st">"pbmc4k_matrix"</span>)
+<span class="kw">data</span>(<span class="st">"pbmc4k_meta"</span>)
+<span class="kw">data</span>(<span class="st">"pbmc4k_vargenes"</span>)
+<span class="kw">data</span>(<span class="st">"pbmc_bulk_matrix"</span>)
+
+<span class="co"># run correlation </span>
+res &lt;-<span class="st"> </span><span class="kw">run_cor</span>(pbmc4k_matrix,
+        pbmc4k_meta,
+        pbmc_bulk_matrix,
+        pbmc4k_vargenes,
+        <span class="dt">if_permute =</span> F,
+        <span class="dt">compute_method =</span> corr_coef)
+
+res[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]
+<span class="co">#&gt;   primary human B cells rep 1 primary human myeloid DC rep 1</span>
+<span class="co">#&gt; 0                  0.26071398                      0.3241628</span>
+<span class="co">#&gt; 1                  0.15866167                      0.5616840</span>
+<span class="co">#&gt; 2                  0.61416715                      0.3091946</span>
+<span class="co">#&gt; 3                  0.27011789                      0.3312665</span>
+<span class="co">#&gt; 4                  0.20172999                      0.2694282</span>
+<span class="co">#&gt; 5                  0.13369595                      0.2360418</span>
+<span class="co">#&gt; 6                  0.22189035                      0.5186335</span>
+<span class="co">#&gt; 7                  0.16992252                      0.6366983</span>
+<span class="co">#&gt; 8                  0.27569335                      0.3280444</span>
+<span class="co">#&gt; 9                  0.06354432                      0.2592503</span>
+<span class="co">#&gt;   primary human monocytes rep 1 primary human neutrophils rep 1</span>
+<span class="co">#&gt; 0                     0.2373057                      0.13693528</span>
+<span class="co">#&gt; 1                     0.5664662                      0.32877541</span>
+<span class="co">#&gt; 2                     0.2010505                      0.09524840</span>
+<span class="co">#&gt; 3                     0.2438347                      0.13522496</span>
+<span class="co">#&gt; 4                     0.1899286                      0.10535997</span>
+<span class="co">#&gt; 5                     0.1696732                      0.09520648</span>
+<span class="co">#&gt; 6                     0.4411546                      0.24598165</span>
+<span class="co">#&gt; 7                     0.4891477                      0.26916012</span>
+<span class="co">#&gt; 8                     0.2553777                      0.09708194</span>
+<span class="co">#&gt; 9                     0.2223792                      0.13199597</span>
+<span class="co">#&gt;   primary human NK cells rep 1 primary human PBMC rep 1</span>
+<span class="co">#&gt; 0                   0.28404388                0.4049182</span>
+<span class="co">#&gt; 1                   0.14569262                0.4737297</span>
+<span class="co">#&gt; 2                   0.12926406                0.2753707</span>
+<span class="co">#&gt; 3                   0.30550387                0.4264436</span>
+<span class="co">#&gt; 4                   0.41307057                0.3606397</span>
+<span class="co">#&gt; 5                   0.60705684                0.3385061</span>
+<span class="co">#&gt; 6                   0.14778968                0.4065401</span>
+<span class="co">#&gt; 7                   0.14319400                0.4364883</span>
+<span class="co">#&gt; 8                   0.14104748                0.2857994</span>
+<span class="co">#&gt; 9                   0.06088959                0.2018084</span>
+<span class="co">#&gt;   primary human T cells rep 1 primary human B cells rep 2</span>
+<span class="co">#&gt; 0                   0.4677130                  0.22064167</span>
+<span class="co">#&gt; 1                   0.1281222                  0.13834138</span>
+<span class="co">#&gt; 2                   0.1740618                  0.58345613</span>
+<span class="co">#&gt; 3                   0.4936697                  0.22602591</span>
+<span class="co">#&gt; 4                   0.3607077                  0.17199536</span>
+<span class="co">#&gt; 5                   0.2377182                  0.11352271</span>
+<span class="co">#&gt; 6                   0.1340635                  0.19029403</span>
+<span class="co">#&gt; 7                   0.1259100                  0.14877558</span>
+<span class="co">#&gt; 8                   0.1311212                  0.25458024</span>
+<span class="co">#&gt; 9                   0.0590857                  0.05765283</span>
+<span class="co">#&gt;   primary human myeloid DC rep 2 primary human monocytes rep 2</span>
+<span class="co">#&gt; 0                      0.3270764                     0.2521141</span>
+<span class="co">#&gt; 1                      0.5638161                     0.5958584</span>
+<span class="co">#&gt; 2                      0.3072206                     0.2117573</span>
+<span class="co">#&gt; 3                      0.3378521                     0.2589214</span>
+<span class="co">#&gt; 4                      0.2748770                     0.2038354</span>
+<span class="co">#&gt; 5                      0.2425337                     0.1817861</span>
+<span class="co">#&gt; 6                      0.5236550                     0.4578511</span>
+<span class="co">#&gt; 7                      0.6474298                     0.5159233</span>
+<span class="co">#&gt; 8                      0.3350843                     0.2604074</span>
+<span class="co">#&gt; 9                      0.2637826                     0.2317193</span></code></pre></div>
+<div id="plot-cluster-identities-and-correlation-coefficients" class="section level3">
+<h3 class="hasAnchor">
+<a href="#plot-cluster-identities-and-correlation-coefficients" class="anchor"></a>Plot cluster identities and correlation coefficients</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot tsne using known identities</span>
+<span class="kw"><a href="../reference/plot_tsne.html">plot_tsne</a></span>(pbmc4k_meta, <span class="dt">feature =</span> <span class="st">"classified"</span>)</code></pre></div>
+<p><img src="overview_files/figure-html/plot-1.png" width="1152" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="co"># plot correlation coefficients on tsne for each identity class</span>
+<span class="kw"><a href="../reference/plot_cor.html">plot_cor</a></span>(res,
+         pbmc4k_meta,
+         <span class="kw">colnames</span>(res)[<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>])
+<span class="co">#&gt; Warning: package 'bindrcpp' was built under R version 3.4.4</span>
+<span class="co">#&gt; [[1]]</span></code></pre></div>
+<p><img src="overview_files/figure-html/plot-2.png" width="1152" style="display: block; margin: auto;"></p>
+<pre><code>#&gt; 
+#&gt; [[2]]</code></pre>
+<p><img src="overview_files/figure-html/plot-3.png" width="1152" style="display: block; margin: auto;"></p>
+<pre><code>#&gt; 
+#&gt; [[3]]</code></pre>
+<p><img src="overview_files/figure-html/plot-4.png" width="1152" style="display: block; margin: auto;"></p>
+<pre><code>#&gt; 
+#&gt; [[4]]</code></pre>
+<p><img src="overview_files/figure-html/plot-5.png" width="1152" style="display: block; margin: auto;"></p>
+<pre><code>#&gt; 
+#&gt; [[5]]</code></pre>
+<p><img src="overview_files/figure-html/plot-6.png" width="1152" style="display: block; margin: auto;"></p>
+<pre><code>#&gt; 
+#&gt; [[6]]</code></pre>
+<p><img src="overview_files/figure-html/plot-7.png" width="1152" style="display: block; margin: auto;"></p>
+<pre><code>#&gt; 
+#&gt; [[7]]</code></pre>
+<p><img src="overview_files/figure-html/plot-8.png" width="1152" style="display: block; margin: auto;"></p>
+</div>
+<div id="obtain-p-value-for-similarity-using-a-permutation-test" class="section level3">
+<h3 class="hasAnchor">
+<a href="#obtain-p-value-for-similarity-using-a-permutation-test" class="anchor"></a>Obtain p-value for similarity using a permutation test</h3>
+<p>We can also calcualte correlation p-values using permutation with the <code>run_cor()</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw">run_cor</span>(pbmc4k_matrix,
+               pbmc4k_meta,
+               pbmc_bulk_matrix,
+                pbmc4k_vargenes,
+               <span class="dt">if_permute =</span> <span class="ot">TRUE</span>,
+               <span class="dt">num_permute=</span><span class="dv">1000</span>,
+               <span class="dt">compute_method =</span> corr_coef,
+               <span class="dt">return_full =</span> <span class="ot">TRUE</span>)
+
+res<span class="op">$</span>p_val[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]
+<span class="co">#&gt;   primary human B cells rep 1 primary human myeloid DC rep 1</span>
+<span class="co">#&gt; 0                       1.000                          1.000</span>
+<span class="co">#&gt; 1                       1.000                          0.000</span>
+<span class="co">#&gt; 2                       0.000                          1.000</span>
+<span class="co">#&gt; 3                       1.000                          1.000</span>
+<span class="co">#&gt; 4                       1.000                          1.000</span>
+<span class="co">#&gt; 5                       1.000                          1.000</span>
+<span class="co">#&gt; 6                       1.000                          0.179</span>
+<span class="co">#&gt; 7                       1.000                          0.000</span>
+<span class="co">#&gt; 8                       0.863                          1.000</span>
+<span class="co">#&gt; 9                       1.000                          1.000</span>
+<span class="co">#&gt;   primary human monocytes rep 1 primary human neutrophils rep 1</span>
+<span class="co">#&gt; 0                         1.000                           1.000</span>
+<span class="co">#&gt; 1                         0.000                           0.000</span>
+<span class="co">#&gt; 2                         1.000                           1.000</span>
+<span class="co">#&gt; 3                         1.000                           1.000</span>
+<span class="co">#&gt; 4                         1.000                           1.000</span>
+<span class="co">#&gt; 5                         1.000                           1.000</span>
+<span class="co">#&gt; 6                         0.246                           0.325</span>
+<span class="co">#&gt; 7                         0.000                           0.012</span>
+<span class="co">#&gt; 8                         1.000                           1.000</span>
+<span class="co">#&gt; 9                         1.000                           1.000</span>
+<span class="co">#&gt;   primary human NK cells rep 1 primary human PBMC rep 1</span>
+<span class="co">#&gt; 0                        1.000                        1</span>
+<span class="co">#&gt; 1                        1.000                        1</span>
+<span class="co">#&gt; 2                        1.000                        1</span>
+<span class="co">#&gt; 3                        0.674                        1</span>
+<span class="co">#&gt; 4                        0.000                        1</span>
+<span class="co">#&gt; 5                        0.000                        1</span>
+<span class="co">#&gt; 6                        1.000                        1</span>
+<span class="co">#&gt; 7                        1.000                        1</span>
+<span class="co">#&gt; 8                        1.000                        1</span>
+<span class="co">#&gt; 9                        1.000                        1</span>
+<span class="co">#&gt;   primary human T cells rep 1 primary human B cells rep 2</span>
+<span class="co">#&gt; 0                           0                       1.000</span>
+<span class="co">#&gt; 1                           1                       1.000</span>
+<span class="co">#&gt; 2                           1                       0.000</span>
+<span class="co">#&gt; 3                           0                       1.000</span>
+<span class="co">#&gt; 4                           0                       1.000</span>
+<span class="co">#&gt; 5                           1                       1.000</span>
+<span class="co">#&gt; 6                           1                       1.000</span>
+<span class="co">#&gt; 7                           1                       1.000</span>
+<span class="co">#&gt; 8                           1                       0.754</span>
+<span class="co">#&gt; 9                           1                       1.000</span>
+<span class="co">#&gt;   primary human myeloid DC rep 2 primary human monocytes rep 2</span>
+<span class="co">#&gt; 0                           1.00                         1.000</span>
+<span class="co">#&gt; 1                           0.00                         0.000</span>
+<span class="co">#&gt; 2                           1.00                         1.000</span>
+<span class="co">#&gt; 3                           1.00                         1.000</span>
+<span class="co">#&gt; 4                           1.00                         1.000</span>
+<span class="co">#&gt; 5                           1.00                         1.000</span>
+<span class="co">#&gt; 6                           0.16                         0.408</span>
+<span class="co">#&gt; 7                           0.00                         0.000</span>
+<span class="co">#&gt; 8                           1.00                         1.000</span>
+<span class="co">#&gt; 9                           1.00                         1.000</span></code></pre></div>
+</div>
 </div>
   </div>
 

@@ -4,7 +4,8 @@
 \name{pbmc4k_matrix}
 \alias{pbmc4k_matrix}
 \title{Matrix of single-cell RNA-seq PBMCs.}
-\format{A data frame with 13 variables:
+\format{A sparseMatrix with genes as rows and cells as columns.
+
 \describe{
 }}
 \source{
@@ -14,6 +15,6 @@
 pbmc4k_matrix
 }
 \description{
-A sample of 4000 cells from a bigger experiment
+A sample of 4000 PBMC cells from a bigger experiment
 }
 \keyword{datasets}

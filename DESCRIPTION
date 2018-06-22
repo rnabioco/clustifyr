@@ -28,7 +28,8 @@ Imports:
     cowplot,
     dplyr,
     tidyr,
-    tibble
+    tibble,
+    stats
 Suggests: 
     testthat,
     biomaRt,
