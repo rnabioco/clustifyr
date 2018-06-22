@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>rclustr overview • RClusterCT</title>
+<title>RClusterCT overview • RClusterCT</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="rclustr overview">
+<script src="../pkgdown.js"></script><meta property="og:title" content="RClusterCT overview">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -55,7 +55,7 @@
       <a href="../articles/exploratory_pca.html">Exploratory PCA</a>
     </li>
     <li>
-      <a href="../articles/overview.html">rclustr overview</a>
+      <a href="../articles/overview.html">RClusterCT overview</a>
     </li>
     <li>
       <a href="../articles/recount_data.html">RClusterCT overview</a>
@@ -82,7 +82,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>rclustr overview</h1>
+      <h1>RClusterCT overview</h1>
             
             <h4 class="date">2018-06-22</h4>
       
@@ -93,13 +93,6 @@
 
     
     
-<pre><code>#&gt; Warning: replacing previous import 'dplyr::vars' by 'ggplot2::vars' when
-#&gt; loading 'RClusterCT'
-#&gt; Warning: replacing previous import 'cowplot::ggsave' by 'ggplot2::ggsave'
-#&gt; when loading 'RClusterCT'
-#&gt; Warning: replacing previous import 'Matrix::expand' by 'tidyr::expand' when
-#&gt; loading 'RClusterCT'
-#&gt; Warning: package 'Matrix' was built under R version 3.4.4</code></pre>
 <div id="why-use-rclusterct" class="section level2">
 <h2 class="hasAnchor">
 <a href="#why-use-rclusterct" class="anchor"></a>Why use RClusterCT?</h2>
@@ -220,65 +213,110 @@ res[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>
                 pbmc4k_vargenes,
                <span class="dt">if_permute =</span> <span class="ot">TRUE</span>,
                <span class="dt">num_permute=</span><span class="dv">1000</span>,
+               <span class="dt">metadata =</span> <span class="st">"classified"</span>,
                <span class="dt">compute_method =</span> corr_coef,
                <span class="dt">return_full =</span> <span class="ot">TRUE</span>)
 
 res<span class="op">$</span>p_val[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]
-<span class="co">#&gt;   primary human B cells rep 1 primary human myeloid DC rep 1</span>
-<span class="co">#&gt; 0                       1.000                          1.000</span>
-<span class="co">#&gt; 1                       1.000                          0.000</span>
-<span class="co">#&gt; 2                       0.000                          1.000</span>
-<span class="co">#&gt; 3                       1.000                          1.000</span>
-<span class="co">#&gt; 4                       1.000                          1.000</span>
-<span class="co">#&gt; 5                       1.000                          1.000</span>
-<span class="co">#&gt; 6                       1.000                          0.179</span>
-<span class="co">#&gt; 7                       1.000                          0.000</span>
-<span class="co">#&gt; 8                       0.863                          1.000</span>
-<span class="co">#&gt; 9                       1.000                          1.000</span>
-<span class="co">#&gt;   primary human monocytes rep 1 primary human neutrophils rep 1</span>
-<span class="co">#&gt; 0                         1.000                           1.000</span>
-<span class="co">#&gt; 1                         0.000                           0.000</span>
-<span class="co">#&gt; 2                         1.000                           1.000</span>
-<span class="co">#&gt; 3                         1.000                           1.000</span>
-<span class="co">#&gt; 4                         1.000                           1.000</span>
-<span class="co">#&gt; 5                         1.000                           1.000</span>
-<span class="co">#&gt; 6                         0.246                           0.325</span>
-<span class="co">#&gt; 7                         0.000                           0.012</span>
-<span class="co">#&gt; 8                         1.000                           1.000</span>
-<span class="co">#&gt; 9                         1.000                           1.000</span>
-<span class="co">#&gt;   primary human NK cells rep 1 primary human PBMC rep 1</span>
-<span class="co">#&gt; 0                        1.000                        1</span>
-<span class="co">#&gt; 1                        1.000                        1</span>
-<span class="co">#&gt; 2                        1.000                        1</span>
-<span class="co">#&gt; 3                        0.674                        1</span>
-<span class="co">#&gt; 4                        0.000                        1</span>
-<span class="co">#&gt; 5                        0.000                        1</span>
-<span class="co">#&gt; 6                        1.000                        1</span>
-<span class="co">#&gt; 7                        1.000                        1</span>
-<span class="co">#&gt; 8                        1.000                        1</span>
-<span class="co">#&gt; 9                        1.000                        1</span>
-<span class="co">#&gt;   primary human T cells rep 1 primary human B cells rep 2</span>
-<span class="co">#&gt; 0                           0                       1.000</span>
-<span class="co">#&gt; 1                           1                       1.000</span>
-<span class="co">#&gt; 2                           1                       0.000</span>
-<span class="co">#&gt; 3                           0                       1.000</span>
-<span class="co">#&gt; 4                           0                       1.000</span>
-<span class="co">#&gt; 5                           1                       1.000</span>
-<span class="co">#&gt; 6                           1                       1.000</span>
-<span class="co">#&gt; 7                           1                       1.000</span>
-<span class="co">#&gt; 8                           1                       0.754</span>
-<span class="co">#&gt; 9                           1                       1.000</span>
-<span class="co">#&gt;   primary human myeloid DC rep 2 primary human monocytes rep 2</span>
-<span class="co">#&gt; 0                           1.00                         1.000</span>
-<span class="co">#&gt; 1                           0.00                         0.000</span>
-<span class="co">#&gt; 2                           1.00                         1.000</span>
-<span class="co">#&gt; 3                           1.00                         1.000</span>
-<span class="co">#&gt; 4                           1.00                         1.000</span>
-<span class="co">#&gt; 5                           1.00                         1.000</span>
-<span class="co">#&gt; 6                           0.16                         0.408</span>
-<span class="co">#&gt; 7                           0.00                         0.000</span>
-<span class="co">#&gt; 8                           1.00                         1.000</span>
-<span class="co">#&gt; 9                           1.00                         1.000</span></code></pre></div>
+<span class="co">#&gt;                     primary human B cells rep 1</span>
+<span class="co">#&gt; B cells                                   0.000</span>
+<span class="co">#&gt; CD14+ Monocytes                           1.000</span>
+<span class="co">#&gt; CD4 T cells, 1                            1.000</span>
+<span class="co">#&gt; CD4 T cells, 2                            1.000</span>
+<span class="co">#&gt; CD8 T cells                               1.000</span>
+<span class="co">#&gt; Dendritic cells, 1                        1.000</span>
+<span class="co">#&gt; Dendritic Cells, 2?                       0.862</span>
+<span class="co">#&gt; FCGR3A+ Monocytes                         1.000</span>
+<span class="co">#&gt; Megakaryocytes                            1.000</span>
+<span class="co">#&gt; NK cells                                  1.000</span>
+<span class="co">#&gt;                     primary human myeloid DC rep 1</span>
+<span class="co">#&gt; B cells                                      1.000</span>
+<span class="co">#&gt; CD14+ Monocytes                              0.000</span>
+<span class="co">#&gt; CD4 T cells, 1                               1.000</span>
+<span class="co">#&gt; CD4 T cells, 2                               1.000</span>
+<span class="co">#&gt; CD8 T cells                                  1.000</span>
+<span class="co">#&gt; Dendritic cells, 1                           0.174</span>
+<span class="co">#&gt; Dendritic Cells, 2?                          1.000</span>
+<span class="co">#&gt; FCGR3A+ Monocytes                            0.000</span>
+<span class="co">#&gt; Megakaryocytes                               1.000</span>
+<span class="co">#&gt; NK cells                                     1.000</span>
+<span class="co">#&gt;                     primary human monocytes rep 1</span>
+<span class="co">#&gt; B cells                                     1.000</span>
+<span class="co">#&gt; CD14+ Monocytes                             0.000</span>
+<span class="co">#&gt; CD4 T cells, 1                              1.000</span>
+<span class="co">#&gt; CD4 T cells, 2                              1.000</span>
+<span class="co">#&gt; CD8 T cells                                 1.000</span>
+<span class="co">#&gt; Dendritic cells, 1                          0.259</span>
+<span class="co">#&gt; Dendritic Cells, 2?                         1.000</span>
+<span class="co">#&gt; FCGR3A+ Monocytes                           0.000</span>
+<span class="co">#&gt; Megakaryocytes                              1.000</span>
+<span class="co">#&gt; NK cells                                    1.000</span>
+<span class="co">#&gt;                     primary human neutrophils rep 1</span>
+<span class="co">#&gt; B cells                                       1.000</span>
+<span class="co">#&gt; CD14+ Monocytes                               0.000</span>
+<span class="co">#&gt; CD4 T cells, 1                                1.000</span>
+<span class="co">#&gt; CD4 T cells, 2                                1.000</span>
+<span class="co">#&gt; CD8 T cells                                   1.000</span>
+<span class="co">#&gt; Dendritic cells, 1                            0.334</span>
+<span class="co">#&gt; Dendritic Cells, 2?                           1.000</span>
+<span class="co">#&gt; FCGR3A+ Monocytes                             0.010</span>
+<span class="co">#&gt; Megakaryocytes                                1.000</span>
+<span class="co">#&gt; NK cells                                      1.000</span>
+<span class="co">#&gt;                     primary human NK cells rep 1 primary human PBMC rep 1</span>
+<span class="co">#&gt; B cells                                     1.00                        1</span>
+<span class="co">#&gt; CD14+ Monocytes                             1.00                        1</span>
+<span class="co">#&gt; CD4 T cells, 1                              1.00                        1</span>
+<span class="co">#&gt; CD4 T cells, 2                              0.71                        1</span>
+<span class="co">#&gt; CD8 T cells                                 0.00                        1</span>
+<span class="co">#&gt; Dendritic cells, 1                          1.00                        1</span>
+<span class="co">#&gt; Dendritic Cells, 2?                         1.00                        1</span>
+<span class="co">#&gt; FCGR3A+ Monocytes                           1.00                        1</span>
+<span class="co">#&gt; Megakaryocytes                              1.00                        1</span>
+<span class="co">#&gt; NK cells                                    0.00                        1</span>
+<span class="co">#&gt;                     primary human T cells rep 1</span>
+<span class="co">#&gt; B cells                                       1</span>
+<span class="co">#&gt; CD14+ Monocytes                               1</span>
+<span class="co">#&gt; CD4 T cells, 1                                0</span>
+<span class="co">#&gt; CD4 T cells, 2                                0</span>
+<span class="co">#&gt; CD8 T cells                                   0</span>
+<span class="co">#&gt; Dendritic cells, 1                            1</span>
+<span class="co">#&gt; Dendritic Cells, 2?                           1</span>
+<span class="co">#&gt; FCGR3A+ Monocytes                             1</span>
+<span class="co">#&gt; Megakaryocytes                                1</span>
+<span class="co">#&gt; NK cells                                      1</span>
+<span class="co">#&gt;                     primary human B cells rep 2</span>
+<span class="co">#&gt; B cells                                   0.000</span>
+<span class="co">#&gt; CD14+ Monocytes                           1.000</span>
+<span class="co">#&gt; CD4 T cells, 1                            1.000</span>
+<span class="co">#&gt; CD4 T cells, 2                            1.000</span>
+<span class="co">#&gt; CD8 T cells                               1.000</span>
+<span class="co">#&gt; Dendritic cells, 1                        1.000</span>
+<span class="co">#&gt; Dendritic Cells, 2?                       0.756</span>
+<span class="co">#&gt; FCGR3A+ Monocytes                         1.000</span>
+<span class="co">#&gt; Megakaryocytes                            1.000</span>
+<span class="co">#&gt; NK cells                                  1.000</span>
+<span class="co">#&gt;                     primary human myeloid DC rep 2</span>
+<span class="co">#&gt; B cells                                       1.00</span>
+<span class="co">#&gt; CD14+ Monocytes                               0.00</span>
+<span class="co">#&gt; CD4 T cells, 1                                1.00</span>
+<span class="co">#&gt; CD4 T cells, 2                                1.00</span>
+<span class="co">#&gt; CD8 T cells                                   1.00</span>
+<span class="co">#&gt; Dendritic cells, 1                            0.16</span>
+<span class="co">#&gt; Dendritic Cells, 2?                           1.00</span>
+<span class="co">#&gt; FCGR3A+ Monocytes                             0.00</span>
+<span class="co">#&gt; Megakaryocytes                                1.00</span>
+<span class="co">#&gt; NK cells                                      1.00</span>
+<span class="co">#&gt;                     primary human monocytes rep 2</span>
+<span class="co">#&gt; B cells                                     1.000</span>
+<span class="co">#&gt; CD14+ Monocytes                             0.000</span>
+<span class="co">#&gt; CD4 T cells, 1                              1.000</span>
+<span class="co">#&gt; CD4 T cells, 2                              1.000</span>
+<span class="co">#&gt; CD8 T cells                                 1.000</span>
+<span class="co">#&gt; Dendritic cells, 1                          0.392</span>
+<span class="co">#&gt; Dendritic Cells, 2?                         1.000</span>
+<span class="co">#&gt; FCGR3A+ Monocytes                           0.000</span>
+<span class="co">#&gt; Megakaryocytes                              1.000</span>
+<span class="co">#&gt; NK cells                                    1.000</span></code></pre></div>
 </div>
 </div>
   </div>
