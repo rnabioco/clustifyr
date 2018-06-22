@@ -5,7 +5,7 @@
 #' @param vargene: a list of gene names for highly variable genes
 #' @export
 
-Reduce_matrix <- function(mat, meta, vargene){
+reduce_matrix <- function(mat, meta, vargene){
   
   Expmat <- as.matrix(mat)
   # dim(Expmat)
