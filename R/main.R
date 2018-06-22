@@ -1,7 +1,7 @@
 #data("pbmc4k_matrix"); data("pbmc4k_avg"); data("pbmc_bulk_matrix");
 # main: global controller function to evaluate and visualize corr. coef
 #' @export
-run_cor <- function(sc_expr, sc_meta, bulk_expr, query_gene_list, per_cell = T,
+run_cor <- function(sc_expr, sc_meta, bulk_expr, query_gene_list, per_cell = F,
                     if_permute=TRUE, num_permute=1000, return_full = F,
                     compute_method, ...) {
   # not permute -> num_permute = 0

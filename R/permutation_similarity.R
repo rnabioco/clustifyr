@@ -11,7 +11,7 @@
 #' @param metadata metadata column used for clustering
 #' @param ... additional paramters to pass to run_one_round
 #' @export
-permutation_similarity <- function(sc_expr, bulk_expr, sc_meta, num_perm, per_cell,
+permutation_similarity <- function(sc_expr, bulk_expr, sc_meta, num_perm, per_cell = F,
                                    compute_method, metadata = "cluster", ...) {
 
   # get cluster or cell ids
