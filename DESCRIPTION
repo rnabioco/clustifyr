@@ -17,11 +17,13 @@ Encoding: UTF-8
 LazyData: true
 ByteCompile: true
 Roxygen: list(markdown = TRUE)
-BugReports: https://github.com/NCBI-Hackathons/RClusterCT
+URL: http://github.com/NCBI-Hackathons/RClusterCT, https://ncbi-hackathons.github.io/RClusterCT/
+BugReports: https://github.com/NCBI-Hackathons/RClusterCT/issues
 RoxygenNote: 6.0.1
 Suggests: 
     testthat
 Imports: 
     tibble,
     ggplot2,
-    entropy
+    entropy,
+    Matrix
