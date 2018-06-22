@@ -4,8 +4,8 @@
 \alias{permutation_similarity}
 \title{Compute the p-value for similarity using permutation}
 \usage{
-permutation_similarity(sc_expr, bulk_expr, sc_meta, num_perm, compute_method,
-  metadata = "cluster", ...)
+permutation_similarity(sc_expr, bulk_expr, sc_meta, num_perm, per_cell,
+  compute_method, metadata = "cluster", ...)
 }
 \arguments{
 \item{sc_expr}{single-cell expression matrix}
@@ -16,9 +16,13 @@ permutation_similarity(sc_expr, bulk_expr, sc_meta, num_perm, compute_method,
 
 \item{num_perm}{number of permutations}
 
+\item{per_cell}{run per cell?}
+
 \item{compute_method}{method(s) for computing similarity scores}
 
 \item{metadata}{metadata column used for clustering}
+
+\item{...}{additional paramters to pass to run_one_round}
 }
 \description{
 Permute cluster labels to calculate empirical p-value
