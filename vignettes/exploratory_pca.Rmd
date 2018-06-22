@@ -1,0 +1,76 @@
+---
+title: "Exploratory PCA"
+output: html_document
+---
+
+```{r setup, echo=F}
+library(RClusterCT)
+
+#Get overlapping genes matrix in the same order
+shared.genes <- rownames(pbmc4k_avg)[rownames(pbmc4k_avg) %in% rownames(pbmc_bulk_matrix)]
+shared.genes <- shared.genes[order(shared.genes)]
+singlecell.clusters <- pbmc4k_avg[shared.genes,]
+names(singlecell.clusters) <- c(
+   "CD4 T cells, 1",
+   "CD14+ Monocytes",
+   "B cells",
+   "CD4 T cells, 2",
+   "CD8 T cells",
+   "NK cells",
+   "Dendritic cells, 1",
+   "FCGR3A+ Monocytes",
+   "Dendritic Cells, 2?",
+   "Megakaryocytes"
+)
+bulkrna <- pbmc_bulk_matrix[shared.genes,]
+```
+
+Here is some sample code to determine which PCs discriminate cell types.
+This assumes that you have already subset your data to the genes that are overlapping between single cell experimental RNA data, and the bulk RNA data with known tissue types which you would like to use to learn the most likely tissue types of your single cell clusters.
+
+## Bulk RNA data
+
+First, perform an appropriate log transformation to your bulk RNA data. 
+
+```{r transform, echo=T}
+head(bulkrna[,1:2])
+bulkrna <- log(bulkrna + 1)
+head(bulkrna[,1:2])
+```
+
+Now, perform a PCA.
+
+```{r pca, echo=T}
+pca <- prcomp(t(bulkrna))
+```
+
+Create a scree plot of the eigenvalues. You would likely need to include PCs up to the "elbow" of the eignvalues, in this case 2.
+
+```{r scree, echo=T}
+plot(pca$sdev)
+```
+
+Do a series of PC plots to see which PCs discriminate the different cell types well.
+
+```{r pc_plots, echo=T}
+#Label the cell types
+cell.types <- rownames(pca$x)
+cell.types <- gsub("primary human ", "", cell.types)
+cell.types <- gsub(" rep 1", "", cell.types)
+cell.types <- gsub(" rep 2", "", cell.types)
+
+library(ggplot2)
+
+plot.frame <- data.frame(
+  PC1=pca$x[,1],
+  PC2=pca$x[,2],
+  PC3=pca$x[,3],
+  PC4=pca$x[,4],
+  PC5=pca$x[,5],
+  cell.types) 
+ggplot(plot.frame, aes(x=PC1, y=PC2, color=cell.types)) + geom_point() 
+ggplot(plot.frame, aes(x=PC2, y=PC3, color=cell.types)) + geom_point() 
+ggplot(plot.frame, aes(x=PC3, y=PC4, color=cell.types)) + geom_point() 
+ggplot(plot.frame, aes(x=PC4, y=PC5, color=cell.types)) + geom_point() 
+```
+
