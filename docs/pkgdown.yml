@@ -4,8 +4,9 @@ pkgdown_sha: bcf6299e76d4a398aadfc476b3ac22d253a91d35
 articles:
   exploratory_pca: exploratory_pca.html
   overview: overview.html
+  random_forest: random_forest.html
   recount_data: recount_data.html
 urls:
-  reference: http://ncbi-hackathons.github.io/RClusterCT/reference
-  article: http://ncbi-hackathons.github.io/RClusterCT/articles
+  reference: http://ncbi-hackathons.github.io/clustifyR/reference
+  article: http://ncbi-hackathons.github.io/clustifyR/articles
 
