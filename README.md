@@ -3,7 +3,7 @@
 [![Travis build status](https://travis-ci.org/NCBI-Hackathons/RClusterCT.svg?branch=master)](https://travis-ci.org/NCBI-Hackathons/RClusterCT)
 
 
-Classify cell types in single-cell RNA sequencing expeirments using reference bulk RNA-seq data sets. See detailed vignettes and documentation [here](https://ncbi-hackathons.github.io/RClusterCT/).
+### Classify cell types in single-cell RNA sequencing expeirments using reference bulk RNA-seq data sets. See detailed vignettes and documentation [here](https://ncbi-hackathons.github.io/RClusterCT/).
 
 ## Workflow
 
