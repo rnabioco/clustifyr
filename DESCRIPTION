@@ -21,8 +21,13 @@ URL: http://github.com/NCBI-Hackathons/RClusterCT, https://ncbi-hackathons.githu
 BugReports: https://github.com/NCBI-Hackathons/RClusterCT/issues
 RoxygenNote: 6.0.1
 Suggests: 
-    testthat
+    testthat,
+    biomaRt,
+    purrr,
+    dplyr,
+    stringr
 Imports: 
     tibble,
     ggplot2,
-    entropy
+    entropy,
+    Matrix
