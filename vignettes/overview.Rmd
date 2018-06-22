@@ -51,14 +51,17 @@ gene_constraints <- list(rownames(pbmc4k_avg), rownames(pbmc_bulk_matrix));
 sc_expr <- select_gene_subset(pbmc4k_matrix, gene_constraints);
 bulk_expr <- select_gene_subset(pbmc_bulk_matrix, gene_constraints);
 
-res <- lappy(list(c("pearson",
+
+dist_metrics <- c("pearson",
              "spearman",
-             "cosine",
-             "kl_divergence")),
+             "cosine")
+
+res <- lapply(dist_metrics,
       function(x){
         permutation_similarity(sc_expr, bulk_expr, pbmc4k_meta, 
-                               1000, corr_coef, method = x)
+                               10, corr_coef, method = x)
       })
 
-lapply(res, head)
+names(res) <- dist_metrics
+lapply(res, function(x) x$score[1:4, 1:4])
 ```
