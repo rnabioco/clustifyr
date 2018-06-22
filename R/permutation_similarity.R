@@ -6,39 +6,56 @@
 #' @param bulk_expr bulk expression matrix
 #' @param sc_meta clustering info of single-cell data assume that genes have ALREADY BEEN filtered
 #' @param num_perm number of permutations
+#' @param per_cell run per cell?
 #' @param compute_method method(s) for computing similarity scores
 #' @param metadata metadata column used for clustering
-#' @param ...
+#' @param ... additional paramters to pass to run_one_round
 #' @export
-permutation_similarity <- function(sc_expr, bulk_expr, sc_meta, num_perm, compute_method, metadata = "cluster", ...) {
+permutation_similarity <- function(sc_expr, bulk_expr, sc_meta, num_perm, per_cell,
+                                   compute_method, metadata = "cluster", ...) {
+
+  # get cluster or cell ids
+  clust_ids <- dplyr::pull(sc_meta, metadata)
+
   # get cell types
-  sc_clust <- sort(unique(dplyr::pull(sc_meta, metadata)))
+  sc_clust <- sort(unique(clust_ids))
   bulk_clust <- colnames(bulk_expr)
-  assigned_score <- run_one_round(compute_mean_expr(sc_expr,
-                                                    dplyr::pull(sc_meta,metadata),
-                                                    sc_clust),
+
+  if (!per_cell){
+    clust_avg <- compute_mean_expr(sc_expr,
+                                   clust_ids,
+                                   sc_clust)
+  } else {
+    clust_avg <- sc_expr
+  }
+
+  assigned_score <- run_one_round(clust_avg,
                                   bulk_expr,
                                   sc_clust,
                                   bulk_clust,
                                   compute_method,
                                   ...)
 
-  # perform permutation
-  sig_counts <- matrix(0L, nrow=length(sc_clust), ncol=length(bulk_clust))
+  if(num_perm > 0) {
+    # perform permutation
+    sig_counts <- matrix(0L, nrow=length(sc_clust), ncol=length(bulk_clust))
 
-  for (i in 1:num_perm) {
-    # permutate assignment
-    new_score <- run_one_round(compute_mean_expr(sc_expr,
-                                                 sample(dplyr::pull(sc_meta,metadata),
-                                                        nrow(sc_meta),
-                                                        replace=FALSE),
-                                                 sc_clust),
-                               bulk_expr,
-                               sc_clust,
-                               bulk_clust,
-                               compute_method,
-                               ...)
-    sig_counts <- sig_counts + as.numeric(new_score>assigned_score)
+    for (i in 1:num_perm) {
+      # permutate assignment
+      new_score <- run_one_round(compute_mean_expr(sc_expr,
+                                                   sample(dplyr::pull(sc_meta,metadata),
+                                                          nrow(sc_meta),
+                                                          replace=FALSE),
+                                                   sc_clust),
+                                 bulk_expr,
+                                 sc_clust,
+                                 bulk_clust,
+                                 compute_method,
+                                 ...)
+      sig_counts <- sig_counts + as.numeric(new_score>assigned_score)
+    }
+  } else {
+    sig_counts <- matrix(NA, nrow=length(sc_clust), ncol=length(bulk_clust))
   }
 
   rownames(assigned_score) <- sc_clust
