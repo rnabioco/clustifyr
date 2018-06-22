@@ -63,5 +63,5 @@ res <- lapply(dist_metrics,
       })
 
 names(res) <- dist_metrics
-lapply(res, function(x) x$score[1:4, 1:4])
+lapply(res, function(x) x$p_val[1:4, 1:4])
 ```
