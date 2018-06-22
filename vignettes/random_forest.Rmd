@@ -104,6 +104,50 @@ bntree<- 1000
 #Build the model
 rFmodel.sub <- randomForest(classified ~ ., data = pbmc4.sub, ntree = bntree, mtry = bmtry, importance = TRUE)
 save(rFmodel.sub,file = "rFmodelsub.RData")
+```
+Call:
+ randomForest(formula = classified ~ ., data = pbmc4.sub, ntree = bntree,      mtry = bmtry, importance = TRUE) 
+               Type of random forest: classification
+                     Number of trees: 1000
+No. of variables tried at each split: 256
+
+        OOB estimate of  error rate: 8%
+Confusion matrix:
+                    B cells CD14+ Monocytes CD4 T cells, 1 CD4 T cells, 2
+B cells                 642               3              6              0
+CD14+ Monocytes           0            1006              6              1
+CD4 T cells, 1            2               2           1270             12
+CD4 T cells, 2            1               1            146            403
+CD8 T cells               1               0             37             20
+Dendritic cells, 1        0              15              3              0
+Dendritic Cells, 2?       1               0              1              0
+FCGR3A+ Monocytes         0              19              0              1
+Megakaryocytes            1               8              0              0
+NK cells                  1               2              1              0
+                    CD8 T cells Dendritic cells, 1 Dendritic Cells, 2?
+B cells                       0                  1                   0
+CD14+ Monocytes               0                  2                   0
+CD4 T cells, 1                1                  0                   0
+CD4 T cells, 2               34                  0                   0
+CD8 T cells                 502                  1                   0
+Dendritic cells, 1            0                110                   0
+Dendritic Cells, 2?           0                  0                  36
+FCGR3A+ Monocytes             0                  0                   0
+Megakaryocytes                0                  0                   0
+NK cells                     34                  0                   0
+                    FCGR3A+ Monocytes Megakaryocytes NK cells class.error
+B cells                             0              0        0  0.01533742
+CD14+ Monocytes                     1              0        0  0.00984252
+CD4 T cells, 1                      0              0        0  0.01320901
+CD4 T cells, 2                      0              0        0  0.31111111
+CD8 T cells                         0              0       11  0.12237762
+Dendritic cells, 1                  0              0        0  0.14062500
+Dendritic Cells, 2?                 0              0        0  0.05263158
+FCGR3A+ Monocytes                  93              0        0  0.17699115
+Megakaryocytes                      1             25        0  0.28571429
+NK cells                            0              0      249  0.13240418
+
+```{r, eval=F, echo=T}
 # To check important variables
 importance(rFmodel)        
 varImpPlot(rFmodel)
