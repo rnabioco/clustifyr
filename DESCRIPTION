@@ -30,4 +30,8 @@ Imports:
     tibble,
     ggplot2,
     entropy,
-    Matrix
+    Matrix,
+    cowplot,
+    dplyr,
+    tidyr,
+    tibble
