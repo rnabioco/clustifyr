@@ -105,6 +105,7 @@ bntree<- 1000
 rFmodel.sub <- randomForest(classified ~ ., data = pbmc4.sub, ntree = bntree, mtry = bmtry, importance = TRUE)
 save(rFmodel.sub,file = "rFmodelsub.RData")
 ```
+```
 Call:
  randomForest(formula = classified ~ ., data = pbmc4.sub, ntree = bntree,      mtry = bmtry, importance = TRUE) 
                Type of random forest: classification
@@ -146,7 +147,7 @@ Dendritic Cells, 2?                 0              0        0  0.05263158
 FCGR3A+ Monocytes                  93              0        0  0.17699115
 Megakaryocytes                      1             25        0  0.28571429
 NK cells                            0              0      249  0.13240418
-
+```
 ```{r, eval=F, echo=T}
 # To check important variables
 importance(rFmodel)        
