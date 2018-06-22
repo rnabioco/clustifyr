@@ -1,12 +1,17 @@
 
-#' compute the p-value for similarity using permutation
+#' Compute the p-value for similarity using permutation
 #'
 #' @description Permute cluster labels to calculate empirical p-value
-#' @param sc_expr: single-cell expr matrix
-#' @param bulk_expr: bulk epxr matrix.
-#' @param sc_meta: clustering info of single-cell data assume that genes have ALREADY BEEN filtered
-#' @param num_perm: number of permutation
-#' @param compute_method parameters feed in for computing similarity score
+<<<<<<< HEAD
+#' @param sc_expr single-cell expression matrix
+#' @param bulk_expr bulk expression matrix
+=======
+#' @param sc_expr single-cell exprression matrix
+#' @param bulk_expr bulk epxression matrix
+>>>>>>> 1155e2bdc28c71654c49af9862940964fe0f088b
+#' @param sc_meta clustering info of single-cell data assume that genes have ALREADY BEEN filtered
+#' @param num_perm number of permutations
+#' @param compute_method method(s) for computing similarity scores
 #' @param metadata metadata column used for clustering
 #' @param ...
 #' @export
