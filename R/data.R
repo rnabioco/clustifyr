@@ -1,8 +1,9 @@
 #' Matrix of single-cell RNA-seq PBMCs.
 #'
-#' A sample of 4000 cells from a bigger experiment
+#' A sample of 4000 PBMC cells from a bigger experiment
 #'
-#' @format A data frame with 13 variables:
+#' @format A sparseMatrix with genes as rows and cells as columns.
+#'
 #' \describe{
 #' }
 #'

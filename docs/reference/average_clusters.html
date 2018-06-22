@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>pick and sort genes — select_gene_subset • RClusterCT</title>
+<title>Average expression values per cluster — average_clusters • RClusterCT</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="pick and sort genes — select_gene_subset" />
+<meta property="og:title" content="Average expression values per cluster — average_clusters" />
 
-<meta property="og:description" content="pick and sort genes" />
+<meta property="og:description" content="Average expression values per cluster" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -115,29 +115,42 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>pick and sort genes</h1>
-    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/RClusterCT/blob/master/R/compute_similarity.R'><code>R/compute_similarity.R</code></a></small>
-    <div class="hidden name"><code>select_gene_subset.Rd</code></div>
+    <h1>Average expression values per cluster</h1>
+    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/RClusterCT/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
+    <div class="hidden name"><code>average_clusters.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>pick and sort genes</p>
+    <p>Average expression values per cluster</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>select_gene_subset</span>(<span class='no'>expr_matrix</span>, <span class='no'>gene_constraints</span>)</pre>
+    <pre class="usage"><span class='fu'>average_clusters</span>(<span class='no'>mat</span>, <span class='no'>cluster_info</span>, <span class='kw'>log_scale</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>cell_column</span> <span class='kw'>=</span> <span class='st'>"rn"</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>expr_matrix:</th>
-      <td><p>expression matrix with row names as the gene names (short name for now)</p></td>
+      <th>mat</th>
+      <td><p>expression matrix</p></td>
     </tr>
     <tr>
-      <th>gene_constraints:</th>
-      <td><p>a list of vectors, where each vector is a candidate list of selected genes. can be HVG, row names of scRNAseq data and/or bulk data.</p></td>
+      <th>cluster_info</th>
+      <td><p>data.frame with cells</p></td>
+    </tr>
+    <tr>
+      <th>log_scale</th>
+      <td><p>input data is natural log, averaging will be done</p></td>
+    </tr>
+    <tr>
+      <th>cell_column</th>
+      <td><p>column in cluster_info with cell ids</p></td>
+    </tr>
+    <tr>
+      <th>cluster_col</th>
+      <td><p>column in cluster_info with cluster number</p></td>
     </tr>
     </table>
     

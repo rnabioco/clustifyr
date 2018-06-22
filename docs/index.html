@@ -53,7 +53,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="articles/exploratory_pca.html">Exploratory PCA</a>
+    </li>
+    <li>
       <a href="articles/overview.html">rclustr overview</a>
+    </li>
+    <li>
+      <a href="articles/recount_data.html">RClusterCT overview</a>
     </li>
   </ul>
 </li>
@@ -80,14 +86,14 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#rclusterct" class="anchor"></a>RClusterCT</h1></div>
 
-<p>Classify cell types in single-cell RNA sequencing expeirments using reference bulk RNA-seq data sets.</p>
+<p>Classify cell types in single-cell RNA sequencing expeirments using reference bulk RNA-seq data sets. See detailed vignettes and documentation <a href="https://ncbi-hackathons.github.io/RClusterCT/">here</a>.</p>
 <div id="workflow" class="section level2">
 <h2 class="hasAnchor">
 <a href="#workflow" class="anchor"></a>Workflow</h2>
 <ol>
 <li><p>Load a single-cell RNA-seq data set (<code>SparseMatrix</code> or <code>data.frame</code>). Normalize (?) with <code>scran</code>.</p></li>
 <li><p>Load the reference data type (i.e., bulk RNA-seq data, a gene set (ordered or unordered))</p></li>
-<li><p>Magic happens. Compute correlations between single-cell and reference data types. Classify on per-cell or per-cluster basis.</p></li>
+<li><p>Compute correlations between single-cell and reference data types. Classify on per-cell or per-cluster basis.</p></li>
 <li><p>Output per-cell or per-cluster, significance of the assignment.</p></li>
 <li><p>Visualize per-cell, per-cluster correlations in e.g. a t-SNE.</p></li>
 </ol>

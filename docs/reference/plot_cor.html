@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>pick and sort genes — select_gene_subset • RClusterCT</title>
+<title>Plot similarity measures on a tSNE — plot_cor • RClusterCT</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="pick and sort genes — select_gene_subset" />
+<meta property="og:title" content="Plot similarity measures on a tSNE — plot_cor" />
 
-<meta property="og:description" content="pick and sort genes" />
+<meta property="og:description" content="Plot similarity measures on a tSNE" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -115,29 +115,38 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>pick and sort genes</h1>
-    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/RClusterCT/blob/master/R/compute_similarity.R'><code>R/compute_similarity.R</code></a></small>
-    <div class="hidden name"><code>select_gene_subset.Rd</code></div>
+    <h1>Plot similarity measures on a tSNE</h1>
+    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/RClusterCT/blob/master/R/plot.R'><code>R/plot.R</code></a></small>
+    <div class="hidden name"><code>plot_cor.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>pick and sort genes</p>
+    <p>Plot similarity measures on a tSNE</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>select_gene_subset</span>(<span class='no'>expr_matrix</span>, <span class='no'>gene_constraints</span>)</pre>
+    <pre class="usage"><span class='fu'>plot_cor</span>(<span class='no'>correlation_matrix</span>, <span class='no'>meta_data</span>,
+  <span class='kw'>bulk_data_to_plot</span> <span class='kw'>=</span> <span class='fu'>colnames</span>(<span class='no'>correlation_matrix</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>expr_matrix:</th>
-      <td><p>expression matrix with row names as the gene names (short name for now)</p></td>
+      <th>correlation_matrix</th>
+      <td><p>input similarity matrix</p></td>
     </tr>
     <tr>
-      <th>gene_constraints:</th>
-      <td><p>a list of vectors, where each vector is a candidate list of selected genes. can be HVG, row names of scRNAseq data and/or bulk data.</p></td>
+      <th>meta_data</th>
+      <td><p>input metadata with tsne coordinates and cluster ids</p></td>
+    </tr>
+    <tr>
+      <th>bulk_data_to_plot</th>
+      <td><p>colname of data to plot, defaults to all</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>passed to plot_tsne</p></td>
     </tr>
     </table>
     

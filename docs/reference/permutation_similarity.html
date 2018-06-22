@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>pick and sort genes — select_gene_subset • RClusterCT</title>
+<title>Compute the p-value for similarity using permutation — permutation_similarity • RClusterCT</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="pick and sort genes — select_gene_subset" />
+<meta property="og:title" content="Compute the p-value for similarity using permutation — permutation_similarity" />
 
-<meta property="og:description" content="pick and sort genes" />
+<meta property="og:description" content="Permute cluster labels to calculate empirical p-value" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -115,29 +115,46 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>pick and sort genes</h1>
-    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/RClusterCT/blob/master/R/compute_similarity.R'><code>R/compute_similarity.R</code></a></small>
-    <div class="hidden name"><code>select_gene_subset.Rd</code></div>
+    <h1>Compute the p-value for similarity using permutation</h1>
+    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/RClusterCT/blob/master/R/permutation_similarity.R'><code>R/permutation_similarity.R</code></a></small>
+    <div class="hidden name"><code>permutation_similarity.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>pick and sort genes</p>
+    <p>Permute cluster labels to calculate empirical p-value</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>select_gene_subset</span>(<span class='no'>expr_matrix</span>, <span class='no'>gene_constraints</span>)</pre>
+    <pre class="usage"><span class='fu'>permutation_similarity</span>(<span class='no'>sc_expr</span>, <span class='no'>bulk_expr</span>, <span class='no'>sc_meta</span>, <span class='no'>num_perm</span>, <span class='no'>compute_method</span>,
+  <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>expr_matrix:</th>
-      <td><p>expression matrix with row names as the gene names (short name for now)</p></td>
+      <th>sc_expr</th>
+      <td><p>single-cell expression matrix</p></td>
     </tr>
     <tr>
-      <th>gene_constraints:</th>
-      <td><p>a list of vectors, where each vector is a candidate list of selected genes. can be HVG, row names of scRNAseq data and/or bulk data.</p></td>
+      <th>bulk_expr</th>
+      <td><p>bulk expression matrix</p></td>
+    </tr>
+    <tr>
+      <th>sc_meta</th>
+      <td><p>clustering info of single-cell data assume that genes have ALREADY BEEN filtered</p></td>
+    </tr>
+    <tr>
+      <th>num_perm</th>
+      <td><p>number of permutations</p></td>
+    </tr>
+    <tr>
+      <th>compute_method</th>
+      <td><p>method(s) for computing similarity scores</p></td>
+    </tr>
+    <tr>
+      <th>metadata</th>
+      <td><p>metadata column used for clustering</p></td>
     </tr>
     </table>
     

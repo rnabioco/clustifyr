@@ -1,8 +1,10 @@
-pandoc: 2.2.1
-pkgdown: 1.1.0
-pkgdown_sha: ~
+pandoc: 1.19.2.1
+pkgdown: 1.1.0.9000
+pkgdown_sha: bcf6299e76d4a398aadfc476b3ac22d253a91d35
 articles:
+  exploratory_pca: exploratory_pca.html
   overview: overview.html
+  recount_data: recount_data.html
 urls:
   reference: http://ncbi-hackathons.github.io/RClusterCT/reference
   article: http://ncbi-hackathons.github.io/RClusterCT/articles
