@@ -1,5 +1,5 @@
 ---
-title: 'RClusterCT overview'
+title: 'Downloading data from recount'
 date: '`r Sys.Date()`'
 output:
   rmarkdown::html_vignette:
