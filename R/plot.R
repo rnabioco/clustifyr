@@ -23,12 +23,12 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
 #' @noRd
 pretty_palette <- rev(RColorBrewer::brewer.pal(11, "RdGy")[c(1:5, 7)])
 
-#' Plot a t-SNE colored by feature.
+#' Plot similarity measures on a tSNE
 #'
-#' @param data input data
-#' @param x x variable
-#' @param y y variable
-#' @param feature feature to color by
+#' @param correlation_matrix input similarity matrix
+#' @param meta_data input metadata with tsne coordinates and cluster ids
+#' @param bulk_data_to_plot colname of data to plot, defaults to all
+#' @param ... passed to plot_tsne
 #'
 #' @export
 plot_cor <- function(correlation_matrix,
