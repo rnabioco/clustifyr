@@ -16,8 +16,7 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
                size = pt_size)
 
   if(typeof(data[[feature]]) %in% c("character",
-                                    "logical",
-                                    "factor")){
+                                    "logical") | is.factor(data[[feature]])){
     p <- p + scale_color_brewer(palette = "Paired",
                                 name = legend_name)
 

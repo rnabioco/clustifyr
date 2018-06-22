@@ -30,7 +30,7 @@ library(Matrix)
 ## Simple Example
 
 ```{r}
-# load pacakge data
+# load package data
 data("pbmc4k_matrix")
 data("pbmc4k_meta")
 data("pbmc4k_vargenes")
@@ -63,7 +63,7 @@ plot_cor(res,
 
 ### Obtain p-value for similarity using a permutation test
 
-We can also calcualte correlation p-values using permutation with the `run_cor()` function.
+We can also calculate correlation p-values using permutation with the `run_cor()` function.
 
 ```{r}
 res <- run_cor(pbmc4k_matrix,
