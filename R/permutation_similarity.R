@@ -25,6 +25,8 @@ permutation_similarity <- function(sc_expr, bulk_expr, sc_meta, num_perm, comput
     new_score <- run_one_round(compute_mean_expr(sc_expr, sample(sc_meta[,'cluster'], nrow(sc_meta), replace=FALSE), sc_clust), bulk_expr, sc_clust, bulk_clust, compute_method, ...);
     sig_counts <- sig_counts + as.numeric(new_score>assigned_score);
   }
+  rownames(assigned_score) <- sc_clust; colnames(assigned_score) <- bulk_clust;
+  rownames(sig_counts) <- sc_clust; colnames(sig_counts) <- bulk_clust;
   return(list(score=assigned_score, p_val=sig_counts/num_perm));
 }
 
