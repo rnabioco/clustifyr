@@ -100,7 +100,7 @@ plot(rf_tune)
 ```{r, eval=F, echo=T}
 #Optimal mtry and ntree
 bmtry<- 256
-bntree<- 1000
+bntree<- 1000 #for testing purpose
 #Build the model
 rFmodel.sub <- randomForest(classified ~ ., data = pbmc4.sub, ntree = bntree, mtry = bmtry, importance = TRUE)
 save(rFmodel.sub,file = "rFmodelsub.RData")
