@@ -11,7 +11,7 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
                       cols = pretty_palette,
                       pt_size = 0.25) {
 
-  p <- ggplot(data, aes(x = !!sym(x), y = !!sym(y))) +
+  p <- ggplot(data, aes_string(x, y)) +
     geom_point(aes_string(color = feature),
                size = pt_size)
 
