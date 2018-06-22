@@ -1,12 +1,12 @@
 ---
-title: 'RClusterCT overview'
+title: 'rclustr overview'
 date: '`r Sys.Date()`'
 output:
   rmarkdown::html_vignette:
     toc: true
     toc_depth: 3
     vignette: >
-      %\VignetteIndexEntry{rclusterct-overview}
+      %\VignetteIndexEntry{rclustr-overview}
       %\VignetteEngine{knitr::rmarkdown}
       %\VignetteEncoding{UTF-8}
 ---
@@ -19,63 +19,78 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r init, echo = FALSE, message = FALSE, warning = FALSE}
-library(RClusterCT)
-library(ggplot2)
-library(Matrix)
+```{r init, echo = FALSE, message = FALSE}
 ```
 
-## Why use RClusterCT?
+## Why use `RClusterCT`?
 
-## Simple Example
+Single cell transcriptomes are difficult to annotate without extensive knowledge of the underlying biology of the system in question. Even with this knowledge, accurate identification can be challenging due to the lack of detectable expression of common marker genes defined by bulk RNA-seq, flow cytometry, etc. RClusterRT solves this problem by providing functions to automatically annotate single cells or clusters using bulk RNA-seq data or marker gene lists (ranked or unranked). Additional functions allow for exploratory analysis of calculated similarities between single cell RNA-seq datasets and reference data.
 
-```{r}
-# load package data
+## A simple example: 10x Genomics PBMCs
+
+In this example, we take an example 10x Genomics 3' scRNA-seq dataset comprised of peripheral blood mononuclear cells from a healthy human donor and annotate the cell clusters (identified using `Seurat`) using bulk RNA-seq data derived from isolated PBMC cell populations. As the heatmap below shows, most cell types are accurately classified using the default correlation method (pearson) and a list of highly variable genes in the single cell dataset identified using `seurat`'s VMR method.
+
+```{r fig.height=8, fig.width=12}
+library(RClusterCT)
+library(ComplexHeatmap)
+library(circlize)
+
+# load pacakge data
 data("pbmc4k_matrix")
 data("pbmc4k_meta")
 data("pbmc4k_vargenes")
 data("pbmc_bulk_matrix")
 
-# run correlation 
+# run correlation (pearson by default)
 res <- run_cor(pbmc4k_matrix,
         pbmc4k_meta,
         pbmc_bulk_matrix,
         pbmc4k_vargenes,
         if_permute = F,
-        compute_method = corr_coef, 
-        per_cell = T,
-        metadata = "rn")
+        metadata = "classified",
+        compute_method = corr_coef)
 
-res[1:10, 1:10]
+# peek at correlation matrix
+res[1:5, 1:5]
+
+# view heatmap of correlation coefficients
+Heatmap(res, colorRamp2(c(0, 1), c("white", "black")))
 ```
 
 ### Plot cluster identities and correlation coefficients
 
+`RClusterCT` provides functions to plot single cells suing pre-calculated tSNE embeddings (or those from any other dimensionality reduction method), and to plot correlation coefficients on those projections. The plots below again show that the highest correlations between these bulk RNA-seq data and the test scRNA-seq dataset are restricted to the correct cell clusters.
+
 ```{r plot, fig.height=8, fig.width=12}
-# plot tsne using known identities
+# plot tSNE using known identities
 plot_tsne(pbmc4k_meta, feature = "classified")
 
-# plot correlation coefficients on tsne for each identity class
+# plot correlation coefficients on tSNE for each identity class
 plot_cor(res,
          pbmc4k_meta,
-         colnames(res)[1:7])
+         colnames(res)[1:7],
+         metadata.col = "classified")
 ```
 
 ### Obtain p-value for similarity using a permutation test
 
-We can also calculate correlation p-values using permutation with the `run_cor()` function.
+In addition to automatically generating a correlation matrix, `RClusterCT` can calculate correlation p-values using permutation with the `run_cor()` function. As with raw correlation coefficients, plotting a heatmap of -log(p-values) demonstrates that the most significant correlations are between corresponding bulk and single cell clusters.
 
-```{r}
+```{r fig.height = 8, fig.width = 12}
+# re-run run_cor with if_permute = TRUE, num_permute=1000 and return_full = TRUE
 res <- run_cor(pbmc4k_matrix,
                pbmc4k_meta,
                pbmc_bulk_matrix,
-                pbmc4k_vargenes,
+               pbmc4k_vargenes,
                if_permute = TRUE,
                num_permute=1000,
-               metadata = "rn",
+               metadata = "classified",
                compute_method = corr_coef,
                return_full = TRUE)
 
-res$p_val[1:10, 1:10]
-```
+# 
+res$p_val[1:5, 1:5]
 
+# view heatmap of correlation coefficients
+Heatmap(-log(res$p_val+.01,10), colorRamp2(c(0, 2), c("white", "black")))
+```
