@@ -1,4 +1,4 @@
-Package: RClusterCT
+Package: clustifyR
 Version: 0.0.0.9000
 Title: Classification of Cell Types in Single-Cell RNA Sequencing Data
 Description: Classify cells from single-cell RNA sequencing data using bulk

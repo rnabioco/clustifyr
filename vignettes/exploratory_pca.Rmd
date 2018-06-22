@@ -4,7 +4,7 @@ output: html_document
 ---
 
 ```{r setup, echo=F}
-library(RClusterCT)
+library(clustifyR)
 #Get overlapping genes to perform the PCA on
 shared.genes <- rownames(pbmc4k_avg)[rownames(pbmc4k_avg) %in% rownames(pbmc_bulk_matrix)]
 bulkrna <- pbmc_bulk_matrix[shared.genes,]
