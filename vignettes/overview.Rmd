@@ -21,6 +21,8 @@ knitr::opts_chunk$set(
 
 ```{r init, echo = FALSE, message = FALSE}
 library(RClusterCT)
+library(ggplot2)
+library(Matrix)
 ```
 
 ## Why use RClusterCT?
@@ -28,52 +30,51 @@ library(RClusterCT)
 ## Simple Example
 
 ```{r}
+# load pacakge data
+data("pbmc4k_matrix")
+data("pbmc4k_meta")
+data("pbmc4k_vargenes")
+data("pbmc_bulk_matrix")
 
-# test correlation function
-# remember to execute functions at the end of the document
-data("pbmc4k_avg");
-data("pbmc_bulk_matrix");
-gene_constraints <- list(pbmc4k_vargenes, rownames(pbmc_bulk_matrix));
-pbmc4k_avg <- select_gene_subset(pbmc4k_avg, gene_constraints);
-pbmc_bulk_matrix <- select_gene_subset(pbmc_bulk_matrix, gene_constraints);
+# run correlation 
+res <- run_cor(pbmc4k_matrix,
+        pbmc4k_meta,
+        pbmc_bulk_matrix,
+        pbmc4k_vargenes,
+        if_permute = F,
+        compute_method = corr_coef)
 
-out <- lapply(colnames(pbmc4k_avg),
-       function(x){
-         per_col <- lapply(colnames(pbmc_bulk_matrix),
-                function(y){
-                  compute_similarity(pbmc4k_avg[,x], 
-                   pbmc_bulk_matrix[,y], corr_coef,
-                   method = "spearman")})
-         do.call(cbind, per_col)
-       })
-
-res <- do.call(rbind, out)
-rownames(res) <- colnames(pbmc4k_avg)
-colnames(res) <- colnames(pbmc_bulk_matrix)
 res[1:10, 1:10]
 ```
 
+### Plot cluster identities and correlation coefficients
+
+```{r plot, fig.height=8, fig.width=12}
+# plot tsne using known identities
+plot_tsne(pbmc4k_meta, feature = "classified")
+
+# plot correlation coefficients on tsne for each identity class
+plot_cor(res,
+         pbmc4k_meta,
+         colnames(res)[1:7])
+
+
+```
 
 ### Obtain p-value for similarity using a permutation test
 
+We can also calcualte correlation p-values using permutation with the `run_cor()` function.
 
 ```{r}
-data("pbmc4k_matrix"); data("pbmc4k_meta"); data("pbmc4k_avg"); data("pbmc_bulk_matrix");
-gene_constraints <- list(rownames(pbmc4k_avg), rownames(pbmc_bulk_matrix));
-sc_expr <- select_gene_subset(pbmc4k_matrix, gene_constraints);
-bulk_expr <- select_gene_subset(pbmc_bulk_matrix, gene_constraints);
+res <- run_cor(pbmc4k_matrix,
+               pbmc4k_meta,
+               pbmc_bulk_matrix,
+                pbmc4k_vargenes,
+               if_permute = TRUE,
+               num_permute=1000,
+               compute_method = corr_coef,
+               return_full = TRUE)
 
-
-dist_metrics <- c("pearson",
-             "spearman",
-             "cosine")
-
-res <- lapply(dist_metrics,
-      function(x){
-        permutation_similarity(sc_expr, bulk_expr, pbmc4k_meta, 
-                               10, corr_coef, method = x)
-      })
-
-names(res) <- dist_metrics
-lapply(res, function(x) x$p_val[1:4, 1:4])
+res$p_val[1:10, 1:10]
 ```
+
