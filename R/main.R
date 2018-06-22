@@ -1,10 +1,10 @@
 #data("pbmc4k_matrix"); data("pbmc4k_avg"); data("pbmc_bulk_matrix");
 # main: global controller function to evaluate and visualize corr. coef
 #' @export
-run_cor <- function(sc_expr, sc_meta, bulk_expr, query_gene_list, if_permute=TRUE, num_permute=1000, compute_method, ...) {
+run_cor <- function(sc_expr, sc_meta, bulk_expr, query_gene_list, if_permute=TRUE, num_permute=1000, compute_method, return_full = F,...) {
   # not permute -> num_permute = 0
   if (!if_permute) {
-    num_permute <- 0;
+    num_permute <- 0
   }
 
   # select gene subsets
@@ -13,12 +13,12 @@ run_cor <- function(sc_expr, sc_meta, bulk_expr, query_gene_list, if_permute=TRU
   bulk_expr <- select_gene_subset(bulk_expr, gene_constraints)
 
   # run permutation
-  res <- permutation_similarity(sc_expr, bulk_expr, sc_meta, num_permute, compute_method, ...);
+  res <- permutation_similarity(sc_expr, bulk_expr, sc_meta, num_permute, compute_method, ...)
 
-  # extract information
-  similarity_score <- res$score;
-  p_val <- res$p_val;
+  # extract score only by default
+  if(!return_full) {
+    res <- res$score
+  }
 
-  #TODO: PLOT FUNCTION
-  return(similarity_score)
+  return(res)
 }
