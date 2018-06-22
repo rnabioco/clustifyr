@@ -72,6 +72,7 @@ res <- run_cor(pbmc4k_matrix,
                 pbmc4k_vargenes,
                if_permute = TRUE,
                num_permute=1000,
+               metadata = "classified",
                compute_method = corr_coef,
                return_full = TRUE)
 
