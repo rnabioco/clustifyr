@@ -20,12 +20,6 @@ Roxygen: list(markdown = TRUE)
 URL: http://github.com/NCBI-Hackathons/RClusterCT, https://ncbi-hackathons.github.io/RClusterCT/
 BugReports: https://github.com/NCBI-Hackathons/RClusterCT/issues
 RoxygenNote: 6.0.1
-Suggests: 
-    testthat,
-    biomaRt,
-    purrr,
-    dplyr,
-    stringr
 Imports: 
     tibble,
     ggplot2,
@@ -35,3 +29,8 @@ Imports:
     dplyr,
     tidyr,
     tibble
+Suggests: 
+    testthat,
+    biomaRt,
+    purrr,
+    stringr
