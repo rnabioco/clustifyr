@@ -3,3 +3,10 @@
 language: R
 sudo: false
 cache: packages
+warnings_are_errors: false
+cache: packages
+r_check_args: '--as-cran'
+bioc_required: true
+bioc_use_devel: true
+r_packages:
+  - devtools
