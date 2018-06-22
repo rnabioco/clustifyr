@@ -87,7 +87,7 @@
       <a href="../articles/exploratory_pca.html">Exploratory PCA</a>
     </li>
     <li>
-      <a href="../articles/overview.html">RClusterCT overview</a>
+      <a href="../articles/overview.html">rclustr overview</a>
     </li>
     <li>
       <a href="../articles/recount_data.html">Downloading data from recount</a>
@@ -126,8 +126,8 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>permutation_similarity</span>(<span class='no'>sc_expr</span>, <span class='no'>bulk_expr</span>, <span class='no'>sc_meta</span>, <span class='no'>num_perm</span>, <span class='no'>compute_method</span>,
-  <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>permutation_similarity</span>(<span class='no'>sc_expr</span>, <span class='no'>bulk_expr</span>, <span class='no'>sc_meta</span>, <span class='no'>num_perm</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='no'>F</span>,
+  <span class='no'>compute_method</span>, <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -149,12 +149,20 @@
       <td><p>number of permutations</p></td>
     </tr>
     <tr>
+      <th>per_cell</th>
+      <td><p>run per cell?</p></td>
+    </tr>
+    <tr>
       <th>compute_method</th>
       <td><p>method(s) for computing similarity scores</p></td>
     </tr>
     <tr>
       <th>metadata</th>
       <td><p>metadata column used for clustering</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>additional paramters to pass to run_one_round</p></td>
     </tr>
     </table>
     

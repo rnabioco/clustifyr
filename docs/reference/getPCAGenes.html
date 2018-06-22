@@ -31,6 +31,8 @@
 
 
 <meta property="og:title" content="Returns a list of genes ("features") based on the top loadings of principal components formed from the bulk expression data set — getPCAGenes" />
+
+<meta property="og:description" content="Returns a list of genes (&quot;features&quot;) based on the top loadings of principal components formed from the bulk expression data set" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -85,7 +87,7 @@
       <a href="../articles/exploratory_pca.html">Exploratory PCA</a>
     </li>
     <li>
-      <a href="../articles/overview.html">RClusterCT overview</a>
+      <a href="../articles/overview.html">rclustr overview</a>
     </li>
     <li>
       <a href="../articles/recount_data.html">Downloading data from recount</a>
@@ -119,7 +121,9 @@
     </div>
 
     <div class="ref-description">
-
+    
+    <p>Returns a list of genes ("features") based on the top loadings of principal components formed from the bulk expression data set</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>getPCAGenes</span>(<span class='no'>sc_avg_expr</span>, <span class='no'>bulk_expr</span>, <span class='no'>nr_pcs</span>, <span class='no'>percentile</span>)</pre>
@@ -141,9 +145,13 @@
     </tr>
     <tr>
       <th>percentile</th>
-      <td><p>Select the percentile of absolute values of PCA loadings to select genes from. E.g. 0.999 would select the .1<!-- % of genes with the largest loadings.} --></p></td>
+      <td><p>Select the percentile of absolute values of PCA loadings to select genes from. E.g. 0.999 would select the .1% of genes with the largest loadings.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>The list of genes to use as features.</p>
     
 
   </div>
@@ -151,7 +159,9 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#value">Value</a></li>
+          </ul>
 
   </div>
 </div>
