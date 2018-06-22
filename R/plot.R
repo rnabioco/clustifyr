@@ -12,23 +12,32 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
                       pt_size = 0.25) {
 
   p <- ggplot(data, aes(x = !!sym(x), y = !!sym(y))) +
-    geom_point(aes(color = !!enquo(feature)),
+    geom_point(aes_string(color = feature),
                size = pt_size)
 
-  p <- p + scale_color_gradientn(colors = cols,
-                                 name = legend_name)
+  if(typeof(data[[feature]]) %in% c("character",
+                                    "logical",
+                                    "factor")){
+    p <- p + scale_color_brewer(palette = "Paired",
+                                name = legend_name)
+
+  } else {
+    p <- p + scale_color_gradientn(colors = cols,
+                                   name = legend_name)
+  }
+
   p + cowplot::theme_cowplot()
 }
 
 #' @noRd
 pretty_palette <- rev(RColorBrewer::brewer.pal(11, "RdGy")[c(1:5, 7)])
 
-#' Plot a t-SNE colored by feature.
+#' Plot similarity measures on a tSNE
 #'
-#' @param data input data
-#' @param x x variable
-#' @param y y variable
-#' @param feature feature to color by
+#' @param correlation_matrix input similarity matrix
+#' @param meta_data input metadata with tsne coordinates and cluster ids
+#' @param bulk_data_to_plot colname of data to plot, defaults to all
+#' @param ... passed to plot_tsne
 #'
 #' @export
 plot_cor <- function(correlation_matrix,
@@ -51,6 +60,7 @@ plot_cor <- function(correlation_matrix,
          function(x){
            tmp_data <- dplyr::filter(plt_data,
                                      bulk_cluster == x)
-           plot_tsne(tmp_data, feature = expr, legend_name = x)
+           plot_tsne(tmp_data, feature = "expr", legend_name = x)
          })
 }
+
