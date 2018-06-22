@@ -40,3 +40,28 @@ compute_similarity(pbmc4k_avg[,"1"],
                    pbmc_bulk_matrix[,"primary human monocytes rep 1"], kl_divergence)
 
 ```
+
+
+### Obtain p-value for similarity using a permutation test
+
+
+```{r}
+data("pbmc4k_matrix"); data("pbmc4k_meta"); data("pbmc4k_avg"); data("pbmc_bulk_matrix");
+gene_constraints <- list(rownames(pbmc4k_avg), rownames(pbmc_bulk_matrix));
+sc_expr <- select_gene_subset(pbmc4k_matrix, gene_constraints);
+bulk_expr <- select_gene_subset(pbmc_bulk_matrix, gene_constraints);
+
+
+dist_metrics <- c("pearson",
+             "spearman",
+             "cosine")
+
+res <- lapply(dist_metrics,
+      function(x){
+        permutation_similarity(sc_expr, bulk_expr, pbmc4k_meta, 
+                               10, corr_coef, method = x)
+      })
+
+names(res) <- dist_metrics
+lapply(res, function(x) x$p_val[1:4, 1:4])
+```
