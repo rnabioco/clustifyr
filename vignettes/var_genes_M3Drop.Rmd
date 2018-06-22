@@ -1,0 +1,47 @@
+---
+title: 'Cluster classification using mark gene lists'
+date: '`r Sys.Date()`'
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 3
+    vignette: >
+      %\VignetteIndexEntry{clustifyR-get_data}
+      %\VignetteEngine{knitr::rmarkdown}
+      %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+```
+
+```{r}
+library('recount')
+library('biomaRt')
+library('dplyr')
+library('purrr')
+library('stringr')
+library("M3Drop")
+```
+
+## get var genes from scRNA seq count matrix, using M3Drop package
+
+```{r}
+library(clustifyR)
+# needs to revert log transformation
+tm <- expm1(as.matrix(pbmc4k_matrix))
+Normalized_data <- M3DropCleanData(tm,
+                                    labels = pbmc4k_meta$rn,
+                                    is.counts=FALSE)
+dim(Normalized_data$data)
+fits <- M3DropDropoutModels(Normalized_data$data)
+DE_genes <- M3DropDifferentialExpression(Normalized_data$data,
+                                          mt_method="fdr", mt_threshold=0.01)
+```
+
+## directly feed into gene_constraints to filter matrices
+```{r}
+gene_constraints <- list(as.character(DE_genes$Gene),rownames(pbmc_bulk_matrix))
+```
