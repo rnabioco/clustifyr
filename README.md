@@ -1,9 +1,11 @@
-# RClusterCT
+# clustifyR
 
-[![Travis build status](https://travis-ci.org/NCBI-Hackathons/RClusterCT.svg?branch=master)](https://travis-ci.org/NCBI-Hackathons/RClusterCT)
+[![Travis build status](https://travis-ci.org/NCBI-Hackathons/clustifyR.svg?branch=master)](https://travis-ci.org/NCBI-Hackathons/clustifyR)
 
+### Classify cell types in single-cell RNA sequencing expeirments using
+reference bulk RNA-seq data sets. See detailed vignettes and documentation
+[here](https://ncbi-hackathons.github.io/clustifyR/).
 
-Classify cell types in single-cell RNA sequencing expeirments using reference bulk RNA-seq data sets. See detailed vignettes and documentation [here](https://ncbi-hackathons.github.io/RClusterCT/).
 
 ## Workflow
 

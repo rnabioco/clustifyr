@@ -1,4 +1,4 @@
 library(testthat)
-library(RClusterCT)
+library(clustifyR)
 
-test_check("RClusterCT")
+test_check("clustifyR")
