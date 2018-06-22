@@ -5,12 +5,16 @@
 \title{compute the p-value for similarity using permutation}
 \usage{
 permutation_similarity(sc_expr, bulk_expr, sc_meta, num_perm, compute_method,
-  ...)
+  metadata = "cluster", ...)
 }
 \arguments{
-\item{sc_expr, }{bulk_expr: single-cell expr matrix and bulk epxr matrix.}
+\item{compute_method}{parameters feed in for computing similarity score}
 
-\item{compute_method, }{...: parameters feed in for computing similarity score}
+\item{metadata}{metadata column used for clustering}
+
+\item{sc_expr:}{single-cell expr matrix}
+
+\item{bulk_expr:}{bulk epxr matrix.}
 
 \item{sc_meta:}{clustering info of single-cell data assume that genes have ALREADY BEEN filtered}
 

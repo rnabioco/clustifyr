@@ -1,21 +1,21 @@
 
-#' compute the p-value for similarity using permutation
+#' Compute the p-value for similarity using permutation
 #'
 #' @description Permute cluster labels to calculate empirical p-value
-#' @param sc_expr: single-cell expr matrix
-#' @param bulk_expr: bulk epxr matrix.
-#' @param sc_meta: clustering info of single-cell data assume that genes have ALREADY BEEN filtered
-#' @param num_perm: number of permutation
-#' @param compute_method parameters feed in for computing similarity score
+#' @param sc_expr single-cell expression matrix
+#' @param bulk_expr bulk expression matrix
+#' @param sc_meta clustering info of single-cell data assume that genes have ALREADY BEEN filtered
+#' @param num_perm number of permutations
+#' @param compute_method method(s) for computing similarity scores
 #' @param metadata metadata column used for clustering
 #' @param ...
 #' @export
 permutation_similarity <- function(sc_expr, bulk_expr, sc_meta, num_perm, compute_method, metadata = "cluster", ...) {
   # get cell types
-  sc_clust <- sort(unique(pull(sc_meta, metadata)))
+  sc_clust <- sort(unique(dplyr::pull(sc_meta, metadata)))
   bulk_clust <- colnames(bulk_expr)
   assigned_score <- run_one_round(compute_mean_expr(sc_expr,
-                                                    pull(sc_meta,metadata),
+                                                    dplyr::pull(sc_meta,metadata),
                                                     sc_clust),
                                   bulk_expr,
                                   sc_clust,
@@ -29,7 +29,7 @@ permutation_similarity <- function(sc_expr, bulk_expr, sc_meta, num_perm, comput
   for (i in 1:num_perm) {
     # permutate assignment
     new_score <- run_one_round(compute_mean_expr(sc_expr,
-                                                 sample(pull(sc_meta,metadata),
+                                                 sample(dplyr::pull(sc_meta,metadata),
                                                         nrow(sc_meta),
                                                         replace=FALSE),
                                                  sc_clust),
