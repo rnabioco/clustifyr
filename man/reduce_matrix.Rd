@@ -8,11 +8,11 @@ prepare the input data for random forest}
 reduce_matrix(mat, meta, vargene)
 }
 \arguments{
-\item{mat:}{expression matrix with row names as the gene names and each column for different cell}
+\item{mat}{expression matrix with row names as the gene names and each column for different cell}
 
-\item{meta:}{cluster and cell type info for each cell}
+\item{meta}{cluster and cell type info for each cell}
 
-\item{vargene:}{a list of gene names for highly variable genes}
+\item{vargene}{a list of gene names for highly variable genes}
 }
 \description{
 reduce the full expression matrix to only the highly variable genes, change the readcounts to binary factors
