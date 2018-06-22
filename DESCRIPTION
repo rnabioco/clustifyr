@@ -40,3 +40,4 @@ Suggests:
     caret,
     mlbench,
     e1071
+VignetteBuilder: knitr
