@@ -24,6 +24,6 @@ Reduce_matrix <- function(mat, meta, vargene){
   Meta <- as.data.frame(meta)
   names(Meta)[names(Meta) == "rn"] <- "Cells"
   Merge <- merge(Meta, Expmat, by="Cells")
-  data1 <- as.data.frame(lapply(Merge[5:2668], as.factor))
+  data1 <- as.data.frame(lapply(Merge[ncol(Meta):ncol(Merge)], as.factor))
   return(data1)
 }
