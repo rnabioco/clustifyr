@@ -1,18 +1,12 @@
-data("pbmc4k_matrix"); data("pbmc4k_meta"); data("pbmc4k_avg"); data("pbmc_bulk_matrix");
-gene_constraints <- list(rownames(pbmc4k_avg), rownames(pbmc_bulk_matrix));
-sc_expr <- select_gene_subset(pbmc4k_matrix, gene_constraints);
-bulk_expr <- select_gene_subset(pbmc_bulk_matrix, gene_constraints);
-res1 <- permutation_similarity(sc_expr, bulk_expr, pbmc4k_meta, 1000, corr_coef, method="pearson");
-res2 <- permutation_similarity(sc_expr, bulk_expr, pbmc4k_meta, 1000, corr_coef, method="spearman");
-res3 <- permutation_similarity(sc_expr, bulk_expr, pbmc4k_meta, 1000, corr_coef, method="cosine");
-res4 <- permutation_similarity(sc_expr, bulk_expr, pbmc4k_meta, 1000, corr_coef, method="kl_divergence");
 
-# compute the p-value for data set
-# sc_expr, bulk_expr: single-cell expr matrix and bulk epxr matrix.
-# sc_meta: clustering info of single-cell data
-# assume that genes have ALREADY BEEN filtered
-# num_perm: number of permutation
-# compute_method, ...: parameters feed in for computing similarity score
+#' compute the p-value for similarity using permutation
+#'
+#' @description Permute cluster labels to calculate empirical p-value
+#' @param sc_expr, bulk_expr: single-cell expr matrix and bulk epxr matrix.
+#' @param sc_meta: clustering info of single-cell data assume that genes have ALREADY BEEN filtered
+#' @param num_perm: number of permutation
+#' @param compute_method, ...: parameters feed in for computing similarity score
+#' @export
 permutation_similarity <- function(sc_expr, bulk_expr, sc_meta, num_perm, compute_method, ...) {
   # get cell types
   sc_clust <- sort(unique(sc_meta[,'cluster'])); bulk_clust <- colnames(bulk_expr);
@@ -30,10 +24,14 @@ permutation_similarity <- function(sc_expr, bulk_expr, sc_meta, num_perm, comput
   return(list(score=assigned_score, p_val=sig_counts/num_perm));
 }
 
+#' compute mean of clusters
+#' @noRd
 compute_mean_expr <- function(sc_expr, sc_assign, sc_clust) {
   sapply(sc_clust, function(x) Matrix::rowMeans(sc_expr[, sc_assign==x]))
 }
 
+#' compute similarity
+#' @noRd
 run_one_round <- function(sc_avg, bulk_expr, sc_clust, bulk_clust, compute_method, ...) {
   num_sc_clust <- length(sc_clust); num_bulk_clust <- length(bulk_clust);
   similarity_score <- matrix(NA, nrow=num_sc_clust, ncol=num_bulk_clust);
