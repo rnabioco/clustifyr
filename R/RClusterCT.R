@@ -7,11 +7,10 @@
 #'
 #' @importFrom stats prcomp
 #' @import ggplot2
-#' @import dplyr
 #' @import tibble
-#' @import ggplot2
 #' @import entropy
 #' @import Matrix
-#' @import cowplot
-#' @import tidyr
+#' @importFrom cowplot theme_cowplot
+#' @importFrom tidyr gather spread
+#' @importFrom dplyr filter mutate pull select left_join
 "_PACKAGE"

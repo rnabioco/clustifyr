@@ -42,7 +42,9 @@ res <- run_cor(pbmc4k_matrix,
         pbmc_bulk_matrix,
         pbmc4k_vargenes,
         if_permute = F,
-        compute_method = corr_coef)
+        compute_method = corr_coef, 
+        per_cell = T,
+        metadata = "rn")
 
 res[1:10, 1:10]
 ```
@@ -57,8 +59,6 @@ plot_tsne(pbmc4k_meta, feature = "classified")
 plot_cor(res,
          pbmc4k_meta,
          colnames(res)[1:7])
-
-
 ```
 
 ### Obtain p-value for similarity using a permutation test
@@ -72,7 +72,7 @@ res <- run_cor(pbmc4k_matrix,
                 pbmc4k_vargenes,
                if_permute = TRUE,
                num_permute=1000,
-               metadata = "classified",
+               metadata = "rn",
                compute_method = corr_coef,
                return_full = TRUE)
 
