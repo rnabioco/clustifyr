@@ -34,4 +34,9 @@ Suggests:
     testthat,
     biomaRt,
     purrr,
-    stringr
+    stringr,
+    lattice,
+    randomForest,
+    caret,
+    mlbench,
+    e1071
