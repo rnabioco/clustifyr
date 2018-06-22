@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Authors • RClusterCT</title>
+<title>Correlation function — corr_coef • RClusterCT</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,12 +25,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
-<link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script>
+<link href="../pkgdown.css" rel="stylesheet">
+<script src="../pkgdown.js"></script>
 
 
 
-<meta property="og:title" content="Authors" />
+<meta property="og:title" content="Correlation function — corr_coef" />
+
+<meta property="og:description" content="candidate scoring methods for similarity.
+score must be between -1 and 1.
+completely positively correlated
+-1. completely negatively correlated
+" />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -46,7 +53,7 @@
   </head>
 
   <body>
-    <div class="container template-authors">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -57,7 +64,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">RClusterCT</a>
+        <a class="navbar-link" href="../index.html">RClusterCT</a>
         <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased package">0.0.0.9000</span>
       </span>
     </div>
@@ -65,13 +72,13 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="reference/index.html">Reference</a>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -81,7 +88,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="articles/overview.html">rclustr overview</a>
+      <a href="../articles/overview.html">rclustr overview</a>
     </li>
   </ul>
 </li>
@@ -104,46 +111,52 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Authors</h1>
+    <h1>Correlation function</h1>
+    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/RClusterCT/blob/master/R/compute_similarity.R'><code>R/compute_similarity.R</code></a></small>
+    <div class="hidden name"><code>corr_coef.Rd</code></div>
     </div>
 
-    <ul class="list-unstyled">
-      <li>
-        <p><strong>Kent Riemondy</strong>. Author, maintainer. 
-        </p>
-      </li>
-      <li>
-        <p><strong>Austin Gillen</strong>. Author. 
-        </p>
-      </li>
-      <li>
-        <p><strong>Rui Fu</strong>. Author. 
-        </p>
-      </li>
-      <li>
-        <p><strong>Jay Hesselberth</strong>. Author. 
-        </p>
-      </li>
-      <li>
-        <p><strong>Yue Hao</strong>. Author. 
-        </p>
-      </li>
-      <li>
-        <p><strong>Chengzhe Tian</strong>. Author. 
-        </p>
-      </li>
-      <li>
-        <p><strong>M. Day</strong>. Author. 
-        </p>
-      </li>
-    </ul>
+    <div class="ref-description">
+    
+    <p>candidate scoring methods for similarity.
+score must be between -1 and 1.</p><ol>
+<li><p>completely positively correlated
+-1. completely negatively correlated</p></li>
+</ol>
+    
+    </div>
+
+    <pre class="usage"><span class='fu'>corr_coef</span>(<span class='no'>vec1</span>, <span class='no'>vec2</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"pearson"</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>vec1</th>
+      <td><p>test vector</p></td>
+    </tr>
+    <tr>
+      <th>vec2</th>
+      <td><p>reference vector</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>pearson, spearman, cosine</p></td>
+    </tr>
+    </table>
+    
 
   </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+                </ul>
 
+  </div>
 </div>
-
 
       <footer>
       <div class="copyright">
