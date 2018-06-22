@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RClusterCT overview • RClusterCT</title>
+<title>rclustr overview • RClusterCT</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="RClusterCT overview">
+<script src="../pkgdown.js"></script><meta property="og:title" content="rclustr overview">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -55,7 +55,7 @@
       <a href="../articles/exploratory_pca.html">Exploratory PCA</a>
     </li>
     <li>
-      <a href="../articles/overview.html">RClusterCT overview</a>
+      <a href="../articles/overview.html">rclustr overview</a>
     </li>
     <li>
       <a href="../articles/recount_data.html">Downloading data from recount</a>
@@ -82,7 +82,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>RClusterCT overview</h1>
+      <h1>rclustr overview</h1>
             
             <h4 class="date">2018-06-22</h4>
       
@@ -95,92 +95,97 @@
     
 <div id="why-use-rclusterct" class="section level2">
 <h2 class="hasAnchor">
-<a href="#why-use-rclusterct" class="anchor"></a>Why use RClusterCT?</h2>
+<a href="#why-use-rclusterct" class="anchor"></a>Why use <code>RClusterCT</code>?</h2>
+<p>Single cell transcriptomes are difficult to annotate without extensive knowledge of the underlying biology of the system in question. Even with this knowledge, accurate identification can be challenging due to the lack of detectable expression of common marker genes defined by bulk RNA-seq, flow cytometry, etc. RClusterRT solves this problem by providing functions to automatically annotate single cells or clusters using bulk RNA-seq data or marker gene lists (ranked or unranked). Additional functions allow for exploratory analysis of calculated similarities between single cell RNA-seq datasets and reference data.</p>
 </div>
-<div id="simple-example" class="section level2">
+<div id="a-simple-example-10x-genomics-pbmcs" class="section level2">
 <h2 class="hasAnchor">
-<a href="#simple-example" class="anchor"></a>Simple Example</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load pacakge data</span>
+<a href="#a-simple-example-10x-genomics-pbmcs" class="anchor"></a>A simple example: 10x Genomics PBMCs</h2>
+<p>In this example, we take an example 10x Genomics 3’ scRNA-seq dataset comprised of peripheral blood mononuclear cells from a healthy human donor and annotate the cell clusters (identified using <code>Seurat</code>) using bulk RNA-seq data derived from isolated PBMC cell populations. As the heatmap below shows, most cell types are accurately classified using the default correlation method (pearson) and a list of highly variable genes in the single cell dataset identified using <code>seurat</code>’s VMR method.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(RClusterCT)
+<span class="kw">library</span>(ComplexHeatmap)
+<span class="co">#&gt; Loading required package: grid</span>
+<span class="co">#&gt; ========================================</span>
+<span class="co">#&gt; ComplexHeatmap version 1.17.1</span>
+<span class="co">#&gt; Bioconductor page: http://bioconductor.org/packages/ComplexHeatmap/</span>
+<span class="co">#&gt; Github page: https://github.com/jokergoo/ComplexHeatmap</span>
+<span class="co">#&gt; Documentation: http://bioconductor.org/packages/ComplexHeatmap/</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; If you use it in published research, please cite:</span>
+<span class="co">#&gt; Gu, Z. Complex heatmaps reveal patterns and correlations in multidimensional </span>
+<span class="co">#&gt;   genomic data. Bioinformatics 2016.</span>
+<span class="co">#&gt; ========================================</span>
+<span class="kw">library</span>(circlize)
+<span class="co">#&gt; Warning: package 'circlize' was built under R version 3.4.3</span>
+<span class="co">#&gt; ========================================</span>
+<span class="co">#&gt; circlize version 0.4.3</span>
+<span class="co">#&gt; CRAN page: https://cran.r-project.org/package=circlize</span>
+<span class="co">#&gt; Github page: https://github.com/jokergoo/circlize</span>
+<span class="co">#&gt; Documentation: http://jokergoo.github.io/circlize_book/book/</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; If you use it in published research, please cite:</span>
+<span class="co">#&gt; Gu, Z. circlize implements and enhances circular visualization </span>
+<span class="co">#&gt;   in R. Bioinformatics 2014.</span>
+<span class="co">#&gt; ========================================</span>
+
+<span class="co"># load pacakge data</span>
 <span class="kw">data</span>(<span class="st">"pbmc4k_matrix"</span>)
 <span class="kw">data</span>(<span class="st">"pbmc4k_meta"</span>)
 <span class="kw">data</span>(<span class="st">"pbmc4k_vargenes"</span>)
 <span class="kw">data</span>(<span class="st">"pbmc_bulk_matrix"</span>)
 
-<span class="co"># run correlation </span>
-res &lt;-<span class="st"> </span><span class="kw">run_cor</span>(pbmc4k_matrix,
+<span class="co"># run correlation (pearson by default)</span>
+res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/run_cor.html">run_cor</a></span>(pbmc4k_matrix,
         pbmc4k_meta,
         pbmc_bulk_matrix,
         pbmc4k_vargenes,
         <span class="dt">if_permute =</span> F,
+        <span class="dt">metadata =</span> <span class="st">"classified"</span>,
         <span class="dt">compute_method =</span> corr_coef)
 
-res[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]
-<span class="co">#&gt;   primary human B cells rep 1 primary human myeloid DC rep 1</span>
-<span class="co">#&gt; 0                  0.26071398                      0.3241628</span>
-<span class="co">#&gt; 1                  0.15866167                      0.5616840</span>
-<span class="co">#&gt; 2                  0.61416715                      0.3091946</span>
-<span class="co">#&gt; 3                  0.27011789                      0.3312665</span>
-<span class="co">#&gt; 4                  0.20172999                      0.2694282</span>
-<span class="co">#&gt; 5                  0.13369595                      0.2360418</span>
-<span class="co">#&gt; 6                  0.22189035                      0.5186335</span>
-<span class="co">#&gt; 7                  0.16992252                      0.6366983</span>
-<span class="co">#&gt; 8                  0.27569335                      0.3280444</span>
-<span class="co">#&gt; 9                  0.06354432                      0.2592503</span>
-<span class="co">#&gt;   primary human monocytes rep 1 primary human neutrophils rep 1</span>
-<span class="co">#&gt; 0                     0.2373057                      0.13693528</span>
-<span class="co">#&gt; 1                     0.5664662                      0.32877541</span>
-<span class="co">#&gt; 2                     0.2010505                      0.09524840</span>
-<span class="co">#&gt; 3                     0.2438347                      0.13522496</span>
-<span class="co">#&gt; 4                     0.1899286                      0.10535997</span>
-<span class="co">#&gt; 5                     0.1696732                      0.09520648</span>
-<span class="co">#&gt; 6                     0.4411546                      0.24598165</span>
-<span class="co">#&gt; 7                     0.4891477                      0.26916012</span>
-<span class="co">#&gt; 8                     0.2553777                      0.09708194</span>
-<span class="co">#&gt; 9                     0.2223792                      0.13199597</span>
-<span class="co">#&gt;   primary human NK cells rep 1 primary human PBMC rep 1</span>
-<span class="co">#&gt; 0                   0.28404388                0.4049182</span>
-<span class="co">#&gt; 1                   0.14569262                0.4737297</span>
-<span class="co">#&gt; 2                   0.12926406                0.2753707</span>
-<span class="co">#&gt; 3                   0.30550387                0.4264436</span>
-<span class="co">#&gt; 4                   0.41307057                0.3606397</span>
-<span class="co">#&gt; 5                   0.60705684                0.3385061</span>
-<span class="co">#&gt; 6                   0.14778968                0.4065401</span>
-<span class="co">#&gt; 7                   0.14319400                0.4364883</span>
-<span class="co">#&gt; 8                   0.14104748                0.2857994</span>
-<span class="co">#&gt; 9                   0.06088959                0.2018084</span>
-<span class="co">#&gt;   primary human T cells rep 1 primary human B cells rep 2</span>
-<span class="co">#&gt; 0                   0.4677130                  0.22064167</span>
-<span class="co">#&gt; 1                   0.1281222                  0.13834138</span>
-<span class="co">#&gt; 2                   0.1740618                  0.58345613</span>
-<span class="co">#&gt; 3                   0.4936697                  0.22602591</span>
-<span class="co">#&gt; 4                   0.3607077                  0.17199536</span>
-<span class="co">#&gt; 5                   0.2377182                  0.11352271</span>
-<span class="co">#&gt; 6                   0.1340635                  0.19029403</span>
-<span class="co">#&gt; 7                   0.1259100                  0.14877558</span>
-<span class="co">#&gt; 8                   0.1311212                  0.25458024</span>
-<span class="co">#&gt; 9                   0.0590857                  0.05765283</span>
-<span class="co">#&gt;   primary human myeloid DC rep 2 primary human monocytes rep 2</span>
-<span class="co">#&gt; 0                      0.3270764                     0.2521141</span>
-<span class="co">#&gt; 1                      0.5638161                     0.5958584</span>
-<span class="co">#&gt; 2                      0.3072206                     0.2117573</span>
-<span class="co">#&gt; 3                      0.3378521                     0.2589214</span>
-<span class="co">#&gt; 4                      0.2748770                     0.2038354</span>
-<span class="co">#&gt; 5                      0.2425337                     0.1817861</span>
-<span class="co">#&gt; 6                      0.5236550                     0.4578511</span>
-<span class="co">#&gt; 7                      0.6474298                     0.5159233</span>
-<span class="co">#&gt; 8                      0.3350843                     0.2604074</span>
-<span class="co">#&gt; 9                      0.2637826                     0.2317193</span></code></pre></div>
+<span class="co"># peek at correlation matrix</span>
+res[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]
+<span class="co">#&gt;                 primary human B cells rep 1 primary human myeloid DC rep 1</span>
+<span class="co">#&gt; B cells                           0.6141671                      0.3091946</span>
+<span class="co">#&gt; CD14+ Monocytes                   0.1586617                      0.5616840</span>
+<span class="co">#&gt; CD4 T cells, 1                    0.2607140                      0.3241628</span>
+<span class="co">#&gt; CD4 T cells, 2                    0.2701179                      0.3312665</span>
+<span class="co">#&gt; CD8 T cells                       0.2017300                      0.2694282</span>
+<span class="co">#&gt;                 primary human monocytes rep 1</span>
+<span class="co">#&gt; B cells                             0.2010505</span>
+<span class="co">#&gt; CD14+ Monocytes                     0.5664662</span>
+<span class="co">#&gt; CD4 T cells, 1                      0.2373057</span>
+<span class="co">#&gt; CD4 T cells, 2                      0.2438347</span>
+<span class="co">#&gt; CD8 T cells                         0.1899286</span>
+<span class="co">#&gt;                 primary human neutrophils rep 1</span>
+<span class="co">#&gt; B cells                               0.0952484</span>
+<span class="co">#&gt; CD14+ Monocytes                       0.3287754</span>
+<span class="co">#&gt; CD4 T cells, 1                        0.1369353</span>
+<span class="co">#&gt; CD4 T cells, 2                        0.1352250</span>
+<span class="co">#&gt; CD8 T cells                           0.1053600</span>
+<span class="co">#&gt;                 primary human NK cells rep 1</span>
+<span class="co">#&gt; B cells                            0.1292641</span>
+<span class="co">#&gt; CD14+ Monocytes                    0.1456926</span>
+<span class="co">#&gt; CD4 T cells, 1                     0.2840439</span>
+<span class="co">#&gt; CD4 T cells, 2                     0.3055039</span>
+<span class="co">#&gt; CD8 T cells                        0.4130706</span>
+
+<span class="co"># view heatmap of correlation coefficients</span>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ComplexHeatmap/topics/Heatmap">Heatmap</a></span>(res, <span class="kw"><a href="http://www.rdocumentation.org/packages/circlize/topics/colorRamp2">colorRamp2</a></span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="st">"white"</span>, <span class="st">"black"</span>)))</code></pre></div>
+<p><img src="overview_files/figure-html/unnamed-chunk-1-1.png" width="1152" style="display: block; margin: auto;"></p>
 <div id="plot-cluster-identities-and-correlation-coefficients" class="section level3">
 <h3 class="hasAnchor">
 <a href="#plot-cluster-identities-and-correlation-coefficients" class="anchor"></a>Plot cluster identities and correlation coefficients</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot tsne using known identities</span>
+<p><code>RClusterCT</code> provides functions to plot single cells suing pre-calculated tSNE embeddings (or those from any other dimensionality reduction method), and to plot correlation coefficients on those projections. The plots below again show that the highest correlations between these bulk RNA-seq data and the test scRNA-seq dataset are restricted to the correct cell clusters.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot tSNE using known identities</span>
 <span class="kw"><a href="../reference/plot_tsne.html">plot_tsne</a></span>(pbmc4k_meta, <span class="dt">feature =</span> <span class="st">"classified"</span>)</code></pre></div>
 <p><img src="overview_files/figure-html/plot-1.png" width="1152" style="display: block; margin: auto;"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
-<span class="co"># plot correlation coefficients on tsne for each identity class</span>
+<span class="co"># plot correlation coefficients on tSNE for each identity class</span>
 <span class="kw"><a href="../reference/plot_cor.html">plot_cor</a></span>(res,
          pbmc4k_meta,
-         <span class="kw">colnames</span>(res)[<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>])
+         <span class="kw">colnames</span>(res)[<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>],
+         <span class="dt">metadata.col =</span> <span class="st">"classified"</span>)
 <span class="co">#&gt; Warning: package 'bindrcpp' was built under R version 3.4.4</span>
 <span class="co">#&gt; [[1]]</span></code></pre></div>
 <p><img src="overview_files/figure-html/plot-2.png" width="1152" style="display: block; margin: auto;"></p>
@@ -206,117 +211,48 @@ res[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>
 <div id="obtain-p-value-for-similarity-using-a-permutation-test" class="section level3">
 <h3 class="hasAnchor">
 <a href="#obtain-p-value-for-similarity-using-a-permutation-test" class="anchor"></a>Obtain p-value for similarity using a permutation test</h3>
-<p>We can also calcualte correlation p-values using permutation with the <code>run_cor()</code> function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw">run_cor</span>(pbmc4k_matrix,
+<p>In addition to automatically generating a correlation matrix, <code>RClusterCT</code> can calculate correlation p-values using permutation with the <code><a href="../reference/run_cor.html">run_cor()</a></code> function. As with raw correlation coefficients, plotting a heatmap of -log(p-values) demonstrates that the most significant correlations are between corresponding bulk and single cell clusters.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># re-run run_cor with if_permute = TRUE, num_permute=1000 and return_full = TRUE</span>
+res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/run_cor.html">run_cor</a></span>(pbmc4k_matrix,
                pbmc4k_meta,
                pbmc_bulk_matrix,
-                pbmc4k_vargenes,
+               pbmc4k_vargenes,
                <span class="dt">if_permute =</span> <span class="ot">TRUE</span>,
                <span class="dt">num_permute=</span><span class="dv">1000</span>,
                <span class="dt">metadata =</span> <span class="st">"classified"</span>,
                <span class="dt">compute_method =</span> corr_coef,
                <span class="dt">return_full =</span> <span class="ot">TRUE</span>)
 
-res<span class="op">$</span>p_val[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]
-<span class="co">#&gt;                     primary human B cells rep 1</span>
-<span class="co">#&gt; B cells                                   0.000</span>
-<span class="co">#&gt; CD14+ Monocytes                           1.000</span>
-<span class="co">#&gt; CD4 T cells, 1                            1.000</span>
-<span class="co">#&gt; CD4 T cells, 2                            1.000</span>
-<span class="co">#&gt; CD8 T cells                               1.000</span>
-<span class="co">#&gt; Dendritic cells, 1                        1.000</span>
-<span class="co">#&gt; Dendritic Cells, 2?                       0.856</span>
-<span class="co">#&gt; FCGR3A+ Monocytes                         1.000</span>
-<span class="co">#&gt; Megakaryocytes                            1.000</span>
-<span class="co">#&gt; NK cells                                  1.000</span>
-<span class="co">#&gt;                     primary human myeloid DC rep 1</span>
-<span class="co">#&gt; B cells                                      1.000</span>
-<span class="co">#&gt; CD14+ Monocytes                              0.000</span>
-<span class="co">#&gt; CD4 T cells, 1                               1.000</span>
-<span class="co">#&gt; CD4 T cells, 2                               1.000</span>
-<span class="co">#&gt; CD8 T cells                                  1.000</span>
-<span class="co">#&gt; Dendritic cells, 1                           0.173</span>
-<span class="co">#&gt; Dendritic Cells, 2?                          1.000</span>
-<span class="co">#&gt; FCGR3A+ Monocytes                            0.000</span>
-<span class="co">#&gt; Megakaryocytes                               1.000</span>
-<span class="co">#&gt; NK cells                                     1.000</span>
-<span class="co">#&gt;                     primary human monocytes rep 1</span>
-<span class="co">#&gt; B cells                                     1.000</span>
-<span class="co">#&gt; CD14+ Monocytes                             0.000</span>
-<span class="co">#&gt; CD4 T cells, 1                              1.000</span>
-<span class="co">#&gt; CD4 T cells, 2                              1.000</span>
-<span class="co">#&gt; CD8 T cells                                 1.000</span>
-<span class="co">#&gt; Dendritic cells, 1                          0.251</span>
-<span class="co">#&gt; Dendritic Cells, 2?                         1.000</span>
-<span class="co">#&gt; FCGR3A+ Monocytes                           0.001</span>
-<span class="co">#&gt; Megakaryocytes                              1.000</span>
-<span class="co">#&gt; NK cells                                    1.000</span>
-<span class="co">#&gt;                     primary human neutrophils rep 1</span>
-<span class="co">#&gt; B cells                                       1.000</span>
-<span class="co">#&gt; CD14+ Monocytes                               0.000</span>
-<span class="co">#&gt; CD4 T cells, 1                                1.000</span>
-<span class="co">#&gt; CD4 T cells, 2                                1.000</span>
-<span class="co">#&gt; CD8 T cells                                   1.000</span>
-<span class="co">#&gt; Dendritic cells, 1                            0.333</span>
-<span class="co">#&gt; Dendritic Cells, 2?                           1.000</span>
-<span class="co">#&gt; FCGR3A+ Monocytes                             0.011</span>
-<span class="co">#&gt; Megakaryocytes                                1.000</span>
-<span class="co">#&gt; NK cells                                      1.000</span>
-<span class="co">#&gt;                     primary human NK cells rep 1 primary human PBMC rep 1</span>
-<span class="co">#&gt; B cells                                    1.000                        1</span>
-<span class="co">#&gt; CD14+ Monocytes                            1.000                        1</span>
-<span class="co">#&gt; CD4 T cells, 1                             1.000                        1</span>
-<span class="co">#&gt; CD4 T cells, 2                             0.701                        1</span>
-<span class="co">#&gt; CD8 T cells                                0.000                        1</span>
-<span class="co">#&gt; Dendritic cells, 1                         1.000                        1</span>
-<span class="co">#&gt; Dendritic Cells, 2?                        1.000                        1</span>
-<span class="co">#&gt; FCGR3A+ Monocytes                          1.000                        1</span>
-<span class="co">#&gt; Megakaryocytes                             1.000                        1</span>
-<span class="co">#&gt; NK cells                                   0.000                        1</span>
-<span class="co">#&gt;                     primary human T cells rep 1</span>
+<span class="co"># </span>
+res<span class="op">$</span>p_val[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]
+<span class="co">#&gt;                 primary human B cells rep 1 primary human myeloid DC rep 1</span>
+<span class="co">#&gt; B cells                                   0                              1</span>
+<span class="co">#&gt; CD14+ Monocytes                           1                              0</span>
+<span class="co">#&gt; CD4 T cells, 1                            1                              1</span>
+<span class="co">#&gt; CD4 T cells, 2                            1                              1</span>
+<span class="co">#&gt; CD8 T cells                               1                              1</span>
+<span class="co">#&gt;                 primary human monocytes rep 1</span>
+<span class="co">#&gt; B cells                                     1</span>
+<span class="co">#&gt; CD14+ Monocytes                             0</span>
+<span class="co">#&gt; CD4 T cells, 1                              1</span>
+<span class="co">#&gt; CD4 T cells, 2                              1</span>
+<span class="co">#&gt; CD8 T cells                                 1</span>
+<span class="co">#&gt;                 primary human neutrophils rep 1</span>
 <span class="co">#&gt; B cells                                       1</span>
-<span class="co">#&gt; CD14+ Monocytes                               1</span>
-<span class="co">#&gt; CD4 T cells, 1                                0</span>
-<span class="co">#&gt; CD4 T cells, 2                                0</span>
-<span class="co">#&gt; CD8 T cells                                   0</span>
-<span class="co">#&gt; Dendritic cells, 1                            1</span>
-<span class="co">#&gt; Dendritic Cells, 2?                           1</span>
-<span class="co">#&gt; FCGR3A+ Monocytes                             1</span>
-<span class="co">#&gt; Megakaryocytes                                1</span>
-<span class="co">#&gt; NK cells                                      1</span>
-<span class="co">#&gt;                     primary human B cells rep 2</span>
-<span class="co">#&gt; B cells                                    0.00</span>
-<span class="co">#&gt; CD14+ Monocytes                            1.00</span>
-<span class="co">#&gt; CD4 T cells, 1                             1.00</span>
-<span class="co">#&gt; CD4 T cells, 2                             1.00</span>
-<span class="co">#&gt; CD8 T cells                                1.00</span>
-<span class="co">#&gt; Dendritic cells, 1                         1.00</span>
-<span class="co">#&gt; Dendritic Cells, 2?                        0.76</span>
-<span class="co">#&gt; FCGR3A+ Monocytes                          1.00</span>
-<span class="co">#&gt; Megakaryocytes                             1.00</span>
-<span class="co">#&gt; NK cells                                   1.00</span>
-<span class="co">#&gt;                     primary human myeloid DC rep 2</span>
-<span class="co">#&gt; B cells                                      1.000</span>
-<span class="co">#&gt; CD14+ Monocytes                              0.000</span>
-<span class="co">#&gt; CD4 T cells, 1                               1.000</span>
-<span class="co">#&gt; CD4 T cells, 2                               1.000</span>
-<span class="co">#&gt; CD8 T cells                                  1.000</span>
-<span class="co">#&gt; Dendritic cells, 1                           0.157</span>
-<span class="co">#&gt; Dendritic Cells, 2?                          1.000</span>
-<span class="co">#&gt; FCGR3A+ Monocytes                            0.000</span>
-<span class="co">#&gt; Megakaryocytes                               1.000</span>
-<span class="co">#&gt; NK cells                                     1.000</span>
-<span class="co">#&gt;                     primary human monocytes rep 2</span>
-<span class="co">#&gt; B cells                                     1.000</span>
-<span class="co">#&gt; CD14+ Monocytes                             0.000</span>
-<span class="co">#&gt; CD4 T cells, 1                              1.000</span>
-<span class="co">#&gt; CD4 T cells, 2                              1.000</span>
-<span class="co">#&gt; CD8 T cells                                 1.000</span>
-<span class="co">#&gt; Dendritic cells, 1                          0.381</span>
-<span class="co">#&gt; Dendritic Cells, 2?                         1.000</span>
-<span class="co">#&gt; FCGR3A+ Monocytes                           0.001</span>
-<span class="co">#&gt; Megakaryocytes                              1.000</span>
-<span class="co">#&gt; NK cells                                    1.000</span></code></pre></div>
+<span class="co">#&gt; CD14+ Monocytes                               0</span>
+<span class="co">#&gt; CD4 T cells, 1                                1</span>
+<span class="co">#&gt; CD4 T cells, 2                                1</span>
+<span class="co">#&gt; CD8 T cells                                   1</span>
+<span class="co">#&gt;                 primary human NK cells rep 1</span>
+<span class="co">#&gt; B cells                                1.000</span>
+<span class="co">#&gt; CD14+ Monocytes                        1.000</span>
+<span class="co">#&gt; CD4 T cells, 1                         1.000</span>
+<span class="co">#&gt; CD4 T cells, 2                         0.679</span>
+<span class="co">#&gt; CD8 T cells                            0.000</span>
+
+<span class="co"># view heatmap of correlation coefficients</span>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ComplexHeatmap/topics/Heatmap">Heatmap</a></span>(<span class="op">-</span><span class="kw">log</span>(res<span class="op">$</span>p_val<span class="op">+</span>.<span class="dv">01</span>,<span class="dv">10</span>), <span class="kw"><a href="http://www.rdocumentation.org/packages/circlize/topics/colorRamp2">colorRamp2</a></span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">2</span>), <span class="kw">c</span>(<span class="st">"white"</span>, <span class="st">"black"</span>)))</code></pre></div>
+<p><img src="overview_files/figure-html/unnamed-chunk-2-1.png" width="1152" style="display: block; margin: auto;"></p>
 </div>
 </div>
   </div>
@@ -326,8 +262,8 @@ res<span class="op">$</span>p_val[<span class="dv">1</span><span class="op">:</s
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#why-use-rclusterct">Why use RClusterCT?</a></li>
-      <li><a href="#simple-example">Simple Example</a></li>
+<li><a href="#why-use-rclusterct">Why use <code>RClusterCT</code>?</a></li>
+      <li><a href="#a-simple-example-10x-genomics-pbmcs">A simple example: 10x Genomics PBMCs</a></li>
       </ul>
 </div>
       </div>

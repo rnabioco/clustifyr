@@ -5,25 +5,26 @@
 #' @param vargene: a list of gene names for highly variable genes
 #' @export
 
-reduce_matrix <- function(mat, meta, vargene){
-  
-  Expmat <- as.matrix(mat)
-  # dim(Expmat)
-  # dim(Vargenes)
-  # colnames(Vargenes) <- c("Genes")
-  
-  #Reduce the expression mat to only highly variable genes, and transpose
-  Expmat <- t(Expmat[rownames(Expmat) %in% vargene, ])
-  # dim(Expmat)
-  
-  #Convert >0 values to 1
-  Expmat[Expmat > 0] <- 1
-  Expmat <- data.frame(Cells = row.names(Expmat), Expmat)
-  
-  # Meta <- data.frame(Cells = row.names(meta), meta)
-  Meta <- as.data.frame(meta)
-  names(Meta)[names(Meta) == "rn"] <- "Cells"
-  Merge <- merge(Meta, Expmat, by="Cells")
-  data1 <- as.data.frame(lapply(Merge[ncol(Meta):ncol(Merge)], as.factor))
-  return(data1)
-}
+#reduce_matrix <- function(mat, meta, vargene){
+#
+#  Expmat <- as.matrix(mat)
+#  # dim(Expmat)
+#  # dim(Vargenes)
+#  # colnames(Vargenes) <- c("Genes")
+#
+#  #Reduce the expression mat to only highly variable genes, and transpose
+#  Expmat <- t(Expmat[rownames(Expmat) %in% vargene, ])
+#  # dim(Expmat)
+#
+#  #Convert >0 values to 1
+#  Expmat[Expmat > 0] <- 1
+#  Expmat <- data.frame(Cells = row.names(Expmat), Expmat)
+#
+#  # Meta <- data.frame(Cells = row.names(meta), meta)
+#  Meta <- as.data.frame(meta)
+#  names(Meta)[names(Meta) == "rn"] <- "Cells"
+#  Merge <- merge(Meta, Expmat, by="Cells")
+#  data1 <- as.data.frame(lapply(Merge[ncol(Meta):ncol(Merge)], as.factor))
+#  return(data1)
+#}
+#

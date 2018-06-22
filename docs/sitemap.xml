@@ -40,10 +40,16 @@
     <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/permutation_similarity.html</loc>
   </url>
   <url>
+    <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/plot_call.html</loc>
+  </url>
+  <url>
     <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/plot_cor.html</loc>
   </url>
   <url>
     <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/plot_tsne.html</loc>
+  </url>
+  <url>
+    <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/run_cor.html</loc>
   </url>
   <url>
     <loc>http://ncbi-hackathons.github.io/RClusterCT/reference/select_gene_subset.html</loc>
