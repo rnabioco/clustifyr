@@ -13,7 +13,7 @@ getPCAGenes(sc_avg_expr, bulk_expr, nr_pcs, percentile)
 
 \item{nr_pcs}{Number PCs to selected gene loadings from. See the "explore_PCA_corr.Rmd" vignette.}
 
-\item{percentile}{Select the percentile of absolute values of PCA loadings to select genes from. E.g. 0.999 would select the .1% of genes with the largest loadings.}
+\item{percentile}{Select the percentile of absolute values of PCA loadings to select genes from. E.g. 0.999 would select the .1\% of genes with the largest loadings.}
 }
 \value{
 The list of genes to use as features.
