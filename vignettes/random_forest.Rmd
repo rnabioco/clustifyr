@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r init, echo = FALSE, message = FALSE, warning = FALSE}
-library(RClusterCT)
+library(clustifyR)
 library(ggplot2)
 library(Matrix)
 library(lattice)

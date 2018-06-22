@@ -1,12 +1,12 @@
 ---
-title: 'rclustr overview'
+title: 'clustifyR overview'
 date: '`r Sys.Date()`'
 output:
   rmarkdown::html_vignette:
     toc: true
     toc_depth: 3
     vignette: >
-      %\VignetteIndexEntry{rclustr-overview}
+      %\VignetteIndexEntry{clustifyR-overview}
       %\VignetteEngine{knitr::rmarkdown}
       %\VignetteEncoding{UTF-8}
 ---
@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 ```{r init, echo = FALSE, message = FALSE}
 ```
 
-## Why use `RClusterCT`?
+## Why use `clustifyR`?
 
 Single cell transcriptomes are difficult to annotate without extensive knowledge of the underlying biology of the system in question. Even with this knowledge, accurate identification can be challenging due to the lack of detectable expression of common marker genes defined by bulk RNA-seq, flow cytometry, etc. RClusterRT solves this problem by providing functions to automatically annotate single cells or clusters using bulk RNA-seq data or marker gene lists (ranked or unranked). Additional functions allow for exploratory analysis of calculated similarities between single cell RNA-seq datasets and reference data.
 
@@ -31,7 +31,7 @@ Single cell transcriptomes are difficult to annotate without extensive knowledge
 In this example, we take an example 10x Genomics 3' scRNA-seq dataset comprised of peripheral blood mononuclear cells from a healthy human donor and annotate the cell clusters (identified using `Seurat`) using bulk RNA-seq data derived from isolated PBMC cell populations. As the heatmap below shows, most cell types are accurately classified using the default correlation method (pearson) and a list of highly variable genes in the single cell dataset identified using `seurat`'s VMR method.
 
 ```{r fig.height=8, fig.width=12}
-library(RClusterCT)
+library(clustifyR)
 library(ComplexHeatmap)
 library(circlize)
 
