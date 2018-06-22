@@ -1,12 +1,12 @@
 ---
-title: 'rclustr overview'
+title: 'RClusterCT overview'
 date: '`r Sys.Date()`'
 output:
   rmarkdown::html_vignette:
     toc: true
     toc_depth: 3
     vignette: >
-      %\VignetteIndexEntry{rclustr-overview}
+      %\VignetteIndexEntry{rclusterct-overview}
       %\VignetteEngine{knitr::rmarkdown}
       %\VignetteEncoding{UTF-8}
 ---
