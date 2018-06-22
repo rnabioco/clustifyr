@@ -5,10 +5,8 @@ output: html_document
 
 ```{r setup, echo=F}
 library(RClusterCT)
-
-#Get overlapping genes matrix in the same order
+#Get overlapping genes to perform the PCA on
 shared.genes <- rownames(pbmc4k_avg)[rownames(pbmc4k_avg) %in% rownames(pbmc_bulk_matrix)]
-shared.genes <- shared.genes[order(shared.genes)]
 bulkrna <- pbmc_bulk_matrix[shared.genes,]
 ```
 
