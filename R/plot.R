@@ -41,25 +41,27 @@ pretty_palette <- rev(RColorBrewer::brewer.pal(11, "RdGy")[c(1:5, 7)])
 #' @export
 plot_cor <- function(correlation_matrix,
                      meta_data,
-                     bulk_data_to_plot = colnames(correlation_matrix)) {
+                     bulk_data_to_plot = colnames(correlation_matrix),
+                     metadata.col = "cluster") {
 
   if (!any(bulk_data_to_plot %in% colnames(correlation_matrix))){
     stop("cluster ids not shared between meta_data and correlation matrix")
   }
 
   cor_df <- as.data.frame(correlation_matrix)
-  cor_df <- tibble::rownames_to_column(cor_df, "cluster")
-  cor_df_long <- tidyr::gather(cor_df, bulk_cluster, expr, -cluster)
+  cor_df <- tibble::rownames_to_column(cor_df, metadata.col)
+  cor_df_long <- tidyr::gather(cor_df, bulk_cluster,
+                               expr, -dplyr::matches(metadata.col))
 
   # checks matrix rownames, 2 branches for cluster number (avg) or cell bar code (each cell)
-  if(cor_df$cluster[1] %in% meta_data$cluster){
+  if(cor_df[[metadata.col]][1] %in% meta_data[[metadata.col]]){
     plt_data <- dplyr::left_join(cor_df_long,
                                  meta_data,
-                                 by = "cluster")
+                                 by = metadata.col)
   } else {
     plt_data <- dplyr::left_join(cor_df_long,
                                  meta_data,
-                                 by = c("cluster" = "rn"))
+                                 by = c(metadata.col = "rn"))
   }
 
   lapply(bulk_data_to_plot,
