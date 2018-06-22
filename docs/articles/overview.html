@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>rclustr overview • RClusterCT</title>
+<title>clustifyR overview • clustifyR</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="rclustr overview">
+<script src="../pkgdown.js"></script><meta property="og:title" content="clustifyR overview">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -28,7 +28,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">RClusterCT</a>
+        <a class="navbar-link" href="../index.html">clustifyR</a>
         <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased package">0.0.0.9000</span>
       </span>
     </div>
@@ -55,7 +55,10 @@
       <a href="../articles/exploratory_pca.html">Exploratory PCA</a>
     </li>
     <li>
-      <a href="../articles/overview.html">rclustr overview</a>
+      <a href="../articles/overview.html">clustifyR overview</a>
+    </li>
+    <li>
+      <a href="../articles/random_forest.html">randomForest model</a>
     </li>
     <li>
       <a href="../articles/recount_data.html">Downloading data from recount</a>
@@ -82,7 +85,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>rclustr overview</h1>
+      <h1>clustifyR overview</h1>
             
             <h4 class="date">2018-06-22</h4>
       
@@ -93,16 +96,16 @@
 
     
     
-<div id="why-use-rclusterct" class="section level2">
+<div id="why-use-clustifyr" class="section level2">
 <h2 class="hasAnchor">
-<a href="#why-use-rclusterct" class="anchor"></a>Why use <code>RClusterCT</code>?</h2>
+<a href="#why-use-clustifyr" class="anchor"></a>Why use <code>clustifyR</code>?</h2>
 <p>Single cell transcriptomes are difficult to annotate without extensive knowledge of the underlying biology of the system in question. Even with this knowledge, accurate identification can be challenging due to the lack of detectable expression of common marker genes defined by bulk RNA-seq, flow cytometry, etc. RClusterRT solves this problem by providing functions to automatically annotate single cells or clusters using bulk RNA-seq data or marker gene lists (ranked or unranked). Additional functions allow for exploratory analysis of calculated similarities between single cell RNA-seq datasets and reference data.</p>
 </div>
 <div id="a-simple-example-10x-genomics-pbmcs" class="section level2">
 <h2 class="hasAnchor">
 <a href="#a-simple-example-10x-genomics-pbmcs" class="anchor"></a>A simple example: 10x Genomics PBMCs</h2>
 <p>In this example, we take an example 10x Genomics 3’ scRNA-seq dataset comprised of peripheral blood mononuclear cells from a healthy human donor and annotate the cell clusters (identified using <code>Seurat</code>) using bulk RNA-seq data derived from isolated PBMC cell populations. As the heatmap below shows, most cell types are accurately classified using the default correlation method (pearson) and a list of highly variable genes in the single cell dataset identified using <code>seurat</code>’s VMR method.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(RClusterCT)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(clustifyR)
 <span class="kw">library</span>(ComplexHeatmap)
 <span class="co">#&gt; Loading required package: grid</span>
 <span class="co">#&gt; ========================================</span>
@@ -247,7 +250,7 @@ res<span class="op">$</span>p_val[<span class="dv">1</span><span class="op">:</s
 <span class="co">#&gt; B cells                                1.000</span>
 <span class="co">#&gt; CD14+ Monocytes                        1.000</span>
 <span class="co">#&gt; CD4 T cells, 1                         1.000</span>
-<span class="co">#&gt; CD4 T cells, 2                         0.679</span>
+<span class="co">#&gt; CD4 T cells, 2                         0.708</span>
 <span class="co">#&gt; CD8 T cells                            0.000</span>
 
 <span class="co"># view heatmap of correlation coefficients</span>
@@ -262,7 +265,7 @@ res<span class="op">$</span>p_val[<span class="dv">1</span><span class="op">:</s
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#why-use-rclusterct">Why use <code>RClusterCT</code>?</a></li>
+<li><a href="#why-use-clustifyr">Why use <code>clustifyR</code>?</a></li>
       <li><a href="#a-simple-example-10x-genomics-pbmcs">A simple example: 10x Genomics PBMCs</a></li>
       </ul>
 </div>

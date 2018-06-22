@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Compute the p-value for similarity using permutation — permutation_similarity • clustifyR</title>
+<title>refine_clusters: refine clustering using data — refine_clusters • clustifyR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Compute the p-value for similarity using permutation — permutation_similarity" />
+<meta property="og:title" content="refine_clusters: refine clustering using data — refine_clusters" />
 
-<meta property="og:description" content="Permute cluster labels to calculate empirical p-value" />
+<meta property="og:description" content="refine_clusters: refine clustering using data" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -118,54 +118,56 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Compute the p-value for similarity using permutation</h1>
-    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/RClusterCT/blob/master/R/permutation_similarity.R'><code>R/permutation_similarity.R</code></a></small>
-    <div class="hidden name"><code>permutation_similarity.Rd</code></div>
+    <h1>refine_clusters: refine clustering using data</h1>
+    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/RClusterCT/blob/master/R/refine_clusters.R'><code>R/refine_clusters.R</code></a></small>
+    <div class="hidden name"><code>refine_clusters.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Permute cluster labels to calculate empirical p-value</p>
+    <p>refine_clusters: refine clustering using data</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>permutation_similarity</span>(<span class='no'>sc_expr</span>, <span class='no'>bulk_expr</span>, <span class='no'>sc_meta</span>, <span class='no'>num_perm</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='no'>F</span>,
-  <span class='no'>compute_method</span>, <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>refine_clusters</span>(<span class='no'>sc_expr</span>, <span class='no'>sc_cluster</span>, <span class='no'>bulk_expr</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>epsilon</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>if_compute_sigma</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>num_iteration</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>default_similiarity</span> <span class='kw'>=</span> -<span class='fl'>5</span>,
+  <span class='kw'>disagreement_freq</span> <span class='kw'>=</span> <span class='fl'>0.001</span>, <span class='kw'>if_plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>tsne_coord</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cluster_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>compute_method</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>sc_expr</th>
-      <td><p>single-cell expression matrix</p></td>
+      <td><p>input single cell data after gene subsetting</p></td>
     </tr>
     <tr>
       <th>bulk_expr</th>
-      <td><p>bulk expression matrix</p></td>
+      <td><p>input bulk data after gene subsetting</p></td>
     </tr>
     <tr>
-      <th>sc_meta</th>
-      <td><p>clustering info of single-cell data assume that genes have ALREADY BEEN filtered</p></td>
+      <th>lambda</th>
+      <td><p>control parameters</p></td>
     </tr>
     <tr>
-      <th>num_perm</th>
-      <td><p>number of permutations</p></td>
+      <th>epsilon</th>
+      <td><p>control parameters</p></td>
     </tr>
     <tr>
-      <th>per_cell</th>
-      <td><p>run per cell?</p></td>
+      <th>num_iteration</th>
+      <td><p>maximal number of iteration before exiting the algorithm</p></td>
     </tr>
     <tr>
       <th>compute_method</th>
-      <td><p>method(s) for computing similarity scores</p></td>
-    </tr>
-    <tr>
-      <th>metadata</th>
-      <td><p>metadata column used for clustering</p></td>
+      <td><p>corr_coef</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>additional paramters to pass to run_one_round</p></td>
+      <td><p>control parameters for calculating similarity score</p></td>
+    </tr>
+    <tr>
+      <th>sc_cluster:</th>
+      <td><p>initial clustering assignment. Note that the number of bulk cell types must be no more than the number of clusters. for additional clusters, there is an assignment of default_similiarity</p></td>
     </tr>
     </table>
     
