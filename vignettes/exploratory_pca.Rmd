@@ -9,19 +9,6 @@ library(RClusterCT)
 #Get overlapping genes matrix in the same order
 shared.genes <- rownames(pbmc4k_avg)[rownames(pbmc4k_avg) %in% rownames(pbmc_bulk_matrix)]
 shared.genes <- shared.genes[order(shared.genes)]
-singlecell.clusters <- pbmc4k_avg[shared.genes,]
-names(singlecell.clusters) <- c(
-   "CD4 T cells, 1",
-   "CD14+ Monocytes",
-   "B cells",
-   "CD4 T cells, 2",
-   "CD8 T cells",
-   "NK cells",
-   "Dendritic cells, 1",
-   "FCGR3A+ Monocytes",
-   "Dendritic Cells, 2?",
-   "Megakaryocytes"
-)
 bulkrna <- pbmc_bulk_matrix[shared.genes,]
 ```
 
