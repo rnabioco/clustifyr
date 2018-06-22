@@ -37,20 +37,19 @@
 
 # Testing consideration
 # Can we have authentic data? Running permutation definitely works.
+
+# refine_clusters: refine clustering using data
 # sc_expr, bulk_expr: data after gene subsetting
-# sc_cluster: initial clustering assignment. the number of bulk cell types must equal to the number of clusters (FOR NOW), and have a one-on-one correspondance
+# sc_cluster: initial clustering assignment.
+# the number of bulk cell types must be no more than the number of clusters. for additional clusters, there is an assignment of default_similiarity
 # lambda, epsilon: control parameters
 # num_iteration: maximal number of iteration before exiting the algorithm
 # compute_method, ...: control parameters for calculating similarity score
-refine_clusters <- function(sc_expr, sc_cluster, bulk_expr, labmda=0.5, epsilon=1, num_iteration=100, compute_method, ...) {
-  # step 1. compute similarity score between each cell and each bulk sample
-  num_cells <- nrow(sc_expr); num_bulk <- ncol(bulk_expr);
-  similarity_score <- c();
-  for (i in 1:num_cells) {
-    curr_cell_expr <- sc_expr[,i];
-    similarity_score <- rbind(similarity_score,
-                              sapply(1:num_bulk, function(x) compute_similarity(curr_cell_expr, bulk_expr[,x], compute_method, ...))
-                              );
+refine_clusters <- function(sc_expr, sc_cluster, bulk_expr, labmda=0.5, epsilon=1, num_iteration=100, default_similiarity=-5, compute_method, ...) {
+  # step 1. check input conditions
+  num_cells <- nrow(sc_expr); num_cluster <- max(sc_cluster); num_bulk <- ncol(bulk_expr);
+  if (num_cluster < num_bulk) {
+    error('refine_clusters: there are more bulk samples than clusters');
   }
 
   # step 2. iteratively re-assign the clusters
@@ -60,7 +59,7 @@ refine_clusters <- function(sc_expr, sc_cluster, bulk_expr, labmda=0.5, epsilon=
     curr_num_iteration <- curr_num_iteration + 1;
     # compute centroid info
     centroid_info <- compute_centroid(sc_expr, sc_cluster);
-    bulk_info <- compute_bulk_score(sc_expr, bulk_expr, compute_method, ...);
+    bulk_info <- compute_bulk_score(sc_expr, bulk_expr, num_cluster, default_similiarity, compute_method, ...);
 
     # compute log probability (up to a constant) for each single cell and each cluster
     log_score <- lambda*epsilon*bulk_info; # similarity prob between each single cell and each bulk sample
@@ -74,6 +73,9 @@ refine_clusters <- function(sc_expr, sc_cluster, bulk_expr, labmda=0.5, epsilon=
 
     # compute the new assignment
     new_cluster <- apply(log_score, 1, which.max);
+    if (length(unique(new_cluster)) < num_cluster) {
+      warning(paste('refine_clusters: iteration ', curr_num_iteration, 'some clusters are degenerated.', sep=''));
+    }
     if (all.equal(curr_cluster, new_cluster)) {
       message(paste("refine_clusters: converged after ", curr_num_iteration, " runs.", sep=''));
       break;
@@ -98,12 +100,21 @@ compute_centroid <- function(sc_expr, sc_cluster) {
   return(list(mu=mu_info, sigma=sigma_info))
 }
 
-compute_bulk_score <- function(sc_expr, bulk_expr, compute_method, ...) {
+compute_bulk_score <- function(sc_expr, bulk_expr, num_cluster, default_similiarity, compute_method, ...) {
+  # for clusters corresponding to bulk data: compute similarity score
   num_cells <- ncol(sc_expr); num_bulk <- ncol(bulk_expr);
   bulk_score <- data(NA, nrow=num_cells, ncol=num_bulk);
   for (i in 1:num_cells) {
     curr_cell_expr <- sc_expr[,i];
     bulk_score[i,] <- sapply(1:num_bulk, function(x) compute_similarity(curr_cell_expr, bulk_expr[,x], compute_method, ...))
   }
+  # for clusters without bulk data, use a default value
+  if (num_cluster > num_bulk) {
+    for (j in (num_bulk+1):num_cluster) {
+      bulk_score <- cbind(bulk_score, rep(default_similiarity, num_cells));
+    }
+  }
   return(bulk_score);
 }
+
+
