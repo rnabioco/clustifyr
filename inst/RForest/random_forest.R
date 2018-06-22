@@ -19,11 +19,11 @@ library(mlbench)
 library(e1071)
 # library(rpart)
 
-source('Reduce_matrix.R')
+source('reduce_matrix.R')
 
 # Input for random forest
-pbmc4 <- Reduce_matrix(pbmc4k_matrix, pbmc4k_meta, pbmc4k_vargenes)
-pbmc5 <- Reduce_matrix(pbmc5_matrix, pbmc5_meta, pbmc4k_vargenes)
+pbmc4 <- reduce_matrix(pbmc4k_matrix, pbmc4k_meta, pbmc4k_vargenes)
+pbmc5 <- reduce_matrix(pbmc5_matrix, pbmc5_meta, pbmc4k_vargenes)
 
 names(pbmc5)[names(pbmc5) == "cluster"] <- "classified"
 
