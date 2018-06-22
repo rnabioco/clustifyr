@@ -12,11 +12,20 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
                       pt_size = 0.25) {
 
   p <- ggplot(data, aes(x = !!sym(x), y = !!sym(y))) +
-    geom_point(aes(color = !!enquo(feature)),
+    geom_point(aes_string(color = feature),
                size = pt_size)
 
-  p <- p + scale_color_gradientn(colors = cols,
-                                 name = legend_name)
+  if(typeof(data[[feature]]) %in% c("character",
+                                    "logical",
+                                    "factor")){
+    p <- p + scale_color_brewer(palette = "Paired",
+                                name = legend_name)
+
+  } else {
+    p <- p + scale_color_gradientn(colors = cols,
+                                   name = legend_name)
+  }
+
   p + cowplot::theme_cowplot()
 }
 
@@ -51,6 +60,7 @@ plot_cor <- function(correlation_matrix,
          function(x){
            tmp_data <- dplyr::filter(plt_data,
                                      bulk_cluster == x)
-           plot_tsne(tmp_data, feature = expr, legend_name = x)
+           plot_tsne(tmp_data, feature = "expr", legend_name = x)
          })
 }
+
