@@ -176,3 +176,6 @@ pred                     0    1   10   11   12    2    3    4    5    6    7    
   Megakaryocytes         0    0    0   40    0    0    0    0    0    0    0    0    0
   NK cells               0    0    0    1    0    0    0    0    3  347    0    0    0
  ```
+```{r plot, fig.height=6, fig.width=8}
+qplot(tSNE_1, tSNE_2, colour = cluster,  data = pbmc5_meta)
+```
