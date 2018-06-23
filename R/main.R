@@ -1,5 +1,5 @@
-#' main: global controller function to evaluate corr. coef
-#' @param query_gene_list character vector with genes for computing similarity
+#' run_cor: Main function to compare scRNA-seq data to bulk RNA-seq data.
+#' @param query_gene_list A vector of genes of interest.
 #' @inheritParams permutation_similarity
 #' @export
 run_cor <- function(sc_expr, sc_meta, bulk_expr, query_gene_list, per_cell = F,
