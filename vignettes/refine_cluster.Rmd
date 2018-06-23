@@ -77,7 +77,7 @@ colnames(bulk_expr) <- c("Monocytes", "B Cells", "T Cells", "Dendritic Cells", "
 cluster_names <- c("Monocytes", "B Cells", "T Cells", "Dendritic Cells", "NK Cells", "Megakaryocytes");
 ```
 
-## Execution
+### Execution
 
 To demonstrate the power of *refine_clusters*, we randomize the cluster assignment and use the function to re-assign clusters.
 
