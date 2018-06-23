@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Motivation
 
-Clustering is a crucial step in single cell RNA-seq (scRNA-seq) data analysis. Most popular methods examine the inherent structure of the scRNA-seq dataset, without making use of the biological information of underlying cell types Consequently, optimal determination of the number of clusters and interpretation of each cluster become a challenging problem. Here, we implement the clustering function *refine_clusters*, which accounts for both the proximity of single cell expression levels within a cluster and the estabilished cell type information by comparing the single cell data to the reference bulk RNA-seq data of pre-defined cell types.
+Clustering is a crucial step in single cell RNA-seq (scRNA-seq) data analysis. Most popular methods examine the inherent structure of the scRNA-seq dataset, without making use of the biological information of underlying cell types. Consequently, optimal determination of the number of clusters and interpretation of each cluster becomes a challenging problem. Here, we implement a clustering function,  `refine_clusters`, which accounts for both the proximity of single cell expression levels within a cluster and the estabilished cell type information by comparing the single cell data to the reference bulk RNA-seq data of pre-defined cell types.
 
 ## Theory
 
@@ -51,7 +51,7 @@ The algorithm works as follows
 ## Example
 ### Dataset
 
-We make use of the **pbmc4k_matrix**, **pbmc4k_meta** and **pbmc_bulk_matrix** dataset. To satisfy the requirement of the function, we define six clusters (Monocytes, B Cells, T Cells, Dendritic Cells, NK Cells and Megakaryocytes) and re-assign each cell to one cluster based on its previous label. We further extract 5 samples (Monocytes, B Cells, T Cells, Dendritic Cells, NK Cells) from the bulk dataset to represent the reference expression profile for the first five clusters. No reference data for Megakaryocytes is provided.
+We make use of the *pbmc4k_matrix*, *pbmc4k_meta* and *pbmc_bulk_matrix* dataset. To satisfy the requirement of the function, we define six clusters (Monocytes, B Cells, T Cells, Dendritic Cells, NK Cells and Megakaryocytes) and re-assign each cell to one cluster based on its previous label. We further extract 5 samples (Monocytes, B Cells, T Cells, Dendritic Cells, NK Cells) from the bulk dataset to represent the reference expression profile for the first five clusters. No reference data for Megakaryocytes is provided.
 
 ```{preparation}
 data("pbmc4k_meta"); data("pbmc4k_matrix"); data("pbmc_bulk_matrix"); data("pbmc4k_markers_M3Drop")
@@ -79,7 +79,7 @@ cluster_names <- c("Monocytes", "B Cells", "T Cells", "Dendritic Cells", "NK Cel
 
 ### Execution
 
-To demonstrate the power of *refine_clusters*, we randomize the cluster assignment and use the function to re-assign clusters.
+To demonstrate the power of `refine_clusters`, we randomize the cluster assignment and use the function to re-assign clusters.
 
 ```{execution, eval=FALSE}
 res <- refine_clusters(sc_expr, sample(sc_cluster, length(sc_cluster)), bulk_expr, lambda=0.5, epsilon=1, if_compute_sigma=TRUE, num_iteration=20, default_similiarity=-1, disagreement_freq=0.01, if_plot=TRUE, tsne_coord=sc_tsne_coord, cluster_names=cluster_names, compute_method=corr_coef);

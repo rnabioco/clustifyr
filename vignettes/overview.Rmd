@@ -29,7 +29,7 @@ Single cell transcriptomes are difficult to annotate without extensive knowledge
 
 In this example, we take an example 10x Genomics 3' scRNA-seq dataset comprised of peripheral blood mononuclear cells from a healthy human donor and annotate the cell clusters (identified using `Seurat`) using bulk RNA-seq data derived from isolated PBMC cell populations. 
 
-```{r fig.height=8, fig.width=12, fig.cap="tSNE projection of PBMCs from a health human donor"}
+```{r fig.height=8, fig.width=12, fig.cap="tSNE projection of PBMCs from a health human donor", warning = F, message = F}
 library(clustifyR)
 library(ComplexHeatmap)
 library(circlize)
@@ -46,7 +46,7 @@ plot_tsne(pbmc4k_meta, feature = "classified")
 
 Bulk RNA-Seq data can be obtained from any input source; here we will obtain a dataset from the [recount2](https://jhubiostatistics.shinyapps.io/recount/) database. This database provides > 2000 human RNA-Seq experiments that have been processed using a consistent pipeline. We have written a wrapper function to download a count matrix from `recount2`, given an SRA ID. 
 
-```{r}
+```{r, warning=F, message=F}
 source(system.file("dl_recount.R", 
                    package = "clustifyR"))
 
@@ -56,8 +56,6 @@ pbmc_data$read_counts[1:5, 1:5]
 
 pbmc_data$meta_data[1:5, ]
 ```
-
-We provide a vignette that demonstrates the few steps necessary to format the bulk rna-seq ma
 
 `clustifyR` provides the `run_cor()` function, which takes as input a matrix of single cell RNA-seq expression values, a metadata table with cluster assignments, and a matrix with bulk RNA seq datasets. 
 
@@ -93,6 +91,26 @@ plot_cor(res,
          colnames(res)[c(1, 5)],
          cluster_col = "classified")
 ```
+
+
+### Correlation per cell
+
+```{r fig.height=8, fig.width=12}
+# run correlation (pearson by default)
+res <- run_cor(expr_mat = pbmc4k_matrix,
+               metadata = pbmc4k_meta,
+               bulk_mat = pbmc_bulk_matrix,
+               query_gene_list = pbmc4k_vargenes,
+               cluster_col = "rn",
+               compute_method = corr_coef, 
+               per_cell = T)
+
+plot_cor(res,
+         pbmc4k_meta,
+         colnames(res)[c(1, 5)],
+         cluster_col = "classified")
+```
+
 
 ### Obtain p-value for similarity using a permutation test
 

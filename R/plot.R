@@ -7,7 +7,8 @@
 #'
 #' @export
 plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
-                      feature, legend_name = "",
+                      feature,
+                      legend_name = "",
                       cols = pretty_palette,
                       pt_size = 0.25) {
 
