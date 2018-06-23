@@ -1,0 +1,157 @@
+---
+title: "Compare Methods"
+output: html_document
+---
+
+This vignette illustrates how one can explore how well different feature selection methods work (which gene selection methods yields the most useful correlations). We have 4 different feature selection methods 1) Variable gene names 2) Markers 3) M3Drop 4) PCA. 
+
+## Load required example data sets
+
+```{r setup, echo=T}
+data("pbmc4k_vargenes")
+data("pbmc4k_markers")
+data("pbmc4k_markers_M3Drop")
+data("pbmc_pca")
+data("pbmc4k_avg")
+data("pbmc_bulk_matrix")
+
+
+#Assign pre-labelled names to single cell clusters
+names(pbmc4k_avg) <- c(
+   "CD4 T cells, 1",
+   "CD14+ Monocytes",
+   "B cells",
+   "CD4 T cells, 2",
+   "CD8 T cells",
+   "NK cells",
+   "Dendritic cells, 1",
+   "FCGR3A+ Monocytes",
+   "Dendritic Cells, 2?",
+   "Megakaryocytes"
+)
+```
+
+## Function to create correlation matrix 
+
+* Row names are the single cell RNA pre-assigned tissue labels.
+* Column names are the bulk RNA sample names.
+* Values are the Spearman correlations between the average single cell RNA expression and the bulk RNA sample expression, for a given set of genes (determined by the feature selection methods).
+
+```{r function_corr_matrix, echo=T}
+
+get_correlation_matrix <- function(gene_names, 
+                                   sc_avg_expr,
+                                   bulk_expr) {
+
+  gene_constraints <- list(gene_names, rownames(bulk_expr))
+  sc_avg_expr <- select_gene_subset(sc_avg_expr, gene_constraints)
+  bulk_expr <- select_gene_subset(bulk_expr, gene_constraints)
+  
+  out <- lapply(colnames(sc_avg_expr),
+         function(x){
+           per_col <- lapply(colnames(bulk_expr),
+                  function(y){
+                    compute_similarity(sc_avg_expr[,x], 
+                     bulk_expr[,y], corr_coef,
+                     method = "spearman")})
+           do.call(cbind, per_col)
+         })
+  
+  mat <- do.call(rbind, out)
+  rownames(mat) <- colnames(sc_avg_expr)
+  colnames(mat) <- colnames(bulk_expr)
+  
+  return (mat)
+}
+
+cor_mat <- get_correlation_matrix(pbmc4k_vargenes, 
+                       pbmc4k_avg,
+                       pbmc_bulk_matrix) 
+
+knitr::kable(round(cor_mat, 2))
+
+```
+
+## Function to create best match matrix 
+
+This function takes a correlation matrix, and determines which bulk RNA sample is the best match (1) for a single cell RNA tissue
+
+```{r function_best_match, echo=T}
+get_best_match_matrix <- function(correlation_matrix) {
+  
+  best_mat <- as.data.frame(t(apply(correlation_matrix, 1, function(x) x - max(x))))
+  best_mat[best_mat==0]="1"
+  best_mat[best_mat!="1"]="0"
+
+  return (best_mat)
+}
+
+best_match_matrix <- get_best_match_matrix(cor_mat)
+
+knitr::kable(best_match_matrix)
+```
+
+## Summary of best matches
+
+Using the above functions, we can now summarize and compare and contrast the best matches for each of the different feature selection methods.
+
+```{r summary_table, echo=T}
+vargenes_cor_mat <- get_correlation_matrix(pbmc4k_vargenes, 
+                       pbmc4k_avg,
+                       pbmc_bulk_matrix) 
+vargenes_best_mat <- get_best_match_matrix(vargenes_cor_mat)
+markers_cor_mat <- get_correlation_matrix(pbmc4k_markers$gene, 
+                       pbmc4k_avg,
+                       pbmc_bulk_matrix) 
+markers_best_mat <- get_best_match_matrix(markers_cor_mat)
+m3drop_cor_mat <- get_correlation_matrix(pbmc4k_markers_M3Drop$Gene, 
+                       pbmc4k_avg,
+                       pbmc_bulk_matrix) 
+m3drop_best_mat <- get_best_match_matrix(m3drop_cor_mat)
+pca_cor_mat <- get_correlation_matrix(pbmc_pca, 
+                       pbmc4k_avg,
+                       pbmc_bulk_matrix) 
+pca_best_mat <- get_best_match_matrix(pca_cor_mat)
+
+get_best_str <- function(name, best_mat, cor_mat) {
+  if (sum(as.numeric(best_mat[,name])) > 0) {
+      best.names <- rownames(best_mat)[which(best_mat[,name]==1)]  
+      best.cor <- round(cor_mat[which(best_mat[,name]==1),name],2)
+      for (i in 1:length(best.cor)) {
+        if (i == 1) {
+          str <- paste0(best.names[i], " (", best.cor[i], ") ") 
+        } else {
+            str <- paste0(str, "; ", best.names[i], " (", best.cor[i], ") ") 
+        }
+      }
+  } else {
+    str <- ""
+  }
+  return(str)
+}
+
+summary <- data.frame()
+bulk_rna_sample_names <- colnames(pbmc_bulk_matrix)
+for (name in bulk_rna_sample_names) {
+  variable_genes <- get_best_str(name, vargenes_best_mat, vargenes_cor_mat)
+  marker_genes <- get_best_str(name, markers_best_mat, markers_cor_mat)
+  m3drop_genes <- get_best_str(name, m3drop_best_mat, m3drop_cor_mat)
+  pca_genes <- get_best_str(name, pca_best_mat, pca_cor_mat)
+  if (paste0(variable_genes, marker_genes, m3drop_genes, pca_genes) != "") {
+      row <- data.frame(
+        variable_genes,
+        marker_genes,
+        m3drop_genes,
+        pca_genes
+      )
+      rownames(row) <- name
+      summary <- rbind(summary,row)    
+  }
+}
+
+knitr::kable(summary)
+
+```
+
+
+
