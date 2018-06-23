@@ -14,7 +14,7 @@ kl_divergence(vec1, vec2, if_logcounts = FALSE, total_reads = 1000,
 
 \item{if_logcounts}{pearson, spearman, cosine}
 
-\item{total_reads}{library size?}
+\item{total_reads}{library size}
 
 \item{max_KL}{max_KL}
 }

@@ -7,9 +7,9 @@
 select_gene_subset(expr_matrix, gene_constraints)
 }
 \arguments{
-\item{expr_matrix:}{expression matrix with row names as the gene names (short name for now)}
+\item{expr_matrix}{expression matrix with row names as the gene names (short name for now)}
 
-\item{gene_constraints:}{a list of vectors, where each vector is a candidate list of selected genes. can be HVG, row names of scRNAseq data and/or bulk data.}
+\item{gene_constraints}{a list of vectors, where each vector is a candidate list of selected genes. can be HVG, row names of scRNAseq data and/or bulk data.}
 }
 \description{
 pick and sort genes
