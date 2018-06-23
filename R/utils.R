@@ -2,15 +2,15 @@
 #' @param mat expression matrix
 #' @param cluster_info data.frame with cells
 #' @param log_scale input data is natural log, averaging will be done
-#' @param cell_column column in cluster_info with cell ids
+#' @param cell_col column in cluster_info with cell ids
 #' @param cluster_col column in cluster_info with cluster number
 #' @export
 average_clusters <- function(mat, cluster_info,
                              log_scale = T,
-                             cell_column = "rn",
+                             cell_col = "rn",
                              cluster_col = "cluster"){
 
-  cluster_ids <- split(cluster_info[[cell_column]],
+  cluster_ids <- split(cluster_info[[cell_col]],
                        cluster_info[[cluster_col]])
 
   out <- lapply(cluster_ids,

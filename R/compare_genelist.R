@@ -1,12 +1,12 @@
 #' Binarize scRNA seq data
 #'
-#' @param expression_matrix single-cell expression matrix
+#' @param expr_mat single-cell expression matrix
 #' @param n number of top expressing genes to keep
 #'
 #' @export
-binarize_expr <- function(expression_matrix,
+binarize_expr <- function(expr_mat,
                           n = 1000){
-  expr_df <- as.data.frame(as.matrix(expression_matrix))
+  expr_df <- as.data.frame(as.matrix(expr_mat))
   df_temp <- apply(expr_df, 2, function(x) x - x[order(x, decreasing=TRUE)[n + 1]])
   df_temp[df_temp > 0] = 1
   df_temp[df_temp < 0] = 0
@@ -41,21 +41,21 @@ matrixize_markers <- function(marker_df, ranked = FALSE, weight = 0){
 
 #' calculate adjusted p-values for hypergeometric test of gene lists or jaccard index
 #'
-#' @param bin_matrix binarized single-cell expression matrix
+#' @param bin_mat binarized single-cell expression matrix
 #' @param marker_m matrix or dataframe of candidate genes for each cluster
 #' @param n number of genes in the genome
 #' @param metric adjusted p-value for hypergeometric test, or jaccard index
 #'
 #' @export
-compare_lists <- function(bin_matrix, marker_m, n = 30000, metric = "hyper"){
+compare_lists <- function(bin_mat, marker_m, n = 30000, metric = "hyper"){
   # "expressed" genes per single cell data cluster
   if (metric == "hyper"){
-    out <- lapply(colnames(bin_matrix),
+    out <- lapply(colnames(bin_mat),
                 function(x){
                   per_col <- lapply(colnames(marker_m),
                                     function(y){
                                       marker_list <- unlist(marker_m[,y],use.names = FALSE)
-                                      bin_temp <- bin_matrix[,x][bin_matrix[,x] == 1]
+                                      bin_temp <- bin_mat[,x][bin_mat[,x] == 1]
                                       list_top <- names(bin_temp)
 
                                       t <- length(intersect(list_top, marker_list))
@@ -67,12 +67,12 @@ compare_lists <- function(bin_matrix, marker_m, n = 30000, metric = "hyper"){
   }
 
   if (metric == "jaccard"){
-    out <- lapply(colnames(bin_matrix),
+    out <- lapply(colnames(bin_mat),
                   function(x){
                     per_col <- lapply(colnames(marker_m),
                                       function(y){
                                         marker_list <- unlist(marker_m[,y],use.names = FALSE)
-                                        bin_temp <- bin_matrix[,x][bin_matrix[,x] == 1]
+                                        bin_temp <- bin_mat[,x][bin_mat[,x] == 1]
                                         list_top <- names(bin_temp)
 
                                         I <- length(intersect(list_top, marker_list))
@@ -82,7 +82,7 @@ compare_lists <- function(bin_matrix, marker_m, n = 30000, metric = "hyper"){
                   })
   }
   res <- do.call(rbind, out)
-  rownames(res) <- colnames(bin_matrix)
+  rownames(res) <- colnames(bin_mat)
   colnames(res) <- colnames(marker_m)
   res
 }
