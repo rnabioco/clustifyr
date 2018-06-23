@@ -60,4 +60,4 @@ Plot the correlation coefficients on a pre-calculated tSNE projection (stored in
            cluster_col = "classified")
 ```
 
-See a list of [command refences](https://ncbi-hackathons.github.io/clustifyR/reference/index.html) or browse [vignettes](https://ncbi-hackathons.github.io/clustifyR/articles/).
+### For more detail, see a list of [command refences](https://ncbi-hackathons.github.io/clustifyR/reference/index.html) or [browse the vignettes](https://ncbi-hackathons.github.io/clustifyR/articles/).
