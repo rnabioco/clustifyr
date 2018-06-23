@@ -64,7 +64,7 @@
       <a href="../articles/get_recount_data.html">Downloading data from recount</a>
     </li>
     <li>
-      <a href="../articles/overview.html">clustifyR overview</a>
+      <a href="../articles/overview.html">Introduction to clustifyR</a>
     </li>
     <li>
       <a href="../articles/random_forest.html">randomForest model</a>
@@ -229,10 +229,7 @@ NK cells                            0              0      249  0.13240418</code>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="st">"rFmodelsub.RData"</span>)
 important &lt;-<span class="kw">as.data.frame</span>(<span class="kw">importance</span>(rFmodel.sub))
 <span class="co"># source('important_heatmap.R')</span>
-<span class="kw">dev.print</span>(png, <span class="dt">file =</span> <span class="st">"myplot.png"</span>)
-<span class="kw">png</span>(<span class="dt">file =</span> <span class="st">"expression_heatmap.png"</span>, <span class="dt">bg =</span> <span class="st">"white"</span>)
-<span class="kw"><a href="../reference/important_heatmap.html">important_heatmap</a></span>(important, pbmc4k_avg, pbmc4k_meta, <span class="dv">20</span>, <span class="dv">30</span>)
-<span class="kw">dev.off</span>()</code></pre></div>
+<span class="kw"><a href="../reference/important_heatmap.html">important_heatmap</a></span>(important, pbmc4k_avg, pbmc4k_meta, <span class="dv">20</span>, <span class="dv">30</span>)</code></pre></div>
 <p>With MeanDecreaseAccuracy &gt;=20 and MeanDecreaseGini &gt;=30: <img src="https://i.imgur.com/8BQO3al.png" alt="Expression of best predictors"><br>With MeanDecreaseAccuracy &gt;=15 and MeanDecreaseGini &gt;=20: <img src="https://i.imgur.com/M32CMFE.png" alt="15_20"></p>
 </div>
 <div id="fit-the-model-with-new-data" class="section level3">

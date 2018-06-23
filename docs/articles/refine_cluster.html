@@ -64,7 +64,7 @@
       <a href="../articles/get_recount_data.html">Downloading data from recount</a>
     </li>
     <li>
-      <a href="../articles/overview.html">clustifyR overview</a>
+      <a href="../articles/overview.html">Introduction to clustifyR</a>
     </li>
     <li>
       <a href="../articles/random_forest.html">randomForest model</a>
@@ -107,7 +107,7 @@
 <div id="motivation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#motivation" class="anchor"></a>Motivation</h2>
-<p>Clustering is a crucial step in single cell RNA-seq (scRNA-seq) data analysis. Most popular methods examine the inherent structure of the scRNA-seq dataset, without making use of the biological information of underlying cell types Consequently, optimal determination of the number of clusters and interpretation of each cluster become a challenging problem. Here, we implement the clustering function <em>refine_clusters</em>, which accounts for both the proximity of single cell expression levels within a cluster and the estabilished cell type information by comparing the single cell data to the reference bulk RNA-seq data of pre-defined cell types.</p>
+<p>Clustering is a crucial step in single cell RNA-seq (scRNA-seq) data analysis. Most popular methods examine the inherent structure of the scRNA-seq dataset, without making use of the biological information of underlying cell types. Consequently, optimal determination of the number of clusters and interpretation of each cluster becomes a challenging problem. Here, we implement a clustering function, <code>refine_clusters</code>, which accounts for both the proximity of single cell expression levels within a cluster and the estabilished cell type information by comparing the single cell data to the reference bulk RNA-seq data of pre-defined cell types.</p>
 </div>
 <div id="theory" class="section level2">
 <h2 class="hasAnchor">
@@ -136,7 +136,7 @@
 <div id="dataset" class="section level3">
 <h3 class="hasAnchor">
 <a href="#dataset" class="anchor"></a>Dataset</h3>
-<p>We make use of the <strong>pbmc4k_matrix</strong>, <strong>pbmc4k_meta</strong> and <strong>pbmc_bulk_matrix</strong> dataset. To satisfy the requirement of the function, we define six clusters (Monocytes, B Cells, T Cells, Dendritic Cells, NK Cells and Megakaryocytes) and re-assign each cell to one cluster based on its previous label. We further extract 5 samples (Monocytes, B Cells, T Cells, Dendritic Cells, NK Cells) from the bulk dataset to represent the reference expression profile for the first five clusters. No reference data for Megakaryocytes is provided.</p>
+<p>We make use of the <em>pbmc4k_matrix</em>, <em>pbmc4k_meta</em> and <em>pbmc_bulk_matrix</em> dataset. To satisfy the requirement of the function, we define six clusters (Monocytes, B Cells, T Cells, Dendritic Cells, NK Cells and Megakaryocytes) and re-assign each cell to one cluster based on its previous label. We further extract 5 samples (Monocytes, B Cells, T Cells, Dendritic Cells, NK Cells) from the bulk dataset to represent the reference expression profile for the first five clusters. No reference data for Megakaryocytes is provided.</p>
 <pre class="preparation"><code>data("pbmc4k_meta"); data("pbmc4k_matrix"); data("pbmc_bulk_matrix"); data("pbmc4k_markers_M3Drop")
 
 # construct sc_cluster
@@ -162,7 +162,7 @@ cluster_names &lt;- c("Monocytes", "B Cells", "T Cells", "Dendritic Cells", "NK 
 <div id="execution" class="section level3">
 <h3 class="hasAnchor">
 <a href="#execution" class="anchor"></a>Execution</h3>
-<p>To demonstrate the power of <em>refine_clusters</em>, we randomize the cluster assignment and use the function to re-assign clusters.</p>
+<p>To demonstrate the power of <code>refine_clusters</code>, we randomize the cluster assignment and use the function to re-assign clusters.</p>
 <pre class="execution"><code>res &lt;- refine_clusters(sc_expr, sample(sc_cluster, length(sc_cluster)), bulk_expr, lambda=0.5, epsilon=1, if_compute_sigma=TRUE, num_iteration=20, default_similiarity=-1, disagreement_freq=0.01, if_plot=TRUE, tsne_coord=sc_tsne_coord, cluster_names=cluster_names, compute_method=corr_coef);</code></pre>
 <p>For this execution, we put equal weights on the two probabilities and we allow the algorithm to run at most 20 iterations. Clustering is considered converged if less than 1% of cells are assigned with new labels during one iteration.</p>
 <p>To evaluate the performance of the algorithm, we visualize the clusters on the t-SNE plot. As a reference, the ground truth is <img src="../inst/images/refine_cluster/initial_truth.png" alt="Ground Truth"></p>
