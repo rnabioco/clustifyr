@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/NCBI-Hackathons/clustifyR.svg?branch=master)](https://travis-ci.org/NCBI-Hackathons/clustifyR)
+
 <p align="center">
   <img src="/inst/logo/logo_transparent.png">
 </p>
