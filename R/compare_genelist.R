@@ -24,16 +24,17 @@ binarize_expr <- function(expression_matrix,
 matrixize_markers <- function(marker_df, ranked = FALSE, weight = 0){
   # takes marker in dataframe form
   # equal number of marker genes per known cluster
+  marker_df <- as_tibble(marker_df)
   cut_num <- min((marker_df %>% group_by(cluster) %>% summarize(n =n()))$n)
-  marker_temp <- marker_df %>% select(gene, cluster) %>% group_by(cluster) %>% slice(1:cut_num)
+  marker_temp <- marker_df %>% dplyr::select(gene, cluster) %>% group_by(cluster) %>% dplyr::slice(1:cut_num)
   if(ranked == TRUE){
     marker_temp <- marker_temp %>% mutate(n = (cut_num + weight) : (1 + weight))
     marker_temp2 <- as.data.frame(tidyr::spread(marker_temp, key = "cluster", value = n) %>% replace(is.na(.), 0))
     rownames(marker_temp2) <- marker_temp2$gene
-    marker_temp2 <- marker_temp2 %>% select(-gene)
+    marker_temp2 <- marker_temp2 %>% dplyr::select(-gene)
   } else {
     marker_temp <- marker_temp %>% mutate(n = 1:cut_num)
-    marker_temp2 <- as.data.frame(tidyr::spread(marker_temp, key = "cluster", value = "gene") %>% select(-n))
+    marker_temp2 <- as.data.frame(tidyr::spread(marker_temp, key = "cluster", value = "gene") %>% dplyr::select(-n))
   }
   marker_temp2
 }
