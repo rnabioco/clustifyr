@@ -14,15 +14,15 @@ Single cell transcriptomes are difficult to annotate without extensive knowledge
 Installation from github in R is a two step process:
 
 ### Step 1:
-```
+```r
 # Install devtools
-> install.packages("devtools")
+install.packages("devtools")
 ```
 
 ### Step 2:
-```
+```r
 # Install clustifyR from github
-> devtools::install_github("NCBI-Hackathons/clustifyR")
+devtools::install_github("NCBI-Hackathons/clustifyR")
 ```
 
 ## Usage
@@ -31,23 +31,23 @@ Installation from github in R is a two step process:
 
 Generate a correlation matrix from a matrix of single cell RNA-seq data (`pbmc4k_matrix`), a metadata table describing the single cell data (`pbmc4k_meta`), a list of variable genes in the single cell data (`pbmc4k_vargenes`), and a matrix of bulk RNA-seq read counts (`pbmc_bulk_matrix`):
 
-```
+```r
 # run correlation (pearson by default)
-> res <- run_cor(expr_mat = pbmc4k_matrix,
-                 metadata = pbmc4k_meta,
-                 bulk_mat = pbmc_bulk_matrix,
-                 query_gene_list = pbmc4k_vargenes,
-                 compute_method = corr_coef)
+res <- run_cor(expr_mat = pbmc4k_matrix,
+               metadata = pbmc4k_meta,
+               bulk_mat = pbmc_bulk_matrix,
+               query_gene_list = pbmc4k_vargenes,
+               compute_method = corr_coef)
 ```
 
 Plot the correlation coefficients on a pre-calculated tSNE projection (stored in `pbmc4k_meta`):
 
-```
+```r
 # plot correlation coefficients on tSNE for each identity class
-> plot_cor(res,
-           pbmc4k_meta,
-           colnames(res)[c(1, 5)],
-           cluster_col = "classified")
+plot_cor(res,
+         pbmc4k_meta,
+         colnames(res)[c(1, 5)],
+         cluster_col = "classified")
 ```
 
 ### For more infomation, see the [detailed vignettes and documentation](https://ncbi-hackathons.github.io/clustifyR/).
