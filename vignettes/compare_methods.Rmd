@@ -1,13 +1,26 @@
 ---
 title: "Compare Methods"
-output: html_document
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 3
+    vignette: >
+      %\VignetteIndexEntry{clustifyR-compare-methods}
+      %\VignetteEngine{knitr::rmarkdown}
+      %\VignetteEncoding{UTF-8}
 ---
 
-This vignette illustrates how one can explore how well different feature selection methods work (which gene selection methods yields the most useful correlations). We have 4 different feature selection methods 1) Variable gene names 2) Markers 3) M3Drop 4) PCA. 
+This vignette illustrates how one can explore how well different feature selection methods work (which gene selection methods yields the most useful correlations). We have 4 different feature selection methods 
+
+1) Highly variable genes via Seurat
+2) Markers of each cluster
+3) M3Drop identified genes 
+4) PCA based method
 
 ## Load required example data sets
 
 ```{r setup, echo=T}
+library(clustifyR)
 data("pbmc4k_vargenes")
 data("pbmc4k_markers")
 data("pbmc4k_markers_M3Drop")
@@ -37,36 +50,14 @@ names(pbmc4k_avg) <- c(
 * Column names are the bulk RNA sample names.
 * Values are the Spearman correlations between the average single cell RNA expression and the bulk RNA sample expression, for a given set of genes (determined by the feature selection methods).
 
-```{r function_corr_matrix, echo=T}
+```{r function_corr_matrix}
 
-get_correlation_matrix <- function(gene_names, 
-                                   sc_avg_expr,
-                                   bulk_expr) {
-
-  gene_constraints <- list(gene_names, rownames(bulk_expr))
-  sc_avg_expr <- select_gene_subset(sc_avg_expr, gene_constraints)
-  bulk_expr <- select_gene_subset(bulk_expr, gene_constraints)
-  
-  out <- lapply(colnames(sc_avg_expr),
-         function(x){
-           per_col <- lapply(colnames(bulk_expr),
-                  function(y){
-                    compute_similarity(sc_avg_expr[,x], 
-                     bulk_expr[,y], corr_coef,
-                     method = "spearman")})
-           do.call(cbind, per_col)
-         })
-  
-  mat <- do.call(rbind, out)
-  rownames(mat) <- colnames(sc_avg_expr)
-  colnames(mat) <- colnames(bulk_expr)
-  
-  return (mat)
-}
-
-cor_mat <- get_correlation_matrix(pbmc4k_vargenes, 
-                       pbmc4k_avg,
-                       pbmc_bulk_matrix) 
+cor_mat <- run_cor(expr_mat = pbmc4k_matrix,
+               metadata = pbmc4k_meta,
+               bulk_mat = pbmc_bulk_matrix,
+               query_gene_list = pbmc4k_vargenes,
+               cluster_col = "classified",
+               compute_method = corr_coef)
 
 knitr::kable(round(cor_mat, 2))
 
@@ -96,21 +87,42 @@ knitr::kable(best_match_matrix)
 Using the above functions, we can now summarize and compare and contrast the best matches for each of the different feature selection methods.
 
 ```{r summary_table, echo=T}
-vargenes_cor_mat <- get_correlation_matrix(pbmc4k_vargenes, 
-                       pbmc4k_avg,
-                       pbmc_bulk_matrix) 
+vargenes_cor_mat <- run_cor(expr_mat = pbmc4k_matrix,
+               metadata = pbmc4k_meta,
+               bulk_mat = pbmc_bulk_matrix,
+               query_gene_list = pbmc4k_vargenes,
+               cluster_col = "classified",
+               compute_method = corr_coef)
+
 vargenes_best_mat <- get_best_match_matrix(vargenes_cor_mat)
-markers_cor_mat <- get_correlation_matrix(pbmc4k_markers$gene, 
-                       pbmc4k_avg,
-                       pbmc_bulk_matrix) 
+
+markers_cor_mat <- run_cor(expr_mat = pbmc4k_matrix,
+               metadata = pbmc4k_meta,
+               bulk_mat = pbmc_bulk_matrix,
+               query_gene_list = pbmc4k_markers$gene,
+               cluster_col = "classified",
+               compute_method = corr_coef)
+
 markers_best_mat <- get_best_match_matrix(markers_cor_mat)
-m3drop_cor_mat <- get_correlation_matrix(pbmc4k_markers_M3Drop$Gene, 
-                       pbmc4k_avg,
-                       pbmc_bulk_matrix) 
+
+
+m3drop_cor_mat <- run_cor(expr_mat = pbmc4k_matrix,
+               metadata = pbmc4k_meta,
+               bulk_mat = pbmc_bulk_matrix,
+               query_gene_list = pbmc4k_markers_M3Drop$Gene,
+               cluster_col = "classified",
+               compute_method = corr_coef)
+
 m3drop_best_mat <- get_best_match_matrix(m3drop_cor_mat)
-pca_cor_mat <- get_correlation_matrix(pbmc_pca, 
-                       pbmc4k_avg,
-                       pbmc_bulk_matrix) 
+
+
+pca_cor_mat <- run_cor(expr_mat = pbmc4k_matrix,
+               metadata = pbmc4k_meta,
+               bulk_mat = pbmc_bulk_matrix,
+               query_gene_list = pbmc_pca,
+               cluster_col = "classified",
+               compute_method = corr_coef)
+
 pca_best_mat <- get_best_match_matrix(pca_cor_mat)
 
 get_best_str <- function(name, best_mat, cor_mat) {
