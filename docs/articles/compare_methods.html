@@ -64,7 +64,7 @@
       <a href="../articles/get_recount_data.html">Downloading data from recount</a>
     </li>
     <li>
-      <a href="../articles/overview.html">clustifyR overview</a>
+      <a href="../articles/overview.html">Introduction to clustifyR</a>
     </li>
     <li>
       <a href="../articles/random_forest.html">randomForest model</a>
@@ -143,7 +143,7 @@
 <ul>
 <li>Row names are the single cell RNA pre-assigned tissue labels.</li>
 <li>Column names are the bulk RNA sample names.</li>
-<li>Values are the Spearman correlations between the average single cell RNA expression and the bulk RNA sample expression, for a given set of genes (determined by the feature selection methods).</li>
+<li>Values are the pearson correlations between the average single cell RNA expression and the bulk RNA sample expression, for a given set of genes (determined by the feature selection methods).</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cor_mat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/run_cor.html">run_cor</a></span>(<span class="dt">expr_mat =</span> pbmc4k_matrix,
                <span class="dt">metadata =</span> pbmc4k_meta,
