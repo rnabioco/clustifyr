@@ -10,7 +10,7 @@
 #' @export
 reduce_expr_matrix <- function(expr_mat, metadata, vargene){
 
-  Expexpr_mat <- as.expr_matrix(expr_mat)
+  Expexpr_mat <- as.matrix(expr_mat)
   # dim(Expexpr_mat)
   # dim(Vargenes)
   # colnames(Vargenes) <- c("Genes")
