@@ -114,9 +114,9 @@
 
 <span class="co"># Input files for random forest</span>
 <span class="co"># Training set</span>
-pbmc4 &lt;-<span class="st"> </span><span class="kw">reduce_matrix</span>(pbmc4k_matrix, pbmc4k_meta, pbmc4k_vargenes)
+pbmc4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reduce_expr_matrix.html">reduce_expr_matrix</a></span>(pbmc4k_matrix, pbmc4k_meta, pbmc4k_vargenes)
 <span class="co"># Test set</span>
-pbmc5 &lt;-<span class="st"> </span><span class="kw">reduce_matrix</span>(pbmc5_matrix, pbmc5_meta, pbmc4k_vargenes)
+pbmc5 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reduce_expr_matrix.html">reduce_expr_matrix</a></span>(pbmc5_matrix, pbmc5_meta, pbmc4k_vargenes)
 
 <span class="co"># Make sure the listed genes (predictors) are the same in both dataset</span>
 <span class="kw">names</span>(pbmc5)[<span class="kw">names</span>(pbmc5) <span class="op">==</span><span class="st"> "cluster"</span>] &lt;-<span class="st"> "classified"</span>

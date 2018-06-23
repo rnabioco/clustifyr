@@ -159,13 +159,17 @@ bulk_expr &lt;- bulk_expr[, c(3, 1, 7, 2, 5)]
 colnames(bulk_expr) &lt;- c("Monocytes", "B Cells", "T Cells", "Dendritic Cells", "NK Cells");
 cluster_names &lt;- c("Monocytes", "B Cells", "T Cells", "Dendritic Cells", "NK Cells", "Megakaryocytes");</code></pre>
 </div>
-</div>
-<div id="execution" class="section level2">
-<h2 class="hasAnchor">
-<a href="#execution" class="anchor"></a>Execution</h2>
+<div id="execution" class="section level3">
+<h3 class="hasAnchor">
+<a href="#execution" class="anchor"></a>Execution</h3>
 <p>To demonstrate the power of <em>refine_clusters</em>, we randomize the cluster assignment and use the function to re-assign clusters.</p>
 <pre class="execution"><code>res &lt;- refine_clusters(sc_expr, sample(sc_cluster, length(sc_cluster)), bulk_expr, lambda=0.5, epsilon=1, if_compute_sigma=TRUE, num_iteration=20, default_similiarity=-1, disagreement_freq=0.01, if_plot=TRUE, tsne_coord=sc_tsne_coord, cluster_names=cluster_names, compute_method=corr_coef);</code></pre>
 <p>For this execution, we put equal weights on the two probabilities and we allow the algorithm to run at most 20 iterations. Clustering is considered converged if less than 1% of cells are assigned with new labels during one iteration.</p>
+<p>To evaluate the performance of the algorithm, we visualize the clusters on the t-SNE plot. As a reference, the ground truth is <img src="../inst/images/refine_cluster/initial_truth.png" alt="Ground Truth"></p>
+<p>Before clustering, since assignment is randomized, the clusters are well-mixed on the t-SNE plot. <img src="../inst/images/refine_cluster/initial_random.png" alt="Before clustering"></p>
+<p>The function shows rapid convergence after 1 iteration, <img src="../inst/images/refine_cluster/iter1.png" alt="After 1 iteration"></p>
+<p>and clustering is stabilized after 10 iterations. <img src="../inst/images/refine_cluster/iter10.png" alt="After 10 iterations"></p>
+</div>
 </div>
   </div>
 
@@ -177,7 +181,6 @@ cluster_names &lt;- c("Monocytes", "B Cells", "T Cells", "Dendritic Cells", "NK 
 <li><a href="#motivation">Motivation</a></li>
       <li><a href="#theory">Theory</a></li>
       <li><a href="#example">Example</a></li>
-      <li><a href="#execution">Execution</a></li>
       </ul>
 </div>
       </div>
