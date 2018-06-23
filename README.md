@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/NCBI-Hackathons/clustifyR.svg?branch=master)](https://travis-ci.org/NCBI-Hackathons/clustifyR)
 
 <p align="center">
-  <img src="https://github.com/NCBI-Hackathons/clustifyR/tree/master/inst/logo/logo_transparent.png">
+  <img src="/inst/logo/logo_transparent.png">
 </p>
 
 ### ClustifyR classifies cell and clusters in single-cell RNA sequencing experiments using reference bulk RNA-seq data sets, gene signatures or marker genes. 
