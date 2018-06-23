@@ -84,7 +84,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/compare_methods.html">Compare Methods</a>
+    </li>
+    <li>
       <a href="../articles/exploratory_pca.html">Exploratory PCA</a>
+    </li>
+    <li>
+      <a href="../articles/gene_list.html">Cluster classification using mark gene lists</a>
+    </li>
+    <li>
+      <a href="../articles/get_recount_data.html">Downloading data from recount</a>
     </li>
     <li>
       <a href="../articles/overview.html">clustifyR overview</a>
@@ -93,7 +102,7 @@
       <a href="../articles/random_forest.html">randomForest model</a>
     </li>
     <li>
-      <a href="../articles/recount_data.html">Downloading data from recount</a>
+      <a href="../articles/refine_cluster.html">Clustering Single Cell RNA-Seq Data Using Reference Bulk RNA-Seq Data</a>
     </li>
   </ul>
 </li>
@@ -101,7 +110,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="http://github.com/NCBI-Hackathons/RClusterCT">
+  <a href="http://github.com/NCBI-Hackathons/clustifyR">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -119,7 +128,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot similarity measures on a tSNE</h1>
-    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/RClusterCT/blob/master/R/plot.R'><code>R/plot.R</code></a></small>
+    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/clustifyR/blob/master/R/plot.R'><code>R/plot.R</code></a></small>
     <div class="hidden name"><code>plot_cor.Rd</code></div>
     </div>
 
@@ -129,9 +138,8 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>plot_cor</span>(<span class='no'>correlation_matrix</span>, <span class='no'>meta_data</span>,
-  <span class='kw'>bulk_data_to_plot</span> <span class='kw'>=</span> <span class='fu'>colnames</span>(<span class='no'>correlation_matrix</span>),
-  <span class='kw'>metadata.col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>)</pre>
+    <pre class="usage"><span class='fu'>plot_cor</span>(<span class='no'>correlation_matrix</span>, <span class='no'>metadata</span>,
+  <span class='kw'>bulk_data_to_plot</span> <span class='kw'>=</span> <span class='fu'>colnames</span>(<span class='no'>correlation_matrix</span>), <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -141,12 +149,16 @@
       <td><p>input similarity matrix</p></td>
     </tr>
     <tr>
-      <th>meta_data</th>
+      <th>metadata</th>
       <td><p>input metadata with tsne coordinates and cluster ids</p></td>
     </tr>
     <tr>
       <th>bulk_data_to_plot</th>
       <td><p>colname of data to plot, defaults to all</p></td>
+    </tr>
+    <tr>
+      <th>cluster_col</th>
+      <td><p>colname of cluster IDs, defaults to "cluster"</p></td>
     </tr>
     <tr>
       <th>...</th>
