@@ -1,5 +1,5 @@
 ---
-title: "Clustering Single Cell RNA-Seq Data Using Reference"
+title: "Clustering Single Cell RNA-Seq Data Using Reference Bulk RNA-Seq Data"
 output: html_document
 ---
 
@@ -7,7 +7,19 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Motivation
+
+Clustering is a crucial step in single cell RNA-seq (scRNA-seq) data analysis. Most methods examine the inherent structure of the scRNA-seq dataset, without making use of the biological information of each cluster. Consequently, optimal determination of the number of clusters and interpretation of each cluster become a challenging problem. Here, we implement the clustering function refine_clusters, which accounts for both the proximality of expression profiles within a cluster and the similarity of each cell to the reference bulk RNA-seq datasets of purified cell types.
+
+## Theory
+
+Function refine_clusters comp a cell with expression profile \( \vec{x} \) to 
+
+
+Clustering single cell RNA-seq (scRNA-seq) data is a challenging problem. Most methods make use of 
+
+
+Clustering single cell RNA-seq (scRNA-seq) data is a challenging problem in
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
