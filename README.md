@@ -25,7 +25,7 @@ Installation from github in R is a two step process:
 > devtools::install_github("NCBI-Hackathons/clustifyR")
 ```
 
-## Usage:
+## Usage
 
 ### Super-quickstart with sample data (included in package):
 
