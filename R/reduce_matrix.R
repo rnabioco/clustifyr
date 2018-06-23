@@ -1,4 +1,4 @@
-#' reduce the full expression matrix to only the highly variable genes, change the readcounts to binary factors
+#' reduce the full expression matrix to only the highly variable genes, change the readcounts to binary factors, 
 #' prepare the input data for random forest
 #' @param mat expression matrix with row names as the gene names and each column for different cell
 #' @param meta cluster and cell type info for each cell
