@@ -100,7 +100,7 @@
     
 
 <p align="center">
-<img src="../../../../inst/logo/logo_transparent.png"></p>
+<img src="https://raw.githubusercontent.com/NCBI-Hackathons/clustifyR/master/inst/logo/logo_transparent.png"></p>
 <div id="clustifyr-is-an-r-package-that-classifies-cells-and-clusters-in-single-cell-rna-sequencing-experiments-using-reference-bulk-rna-seq-data-sets-gene-signatures-or-marker-genes-" class="section level3">
 <h3 class="hasAnchor">
 <a href="#clustifyr-is-an-r-package-that-classifies-cells-and-clusters-in-single-cell-rna-sequencing-experiments-using-reference-bulk-rna-seq-data-sets-gene-signatures-or-marker-genes-" class="anchor"></a>ClustifyR is an <a href="https://www.r-project.org/">R</a> package that classifies cells and clusters in single-cell RNA sequencing experiments using reference bulk RNA-seq data sets, gene signatures or marker genes.</h3>
@@ -114,14 +114,14 @@
 <div id="step-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#step-1" class="anchor"></a>Step 1:</h3>
-<pre><code># Install devtools
-&gt; install.packages("devtools")</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Install devtools</span>
+<span class="kw">install.packages</span>(<span class="st">"devtools"</span>)</code></pre></div>
 </div>
 <div id="step-2" class="section level3">
 <h3 class="hasAnchor">
 <a href="#step-2" class="anchor"></a>Step 2:</h3>
-<pre><code># Install classifyR from github
-&gt; devtools::install_github("NCBI-Hackathons/clustifyR")</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Install clustifyR from github</span>
+devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"NCBI-Hackathons/clustifyR"</span>)</code></pre></div>
 </div>
 </div>
 <div id="usage" class="section level2">
@@ -131,18 +131,18 @@
 <h3 class="hasAnchor">
 <a href="#super-quickstart-with-sample-data-included-in-package" class="anchor"></a>Super-quickstart with sample data (included in package):</h3>
 <p>Generate a correlation matrix from a matrix of single cell RNA-seq data (<code>pbmc4k_matrix</code>), a metadata table describing the single cell data (<code>pbmc4k_meta</code>), a list of variable genes in the single cell data (<code>pbmc4k_vargenes</code>), and a matrix of bulk RNA-seq read counts (<code>pbmc_bulk_matrix</code>):</p>
-<pre><code># run correlation (pearson by default)
-&gt; res &lt;- run_cor(expr_mat = pbmc4k_matrix,
-                 metadata = pbmc4k_meta,
-                 bulk_mat = pbmc_bulk_matrix,
-                 query_gene_list = pbmc4k_vargenes,
-                 compute_method = corr_coef)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># run correlation (pearson by default)</span>
+res &lt;-<span class="st"> </span><span class="kw"><a href="reference/run_cor.html">run_cor</a></span>(<span class="dt">expr_mat =</span> pbmc4k_matrix,
+               <span class="dt">metadata =</span> pbmc4k_meta,
+               <span class="dt">bulk_mat =</span> pbmc_bulk_matrix,
+               <span class="dt">query_gene_list =</span> pbmc4k_vargenes,
+               <span class="dt">compute_method =</span> corr_coef)</code></pre></div>
 <p>Plot the correlation coefficients on a pre-calculated tSNE projection (stored in <code>pbmc4k_meta</code>):</p>
-<pre><code># plot correlation coefficients on tSNE for each identity class
-&gt; plot_cor(res,
-           pbmc4k_meta,
-           colnames(res)[c(1, 5)],
-           cluster_col = "classified")</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot correlation coefficients on tSNE for each identity class</span>
+<span class="kw"><a href="reference/plot_cor.html">plot_cor</a></span>(res,
+         pbmc4k_meta,
+         <span class="kw">colnames</span>(res)[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">5</span>)],
+         <span class="dt">cluster_col =</span> <span class="st">"classified"</span>)</code></pre></div>
 </div>
 <div id="for-more-detail-see-a-list-of-command-refences-or-browse-the-vignettes-" class="section level3">
 <h3 class="hasAnchor">

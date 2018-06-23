@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Returns a list of genes ("features") based on the top loadings of principal components
+<title>Returns a list of genes ("features") based on the top
+loadings of principal components
 formed from the bulk expression data set — getPCAGenes • clustifyR</title>
 
 <!-- jquery -->
@@ -31,10 +32,12 @@ formed from the bulk expression data set — getPCAGenes • clustifyR</title>
 
 
 
-<meta property="og:title" content="Returns a list of genes ("features") based on the top loadings of principal components
+<meta property="og:title" content="Returns a list of genes ("features") based on the top
+loadings of principal components
 formed from the bulk expression data set — getPCAGenes" />
 
-<meta property="og:description" content="Returns a list of genes (&quot;features&quot;) based on the top loadings of principal components
+<meta property="og:description" content="Returns a list of genes (&quot;features&quot;) based on the top
+loadings of principal components
 formed from the bulk expression data set" />
 <meta name="twitter:card" content="summary" />
 
@@ -130,7 +133,8 @@ formed from the bulk expression data set" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Returns a list of genes ("features") based on the top loadings of principal components
+    <h1>Returns a list of genes ("features") based on the top
+loadings of principal components
 formed from the bulk expression data set</h1>
     <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/clustifyR/blob/master/R/get_pca_genes.R'><code>R/get_pca_genes.R</code></a></small>
     <div class="hidden name"><code>getPCAGenes.Rd</code></div>
@@ -138,7 +142,8 @@ formed from the bulk expression data set</h1>
 
     <div class="ref-description">
     
-    <p>Returns a list of genes ("features") based on the top loadings of principal components
+    <p>Returns a list of genes ("features") based on the top
+loadings of principal components
 formed from the bulk expression data set</p>
     
     </div>
@@ -150,21 +155,26 @@ formed from the bulk expression data set</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>sc_avg_expr</th>
-      <td><p>Expression data frame; rownames=genes, colnames=single cell cluster name,
+      <td><p>Expression data frame; rownames=genes,
+colnames=single cell cluster name,
 values=average single cell expression (log transformed).</p></td>
     </tr>
     <tr>
       <th>bulk_expr</th>
-      <td><p>Bulk RNA expression data frame; rownames=genes, colnames=sample name, values=expression counts.</p></td>
+      <td><p>Bulk RNA expression data frame; rownames=genes,
+colnames=sample name, values=expression counts.</p></td>
     </tr>
     <tr>
       <th>nr_pcs</th>
-      <td><p>Number PCs to selected gene loadings from. See the explore_PCA_corr.Rmd vignette.</p></td>
+      <td><p>Number PCs to selected gene loadings from.
+See the explore_PCA_corr.Rmd vignette.</p></td>
     </tr>
     <tr>
       <th>percentile</th>
-      <td><p>Select the percentile of absolute values of PCA loadings to select genes from.
-E.g. 0.999 would select the top point 1 percent of genes with the largest loadings.</p></td>
+      <td><p>Select the percentile of absolute values of
+PCA loadings to select genes from.
+E.g. 0.999 would select the top point 1 percent of genes
+with the largest loadings.</p></td>
     </tr>
     </table>
     
