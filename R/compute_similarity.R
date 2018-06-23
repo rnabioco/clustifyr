@@ -1,8 +1,8 @@
 
 #' pick and sort genes
 
-#' @param  expr_matrix: expression matrix with row names as the gene names (short name for now)
-#' @param gene_constraints: a list of vectors, where each vector is a candidate list of selected genes. can be HVG, row names of scRNAseq data and/or bulk data.
+#' @param  expr_matrix expression matrix with row names as the gene names (short name for now)
+#' @param gene_constraints a list of vectors, where each vector is a candidate list of selected genes. can be HVG, row names of scRNAseq data and/or bulk data.
 #' @export
 select_gene_subset <- function(expr_matrix, gene_constraints) {
   gene_subset <- gene_constraints[[1]];
@@ -56,7 +56,7 @@ corr_coef <- function(vec1, vec2, method="pearson") {
 #' @param vec1 test vector
 #' @param vec2 reference vector
 #' @param if_logcounts pearson, spearman, cosine
-#' @param total_reads library size?
+#' @param total_reads library size
 #' @param max_KL max_KL
 #' @export
 kl_divergence <- function(vec1, vec2, if_logcounts=FALSE, total_reads=1000, max_KL=1) {
