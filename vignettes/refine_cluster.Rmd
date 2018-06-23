@@ -13,15 +13,29 @@ Clustering is a crucial step in single cell RNA-seq (scRNA-seq) data analysis. M
 
 ## Theory
 
-Function refine_clusters comp a cell with expression profile  $A = \pi*r^{2}$ $ \vec{x} $ to 
+Let the expression profile of a single cell be $\vec{x\ }$, where each element refers to the expression level (counts/reads) of a gene. Assume the scRNA-seq data is to be clustered into $M$ clusters, and the first $N$ clusters have  bulk RNA-seq data of purified cells as references ($M\geq N$). Let $\vec{B_i}$ be the expression profile of the bulk data for i-th cluster. $\vec{x\ }$ and $\vec{B_i}$ must be organized in the same fashion.
 
+The function refine_clusters defines the probability of a cell $\vec{x\ }$ being assigned to cluster $i$ as a weighted product of the probability that $\vec{x\ }$ is similar to $\vec{B_i}$ and the probability that $\vec{x\ }$ is proximal to the centroid of clsuter $i$ (with mean $\vec{\mu_i}$ and standard deviation $\vec{\sigma_i}$). The former probability is defined as
+$$P(\vec{x\ }; \vec{B_i}) \propto \exp\{\epsilon S(\vec{x\ }, \vec{B_i})\}$$
+where $S(\vec{x\ }, \vec{B_i})$ represents the similarity between $\vec{x\ }$ and $\vec{B_i}$, and $\epsilon$ is a user-defined weighting parameter. The latter probability is modeled as a Gaussian distribution, i.e. 
+$$P(\vec{x\ }; \vec{\mu_i}, \vec{\sigma_i}) \sim N(\vec{\mu_i}, \mathbf{\Sigma}^{(i)})$$
+where the mean $\vec{\mu_i}$ is the mean expression level within the cluster and the covariance matrix $\mathbf{\Sigma}^{(i)}$ is a diagonal matrix where each element diagonal represents the variance of a gene's expression within the cluster $i$ ($\Sigma^{(i)}_{j,j} = \sigma_{i,j}^2$). The overall probability is then expressed as
+$$P(\vec{x\ }; \mathrm{Cluster}\ i) = P(\vec{x\ }; \vec{B_i})^\lambda P(\vec{x\ }; \vec{\mu_i}, \vec{\sigma_i})^{1-\lambda}$$
+The function refine_clusters computes $P(\vec{x\ }; \mathrm{Cluster}\ i)$ for each single cell $\vec{x\ }$ and each cluster $i$, and assigns the cell to the cluster with the highest probability. The function then iterates this process until clustering is coverged.
 
-Clustering single cell RNA-seq (scRNA-seq) data is a challenging problem. Most methods make use of 
+The algorithm works as follows
 
+* Input: scRNA-seq expression matrix, bulk RNA-seq expression matrix, initial cluster assignment
+* Output: Optimal cluster assignment
 
-Clustering single cell RNA-seq (scRNA-seq) data is a challenging problem in
+1. For each single cell ($\vec{x\ }$) and each bulk RNA-seq data ($\vec{B_i}$), compute the similarity score $S(\vec{x\ }, \vec{B_i})$. For clusters without reference bulk data, a default similarity score is used.
+2. For each cluster $i$, compute its centroid $\vec{\mu_i}$ and $\vec{\sigma_i}$.
+3. For each cell ($\vec{x\ }$) and each cluster $i$, compute the probability of assignment $P(\vec{x\ }; \mathrm{Cluster}\ i)$, and assign the cell to the cluster with highest probability.
+4. Repeat Step 2-3 until convergence.
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+## Example
+### Dataset
+
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 

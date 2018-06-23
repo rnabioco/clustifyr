@@ -159,7 +159,7 @@ varImpPlot(rFmodel)
 ### Check expression patterns of important genes
 ```{r, eval=F, echo=T}
 load("rFmodelsub.RData")
-important <-as.data.frame(importance(model) )
+important <-as.data.frame(importance(rFmodel.sub))
 # source('important_heatmap.R')
 dev.print(png, file = "myplot.png")
 png(file = "expression_heatmap.png", bg = "white")
