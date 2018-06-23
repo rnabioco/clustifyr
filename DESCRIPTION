@@ -30,16 +30,4 @@ Imports:
     tidyr,
     tibble,
     stats
-Suggests: 
-    testthat,
-    biomaRt,
-    purrr,
-    stringr,
-    lattice,
-    randomForest,
-    caret,
-    mlbench,
-    e1071,
-    M3Drop,
-    ComplexHeatmap
 VignetteBuilder: knitr
