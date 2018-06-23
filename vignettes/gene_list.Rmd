@@ -20,7 +20,6 @@ knitr::opts_chunk$set(message = FALSE)
 ## Unranked list: Preprocessing gene list into dataframe/matrix form
 
 ```{r}
-library()
 library('dplyr')
 library('purrr')
 library('stringr')
@@ -67,7 +66,7 @@ pbmc4k_rm <- matrixize_markers(pbmc4k_markers, TRUE)
 ```{r}
 gene_constraints <- list(rownames(pbmc4k_avg),rownames(pbmc4k_rm))
 pbmc4k_avg_d<- select_gene_subset(pbmc4k_avg, gene_constraints)
-pbmc4k_rm_d <- select_gene_subset(t, gene_constraints)
+pbmc4k_rm_d <- select_gene_subset(pbmc4k_rm, gene_constraints)
 out <- lapply(colnames(pbmc4k_avg_d),
               function(x){
                 per_col <- lapply(colnames(pbmc4k_rm_d),
@@ -87,7 +86,7 @@ plot_cor(res,
          colnames(res)[1:7])
 ```
 
-## Pancrea data from Indrop
+## Pancreas data from Indrop
 
 ```{r}
 library(clustifyR)
