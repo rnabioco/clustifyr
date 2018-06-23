@@ -164,7 +164,7 @@ important <-as.data.frame(importance(model) )
 # source('important_heatmap.R')
 dev.print(png, file = "myplot.png")
 png(file = "expression_heatmap.png", bg = "white")
-important_heatmap(rFmodel.sub, pbmc4k_avg, pbmc4k_meta, 20, 30)
+important_heatmap(important, pbmc4k_avg, pbmc4k_meta, 20, 30)
 dev.off()
 ```
 ![Expression of best predictors](https://i.imgur.com/8BQO3al.png)
