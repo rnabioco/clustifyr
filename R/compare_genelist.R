@@ -16,7 +16,7 @@ binarize_expr <- function(expr_mat,
 #' convert candidate genes list into matrix
 #'
 #' @param marker_df dataframe of candidate genes
-#' @param ranked unranked gene list feeds into hyperp, ranked gene list feeds into regular corr_coef
+#' @param ranked unranked gene list feeds into hyperp, theranked gene list feeds into regular corr_coef
 #' @param weight ranked genes are tranformed into pseudo expression with added weight
 #' @param marker_df dataframe of candidate genes
 #'
