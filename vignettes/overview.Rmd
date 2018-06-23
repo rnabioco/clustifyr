@@ -1,5 +1,5 @@
 ---
-title: 'clustifyR overview'
+title: 'Introduction to clustifyR'
 date: '`r Sys.Date()`'
 output:
   rmarkdown::html_vignette:
@@ -44,7 +44,7 @@ data("pbmc_bulk_matrix")
 plot_tsne(pbmc4k_meta, feature = "classified")
 ```
 
-Bulk RNA-Seq data can be obtained from any input source, here we will obtain a dataset from the [recount2](https://jhubiostatistics.shinyapps.io/recount/) database. This database provides > 2000 human RNA-Seq experiments that have been processed using a consistent pipeline. We have written a wrapper function to download a count matrix from `recount2`, given an SRA ID. 
+Bulk RNA-Seq data can be obtained from any input source; here we will obtain a dataset from the [recount2](https://jhubiostatistics.shinyapps.io/recount/) database. This database provides > 2000 human RNA-Seq experiments that have been processed using a consistent pipeline. We have written a wrapper function to download a count matrix from `recount2`, given an SRA ID. 
 
 ```{r}
 source(system.file("dl_recount.R", 
@@ -58,6 +58,7 @@ pbmc_data$meta_data[1:5, ]
 ```
 
 We provide a vignette that demonstrates the few steps necessary to format the bulk rna-seq ma
+
 `clustifyR` provides the `run_cor()` function, which takes as input a matrix of single cell RNA-seq expression values, a metadata table with cluster assignments, and a matrix with bulk RNA seq datasets. 
 
 As the heatmap below shows, most cell types are accurately classified using the default correlation method (pearson) and a list of highly variable genes in the single cell dataset identified using `Seurat`'s VMR method.
