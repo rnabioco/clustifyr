@@ -17,9 +17,8 @@ Encoding: UTF-8
 LazyData: true
 ByteCompile: true
 Roxygen: list(markdown = TRUE)
-URL: http://github.com/NCBI-Hackathons/RClusterCT, https://ncbi-hackathons.github.io/RClusterCT/
-BugReports: https://github.com/NCBI-Hackathons/RClusterCT/issues
-RoxygenNote: 6.0.1
+URL: http://github.com/NCBI-Hackathons/clustifyR, https://ncbi-hackathons.github.io/clustifyR/
+BugReports: https://github.com/NCBI-Hackathons/clustifyR/issues
 Imports: 
     tibble,
     ggplot2,
@@ -29,7 +28,8 @@ Imports:
     dplyr,
     tidyr,
     tibble,
-    stats
-Suggest:
+    stats,
+    gplot2
+Suggests:
     testthat
 VignetteBuilder: knitr
