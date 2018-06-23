@@ -20,8 +20,7 @@ knitr::opts_chunk$set(message = FALSE)
 ## Unranked list: Preprocessing gene list into dataframe/matrix form
 
 ```{r}
-library('recount')
-library('biomaRt')
+library()
 library('dplyr')
 library('purrr')
 library('stringr')
