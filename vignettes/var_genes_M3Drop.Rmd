@@ -6,7 +6,7 @@ output:
     toc: true
     toc_depth: 3
     vignette: >
-      %\VignetteIndexEntry{clustifyR-get_data}
+      %\VignetteIndexEntry{clustifyR-var_genes_M3Drop}
       %\VignetteEngine{knitr::rmarkdown}
       %\VignetteEncoding{UTF-8}
 ---
