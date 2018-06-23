@@ -27,5 +27,5 @@ Installation in R from the github repo is a two step process:
 
 ## Usage:
 
-### See detailed vignettes and documentation [here](https://ncbi-hackathons.github.io/clustifyR/).
+### See [detailed vignettes and documentation](https://ncbi-hackathons.github.io/clustifyR/) or jump directly to the [quickstart]().
 
