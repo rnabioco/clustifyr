@@ -2,26 +2,33 @@
 % Please edit documentation in R/get_pca_genes.R
 \name{getPCAGenes}
 \alias{getPCAGenes}
-\title{Returns a list of genes ("features") based on the top loadings of principal components
+\title{Returns a list of genes ("features") based on the top
+loadings of principal components
 formed from the bulk expression data set}
 \usage{
 getPCAGenes(sc_avg_expr, bulk_expr, nr_pcs, percentile)
 }
 \arguments{
-\item{sc_avg_expr}{Expression data frame; rownames=genes, colnames=single cell cluster name,
+\item{sc_avg_expr}{Expression data frame; rownames=genes,
+colnames=single cell cluster name,
 values=average single cell expression (log transformed).}
 
-\item{bulk_expr}{Bulk RNA expression data frame; rownames=genes, colnames=sample name, values=expression counts.}
+\item{bulk_expr}{Bulk RNA expression data frame; rownames=genes,
+colnames=sample name, values=expression counts.}
 
-\item{nr_pcs}{Number PCs to selected gene loadings from. See the explore_PCA_corr.Rmd vignette.}
+\item{nr_pcs}{Number PCs to selected gene loadings from.
+See the explore_PCA_corr.Rmd vignette.}
 
-\item{percentile}{Select the percentile of absolute values of PCA loadings to select genes from.
-E.g. 0.999 would select the top point 1 percent of genes with the largest loadings.}
+\item{percentile}{Select the percentile of absolute values of
+PCA loadings to select genes from.
+E.g. 0.999 would select the top point 1 percent of genes
+with the largest loadings.}
 }
 \value{
 The list of genes to use as features.
 }
 \description{
-Returns a list of genes ("features") based on the top loadings of principal components
+Returns a list of genes ("features") based on the top
+loadings of principal components
 formed from the bulk expression data set
 }

@@ -7,7 +7,8 @@
 important_heatmap(important, avg_matrix, meta, MDA_thresh, MDG_thresh)
 }
 \arguments{
-\item{important}{importance measurements of genes (predictors) from the random forest model}
+\item{important}{importance measurements of genes (predictors)
+from the random forest model}
 
 \item{avg_matrix}{average expression matrix}
 

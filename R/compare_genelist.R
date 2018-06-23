@@ -16,8 +16,10 @@ binarize_expr <- function(expr_mat,
 #' convert candidate genes list into matrix
 #'
 #' @param marker_df dataframe of candidate genes
-#' @param ranked unranked gene list feeds into hyperp, theranked gene list feeds into regular corr_coef
-#' @param weight ranked genes are tranformed into pseudo expression with added weight
+#' @param ranked unranked gene list feeds into hyperp, the ranked
+#' gene list feeds into regular corr_coef
+#' @param weight ranked genes are tranformed into pseudo expression with
+#' added weight
 #' @param marker_df dataframe of candidate genes
 #'
 #' @export
@@ -39,7 +41,8 @@ matrixize_markers <- function(marker_df, ranked = FALSE, weight = 0){
   marker_temp2
 }
 
-#' calculate adjusted p-values for hypergeometric test of gene lists or jaccard index
+#' calculate adjusted p-values for hypergeometric test of gene lists
+#' or jaccard index
 #'
 #' @param bin_mat binarized single-cell expression matrix
 #' @param marker_m matrix or dataframe of candidate genes for each cluster
