@@ -51,7 +51,7 @@ The algorithm works as follows
 ## Example
 ### Dataset
 
-We make use of the **pbmc4k_matrix**, **pbmc4k_meta** and **pbmc_bulk_matrix** dataset. To satisfy the requirement of the function, we define six clusters (Monocytes, B Cells, T Cells, Dendritic Cells, NK Cells and Megakaryocytes) and re-assign each cell to one cluster based on its previous label. We further extract 5 samples (Monocytes, B Cells, T Cells, Dendritic Cells, NK Cells) from the bulk dataset to represent the reference expression profile for the first five clusters. No reference data for Megakaryocytes is provided.
+We make use of the *pbmc4k_matrix*, *pbmc4k_meta* and *pbmc_bulk_matrix* dataset. To satisfy the requirement of the function, we define six clusters (Monocytes, B Cells, T Cells, Dendritic Cells, NK Cells and Megakaryocytes) and re-assign each cell to one cluster based on its previous label. We further extract 5 samples (Monocytes, B Cells, T Cells, Dendritic Cells, NK Cells) from the bulk dataset to represent the reference expression profile for the first five clusters. No reference data for Megakaryocytes is provided.
 
 ```{preparation}
 data("pbmc4k_meta"); data("pbmc4k_matrix"); data("pbmc_bulk_matrix"); data("pbmc4k_markers_M3Drop")
