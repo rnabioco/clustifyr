@@ -1,27 +1,27 @@
-# clustifyR
+<p align="center">
+  <img src="/inst/logo/logo_transparent.png">
+</p>
 
 [![Travis build status](https://travis-ci.org/NCBI-Hackathons/clustifyR.svg?branch=master)](https://travis-ci.org/NCBI-Hackathons/clustifyR)
 
-### Classify cell types in single-cell RNA sequencing experiments using reference bulk RNA-seq data sets. See detailed vignettes and documentation [here](https://ncbi-hackathons.github.io/clustifyR/).
+### ClusifyR classifies cell and clusters in single-cell RNA sequencing experiments using reference bulk RNA-seq data sets, gene signatures or marker genes. See detailed vignettes and documentation [here](https://ncbi-hackathons.github.io/clustifyR/).
 
-## Workflow
 
-1. Load a single-cell RNA-seq data set (`SparseMatrix` or `data.frame`). Normalize (?) with `scran`.
+## Installation
+Installation from the github repo is a two step process:
 
-1. Load the reference data type (i.e., bulk RNA-seq data, a gene set (ordered or unordered))
+### Step 1:
+```
+# Install devtools
+> install.packages("devtools")
+```
 
-1. Compute correlations between single-cell and reference data types. Classify on per-cell or per-cluster basis.
+### Step 2:
+```
+# Install classifyR from github
+> devtools::install_github("NCBI-Hackathons/clustifyR")
+```
 
-1. Output per-cell or per-cluster, significance of the assignment.
+### Usage:
 
-1. Visualize per-cell, per-cluster correlations in e.g. a t-SNE.
-
-## Previous work
-
-* `scmap`: [[code](https://github.com/hemberg-lab/scmap)] [[paper](https://www.nature.com/articles/nmeth.4644)]
-  
-* `scfind` [[code](https://github.com/hemberg-lab/scfind)]
-
-* `SingleR` [[code](https://github.com/dviraran/SingleR)] [[paper](https://doi.org/10.1101/284604)]
-
-* `CellAtlasSearch` [[paper](https://doi.org/10.1093/nar/gky421)] (no code available)
+See [the vignettes](https://ncbi-hackathons.github.io/clustifyR/) for detailed usage infromation.
