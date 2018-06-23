@@ -11,7 +11,7 @@ knitr::opts_chunk$set(
 [![Build Status](https://travis-ci.org/NCBI-Hackathons/clustifyR.svg?branch=master)](https://travis-ci.org/NCBI-Hackathons/clustifyR)
 
 <p align="center">
-  <img src="/inst/logo/logo_transparent.png">
+  <img src="https://raw.githubusercontent.com/NCBI-Hackathons/clustifyR/master/inst/logo/logo_transparent.png">
 </p>
 
 ### ClustifyR is an [R](https://www.r-project.org/) package that classifies cells and clusters in single-cell RNA sequencing experiments using reference bulk RNA-seq data sets, gene signatures or marker genes. 
