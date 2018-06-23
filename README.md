@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/NCBI-Hackathons/clustifyR.svg?branch=master)](https://travis-ci.org/NCBI-Hackathons/clustifyR)
 
 <p align="center">
-  <img src="/inst/logo/logo_transparent.png">
+  <img src="/inst/logo/logo_transparent.png" width = 405 height = 174>
 </p>
 
 ### ClustifyR is an [R](https://www.r-project.org/) package that classifies cells and clusters in single-cell RNA sequencing experiments using reference bulk RNA-seq data sets, gene signatures or marker genes. 

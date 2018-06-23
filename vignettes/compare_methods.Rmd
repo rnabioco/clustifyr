@@ -48,7 +48,7 @@ names(pbmc4k_avg) <- c(
 
 * Row names are the single cell RNA pre-assigned tissue labels.
 * Column names are the bulk RNA sample names.
-* Values are the Spearman correlations between the average single cell RNA expression and the bulk RNA sample expression, for a given set of genes (determined by the feature selection methods).
+* Values are the pearson correlations between the average single cell RNA expression and the bulk RNA sample expression, for a given set of genes (determined by the feature selection methods).
 
 ```{r function_corr_matrix}
 
