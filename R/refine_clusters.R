@@ -13,12 +13,12 @@
 # 1. log-scale to avoid issue of machine precision
 # 2. P(x is similar to bulk i): make use of the similarity score (\in [-1, 1]).
 #    Use exponential scoring function P(similarity) = C exp(\epsilon * similarity_score), where C=\epsilon/(exp(\epsilon) - exp(-\epsilon)).
-#TODO: Consider changing similarity score to [0, 1] to simplify the expression of C. Probably can ignore because we are comparing relative probabilities
+# #TODO: Consider changing similarity score to [0, 1] to simplify the expression of C. Probably can ignore because we are comparing relative probabilities
 # 3. P(x is closed to centroid of cluster i): make use of Euclidean distance between x and centroid \mu_i
 #    Use Euclidean distance because of better change to have convergence (k-means using Euclidean distance is guaranteed to converge to the unique point)
 #    Assume something like random walk (i.e. diffusion) -> Gaussian distribution
 #    P = 1/sqrt(2*\pi*\sigma^2) exp(-|x-\mu_i|^2/2/\sigma^2)
-#TODO: In principle it's a multivariate Gaussian distribution, so \sigma^2 should be replaced by the covariance matrix \Sigma
+# #TODO: In principle it's a multivariate Gaussian distribution, so \sigma^2 should be replaced by the covariance matrix \Sigma
 #    If we assume that all cells/centroids have the same set of genes (which should be!), and every gene has the same amount of error (after normalizing genes!), this expression should be ok.
 #    Otherwise, consider model \Sigma explicitly. As a first-order approximation, can assume \Sigma is a diagonal matrix,
 #    where each diagonal element represents the stochasticity of each gene (which can be estimate from looking at cluster-wise/data-wise variance)
@@ -41,7 +41,7 @@
 #' refine_clusters: refine clustering using reference data
 #' @param sc_expr input single cell data after gene subsetting
 #' @param bulk_expr input bulk data after gene subsetting
-#' @param sc_cluster: initial clustering assignment. Note that the number of bulk cell types must be no more than the number of clusters. for additional clusters, there is an assignment of default_similiarity
+#' @param sc_cluster initial clustering assignment. Note that the number of bulk cell types must be no more than the number of clusters. for additional clusters, there is an assignment of default_similiarity
 #' @param lambda control parameters
 #' @param epsilon control parameters
 #' @param if_compute_sigma whether compute the standard deviation of each gene's expression within each cluster. If not, the function assumes that all standard deviations equal to 1.

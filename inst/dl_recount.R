@@ -1,8 +1,9 @@
-#' download data from recount
-#'
-#' @param sra_id i.e. SRP051688
-#' @return a list containing a matrix with the count data and a dataframe with the metadata
-#' @export
+library(dplyr)
+library(purrr)
+library(tidyr)
+library(stringr)
+library(recount)
+
 dl_recount <- function(sra_id){
   download_study(sra_id)
   load(file.path(sra_id, "rse_gene.Rdata"))
