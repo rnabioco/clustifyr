@@ -14,5 +14,7 @@ corr_coef(vec1, vec2, method = "pearson")
 \item{method}{pearson, spearman, cosine}
 }
 \description{
-Compute correlation between two vectors. Returned value is between -1 and 1, where 1 indicates highest positive correlation and -1 indicates highest negative correlation.
+Compute correlation between two vectors.
+Returned value is between -1 and 1, where 1 indicates highest positive correlation
+and -1 indicates highest negative correlation.
 }

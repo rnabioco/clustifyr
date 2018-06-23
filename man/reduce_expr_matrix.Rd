@@ -7,13 +7,15 @@
 reduce_expr_matrix(expr_mat, metadata, vargene)
 }
 \arguments{
-\item{expr_mat}{expression expr_matrix with row names as the gene names and each column for different cell}
+\item{expr_mat}{expression expr_matrix with row names as the gene names and
+each column for different cell}
 
 \item{metadata}{cluster and cell type info for each cell}
 
 \item{vargene}{a list of gene names for highly variable genes}
 }
 \description{
-Reduce the full expression expr_matrix to only the highly variable genes, change the readcounts to binary factors,
+Reduce the full expression expr_matrix to only the highly variable genes,
+change the readcounts to binary factors,
 prepare the input data for random forest
 }

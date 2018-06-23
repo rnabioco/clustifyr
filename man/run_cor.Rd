@@ -10,7 +10,7 @@ run_cor(expr_mat, metadata, bulk_mat, query_gene_list, per_cell = F,
 \arguments{
 \item{expr_mat}{single-cell expression matrix}
 
-\item{metadata}{clustering info of single-cell data assume that genes have ALREADY BEEN filtered}
+\item{metadata}{clustering info of single-cell data}
 
 \item{bulk_mat}{bulk expression matrix}
 
@@ -18,13 +18,15 @@ run_cor(expr_mat, metadata, bulk_mat, query_gene_list, per_cell = F,
 
 \item{per_cell}{run per cell?}
 
-\item{num_perm}{number of permutations}
+\item{num_perm}{number of permutations, set to 0 by default}
 
-\item{return_full}{Return full results instead of correlation coefficient only.}
+\item{return_full}{Return full results includeing scores instead of correlation coefficient only.}
 
 \item{compute_method}{method(s) for computing similarity scores}
 
-\item{...}{additional paramters to pass to run_one_round}
+\item{...}{additional arguments to pass to compute_method function}
+
+\item{cluster_col}{column used for clustering}
 }
 \description{
 run_cor: Main function to compare scRNA-seq data to bulk RNA-seq data.
