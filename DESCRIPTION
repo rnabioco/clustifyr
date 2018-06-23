@@ -30,4 +30,6 @@ Imports:
     tidyr,
     tibble,
     stats
+Suggest:
+    testthat
 VignetteBuilder: knitr
