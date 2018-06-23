@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Matrix of single-cell RNA-seq PBMCs. — pbmc4k_matrix • clustifyR</title>
+<title>Binarize scRNA seq data — binarize_expr • clustifyR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Matrix of single-cell RNA-seq PBMCs. — pbmc4k_matrix" />
+<meta property="og:title" content="Binarize scRNA seq data — binarize_expr" />
 
-<meta property="og:description" content="A sample of 4000 PBMC cells from a bigger experiment" />
+<meta property="og:description" content="Binarize scRNA seq data" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -127,39 +127,39 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Matrix of single-cell RNA-seq PBMCs.</h1>
-    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/clustifyR/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>pbmc4k_matrix.Rd</code></div>
+    <h1>Binarize scRNA seq data</h1>
+    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/clustifyR/blob/master/R/compare_genelist.R'><code>R/compare_genelist.R</code></a></small>
+    <div class="hidden name"><code>binarize_expr.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>A sample of 4000 PBMC cells from a bigger experiment</p>
+    <p>Binarize scRNA seq data</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>pbmc4k_matrix</span></pre>
-        
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>A sparseMatrix with genes as rows and cells as columns.</p>
-<dl class='dl-horizontal'>
-</dl>
+    <pre class="usage"><span class='fu'>binarize_expr</span>(<span class='no'>expr_mat</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1000</span>)</pre>
     
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    <p>google.com</p>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>expr_mat</th>
+      <td><p>single-cell expression matrix</p></td>
+    </tr>
+    <tr>
+      <th>n</th>
+      <td><p>number of top expressing genes to keep</p></td>
+    </tr>
+    </table>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      
-      <li><a href="#format">Format</a></li>
-
-      <li><a href="#source">Source</a></li>
-          </ul>
+      <li><a href="#arguments">Arguments</a></li>
+                </ul>
 
   </div>
 </div>

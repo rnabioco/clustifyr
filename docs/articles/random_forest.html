@@ -52,7 +52,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/compare_methods.html">Compare Methods</a>
+    </li>
+    <li>
       <a href="../articles/exploratory_pca.html">Exploratory PCA</a>
+    </li>
+    <li>
+      <a href="../articles/gene_list.html">Cluster classification using mark gene lists</a>
+    </li>
+    <li>
+      <a href="../articles/get_recount_data.html">Downloading data from recount</a>
     </li>
     <li>
       <a href="../articles/overview.html">clustifyR overview</a>
@@ -61,14 +70,14 @@
       <a href="../articles/random_forest.html">randomForest model</a>
     </li>
     <li>
-      <a href="../articles/recount_data.html">Downloading data from recount</a>
+      <a href="../articles/refine_cluster.html">Clustering Single Cell RNA-Seq Data Using Reference Bulk RNA-Seq Data</a>
     </li>
   </ul>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="http://github.com/NCBI-Hackathons/RClusterCT">
+  <a href="http://github.com/NCBI-Hackathons/clustifyR">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -87,9 +96,9 @@
     <div class="page-header toc-ignore">
       <h1>randomForest model</h1>
             
-            <h4 class="date">2018-06-22</h4>
+            <h4 class="date">2018-06-23</h4>
       
-      <small class="dont-index">Source: <a href="http://github.com/NCBI-Hackathons/RClusterCT/blob/master/vignettes/random_forest.Rmd"><code>vignettes/random_forest.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="http://github.com/NCBI-Hackathons/clustifyR/blob/master/vignettes/random_forest.Rmd"><code>vignettes/random_forest.Rmd</code></a></small>
       <div class="hidden name"><code>random_forest.Rmd</code></div>
 
     </div>
@@ -105,9 +114,9 @@
 
 <span class="co"># Input files for random forest</span>
 <span class="co"># Training set</span>
-pbmc4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reduce_matrix.html">reduce_matrix</a></span>(pbmc4k_matrix, pbmc4k_meta, pbmc4k_vargenes)
+pbmc4 &lt;-<span class="st"> </span><span class="kw">reduce_matrix</span>(pbmc4k_matrix, pbmc4k_meta, pbmc4k_vargenes)
 <span class="co"># Test set</span>
-pbmc5 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reduce_matrix.html">reduce_matrix</a></span>(pbmc5_matrix, pbmc5_meta, pbmc4k_vargenes)
+pbmc5 &lt;-<span class="st"> </span><span class="kw">reduce_matrix</span>(pbmc5_matrix, pbmc5_meta, pbmc4k_vargenes)
 
 <span class="co"># Make sure the listed genes (predictors) are the same in both dataset</span>
 <span class="kw">names</span>(pbmc5)[<span class="kw">names</span>(pbmc5) <span class="op">==</span><span class="st"> "cluster"</span>] &lt;-<span class="st"> "classified"</span>
@@ -213,6 +222,18 @@ NK cells                            0              0      249  0.13240418</code>
 <div class="figure">
 <img src="https://i.imgur.com/h5d0aST.png" alt="Important variables"><p class="caption">Important variables</p>
 </div>
+</div>
+<div id="check-expression-patterns-of-important-genes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#check-expression-patterns-of-important-genes" class="anchor"></a>Check expression patterns of important genes</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="st">"rFmodelsub.RData"</span>)
+important &lt;-<span class="kw">as.data.frame</span>(<span class="kw">importance</span>(rFmodel.sub))
+<span class="co"># source('important_heatmap.R')</span>
+<span class="kw">dev.print</span>(png, <span class="dt">file =</span> <span class="st">"myplot.png"</span>)
+<span class="kw">png</span>(<span class="dt">file =</span> <span class="st">"expression_heatmap.png"</span>, <span class="dt">bg =</span> <span class="st">"white"</span>)
+<span class="kw"><a href="../reference/important_heatmap.html">important_heatmap</a></span>(important, pbmc4k_avg, pbmc4k_meta, <span class="dv">20</span>, <span class="dv">30</span>)
+<span class="kw">dev.off</span>()</code></pre></div>
+<p>With MeanDecreaseAccuracy &gt;=20 and MeanDecreaseGini &gt;=30: <img src="https://i.imgur.com/8BQO3al.png" alt="Expression of best predictors"><br>With MeanDecreaseAccuracy &gt;=15 and MeanDecreaseGini &gt;=20: <img src="https://i.imgur.com/M32CMFE.png" alt="15_20"></p>
 </div>
 <div id="fit-the-model-with-new-data" class="section level3">
 <h3 class="hasAnchor">

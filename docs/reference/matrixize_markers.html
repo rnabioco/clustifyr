@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Matrix of single-cell RNA-seq PBMCs. — pbmc4k_matrix • clustifyR</title>
+<title>convert candidate genes list into matrix — matrixize_markers • clustifyR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Matrix of single-cell RNA-seq PBMCs. — pbmc4k_matrix" />
+<meta property="og:title" content="convert candidate genes list into matrix — matrixize_markers" />
 
-<meta property="og:description" content="A sample of 4000 PBMC cells from a bigger experiment" />
+<meta property="og:description" content="convert candidate genes list into matrix" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -127,39 +127,47 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Matrix of single-cell RNA-seq PBMCs.</h1>
-    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/clustifyR/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>pbmc4k_matrix.Rd</code></div>
+    <h1>convert candidate genes list into matrix</h1>
+    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/clustifyR/blob/master/R/compare_genelist.R'><code>R/compare_genelist.R</code></a></small>
+    <div class="hidden name"><code>matrixize_markers.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>A sample of 4000 PBMC cells from a bigger experiment</p>
+    <p>convert candidate genes list into matrix</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>pbmc4k_matrix</span></pre>
-        
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>A sparseMatrix with genes as rows and cells as columns.</p>
-<dl class='dl-horizontal'>
-</dl>
+    <pre class="usage"><span class='fu'>matrixize_markers</span>(<span class='no'>marker_df</span>, <span class='kw'>ranked</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>weight</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
     
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    <p>google.com</p>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>marker_df</th>
+      <td><p>dataframe of candidate genes</p></td>
+    </tr>
+    <tr>
+      <th>ranked</th>
+      <td><p>unranked gene list feeds into hyperp, theranked gene list feeds into regular corr_coef</p></td>
+    </tr>
+    <tr>
+      <th>weight</th>
+      <td><p>ranked genes are tranformed into pseudo expression with added weight</p></td>
+    </tr>
+    <tr>
+      <th>marker_df</th>
+      <td><p>dataframe of candidate genes</p></td>
+    </tr>
+    </table>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      
-      <li><a href="#format">Format</a></li>
-
-      <li><a href="#source">Source</a></li>
-          </ul>
+      <li><a href="#arguments">Arguments</a></li>
+                </ul>
 
   </div>
 </div>
