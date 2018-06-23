@@ -86,7 +86,7 @@ plot_cor(res,
          colnames(res)[1:7])
 ```
 
-## Pancrea data from Indrop
+## Pancreas data from Indrop
 
 ```{r}
 library(clustifyR)
