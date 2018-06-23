@@ -172,6 +172,8 @@ colnames(res) <- left_join(data_frame(cluster = colnames(res)),
                            by = "cluster") %>% 
   pull(classified)
 
+rownames(res) <- colnames(res)
+
 Heatmap(-log10(res), 
         cluster_rows = FALSE,
         cluster_columns = FALSE, 
@@ -183,6 +185,13 @@ Here's an example using ~100 markers per cluster
 
 ```{r}
 res2 <- compare_lists(pbmc4k_avgb, markers)
+
+rownames(res2) <- left_join(data_frame(cluster = rownames(res2)),
+                           unique(data_frame(cluster = pbmc4k_meta$cluster,
+                                             classified =  pbmc4k_meta$classified)), 
+                           by = "cluster") %>% 
+  pull(classified)
+
 Heatmap(-log10(res2), 
         cluster_rows = FALSE, 
         cluster_columns = FALSE, 
