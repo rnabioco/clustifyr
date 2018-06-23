@@ -2,6 +2,7 @@
 #'
 #' @param expression_matrix single-cell expression matrix
 #' @param n number of top expressing genes to keep
+#'
 #' @export
 binarize_expr <- function(expression_matrix,
                           n = 1000){
@@ -18,6 +19,7 @@ binarize_expr <- function(expression_matrix,
 #' @param ranked unranked gene list feeds into hyperp, ranked gene list feeds into regular corr_coef
 #' @param weight ranked genes are tranformed into pseudo expression with added weight
 #' @param marker_df dataframe of candidate genes
+#'
 #' @export
 matrixize_markers <- function(marker_df, ranked = FALSE, weight = 0){
   # takes marker in dataframe form
@@ -42,6 +44,7 @@ matrixize_markers <- function(marker_df, ranked = FALSE, weight = 0){
 #' @param marker_m matrix or dataframe of candidate genes for each cluster
 #' @param n number of genes in the genome
 #' @param metric adjusted p-value for hypergeometric test, or jaccard index
+#'
 #' @export
 compare_lists <- function(bin_matrix, marker_m, n = 30000, metric = "hyper"){
   # "expressed" genes per single cell data cluster
