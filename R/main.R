@@ -19,8 +19,8 @@ run_cor <- function(expr_mat, metadata, bulk_mat, query_gene_list, per_cell = F,
   bulk_mat <- select_gene_subset(bulk_mat, gene_constraints)
 
   # run permutation
-  res <- permutation_similarity(expr_mat, bulk_mat, metadata,
-                                num_permute, per_cell, compute_method, ...)
+  res <- permutation_similarity(expr_mat, metadata, bulk_mat,
+                                num_perm, per_cell, compute_method, ...)
 
   # extract score only by default
   if(!return_full) {
