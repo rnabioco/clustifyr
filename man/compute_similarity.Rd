@@ -15,8 +15,7 @@ compute_similarity(vec1, vec2, compute_method, ...)
 }
 \description{
 Compute the similarity score between two vectors using a customized scoring function
-vec1, vec2: input expression vectors, can come from single cell or bulk RNA seq data.
-the length of vec1 and vec2 must match, and corresponding elements must refer to the same gene.
-vec1 and vec2 should be AFTER pre-processing, feature selection and dimension reduction
-compute_method and ...: function to compute the similarity score, and relevant parameters for compute_method
+Two vectors may be from either scRNA-seq or bulk RNA-seq data.
+The lengths of vec1 and vec2 must match, and must be arranged in the same order of genes.
+Both vectors should be provided to this function after pre-processing, feature selection and dimension reduction.
 }

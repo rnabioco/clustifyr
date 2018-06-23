@@ -2,15 +2,17 @@
 % Please edit documentation in R/compute_similarity.R
 \name{select_gene_subset}
 \alias{select_gene_subset}
-\title{pick and sort genes}
+\title{Pick and sort genes}
 \usage{
 select_gene_subset(expr_matrix, gene_constraints)
 }
 \arguments{
-\item{expr_matrix}{expression matrix with row names as the gene names (short name for now)}
+\item{expr_matrix}{Expression matrix with row names as the gene names (short name for now)}
 
-\item{gene_constraints}{a list of vectors, where each vector is a candidate list of selected genes. can be HVG, row names of scRNAseq data and/or bulk data.}
+\item{gene_constraints}{A list of vectors, where each vector is a candidate list of selected genes. Possible examples of candidate lists include row names of expression matrix and a list of highly variable genes.}
 }
 \description{
-pick and sort genes
+Data set from different sources may contain different gene sets.
+In order to establish a fair comparison, we select a subset of genes shared by both datasets.
+This function can be also used to extract data for genes of interest, such as highly variable genes.
 }
