@@ -12,7 +12,9 @@ refine_clusters(expr_mat, sc_cluster, bulk_mat, lambda = 0.5, epsilon = 1,
 \arguments{
 \item{expr_mat}{input single cell data after gene subsetting}
 
-\item{sc_cluster}{initial clustering assignment. Note that the number of bulk cell types must be no more than the number of clusters. for additional clusters, there is an assignment of default_similiarity}
+\item{sc_cluster}{initial clustering assignment.
+Note that the number of bulk cell types must be no more than the number of clusters.
+for additional clusters, there is an assignment of default_similiarity}
 
 \item{bulk_mat}{input bulk data after gene subsetting}
 
@@ -20,7 +22,8 @@ refine_clusters(expr_mat, sc_cluster, bulk_mat, lambda = 0.5, epsilon = 1,
 
 \item{epsilon}{control parameters}
 
-\item{if_compute_sigma}{whether compute the standard deviation of each gene's expression within each cluster. If not, the function assumes that all standard deviations equal to 1.}
+\item{if_compute_sigma}{whether compute the standard deviation of each gene's expression within each cluster.
+If not, the function assumes that all standard deviations equal to 1.}
 
 \item{num_iteration}{maximal number of iteration before exiting the algorithm}
 

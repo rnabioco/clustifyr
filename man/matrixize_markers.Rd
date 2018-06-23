@@ -9,7 +9,7 @@ matrixize_markers(marker_df, ranked = FALSE, weight = 0)
 \arguments{
 \item{marker_df}{dataframe of candidate genes}
 
-\item{ranked}{unranked gene list feeds into hyperp, ranked gene list feeds into regular corr_coef}
+\item{ranked}{unranked gene list feeds into hyperp, theranked gene list feeds into regular corr_coef}
 
 \item{weight}{ranked genes are tranformed into pseudo expression with added weight}
 

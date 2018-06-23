@@ -1,7 +1,9 @@
 #' Reduce expr_matrix
-#' @description Reduce the full expression expr_matrix to only the highly variable genes, change the readcounts to binary factors,
+#' @description Reduce the full expression expr_matrix to only the highly variable genes,
+#' change the readcounts to binary factors,
 #' prepare the input data for random forest
-#' @param expr_mat expression expr_matrix with row names as the gene names and each column for different cell
+#' @param expr_mat expression expr_matrix with row names as the gene names and
+#' each column for different cell
 #' @param metadata cluster and cell type info for each cell
 #' @param vargene a list of gene names for highly variable genes
 #' @export
