@@ -2,7 +2,7 @@
 % Please edit documentation in R/reduce_matrix.R
 \name{reduce_matrix}
 \alias{reduce_matrix}
-\title{reduce the full expression matrix to only the highly variable genes, change the readcounts to binary factors
+\title{reduce the full expression matrix to only the highly variable genes, change the readcounts to binary factors,
 prepare the input data for random forest}
 \usage{
 reduce_matrix(mat, meta, vargene)
@@ -15,6 +15,6 @@ reduce_matrix(mat, meta, vargene)
 \item{vargene}{a list of gene names for highly variable genes}
 }
 \description{
-reduce the full expression matrix to only the highly variable genes, change the readcounts to binary factors
+reduce the full expression matrix to only the highly variable genes, change the readcounts to binary factors,
 prepare the input data for random forest
 }
