@@ -6,7 +6,8 @@
 #' @param query_gene_list A vector of genes of interest.
 #' @param per_cell run per cell?
 #' @param num_perm number of permutations, set to 0 by default
-#' @param return_full Return full results includeing scores instead of correlation coefficient only.
+#' @param return_full Return full results includeing scores instead
+#'  of correlation coefficient only.
 #' @param compute_method method(s) for computing similarity scores
 #' @param cluster_col column used for clustering
 #' @param ... additional arguments to pass to compute_method function

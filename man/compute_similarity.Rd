@@ -14,9 +14,11 @@ compute_similarity(vec1, vec2, compute_method, ...)
 \item{compute_method}{method to run i.e. corr_coef}
 }
 \description{
-Compute the similarity score between two vectors using a customized scoring function
+Compute the similarity score between two vectors using a
+customized scoring function
 Two vectors may be from either scRNA-seq or bulk RNA-seq data.
-The lengths of vec1 and vec2 must match, and must be arranged in the same order of genes.
+The lengths of vec1 and vec2 must match, and must be arranged in the
+same order of genes.
 Both vectors should be provided to this function after pre-processing,
 feature selection and dimension reduction.
 }

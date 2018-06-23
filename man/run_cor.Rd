@@ -20,7 +20,8 @@ run_cor(expr_mat, metadata, bulk_mat, query_gene_list, per_cell = F,
 
 \item{num_perm}{number of permutations, set to 0 by default}
 
-\item{return_full}{Return full results includeing scores instead of correlation coefficient only.}
+\item{return_full}{Return full results includeing scores instead
+of correlation coefficient only.}
 
 \item{compute_method}{method(s) for computing similarity scores}
 
