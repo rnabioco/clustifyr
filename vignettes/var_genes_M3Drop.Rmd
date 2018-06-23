@@ -45,3 +45,20 @@ DE_genes <- M3DropDifferentialExpression(Normalized_data$data,
 ```{r}
 gene_constraints <- list(as.character(DE_genes$Gene),rownames(pbmc_bulk_matrix))
 ```
+
+## or through Seurat
+```{r savedata}
+pbmc4k_matrix <- seurat_object@data
+
+pbmc4k_avg <- AverageExpression(sFil2)
+
+pbmc4k_meta <- seurat_object@meta.data
+library(data.table)
+setDT(data.frame(pbmc4k_tsne), keep.rownames = TRUE) -> pbmc4k_tibble
+setDT(pbmc4k_meta, keep.rownames = TRUE) -> pbmc4k_tibble2
+as_tibble(pbmc4k_tibble2) -> pbmc4k_tibble2
+as_tibble(pbmc4k_tibble) -> pbmc4k_tibble
+pbmc4k_meta <- inner_join(pbmc5_tibble, pbmc4k_tibble2 %>% select(rn, cluster, classified)) 
+
+pbmc4k_markers <- FindAllMarkers(pbmc4k, only.pos = TRUE, min.pct = 0.2, thresh.use = 0.2)
+```

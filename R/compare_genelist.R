@@ -15,15 +15,25 @@ binarize_expr <- function(expression_matrix,
 #' convert candidate genes list into matrix
 #'
 #' @param marker_df dataframe of candidate genes
+#' @param ranked unranked gene list feeds into hyperp, ranked gene list feeds into regular corr_coef
+#' @param weight ranked genes are tranformed into pseudo expression with added weight
+#' @param marker_df dataframe of candidate genes
 #' @export
-matrixize_markers <- function(marker_df){
+matrixize_markers <- function(marker_df, ranked = FALSE, weight = 0){
   # takes marker in dataframe form
   # equal number of marker genes per known cluster
   cut_num <- min((marker_df %>% group_by(cluster) %>% summarize(n =n()))$n)
   marker_temp <- marker_df %>% select(gene, cluster) %>% group_by(cluster) %>% slice(1:cut_num)
-  marker_temp <- marker_temp %>% mutate(n = 1:cut_num)
-  marker_m <- tidyr::spread(list_temp2, key = "cluster", value = "gene") %>% select(-n)
-  marker_m
+  if(ranked == TRUE){
+    marker_temp <- marker_temp %>% mutate(n = (cut_num + weight) : (1 + weight))
+    marker_temp2 <- as.data.frame(tidyr::spread(marker_temp, key = "cluster", value = n) %>% replace(is.na(.), 0))
+    rownames(marker_temp2) <- marker_temp2$gene
+    marker_temp2 <- marker_temp2 %>% select(-gene)
+  } else {
+    marker_temp <- marker_temp %>% mutate(n = 1:cut_num)
+    marker_temp2 <- as.data.frame(tidyr::spread(marker_temp, key = "cluster", value = "gene") %>% select(-n))
+  }
+  marker_temp2
 }
 
 #' calculate adjusted p-values for hypergeometric test of gene lists
