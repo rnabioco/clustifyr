@@ -1,6 +1,13 @@
 ---
 title: "Exploratory PCA"
-output: html_document
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 3
+    vignette: >
+      %\VignetteIndexEntry{clustifyR-explore_pca}
+      %\VignetteEngine{knitr::rmarkdown}
+      %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, echo=F}
