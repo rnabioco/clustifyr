@@ -1,6 +1,7 @@
 #' Heatmap of average expression of most predictive genes across cell types
 #'
-#' @param important importance measurements of genes (predictors) from the random forest model
+#' @param important importance measurements of genes (predictors)
+#' from the random forest model
 #' @param avg_matrix average expression matrix
 #' @param meta contains cluster info and classified cell types
 #' @param MDA_thresh MeanDecreaseAccuracy threshold
@@ -25,10 +26,10 @@ important_heatmap <- function(important, avg_matrix, meta, MDA_thresh, MDG_thres
   # cc <- rainbow(ncol(log_mat))
   # colorside = gray(1:10/10)
   bk1 = seq(min(log_mat),max(log_mat),length.out=11)
-  color <- colorpanel(ncol(log_mat),"azure","steelblue1","royalblue4") 
+  color <- colorpanel(ncol(log_mat),"azure","steelblue1","royalblue4")
   # Plot the heatmap
-  heatmap<-heatmap.2( log_mat, 
-             key=TRUE, 
+  heatmap<-heatmap.2( log_mat,
+             key=TRUE,
              key.title = NA,
              key.xlab = 'log(avg_expression)',
              trace="none",

@@ -7,13 +7,18 @@
 select_gene_subset(bin_mat, gene_constraints)
 }
 \arguments{
-\item{bin_mat}{Expression matrix with row names as the gene names. Use short name for now}
+\item{bin_mat}{Expression matrix with row names as the gene names. Use short
+name for now}
 
-\item{gene_constraints}{A list of vectors, where each vector is a candidate list of selected genes.}
+\item{gene_constraints}{A list of vectors, where each vector is a candidate
+list of selected genes.}
 }
 \description{
 Data set from different sources may contain different gene sets.
-In order to establish a fair comparison, we select a subset of genes shared by both datasets.
-This function can be also used to extract data for genes of interest, such as highly variable genes.
-Possible examples of candidate lists include row names of expression matrix and a list of highly variable genes.
+In order to establish a fair comparison, we select a subset of genes
+shared by both datasets.
+This function can be also used to extract data for genes of interest,
+such as highly variable genes.
+Possible examples of candidate lists include row names of expression matrix
+and a list of highly variable genes.
 }

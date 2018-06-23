@@ -2,7 +2,8 @@
 % Please edit documentation in R/compare_genelist.R
 \name{compare_lists}
 \alias{compare_lists}
-\title{calculate adjusted p-values for hypergeometric test of gene lists or jaccard index}
+\title{calculate adjusted p-values for hypergeometric test of gene lists
+or jaccard index}
 \usage{
 compare_lists(bin_mat, marker_m, n = 30000, metric = "hyper")
 }
@@ -16,5 +17,6 @@ compare_lists(bin_mat, marker_m, n = 30000, metric = "hyper")
 \item{metric}{adjusted p-value for hypergeometric test, or jaccard index}
 }
 \description{
-calculate adjusted p-values for hypergeometric test of gene lists or jaccard index
+calculate adjusted p-values for hypergeometric test of gene lists
+or jaccard index
 }

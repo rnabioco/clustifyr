@@ -7,11 +7,15 @@
 #' for additional clusters, there is an assignment of default_similiarity
 #' @param lambda control parameters
 #' @param epsilon control parameters
-#' @param if_compute_sigma whether compute the standard deviation of each gene's expression within each cluster.
+#' @param if_compute_sigma whether compute the standard deviation
+#'  of each gene's expression within each cluster.
 #' If not, the function assumes that all standard deviations equal to 1.
-#' @param disagreement_freq maximal fraction of changes in cluster assignment after one iteration to be considered as converged.
-#' @param num_iteration maximal number of iteration before exiting the algorithm
-#' @param default_similiarity default similarity score if there is no reference data to compare to
+#' @param disagreement_freq maximal fraction of changes in cluster
+#'  assignment after one iteration to be considered as converged.
+#' @param num_iteration maximal number of iteration before exiting
+#' the algorithm
+#' @param default_similiarity default similarity score if there is
+#'  no reference data to compare to
 #' @param if_plot whether to plot the clustering result at each iteration.
 #' @param tsne_coord t-SNE coordinate of every cells for plotting
 #' @param cluster_name Name of each cluster for plotting

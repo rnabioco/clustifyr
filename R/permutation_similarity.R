@@ -3,7 +3,8 @@
 #'
 #' @description Permute cluster labels to calculate empirical p-value
 #' @param expr_mat single-cell expression matrix
-#' @param metadata clustering info of single-cell data assume that genes have ALREADY BEEN filtered
+#' @param metadata clustering info of single-cell data assume that
+#'  genes have ALREADY BEEN filtered
 #' @param bulk_mat bulk expression matrix
 #' @param num_perm number of permutations
 #' @param per_cell run per cell?
