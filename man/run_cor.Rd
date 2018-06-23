@@ -2,7 +2,7 @@
 % Please edit documentation in R/main.R
 \name{run_cor}
 \alias{run_cor}
-\title{main: global controller function to evaluate corr. coef}
+\title{run_cor: Main function to compare scRNA-seq data to bulk RNA-seq data.}
 \usage{
 run_cor(sc_expr, sc_meta, bulk_expr, query_gene_list, per_cell = F,
   if_permute = TRUE, num_permute = 1000, return_full = F, compute_method,
@@ -15,7 +15,7 @@ run_cor(sc_expr, sc_meta, bulk_expr, query_gene_list, per_cell = F,
 
 \item{bulk_expr}{bulk expression matrix}
 
-\item{query_gene_list}{character vector with genes for computing similarity}
+\item{query_gene_list}{A vector of genes of interest.}
 
 \item{per_cell}{run per cell?}
 
@@ -24,5 +24,5 @@ run_cor(sc_expr, sc_meta, bulk_expr, query_gene_list, per_cell = F,
 \item{...}{additional paramters to pass to run_one_round}
 }
 \description{
-main: global controller function to evaluate corr. coef
+run_cor: Main function to compare scRNA-seq data to bulk RNA-seq data.
 }

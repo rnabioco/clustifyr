@@ -3,7 +3,7 @@
 #' @description Data set from different sources may contain different gene sets.
 #' In order to establish a fair comparison, we select a subset of genes shared by both datasets.
 #' This function can be also used to extract data for genes of interest, such as highly variable genes.
-#' @param expr_matrix Expression matrix with row names as the gene names (short name for now)
+#' @param expr_matrix Expression matrix with row names as the gene names. Use short name for now
 #' @param gene_constraints A list of vectors, where each vector is a candidate list of selected genes. Possible examples of candidate lists include row names of expression matrix and a list of highly variable genes.
 #' @export
 select_gene_subset <- function(expr_matrix, gene_constraints) {
@@ -51,7 +51,7 @@ corr_coef <- function(vec1, vec2, method="pearson") {
 #' @description Use package entropy to compute Kullback-Leibler divergence.
 #' The function first converts each vector's reads to pseudo-number of transcripts by normalizing the total reads to total_reads. The normalized read for each gene is then rounded to serve as the pseudo-number of transcripts.
 #' Function entropy::KL.shrink is called to compute the KL-divergence between the two vectors, and the maximal allowed divergence is set to max_KL.
-#' Finally, a linear transform is performed to convert the KL divergence (between 0 and max_KL) to similarity score (between -1 and 1).
+#' Finally, a linear transform is performed to convert the KL divergence, which is between 0 and max_KL, to similarity score between -1 and 1.
 #' @param vec1 Test vector
 #' @param vec2 Reference vector
 #' @param if_logcounts Whether the vectors are log-transformed. If so, the raw count should be computed before computing KL-divergence.
