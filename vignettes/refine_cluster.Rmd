@@ -1,6 +1,13 @@
 ---
 title: "Clustering Single Cell RNA-Seq Data Using Reference Bulk RNA-Seq Data"
-output: html_document
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 3
+    vignette: >
+      %\VignetteIndexEntry{clustifyR-refine-clusters}
+      %\VignetteEngine{knitr::rmarkdown}
+      %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include=FALSE}

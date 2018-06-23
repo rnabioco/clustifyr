@@ -1,0 +1,55 @@
+---
+title: 'Downloading data from recount'
+date: '`r Sys.Date()`'
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 3
+    vignette: >
+      %\VignetteIndexEntry{clustifyR-get_data}
+      %\VignetteEngine{knitr::rmarkdown}
+      %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+```
+## Preprocessing data from the recount database
+
+Here we will download a [study](https://trace.ncbi.nlm.nih.gov/Traces/sra/?study=SRP051688) of human vaccination responses in which individual cell types were sorted out from PBMCs. 
+
+```{r}
+source(system.file("dl_recount.R", 
+                   package = "clustifyR"))
+
+pbmc_data <- dl_recount("SRP051688")
+
+pbmc_data$read_counts[1:5, 1:5]
+
+pbmc_data$meta_data[1:5, ]
+```
+
+Next, we'll select the time = 0 controls. 
+
+```{r filter}
+good_libs <- filter(pbmc_data$meta_data, str_detect(time, "0"))
+
+pbmc_data <- pbmc_data$read_counts[, good_libs$run]
+```
+
+Lastly, we'll rename the columns based on the cell type.
+```{r rename}
+new_ids <- left_join(data_frame(run = colnames(pbmc_data)), 
+          good_libs, by = "run") %>% 
+  group_by(`cell type`) %>% 
+  mutate(cell_id = stringr::str_c(`cell type`, " rep ", row_number())) %>% 
+  pull(cell_id)
+
+colnames(pbmc_data) <- new_ids
+
+pbmc_data[1:5, 1:5]
+``` 
+
+
