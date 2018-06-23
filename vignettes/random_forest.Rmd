@@ -28,6 +28,7 @@ library(randomForest)
 library(caret)
 library(mlbench)
 library(e1071)
+library(gplots)
 ```
 
 ## Cell type prediction using Random Forest model
@@ -154,6 +155,19 @@ importance(rFmodel)
 varImpPlot(rFmodel)
 ```
 ![Important variables](https://i.imgur.com/h5d0aST.png)
+
+### Check expression patterns of important genes
+With MeanDecreaseAccuracy >=20 and MeanDecreaseGini >=30
+```{r, eval=F, echo=T}
+load("rFmodelsub.RData")
+important <-as.data.frame(importance(model) )
+# source('important_heatmap.R')
+dev.print(png, file = "myplot.png")
+png(file = "expression_heatmap.png", bg = "white")
+important_heatmap(rFmodel.sub, pbmc4k_avg, pbmc4k_meta, 20, 30)
+dev.off()
+```
+![Expression of best predictors](https://i.imgur.com/8BQO3al.png)
 
 ### Fit the model with new data
 
