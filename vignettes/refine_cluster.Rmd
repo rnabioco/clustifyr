@@ -13,7 +13,7 @@ Clustering is a crucial step in single cell RNA-seq (scRNA-seq) data analysis. M
 
 ## Theory
 
-Function refine_clusters comp a cell with expression profile $\vec{x}$ to 
+Function refine_clusters comp a cell with expression profile  $A = \pi*r^{2}$ $ \vec{x} $ to 
 
 
 Clustering single cell RNA-seq (scRNA-seq) data is a challenging problem. Most methods make use of 
