@@ -80,3 +80,29 @@ res <- run_cor(pbmc4k_matrix,
 # view heatmap of correlation coefficients
 Heatmap(res, colorRamp2(c(0, 1), c("white", "black")))
 ```
+
+
+## Pancreatic cells
+
+```{r}
+dat <- dl_recount("SRP056835")
+
+bulk_counts <- dat$read_counts
+bulk_counts <- bulk_counts[, dat$meta_data$run]
+colnames(bulk_counts) <- paste0(dat$meta_data$tissue, 
+                                "_",
+                                dat$meta_data$`developmental stage`,
+                                "_",
+                                dat$meta_data$run)
+
+res <- run_cor(pan_indrop_matrix,
+        pan_indrop_meta,
+        bulk_counts,
+        pan_indrop_vargenes,
+        if_permute = F,
+        metadata = "cell_type1",
+        compute_method = corr_coef)
+
+# view heatmap of correlation coefficients
+Heatmap(res, colorRamp2(c(0, 1), c("white", "black")))
+```
