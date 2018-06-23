@@ -3,15 +3,15 @@
 #' @description Data set from different sources may contain different gene sets.
 #' In order to establish a fair comparison, we select a subset of genes shared by both datasets.
 #' This function can be also used to extract data for genes of interest, such as highly variable genes.
-#' @param expr_matrix Expression matrix with row names as the gene names. Use short name for now
+#' @param bin_mat Expression matrix with row names as the gene names. Use short name for now
 #' @param gene_constraints A list of vectors, where each vector is a candidate list of selected genes. Possible examples of candidate lists include row names of expression matrix and a list of highly variable genes.
 #' @export
-select_gene_subset <- function(expr_matrix, gene_constraints) {
+select_gene_subset <- function(bin_mat, gene_constraints) {
   gene_subset <- gene_constraints[[1]];
   for (i in 2:length(gene_constraints)) {
     gene_subset <- intersect(gene_subset, gene_constraints[[i]]);
   }
-  return(expr_matrix[sort(gene_subset),]);
+  return(bin_mat[sort(gene_subset),]);
 }
 
 #' Compute similarity between two vectors
