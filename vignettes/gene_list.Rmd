@@ -50,7 +50,7 @@ pbmc4k_avgb <- binarize_expr(pbmc4k_avg)
 ## Unranked list: Classify
 
 ```{r}
-res <- hyperp(pbmc4k_avgb,pbmc4k_mm)
+res <- compare_lists(pbmc4k_avgb,pbmc4k_mm)
 Heatmap(-log10(res), cluster_rows = FALSE, cluster_columns = FALSE, heatmap_legend_param = list(title = "-log10(adjP)"))
 
 res2 <- hyperp(pbmc4k_avgb,mm2)
