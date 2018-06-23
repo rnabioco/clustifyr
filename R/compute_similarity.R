@@ -1,8 +1,10 @@
 
-#' pick and sort genes
-
-#' @param  expr_matrix expression matrix with row names as the gene names (short name for now)
-#' @param gene_constraints a list of vectors, where each vector is a candidate list of selected genes. can be HVG, row names of scRNAseq data and/or bulk data.
+#' Pick and sort genes
+#' @description Data set from different sources may contain different gene sets.
+#' In order to establish a fair comparison, we select a subset of genes shared by both datasets.
+#' This function can be also used to extract data for genes of interest, such as highly variable genes.
+#' @param expr_matrix Expression matrix with row names as the gene names (short name for now)
+#' @param gene_constraints A list of vectors, where each vector is a candidate list of selected genes. Possible examples of candidate lists include row names of expression matrix and a list of highly variable genes.
 #' @export
 select_gene_subset <- function(expr_matrix, gene_constraints) {
   gene_subset <- gene_constraints[[1]];
@@ -14,10 +16,9 @@ select_gene_subset <- function(expr_matrix, gene_constraints) {
 
 #' Compute similarity between two vectors
 #' @description Compute the similarity score between two vectors using a customized scoring function
-#' vec1, vec2: input expression vectors, can come from single cell or bulk RNA seq data.
-#' the length of vec1 and vec2 must match, and corresponding elements must refer to the same gene.
-#' vec1 and vec2 should be AFTER pre-processing, feature selection and dimension reduction
-#' compute_method and ...: function to compute the similarity score, and relevant parameters for compute_method
+#' Two vectors may be from either scRNA-seq or bulk RNA-seq data.
+#' The lengths of vec1 and vec2 must match, and must be arranged in the same order of genes.
+#' Both vectors should be provided to this function after pre-processing, feature selection and dimension reduction.
 #' @param vec1 test vector
 #' @param vec2 reference vector
 #' @param compute_method method to run i.e. corr_coef
@@ -33,11 +34,7 @@ compute_similarity <- function(vec1, vec2, compute_method, ...) {
 }
 
 #' Correlation function
-#' @description
-#' candidate scoring methods for similarity.
-#' score must be between -1 and 1.
-#' 1. completely positively correlated
-#' -1. completely negatively correlated
+#' @description Compute correlation between two vectors. Returned value is between -1 and 1, where 1 indicates highest positive correlation and -1 indicates highest negative correlation.
 #' @param vec1 test vector
 #' @param vec2 reference vector
 #' @param method pearson, spearman, cosine
@@ -51,18 +48,20 @@ corr_coef <- function(vec1, vec2, method="pearson") {
 }
 
 #' KL divergence
-#' @description
-#' use package entropy to compute kl divergence
-#' @param vec1 test vector
-#' @param vec2 reference vector
-#' @param if_logcounts pearson, spearman, cosine
-#' @param total_reads library size
-#' @param max_KL max_KL
+#' @description Use package entropy to compute Kullback-Leibler divergence.
+#' The function first converts each vector's reads to pseudo-number of transcripts by normalizing the total reads to total_reads. The normalized read for each gene is then rounded to serve as the pseudo-number of transcripts.
+#' Function entropy::KL.shrink is called to compute the KL-divergence between the two vectors, and the maximal allowed divergence is set to max_KL.
+#' Finally, a linear transform is performed to convert the KL divergence (between 0 and max_KL) to similarity score (between -1 and 1).
+#' @param vec1 Test vector
+#' @param vec2 Reference vector
+#' @param if_logcounts Whether the vectors are log-transformed. If so, the raw count should be computed before computing KL-divergence.
+#' @param total_reads Pseudo-library size
+#' @param max_KL Maximal allowed value of KL-divergence.
 #' @export
 kl_divergence <- function(vec1, vec2, if_logcounts=FALSE, total_reads=1000, max_KL=1) {
 
   if (if_logcounts) {
-    vec1 <- exp(vec1); vec2 <- exp(vec2);
+    vec1 <- exp(vec1)-1; vec2 <- exp(vec2)-1;
   }
   count1 <- round(vec1*total_reads/sum(vec1)); count2 <- round(vec2*total_reads/sum(vec2));
   est_KL <- entropy::KL.shrink(count1, count2, unit="log2")
