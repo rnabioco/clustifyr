@@ -90,7 +90,7 @@ plot_tsne(pbmc4k_meta, feature = "classified")
 plot_cor(res,
          pbmc4k_meta,
          colnames(res)[c(1, 5)],
-         metadata.col = "classified")
+         cluster_col = "classified")
 ```
 
 ### Obtain p-value for similarity using a permutation test
@@ -103,9 +103,8 @@ res <- run_cor(pbmc4k_matrix,
                pbmc4k_meta,
                pbmc_bulk_matrix,
                pbmc4k_vargenes,
-               if_permute = TRUE,
-               num_permute = 1000,
-               metadata = "classified",
+               num_perm = 1000,
+               cluster_col = "classified",
                compute_method = corr_coef,
                return_full = TRUE)
 
@@ -117,3 +116,57 @@ Heatmap(-log(res$p_val+.01,10), colorRamp2(c(0, 2), c("white", "black")))
 
 ### Using gene lists to classify cells (ranked or unranked)
 
+```{r}
+# generate a dataframe of markers from Seurat (a common format)
+pbmc4k_mm <- matrixize_markers(pbmc4k_markers)
+head(pbmc4k_mm)
+```
+
+```{r}
+# or just lists of genes
+NKm <- c("GNLY", "NKG7", "ZBTB32", "IL2RB")
+DCm <- c("FCER1A", "CST3", "ITGAX", "IRF8")
+Bm <- c("MS4A1", "CD79A","CD79B","CD37")
+markers <- data.frame(Bm, DCm, NKm)
+markers
+
+```
+
+Generate binary expression calls from single cell data. 
+
+```{r}
+pbmc4k_avgb <- binarize_expr(pbmc4k_avg)
+pbmc4k_avgb[1:5, c(1, 2, 10)]
+```
+
+#### Classify using a hypergeometric test
+
+Here's an example using ~100 markers per cluster
+
+```{r}
+res <- compare_lists(pbmc4k_avgb, pbmc4k_mm)
+
+# rename columns 
+colnames(res) <- left_join(data_frame(cluster = colnames(res)),
+                           unique(data_frame(cluster = pbmc4k_meta$cluster,
+                                             classified =  pbmc4k_meta$classified)), 
+                           by = "cluster") %>% 
+  pull(classified)
+
+Heatmap(-log10(res), 
+        cluster_rows = FALSE,
+        cluster_columns = FALSE, 
+        heatmap_legend_param = list(title = "-log10(adjP)"))
+```
+
+
+Here's an example using ~100 markers per cluster
+
+```{r}
+res2 <- compare_lists(pbmc4k_avgb, markers)
+Heatmap(-log10(res2), 
+        cluster_rows = FALSE, 
+        cluster_columns = FALSE, 
+        heatmap_legend_param = list(title = "-log10(adjP)"))
+
+```
