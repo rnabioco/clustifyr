@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Returns a list of genes ("features") based on the top loadings of principal components formed from the bulk expression data set — getPCAGenes • clustifyR</title>
+<title>Returns a list of genes ("features") based on the top loadings of principal components
+formed from the bulk expression data set — getPCAGenes • clustifyR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +31,11 @@
 
 
 
-<meta property="og:title" content="Returns a list of genes ("features") based on the top loadings of principal components formed from the bulk expression data set — getPCAGenes" />
+<meta property="og:title" content="Returns a list of genes ("features") based on the top loadings of principal components
+formed from the bulk expression data set — getPCAGenes" />
 
-<meta property="og:description" content="Returns a list of genes (&quot;features&quot;) based on the top loadings of principal components formed from the bulk expression data set" />
+<meta property="og:description" content="Returns a list of genes (&quot;features&quot;) based on the top loadings of principal components
+formed from the bulk expression data set" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -84,7 +87,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/compare_methods.html">Compare Methods</a>
+    </li>
+    <li>
       <a href="../articles/exploratory_pca.html">Exploratory PCA</a>
+    </li>
+    <li>
+      <a href="../articles/gene_list.html">Cluster classification using mark gene lists</a>
+    </li>
+    <li>
+      <a href="../articles/get_recount_data.html">Downloading data from recount</a>
     </li>
     <li>
       <a href="../articles/overview.html">clustifyR overview</a>
@@ -93,7 +105,7 @@
       <a href="../articles/random_forest.html">randomForest model</a>
     </li>
     <li>
-      <a href="../articles/recount_data.html">Downloading data from recount</a>
+      <a href="../articles/refine_cluster.html">Clustering Single Cell RNA-Seq Data Using Reference Bulk RNA-Seq Data</a>
     </li>
   </ul>
 </li>
@@ -101,7 +113,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="http://github.com/NCBI-Hackathons/RClusterCT">
+  <a href="http://github.com/NCBI-Hackathons/clustifyR">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -118,14 +130,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Returns a list of genes ("features") based on the top loadings of principal components formed from the bulk expression data set</h1>
-    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/RClusterCT/blob/master/R/get_pca_genes.R'><code>R/get_pca_genes.R</code></a></small>
+    <h1>Returns a list of genes ("features") based on the top loadings of principal components
+formed from the bulk expression data set</h1>
+    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/clustifyR/blob/master/R/get_pca_genes.R'><code>R/get_pca_genes.R</code></a></small>
     <div class="hidden name"><code>getPCAGenes.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Returns a list of genes ("features") based on the top loadings of principal components formed from the bulk expression data set</p>
+    <p>Returns a list of genes ("features") based on the top loadings of principal components
+formed from the bulk expression data set</p>
     
     </div>
 
@@ -136,7 +150,8 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>sc_avg_expr</th>
-      <td><p>Expression data frame; rownames=genes, colnames=single cell cluster name, values=average single cell expression (log transformed).</p></td>
+      <td><p>Expression data frame; rownames=genes, colnames=single cell cluster name,
+values=average single cell expression (log transformed).</p></td>
     </tr>
     <tr>
       <th>bulk_expr</th>
@@ -144,11 +159,12 @@
     </tr>
     <tr>
       <th>nr_pcs</th>
-      <td><p>Number PCs to selected gene loadings from. See the "explore_PCA_corr.Rmd" vignette.</p></td>
+      <td><p>Number PCs to selected gene loadings from. See the explore_PCA_corr.Rmd vignette.</p></td>
     </tr>
     <tr>
       <th>percentile</th>
-      <td><p>Select the percentile of absolute values of PCA loadings to select genes from. E.g. 0.999 would select the .1% of genes with the largest loadings.</p></td>
+      <td><p>Select the percentile of absolute values of PCA loadings to select genes from.
+E.g. 0.999 would select the top point 1 percent of genes with the largest loadings.</p></td>
     </tr>
     </table>
     

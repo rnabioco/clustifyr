@@ -33,10 +33,10 @@
 <meta property="og:title" content="Compute similarity between two vectors — compute_similarity" />
 
 <meta property="og:description" content="Compute the similarity score between two vectors using a customized scoring function
-vec1, vec2: input expression vectors, can come from single cell or bulk RNA seq data.
-the length of vec1 and vec2 must match, and corresponding elements must refer to the same gene.
-vec1 and vec2 should be AFTER pre-processing, feature selection and dimension reduction
-compute_method and ...: function to compute the similarity score, and relevant parameters for compute_method" />
+Two vectors may be from either scRNA-seq or bulk RNA-seq data.
+The lengths of vec1 and vec2 must match, and must be arranged in the same order of genes.
+Both vectors should be provided to this function after pre-processing,
+feature selection and dimension reduction." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -88,7 +88,16 @@ compute_method and ...: function to compute the similarity score, and relevant p
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/compare_methods.html">Compare Methods</a>
+    </li>
+    <li>
       <a href="../articles/exploratory_pca.html">Exploratory PCA</a>
+    </li>
+    <li>
+      <a href="../articles/gene_list.html">Cluster classification using mark gene lists</a>
+    </li>
+    <li>
+      <a href="../articles/get_recount_data.html">Downloading data from recount</a>
     </li>
     <li>
       <a href="../articles/overview.html">clustifyR overview</a>
@@ -97,7 +106,7 @@ compute_method and ...: function to compute the similarity score, and relevant p
       <a href="../articles/random_forest.html">randomForest model</a>
     </li>
     <li>
-      <a href="../articles/recount_data.html">Downloading data from recount</a>
+      <a href="../articles/refine_cluster.html">Clustering Single Cell RNA-Seq Data Using Reference Bulk RNA-Seq Data</a>
     </li>
   </ul>
 </li>
@@ -105,7 +114,7 @@ compute_method and ...: function to compute the similarity score, and relevant p
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="http://github.com/NCBI-Hackathons/RClusterCT">
+  <a href="http://github.com/NCBI-Hackathons/clustifyR">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -123,17 +132,17 @@ compute_method and ...: function to compute the similarity score, and relevant p
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Compute similarity between two vectors</h1>
-    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/RClusterCT/blob/master/R/compute_similarity.R'><code>R/compute_similarity.R</code></a></small>
+    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/clustifyR/blob/master/R/compute_similarity.R'><code>R/compute_similarity.R</code></a></small>
     <div class="hidden name"><code>compute_similarity.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
     <p>Compute the similarity score between two vectors using a customized scoring function
-vec1, vec2: input expression vectors, can come from single cell or bulk RNA seq data.
-the length of vec1 and vec2 must match, and corresponding elements must refer to the same gene.
-vec1 and vec2 should be AFTER pre-processing, feature selection and dimension reduction
-compute_method and ...: function to compute the similarity score, and relevant parameters for compute_method</p>
+Two vectors may be from either scRNA-seq or bulk RNA-seq data.
+The lengths of vec1 and vec2 must match, and must be arranged in the same order of genes.
+Both vectors should be provided to this function after pre-processing,
+feature selection and dimension reduction.</p>
     
     </div>
 

@@ -32,11 +32,9 @@
 
 <meta property="og:title" content="Correlation function — corr_coef" />
 
-<meta property="og:description" content="candidate scoring methods for similarity.
-score must be between -1 and 1.
-completely positively correlated
--1. completely negatively correlated
-" />
+<meta property="og:description" content="Compute correlation between two vectors.
+Returned value is between -1 and 1, where 1 indicates highest positive correlation
+and -1 indicates highest negative correlation." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -88,7 +86,16 @@ completely positively correlated
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/compare_methods.html">Compare Methods</a>
+    </li>
+    <li>
       <a href="../articles/exploratory_pca.html">Exploratory PCA</a>
+    </li>
+    <li>
+      <a href="../articles/gene_list.html">Cluster classification using mark gene lists</a>
+    </li>
+    <li>
+      <a href="../articles/get_recount_data.html">Downloading data from recount</a>
     </li>
     <li>
       <a href="../articles/overview.html">clustifyR overview</a>
@@ -97,7 +104,7 @@ completely positively correlated
       <a href="../articles/random_forest.html">randomForest model</a>
     </li>
     <li>
-      <a href="../articles/recount_data.html">Downloading data from recount</a>
+      <a href="../articles/refine_cluster.html">Clustering Single Cell RNA-Seq Data Using Reference Bulk RNA-Seq Data</a>
     </li>
   </ul>
 </li>
@@ -105,7 +112,7 @@ completely positively correlated
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="http://github.com/NCBI-Hackathons/RClusterCT">
+  <a href="http://github.com/NCBI-Hackathons/clustifyR">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -123,17 +130,15 @@ completely positively correlated
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Correlation function</h1>
-    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/RClusterCT/blob/master/R/compute_similarity.R'><code>R/compute_similarity.R</code></a></small>
+    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/clustifyR/blob/master/R/compute_similarity.R'><code>R/compute_similarity.R</code></a></small>
     <div class="hidden name"><code>corr_coef.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>candidate scoring methods for similarity.
-score must be between -1 and 1.</p><ol>
-<li><p>completely positively correlated
--1. completely negatively correlated</p></li>
-</ol>
+    <p>Compute correlation between two vectors.
+Returned value is between -1 and 1, where 1 indicates highest positive correlation
+and -1 indicates highest negative correlation.</p>
     
     </div>
 

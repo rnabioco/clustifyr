@@ -19,7 +19,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-home">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -53,7 +53,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="articles/compare_methods.html">Compare Methods</a>
+    </li>
+    <li>
       <a href="articles/exploratory_pca.html">Exploratory PCA</a>
+    </li>
+    <li>
+      <a href="articles/gene_list.html">Cluster classification using mark gene lists</a>
+    </li>
+    <li>
+      <a href="articles/get_recount_data.html">Downloading data from recount</a>
     </li>
     <li>
       <a href="articles/overview.html">clustifyR overview</a>
@@ -62,14 +71,14 @@
       <a href="articles/random_forest.html">randomForest model</a>
     </li>
     <li>
-      <a href="articles/recount_data.html">Downloading data from recount</a>
+      <a href="articles/refine_cluster.html">Clustering Single Cell RNA-Seq Data Using Reference Bulk RNA-Seq Data</a>
     </li>
   </ul>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="http://github.com/NCBI-Hackathons/RClusterCT">
+  <a href="http://github.com/NCBI-Hackathons/clustifyR">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -84,46 +93,71 @@
 
       
       </header><div class="row">
-  <div class="contents col-md-9">
-    <div id="clustifyr" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#clustifyr" class="anchor"></a>clustifyR</h1></div>
+  <div class="col-md-9 contents">
+    
 
-<div id="classify-cell-types-in-single-cell-rna-sequencing-expeirments-using-reference-bulk-rna-seq-data-sets--see-detailed-vignettes-and-documentation-here-" class="section level3">
+    
+    
+
+<p align="center">
+<img src="../../../../inst/logo/logo_transparent.png"></p>
+<div id="clustifyr-is-an-r-package-that-classifies-cells-and-clusters-in-single-cell-rna-sequencing-experiments-using-reference-bulk-rna-seq-data-sets-gene-signatures-or-marker-genes-" class="section level3">
 <h3 class="hasAnchor">
-<a href="#classify-cell-types-in-single-cell-rna-sequencing-expeirments-using-reference-bulk-rna-seq-data-sets--see-detailed-vignettes-and-documentation-here-" class="anchor"></a>Classify cell types in single-cell RNA sequencing expeirments using reference bulk RNA-seq data sets. See detailed vignettes and documentation <a href="https://ncbi-hackathons.github.io/clustifyR/">here</a>.</h3>
+<a href="#clustifyr-is-an-r-package-that-classifies-cells-and-clusters-in-single-cell-rna-sequencing-experiments-using-reference-bulk-rna-seq-data-sets-gene-signatures-or-marker-genes-" class="anchor"></a>ClustifyR is an <a href="https://www.r-project.org/">R</a> package that classifies cells and clusters in single-cell RNA sequencing experiments using reference bulk RNA-seq data sets, gene signatures or marker genes.</h3>
+<p>Single cell transcriptomes are difficult to annotate without extensive knowledge of the underlying biology of the system in question. Even with this knowledge, accurate identification can be challenging due to the lack of detectable expression of common marker genes defined by bulk RNA-seq, flow cytometry, etc. <code>ClustifyR</code> solves this problem by providing functions to automatically annotate single cells or clusters using bulk RNA-seq data or marker gene lists (ranked or unranked). Additional functions allow for exploratory analysis of similarities between single cell RNA-seq datasets and reference data. Put another way:</p>
+<p><strong>C</strong>lustifyR <strong>L</strong>everages <strong>U</strong>ser <strong>S</strong>upplied <strong>T</strong>ranscripts to <strong>I</strong>dentify <strong>F</strong>eatures in <strong>Y</strong>our sc<strong>R</strong>NA-seq</p>
 </div>
-<div id="workflow" class="section level2">
+<div id="installation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#workflow" class="anchor"></a>Workflow</h2>
-<ol>
-<li><p>Load a single-cell RNA-seq data set (<code>SparseMatrix</code> or <code>data.frame</code>). Normalize (?) with <code>scran</code>.</p></li>
-<li><p>Load the reference data type (i.e., bulk RNA-seq data, a gene set (ordered or unordered))</p></li>
-<li><p>Compute correlations between single-cell and reference data types. Classify on per-cell or per-cluster basis.</p></li>
-<li><p>Output per-cell or per-cluster, significance of the assignment.</p></li>
-<li><p>Visualize per-cell, per-cluster correlations in e.g. a t-SNE.</p></li>
-</ol>
+<a href="#installation" class="anchor"></a>Installation</h2>
+<p>Installation from github in R is a two step process:</p>
+<div id="step-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#step-1" class="anchor"></a>Step 1:</h3>
+<pre><code># Install devtools
+&gt; install.packages("devtools")</code></pre>
 </div>
-<div id="previous-work" class="section level2">
+<div id="step-2" class="section level3">
+<h3 class="hasAnchor">
+<a href="#step-2" class="anchor"></a>Step 2:</h3>
+<pre><code># Install classifyR from github
+&gt; devtools::install_github("NCBI-Hackathons/clustifyR")</code></pre>
+</div>
+</div>
+<div id="usage" class="section level2">
 <h2 class="hasAnchor">
-<a href="#previous-work" class="anchor"></a>Previous work</h2>
-<ul>
-<li><p><code>scmap</code>: [<a href="https://github.com/hemberg-lab/scmap">code</a>] [<a href="https://www.nature.com/articles/nmeth.4644">paper</a>]</p></li>
-<li><p><code>scfind</code> [<a href="https://github.com/hemberg-lab/scfind">code</a>]</p></li>
-<li><p><code>SingleR</code> [<a href="https://github.com/dviraran/SingleR">code</a>] [<a href="https://doi.org/10.1101/284604">paper</a>]</p></li>
-<li><p><code>CellAtlasSearch</code> [<a href="https://doi.org/10.1093/nar/gky421">paper</a>] (no code available)</p></li>
-</ul>
+<a href="#usage" class="anchor"></a>Usage</h2>
+<div id="super-quickstart-with-sample-data-included-in-package" class="section level3">
+<h3 class="hasAnchor">
+<a href="#super-quickstart-with-sample-data-included-in-package" class="anchor"></a>Super-quickstart with sample data (included in package):</h3>
+<p>Generate a correlation matrix from a matrix of single cell RNA-seq data (<code>pbmc4k_matrix</code>), a metadata table describing the single cell data (<code>pbmc4k_meta</code>), a list of variable genes in the single cell data (<code>pbmc4k_vargenes</code>), and a matrix of bulk RNA-seq read counts (<code>pbmc_bulk_matrix</code>):</p>
+<pre><code># run correlation (pearson by default)
+&gt; res &lt;- run_cor(expr_mat = pbmc4k_matrix,
+                 metadata = pbmc4k_meta,
+                 bulk_mat = pbmc_bulk_matrix,
+                 query_gene_list = pbmc4k_vargenes,
+                 compute_method = corr_coef)</code></pre>
+<p>Plot the correlation coefficients on a pre-calculated tSNE projection (stored in <code>pbmc4k_meta</code>):</p>
+<pre><code># plot correlation coefficients on tSNE for each identity class
+&gt; plot_cor(res,
+           pbmc4k_meta,
+           colnames(res)[c(1, 5)],
+           cluster_col = "classified")</code></pre>
+</div>
+<div id="for-more-detail-see-a-list-of-command-refences-or-browse-the-vignettes-" class="section level3">
+<h3 class="hasAnchor">
+<a href="#for-more-detail-see-a-list-of-command-refences-or-browse-the-vignettes-" class="anchor"></a>For more detail, see a list of <a href="https://ncbi-hackathons.github.io/clustifyR/reference/index.html">command refences</a> or <a href="https://ncbi-hackathons.github.io/clustifyR/articles/">browse the vignettes</a>.</h3>
 </div>
 </div>
   </div>
 
-  <div class="col-md-3" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="http://github.com/NCBI-Hackathons/RClusterCT">http://​github.com/​NCBI-Hackathons/​RClusterCT</a>
+<li>Browse source code at <br><a href="http://github.com/NCBI-Hackathons/clustifyR">http://​github.com/​NCBI-Hackathons/​clustifyR</a>
 </li>
-<li>Report a bug at <br><a href="https://github.com/NCBI-Hackathons/RClusterCT/issues">https://​github.com/​NCBI-Hackathons/​RClusterCT/​issues</a>
+<li>Report a bug at <br><a href="https://github.com/NCBI-Hackathons/clustifyR/issues">https://​github.com/​NCBI-Hackathons/​clustifyR/​issues</a>
 </li>
 </ul>
 </div>
@@ -146,13 +180,14 @@
 </ul>
 </div>
 
-  <div class="dev-status">
+      <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/NCBI-Hackathons/clustifyR"><img src="https://travis-ci.org/NCBI-Hackathons/clustifyR.svg?branch=master" alt="Travis build status"></a></li>
+<li><a href="https://travis-ci.org/NCBI-Hackathons/clustifyR"><img src="https://travis-ci.org/NCBI-Hackathons/clustifyR.svg?branch=master" alt="Build Status"></a></li>
 </ul>
 </div>
 </div>
+
 </div>
 
 
