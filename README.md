@@ -25,6 +25,12 @@ install.packages("devtools")
 devtools::install_github("NCBI-Hackathons/clustifyR")
 ```
 
+## Workflow
+
+<p align="center">
+  <img src="/inst/flowchart.png">
+</p>
+
 ## Usage
 
 ### Super-quickstart with sample data (included in package):
