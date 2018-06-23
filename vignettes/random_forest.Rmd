@@ -161,10 +161,7 @@ varImpPlot(rFmodel)
 load("rFmodelsub.RData")
 important <-as.data.frame(importance(rFmodel.sub))
 # source('important_heatmap.R')
-dev.print(png, file = "myplot.png")
-png(file = "expression_heatmap.png", bg = "white")
 important_heatmap(important, pbmc4k_avg, pbmc4k_meta, 20, 30)
-dev.off()
 ```
 With MeanDecreaseAccuracy >=20 and MeanDecreaseGini >=30:
 ![Expression of best predictors](https://i.imgur.com/8BQO3al.png)
