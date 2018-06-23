@@ -8,16 +8,19 @@ kl_divergence(vec1, vec2, if_logcounts = FALSE, total_reads = 1000,
   max_KL = 1)
 }
 \arguments{
-\item{vec1}{test vector}
+\item{vec1}{Test vector}
 
-\item{vec2}{reference vector}
+\item{vec2}{Reference vector}
 
-\item{if_logcounts}{pearson, spearman, cosine}
+\item{if_logcounts}{Whether the vectors are log-transformed. If so, the raw count should be computed before computing KL-divergence.}
 
-\item{total_reads}{library size}
+\item{total_reads}{Pseudo-library size}
 
-\item{max_KL}{max_KL}
+\item{max_KL}{Maximal allowed value of KL-divergence.}
 }
 \description{
-use package entropy to compute kl divergence
+Use package entropy to compute Kullback-Leibler divergence.
+The function first converts each vector's reads to pseudo-number of transcripts by normalizing the total reads to total_reads. The normalized read for each gene is then rounded to serve as the pseudo-number of transcripts.
+Function entropy::KL.shrink is called to compute the KL-divergence between the two vectors, and the maximal allowed divergence is set to max_KL.
+Finally, a linear transform is performed to convert the KL divergence (between 0 and max_KL) to similarity score (between -1 and 1).
 }
