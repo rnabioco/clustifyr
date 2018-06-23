@@ -24,14 +24,16 @@ dl_recount <- function(sra_id){
         unique() %>%
         unlist()
 
-  mdata <- data_frame(all_data = as.list(mdata$characteristics)) %>%
+  mdata <- data_frame(run =  mdata$run,
+                      all_data = as.list(mdata$characteristics)) %>%
     mutate(out = purrr::map_chr(all_data,
                                 ~str_c(.x, collapse = "::"))) %>%
   tidyr::separate(out,
                   sep = "::",
                   into = mdata_cols) %>%
     select(-all_data) %>%
-    mutate_all(.funs = function(x) str_match(x, ": (.+)")[, 2])
+    mutate_at(.vars = vars(-matches("run")),
+              .funs = function(x) str_match(x, ": (.+)")[, 2])
 
   # convert ids to symbols
   row_ids_to_symbols <- left_join(data_frame(ids = gene_ids),
