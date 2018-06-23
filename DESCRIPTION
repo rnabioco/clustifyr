@@ -31,6 +31,8 @@ Imports:
     stats,
     gplots
 Suggests:
-    testthat
+    testthat,
+    knitr,
+    rmarkdown
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
