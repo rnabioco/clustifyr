@@ -4,10 +4,10 @@
 \alias{select_gene_subset}
 \title{Pick and sort genes}
 \usage{
-select_gene_subset(expr_matrix, gene_constraints)
+select_gene_subset(bin_mat, gene_constraints)
 }
 \arguments{
-\item{expr_matrix}{Expression matrix with row names as the gene names. Use short name for now}
+\item{bin_mat}{Expression matrix with row names as the gene names. Use short name for now}
 
 \item{gene_constraints}{A list of vectors, where each vector is a candidate list of selected genes. Possible examples of candidate lists include row names of expression matrix and a list of highly variable genes.}
 }

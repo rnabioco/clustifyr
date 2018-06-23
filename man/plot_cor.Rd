@@ -4,16 +4,17 @@
 \alias{plot_cor}
 \title{Plot similarity measures on a tSNE}
 \usage{
-plot_cor(correlation_matrix, meta_data,
-  bulk_data_to_plot = colnames(correlation_matrix),
-  metadata.col = "cluster")
+plot_cor(correlation_matrix, metadata,
+  bulk_data_to_plot = colnames(correlation_matrix), cluster_col = "cluster")
 }
 \arguments{
 \item{correlation_matrix}{input similarity matrix}
 
-\item{meta_data}{input metadata with tsne coordinates and cluster ids}
+\item{metadata}{input metadata with tsne coordinates and cluster ids}
 
 \item{bulk_data_to_plot}{colname of data to plot, defaults to all}
+
+\item{cluster_col}{colname of cluster IDs, defaults to "cluster"}
 
 \item{...}{passed to plot_tsne}
 }

@@ -4,7 +4,7 @@
 \alias{average_clusters}
 \title{Average expression values per cluster}
 \usage{
-average_clusters(mat, cluster_info, log_scale = T, cell_column = "rn",
+average_clusters(mat, cluster_info, log_scale = T, cell_col = "rn",
   cluster_col = "cluster")
 }
 \arguments{
@@ -14,7 +14,7 @@ average_clusters(mat, cluster_info, log_scale = T, cell_column = "rn",
 
 \item{log_scale}{input data is natural log, averaging will be done}
 
-\item{cell_column}{column in cluster_info with cell ids}
+\item{cell_col}{column in cluster_info with cell ids}
 
 \item{cluster_col}{column in cluster_info with cluster number}
 }
