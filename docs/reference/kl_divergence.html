@@ -32,7 +32,13 @@
 
 <meta property="og:title" content="KL divergence — kl_divergence" />
 
-<meta property="og:description" content="use package entropy to compute kl divergence" />
+<meta property="og:description" content="Use package entropy to compute Kullback-Leibler divergence.
+The function first converts each vector's reads to pseudo-number of transcripts by normalizing the total reads to total_reads.
+The normalized read for each gene is then rounded to serve as the pseudo-number of transcripts.
+Function entropy::KL.shrink is called to compute the KL-divergence between the two vectors,
+and the maximal allowed divergence is set to max_KL.
+Finally, a linear transform is performed to convert the KL divergence,
+which is between 0 and max_KL, to similarity score between -1 and 1." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -84,7 +90,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/compare_methods.html">Compare Methods</a>
+    </li>
+    <li>
       <a href="../articles/exploratory_pca.html">Exploratory PCA</a>
+    </li>
+    <li>
+      <a href="../articles/gene_list.html">Cluster classification using mark gene lists</a>
+    </li>
+    <li>
+      <a href="../articles/get_recount_data.html">Downloading data from recount</a>
     </li>
     <li>
       <a href="../articles/overview.html">clustifyR overview</a>
@@ -93,7 +108,7 @@
       <a href="../articles/random_forest.html">randomForest model</a>
     </li>
     <li>
-      <a href="../articles/recount_data.html">Downloading data from recount</a>
+      <a href="../articles/refine_cluster.html">Clustering Single Cell RNA-Seq Data Using Reference Bulk RNA-Seq Data</a>
     </li>
   </ul>
 </li>
@@ -101,7 +116,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="http://github.com/NCBI-Hackathons/RClusterCT">
+  <a href="http://github.com/NCBI-Hackathons/clustifyR">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -119,13 +134,19 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>KL divergence</h1>
-    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/RClusterCT/blob/master/R/compute_similarity.R'><code>R/compute_similarity.R</code></a></small>
+    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/clustifyR/blob/master/R/compute_similarity.R'><code>R/compute_similarity.R</code></a></small>
     <div class="hidden name"><code>kl_divergence.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>use package entropy to compute kl divergence</p>
+    <p>Use package entropy to compute Kullback-Leibler divergence.
+The function first converts each vector's reads to pseudo-number of transcripts by normalizing the total reads to total_reads.
+The normalized read for each gene is then rounded to serve as the pseudo-number of transcripts.
+Function entropy::KL.shrink is called to compute the KL-divergence between the two vectors,
+and the maximal allowed divergence is set to max_KL.
+Finally, a linear transform is performed to convert the KL divergence,
+which is between 0 and max_KL, to similarity score between -1 and 1.</p>
     
     </div>
 
@@ -137,23 +158,23 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>vec1</th>
-      <td><p>test vector</p></td>
+      <td><p>Test vector</p></td>
     </tr>
     <tr>
       <th>vec2</th>
-      <td><p>reference vector</p></td>
+      <td><p>Reference vector</p></td>
     </tr>
     <tr>
       <th>if_logcounts</th>
-      <td><p>pearson, spearman, cosine</p></td>
+      <td><p>Whether the vectors are log-transformed. If so, the raw count should be computed before computing KL-divergence.</p></td>
     </tr>
     <tr>
       <th>total_reads</th>
-      <td><p>library size?</p></td>
+      <td><p>Pseudo-library size</p></td>
     </tr>
     <tr>
       <th>max_KL</th>
-      <td><p>max_KL</p></td>
+      <td><p>Maximal allowed value of KL-divergence.</p></td>
     </tr>
     </table>
     

@@ -7,7 +7,13 @@
     <loc>http://ncbi-hackathons.github.io/clustifyR/reference/average_clusters.html</loc>
   </url>
   <url>
+    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/binarize_expr.html</loc>
+  </url>
+  <url>
     <loc>http://ncbi-hackathons.github.io/clustifyR/reference/clustifyR.html</loc>
+  </url>
+  <url>
+    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/compare_lists.html</loc>
   </url>
   <url>
     <loc>http://ncbi-hackathons.github.io/clustifyR/reference/compute_similarity.html</loc>
@@ -19,7 +25,13 @@
     <loc>http://ncbi-hackathons.github.io/clustifyR/reference/getPCAGenes.html</loc>
   </url>
   <url>
+    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/important_heatmap.html</loc>
+  </url>
+  <url>
     <loc>http://ncbi-hackathons.github.io/clustifyR/reference/kl_divergence.html</loc>
+  </url>
+  <url>
+    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/matrixize_markers.html</loc>
   </url>
   <url>
     <loc>http://ncbi-hackathons.github.io/clustifyR/reference/pbmc4k_matrix.html</loc>
@@ -49,7 +61,7 @@
     <loc>http://ncbi-hackathons.github.io/clustifyR/reference/plot_tsne.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/reduce_matrix.html</loc>
+    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/reduce_expr_matrix.html</loc>
   </url>
   <url>
     <loc>http://ncbi-hackathons.github.io/clustifyR/reference/refine_clusters.html</loc>
@@ -61,7 +73,16 @@
     <loc>http://ncbi-hackathons.github.io/clustifyR/reference/select_gene_subset.html</loc>
   </url>
   <url>
+    <loc>http://ncbi-hackathons.github.io/clustifyR/articles/compare_methods.html</loc>
+  </url>
+  <url>
     <loc>http://ncbi-hackathons.github.io/clustifyR/articles/exploratory_pca.html</loc>
+  </url>
+  <url>
+    <loc>http://ncbi-hackathons.github.io/clustifyR/articles/gene_list.html</loc>
+  </url>
+  <url>
+    <loc>http://ncbi-hackathons.github.io/clustifyR/articles/get_recount_data.html</loc>
   </url>
   <url>
     <loc>http://ncbi-hackathons.github.io/clustifyR/articles/overview.html</loc>
@@ -70,6 +91,6 @@
     <loc>http://ncbi-hackathons.github.io/clustifyR/articles/random_forest.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/articles/recount_data.html</loc>
+    <loc>http://ncbi-hackathons.github.io/clustifyR/articles/refine_cluster.html</loc>
   </url>
 </urlset>

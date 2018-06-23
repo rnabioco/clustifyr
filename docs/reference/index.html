@@ -81,7 +81,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/compare_methods.html">Compare Methods</a>
+    </li>
+    <li>
       <a href="../articles/exploratory_pca.html">Exploratory PCA</a>
+    </li>
+    <li>
+      <a href="../articles/gene_list.html">Cluster classification using mark gene lists</a>
+    </li>
+    <li>
+      <a href="../articles/get_recount_data.html">Downloading data from recount</a>
     </li>
     <li>
       <a href="../articles/overview.html">clustifyR overview</a>
@@ -90,7 +99,7 @@
       <a href="../articles/random_forest.html">randomForest model</a>
     </li>
     <li>
-      <a href="../articles/recount_data.html">Downloading data from recount</a>
+      <a href="../articles/refine_cluster.html">Clustering Single Cell RNA-Seq Data Using Reference Bulk RNA-Seq Data</a>
     </li>
   </ul>
 </li>
@@ -98,7 +107,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="http://github.com/NCBI-Hackathons/RClusterCT">
+  <a href="http://github.com/NCBI-Hackathons/clustifyR">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -142,9 +151,21 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="binarize_expr.html">binarize_expr()</a></code> </p>
+        </td>
+        <td><p>Binarize scRNA seq data</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="clustifyR.html">clustifyR</a></code> </p>
         </td>
         <td><p>clustifyR</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="compare_lists.html">compare_lists()</a></code> </p>
+        </td>
+        <td><p>calculate adjusted p-values for hypergeometric test of gene lists or jaccard index</p></td>
       </tr><tr>
         
         <td>
@@ -162,13 +183,26 @@
         <td>
           <p><code><a href="getPCAGenes.html">getPCAGenes()</a></code> </p>
         </td>
-        <td><p>Returns a list of genes ("features") based on the top loadings of principal components formed from the bulk expression data set</p></td>
+        <td><p>Returns a list of genes ("features") based on the top loadings of principal components
+formed from the bulk expression data set</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="important_heatmap.html">important_heatmap()</a></code> </p>
+        </td>
+        <td><p>Heatmap of average expression of most predictive genes across cell types</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="kl_divergence.html">kl_divergence()</a></code> </p>
         </td>
         <td><p>KL divergence</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="matrixize_markers.html">matrixize_markers()</a></code> </p>
+        </td>
+        <td><p>convert candidate genes list into matrix</p></td>
       </tr><tr>
         
         <td>
@@ -226,28 +260,27 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="reduce_matrix.html">reduce_matrix()</a></code> </p>
+          <p><code><a href="reduce_expr_matrix.html">reduce_expr_matrix()</a></code> </p>
         </td>
-        <td><p>reduce the full expression matrix to only the highly variable genes, change the readcounts to binary factors
-prepare the input data for random forest</p></td>
+        <td><p>Reduce expr_matrix</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="refine_clusters.html">refine_clusters()</a></code> </p>
         </td>
-        <td><p>refine_clusters: refine clustering using data</p></td>
+        <td><p>refine_clusters: refine clustering using reference data</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="run_cor.html">run_cor()</a></code> </p>
         </td>
-        <td><p>main: global controller function to evaluate corr. coef</p></td>
+        <td><p>run_cor: Main function to compare scRNA-seq data to bulk RNA-seq data.</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="select_gene_subset.html">select_gene_subset()</a></code> </p>
         </td>
-        <td><p>pick and sort genes</p></td>
+        <td><p>Pick and sort genes</p></td>
       </tr>
     </tbody>
     </table>

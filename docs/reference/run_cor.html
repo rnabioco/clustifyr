@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>main: global controller function to evaluate corr. coef — run_cor • clustifyR</title>
+<title>run_cor: Main function to compare scRNA-seq data to bulk RNA-seq data. — run_cor • clustifyR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="main: global controller function to evaluate corr. coef — run_cor" />
+<meta property="og:title" content="run_cor: Main function to compare scRNA-seq data to bulk RNA-seq data. — run_cor" />
 
-<meta property="og:description" content="main: global controller function to evaluate corr. coef" />
+<meta property="og:description" content="run_cor: Main function to compare scRNA-seq data to bulk RNA-seq data." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -84,7 +84,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/compare_methods.html">Compare Methods</a>
+    </li>
+    <li>
       <a href="../articles/exploratory_pca.html">Exploratory PCA</a>
+    </li>
+    <li>
+      <a href="../articles/gene_list.html">Cluster classification using mark gene lists</a>
+    </li>
+    <li>
+      <a href="../articles/get_recount_data.html">Downloading data from recount</a>
     </li>
     <li>
       <a href="../articles/overview.html">clustifyR overview</a>
@@ -93,7 +102,7 @@
       <a href="../articles/random_forest.html">randomForest model</a>
     </li>
     <li>
-      <a href="../articles/recount_data.html">Downloading data from recount</a>
+      <a href="../articles/refine_cluster.html">Clustering Single Cell RNA-Seq Data Using Reference Bulk RNA-Seq Data</a>
     </li>
   </ul>
 </li>
@@ -101,7 +110,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="http://github.com/NCBI-Hackathons/RClusterCT">
+  <a href="http://github.com/NCBI-Hackathons/clustifyR">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -118,43 +127,50 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>main: global controller function to evaluate corr. coef</h1>
-    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/RClusterCT/blob/master/R/main.R'><code>R/main.R</code></a></small>
+    <h1>run_cor: Main function to compare scRNA-seq data to bulk RNA-seq data.</h1>
+    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/clustifyR/blob/master/R/main.R'><code>R/main.R</code></a></small>
     <div class="hidden name"><code>run_cor.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>main: global controller function to evaluate corr. coef</p>
+    <p>run_cor: Main function to compare scRNA-seq data to bulk RNA-seq data.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>run_cor</span>(<span class='no'>sc_expr</span>, <span class='no'>sc_meta</span>, <span class='no'>bulk_expr</span>, <span class='no'>query_gene_list</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='no'>F</span>,
-  <span class='kw'>if_permute</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>num_permute</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>return_full</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='no'>compute_method</span>,
-  <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>run_cor</span>(<span class='no'>expr_mat</span>, <span class='no'>metadata</span>, <span class='no'>bulk_mat</span>, <span class='no'>query_gene_list</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='no'>F</span>,
+  <span class='kw'>num_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>return_full</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='no'>compute_method</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>sc_expr</th>
+      <th>expr_mat</th>
       <td><p>single-cell expression matrix</p></td>
     </tr>
     <tr>
-      <th>sc_meta</th>
-      <td><p>clustering info of single-cell data assume that genes have ALREADY BEEN filtered</p></td>
+      <th>metadata</th>
+      <td><p>clustering info of single-cell data</p></td>
     </tr>
     <tr>
-      <th>bulk_expr</th>
+      <th>bulk_mat</th>
       <td><p>bulk expression matrix</p></td>
     </tr>
     <tr>
       <th>query_gene_list</th>
-      <td><p>character vector with genes for computing similarity</p></td>
+      <td><p>A vector of genes of interest.</p></td>
     </tr>
     <tr>
       <th>per_cell</th>
       <td><p>run per cell?</p></td>
+    </tr>
+    <tr>
+      <th>num_perm</th>
+      <td><p>number of permutations, set to 0 by default</p></td>
+    </tr>
+    <tr>
+      <th>return_full</th>
+      <td><p>Return full results includeing scores instead of correlation coefficient only.</p></td>
     </tr>
     <tr>
       <th>compute_method</th>
@@ -162,7 +178,11 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>additional paramters to pass to run_one_round</p></td>
+      <td><p>additional arguments to pass to compute_method function</p></td>
+    </tr>
+    <tr>
+      <th>cluster_col</th>
+      <td><p>column used for clustering</p></td>
     </tr>
     </table>
     
