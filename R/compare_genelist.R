@@ -29,7 +29,7 @@ matrixize_markers <- function(marker_df){
 #' calculate adjusted p-values for hypergeometric test of gene lists
 #'
 #' @param bin_matrix binarized single-cell expression matrix
-#' @marker_m matrix or dataframe of candidate genes for each cluster
+#' @param marker_m matrix or dataframe of candidate genes for each cluster
 #' @param n number of genes in the genome
 #' @export
 hyperp <- function(bin_matrix, marker_m, n = 30000){

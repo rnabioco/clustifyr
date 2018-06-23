@@ -39,5 +39,7 @@ Suggests:
     randomForest,
     caret,
     mlbench,
-    e1071
+    e1071,
+    M3Drop,
+    ComplexHeatmap
 VignetteBuilder: knitr
