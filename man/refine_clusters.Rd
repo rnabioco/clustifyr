@@ -2,7 +2,7 @@
 % Please edit documentation in R/refine_clusters.R
 \name{refine_clusters}
 \alias{refine_clusters}
-\title{refine_clusters: refine clustering using data}
+\title{refine_clusters: refine clustering using reference data}
 \usage{
 refine_clusters(sc_expr, sc_cluster, bulk_expr, lambda = 0.5, epsilon = 1,
   if_compute_sigma = TRUE, num_iteration = 100, default_similiarity = -5,
@@ -12,20 +12,32 @@ refine_clusters(sc_expr, sc_cluster, bulk_expr, lambda = 0.5, epsilon = 1,
 \arguments{
 \item{sc_expr}{input single cell data after gene subsetting}
 
+\item{sc_cluster}{initial clustering assignment. Note that the number of bulk cell types must be no more than the number of clusters. for additional clusters, there is an assignment of default_similiarity}
+
 \item{bulk_expr}{input bulk data after gene subsetting}
 
 \item{lambda}{control parameters}
 
 \item{epsilon}{control parameters}
 
+\item{if_compute_sigma}{whether compute the standard deviation of each gene's expression within each cluster. If not, the function assumes that all standard deviations equal to 1.}
+
 \item{num_iteration}{maximal number of iteration before exiting the algorithm}
+
+\item{default_similiarity}{default similarity score if there is no reference data to compare to}
+
+\item{disagreement_freq}{maximal fraction of changes in cluster assignment after one iteration to be considered as converged.}
+
+\item{if_plot}{whether to plot the clustering result at each iteration.}
+
+\item{tsne_coord}{t-SNE coordinate of every cells for plotting}
 
 \item{compute_method}{corr_coef}
 
 \item{...}{control parameters for calculating similarity score}
 
-\item{sc_cluster:}{initial clustering assignment. Note that the number of bulk cell types must be no more than the number of clusters. for additional clusters, there is an assignment of default_similiarity}
+\item{cluster_name}{Name of each cluster for plotting}
 }
 \description{
-refine_clusters: refine clustering using data
+refine_clusters: refine clustering using reference data
 }
