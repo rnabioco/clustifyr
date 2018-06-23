@@ -4,20 +4,23 @@
 \alias{run_cor}
 \title{run_cor: Main function to compare scRNA-seq data to bulk RNA-seq data.}
 \usage{
-run_cor(sc_expr, sc_meta, bulk_expr, query_gene_list, per_cell = F,
-  if_permute = TRUE, num_permute = 1000, return_full = F, compute_method,
-  ...)
+run_cor(expr_mat, metadata, bulk_mat, query_gene_list, per_cell = F,
+  num_perm = 0, return_full = F, compute_method, ...)
 }
 \arguments{
-\item{sc_expr}{single-cell expression matrix}
+\item{expr_mat}{single-cell expression matrix}
 
-\item{sc_meta}{clustering info of single-cell data assume that genes have ALREADY BEEN filtered}
+\item{metadata}{clustering info of single-cell data assume that genes have ALREADY BEEN filtered}
 
-\item{bulk_expr}{bulk expression matrix}
+\item{bulk_mat}{bulk expression matrix}
 
 \item{query_gene_list}{A vector of genes of interest.}
 
 \item{per_cell}{run per cell?}
+
+\item{num_perm}{number of permutations}
+
+\item{return_full}{Return full results instead of correlation coefficient only.}
 
 \item{compute_method}{method(s) for computing similarity scores}
 

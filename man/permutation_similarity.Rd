@@ -4,15 +4,15 @@
 \alias{permutation_similarity}
 \title{Compute the p-value for similarity using permutation}
 \usage{
-permutation_similarity(sc_expr, bulk_expr, sc_meta, num_perm, per_cell = F,
-  compute_method, metadata = "cluster", ...)
+permutation_similarity(expr_mat, metadata, bulk_mat, num_perm, per_cell = F,
+  compute_method, cluster_col = "cluster", ...)
 }
 \arguments{
-\item{sc_expr}{single-cell expression matrix}
+\item{expr_mat}{single-cell expression matrix}
 
-\item{bulk_expr}{bulk expression matrix}
+\item{metadata}{clustering info of single-cell data assume that genes have ALREADY BEEN filtered}
 
-\item{sc_meta}{clustering info of single-cell data assume that genes have ALREADY BEEN filtered}
+\item{bulk_mat}{bulk expression matrix}
 
 \item{num_perm}{number of permutations}
 
@@ -20,7 +20,7 @@ permutation_similarity(sc_expr, bulk_expr, sc_meta, num_perm, per_cell = F,
 
 \item{compute_method}{method(s) for computing similarity scores}
 
-\item{metadata}{metadata column used for clustering}
+\item{cluster_col}{cluster_col column used for clustering}
 
 \item{...}{additional paramters to pass to run_one_round}
 }

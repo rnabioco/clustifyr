@@ -4,10 +4,10 @@
 \alias{binarize_expr}
 \title{Binarize scRNA seq data}
 \usage{
-binarize_expr(expression_matrix, n = 1000)
+binarize_expr(expr_mat, n = 1000)
 }
 \arguments{
-\item{expression_matrix}{single-cell expression matrix}
+\item{expr_mat}{single-cell expression matrix}
 
 \item{n}{number of top expressing genes to keep}
 }
