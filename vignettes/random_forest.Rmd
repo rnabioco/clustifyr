@@ -168,7 +168,7 @@ dev.off()
 ```
 With MeanDecreaseAccuracy >=20 and MeanDecreaseGini >=30:
 ![Expression of best predictors](https://i.imgur.com/8BQO3al.png)
-With MeanDecreaseAccuracy >=15 and MeanDecreaseGini >=20:
+<br>With MeanDecreaseAccuracy >=15 and MeanDecreaseGini >=20:
 ![15_20](https://i.imgur.com/M32CMFE.png)
 
 ### Fit the model with new data
