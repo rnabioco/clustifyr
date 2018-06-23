@@ -18,8 +18,6 @@ knitr::opts_chunk$set(message = FALSE)
 ```
 
 ```{r}
-library('recount')
-library('biomaRt')
 library('dplyr')
 library('purrr')
 library('stringr')
