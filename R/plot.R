@@ -34,34 +34,35 @@ pretty_palette <- rev(RColorBrewer::brewer.pal(11, "RdGy")[c(1:5, 7)])
 #' Plot similarity measures on a tSNE
 #'
 #' @param correlation_matrix input similarity matrix
-#' @param meta_data input metadata with tsne coordinates and cluster ids
+#' @param metadata input metadata with tsne coordinates and cluster ids
 #' @param bulk_data_to_plot colname of data to plot, defaults to all
+#' @param cluster_col colname of cluster IDs, defaults to "cluster"
 #' @param ... passed to plot_tsne
 #'
 #' @export
 plot_cor <- function(correlation_matrix,
-                     meta_data,
+                     metadata,
                      bulk_data_to_plot = colnames(correlation_matrix),
-                     metadata.col = "cluster") {
+                     cluster_col = "cluster") {
 
   if (!any(bulk_data_to_plot %in% colnames(correlation_matrix))){
-    stop("cluster ids not shared between meta_data and correlation matrix")
+    stop("cluster ids not shared between metadata and correlation matrix")
   }
 
   cor_df <- as.data.frame(correlation_matrix)
-  cor_df <- tibble::rownames_to_column(cor_df, metadata.col)
+  cor_df <- tibble::rownames_to_column(cor_df, cluster_col)
   cor_df_long <- tidyr::gather(cor_df, bulk_cluster,
-                               expr, -dplyr::matches(metadata.col))
+                               expr, -dplyr::matches(cluster_col))
 
   # checks matrix rownames, 2 branches for cluster number (avg) or cell bar code (each cell)
-  if(cor_df[[metadata.col]][1] %in% meta_data[[metadata.col]]){
+  if(cor_df[[cluster_col]][1] %in% metadata[[cluster_col]]){
     plt_data <- dplyr::left_join(cor_df_long,
-                                 meta_data,
-                                 by = metadata.col)
+                                 metadata,
+                                 by = cluster_col)
   } else {
     plt_data <- dplyr::left_join(cor_df_long,
-                                 meta_data,
-                                 by = structure(names = metadata.col, "rn"))
+                                 metadata,
+                                 by = structure(names = cluster_col, "rn"))
   }
 
   lapply(bulk_data_to_plot,
@@ -75,16 +76,16 @@ plot_cor <- function(correlation_matrix,
 #' Plot called clusters on a tSNE
 #'
 #' @param correlation_matrix input similarity matrix
-#' @param meta_data input metadata with tsne coordinates and cluster ids
+#' @param metadata input metadata with tsne coordinates and cluster ids
 #' @param bulk_data_to_plot colname of data to plot, defaults to all
 #' @param ... passed to plot_tsne
 #'
 #' @export
 plot_call <- function(correlation_matrix,
-                      meta_data,
+                      metadata,
                       bulk_data_to_plot = colnames(correlation_matrix)) {
   df_temp <- as.data.frame(t(apply(correlation_matrix, 1, function(x) x - max(x))))
   df_temp[df_temp==0]="1"
   df_temp[df_temp!="1"]="0"
-  plot_cor(df_temp, meta_data, bulk_data_to_plot)
+  plot_cor(df_temp, metadata, bulk_data_to_plot)
 }
