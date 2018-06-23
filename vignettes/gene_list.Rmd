@@ -17,7 +17,7 @@ knitr::opts_chunk$set(warning = FALSE)
 knitr::opts_chunk$set(message = FALSE)
 ```
 
-## Preprocessing gene list into dataframe/matrix form
+## Unranked list: Preprocessing gene list into dataframe/matrix form
 
 ```{r}
 library('recount')
@@ -41,12 +41,13 @@ Bm <- c("MS4A1", "CD79A")
 mm2 <- data.frame(Bm, DCm, NKm)
 ```
 
-## Binarize single cell gene expression data
+## Unranked list: Binarize single cell gene expression data
+
 ```{r}
 pbmc4k_avgb <- binarize_expr(pbmc4k_avg)
 ```
 
-## Classify
+## Unranked list: Classify
 
 ```{r}
 res <- hyperp(pbmc4k_avgb,pbmc4k_mm)
@@ -54,4 +55,35 @@ Heatmap(-log10(res), cluster_rows = FALSE, cluster_columns = FALSE, heatmap_lege
 
 res2 <- hyperp(pbmc4k_avgb,mm2)
 Heatmap(-log10(res2), cluster_rows = FALSE, cluster_columns = FALSE, heatmap_legend_param = list(title = "-log10(adjP)"))
+```
+
+## Ranked list: Preprocessing gene list into dataframe/matrix form
+
+```{r}
+pbmc4k_rm <- matrixize_markers(pbmc4k_markers, TRUE)
+```
+
+## Ranked list: Classify
+
+```{r}
+gene_constraints <- list(rownames(pbmc4k_avg),rownames(pbmc4k_rm))
+pbmc4k_avg_d<- select_gene_subset(pbmc4k_avg, gene_constraints)
+pbmc4k_rm_d <- select_gene_subset(t, gene_constraints)
+out <- lapply(colnames(pbmc4k_avg_d),
+              function(x){
+                per_col <- lapply(colnames(pbmc4k_rm_d),
+                                  function(y){
+                                    compute_similarity(pbmc4k_avg_d[,x],
+                                                       pbmc4k_rm_d[,y], corr_coef,
+                                                       method = "spearman")})
+                do.call(cbind, per_col)
+              })
+
+res <- do.call(rbind, out)
+rownames(res) <- colnames(pbmc4k_avg_d)
+colnames(res) <- colnames(pbmc4k_rm_d)
+
+plot_cor(res,
+         pbmc4k_meta,
+         colnames(res)[1:7])
 ```
