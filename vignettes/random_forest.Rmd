@@ -41,9 +41,9 @@ The training set contains an expression matrix with normalized readcounts per ge
 
 # Input files for random forest
 # Training set
-pbmc4 <- reduce_matrix(pbmc4k_matrix, pbmc4k_meta, pbmc4k_vargenes)
+pbmc4 <- reduce_expr_matrix(pbmc4k_matrix, pbmc4k_meta, pbmc4k_vargenes)
 # Test set
-pbmc5 <- reduce_matrix(pbmc5_matrix, pbmc5_meta, pbmc4k_vargenes)
+pbmc5 <- reduce_expr_matrix(pbmc5_matrix, pbmc5_meta, pbmc4k_vargenes)
 
 # Make sure the listed genes (predictors) are the same in both dataset
 names(pbmc5)[names(pbmc5) == "cluster"] <- "classified"
