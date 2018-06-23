@@ -9,19 +9,19 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Motivation
 
-Clustering is a crucial step in single cell RNA-seq (scRNA-seq) data analysis. Most methods examine the inherent structure of the scRNA-seq dataset, without making use of the biological information of each cluster. Consequently, optimal determination of the number of clusters and interpretation of each cluster become a challenging problem. Here, we implement the clustering function refine_clusters, which accounts for both the proximality of expression profiles within a cluster and the similarity of each cell to the reference bulk RNA-seq datasets of purified cell types.
+Clustering is a crucial step in single cell RNA-seq (scRNA-seq) data analysis. Most methods examine the inherent structure of the scRNA-seq dataset, without making use of the biological information of each cluster. Consequently, optimal determination of the number of clusters and interpretation of each cluster become a challenging problem. Here, we implement the clustering function *refine_clusters*, which accounts for both the proximality of expression profiles within a cluster and the similarity of each cell to the reference bulk RNA-seq datasets of purified cell types.
 
 ## Theory
 
 Let the expression profile of a single cell be $\vec{x\ }$, where each element refers to the expression level (counts/reads) of a gene. Assume the scRNA-seq data is to be clustered into $M$ clusters, and the first $N$ clusters have  bulk RNA-seq data of purified cells as references ($M\geq N$). Let $\vec{B_i}$ be the expression profile of the bulk data for i-th cluster. $\vec{x\ }$ and $\vec{B_i}$ must be organized in the same fashion.
 
-The function refine_clusters defines the probability of a cell $\vec{x\ }$ being assigned to cluster $i$ as a weighted product of the probability that $\vec{x\ }$ is similar to $\vec{B_i}$ and the probability that $\vec{x\ }$ is proximal to the centroid of clsuter $i$ (with mean $\vec{\mu_i}$ and standard deviation $\vec{\sigma_i}$). The former probability is defined as
+The function *refine_clusters* defines the probability of a cell $\vec{x\ }$ being assigned to cluster $i$ as a weighted product of the probability that $\vec{x\ }$ is similar to $\vec{B_i}$ and the probability that $\vec{x\ }$ is proximal to the centroid of clsuter $i$ (with mean $\vec{\mu_i}$ and standard deviation $\vec{\sigma_i}$). The former probability is defined as
 $$P(\vec{x\ }; \vec{B_i}) \propto \exp\{\epsilon S(\vec{x\ }, \vec{B_i})\}$$
 where $S(\vec{x\ }, \vec{B_i})$ represents the similarity between $\vec{x\ }$ and $\vec{B_i}$, and $\epsilon$ is a user-defined weighting parameter. The latter probability is modeled as a Gaussian distribution, i.e. 
 $$P(\vec{x\ }; \vec{\mu_i}, \vec{\sigma_i}) \sim N(\vec{\mu_i}, \mathbf{\Sigma}^{(i)})$$
 where the mean $\vec{\mu_i}$ is the mean expression level within the cluster and the covariance matrix $\mathbf{\Sigma}^{(i)}$ is a diagonal matrix where each element diagonal represents the variance of a gene's expression within the cluster $i$ ($\Sigma^{(i)}_{j,j} = \sigma_{i,j}^2$). The overall probability is then expressed as
 $$P(\vec{x\ }; \mathrm{Cluster}\ i) = P(\vec{x\ }; \vec{B_i})^\lambda P(\vec{x\ }; \vec{\mu_i}, \vec{\sigma_i})^{1-\lambda}$$
-The function refine_clusters computes $P(\vec{x\ }; \mathrm{Cluster}\ i)$ for each single cell $\vec{x\ }$ and each cluster $i$, and assigns the cell to the cluster with the highest probability. The function then iterates this process until clustering is coverged.
+The function *refine_clusters* computes $P(\vec{x\ }; \mathrm{Cluster}\ i)$ for each single cell $\vec{x\ }$ and each cluster $i$, and assigns the cell to the cluster with the highest probability. The function then iterates this process until clustering is coverged.
 
 The algorithm works as follows
 
@@ -36,19 +36,41 @@ The algorithm works as follows
 ## Example
 ### Dataset
 
+We make use of the **pbmc4k_matrix**, **pbmc4k_meta** and **pbmc_bulk_matrix** dataset. To satisfy the requirement of the function, we define six clusters (Monocytes, B Cells, T Cells, Dendritic Cells, NK Cells and Megakaryocytes) and re-assign each cell to one cluster based on its previous label. We further extract 5 samples from the bulk dataset to represent the reference expression profile for the first five clusters.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+```{preparation}
+data("pbmc4k_meta"); data("pbmc4k_matrix"); data("pbmc_bulk_matrix"); data("pbmc4k_markers_M3Drop")
 
-```{r cars}
-summary(cars)
+# construct sc_cluster
+gene_constraints <- list(rownames(pbmc4k_matrix), rownames(pbmc_bulk_matrix), pbmc4k_markers_M3Drop[,'Gene']);
+sc_expr <- select_gene_subset(pbmc4k_matrix, gene_constraints);
+bulk_expr <- select_gene_subset(pbmc_bulk_matrix, gene_constraints);
+sc_tsne_coord <- pbmc4k_meta[,c('tSNE_1', 'tSNE_2')];
+sc_cluster <- rep(0, ncol(sc_expr));
+sc_cluster[which(pbmc4k_meta[,'classified']=="CD14+ Monocytes")] <- 1; # 1 monocytes
+sc_cluster[which(pbmc4k_meta[,'classified']=="FCGR3A+ Monocytes")] <- 1;
+sc_cluster[which(pbmc4k_meta[,'classified']=="B cells")] <- 2; # 2 B cells
+sc_cluster[which(pbmc4k_meta[,'classified']=="CD4 T cells, 1")] <- 3; # 3 T cells
+sc_cluster[which(pbmc4k_meta[,'classified']=="CD4 T cells, 2")] <- 3;
+sc_cluster[which(pbmc4k_meta[,'classified']=="CD8 T cells")] <- 3;
+sc_cluster[which(pbmc4k_meta[,'classified']=="Dendritic cells, 1")] <- 4; # 4 DC
+sc_cluster[which(pbmc4k_meta[,'classified']=="Dendritic Cells, 2?")] <- 4;
+sc_cluster[which(pbmc4k_meta[,'classified']=="NK cells")] <- 5; # 5 NK cells
+sc_cluster[which(pbmc4k_meta[,'classified']=="Megakaryocytes")] <- 6; # 6 megakaryocytes (not found)
+bulk_expr <- bulk_expr[, c(3, 1, 7, 2, 5)]
+colnames(bulk_expr) <- c("Monocytes", "B Cells", "T Cells", "Dendritic Cells", "NK Cells");
+cluster_names <- c("Monocytes", "B Cells", "T Cells", "Dendritic Cells", "NK Cells", "Megakaryocytes");
 ```
 
-## Including Plots
+## Execution
 
-You can also embed plots, for example:
+To demonstrate the power of *refine_clusters*, we randomize the cluster assignment and use the function to re-assign clusters.
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{execution, eval=FALSE}
+res <- refine_clusters(sc_expr, sample(sc_cluster, length(sc_cluster)), bulk_expr, lambda=0.5, epsilon=1, if_compute_sigma=TRUE, num_iteration=20, default_similiarity=-1, disagreement_freq=0.001, if_plot=TRUE, tsne_coord=sc_tsne_coord, cluster_names=cluster_names, compute_method=corr_coef);
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+For this execution, we put equal weights on the two probabilities and we allow the algorithm to run at most 20 iterations. Clustering is defined as convergent if less than 0.1% of assignment is changed between two iterations.
+
+
+
