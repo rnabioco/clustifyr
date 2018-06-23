@@ -21,7 +21,7 @@ Installation from github in R is a two step process:
 
 ### Step 2:
 ```
-# Install classifyR from github
+# Install clustifyR from github
 > devtools::install_github("NCBI-Hackathons/clustifyR")
 ```
 
