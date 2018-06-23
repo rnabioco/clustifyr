@@ -61,7 +61,7 @@ plot_cor <- function(correlation_matrix,
   } else {
     plt_data <- dplyr::left_join(cor_df_long,
                                  meta_data,
-                                 by = c(metadata.col = "rn"))
+                                 by = structure(names = metadata.col, "rn"))
   }
 
   lapply(bulk_data_to_plot,
