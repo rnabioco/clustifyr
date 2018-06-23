@@ -87,6 +87,17 @@ res <- refine_clusters(sc_expr, sample(sc_cluster, length(sc_cluster)), bulk_exp
 
 For this execution, we put equal weights on the two probabilities and we allow the algorithm to run at most 20 iterations. Clustering is considered converged if less than 1% of cells are assigned with new labels during one iteration.
 
+To evaluate the performance of the algorithm, we visualize the clusters on the t-SNE plot. As a reference, the ground truth is 
+![Ground Truth](../inst/images/refine_cluster/initial_truth.png)
+
+Before clustering, since assignment is randomized, the clusters are well-mixed on the t-SNE plot.
+![Before clustering](../inst/images/refine_cluster/initial_random.png)
+
+The function shows rapid convergence after 1 iteration,
+![After 1 iteration](../inst/images/refine_cluster/iter1.png)
+
+and clustering is stabilized after 10 iterations.
+![After 10 iterations](../inst/images/refine_cluster/iter10.png)
 
 
 
