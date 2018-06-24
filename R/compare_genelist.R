@@ -18,16 +18,24 @@ binarize_expr <- function(expr_mat,
 #' @param marker_df dataframe of candidate genes
 #' @param ranked unranked gene list feeds into hyperp, the ranked
 #' gene list feeds into regular corr_coef
+#' @param n number of genes to use
 #' @param weight ranked genes are tranformed into pseudo expression with
 #' added weight
-#' @param marker_df dataframe of candidate genes
+#' @param labels vector or dataframe of cluster names
 #'
 #' @export
-matrixize_markers <- function(marker_df, ranked = FALSE, weight = 0, labels = NULL){
+matrixize_markers <- function(marker_df, ranked = FALSE, n = NULL, weight = 0, labels = NULL){
   # takes marker in dataframe form
   # equal number of marker genes per known cluster
   marker_df <- as_tibble(marker_df)
   cut_num <- min((marker_df %>% group_by(cluster) %>% summarize(n =n()))$n)
+
+  if(!is.null(n)){
+    if(n < cut_num){
+      cut_num = n
+    }
+  }
+
   marker_temp <- marker_df %>% dplyr::select(gene, cluster) %>% group_by(cluster) %>% dplyr::slice(1:cut_num)
   if(ranked == TRUE){
     marker_temp <- marker_temp %>% mutate(n = (cut_num + weight) : (1 + weight))
