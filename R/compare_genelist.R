@@ -83,6 +83,11 @@ get_vargenes <- function(marker_m){
 #'
 #' @export
 compare_lists <- function(bin_mat, marker_m, n = 30000, metric = "hyper", output_high = TRUE){
+  # check if matrix is binarized
+  if (length(unique(bin_mat[,1])) > 2){
+    metric = "spearman"
+  }
+
   # "expressed" genes per single cell data cluster
   if (metric == "hyper"){
     out <- lapply(colnames(bin_mat),
@@ -138,12 +143,12 @@ compare_lists <- function(bin_mat, marker_m, n = 30000, metric = "hyper", output
   rownames(res) <- colnames(bin_mat)
   colnames(res) <- colnames(marker_m)
 
-  if ((metric == "hyper") & (output_high == TRUE)){
-    res <- -log10(res)
-  }
-
-  if ((metric == "spearman") & (output_high == TRUE)){
-    res <- -res
+  if (output_high == TRUE){
+    if (metric == "hyper"){
+      res <- -log10(res)
+    } else if (metric == "spearman"){
+      res <- -res
+    }
   }
 
   res
