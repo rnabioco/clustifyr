@@ -23,7 +23,7 @@ binarize_expr <- function(expr_mat,
 #' @param marker_df dataframe of candidate genes
 #'
 #' @export
-matrixize_markers <- function(marker_df, ranked = FALSE, weight = 0){
+matrixize_markers <- function(marker_df, ranked = FALSE, weight = 0, labels = NULL){
   # takes marker in dataframe form
   # equal number of marker genes per known cluster
   marker_df <- as_tibble(marker_df)
@@ -38,6 +38,20 @@ matrixize_markers <- function(marker_df, ranked = FALSE, weight = 0){
     marker_temp <- marker_temp %>% mutate(n = 1:cut_num)
     marker_temp2 <- as.data.frame(tidyr::spread(marker_temp, key = "cluster", value = "gene") %>% dplyr::select(-n))
   }
+
+  # if labels is vector, adopt names in vector; if labels is a metadata dataframe, pulls names from "classified" column
+  if(!is.null(labels)){
+    if(typeof(labels) != "character"){
+      label_df <- labels
+      labels <- left_join(data_frame(cluster = colnames(marker_temp2)),
+                unique(data_frame(cluster = labels$cluster,
+                                  classified =  labels$classified)),
+                by = "cluster") %>%
+        pull(classified)
+    }
+    colnames(marker_temp2) <- labels
+  }
+
   marker_temp2
 }
 
