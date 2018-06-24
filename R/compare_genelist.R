@@ -30,14 +30,14 @@ matrixize_markers <- function(marker_df, ranked = FALSE, n = NULL, weight = 0, l
   marker_df <- as_tibble(marker_df)
   cut_num <- min((marker_df %>% group_by(cluster) %>% summarize(n =n()))$n)
 
-  if(!is.null(n)){
-    if(n < cut_num){
+  if (!is.null(n)){
+    if (n < cut_num){
       cut_num = n
     }
   }
 
   marker_temp <- marker_df %>% dplyr::select(gene, cluster) %>% group_by(cluster) %>% dplyr::slice(1:cut_num)
-  if(ranked == TRUE){
+  if (ranked == TRUE){
     marker_temp <- marker_temp %>% mutate(n = (cut_num + weight) : (1 + weight))
     marker_temp2 <- as.data.frame(tidyr::spread(marker_temp, key = "cluster", value = n) %>% replace(is.na(.), 0))
     rownames(marker_temp2) <- marker_temp2$gene
@@ -48,8 +48,8 @@ matrixize_markers <- function(marker_df, ranked = FALSE, n = NULL, weight = 0, l
   }
 
   # if labels is vector, adopt names in vector; if labels is a metadata dataframe, pulls names from "classified" column
-  if(!is.null(labels)){
-    if(typeof(labels) != "character"){
+  if (!is.null(labels)){
+    if (typeof(labels) != "character"){
       label_df <- labels
       labels <- left_join(data_frame(cluster = colnames(marker_temp2)),
                 unique(data_frame(cluster = labels$cluster,
@@ -63,6 +63,15 @@ matrixize_markers <- function(marker_df, ranked = FALSE, n = NULL, weight = 0, l
   marker_temp2
 }
 
+#' generate variable gene list from marker matrix (required for run_cor main function)
+#'
+#' @param marker_m matrix or dataframe of candidate genes for each cluster
+#'
+#' @export
+get_vargenes <- function(marker_m){
+  unique(unlist(marker_m, use.names = FALSE))
+}
+
 #' calculate adjusted p-values for hypergeometric test of gene lists
 #' or jaccard index
 #'
@@ -70,9 +79,10 @@ matrixize_markers <- function(marker_df, ranked = FALSE, n = NULL, weight = 0, l
 #' @param marker_m matrix or dataframe of candidate genes for each cluster
 #' @param n number of genes in the genome
 #' @param metric adjusted p-value for hypergeometric test, or jaccard index
+#' @param output_high if true (by default to fit with rest of package), -log10 transform p-value
 #'
 #' @export
-compare_lists <- function(bin_mat, marker_m, n = 30000, metric = "hyper"){
+compare_lists <- function(bin_mat, marker_m, n = 30000, metric = "hyper", output_high = TRUE){
   # "expressed" genes per single cell data cluster
   if (metric == "hyper"){
     out <- lapply(colnames(bin_mat),
@@ -109,5 +119,9 @@ compare_lists <- function(bin_mat, marker_m, n = 30000, metric = "hyper"){
   res <- do.call(rbind, out)
   rownames(res) <- colnames(bin_mat)
   colnames(res) <- colnames(marker_m)
+
+  if ((metric == "hyper") & (output_high == TRUE)){
+    res <- -log10(res)
+  }
   res
 }
