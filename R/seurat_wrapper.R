@@ -20,7 +20,8 @@ clustify_seurat <- function(seurat_object,
                             num_perm = 0,
                             cluster_col = "cluster",
                             compute_method = corr_coef,
-                            output = "object"){
+                            output = "object",
+                            carry_cor = TRUE){
   expr_mat <- seurat_object@data
 
   metadata <- data.table::copy(seurat_object@meta.data)
@@ -31,14 +32,20 @@ clustify_seurat <- function(seurat_object,
   as_tibble(metadata_tibble) -> metadata_tibble
   metadata <- inner_join(metadata_tibble, metadata_tibble2 %>% select(rn, cluster_col), by = "rn")
 
+  # if per_cell, cluster_col should default to "rn"
+  if ((per_cell == TRUE) & (dim(unique(metadata[,cluster_col]))[1] != dim(metadata)[1])){
+    cluster_orig = cluster_col
+    cluster_col = "rn"
+  }
+
   res <- run_cor(expr_mat,
                  metadata,
                  bulk_mat,
                  query_gene_list,
-                 per_cell = F,
-                 num_perm = 0,
-                 cluster_col = "cluster",
-                 compute_method = corr_coef,
+                 per_cell = per_cell,
+                 num_perm = num_perm,
+                 cluster_col = cluster_col,
+                 compute_method = compute_method,
                  return_full = FALSE)
 
   df_temp <- as.data.frame(t(apply(res, 1, function(x) x - max(x))))
@@ -48,16 +55,17 @@ clustify_seurat <- function(seurat_object,
 
   calls <- c()
   for(name in rownames(df_call)){
-    calls <- c(calls, get_best_str(name, df_call, df_temp))
+    calls <- c(calls, get_best_str(name, df_call, res, carry_cor))
   }
-  calls_df <- data.frame("cluster" = rownames(df_call), "call" = calls, stringsAsFactors=FALSE)
+  calls_df <- data.frame("tempid" = rownames(df_call), "call" = calls, stringsAsFactors=FALSE)
   calls_df
-  metadata <- data.table::copy(seurat_object@meta.data)
-  calls <- left_join(metadata, calls_df, by = "cluster") %>% select(call)
-  rownames(calls) <- rownames(metadata)
+
+  metadata <- data.table::setDT(data.table::copy(seurat_object@meta.data), keep.rownames = TRUE)
+  calls <- left_join(metadata, calls_df, by = structure(names = cluster_col, "tempid")) %>% select(call)
+  rownames(calls) <- rownames(seurat_object@meta.data)
 
   if (output == "object"){
-  Seurat::AddMetaData(seurat_object, calls, "calls")
+  Seurat::AddMetaData(seurat_object, calls, "call")
   } else if (output == "df"){
     calls
   }
@@ -68,22 +76,26 @@ clustify_seurat <- function(seurat_object,
 #' @param name name of row to query
 #' @param best_mat binarized call matrix
 #' @param cor_mat correlation matrix
-#'
+#' @param carry_cor whether the correlation score gets reported
 #' @export
 #'
-get_best_str <- function(name, best_mat, cor_mat) {
+get_best_str <- function(name, best_mat, cor_mat, carry_cor = TRUE) {
   if (sum(as.numeric(best_mat[name,])) > 0) {
     best.names <- colnames(best_mat)[which(best_mat[name,]==1)]
     best.cor <- round(cor_mat[name, which(best_mat[name,]==1)],2)
     for (i in 1:length(best.cor)) {
       if (i == 1) {
-        str <- paste0(best.names[i], " (", best.cor[i], ") ")
+        str <- paste0(best.names[i], " (", best.cor[i], ")")
       } else {
-        str <- paste0(str, "; ", best.names[i], " (", best.cor[i], ") ")
+        str <- paste0(str, "; ", best.names[i], " (", best.cor[i], ")")
       }
     }
   } else {
-    str <- ""
+    str <- "?"
+  }
+
+  if (carry_cor == FALSE){
+    str <- gsub(" \\(.*\\)","",str)
   }
   return(str)
 }
