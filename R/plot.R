@@ -1,4 +1,4 @@
-#' Plot a t-SNE colored by feature.
+#' Plot a tSNE colored by feature.
 #'
 #' @param data input data
 #' @param x x variable
@@ -37,7 +37,7 @@ pretty_palette <- rev(RColorBrewer::brewer.pal(11, "RdGy")[c(1:5, 7)])
 #' @param correlation_matrix input similarity matrix
 #' @param metadata input metadata with tsne coordinates and cluster ids
 #' @param bulk_data_to_plot colname of data to plot, defaults to all
-#' @param cluster_col colname of cluster IDs, defaults to "cluster"
+#' @param cluster_col colname of cluster IDs, defaults to cluster
 #' @param ... passed to plot_tsne
 #'
 #' @export

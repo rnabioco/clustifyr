@@ -1,5 +1,7 @@
 
 #' Pick and sort genes
+#'
+#'
 #' @description Data set from different sources may contain different gene sets.
 #' In order to establish a fair comparison, we select a subset of genes
 #'  shared by both datasets.
@@ -7,6 +9,8 @@
 #' such as highly variable genes.
 #' Possible examples of candidate lists include row names of expression matrix
 #' and a list of highly variable genes.
+#'
+#'
 #' @param bin_mat Expression matrix with row names as the gene names. Use short
 #'  name for now
 #' @param gene_constraints A list of vectors, where each vector is a candidate
@@ -21,6 +25,7 @@ select_gene_subset <- function(bin_mat, gene_constraints) {
 }
 
 #' Compute similarity between two vectors
+#'
 #' @description Compute the similarity score between two vectors using a
 #' customized scoring function
 #' Two vectors may be from either scRNA-seq or bulk RNA-seq data.
@@ -28,6 +33,7 @@ select_gene_subset <- function(bin_mat, gene_constraints) {
 #' same order of genes.
 #' Both vectors should be provided to this function after pre-processing,
 #' feature selection and dimension reduction.
+#'
 #' @param vec1 test vector
 #' @param vec2 reference vector
 #' @param compute_method method to run i.e. corr_coef
@@ -43,10 +49,13 @@ compute_similarity <- function(vec1, vec2, compute_method, ...) {
 }
 
 #' Correlation function
+#'
 #' @description Compute correlation between two vectors.
 #' Returned value is between -1 and 1, where 1 indicates highest
 #' positive correlation
 #' and -1 indicates highest negative correlation.
+#'
+#'
 #' @param vec1 test vector
 #' @param vec2 reference vector
 #' @param method pearson, spearman, cosine
@@ -60,15 +69,17 @@ corr_coef <- function(vec1, vec2, method="pearson") {
 }
 
 #' KL divergence
+#'
 #' @description Use package entropy to compute Kullback-Leibler divergence.
 #' The function first converts each vector's reads to pseudo-number of
 #' transcripts by normalizing the total reads to total_reads.
 #' The normalized read for each gene is then rounded to serve as the
 #' pseudo-number of transcripts.
-#' Function entropy::KL.shrink is called to compute the KL-divergence between
+#' Function [entropy::KL.shrink()] is called to compute the KL-divergence between
 #' the two vectors, and the maximal allowed divergence is set to max_KL.
 #' Finally, a linear transform is performed to convert the KL divergence,
-#' which is between 0 and max_KL, to similarity score between -1 and 1.
+#' which is between 0 and max_KL, to a similarity score between -1 and 1.
+#'
 #' @param vec1 Test vector
 #' @param vec2 Reference vector
 #' @param if_logcounts Whether the vectors are log-transformed. If so, the
