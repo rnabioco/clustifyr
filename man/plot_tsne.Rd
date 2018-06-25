@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.R
 \name{plot_tsne}
 \alias{plot_tsne}
-\title{Plot a t-SNE colored by feature.}
+\title{Plot a tSNE colored by feature.}
 \usage{
 plot_tsne(data, x = "tSNE_1", y = "tSNE_2", feature, legend_name = "",
   cols = pretty_palette, pt_size = 0.25)
@@ -17,5 +17,5 @@ plot_tsne(data, x = "tSNE_1", y = "tSNE_2", feature, legend_name = "",
 \item{feature}{feature to color by}
 }
 \description{
-Plot a t-SNE colored by feature.
+Plot a tSNE colored by feature.
 }

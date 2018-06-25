@@ -14,7 +14,7 @@ plot_cor(correlation_matrix, metadata,
 
 \item{bulk_data_to_plot}{colname of data to plot, defaults to all}
 
-\item{cluster_col}{colname of cluster IDs, defaults to "cluster"}
+\item{cluster_col}{colname of cluster IDs, defaults to cluster}
 
 \item{...}{passed to plot_tsne}
 }

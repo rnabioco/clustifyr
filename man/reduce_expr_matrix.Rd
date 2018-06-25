@@ -2,7 +2,7 @@
 % Please edit documentation in R/reduce_matrix.R
 \name{reduce_expr_matrix}
 \alias{reduce_expr_matrix}
-\title{Reduce expr_matrix}
+\title{Reduce expression matrix to variable genes and binarize.}
 \usage{
 reduce_expr_matrix(expr_mat, metadata, vargene)
 }

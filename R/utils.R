@@ -1,7 +1,10 @@
 #' Average expression values per cluster
+#'
+#'
 #' @param mat expression matrix
 #' @param cluster_info data.frame with cells
-#' @param log_scale input data is natural log, averaging will be done
+#' @param log_scale input data is natural log,
+#' averaging will be done on unlogged data
 #' @param cell_col column in cluster_info with cell ids
 #' @param cluster_col column in cluster_info with cluster number
 #' @export

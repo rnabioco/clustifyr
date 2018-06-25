@@ -1,10 +1,10 @@
-#' run_cor: Main function to compare scRNA-seq data to bulk RNA-seq data.
+#' Main function to compare scRNA-seq data to bulk RNA-seq data.
 #'
 #' @param expr_mat single-cell expression matrix
 #' @param metadata clustering info of single-cell data
 #' @param bulk_mat bulk expression matrix
 #' @param query_gene_list A vector of genes of interest.
-#' @param per_cell run per cell?
+#' @param per_cell if true run per cell, otherwise per cluster.
 #' @param num_perm number of permutations, set to 0 by default
 #' @param return_full Return full results includeing scores instead
 #'  of correlation coefficient only.

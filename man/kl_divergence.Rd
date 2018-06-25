@@ -25,8 +25,8 @@ The function first converts each vector's reads to pseudo-number of
 transcripts by normalizing the total reads to total_reads.
 The normalized read for each gene is then rounded to serve as the
 pseudo-number of transcripts.
-Function entropy::KL.shrink is called to compute the KL-divergence between
+Function \code{\link[entropy:KL.shrink]{entropy::KL.shrink()}} is called to compute the KL-divergence between
 the two vectors, and the maximal allowed divergence is set to max_KL.
 Finally, a linear transform is performed to convert the KL divergence,
-which is between 0 and max_KL, to similarity score between -1 and 1.
+which is between 0 and max_KL, to a similarity score between -1 and 1.
 }

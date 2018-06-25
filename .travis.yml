@@ -10,3 +10,5 @@ bioc_required: true
 bioc_use_devel: true
 r_packages:
   - devtools
+before_install:
+  - tlmgr install index

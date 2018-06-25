@@ -2,7 +2,7 @@
 % Please edit documentation in R/refine_clusters.R
 \name{refine_clusters}
 \alias{refine_clusters}
-\title{refine_clusters: refine clustering using reference data}
+\title{Refine clustering using reference data}
 \usage{
 refine_clusters(expr_mat, sc_cluster, bulk_mat, lambda = 0.5, epsilon = 1,
   if_compute_sigma = TRUE, num_iteration = 100, default_similiarity = -5,
@@ -13,8 +13,9 @@ refine_clusters(expr_mat, sc_cluster, bulk_mat, lambda = 0.5, epsilon = 1,
 \item{expr_mat}{input single cell data after gene subsetting}
 
 \item{sc_cluster}{initial clustering assignment.
-Note that the number of bulk cell types must be no more than the number of clusters.
-for additional clusters, there is an assignment of default_similiarity}
+Note that the number of bulk cell types must be no more than
+the number of clusters. for additional clusters,
+there is an assignment of default_similiarity}
 
 \item{bulk_mat}{input bulk data after gene subsetting}
 
@@ -46,5 +47,5 @@ assignment after one iteration to be considered as converged.}
 \item{cluster_name}{Name of each cluster for plotting}
 }
 \description{
-refine_clusters: refine clustering using reference data
+Refine clustering using reference data
 }
