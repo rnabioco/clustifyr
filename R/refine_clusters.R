@@ -1,10 +1,13 @@
 
-#' refine_clusters: refine clustering using reference data
+#' Refine clustering using reference data
+#'
+#'
 #' @param expr_mat input single cell data after gene subsetting
 #' @param bulk_mat input bulk data after gene subsetting
 #' @param sc_cluster initial clustering assignment.
-#' Note that the number of bulk cell types must be no more than the number of clusters.
-#' for additional clusters, there is an assignment of default_similiarity
+#' Note that the number of bulk cell types must be no more than
+#' the number of clusters. for additional clusters,
+#' there is an assignment of default_similiarity
 #' @param lambda control parameters
 #' @param epsilon control parameters
 #' @param if_compute_sigma whether compute the standard deviation
@@ -22,7 +25,10 @@
 #' @param compute_method corr_coef
 #' @param ... control parameters for calculating similarity score
 #' @export
-refine_clusters <- function(expr_mat, sc_cluster, bulk_mat, lambda=0.5, epsilon=1, if_compute_sigma=TRUE, num_iteration=100, default_similiarity=-5, disagreement_freq=0.001, if_plot=FALSE, tsne_coord=NULL, cluster_names=NULL, compute_method, ...) {
+refine_clusters <- function(expr_mat, sc_cluster, bulk_mat, lambda=0.5, epsilon=1,
+                            if_compute_sigma=TRUE, num_iteration=100, default_similiarity=-5,
+                            disagreement_freq=0.001, if_plot=FALSE, tsne_coord=NULL,
+                            cluster_names=NULL, compute_method, ...) {
   # step 1. check input conditions
   num_cells <- ncol(expr_mat); num_cluster <- max(sc_cluster); num_bulk <- ncol(bulk_mat);
   if (num_cluster < num_bulk) {

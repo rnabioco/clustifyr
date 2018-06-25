@@ -1,8 +1,10 @@
-#' Reduce expr_matrix
+#' Reduce expression matrix to variable genes and binarize.
+#'
 #' @description Reduce the full expression expr_matrix to only the
 #' highly variable genes,
 #' change the readcounts to binary factors,
 #' prepare the input data for random forest
+#'
 #' @param expr_mat expression expr_matrix with row names as the gene
 #' names and each column for different cell
 #' @param metadata cluster and cell type info for each cell

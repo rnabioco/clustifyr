@@ -2,7 +2,7 @@
 % Please edit documentation in R/main.R
 \name{run_cor}
 \alias{run_cor}
-\title{run_cor: Main function to compare scRNA-seq data to bulk RNA-seq data.}
+\title{Main function to compare scRNA-seq data to bulk RNA-seq data.}
 \usage{
 run_cor(expr_mat, metadata, bulk_mat, query_gene_list, per_cell = F,
   num_perm = 0, return_full = F, compute_method, ...)
@@ -16,7 +16,7 @@ run_cor(expr_mat, metadata, bulk_mat, query_gene_list, per_cell = F,
 
 \item{query_gene_list}{A vector of genes of interest.}
 
-\item{per_cell}{run per cell?}
+\item{per_cell}{if true run per cell, otherwise per cluster.}
 
 \item{num_perm}{number of permutations, set to 0 by default}
 
@@ -30,5 +30,5 @@ of correlation coefficient only.}
 \item{cluster_col}{column used for clustering}
 }
 \description{
-run_cor: Main function to compare scRNA-seq data to bulk RNA-seq data.
+Main function to compare scRNA-seq data to bulk RNA-seq data.
 }

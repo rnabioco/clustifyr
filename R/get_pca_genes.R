@@ -1,18 +1,19 @@
-#' Returns a list of genes ("features") based on the top
+#' Returns a list of variable genes based on PCA
+#'
+#'  @description  Extract genes, i.e. "features", based on the top
 #' loadings of principal components
 #' formed from the bulk expression data set
 #'
-#' @param sc_avg_expr Expression data frame; rownames=genes,
-#' colnames=single cell cluster name,
-#' values=average single cell expression (log transformed).
-#' @param bulk_expr Bulk RNA expression data frame; rownames=genes,
-#' colnames=sample name, values=expression counts.
-#' @param nr_pcs Number PCs to selected gene loadings from.
-#' See the explore_PCA_corr.Rmd vignette.
+#' @param sc_avg_expr Expression data frame. Rownames are genes,
+#' colnames are single cell cluster name, and
+#' values are average single cell expression (log transformed).
+#' @param bulk_expr Bulk RNA expression data frame. Rownames are genes,
+#' colnames are bulk sample names, and values are expression counts.
+#' @param nr_pcs Number of PCs to selected gene loadings from.
+#' See the explore_PCA_corr.Rmd vignette for details.
 #' @param percentile Select the percentile of absolute values of
-#' PCA loadings to select genes from.
-#' E.g. 0.999 would select the top point 1 percent of genes
-#' with the largest loadings.
+#' PCA loadings to select genes from. E.g. 0.999 would select the
+#' top point 1 percent of genes with the largest loadings.
 #' @return The list of genes to use as features.
 #'
 #' @export

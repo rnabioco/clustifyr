@@ -2,6 +2,8 @@
 #' Compute the p-value for similarity using permutation
 #'
 #' @description Permute cluster labels to calculate empirical p-value
+#'
+#'
 #' @param expr_mat single-cell expression matrix
 #' @param metadata clustering info of single-cell data assume that
 #'  genes have ALREADY BEEN filtered

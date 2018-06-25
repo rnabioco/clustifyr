@@ -75,7 +75,10 @@ matrixize_markers <- function(marker_df,
   marker_temp2
 }
 
-#' generate variable gene list from marker matrix (required for run_cor main function)
+#' generate variable gene list from marker matrix
+#'
+#' @description Variable gene list is required for run_cor main function. This
+#' function parses variables genes from a matrix input.
 #'
 #' @param marker_m matrix or dataframe of candidate genes for each cluster
 #'
@@ -91,7 +94,8 @@ get_vargenes <- function(marker_m){
 #' @param marker_m matrix or dataframe of candidate genes for each cluster
 #' @param n number of genes in the genome
 #' @param metric adjusted p-value for hypergeometric test, or jaccard index
-#' @param output_high if true (by default to fit with rest of package), -log10 transform p-value
+#' @param output_high if true (by default to fit with rest of package),
+#' -log10 transform p-value
 #'
 #' @export
 compare_lists <- function(bin_mat,
