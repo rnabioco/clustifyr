@@ -12,7 +12,9 @@ Authors@R: c(
   person("Chengzhe", "Tian", , "blah@gmail.com", role = c("aut")),
   person("M.", "Day", , "blah@gmail.com", role = c("aut"))
   )
-License: MIT
+Depends:
+  R (>= 3.1.2)
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
@@ -27,7 +29,6 @@ Imports:
     cowplot,
     dplyr,
     tidyr,
-    tibble,
     stats,
     gplots
 Suggests:

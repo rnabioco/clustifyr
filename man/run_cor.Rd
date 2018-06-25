@@ -26,8 +26,6 @@ of correlation coefficient only.}
 \item{compute_method}{method(s) for computing similarity scores}
 
 \item{...}{additional arguments to pass to compute_method function}
-
-\item{cluster_col}{column used for clustering}
 }
 \description{
 Main function to compare scRNA-seq data to bulk RNA-seq data.

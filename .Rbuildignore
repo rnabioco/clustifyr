@@ -1,5 +1,6 @@
-^RClusterCT\.Rproj$
+^clustifyR\.Rproj$
 ^\.Rproj\.user$
 ^_pkgdown\.yml$
 ^docs$
 ^\.travis\.yml$
+^README\.Rmd$
