@@ -15,6 +15,13 @@ plot_tsne(data, x = "tSNE_1", y = "tSNE_2", feature, legend_name = "",
 \item{y}{y variable}
 
 \item{feature}{feature to color by}
+
+\item{legend_name}{legend name to display, defaults to no name}
+
+\item{cols}{character vector of colors to built color gradient
+for continuous values. defaults to \code{\link[clustifyR:pretty_palette]{clustifyR::pretty_palette}}}
+
+\item{pt_size}{point size}
 }
 \description{
 Plot a tSNE colored by feature.

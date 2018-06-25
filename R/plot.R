@@ -4,7 +4,10 @@
 #' @param x x variable
 #' @param y y variable
 #' @param feature feature to color by
-#'
+#' @param legend_name legend name to display, defaults to no name
+#' @param cols character vector of colors to built color gradient
+#' for continuous values. defaults to [`clustifyR::pretty_palette`]
+#' @param pt_size point size
 #' @export
 plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
                       feature,
@@ -29,7 +32,8 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
   p + cowplot::theme_cowplot()
 }
 
-#' @noRd
+#' Color palette for plotting continous variables
+#' @export
 pretty_palette <- rev(RColorBrewer::brewer.pal(11, "RdGy")[c(1:5, 7)])
 
 #' Plot similarity measures on a tSNE
