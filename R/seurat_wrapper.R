@@ -8,6 +8,7 @@
 #' @param return_full Return full results includeing scores instead
 #'  of correlation coefficient only.
 #' @param compute_method method(s) for computing similarity scores
+#' @param output either output a new seurat object, or just a dataframe of calls
 #' @param ... additional arguments to pass to compute_method function
 #'
 #' @export
@@ -18,7 +19,8 @@ clustify_seurat <- function(seurat_object,
                             per_cell = F,
                             num_perm = 0,
                             cluster_col = "cluster",
-                            compute_method = corr_coef){
+                            compute_method = corr_coef,
+                            output = "object"){
   expr_mat <- seurat_object@data
 
   metadata <- data.table::copy(seurat_object@meta.data)
@@ -53,7 +55,12 @@ clustify_seurat <- function(seurat_object,
   metadata <- data.table::copy(seurat_object@meta.data)
   calls <- left_join(metadata, calls_df, by = "cluster") %>% select(call)
   rownames(calls) <- rownames(metadata)
+
+  if (output == "object"){
   Seurat::AddMetaData(seurat_object, calls, "calls")
+  } else if (output == "df"){
+    calls
+  }
 }
 
 #' Function to make call and attach score
