@@ -40,11 +40,11 @@ assignment after one iteration to be considered as converged.}
 
 \item{tsne_coord}{t-SNE coordinate of every cells for plotting}
 
+\item{cluster_names}{Name of each cluster for plotting}
+
 \item{compute_method}{corr_coef}
 
 \item{...}{control parameters for calculating similarity score}
-
-\item{cluster_name}{Name of each cluster for plotting}
 }
 \description{
 Refine clustering using reference data

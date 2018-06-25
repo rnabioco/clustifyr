@@ -37,6 +37,7 @@ select_gene_subset <- function(bin_mat, gene_constraints) {
 #' @param vec1 test vector
 #' @param vec2 reference vector
 #' @param compute_method method to run i.e. corr_coef
+#' @param ... arguments to pass to compute_method function
 #' @export
 compute_similarity <- function(vec1, vec2, compute_method, ...) {
   # examine whether two vectors are of the same size

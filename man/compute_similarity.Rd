@@ -12,6 +12,8 @@ compute_similarity(vec1, vec2, compute_method, ...)
 \item{vec2}{reference vector}
 
 \item{compute_method}{method to run i.e. corr_coef}
+
+\item{...}{arguments to pass to compute_method function}
 }
 \description{
 Compute the similarity score between two vectors using a

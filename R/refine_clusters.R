@@ -21,7 +21,7 @@
 #'  no reference data to compare to
 #' @param if_plot whether to plot the clustering result at each iteration.
 #' @param tsne_coord t-SNE coordinate of every cells for plotting
-#' @param cluster_name Name of each cluster for plotting
+#' @param cluster_names Name of each cluster for plotting
 #' @param compute_method corr_coef
 #' @param ... control parameters for calculating similarity score
 #' @export

@@ -9,7 +9,6 @@
 #' @param return_full Return full results includeing scores instead
 #'  of correlation coefficient only.
 #' @param compute_method method(s) for computing similarity scores
-#' @param cluster_col column used for clustering
 #' @param ... additional arguments to pass to compute_method function
 #' @export
 run_cor <- function(expr_mat, metadata, bulk_mat, query_gene_list, per_cell = F,
