@@ -21,13 +21,25 @@ binarize_expr <- function(expr_mat,
 #' @param n number of genes to use
 #' @param weight ranked genes are tranformed into pseudo expression with
 #' added weight
+#' @param unique whether to use only unique markers to 1 cluster
 #' @param labels vector or dataframe of cluster names
 #'
 #' @export
-matrixize_markers <- function(marker_df, ranked = FALSE, n = NULL, weight = 0, labels = NULL){
+matrixize_markers <- function(marker_df,
+                              ranked = FALSE,
+                              n = NULL,
+                              weight = 0,
+                              unique = FALSE,
+                              labels = NULL){
   # takes marker in dataframe form
   # equal number of marker genes per known cluster
   marker_df <- as_tibble(marker_df)
+
+  if (unique == TRUE){
+    nonunique <- marker_df %>% group_by(gene) %>% summarize(n=n()) %>% filter(n>1)
+    marker_df <- anti_join(marker_df, nonunique, by = "gene")
+  }
+
   cut_num <- min((marker_df %>% group_by(cluster) %>% summarize(n =n()))$n)
 
   if (!is.null(n)){
@@ -82,7 +94,11 @@ get_vargenes <- function(marker_m){
 #' @param output_high if true (by default to fit with rest of package), -log10 transform p-value
 #'
 #' @export
-compare_lists <- function(bin_mat, marker_m, n = 30000, metric = "hyper", output_high = TRUE){
+compare_lists <- function(bin_mat,
+                          marker_m,
+                          n = 30000,
+                          metric = "hyper",
+                          output_high = TRUE){
   # check if matrix is binarized
   if (length(unique(bin_mat[,1])) > 2){
     metric = "spearman"
@@ -101,7 +117,8 @@ compare_lists <- function(bin_mat, marker_m, n = 30000, metric = "hyper", output
                                       t <- length(intersect(list_top, marker_list))
                                       a <- max(length(list_top),length(marker_list))
                                       b <- min(length(list_top),length(marker_list))
-                                      sum(dhyper(t:b, a, n - a, b))})
+                                      sum(dhyper(t:b, a, n - a, b))
+                                    })
                   do.call(cbind, as.list(p.adjust(per_col)))
                 })
   }
@@ -117,7 +134,7 @@ compare_lists <- function(bin_mat, marker_m, n = 30000, metric = "hyper", output
 
                                         I <- length(intersect(list_top, marker_list))
                                         I/(length(list_top) + length(marker_list) - I)
-                                        })
+                                      })
                     do.call(cbind, per_col)
                   })
   }
