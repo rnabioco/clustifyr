@@ -1,7 +1,7 @@
 #' Wrapper to integate into Seurat workflow
 #'
 #' @param seurat_object seruat_object after tsne projections and clustering
-#' @param bulk_mat bulk expression matrix, or ranked list
+#' @param bulk_mat bulk expression matrix, or matrixized ranked list
 #' @param query_gene_list A vector of genes of interest, or by default loads var.genes from seurat object, a number can be given to subset var.genes
 #' @param per_cell if true run per cell, otherwise per cluster.
 #' @param num_perm number of permutations, set to 0 by default
@@ -86,7 +86,10 @@ clustify_seurat <- function(seurat_object,
 #' @param carry_cor whether the correlation score gets reported
 #' @export
 #'
-get_best_str <- function(name, best_mat, cor_mat, carry_cor = TRUE) {
+get_best_str <- function(name,
+                         best_mat,
+                         cor_mat,
+                         carry_cor = TRUE) {
   if (sum(as.numeric(best_mat[name,])) > 0) {
     best.names <- colnames(best_mat)[which(best_mat[name,]==1)]
     best.cor <- round(cor_mat[name, which(best_mat[name,]==1)],2)
@@ -111,8 +114,19 @@ get_best_str <- function(name, best_mat, cor_mat, carry_cor = TRUE) {
 #'
 #' @param seurat_object seruat_object after tsne projections and clustering
 #' @param cluster_col column name where classified cluster names are stored in seurat meta data, cannot be "rn"
+#' @param var.genes_only whether to keep only var.genes in the final matrix output
+#'
 #' @export
 #'
-use_seurat_comp <- function(seurat_object, cluster_col = "classified"){
-  average_clusters(seurat_object@data, data.table::setDT(data.table::copy(seurat_object@meta.data), keep.rownames = TRUE), log_scale = FALSE, cluster_col = cluster_col)
+use_seurat_comp <- function(seurat_object,
+                            cluster_col = "classified",
+                            var.genes_only = FALSE){
+  temp_mat <- average_clusters(seurat_object@data,
+                               data.table::setDT(data.table::copy(seurat_object@meta.data), keep.rownames = TRUE),
+                               log_scale = TRUE,
+                               cluster_col = cluster_col)
+  if (var.genes_only == TRUE){
+    temp_mat <- temp_mat[seurat_object@var.genes,]
+  }
+  temp_mat
 }

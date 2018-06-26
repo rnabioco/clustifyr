@@ -15,7 +15,7 @@ binarize_expr <- function(expr_mat,
 
 #' convert candidate genes list into matrix
 #'
-#' @param marker_df dataframe of candidate genes
+#' @param marker_df dataframe of candidate genes, must contain "gene" and "cluster" columns, or a matrix of gene names to convert to ranked
 #' @param ranked unranked gene list feeds into hyperp, the ranked
 #' gene list feeds into regular corr_coef
 #' @param n number of genes to use
@@ -34,6 +34,11 @@ matrixize_markers <- function(marker_df,
   # takes marker in dataframe form
   # equal number of marker genes per known cluster
   marker_df <- as_tibble(marker_df)
+
+  # if "gene" not present in column names, assume df is a matrix to be converted to ranked
+  if (!("gene" %in% colnames(marker_df))){
+    marker_df <- data.frame(lapply(marker_df, as.character), stringsAsFactors=FALSE) %>% tidyr::gather(factor_key = TRUE, key = "cluster", value = "gene")
+  }
 
   if (unique == TRUE){
     nonunique <- marker_df %>% group_by(gene) %>% summarize(n=n()) %>% filter(n>1)
