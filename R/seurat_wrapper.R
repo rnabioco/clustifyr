@@ -2,7 +2,7 @@
 #'
 #' @param seurat_object seruat_object after tsne projections and clustering
 #' @param bulk_mat bulk expression matrix, or ranked list
-#' @param query_gene_list A vector of genes of interest.
+#' @param query_gene_list A vector of genes of interest, or by default loads var.genes from seurat object, a number can be given to subset var.genes
 #' @param per_cell if true run per cell, otherwise per cluster.
 #' @param num_perm number of permutations, set to 0 by default
 #' @param return_full Return full results includeing scores instead
@@ -15,13 +15,13 @@
 #'
 clustify_seurat <- function(seurat_object,
                             bulk_mat,
-                            query_gene_list,
+                            query_gene_list = "var.genes",
                             per_cell = F,
                             num_perm = 0,
                             cluster_col = "cluster",
                             compute_method = corr_coef,
                             output = "object",
-                            carry_cor = TRUE){
+                            carry_cor = FALSE){
   expr_mat <- seurat_object@data
 
   metadata <- data.table::copy(seurat_object@meta.data)
@@ -31,6 +31,13 @@ clustify_seurat <- function(seurat_object,
   as_tibble(metadata_tibble2)
   as_tibble(metadata_tibble) -> metadata_tibble
   metadata <- inner_join(metadata_tibble, metadata_tibble2 %>% select(rn, cluster_col), by = "rn")
+
+  # if query_gene_list == NULL, use var.genes saved in seurat object
+  if (query_gene_list == "var.genes"){
+    query_gene_list <- seurat_object@var.genes
+  } else if (typeof(query_gene_list) == "double"){
+    query_gene_list <- (seurat_object@hvg.info %>% rownames_to_column() %>% arrange(desc(gene.dispersion.scaled)) %>% pull(rowname))[1:query_gene_list]
+  }
 
   # if per_cell, cluster_col should default to "rn"
   if ((per_cell == TRUE) & (dim(unique(metadata[,cluster_col]))[1] != dim(metadata)[1])){
@@ -100,3 +107,12 @@ get_best_str <- function(name, best_mat, cor_mat, carry_cor = TRUE) {
   return(str)
 }
 
+#' Function to convert labelled seurat object to avg expression matrix
+#'
+#' @param seurat_object seruat_object after tsne projections and clustering
+#' @param cluster_col column name where classified cluster names are stored in seurat meta data, cannot be "rn"
+#' @export
+#'
+use_seurat_comp <- function(seurat_object, cluster_col = "classified"){
+  average_clusters(seurat_object@data, data.table::setDT(data.table::copy(seurat_object@meta.data), keep.rownames = TRUE), log_scale = FALSE, cluster_col = cluster_col)
+}
