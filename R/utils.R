@@ -1,12 +1,12 @@
 #' Average expression values per cluster
 #'
-#'
 #' @param mat expression matrix
 #' @param cluster_info data.frame with cells
 #' @param log_scale input data is natural log,
 #' averaging will be done on unlogged data
 #' @param cell_col column in cluster_info with cell ids
 #' @param cluster_col column in cluster_info with cluster number
+#'
 #' @export
 average_clusters <- function(mat, cluster_info,
                              log_scale = T,
@@ -35,3 +35,59 @@ average_clusters <- function(mat, cluster_info,
   )
   return(do.call(cbind, out))
 }
+
+#' % detected per cluster
+#'
+#' @param mat expression matrix
+#' @param cluster_info data.frame with cells
+#' @param cell_col column in cluster_info with cell ids
+#' @param cluster_col column in cluster_info with cluster number
+#' @param cut_num binary cutoff for detection
+#'
+#' @export
+percent_clusters <- function(mat, cluster_info,
+                             cell_col = "rn",
+                             cluster_col = "cluster",
+                             cut_num = 0.5){
+
+  mat[mat >= cut_num] = 1
+  mat[mat <= cut_num] = 0
+
+  average_clusters(mat, cluster_info,
+                               log_scale = F,
+                               cell_col = cell_col,
+                               cluster_col = cluster_col)
+}
+
+#' Function to make call and attach score
+#'
+#' @param name name of row to query
+#' @param best_mat binarized call matrix
+#' @param cor_mat correlation matrix
+#' @param carry_cor whether the correlation score gets reported
+#'
+#' @export
+get_best_str <- function(name,
+                         best_mat,
+                         cor_mat,
+                         carry_cor = TRUE) {
+  if (sum(as.numeric(best_mat[name,])) > 0) {
+    best.names <- colnames(best_mat)[which(best_mat[name,]==1)]
+    best.cor <- round(cor_mat[name, which(best_mat[name,]==1)],2)
+    for (i in 1:length(best.cor)) {
+      if (i == 1) {
+        str <- paste0(best.names[i], " (", best.cor[i], ")")
+      } else {
+        str <- paste0(str, "; ", best.names[i], " (", best.cor[i], ")")
+      }
+    }
+  } else {
+    str <- "?"
+  }
+
+  if (carry_cor == FALSE){
+    str <- gsub(" \\(.*\\)","",str)
+  }
+  return(str)
+}
+
