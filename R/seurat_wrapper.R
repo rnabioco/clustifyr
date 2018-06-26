@@ -12,7 +12,6 @@
 #' @param ... additional arguments to pass to compute_method function
 #'
 #' @export
-#'
 clustify_seurat <- function(seurat_object,
                             bulk_mat,
                             query_gene_list = "var.genes",
@@ -78,38 +77,6 @@ clustify_seurat <- function(seurat_object,
   }
 }
 
-#' Function to make call and attach score
-#'
-#' @param name name of row to query
-#' @param best_mat binarized call matrix
-#' @param cor_mat correlation matrix
-#' @param carry_cor whether the correlation score gets reported
-#' @export
-#'
-get_best_str <- function(name,
-                         best_mat,
-                         cor_mat,
-                         carry_cor = TRUE) {
-  if (sum(as.numeric(best_mat[name,])) > 0) {
-    best.names <- colnames(best_mat)[which(best_mat[name,]==1)]
-    best.cor <- round(cor_mat[name, which(best_mat[name,]==1)],2)
-    for (i in 1:length(best.cor)) {
-      if (i == 1) {
-        str <- paste0(best.names[i], " (", best.cor[i], ")")
-      } else {
-        str <- paste0(str, "; ", best.names[i], " (", best.cor[i], ")")
-      }
-    }
-  } else {
-    str <- "?"
-  }
-
-  if (carry_cor == FALSE){
-    str <- gsub(" \\(.*\\)","",str)
-  }
-  return(str)
-}
-
 #' Function to convert labelled seurat object to avg expression matrix
 #'
 #' @param seurat_object seruat_object after tsne projections and clustering
@@ -117,7 +84,6 @@ get_best_str <- function(name,
 #' @param var.genes_only whether to keep only var.genes in the final matrix output
 #'
 #' @export
-#'
 use_seurat_comp <- function(seurat_object,
                             cluster_col = "classified",
                             var.genes_only = FALSE){
