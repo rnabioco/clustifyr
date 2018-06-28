@@ -15,11 +15,12 @@ binarize_expr <- function(expr_mat,
 
 #' convert candidate genes list into matrix
 #'
-#' @param marker_df dataframe of candidate genes
+#' @param marker_df dataframe of candidate genes, must contain "gene" and "cluster" columns, or a matrix of gene names to convert to ranked
 #' @param ranked unranked gene list feeds into hyperp, the ranked
 #' gene list feeds into regular corr_coef
 #' @param n number of genes to use
-#' @param weight ranked genes are tranformed into pseudo expression with
+#' @param step_weight ranked genes are tranformed into pseudo expression by descending weight
+#' @param background_weight ranked genes are tranformed into pseudo expression with
 #' added weight
 #' @param unique whether to use only unique markers to 1 cluster
 #' @param labels vector or dataframe of cluster names
@@ -28,12 +29,18 @@ binarize_expr <- function(expr_mat,
 matrixize_markers <- function(marker_df,
                               ranked = FALSE,
                               n = NULL,
-                              weight = 0,
+                              step_weight = 1,
+                              background_weight = 0,
                               unique = FALSE,
                               labels = NULL){
   # takes marker in dataframe form
   # equal number of marker genes per known cluster
   marker_df <- as_tibble(marker_df)
+
+  # if "gene" not present in column names, assume df is a matrix to be converted to ranked
+  if (!("gene" %in% colnames(marker_df))){
+    marker_df <- data.frame(lapply(marker_df, as.character), stringsAsFactors=FALSE) %>% tidyr::gather(factor_key = TRUE, key = "cluster", value = "gene")
+  }
 
   if (unique == TRUE){
     nonunique <- marker_df %>% group_by(gene) %>% summarize(n=n()) %>% filter(n>1)
@@ -50,7 +57,7 @@ matrixize_markers <- function(marker_df,
 
   marker_temp <- marker_df %>% dplyr::select(gene, cluster) %>% group_by(cluster) %>% dplyr::slice(1:cut_num)
   if (ranked == TRUE){
-    marker_temp <- marker_temp %>% mutate(n = (cut_num + weight) : (1 + weight))
+    marker_temp <- marker_temp %>% mutate(n = seq(step_weight * cut_num, by = -step_weight, length.out = cut_num) + background_weight)
     marker_temp2 <- as.data.frame(tidyr::spread(marker_temp, key = "cluster", value = n) %>% replace(is.na(.), 0))
     rownames(marker_temp2) <- marker_temp2$gene
     marker_temp2 <- marker_temp2 %>% dplyr::select(-gene)
