@@ -4,13 +4,13 @@ Title: Classification of Cell Types in Single-Cell RNA Sequencing Data
 Description: Classify cells from single-cell RNA sequencing data using bulk
   RNA-seq reference data.
 Authors@R: c(
-  person("Kent", "Riemondy", , "blah@gmail.com", role = c("aut", "cre")),
-  person("Austin", "Gillen", , "blah@gmail.com", role = c("aut")),
-  person("Rui", "Fu", , "blah@gmail.com", role = c("aut")),
-  person("Jay", "Hesselberth", , "blah@gmail.com", role = c("aut")),
-  person("Yue", "Hao", , "blah@gmail.com", role = c("aut")),
-  person("Chengzhe", "Tian", , "blah@gmail.com", role = c("aut")),
-  person("M.", "Day", , "blah@gmail.com", role = c("aut"))
+  person("Kent", "Riemondy", , "kent.riemondy@ucdenver.edu", role = c("aut", "cre")),
+  person("Austin", "Gillen", , "austin.gillen@ucdenver.edu", role = c("aut")),
+  person("Rui", "Fu", , "rui.fu@ucdenver.edu", role = c("aut")),
+  person("Jay", "Hesselberth", , "jay.hesselberth@gmail.com", role = c("aut")),
+  person("Yue", "Hao", , "haoyuethink@gmail.com", role = c("aut")),
+  person("Chengzhe", "Tian", , "Chengzhe.Tian@colorado.edu", role = c("aut")),
+  person("M.", "Day", , "michelle.daya@ucdenver.edu", role = c("aut"))
   )
 Depends:
   R (>= 3.1.2)
