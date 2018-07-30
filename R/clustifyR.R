@@ -8,7 +8,6 @@
 #' @importFrom stats prcomp dhyper cor p.adjust quantile
 #' @import ggplot2
 #' @import tibble
-#' @import gplots
 #' @import entropy
 #' @import Matrix
 #' @importFrom cowplot theme_cowplot

@@ -26,22 +26,35 @@ important_heatmap <- function(important, avg_matrix, meta, MDA_thresh, MDG_thres
   # cc <- rainbow(ncol(log_mat))
   # colorside = gray(1:10/10)
   bk1 = seq(min(log_mat),max(log_mat),length.out=11)
-  color <- colorpanel(ncol(log_mat),"azure","steelblue1","royalblue4")
+  #color <- colorpanel(ncol(log_mat),"azure","steelblue1","royalblue4") if using gplots
+  colorCount <- ncol(log_mat)
+  getPalette <- grDevices::colorRampPalette(RColorBrewer::brewer.pal(9,"Blues"))
+  color <- getPalette(colorCount)
   # Plot the heatmap
-  heatmap<-heatmap.2( log_mat,
-             key=TRUE,
-             key.title = NA,
-             key.xlab = 'log(avg_expression)',
-             trace="none",
-             # ColSideColors=colorside,
-             cexRow=1,
-             cexCol=1,
-             breaks=bk1,
-             col=color,
-             sepwidth=c(0.1,0.1),
-             sepcolor="white",
-             colsep=1:ncol(log_mat),
-             rowsep=1:nrow(log_mat),
-             margins=c(10,6))
+  # heatmap<-heatmap.2( log_mat,
+  #            key=TRUE,
+  #            key.title = NA,
+  #            key.xlab = 'log(avg_expression)',
+  #            trace="none",
+  #            # ColSideColors=colorside,
+  #            cexRow=1,
+  #            cexCol=1,
+  #            breaks=bk1,
+  #            col=color,
+  #            sepwidth=c(0.1,0.1),
+  #            sepcolor="white",
+  #            colsep=1:ncol(log_mat),
+  #            rowsep=1:nrow(log_mat),
+  #            margins=c(10,6))
+  # heatmap<-heatmap( log_mat,
+  #                     cexRow=1,
+  #                     cexCol=1,
+  #                     breaks=bk1,
+  #                     col=color,
+  #                     margins=c(10,6))
+  ComplexHeatmap::Heatmap( log_mat,
+                    col=color,
+                    name = "heatmap",
+                    show_heatmap_legend = TRUE)
 }
 
