@@ -28,7 +28,6 @@ library(randomForest)
 library(caret)
 library(mlbench)
 library(e1071)
-library(gplots)
 ```
 
 ## Cell type prediction using Random Forest model
@@ -151,8 +150,8 @@ NK cells                            0              0      249  0.13240418
 ```
 ```{r, eval=F, echo=T}
 # To check important variables
-importance(rFmodel)        
-varImpPlot(rFmodel)
+importance(rFmodel.sub)        
+varImpPlot(rFmodel.sub)
 ```
 ![Important variables](https://i.imgur.com/h5d0aST.png)
 
