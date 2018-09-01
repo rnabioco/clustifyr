@@ -77,7 +77,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="http://github.com/NCBI-Hackathons/clustifyR">
+  <a href="https://github.com/NCBI-Hackathons/clustifyR">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -97,7 +97,7 @@
       <h1>Compare Methods</h1>
             
       
-      <small class="dont-index">Source: <a href="http://github.com/NCBI-Hackathons/clustifyR/blob/master/vignettes/compare_methods.Rmd"><code>vignettes/compare_methods.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/NCBI-Hackathons/clustifyR/blob/master/vignettes/compare_methods.Rmd"><code>vignettes/compare_methods.Rmd</code></a></small>
       <div class="hidden name"><code>compare_methods.Rmd</code></div>
 
     </div>
@@ -114,28 +114,28 @@
 <div id="load-required-example-data-sets" class="section level2">
 <h2 class="hasAnchor">
 <a href="#load-required-example-data-sets" class="anchor"></a>Load required example data sets</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(clustifyR)
-<span class="kw">data</span>(<span class="st">"pbmc4k_vargenes"</span>)
-<span class="kw">data</span>(<span class="st">"pbmc4k_markers"</span>)
-<span class="kw">data</span>(<span class="st">"pbmc4k_markers_M3Drop"</span>)
-<span class="kw">data</span>(<span class="st">"pbmc_pca"</span>)
-<span class="kw">data</span>(<span class="st">"pbmc4k_avg"</span>)
-<span class="kw">data</span>(<span class="st">"pbmc_bulk_matrix"</span>)
-
-
-<span class="co">#Assign pre-labelled names to single cell clusters</span>
-<span class="kw">names</span>(pbmc4k_avg) &lt;-<span class="st"> </span><span class="kw">c</span>(
-   <span class="st">"CD4 T cells, 1"</span>,
-   <span class="st">"CD14+ Monocytes"</span>,
-   <span class="st">"B cells"</span>,
-   <span class="st">"CD4 T cells, 2"</span>,
-   <span class="st">"CD8 T cells"</span>,
-   <span class="st">"NK cells"</span>,
-   <span class="st">"Dendritic cells, 1"</span>,
-   <span class="st">"FCGR3A+ Monocytes"</span>,
-   <span class="st">"Dendritic Cells, 2?"</span>,
-   <span class="st">"Megakaryocytes"</span>
-)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(clustifyR)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">data</span>(<span class="st">"pbmc4k_vargenes"</span>)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">data</span>(<span class="st">"pbmc4k_markers"</span>)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">data</span>(<span class="st">"pbmc4k_markers_M3Drop"</span>)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">data</span>(<span class="st">"pbmc_pca"</span>)</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw">data</span>(<span class="st">"pbmc4k_avg"</span>)</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw">data</span>(<span class="st">"pbmc_bulk_matrix"</span>)</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">#Assign pre-labelled names to single cell clusters</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="kw">names</span>(pbmc4k_avg) &lt;-<span class="st"> </span><span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">   <span class="st">"CD4 T cells, 1"</span>,</a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">   <span class="st">"CD14+ Monocytes"</span>,</a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">   <span class="st">"B cells"</span>,</a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">   <span class="st">"CD4 T cells, 2"</span>,</a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">   <span class="st">"CD8 T cells"</span>,</a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">   <span class="st">"NK cells"</span>,</a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">   <span class="st">"Dendritic cells, 1"</span>,</a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">   <span class="st">"FCGR3A+ Monocytes"</span>,</a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">   <span class="st">"Dendritic Cells, 2?"</span>,</a>
+<a class="sourceLine" id="cb1-21" data-line-number="21">   <span class="st">"Megakaryocytes"</span></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22">)</a></code></pre></div>
 </div>
 <div id="function-to-create-correlation-matrix" class="section level2">
 <h2 class="hasAnchor">
@@ -145,14 +145,14 @@
 <li>Column names are the bulk RNA sample names.</li>
 <li>Values are the pearson correlations between the average single cell RNA expression and the bulk RNA sample expression, for a given set of genes (determined by the feature selection methods).</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cor_mat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/run_cor.html">run_cor</a></span>(<span class="dt">expr_mat =</span> pbmc4k_matrix,
-               <span class="dt">metadata =</span> pbmc4k_meta,
-               <span class="dt">bulk_mat =</span> pbmc_bulk_matrix,
-               <span class="dt">query_gene_list =</span> pbmc4k_vargenes,
-               <span class="dt">cluster_col =</span> <span class="st">"classified"</span>,
-               <span class="dt">compute_method =</span> corr_coef)
-
-knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(<span class="kw">round</span>(cor_mat, <span class="dv">2</span>))</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">cor_mat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/run_cor.html">run_cor</a></span>(<span class="dt">expr_mat =</span> pbmc4k_matrix,</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">               <span class="dt">metadata =</span> pbmc4k_meta,</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">               <span class="dt">bulk_mat =</span> pbmc_bulk_matrix,</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">               <span class="dt">query_gene_list =</span> pbmc4k_vargenes,</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">               <span class="dt">cluster_col =</span> <span class="st">"classified"</span>,</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">               <span class="dt">compute_method =</span> corr_coef)</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(<span class="kw">round</span>(cor_mat, <span class="dv">2</span>))</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th></th>
@@ -349,18 +349,18 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <h2 class="hasAnchor">
 <a href="#function-to-create-best-match-matrix" class="anchor"></a>Function to create best match matrix</h2>
 <p>This function takes a correlation matrix, and determines which bulk RNA sample is the best match (1) for a single cell RNA tissue</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">get_best_match_matrix &lt;-<span class="st"> </span><span class="cf">function</span>(correlation_matrix) {
-  
-  best_mat &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">t</span>(<span class="kw">apply</span>(correlation_matrix, <span class="dv">1</span>, <span class="cf">function</span>(x) x <span class="op">-</span><span class="st"> </span><span class="kw">max</span>(x))))
-  best_mat[best_mat<span class="op">==</span><span class="dv">0</span>]=<span class="st">"1"</span>
-  best_mat[best_mat<span class="op">!=</span><span class="st">"1"</span>]=<span class="st">"0"</span>
-
-  <span class="kw">return</span> (best_mat)
-}
-
-best_match_matrix &lt;-<span class="st"> </span><span class="kw">get_best_match_matrix</span>(cor_mat)
-
-knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(best_match_matrix)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">get_best_match_matrix &lt;-<span class="st"> </span><span class="cf">function</span>(correlation_matrix) {</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">  </a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">  best_mat &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">t</span>(<span class="kw">apply</span>(correlation_matrix, <span class="dv">1</span>, <span class="cf">function</span>(x) x <span class="op">-</span><span class="st"> </span><span class="kw">max</span>(x))))</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">  best_mat[best_mat<span class="op">==</span><span class="dv">0</span>]=<span class="st">"1"</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">  best_mat[best_mat<span class="op">!=</span><span class="st">"1"</span>]=<span class="st">"0"</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">  <span class="kw">return</span> (best_mat)</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">}</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">best_match_matrix &lt;-<span class="st"> </span><span class="kw">get_best_match_matrix</span>(cor_mat)</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(best_match_matrix)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th></th>
@@ -557,81 +557,81 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 <h2 class="hasAnchor">
 <a href="#summary-of-best-matches" class="anchor"></a>Summary of best matches</h2>
 <p>Using the above functions, we can now summarize and compare and contrast the best matches for each of the different feature selection methods.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vargenes_cor_mat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/run_cor.html">run_cor</a></span>(<span class="dt">expr_mat =</span> pbmc4k_matrix,
-               <span class="dt">metadata =</span> pbmc4k_meta,
-               <span class="dt">bulk_mat =</span> pbmc_bulk_matrix,
-               <span class="dt">query_gene_list =</span> pbmc4k_vargenes,
-               <span class="dt">cluster_col =</span> <span class="st">"classified"</span>,
-               <span class="dt">compute_method =</span> corr_coef)
-
-vargenes_best_mat &lt;-<span class="st"> </span><span class="kw">get_best_match_matrix</span>(vargenes_cor_mat)
-
-markers_cor_mat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/run_cor.html">run_cor</a></span>(<span class="dt">expr_mat =</span> pbmc4k_matrix,
-               <span class="dt">metadata =</span> pbmc4k_meta,
-               <span class="dt">bulk_mat =</span> pbmc_bulk_matrix,
-               <span class="dt">query_gene_list =</span> pbmc4k_markers<span class="op">$</span>gene,
-               <span class="dt">cluster_col =</span> <span class="st">"classified"</span>,
-               <span class="dt">compute_method =</span> corr_coef)
-
-markers_best_mat &lt;-<span class="st"> </span><span class="kw">get_best_match_matrix</span>(markers_cor_mat)
-
-
-m3drop_cor_mat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/run_cor.html">run_cor</a></span>(<span class="dt">expr_mat =</span> pbmc4k_matrix,
-               <span class="dt">metadata =</span> pbmc4k_meta,
-               <span class="dt">bulk_mat =</span> pbmc_bulk_matrix,
-               <span class="dt">query_gene_list =</span> pbmc4k_markers_M3Drop<span class="op">$</span>Gene,
-               <span class="dt">cluster_col =</span> <span class="st">"classified"</span>,
-               <span class="dt">compute_method =</span> corr_coef)
-
-m3drop_best_mat &lt;-<span class="st"> </span><span class="kw">get_best_match_matrix</span>(m3drop_cor_mat)
-
-
-pca_cor_mat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/run_cor.html">run_cor</a></span>(<span class="dt">expr_mat =</span> pbmc4k_matrix,
-               <span class="dt">metadata =</span> pbmc4k_meta,
-               <span class="dt">bulk_mat =</span> pbmc_bulk_matrix,
-               <span class="dt">query_gene_list =</span> pbmc_pca,
-               <span class="dt">cluster_col =</span> <span class="st">"classified"</span>,
-               <span class="dt">compute_method =</span> corr_coef)
-
-pca_best_mat &lt;-<span class="st"> </span><span class="kw">get_best_match_matrix</span>(pca_cor_mat)
-
-get_best_str &lt;-<span class="st"> </span><span class="cf">function</span>(name, best_mat, cor_mat) {
-  <span class="cf">if</span> (<span class="kw">sum</span>(<span class="kw">as.numeric</span>(best_mat[,name])) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) {
-      best.names &lt;-<span class="st"> </span><span class="kw">rownames</span>(best_mat)[<span class="kw">which</span>(best_mat[,name]<span class="op">==</span><span class="dv">1</span>)]  
-      best.cor &lt;-<span class="st"> </span><span class="kw">round</span>(cor_mat[<span class="kw">which</span>(best_mat[,name]<span class="op">==</span><span class="dv">1</span>),name],<span class="dv">2</span>)
-      <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(best.cor)) {
-        <span class="cf">if</span> (i <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) {
-          str &lt;-<span class="st"> </span><span class="kw">paste0</span>(best.names[i], <span class="st">" ("</span>, best.cor[i], <span class="st">") "</span>) 
-        } <span class="cf">else</span> {
-            str &lt;-<span class="st"> </span><span class="kw">paste0</span>(str, <span class="st">"; "</span>, best.names[i], <span class="st">" ("</span>, best.cor[i], <span class="st">") "</span>) 
-        }
-      }
-  } <span class="cf">else</span> {
-    str &lt;-<span class="st"> ""</span>
-  }
-  <span class="kw">return</span>(str)
-}
-
-summary &lt;-<span class="st"> </span><span class="kw">data.frame</span>()
-bulk_rna_sample_names &lt;-<span class="st"> </span><span class="kw">colnames</span>(pbmc_bulk_matrix)
-<span class="cf">for</span> (name <span class="cf">in</span> bulk_rna_sample_names) {
-  variable_genes &lt;-<span class="st"> </span><span class="kw">get_best_str</span>(name, vargenes_best_mat, vargenes_cor_mat)
-  marker_genes &lt;-<span class="st"> </span><span class="kw">get_best_str</span>(name, markers_best_mat, markers_cor_mat)
-  m3drop_genes &lt;-<span class="st"> </span><span class="kw">get_best_str</span>(name, m3drop_best_mat, m3drop_cor_mat)
-  pca_genes &lt;-<span class="st"> </span><span class="kw">get_best_str</span>(name, pca_best_mat, pca_cor_mat)
-  <span class="cf">if</span> (<span class="kw">paste0</span>(variable_genes, marker_genes, m3drop_genes, pca_genes) <span class="op">!=</span><span class="st"> ""</span>) {
-      row &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
-        variable_genes,
-        marker_genes,
-        m3drop_genes,
-        pca_genes
-      )
-      <span class="kw">rownames</span>(row) &lt;-<span class="st"> </span>name
-      summary &lt;-<span class="st"> </span><span class="kw">rbind</span>(summary,row)    
-  }
-}
-
-knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(summary)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">vargenes_cor_mat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/run_cor.html">run_cor</a></span>(<span class="dt">expr_mat =</span> pbmc4k_matrix,</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">               <span class="dt">metadata =</span> pbmc4k_meta,</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">               <span class="dt">bulk_mat =</span> pbmc_bulk_matrix,</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">               <span class="dt">query_gene_list =</span> pbmc4k_vargenes,</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">               <span class="dt">cluster_col =</span> <span class="st">"classified"</span>,</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">               <span class="dt">compute_method =</span> corr_coef)</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">vargenes_best_mat &lt;-<span class="st"> </span><span class="kw">get_best_match_matrix</span>(vargenes_cor_mat)</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">markers_cor_mat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/run_cor.html">run_cor</a></span>(<span class="dt">expr_mat =</span> pbmc4k_matrix,</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">               <span class="dt">metadata =</span> pbmc4k_meta,</a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">               <span class="dt">bulk_mat =</span> pbmc_bulk_matrix,</a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">               <span class="dt">query_gene_list =</span> pbmc4k_markers<span class="op">$</span>gene,</a>
+<a class="sourceLine" id="cb4-14" data-line-number="14">               <span class="dt">cluster_col =</span> <span class="st">"classified"</span>,</a>
+<a class="sourceLine" id="cb4-15" data-line-number="15">               <span class="dt">compute_method =</span> corr_coef)</a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17">markers_best_mat &lt;-<span class="st"> </span><span class="kw">get_best_match_matrix</span>(markers_cor_mat)</a>
+<a class="sourceLine" id="cb4-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb4-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb4-20" data-line-number="20">m3drop_cor_mat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/run_cor.html">run_cor</a></span>(<span class="dt">expr_mat =</span> pbmc4k_matrix,</a>
+<a class="sourceLine" id="cb4-21" data-line-number="21">               <span class="dt">metadata =</span> pbmc4k_meta,</a>
+<a class="sourceLine" id="cb4-22" data-line-number="22">               <span class="dt">bulk_mat =</span> pbmc_bulk_matrix,</a>
+<a class="sourceLine" id="cb4-23" data-line-number="23">               <span class="dt">query_gene_list =</span> pbmc4k_markers_M3Drop<span class="op">$</span>Gene,</a>
+<a class="sourceLine" id="cb4-24" data-line-number="24">               <span class="dt">cluster_col =</span> <span class="st">"classified"</span>,</a>
+<a class="sourceLine" id="cb4-25" data-line-number="25">               <span class="dt">compute_method =</span> corr_coef)</a>
+<a class="sourceLine" id="cb4-26" data-line-number="26"></a>
+<a class="sourceLine" id="cb4-27" data-line-number="27">m3drop_best_mat &lt;-<span class="st"> </span><span class="kw">get_best_match_matrix</span>(m3drop_cor_mat)</a>
+<a class="sourceLine" id="cb4-28" data-line-number="28"></a>
+<a class="sourceLine" id="cb4-29" data-line-number="29"></a>
+<a class="sourceLine" id="cb4-30" data-line-number="30">pca_cor_mat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/run_cor.html">run_cor</a></span>(<span class="dt">expr_mat =</span> pbmc4k_matrix,</a>
+<a class="sourceLine" id="cb4-31" data-line-number="31">               <span class="dt">metadata =</span> pbmc4k_meta,</a>
+<a class="sourceLine" id="cb4-32" data-line-number="32">               <span class="dt">bulk_mat =</span> pbmc_bulk_matrix,</a>
+<a class="sourceLine" id="cb4-33" data-line-number="33">               <span class="dt">query_gene_list =</span> pbmc_pca,</a>
+<a class="sourceLine" id="cb4-34" data-line-number="34">               <span class="dt">cluster_col =</span> <span class="st">"classified"</span>,</a>
+<a class="sourceLine" id="cb4-35" data-line-number="35">               <span class="dt">compute_method =</span> corr_coef)</a>
+<a class="sourceLine" id="cb4-36" data-line-number="36"></a>
+<a class="sourceLine" id="cb4-37" data-line-number="37">pca_best_mat &lt;-<span class="st"> </span><span class="kw">get_best_match_matrix</span>(pca_cor_mat)</a>
+<a class="sourceLine" id="cb4-38" data-line-number="38"></a>
+<a class="sourceLine" id="cb4-39" data-line-number="39">get_best_str &lt;-<span class="st"> </span><span class="cf">function</span>(name, best_mat, cor_mat) {</a>
+<a class="sourceLine" id="cb4-40" data-line-number="40">  <span class="cf">if</span> (<span class="kw">sum</span>(<span class="kw">as.numeric</span>(best_mat[,name])) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb4-41" data-line-number="41">      best.names &lt;-<span class="st"> </span><span class="kw">rownames</span>(best_mat)[<span class="kw">which</span>(best_mat[,name]<span class="op">==</span><span class="dv">1</span>)]  </a>
+<a class="sourceLine" id="cb4-42" data-line-number="42">      best.cor &lt;-<span class="st"> </span><span class="kw">round</span>(cor_mat[<span class="kw">which</span>(best_mat[,name]<span class="op">==</span><span class="dv">1</span>),name],<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb4-43" data-line-number="43">      <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(best.cor)) {</a>
+<a class="sourceLine" id="cb4-44" data-line-number="44">        <span class="cf">if</span> (i <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) {</a>
+<a class="sourceLine" id="cb4-45" data-line-number="45">          str &lt;-<span class="st"> </span><span class="kw">paste0</span>(best.names[i], <span class="st">" ("</span>, best.cor[i], <span class="st">") "</span>) </a>
+<a class="sourceLine" id="cb4-46" data-line-number="46">        } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb4-47" data-line-number="47">            str &lt;-<span class="st"> </span><span class="kw">paste0</span>(str, <span class="st">"; "</span>, best.names[i], <span class="st">" ("</span>, best.cor[i], <span class="st">") "</span>) </a>
+<a class="sourceLine" id="cb4-48" data-line-number="48">        }</a>
+<a class="sourceLine" id="cb4-49" data-line-number="49">      }</a>
+<a class="sourceLine" id="cb4-50" data-line-number="50">  } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb4-51" data-line-number="51">    str &lt;-<span class="st"> ""</span></a>
+<a class="sourceLine" id="cb4-52" data-line-number="52">  }</a>
+<a class="sourceLine" id="cb4-53" data-line-number="53">  <span class="kw">return</span>(str)</a>
+<a class="sourceLine" id="cb4-54" data-line-number="54">}</a>
+<a class="sourceLine" id="cb4-55" data-line-number="55"></a>
+<a class="sourceLine" id="cb4-56" data-line-number="56">summary &lt;-<span class="st"> </span><span class="kw">data.frame</span>()</a>
+<a class="sourceLine" id="cb4-57" data-line-number="57">bulk_rna_sample_names &lt;-<span class="st"> </span><span class="kw">colnames</span>(pbmc_bulk_matrix)</a>
+<a class="sourceLine" id="cb4-58" data-line-number="58"><span class="cf">for</span> (name <span class="cf">in</span> bulk_rna_sample_names) {</a>
+<a class="sourceLine" id="cb4-59" data-line-number="59">  variable_genes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_best_str.html">get_best_str</a></span>(name, vargenes_best_mat, vargenes_cor_mat)</a>
+<a class="sourceLine" id="cb4-60" data-line-number="60">  marker_genes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_best_str.html">get_best_str</a></span>(name, markers_best_mat, markers_cor_mat)</a>
+<a class="sourceLine" id="cb4-61" data-line-number="61">  m3drop_genes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_best_str.html">get_best_str</a></span>(name, m3drop_best_mat, m3drop_cor_mat)</a>
+<a class="sourceLine" id="cb4-62" data-line-number="62">  pca_genes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_best_str.html">get_best_str</a></span>(name, pca_best_mat, pca_cor_mat)</a>
+<a class="sourceLine" id="cb4-63" data-line-number="63">  <span class="cf">if</span> (<span class="kw">paste0</span>(variable_genes, marker_genes, m3drop_genes, pca_genes) <span class="op">!=</span><span class="st"> ""</span>) {</a>
+<a class="sourceLine" id="cb4-64" data-line-number="64">      row &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
+<a class="sourceLine" id="cb4-65" data-line-number="65">        variable_genes,</a>
+<a class="sourceLine" id="cb4-66" data-line-number="66">        marker_genes,</a>
+<a class="sourceLine" id="cb4-67" data-line-number="67">        m3drop_genes,</a>
+<a class="sourceLine" id="cb4-68" data-line-number="68">        pca_genes</a>
+<a class="sourceLine" id="cb4-69" data-line-number="69">      )</a>
+<a class="sourceLine" id="cb4-70" data-line-number="70">      <span class="kw">rownames</span>(row) &lt;-<span class="st"> </span>name</a>
+<a class="sourceLine" id="cb4-71" data-line-number="71">      summary &lt;-<span class="st"> </span><span class="kw">rbind</span>(summary,row)    </a>
+<a class="sourceLine" id="cb4-72" data-line-number="72">  }</a>
+<a class="sourceLine" id="cb4-73" data-line-number="73">}</a>
+<a class="sourceLine" id="cb4-74" data-line-number="74"></a>
+<a class="sourceLine" id="cb4-75" data-line-number="75">knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(summary)</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th></th>

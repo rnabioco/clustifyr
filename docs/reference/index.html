@@ -107,7 +107,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="http://github.com/NCBI-Hackathons/clustifyR">
+  <a href="https://github.com/NCBI-Hackathons/clustifyR">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -163,6 +163,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="clustify_seurat.html">clustify_seurat()</a></code> </p>
+        </td>
+        <td><p>Wrapper to integate into Seurat workflow</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="compare_lists.html">compare_lists()</a></code> </p>
         </td>
         <td><p>calculate adjusted p-values for hypergeometric test of gene lists
@@ -184,9 +190,19 @@ or jaccard index</p></td>
         <td>
           <p><code><a href="getPCAGenes.html">getPCAGenes()</a></code> </p>
         </td>
-        <td><p>Returns a list of genes ("features") based on the top
-loadings of principal components
-formed from the bulk expression data set</p></td>
+        <td><p>Returns a list of variable genes based on PCA</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_best_str.html">get_best_str()</a></code> </p>
+        </td>
+        <td><p>Function to make call and attach score</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_vargenes.html">get_vargenes()</a></code> </p>
+        </td>
+        <td><p>generate variable gene list from marker matrix</p></td>
       </tr><tr>
         
         <td>
@@ -208,6 +224,24 @@ formed from the bulk expression data set</p></td>
       </tr><tr>
         
         <td>
+          <p><code><a href="pbmc4k_avg.html">pbmc4k_avg</a></code> </p>
+        </td>
+        <td><p>Matrix of average gene expression per cluster from single-cell RNA-seq PBMCs.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pbmc4k_markers.html">pbmc4k_markers</a></code> </p>
+        </td>
+        <td><p>Marker genes identified by Seurat from single-cell RNA-seq PBMCs.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pbmc4k_markers_M3Drop.html">pbmc4k_markers_M3Drop</a></code> </p>
+        </td>
+        <td><p>Marker genes identified by M3Drop from single-cell RNA-seq PBMCs.</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="pbmc4k_matrix.html">pbmc4k_matrix</a></code> </p>
         </td>
         <td><p>Matrix of single-cell RNA-seq PBMCs.</p></td>
@@ -217,6 +251,18 @@ formed from the bulk expression data set</p></td>
           <p><code><a href="pbmc4k_meta.html">pbmc4k_meta</a></code> </p>
         </td>
         <td><p>Meta-data for single-cell RNA-seq PBMCs.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pbmc4k_vargenes.html">pbmc4k_vargenes</a></code> </p>
+        </td>
+        <td><p>variable genes identified by Seurat from single-cell RNA-seq PBMCs.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pbmc5_markers.html">pbmc5_markers</a></code> </p>
+        </td>
+        <td><p>Marker genes identified by Seurat from single-cell RNA-seq PBMCs from 5'end kit.</p></td>
       </tr><tr>
         
         <td>
@@ -235,6 +281,29 @@ formed from the bulk expression data set</p></td>
           <p><code><a href="pbmc_bulk_matrix.html">pbmc_bulk_matrix</a></code> </p>
         </td>
         <td><p>Bulk RNA-Seq data from sorted populations isolated from PBMCs.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="percent_clusters.html">percent_clusters</a></code> </p>
+        </td>
+        <td><p><!-- % detected per cluster} -->
+
+percent_clusters(mat, cluster_info, cell_col = "rn",
+  cluster_col = "cluster", cut_num = 0.5)
+
+
+matexpression matrix
+
+cluster_infodata.frame with cells
+
+cell_colcolumn in cluster_info with cell ids
+
+cluster_colcolumn in cluster_info with cluster number
+
+cut_numbinary cutoff for detection
+
+
+<!-- % detected per cluster --></p></td>
       </tr><tr>
         
         <td>
@@ -258,31 +327,43 @@ formed from the bulk expression data set</p></td>
         <td>
           <p><code><a href="plot_tsne.html">plot_tsne()</a></code> </p>
         </td>
-        <td><p>Plot a t-SNE colored by feature.</p></td>
+        <td><p>Plot a tSNE colored by feature.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pretty_palette.html">pretty_palette</a></code> </p>
+        </td>
+        <td><p>Color palette for plotting continous variables</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="reduce_expr_matrix.html">reduce_expr_matrix()</a></code> </p>
         </td>
-        <td><p>Reduce expr_matrix</p></td>
+        <td><p>Reduce expression matrix to variable genes and binarize.</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="refine_clusters.html">refine_clusters()</a></code> </p>
         </td>
-        <td><p>refine_clusters: refine clustering using reference data</p></td>
+        <td><p>Refine clustering using reference data</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="run_cor.html">run_cor()</a></code> </p>
         </td>
-        <td><p>run_cor: Main function to compare scRNA-seq data to bulk RNA-seq data.</p></td>
+        <td><p>Main function to compare scRNA-seq data to bulk RNA-seq data.</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="select_gene_subset.html">select_gene_subset()</a></code> </p>
         </td>
         <td><p>Pick and sort genes</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="use_seurat_comp.html">use_seurat_comp()</a></code> </p>
+        </td>
+        <td><p>Function to convert labelled seurat object to avg expression matrix</p></td>
       </tr>
     </tbody>
     </table>

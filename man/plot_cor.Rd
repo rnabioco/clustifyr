@@ -5,7 +5,8 @@
 \title{Plot similarity measures on a tSNE}
 \usage{
 plot_cor(correlation_matrix, metadata,
-  bulk_data_to_plot = colnames(correlation_matrix), cluster_col = "cluster")
+  bulk_data_to_plot = colnames(correlation_matrix),
+  cluster_col = "cluster")
 }
 \arguments{
 \item{correlation_matrix}{input similarity matrix}

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Pick and sort genes — select_gene_subset • clustifyR</title>
+<title>Function to make call and attach score — get_best_str • clustifyR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,15 +30,9 @@
 
 
 
-<meta property="og:title" content="Pick and sort genes — select_gene_subset" />
+<meta property="og:title" content="Function to make call and attach score — get_best_str" />
 
-<meta property="og:description" content="Data set from different sources may contain different gene sets.
-In order to establish a fair comparison, we select a subset of genes
-shared by both datasets.
-This function can be also used to extract data for genes of interest,
-such as highly variable genes.
-Possible examples of candidate lists include row names of expression matrix
-and a list of highly variable genes." />
+<meta property="og:description" content="Function to make call and attach score" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -133,37 +127,37 @@ and a list of highly variable genes." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Pick and sort genes</h1>
-    <small class="dont-index">Source: <a href='https://github.com/NCBI-Hackathons/clustifyR/blob/master/R/compute_similarity.R'><code>R/compute_similarity.R</code></a></small>
-    <div class="hidden name"><code>select_gene_subset.Rd</code></div>
+    <h1>Function to make call and attach score</h1>
+    <small class="dont-index">Source: <a href='https://github.com/NCBI-Hackathons/clustifyR/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
+    <div class="hidden name"><code>get_best_str.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Data set from different sources may contain different gene sets.
-In order to establish a fair comparison, we select a subset of genes
-shared by both datasets.
-This function can be also used to extract data for genes of interest,
-such as highly variable genes.
-Possible examples of candidate lists include row names of expression matrix
-and a list of highly variable genes.</p>
+    <p>Function to make call and attach score</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>select_gene_subset</span>(<span class='no'>bin_mat</span>, <span class='no'>gene_constraints</span>)</pre>
+    <pre class="usage"><span class='fu'>get_best_str</span>(<span class='no'>name</span>, <span class='no'>best_mat</span>, <span class='no'>cor_mat</span>, <span class='kw'>carry_cor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>bin_mat</th>
-      <td><p>Expression matrix with row names as the gene names. Use short
-name for now</p></td>
+      <th>name</th>
+      <td><p>name of row to query</p></td>
     </tr>
     <tr>
-      <th>gene_constraints</th>
-      <td><p>A list of vectors, where each vector is a candidate
-list of selected genes.</p></td>
+      <th>best_mat</th>
+      <td><p>binarized call matrix</p></td>
+    </tr>
+    <tr>
+      <th>cor_mat</th>
+      <td><p>correlation matrix</p></td>
+    </tr>
+    <tr>
+      <th>carry_cor</th>
+      <td><p>whether the correlation score gets reported</p></td>
     </tr>
     </table>
     

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Pick and sort genes — select_gene_subset • clustifyR</title>
+<title>Wrapper to integate into Seurat workflow — clustify_seurat • clustifyR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,15 +30,9 @@
 
 
 
-<meta property="og:title" content="Pick and sort genes — select_gene_subset" />
+<meta property="og:title" content="Wrapper to integate into Seurat workflow — clustify_seurat" />
 
-<meta property="og:description" content="Data set from different sources may contain different gene sets.
-In order to establish a fair comparison, we select a subset of genes
-shared by both datasets.
-This function can be also used to extract data for genes of interest,
-such as highly variable genes.
-Possible examples of candidate lists include row names of expression matrix
-and a list of highly variable genes." />
+<meta property="og:description" content="Wrapper to integate into Seurat workflow" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -133,37 +127,60 @@ and a list of highly variable genes." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Pick and sort genes</h1>
-    <small class="dont-index">Source: <a href='https://github.com/NCBI-Hackathons/clustifyR/blob/master/R/compute_similarity.R'><code>R/compute_similarity.R</code></a></small>
-    <div class="hidden name"><code>select_gene_subset.Rd</code></div>
+    <h1>Wrapper to integate into Seurat workflow</h1>
+    <small class="dont-index">Source: <a href='https://github.com/NCBI-Hackathons/clustifyR/blob/master/R/seurat_wrapper.R'><code>R/seurat_wrapper.R</code></a></small>
+    <div class="hidden name"><code>clustify_seurat.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Data set from different sources may contain different gene sets.
-In order to establish a fair comparison, we select a subset of genes
-shared by both datasets.
-This function can be also used to extract data for genes of interest,
-such as highly variable genes.
-Possible examples of candidate lists include row names of expression matrix
-and a list of highly variable genes.</p>
+    <p>Wrapper to integate into Seurat workflow</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>select_gene_subset</span>(<span class='no'>bin_mat</span>, <span class='no'>gene_constraints</span>)</pre>
+    <pre class="usage"><span class='fu'>clustify_seurat</span>(<span class='no'>seurat_object</span>, <span class='no'>bulk_mat</span>, <span class='kw'>query_gene_list</span> <span class='kw'>=</span> <span class='st'>"var.genes"</span>,
+  <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='kw'>num_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>,
+  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='no'>corr_coef</span>, <span class='kw'>output</span> <span class='kw'>=</span> <span class='st'>"object"</span>, <span class='kw'>carry_cor</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>bin_mat</th>
-      <td><p>Expression matrix with row names as the gene names. Use short
-name for now</p></td>
+      <th>seurat_object</th>
+      <td><p>seruat_object after tsne projections and clustering</p></td>
     </tr>
     <tr>
-      <th>gene_constraints</th>
-      <td><p>A list of vectors, where each vector is a candidate
-list of selected genes.</p></td>
+      <th>bulk_mat</th>
+      <td><p>bulk expression matrix, or matrixized ranked list</p></td>
+    </tr>
+    <tr>
+      <th>query_gene_list</th>
+      <td><p>A vector of genes of interest, or by default loads var.genes from seurat object, a number can be given to subset var.genes</p></td>
+    </tr>
+    <tr>
+      <th>per_cell</th>
+      <td><p>if true run per cell, otherwise per cluster.</p></td>
+    </tr>
+    <tr>
+      <th>num_perm</th>
+      <td><p>number of permutations, set to 0 by default</p></td>
+    </tr>
+    <tr>
+      <th>compute_method</th>
+      <td><p>method(s) for computing similarity scores</p></td>
+    </tr>
+    <tr>
+      <th>output</th>
+      <td><p>either output a new seurat object, or just a dataframe of calls</p></td>
+    </tr>
+    <tr>
+      <th>return_full</th>
+      <td><p>Return full results includeing scores instead
+of correlation coefficient only.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>additional arguments to pass to compute_method function</p></td>
     </tr>
     </table>
     

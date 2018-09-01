@@ -6,9 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Returns a list of genes ("features") based on the top
-loadings of principal components
-formed from the bulk expression data set — getPCAGenes • clustifyR</title>
+<title>Returns a list of variable genes based on PCA — getPCAGenes • clustifyR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -32,11 +30,9 @@ formed from the bulk expression data set — getPCAGenes • clustifyR</title>
 
 
 
-<meta property="og:title" content="Returns a list of genes ("features") based on the top
-loadings of principal components
-formed from the bulk expression data set — getPCAGenes" />
+<meta property="og:title" content="Returns a list of variable genes based on PCA — getPCAGenes" />
 
-<meta property="og:description" content="Returns a list of genes (&quot;features&quot;) based on the top
+<meta property="og:description" content="@description  Extract genes, i.e. &quot;features&quot;, based on the top
 loadings of principal components
 formed from the bulk expression data set" />
 <meta name="twitter:card" content="summary" />
@@ -116,7 +112,7 @@ formed from the bulk expression data set" />
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="http://github.com/NCBI-Hackathons/clustifyR">
+  <a href="https://github.com/NCBI-Hackathons/clustifyR">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -133,16 +129,14 @@ formed from the bulk expression data set" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Returns a list of genes ("features") based on the top
-loadings of principal components
-formed from the bulk expression data set</h1>
-    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/clustifyR/blob/master/R/get_pca_genes.R'><code>R/get_pca_genes.R</code></a></small>
+    <h1>Returns a list of variable genes based on PCA</h1>
+    <small class="dont-index">Source: <a href='https://github.com/NCBI-Hackathons/clustifyR/blob/master/R/get_pca_genes.R'><code>R/get_pca_genes.R</code></a></small>
     <div class="hidden name"><code>getPCAGenes.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Returns a list of genes ("features") based on the top
+    <p>@description  Extract genes, i.e. "features", based on the top
 loadings of principal components
 formed from the bulk expression data set</p>
     
@@ -155,26 +149,25 @@ formed from the bulk expression data set</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>sc_avg_expr</th>
-      <td><p>Expression data frame; rownames=genes,
-colnames=single cell cluster name,
-values=average single cell expression (log transformed).</p></td>
+      <td><p>Expression data frame. Rownames are genes,
+colnames are single cell cluster name, and
+values are average single cell expression (log transformed).</p></td>
     </tr>
     <tr>
       <th>bulk_expr</th>
-      <td><p>Bulk RNA expression data frame; rownames=genes,
-colnames=sample name, values=expression counts.</p></td>
+      <td><p>Bulk RNA expression data frame. Rownames are genes,
+colnames are bulk sample names, and values are expression counts.</p></td>
     </tr>
     <tr>
       <th>nr_pcs</th>
-      <td><p>Number PCs to selected gene loadings from.
-See the explore_PCA_corr.Rmd vignette.</p></td>
+      <td><p>Number of PCs to selected gene loadings from.
+See the explore_PCA_corr.Rmd vignette for details.</p></td>
     </tr>
     <tr>
       <th>percentile</th>
       <td><p>Select the percentile of absolute values of
-PCA loadings to select genes from.
-E.g. 0.999 would select the top point 1 percent of genes
-with the largest loadings.</p></td>
+PCA loadings to select genes from. E.g. 0.999 would select the
+top point 1 percent of genes with the largest loadings.</p></td>
     </tr>
     </table>
     

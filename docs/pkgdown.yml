@@ -1,6 +1,6 @@
-pandoc: 1.19.2.1
+pandoc: 2.2.3.2
 pkgdown: 1.1.0.9000
-pkgdown_sha: bcf6299e76d4a398aadfc476b3ac22d253a91d35
+pkgdown_sha: ~
 articles:
   compare_methods: compare_methods.html
   exploratory_pca: exploratory_pca.html

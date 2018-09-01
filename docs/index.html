@@ -78,7 +78,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="http://github.com/NCBI-Hackathons/clustifyR">
+  <a href="https://github.com/NCBI-Hackathons/clustifyR">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -114,14 +114,14 @@
 <div id="step-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#step-1" class="anchor"></a>Step 1:</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Install devtools</span>
-<span class="kw">install.packages</span>(<span class="st">"devtools"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Install devtools</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>)</a></code></pre></div>
 </div>
 <div id="step-2" class="section level3">
 <h3 class="hasAnchor">
 <a href="#step-2" class="anchor"></a>Step 2:</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Install clustifyR from github</span>
-devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"NCBI-Hackathons/clustifyR"</span>)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Install clustifyR from github</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"NCBI-Hackathons/clustifyR"</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="usage" class="section level2">
@@ -131,18 +131,18 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <h3 class="hasAnchor">
 <a href="#super-quickstart-with-sample-data-included-in-package" class="anchor"></a>Super-quickstart with sample data (included in package):</h3>
 <p>Generate a correlation matrix from a matrix of single cell RNA-seq data (<code>pbmc4k_matrix</code>), a metadata table describing the single cell data (<code>pbmc4k_meta</code>), a list of variable genes in the single cell data (<code>pbmc4k_vargenes</code>), and a matrix of bulk RNA-seq read counts (<code>pbmc_bulk_matrix</code>):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># run correlation (pearson by default)</span>
-res &lt;-<span class="st"> </span><span class="kw"><a href="reference/run_cor.html">run_cor</a></span>(<span class="dt">expr_mat =</span> pbmc4k_matrix,
-               <span class="dt">metadata =</span> pbmc4k_meta,
-               <span class="dt">bulk_mat =</span> pbmc_bulk_matrix,
-               <span class="dt">query_gene_list =</span> pbmc4k_vargenes,
-               <span class="dt">compute_method =</span> corr_coef)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># run correlation (pearson by default)</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">res &lt;-<span class="st"> </span><span class="kw"><a href="reference/run_cor.html">run_cor</a></span>(<span class="dt">expr_mat =</span> pbmc4k_matrix,</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">               <span class="dt">metadata =</span> pbmc4k_meta,</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">               <span class="dt">bulk_mat =</span> pbmc_bulk_matrix,</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">               <span class="dt">query_gene_list =</span> pbmc4k_vargenes,</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">               <span class="dt">compute_method =</span> corr_coef)</a></code></pre></div>
 <p>Plot the correlation coefficients on a pre-calculated tSNE projection (stored in <code>pbmc4k_meta</code>):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot correlation coefficients on tSNE for each identity class</span>
-<span class="kw"><a href="reference/plot_cor.html">plot_cor</a></span>(res,
-         pbmc4k_meta,
-         <span class="kw">colnames</span>(res)[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">5</span>)],
-         <span class="dt">cluster_col =</span> <span class="st">"classified"</span>)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># plot correlation coefficients on tSNE for each identity class</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="reference/plot_cor.html">plot_cor</a></span>(res,</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">         pbmc4k_meta,</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">         <span class="kw">colnames</span>(res)[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">5</span>)],</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">         <span class="dt">cluster_col =</span> <span class="st">"classified"</span>)</a></code></pre></div>
 </div>
 <div id="for-more-detail-see-a-list-of-command-refences-or-browse-the-vignettes-" class="section level3">
 <h3 class="hasAnchor">
@@ -155,7 +155,7 @@ res &lt;-<span class="st"> </span><span class="kw"><a href="reference/run_cor.ht
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="http://github.com/NCBI-Hackathons/clustifyR">http://​github.com/​NCBI-Hackathons/​clustifyR</a>
+<li>Browse source code at <br><a href="https://github.com/NCBI-Hackathons/clustifyR">https://​github.com/​NCBI-Hackathons/​clustifyR</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/NCBI-Hackathons/clustifyR/issues">https://​github.com/​NCBI-Hackathons/​clustifyR/​issues</a>
 </li>
@@ -164,7 +164,9 @@ res &lt;-<span class="st"> </span><span class="kw"><a href="reference/run_cor.ht
 <div class="license">
 <h2>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://opensource.org/licenses/mit-license.php">MIT</a></li>
+<li>
+<a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
+</li>
 </ul>
 </div>
 <div class="developers">

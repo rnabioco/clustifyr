@@ -13,6 +13,9 @@
     <loc>http://ncbi-hackathons.github.io/clustifyR/reference/clustifyR.html</loc>
   </url>
   <url>
+    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/clustify_seurat.html</loc>
+  </url>
+  <url>
     <loc>http://ncbi-hackathons.github.io/clustifyR/reference/compare_lists.html</loc>
   </url>
   <url>
@@ -25,6 +28,12 @@
     <loc>http://ncbi-hackathons.github.io/clustifyR/reference/getPCAGenes.html</loc>
   </url>
   <url>
+    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/get_best_str.html</loc>
+  </url>
+  <url>
+    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/get_vargenes.html</loc>
+  </url>
+  <url>
     <loc>http://ncbi-hackathons.github.io/clustifyR/reference/important_heatmap.html</loc>
   </url>
   <url>
@@ -34,10 +43,25 @@
     <loc>http://ncbi-hackathons.github.io/clustifyR/reference/matrixize_markers.html</loc>
   </url>
   <url>
+    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/pbmc4k_avg.html</loc>
+  </url>
+  <url>
+    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/pbmc4k_markers.html</loc>
+  </url>
+  <url>
+    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/pbmc4k_markers_M3Drop.html</loc>
+  </url>
+  <url>
     <loc>http://ncbi-hackathons.github.io/clustifyR/reference/pbmc4k_matrix.html</loc>
   </url>
   <url>
     <loc>http://ncbi-hackathons.github.io/clustifyR/reference/pbmc4k_meta.html</loc>
+  </url>
+  <url>
+    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/pbmc4k_vargenes.html</loc>
+  </url>
+  <url>
+    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/pbmc5_markers.html</loc>
   </url>
   <url>
     <loc>http://ncbi-hackathons.github.io/clustifyR/reference/pbmc5_matrix.html</loc>
@@ -47,6 +71,9 @@
   </url>
   <url>
     <loc>http://ncbi-hackathons.github.io/clustifyR/reference/pbmc_bulk_matrix.html</loc>
+  </url>
+  <url>
+    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/percent_clusters.html</loc>
   </url>
   <url>
     <loc>http://ncbi-hackathons.github.io/clustifyR/reference/permutation_similarity.html</loc>
@@ -61,6 +88,9 @@
     <loc>http://ncbi-hackathons.github.io/clustifyR/reference/plot_tsne.html</loc>
   </url>
   <url>
+    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/pretty_palette.html</loc>
+  </url>
+  <url>
     <loc>http://ncbi-hackathons.github.io/clustifyR/reference/reduce_expr_matrix.html</loc>
   </url>
   <url>
@@ -71,6 +101,9 @@
   </url>
   <url>
     <loc>http://ncbi-hackathons.github.io/clustifyR/reference/select_gene_subset.html</loc>
+  </url>
+  <url>
+    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/use_seurat_comp.html</loc>
   </url>
   <url>
     <loc>http://ncbi-hackathons.github.io/clustifyR/articles/compare_methods.html</loc>

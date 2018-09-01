@@ -110,7 +110,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="http://github.com/NCBI-Hackathons/clustifyR">
+  <a href="https://github.com/NCBI-Hackathons/clustifyR">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -128,7 +128,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>convert candidate genes list into matrix</h1>
-    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/clustifyR/blob/master/R/compare_genelist.R'><code>R/compare_genelist.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/NCBI-Hackathons/clustifyR/blob/master/R/compare_genelist.R'><code>R/compare_genelist.R</code></a></small>
     <div class="hidden name"><code>matrixize_markers.Rd</code></div>
     </div>
 
@@ -138,14 +138,16 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>matrixize_markers</span>(<span class='no'>marker_df</span>, <span class='kw'>ranked</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>weight</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
+    <pre class="usage"><span class='fu'>matrixize_markers</span>(<span class='no'>marker_df</span>, <span class='kw'>ranked</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>step_weight</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>background_weight</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>unique</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>marker_df</th>
-      <td><p>dataframe of candidate genes</p></td>
+      <td><p>dataframe of candidate genes, must contain "gene" and "cluster" columns, or a matrix of gene names to convert to ranked</p></td>
     </tr>
     <tr>
       <th>ranked</th>
@@ -153,13 +155,25 @@
 gene list feeds into regular corr_coef</p></td>
     </tr>
     <tr>
-      <th>weight</th>
+      <th>n</th>
+      <td><p>number of genes to use</p></td>
+    </tr>
+    <tr>
+      <th>step_weight</th>
+      <td><p>ranked genes are tranformed into pseudo expression by descending weight</p></td>
+    </tr>
+    <tr>
+      <th>background_weight</th>
       <td><p>ranked genes are tranformed into pseudo expression with
 added weight</p></td>
     </tr>
     <tr>
-      <th>marker_df</th>
-      <td><p>dataframe of candidate genes</p></td>
+      <th>unique</th>
+      <td><p>whether to use only unique markers to 1 cluster</p></td>
+    </tr>
+    <tr>
+      <th>labels</th>
+      <td><p>vector or dataframe of cluster names</p></td>
     </tr>
     </table>
     

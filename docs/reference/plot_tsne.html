@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot a t-SNE colored by feature. — plot_tsne • clustifyR</title>
+<title>Plot a tSNE colored by feature. — plot_tsne • clustifyR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Plot a t-SNE colored by feature. — plot_tsne" />
+<meta property="og:title" content="Plot a tSNE colored by feature. — plot_tsne" />
 
-<meta property="og:description" content="Plot a t-SNE colored by feature." />
+<meta property="og:description" content="Plot a tSNE colored by feature." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -110,7 +110,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="http://github.com/NCBI-Hackathons/clustifyR">
+  <a href="https://github.com/NCBI-Hackathons/clustifyR">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -127,19 +127,19 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot a t-SNE colored by feature.</h1>
-    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/clustifyR/blob/master/R/plot.R'><code>R/plot.R</code></a></small>
+    <h1>Plot a tSNE colored by feature.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/NCBI-Hackathons/clustifyR/blob/master/R/plot.R'><code>R/plot.R</code></a></small>
     <div class="hidden name"><code>plot_tsne.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Plot a t-SNE colored by feature.</p>
+    <p>Plot a tSNE colored by feature.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>plot_tsne</span>(<span class='no'>data</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"tSNE_1"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"tSNE_2"</span>, <span class='no'>feature</span>, <span class='kw'>legend_name</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>cols</span> <span class='kw'>=</span> <span class='no'>pretty_palette</span>, <span class='kw'>pt_size</span> <span class='kw'>=</span> <span class='fl'>0.25</span>)</pre>
+    <pre class="usage"><span class='fu'>plot_tsne</span>(<span class='no'>data</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"tSNE_1"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"tSNE_2"</span>, <span class='no'>feature</span>,
+  <span class='kw'>legend_name</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>cols</span> <span class='kw'>=</span> <span class='no'>pretty_palette</span>, <span class='kw'>pt_size</span> <span class='kw'>=</span> <span class='fl'>0.25</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -159,6 +159,19 @@
     <tr>
       <th>feature</th>
       <td><p>feature to color by</p></td>
+    </tr>
+    <tr>
+      <th>legend_name</th>
+      <td><p>legend name to display, defaults to no name</p></td>
+    </tr>
+    <tr>
+      <th>cols</th>
+      <td><p>character vector of colors to built color gradient
+for continuous values. defaults to <code><a href='pretty_palette.html'>clustifyR::pretty_palette</a></code></p></td>
+    </tr>
+    <tr>
+      <th>pt_size</th>
+      <td><p>point size</p></td>
     </tr>
     </table>
     

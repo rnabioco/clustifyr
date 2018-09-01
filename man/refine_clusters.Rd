@@ -4,10 +4,11 @@
 \alias{refine_clusters}
 \title{Refine clustering using reference data}
 \usage{
-refine_clusters(expr_mat, sc_cluster, bulk_mat, lambda = 0.5, epsilon = 1,
-  if_compute_sigma = TRUE, num_iteration = 100, default_similiarity = -5,
-  disagreement_freq = 0.001, if_plot = FALSE, tsne_coord = NULL,
-  cluster_names = NULL, compute_method, ...)
+refine_clusters(expr_mat, sc_cluster, bulk_mat, lambda = 0.5,
+  epsilon = 1, if_compute_sigma = TRUE, num_iteration = 100,
+  default_similiarity = -5, disagreement_freq = 0.001,
+  if_plot = FALSE, tsne_coord = NULL, cluster_names = NULL,
+  compute_method, ...)
 }
 \arguments{
 \item{expr_mat}{input single cell data after gene subsetting}

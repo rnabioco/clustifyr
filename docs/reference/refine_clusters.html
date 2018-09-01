@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>refine_clusters: refine clustering using reference data — refine_clusters • clustifyR</title>
+<title>Refine clustering using reference data — refine_clusters • clustifyR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="refine_clusters: refine clustering using reference data — refine_clusters" />
+<meta property="og:title" content="Refine clustering using reference data — refine_clusters" />
 
-<meta property="og:description" content="refine_clusters: refine clustering using reference data" />
+<meta property="og:description" content="Refine clustering using reference data" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -110,7 +110,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="http://github.com/NCBI-Hackathons/clustifyR">
+  <a href="https://github.com/NCBI-Hackathons/clustifyR">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -127,21 +127,22 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>refine_clusters: refine clustering using reference data</h1>
-    <small class="dont-index">Source: <a href='http://github.com/NCBI-Hackathons/clustifyR/blob/master/R/refine_clusters.R'><code>R/refine_clusters.R</code></a></small>
+    <h1>Refine clustering using reference data</h1>
+    <small class="dont-index">Source: <a href='https://github.com/NCBI-Hackathons/clustifyR/blob/master/R/refine_clusters.R'><code>R/refine_clusters.R</code></a></small>
     <div class="hidden name"><code>refine_clusters.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>refine_clusters: refine clustering using reference data</p>
+    <p>Refine clustering using reference data</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>refine_clusters</span>(<span class='no'>expr_mat</span>, <span class='no'>sc_cluster</span>, <span class='no'>bulk_mat</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>epsilon</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>if_compute_sigma</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>num_iteration</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>default_similiarity</span> <span class='kw'>=</span> -<span class='fl'>5</span>,
-  <span class='kw'>disagreement_freq</span> <span class='kw'>=</span> <span class='fl'>0.001</span>, <span class='kw'>if_plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>tsne_coord</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>cluster_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>compute_method</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>refine_clusters</span>(<span class='no'>expr_mat</span>, <span class='no'>sc_cluster</span>, <span class='no'>bulk_mat</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
+  <span class='kw'>epsilon</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>if_compute_sigma</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>num_iteration</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+  <span class='kw'>default_similiarity</span> <span class='kw'>=</span> -<span class='fl'>5</span>, <span class='kw'>disagreement_freq</span> <span class='kw'>=</span> <span class='fl'>0.001</span>,
+  <span class='kw'>if_plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>tsne_coord</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cluster_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>compute_method</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -153,8 +154,9 @@
     <tr>
       <th>sc_cluster</th>
       <td><p>initial clustering assignment.
-Note that the number of bulk cell types must be no more than the number of clusters.
-for additional clusters, there is an assignment of default_similiarity</p></td>
+Note that the number of bulk cell types must be no more than
+the number of clusters. for additional clusters,
+there is an assignment of default_similiarity</p></td>
     </tr>
     <tr>
       <th>bulk_mat</th>
@@ -198,16 +200,16 @@ assignment after one iteration to be considered as converged.</p></td>
       <td><p>t-SNE coordinate of every cells for plotting</p></td>
     </tr>
     <tr>
+      <th>cluster_names</th>
+      <td><p>Name of each cluster for plotting</p></td>
+    </tr>
+    <tr>
       <th>compute_method</th>
       <td><p>corr_coef</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>control parameters for calculating similarity score</p></td>
-    </tr>
-    <tr>
-      <th>cluster_name</th>
-      <td><p>Name of each cluster for plotting</p></td>
     </tr>
     </table>
     

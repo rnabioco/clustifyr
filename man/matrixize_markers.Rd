@@ -4,18 +4,21 @@
 \alias{matrixize_markers}
 \title{convert candidate genes list into matrix}
 \usage{
-matrixize_markers(marker_df, ranked = FALSE, n = NULL, weight = 0,
-  unique = FALSE, labels = NULL)
+matrixize_markers(marker_df, ranked = FALSE, n = NULL,
+  step_weight = 1, background_weight = 0, unique = FALSE,
+  labels = NULL)
 }
 \arguments{
-\item{marker_df}{dataframe of candidate genes}
+\item{marker_df}{dataframe of candidate genes, must contain "gene" and "cluster" columns, or a matrix of gene names to convert to ranked}
 
 \item{ranked}{unranked gene list feeds into hyperp, the ranked
 gene list feeds into regular corr_coef}
 
 \item{n}{number of genes to use}
 
-\item{weight}{ranked genes are tranformed into pseudo expression with
+\item{step_weight}{ranked genes are tranformed into pseudo expression by descending weight}
+
+\item{background_weight}{ranked genes are tranformed into pseudo expression with
 added weight}
 
 \item{unique}{whether to use only unique markers to 1 cluster}
