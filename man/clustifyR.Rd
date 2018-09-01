@@ -4,25 +4,25 @@
 \name{clustifyR}
 \alias{clustifyR}
 \alias{clustifyR-package}
-\alias{clustifyR-package}
 \title{clustifyR}
 \description{
-clustifyR
+Classify cells from single-cell RNA sequencing data using bulk
+  RNA-seq reference data.
 }
 \seealso{
 Report bugs at \url{https://github.com/NCBI-Hackathons/clustifyR/issues}
 }
 \author{
-\strong{Maintainer}: Kent Riemondy \email{blah@gmail.com}
+\strong{Maintainer}: Kent Riemondy \email{kent.riemondy@ucdenver.edu}
 
 Authors:
 \itemize{
-  \item Austin Gillen \email{blah@gmail.com}
-  \item Rui Fu \email{blah@gmail.com}
-  \item Jay Hesselberth \email{blah@gmail.com}
-  \item Yue Hao \email{blah@gmail.com}
-  \item Chengzhe Tian \email{blah@gmail.com}
-  \item M. Day \email{blah@gmail.com}
+  \item Austin Gillen \email{austin.gillen@ucdenver.edu}
+  \item Rui Fu \email{rui.fu@ucdenver.edu}
+  \item Jay Hesselberth \email{jay.hesselberth@gmail.com}
+  \item Yue Hao \email{haoyuethink@gmail.com}
+  \item Chengzhe Tian \email{Chengzhe.Tian@colorado.edu}
+  \item M. Day \email{michelle.daya@ucdenver.edu}
 }
 
 }

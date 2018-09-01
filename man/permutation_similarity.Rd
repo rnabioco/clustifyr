@@ -4,8 +4,8 @@
 \alias{permutation_similarity}
 \title{Compute the p-value for similarity using permutation}
 \usage{
-permutation_similarity(expr_mat, metadata, bulk_mat, num_perm, per_cell = F,
-  compute_method, cluster_col = "cluster", ...)
+permutation_similarity(expr_mat, metadata, bulk_mat, num_perm,
+  per_cell = F, compute_method, cluster_col = "cluster", ...)
 }
 \arguments{
 \item{expr_mat}{single-cell expression matrix}
