@@ -13,17 +13,19 @@
 #' @export
 run_cor <- function(expr_mat, metadata, bulk_mat, query_gene_list, per_cell = F,
                     num_perm = 0, return_full = F, compute_method, ...) {
-# select gene subsets
+  # select gene subsets
   gene_constraints <- list(rownames(expr_mat), rownames(bulk_mat), query_gene_list)
   expr_mat <- select_gene_subset(expr_mat, gene_constraints)
   bulk_mat <- select_gene_subset(bulk_mat, gene_constraints)
 
   # run permutation
-  res <- permutation_similarity(expr_mat, metadata, bulk_mat,
-                                num_perm, per_cell, compute_method, ...)
+  res <- permutation_similarity(
+    expr_mat, metadata, bulk_mat,
+    num_perm, per_cell, compute_method, ...
+  )
 
   # extract score only by default
-  if(!return_full) {
+  if (!return_full) {
     res <- res$score
   }
 

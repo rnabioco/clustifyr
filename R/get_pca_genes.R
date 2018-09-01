@@ -17,27 +17,26 @@
 #' @return The list of genes to use as features.
 #'
 #' @export
-getPCAGenes <- function (
-  sc_avg_expr,
-  bulk_expr,
-  nr_pcs,
-  percentile) {
+getPCAGenes <- function(
+                        sc_avg_expr,
+                        bulk_expr,
+                        nr_pcs,
+                        percentile) {
 
-  #Get overlapping genes
+  # Get overlapping genes
   shared.genes <- rownames(sc_avg_expr)[rownames(sc_avg_expr) %in% rownames(bulk_expr)]
-  bulkrna <- bulk_expr[shared.genes,]
+  bulkrna <- bulk_expr[shared.genes, ]
   bulkrna <- log(bulkrna + 1)
 
-  #Get the PCs
+  # Get the PCs
   pca <- prcomp(t(bulkrna))
 
-  #For the given number PCs, select the genes with the largest loadings
+  # For the given number PCs, select the genes with the largest loadings
   genes <- c()
   for (i in 1:nr_pcs) {
-    cutoff <- quantile(abs(pca$rotation[,i]), probs=percentile)
-    genes <- c(genes, rownames(pca$rotation[abs(pca$rotation[,i]) >= cutoff,]))
+    cutoff <- quantile(abs(pca$rotation[, i]), probs = percentile)
+    genes <- c(genes, rownames(pca$rotation[abs(pca$rotation[, i]) >= cutoff, ]))
   }
 
-  return (genes)
-
+  return(genes)
 }
