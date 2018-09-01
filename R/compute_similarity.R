@@ -17,11 +17,11 @@
 #' list of selected genes.
 #' @export
 select_gene_subset <- function(bin_mat, gene_constraints) {
-  gene_subset <- gene_constraints[[1]];
+  gene_subset <- gene_constraints[[1]]
   for (i in 2:length(gene_constraints)) {
-    gene_subset <- intersect(gene_subset, gene_constraints[[i]]);
+    gene_subset <- intersect(gene_subset, gene_constraints[[i]])
   }
-  return(bin_mat[sort(gene_subset),]);
+  return(bin_mat[sort(gene_subset), ])
 }
 
 #' Compute similarity between two vectors
@@ -42,11 +42,11 @@ select_gene_subset <- function(bin_mat, gene_constraints) {
 compute_similarity <- function(vec1, vec2, compute_method, ...) {
   # examine whether two vectors are of the same size
   if (!is.numeric(vec1) || !is.numeric(vec2) || length(vec1) != length(vec2)) {
-    stop("compute_similarity: two input vectors are not numeric or of different sizes.");
+    stop("compute_similarity: two input vectors are not numeric or of different sizes.")
   }
 
   # return the similarity score, must be
-  return(compute_method(vec1, vec2, ...));
+  return(compute_method(vec1, vec2, ...))
 }
 
 #' Correlation function
@@ -61,12 +61,12 @@ compute_similarity <- function(vec1, vec2, compute_method, ...) {
 #' @param vec2 reference vector
 #' @param method pearson, spearman, cosine
 #' @export
-corr_coef <- function(vec1, vec2, method="pearson") {
+corr_coef <- function(vec1, vec2, method = "pearson") {
   return(switch(method,
-                pearson=cor(vec1, vec2, method="pearson"),
-                spearman=cor(vec1, vec2, method="spearman"),
-                cosine=sum(vec1*vec2)/sqrt(sum(vec1^2)*sum(vec2^2))
-  ));
+    pearson = cor(vec1, vec2, method = "pearson"),
+    spearman = cor(vec1, vec2, method = "spearman"),
+    cosine = sum(vec1 * vec2) / sqrt(sum(vec1^2) * sum(vec2^2))
+  ))
 }
 
 #' KL divergence
@@ -88,13 +88,13 @@ corr_coef <- function(vec1, vec2, method="pearson") {
 #' @param total_reads Pseudo-library size
 #' @param max_KL Maximal allowed value of KL-divergence.
 #' @export
-kl_divergence <- function(vec1, vec2, if_logcounts=FALSE, total_reads=1000, max_KL=1) {
-
+kl_divergence <- function(vec1, vec2, if_logcounts = FALSE, total_reads = 1000, max_KL = 1) {
   if (if_logcounts) {
-    vec1 <- exp(vec1)-1; vec2 <- exp(vec2)-1;
+    vec1 <- exp(vec1) - 1
+    vec2 <- exp(vec2) - 1
   }
-  count1 <- round(vec1*total_reads/sum(vec1)); count2 <- round(vec2*total_reads/sum(vec2));
-  est_KL <- entropy::KL.shrink(count1, count2, unit="log2")
-  return((max_KL-est_KL)/max_KL*2-1);
+  count1 <- round(vec1 * total_reads / sum(vec1))
+  count2 <- round(vec2 * total_reads / sum(vec2))
+  est_KL <- entropy::KL.shrink(count1, count2, unit = "log2")
+  return((max_KL - est_KL) / max_KL * 2 - 1)
 }
-

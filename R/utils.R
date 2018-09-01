@@ -11,27 +11,29 @@
 average_clusters <- function(mat, cluster_info,
                              log_scale = T,
                              cell_col = "rn",
-                             cluster_col = "cluster"){
+                             cluster_col = "cluster") {
+  cluster_ids <- split(
+    cluster_info[[cell_col]],
+    cluster_info[[cluster_col]]
+  )
 
-  cluster_ids <- split(cluster_info[[cell_col]],
-                       cluster_info[[cluster_col]])
-
-  out <- lapply(cluster_ids,
-                function(cell_ids){
-                  if(!all(cell_ids %in% colnames(mat))){
-                    stop("cell ids not found in input matrix")
-                  }
-                  if (log_scale) {
-                    mat_data <- expm1(mat[, cell_ids])
-                  } else {
-                    mat_data <- mat[, cell_ids]
-                  }
-                  res <- Matrix::rowMeans(mat_data)
-                  if (log_scale) {
-                    res <- log1p(res)
-                  }
-                  res
-                }
+  out <- lapply(
+    cluster_ids,
+    function(cell_ids) {
+      if (!all(cell_ids %in% colnames(mat))) {
+        stop("cell ids not found in input matrix")
+      }
+      if (log_scale) {
+        mat_data <- expm1(mat[, cell_ids])
+      } else {
+        mat_data <- mat[, cell_ids]
+      }
+      res <- Matrix::rowMeans(mat_data)
+      if (log_scale) {
+        res <- log1p(res)
+      }
+      res
+    }
   )
   return(do.call(cbind, out))
 }
@@ -48,15 +50,15 @@ average_clusters <- function(mat, cluster_info,
 percent_clusters <- function(mat, cluster_info,
                              cell_col = "rn",
                              cluster_col = "cluster",
-                             cut_num = 0.5){
-
-  mat[mat >= cut_num] = 1
-  mat[mat <= cut_num] = 0
+                             cut_num = 0.5) {
+  mat[mat >= cut_num] <- 1
+  mat[mat <= cut_num] <- 0
 
   average_clusters(mat, cluster_info,
-                               log_scale = F,
-                               cell_col = cell_col,
-                               cluster_col = cluster_col)
+    log_scale = F,
+    cell_col = cell_col,
+    cluster_col = cluster_col
+  )
 }
 
 #' Function to make call and attach score
@@ -71,9 +73,9 @@ get_best_str <- function(name,
                          best_mat,
                          cor_mat,
                          carry_cor = TRUE) {
-  if (sum(as.numeric(best_mat[name,])) > 0) {
-    best.names <- colnames(best_mat)[which(best_mat[name,]==1)]
-    best.cor <- round(cor_mat[name, which(best_mat[name,]==1)],2)
+  if (sum(as.numeric(best_mat[name, ])) > 0) {
+    best.names <- colnames(best_mat)[which(best_mat[name, ] == 1)]
+    best.cor <- round(cor_mat[name, which(best_mat[name, ] == 1)], 2)
     for (i in 1:length(best.cor)) {
       if (i == 1) {
         str <- paste0(best.names[i], " (", best.cor[i], ")")
@@ -85,9 +87,8 @@ get_best_str <- function(name,
     str <- "?"
   }
 
-  if (carry_cor == FALSE){
-    str <- gsub(" \\(.*\\)","",str)
+  if (carry_cor == FALSE) {
+    str <- gsub(" \\(.*\\)", "", str)
   }
   return(str)
 }
-

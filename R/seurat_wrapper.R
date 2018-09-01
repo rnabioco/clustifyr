@@ -20,7 +20,7 @@ clustify_seurat <- function(seurat_object,
                             cluster_col = "cluster",
                             compute_method = corr_coef,
                             output = "object",
-                            carry_cor = FALSE){
+                            carry_cor = FALSE) {
   expr_mat <- seurat_object@data
 
   metadata <- data.table::copy(seurat_object@meta.data)
@@ -32,47 +32,48 @@ clustify_seurat <- function(seurat_object,
   metadata <- inner_join(metadata_tibble, metadata_tibble2 %>% select(rn, cluster_col), by = "rn")
 
   # if query_gene_list == NULL, use var.genes saved in seurat object
-  if (query_gene_list == "var.genes"){
+  if (query_gene_list == "var.genes") {
     query_gene_list <- seurat_object@var.genes
-  } else if (typeof(query_gene_list) == "double"){
+  } else if (typeof(query_gene_list) == "double") {
     query_gene_list <- (seurat_object@hvg.info %>% rownames_to_column() %>% arrange(desc(gene.dispersion.scaled)) %>% pull(rowname))[1:query_gene_list]
   }
 
   # if per_cell, cluster_col should default to "rn"
-  if ((per_cell == TRUE) & (dim(unique(metadata[,cluster_col]))[1] != dim(metadata)[1])){
-    cluster_orig = cluster_col
-    cluster_col = "rn"
+  if ((per_cell == TRUE) & (dim(unique(metadata[, cluster_col]))[1] != dim(metadata)[1])) {
+    cluster_orig <- cluster_col
+    cluster_col <- "rn"
   }
 
   res <- run_cor(expr_mat,
-                 metadata,
-                 bulk_mat,
-                 query_gene_list,
-                 per_cell = per_cell,
-                 num_perm = num_perm,
-                 cluster_col = cluster_col,
-                 compute_method = compute_method,
-                 return_full = FALSE)
+    metadata,
+    bulk_mat,
+    query_gene_list,
+    per_cell = per_cell,
+    num_perm = num_perm,
+    cluster_col = cluster_col,
+    compute_method = compute_method,
+    return_full = FALSE
+  )
 
   df_temp <- as.data.frame(t(apply(res, 1, function(x) x - max(x))))
   df_call <- data.table::copy(df_temp)
-  df_call[df_call==0]="1"
-  df_call[df_call!="1"]="0"
+  df_call[df_call == 0] <- "1"
+  df_call[df_call != "1"] <- "0"
 
   calls <- c()
-  for(name in rownames(df_call)){
+  for (name in rownames(df_call)) {
     calls <- c(calls, get_best_str(name, df_call, res, carry_cor))
   }
-  calls_df <- data.frame("tempid" = rownames(df_call), "call" = calls, stringsAsFactors=FALSE)
+  calls_df <- data.frame("tempid" = rownames(df_call), "call" = calls, stringsAsFactors = FALSE)
   calls_df
 
   metadata <- data.table::setDT(data.table::copy(seurat_object@meta.data), keep.rownames = TRUE)
   calls <- left_join(metadata, calls_df, by = structure(names = cluster_col, "tempid")) %>% select(call)
   rownames(calls) <- rownames(seurat_object@meta.data)
 
-  if (output == "object"){
-  Seurat::AddMetaData(seurat_object, calls, "call")
-  } else if (output == "df"){
+  if (output == "object") {
+    Seurat::AddMetaData(seurat_object, calls, "call")
+  } else if (output == "df") {
     calls
   }
 }
@@ -86,13 +87,14 @@ clustify_seurat <- function(seurat_object,
 #' @export
 use_seurat_comp <- function(seurat_object,
                             cluster_col = "classified",
-                            var.genes_only = FALSE){
+                            var.genes_only = FALSE) {
   temp_mat <- average_clusters(seurat_object@data,
-                               data.table::setDT(data.table::copy(seurat_object@meta.data), keep.rownames = TRUE),
-                               log_scale = TRUE,
-                               cluster_col = cluster_col)
-  if (var.genes_only == TRUE){
-    temp_mat <- temp_mat[seurat_object@var.genes,]
+    data.table::setDT(data.table::copy(seurat_object@meta.data), keep.rownames = TRUE),
+    log_scale = TRUE,
+    cluster_col = cluster_col
+  )
+  if (var.genes_only == TRUE) {
+    temp_mat <- temp_mat[seurat_object@var.genes, ]
   }
   temp_mat
 }
