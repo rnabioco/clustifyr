@@ -29,11 +29,16 @@ Imports:
     cowplot,
     dplyr,
     tidyr,
-    stats,
-    gplots
+biocViews:
+    recount,
+    Seurat,
+    ComplexHeatmap
 Suggests:
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    randomForest,
+    caret,
+    mlbench
 VignetteBuilder: knitr
 RoxygenNote: 6.1.0
