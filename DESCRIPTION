@@ -10,7 +10,7 @@ Authors@R: c(
   person("Jay", "Hesselberth", , "jay.hesselberth@gmail.com", role = c("aut")),
   person("Yue", "Hao", , "haoyuethink@gmail.com", role = c("aut")),
   person("Chengzhe", "Tian", , "Chengzhe.Tian@colorado.edu", role = c("aut")),
-  person("M.", "Day", , "michelle.daya@ucdenver.edu", role = c("aut"))
+  person("Michelle", "Daya", , "michelle.daya@ucdenver.edu", role = c("aut"))
   )
 Depends:
   R (>= 3.1.2)
