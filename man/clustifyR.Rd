@@ -6,11 +6,13 @@
 \alias{clustifyR-package}
 \title{clustifyR}
 \description{
+\if{html}{\figure{logo.png}{options: align='right'}}
+
 Classify cells from single-cell RNA sequencing data using bulk
   RNA-seq reference data.
 }
 \seealso{
-Report bugs at \url{https://github.com/NCBI-Hackathons/clustifyR/issues}
+Report bugs at \url{https://github.com/rnabioco/clustifyR/issues}
 }
 \author{
 \strong{Maintainer}: Kent Riemondy \email{kent.riemondy@ucdenver.edu}

@@ -19,8 +19,8 @@ Encoding: UTF-8
 LazyData: true
 ByteCompile: true
 Roxygen: list(markdown = TRUE)
-URL: http://github.com/NCBI-Hackathons/clustifyR, https://ncbi-hackathons.github.io/clustifyR/
-BugReports: https://github.com/NCBI-Hackathons/clustifyR/issues
+URL: http://github.com/rnabioco/clustifyR#readme, https://rnabioco.github.io/clustifyR/
+BugReports: https://github.com/rnabioco/clustifyR/issues
 Imports: 
     tibble,
     ggplot2,
@@ -39,6 +39,7 @@ Suggests:
     rmarkdown,
     randomForest,
     caret,
-    mlbench
+    mlbench,
+    covr
 VignetteBuilder: knitr
 RoxygenNote: 6.1.0
