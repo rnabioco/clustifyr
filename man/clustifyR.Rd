@@ -22,7 +22,7 @@ Authors:
   \item Jay Hesselberth \email{jay.hesselberth@gmail.com}
   \item Yue Hao \email{haoyuethink@gmail.com}
   \item Chengzhe Tian \email{Chengzhe.Tian@colorado.edu}
-  \item M. Day \email{michelle.daya@ucdenver.edu}
+  \item Michelle Daya \email{michelle.daya@ucdenver.edu}
 }
 
 }
