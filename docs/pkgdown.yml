@@ -10,6 +10,6 @@ articles:
   random_forest: random_forest.html
   refine_cluster: refine_cluster.html
 urls:
-  reference: http://ncbi-hackathons.github.io/clustifyR/reference
-  article: http://ncbi-hackathons.github.io/clustifyR/articles
+  reference: http://rnabioco.github.io/clustifyR/reference
+  article: http://rnabioco.github.io/clustifyR/articles
 

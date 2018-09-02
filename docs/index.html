@@ -12,6 +12,7 @@
 <script src="pkgdown.js"></script><meta property="og:title" content="Classification of Cell Types in Single-Cell RNA Sequencing Data">
 <meta property="og:description" content="Classify cells from single-cell RNA sequencing data using bulk
   RNA-seq reference data.">
+<meta property="og:image" content="http://rnabioco.github.io/clustifyR/logo.png">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -78,7 +79,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/NCBI-Hackathons/clustifyR">
+  <a href="https://github.com/rnabioco/clustifyR">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -99,54 +100,52 @@
     
     
 
-<p align="center">
-<img src="https://raw.githubusercontent.com/NCBI-Hackathons/clustifyR/master/inst/logo/logo_transparent.png" width="405" height="174"></p>
-<div id="clustifyr-is-an-r-package-that-classifies-cells-and-clusters-in-single-cell-rna-sequencing-experiments-using-reference-bulk-rna-seq-data-sets-gene-signatures-or-marker-genes-" class="section level3">
-<h3 class="hasAnchor">
-<a href="#clustifyr-is-an-r-package-that-classifies-cells-and-clusters-in-single-cell-rna-sequencing-experiments-using-reference-bulk-rna-seq-data-sets-gene-signatures-or-marker-genes-" class="anchor"></a>ClustifyR is an <a href="https://www.r-project.org/">R</a> package that classifies cells and clusters in single-cell RNA sequencing experiments using reference bulk RNA-seq data sets, gene signatures or marker genes.</h3>
-<p>Single cell transcriptomes are difficult to annotate without extensive knowledge of the underlying biology of the system in question. Even with this knowledge, accurate identification can be challenging due to the lack of detectable expression of common marker genes defined by bulk RNA-seq, flow cytometry, etc. <code>ClustifyR</code> solves this problem by providing functions to automatically annotate single cells or clusters using bulk RNA-seq data or marker gene lists (ranked or unranked). Additional functions allow for exploratory analysis of similarities between single cell RNA-seq datasets and reference data. Put another way:</p>
-<p><strong>C</strong>lustifyR <strong>L</strong>everages <strong>U</strong>ser <strong>S</strong>upplied <strong>T</strong>ranscripts to <strong>I</strong>dentify <strong>F</strong>eatures in <strong>Y</strong>our sc<strong>R</strong>NA-seq</p>
-</div>
+<div id="clustifyr" class="section level1">
+<div class="page-header"><h1 class="hasAnchor">
+<a href="#clustifyr" class="anchor"></a>clustifyR <img src="reference/figures/logo.png" align="right">
+</h1></div>
+<p>clustifyR classifies cells and clusters in single-cell RNA sequencing experiments using reference bulk RNA-seq data sets, gene signatures, or marker genes.</p>
+<p>Single cell transcriptomes are difficult to annotate without extensive knowledge of the underlying biology of the system in question. Even with this knowledge, accurate identification can be challenging due to the lack of detectable expression of common marker genes. ClustifyR solves this problem by automatically annotating single cells or clusters using bulk RNA-seq data or marker gene lists. Additional functions allow for exploratory analysis of similarities between single cell RNA-seq datasets and reference data.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>Installation from github in R is a two step process:</p>
-<div id="step-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#step-1" class="anchor"></a>Step 1:</h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Install devtools</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"rnabioco/clustifyR"</span>)</a></code></pre></div>
 </div>
-<div id="step-2" class="section level3">
-<h3 class="hasAnchor">
-<a href="#step-2" class="anchor"></a>Step 2:</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Install clustifyR from github</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"NCBI-Hackathons/clustifyR"</span>)</a></code></pre></div>
-</div>
-</div>
-<div id="usage" class="section level2">
+<div id="example-usage" class="section level2">
 <h2 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h2>
-<div id="super-quickstart-with-sample-data-included-in-package" class="section level3">
-<h3 class="hasAnchor">
-<a href="#super-quickstart-with-sample-data-included-in-package" class="anchor"></a>Super-quickstart with sample data (included in package):</h3>
-<p>Generate a correlation matrix from a matrix of single cell RNA-seq data (<code>pbmc4k_matrix</code>), a metadata table describing the single cell data (<code>pbmc4k_meta</code>), a list of variable genes in the single cell data (<code>pbmc4k_vargenes</code>), and a matrix of bulk RNA-seq read counts (<code>pbmc_bulk_matrix</code>):</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># run correlation (pearson by default)</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">res &lt;-<span class="st"> </span><span class="kw"><a href="reference/run_cor.html">run_cor</a></span>(<span class="dt">expr_mat =</span> pbmc4k_matrix,</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">               <span class="dt">metadata =</span> pbmc4k_meta,</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">               <span class="dt">bulk_mat =</span> pbmc_bulk_matrix,</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">               <span class="dt">query_gene_list =</span> pbmc4k_vargenes,</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">               <span class="dt">compute_method =</span> corr_coef)</a></code></pre></div>
-<p>Plot the correlation coefficients on a pre-calculated tSNE projection (stored in <code>pbmc4k_meta</code>):</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># plot correlation coefficients on tSNE for each identity class</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="reference/plot_cor.html">plot_cor</a></span>(res,</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">         pbmc4k_meta,</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">         <span class="kw">colnames</span>(res)[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">5</span>)],</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">         <span class="dt">cluster_col =</span> <span class="st">"classified"</span>)</a></code></pre></div>
-</div>
-<div id="for-more-detail-see-a-list-of-command-refences-or-browse-the-vignettes-" class="section level3">
-<h3 class="hasAnchor">
-<a href="#for-more-detail-see-a-list-of-command-refences-or-browse-the-vignettes-" class="anchor"></a>For more detail, see a list of <a href="https://ncbi-hackathons.github.io/clustifyR/reference/index.html">command refences</a> or <a href="https://ncbi-hackathons.github.io/clustifyR/articles/">browse the vignettes</a>.</h3>
+<a href="#example-usage" class="anchor"></a>Example usage</h2>
+<p>In this example we use the following input data:</p>
+<ul>
+<li>a correlation matrix from single cell RNA-seq data (<code>pbmc4k_matrix</code>)</li>
+<li>a metadata table (<code>pbmc4k_meta</code>)</li>
+<li>a list of variable genes (<code>pbmc4k_vargenes</code>)-</li>
+<li>a matrix of bulk RNA-seq read counts (<code>pbmc_bulk_matrix</code>):</li>
+</ul>
+<p>We then calculate correlation coefficients and plot them on a pre-calculated tSNE projection (stored in <code>pbmc4k_meta</code>).</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(clustifyR)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">res &lt;-<span class="st"> </span><span class="kw"><a href="reference/run_cor.html">run_cor</a></span>(</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="dt">expr_mat =</span> pbmc4k_matrix,</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">  <span class="dt">metadata =</span> pbmc4k_meta,</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">  <span class="dt">bulk_mat =</span> pbmc_bulk_matrix,</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">  <span class="dt">query_gene_list =</span> pbmc4k_vargenes,</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">  <span class="dt">compute_method =</span> corr_coef</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">)</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="kw"><a href="reference/plot_cor.html">plot_cor</a></span>(</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">  res,</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">  pbmc4k_meta,</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">  <span class="kw">colnames</span>(res)[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">5</span>)],</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">  <span class="dt">cluster_col =</span> <span class="st">"classified"</span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">)</a>
+<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; [[1]]</span></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt; Warning: Removed 10 rows containing missing values (geom_point).</span></a></code></pre></div>
+<p><img src="reference/figures/README-example-1.png" width="100%"></p>
+<pre><code>#&gt; 
+#&gt; [[2]]
+#&gt; Warning: Removed 10 rows containing missing values (geom_point).</code></pre>
+<p><img src="reference/figures/README-example-2.png" width="100%"></p>
 </div>
 </div>
   </div>
@@ -155,9 +154,9 @@
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/NCBI-Hackathons/clustifyR">https://​github.com/​NCBI-Hackathons/​clustifyR</a>
+<li>Browse source code at <br><a href="https://github.com/rnabioco/clustifyR">https://​github.com/​rnabioco/​clustifyR</a>
 </li>
-<li>Report a bug at <br><a href="https://github.com/NCBI-Hackathons/clustifyR/issues">https://​github.com/​NCBI-Hackathons/​clustifyR/​issues</a>
+<li>Report a bug at <br><a href="https://github.com/rnabioco/clustifyR/issues">https://​github.com/​rnabioco/​clustifyR/​issues</a>
 </li>
 </ul>
 </div>
@@ -185,7 +184,9 @@
       <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/NCBI-Hackathons/clustifyR"><img src="https://travis-ci.org/NCBI-Hackathons/clustifyR.svg?branch=master" alt="Build Status"></a></li>
+<li><a href="https://travis-ci.org/rnabioco/clustifyR"><img src="https://travis-ci.org/rnabioco/clustifyR.svg?branch=master" alt="Build Status"></a></li>
+<li><a href="https://ci.appveyor.com/project/rnabioco/clustifyR"><img src="https://ci.appveyor.com/api/projects/status/github/rnabioco/clustifyR?branch=master&amp;svg=true" alt="AppVeyor build status"></a></li>
+<li><a href="https://codecov.io/github/rnabioco/clustifyR?branch=master"><img src="https://codecov.io/gh/rnabioco/clustifyR/branch/master/graph/badge.svg" alt="Coverage status"></a></li>
 </ul>
 </div>
 </div>

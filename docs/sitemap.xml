@@ -1,129 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/index.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/index.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/average_clusters.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/average_clusters.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/binarize_expr.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/binarize_expr.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/clustifyR.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/clustifyR.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/clustify_seurat.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/clustify_seurat.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/compare_lists.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/compare_lists.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/compute_similarity.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/compute_similarity.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/corr_coef.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/corr_coef.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/getPCAGenes.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/getPCAGenes.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/get_best_str.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/get_best_str.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/get_vargenes.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/get_vargenes.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/important_heatmap.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/important_heatmap.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/kl_divergence.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/kl_divergence.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/matrixize_markers.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/matrixize_markers.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/pbmc4k_avg.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/pbmc4k_avg.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/pbmc4k_markers.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/pbmc4k_markers.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/pbmc4k_markers_M3Drop.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/pbmc4k_markers_M3Drop.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/pbmc4k_matrix.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/pbmc4k_matrix.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/pbmc4k_meta.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/pbmc4k_meta.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/pbmc4k_vargenes.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/pbmc4k_vargenes.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/pbmc5_markers.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/pbmc5_markers.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/pbmc5_matrix.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/pbmc5_matrix.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/pbmc5_meta.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/pbmc5_meta.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/pbmc_bulk_matrix.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/pbmc_bulk_matrix.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/percent_clusters.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/percent_clusters.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/permutation_similarity.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/permutation_similarity.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/plot_call.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/plot_call.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/plot_cor.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/plot_cor.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/plot_tsne.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/plot_tsne.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/pretty_palette.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/pretty_palette.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/reduce_expr_matrix.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/reduce_expr_matrix.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/refine_clusters.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/refine_clusters.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/run_cor.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/run_cor.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/select_gene_subset.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/select_gene_subset.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/reference/use_seurat_comp.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/reference/use_seurat_comp.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/articles/clustifyR.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/articles/clustifyR.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/articles/compare_methods.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/articles/compare_methods.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/articles/exploratory_pca.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/articles/exploratory_pca.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/articles/gene_list.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/articles/gene_list.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/articles/get_recount_data.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/articles/get_recount_data.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/articles/random_forest.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/articles/random_forest.html</loc>
   </url>
   <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/articles/refine_cluster.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/articles/refine_cluster.html</loc>
   </url>
 </urlset>
