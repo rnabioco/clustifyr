@@ -38,7 +38,7 @@ average_clusters <- function(mat, cluster_info,
   return(do.call(cbind, out))
 }
 
-#' % detected per cluster
+#' Percentage detected per cluster
 #'
 #' @param mat expression matrix
 #' @param cluster_info data.frame with cells
