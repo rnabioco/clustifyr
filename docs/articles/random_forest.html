@@ -42,6 +42,9 @@
   </a>
 </li>
 <li>
+  <a href="../articles/clustifyR.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -64,9 +67,6 @@
       <a href="../articles/get_recount_data.html">Downloading data from recount</a>
     </li>
     <li>
-      <a href="../articles/overview.html">Introduction to clustifyR</a>
-    </li>
-    <li>
       <a href="../articles/random_forest.html">randomForest model</a>
     </li>
     <li>
@@ -77,7 +77,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="http://github.com/NCBI-Hackathons/clustifyR">
+  <a href="https://github.com/NCBI-Hackathons/clustifyR">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -96,9 +96,9 @@
     <div class="page-header toc-ignore">
       <h1>randomForest model</h1>
             
-            <h4 class="date">2018-06-23</h4>
+            <h4 class="date">2018-09-02</h4>
       
-      <small class="dont-index">Source: <a href="http://github.com/NCBI-Hackathons/clustifyR/blob/master/vignettes/random_forest.Rmd"><code>vignettes/random_forest.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/NCBI-Hackathons/clustifyR/blob/master/vignettes/random_forest.Rmd"><code>vignettes/random_forest.Rmd</code></a></small>
       <div class="hidden name"><code>random_forest.Rmd</code></div>
 
     </div>
@@ -109,72 +109,72 @@
 <h2 class="hasAnchor">
 <a href="#cell-type-prediction-using-random-forest-model" class="anchor"></a>Cell type prediction using Random Forest model</h2>
 <p>The goal is to build a random forest model using single-cell RNA-seq expression data to predict the cell type in each cluster. The training set contains an expression matrix with normalized readcounts per gene per cell, clustering information and identified cell types. The test set contains only the expression and clusters.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Reduce the expression matrix to only highly variable genes</span>
-<span class="co"># source('reduce_matrix.R')</span>
-
-<span class="co"># Input files for random forest</span>
-<span class="co"># Training set</span>
-pbmc4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reduce_expr_matrix.html">reduce_expr_matrix</a></span>(pbmc4k_matrix, pbmc4k_meta, pbmc4k_vargenes)
-<span class="co"># Test set</span>
-pbmc5 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reduce_expr_matrix.html">reduce_expr_matrix</a></span>(pbmc5_matrix, pbmc5_meta, pbmc4k_vargenes)
-
-<span class="co"># Make sure the listed genes (predictors) are the same in both dataset</span>
-<span class="kw">names</span>(pbmc5)[<span class="kw">names</span>(pbmc5) <span class="op">==</span><span class="st"> "cluster"</span>] &lt;-<span class="st"> "classified"</span>
-pbmc4.sub &lt;-<span class="st"> </span>pbmc4[, <span class="kw">colnames</span>(pbmc4) <span class="op">%in%</span><span class="st"> </span><span class="kw">colnames</span>(pbmc5)]
-pbmc5.sub &lt;-<span class="st"> </span>pbmc5[, <span class="kw">colnames</span>(pbmc5) <span class="op">%in%</span><span class="st"> </span><span class="kw">colnames</span>(pbmc4.sub)]</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Reduce the expression matrix to only highly variable genes</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co"># source('reduce_matrix.R')</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co"># Input files for random forest</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co"># Training set</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">pbmc4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reduce_expr_matrix.html">reduce_expr_matrix</a></span>(pbmc4k_matrix, pbmc4k_meta, pbmc4k_vargenes)</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co"># Test set</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">pbmc5 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reduce_expr_matrix.html">reduce_expr_matrix</a></span>(pbmc5_matrix, pbmc5_meta, pbmc4k_vargenes)</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co"># Make sure the listed genes (predictors) are the same in both dataset</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="kw">names</span>(pbmc5)[<span class="kw">names</span>(pbmc5) <span class="op">==</span><span class="st"> "cluster"</span>] &lt;-<span class="st"> "classified"</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">pbmc4.sub &lt;-<span class="st"> </span>pbmc4[, <span class="kw">colnames</span>(pbmc4) <span class="op">%in%</span><span class="st"> </span><span class="kw">colnames</span>(pbmc5)]</a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">pbmc5.sub &lt;-<span class="st"> </span>pbmc5[, <span class="kw">colnames</span>(pbmc5) <span class="op">%in%</span><span class="st"> </span><span class="kw">colnames</span>(pbmc4.sub)]</a></code></pre></div>
 <div id="plot-training-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#plot-training-data" class="anchor"></a>Plot training data</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot tsne using known identities</span>
-<span class="kw">qplot</span>(tSNE_<span class="dv">1</span>, tSNE_<span class="dv">2</span>, <span class="dt">colour =</span> classified,  <span class="dt">data =</span> pbmc4k_meta)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># plot tsne using known identities</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">qplot</span>(tSNE_<span class="dv">1</span>, tSNE_<span class="dv">2</span>, <span class="dt">colour =</span> classified,  <span class="dt">data =</span> pbmc4k_meta)</a></code></pre></div>
 <p><img src="random_forest_files/figure-html/plot-1.png" width="768" style="display: block; margin: auto;"></p>
 </div>
 <div id="model-parameter-tuning" class="section level3">
 <h3 class="hasAnchor">
 <a href="#model-parameter-tuning" class="anchor"></a>Model parameter tuning</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Algorithm Tune (tuneRF)</span>
-seed &lt;-<span class="st"> </span><span class="dv">100</span>
-<span class="kw">set.seed</span>(seed)
-<span class="co"># initial mtry &lt;- sqrt(ncol(pbmc4))</span>
-x &lt;-<span class="st"> </span>pbmc4[,<span class="dv">2</span><span class="op">:</span><span class="kw">ncol</span>(pbmc4)]
-y &lt;-<span class="st"> </span>pbmc4[,<span class="dv">1</span>]
-bestmtry &lt;-<span class="st"> </span><span class="kw">tuneRF</span>(x, y, <span class="dt">stepFactor=</span><span class="fl">1.5</span>, <span class="dt">improve=</span><span class="fl">1e-5</span>, <span class="dt">ntree=</span><span class="dv">500</span>)
-<span class="kw">print</span>(bestmtry)
-<span class="co"># In this case bestmtry is 256 when ntree is 500</span>
-
-<span class="co"># Tune model using caret</span>
-<span class="co"># Custom tuning</span>
-<span class="co"># https://machinelearningmastery.com/tune-machine-learning-algorithms-in-r/</span>
-customRF &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">type =</span> <span class="st">"Classification"</span>, <span class="dt">library =</span> <span class="st">"randomForest"</span>, <span class="dt">loop =</span> <span class="ot">NULL</span>)
-customRF<span class="op">$</span>parameters &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">parameter =</span> <span class="kw">c</span>(<span class="st">"mtry"</span>, <span class="st">"ntree"</span>), <span class="dt">class =</span> <span class="kw">rep</span>(<span class="st">"numeric"</span>, <span class="dv">2</span>), <span class="dt">label =</span> <span class="kw">c</span>(<span class="st">"mtry"</span>, <span class="st">"ntree"</span>))
-customRF<span class="op">$</span>grid &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, <span class="dt">len =</span> <span class="ot">NULL</span>, <span class="dt">search =</span> <span class="st">"grid"</span>) {}
-customRF<span class="op">$</span>fit &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, wts, param, lev, last, weights, classProbs, ...) {
-  <span class="kw">randomForest</span>(x, y, <span class="dt">mtry =</span> param<span class="op">$</span>mtry, <span class="dt">ntree=</span>param<span class="op">$</span>ntree, ...)
-}
-customRF<span class="op">$</span>predict &lt;-<span class="st"> </span><span class="cf">function</span>(modelFit, newdata, <span class="dt">preProc =</span> <span class="ot">NULL</span>, <span class="dt">submodels =</span> <span class="ot">NULL</span>)
-  <span class="kw">predict</span>(modelFit, newdata)
-customRF<span class="op">$</span>prob &lt;-<span class="st"> </span><span class="cf">function</span>(modelFit, newdata, <span class="dt">preProc =</span> <span class="ot">NULL</span>, <span class="dt">submodels =</span> <span class="ot">NULL</span>)
-  <span class="kw">predict</span>(modelFit, newdata, <span class="dt">type =</span> <span class="st">"prob"</span>)
-customRF<span class="op">$</span>sort &lt;-<span class="st"> </span><span class="cf">function</span>(x) x[<span class="kw">order</span>(x[,<span class="dv">1</span>]),]
-customRF<span class="op">$</span>levels &lt;-<span class="st"> </span><span class="cf">function</span>(x) x<span class="op">$</span>classes
-
-metric &lt;-<span class="st"> "Accuracy"</span>
-control &lt;-<span class="st"> </span><span class="kw">trainControl</span>(<span class="dt">method=</span><span class="st">"repeatedcv"</span>, <span class="dt">number=</span><span class="dv">10</span>, <span class="dt">repeats=</span><span class="dv">3</span>)
-tunegrid &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">.mtry=</span><span class="kw">c</span>(<span class="dv">250</span><span class="op">:</span><span class="dv">260</span>), <span class="dt">.ntree=</span><span class="kw">c</span>(<span class="dv">500</span>, <span class="dv">1000</span>, <span class="dv">1500</span>, <span class="dv">2000</span>))
-<span class="kw">set.seed</span>(seed)
-rf_tune &lt;-<span class="st"> </span><span class="kw">train</span>(classified<span class="op">~</span>., <span class="dt">data=</span>pbmc4, <span class="dt">method=</span>customRF, <span class="dt">metric=</span>metric, <span class="dt">tuneGrid=</span>tunegrid, <span class="dt">trControl=</span>control)
-<span class="kw">summary</span>(rf_tune)
-<span class="kw">plot</span>(rf_tune)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># Algorithm Tune (tuneRF)</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">seed &lt;-<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw">set.seed</span>(seed)</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co"># initial mtry &lt;- sqrt(ncol(pbmc4))</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">x &lt;-<span class="st"> </span>pbmc4[,<span class="dv">2</span><span class="op">:</span><span class="kw">ncol</span>(pbmc4)]</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">y &lt;-<span class="st"> </span>pbmc4[,<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">bestmtry &lt;-<span class="st"> </span><span class="kw">tuneRF</span>(x, y, <span class="dt">stepFactor=</span><span class="fl">1.5</span>, <span class="dt">improve=</span><span class="fl">1e-5</span>, <span class="dt">ntree=</span><span class="dv">500</span>)</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="kw">print</span>(bestmtry)</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co"># In this case bestmtry is 256 when ntree is 500</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co"># Tune model using caret</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co"># Custom tuning</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co"># https://machinelearningmastery.com/tune-machine-learning-algorithms-in-r/</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14">customRF &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">type =</span> <span class="st">"Classification"</span>, <span class="dt">library =</span> <span class="st">"randomForest"</span>, <span class="dt">loop =</span> <span class="ot">NULL</span>)</a>
+<a class="sourceLine" id="cb3-15" data-line-number="15">customRF<span class="op">$</span>parameters &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">parameter =</span> <span class="kw">c</span>(<span class="st">"mtry"</span>, <span class="st">"ntree"</span>), <span class="dt">class =</span> <span class="kw">rep</span>(<span class="st">"numeric"</span>, <span class="dv">2</span>), <span class="dt">label =</span> <span class="kw">c</span>(<span class="st">"mtry"</span>, <span class="st">"ntree"</span>))</a>
+<a class="sourceLine" id="cb3-16" data-line-number="16">customRF<span class="op">$</span>grid &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, <span class="dt">len =</span> <span class="ot">NULL</span>, <span class="dt">search =</span> <span class="st">"grid"</span>) {}</a>
+<a class="sourceLine" id="cb3-17" data-line-number="17">customRF<span class="op">$</span>fit &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, wts, param, lev, last, weights, classProbs, ...) {</a>
+<a class="sourceLine" id="cb3-18" data-line-number="18">  <span class="kw">randomForest</span>(x, y, <span class="dt">mtry =</span> param<span class="op">$</span>mtry, <span class="dt">ntree=</span>param<span class="op">$</span>ntree, ...)</a>
+<a class="sourceLine" id="cb3-19" data-line-number="19">}</a>
+<a class="sourceLine" id="cb3-20" data-line-number="20">customRF<span class="op">$</span>predict &lt;-<span class="st"> </span><span class="cf">function</span>(modelFit, newdata, <span class="dt">preProc =</span> <span class="ot">NULL</span>, <span class="dt">submodels =</span> <span class="ot">NULL</span>)</a>
+<a class="sourceLine" id="cb3-21" data-line-number="21">  <span class="kw">predict</span>(modelFit, newdata)</a>
+<a class="sourceLine" id="cb3-22" data-line-number="22">customRF<span class="op">$</span>prob &lt;-<span class="st"> </span><span class="cf">function</span>(modelFit, newdata, <span class="dt">preProc =</span> <span class="ot">NULL</span>, <span class="dt">submodels =</span> <span class="ot">NULL</span>)</a>
+<a class="sourceLine" id="cb3-23" data-line-number="23">  <span class="kw">predict</span>(modelFit, newdata, <span class="dt">type =</span> <span class="st">"prob"</span>)</a>
+<a class="sourceLine" id="cb3-24" data-line-number="24">customRF<span class="op">$</span>sort &lt;-<span class="st"> </span><span class="cf">function</span>(x) x[<span class="kw">order</span>(x[,<span class="dv">1</span>]),]</a>
+<a class="sourceLine" id="cb3-25" data-line-number="25">customRF<span class="op">$</span>levels &lt;-<span class="st"> </span><span class="cf">function</span>(x) x<span class="op">$</span>classes</a>
+<a class="sourceLine" id="cb3-26" data-line-number="26"></a>
+<a class="sourceLine" id="cb3-27" data-line-number="27">metric &lt;-<span class="st"> "Accuracy"</span></a>
+<a class="sourceLine" id="cb3-28" data-line-number="28">control &lt;-<span class="st"> </span><span class="kw">trainControl</span>(<span class="dt">method=</span><span class="st">"repeatedcv"</span>, <span class="dt">number=</span><span class="dv">10</span>, <span class="dt">repeats=</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb3-29" data-line-number="29">tunegrid &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">.mtry=</span><span class="kw">c</span>(<span class="dv">250</span><span class="op">:</span><span class="dv">260</span>), <span class="dt">.ntree=</span><span class="kw">c</span>(<span class="dv">500</span>, <span class="dv">1000</span>, <span class="dv">1500</span>, <span class="dv">2000</span>))</a>
+<a class="sourceLine" id="cb3-30" data-line-number="30"><span class="kw">set.seed</span>(seed)</a>
+<a class="sourceLine" id="cb3-31" data-line-number="31">rf_tune &lt;-<span class="st"> </span><span class="kw">train</span>(classified<span class="op">~</span>., <span class="dt">data=</span>pbmc4, <span class="dt">method=</span>customRF, <span class="dt">metric=</span>metric, <span class="dt">tuneGrid=</span>tunegrid, <span class="dt">trControl=</span>control)</a>
+<a class="sourceLine" id="cb3-32" data-line-number="32"><span class="kw">summary</span>(rf_tune)</a>
+<a class="sourceLine" id="cb3-33" data-line-number="33"><span class="kw">plot</span>(rf_tune)</a></code></pre></div>
 </div>
 <div id="build-model-with-optimal-parameters" class="section level3">
 <h3 class="hasAnchor">
 <a href="#build-model-with-optimal-parameters" class="anchor"></a>Build model with optimal parameters</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Optimal mtry and ntree</span>
-bmtry&lt;-<span class="st"> </span><span class="dv">256</span>
-bntree&lt;-<span class="st"> </span><span class="dv">1000</span> <span class="co">#for testing purpose</span>
-<span class="co">#Build the model</span>
-rFmodel.sub &lt;-<span class="st"> </span><span class="kw">randomForest</span>(classified <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> pbmc4.sub, <span class="dt">ntree =</span> bntree, <span class="dt">mtry =</span> bmtry, <span class="dt">importance =</span> <span class="ot">TRUE</span>)
-<span class="kw">save</span>(rFmodel.sub,<span class="dt">file =</span> <span class="st">"rFmodelsub.RData"</span>)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co">#Optimal mtry and ntree</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">bmtry&lt;-<span class="st"> </span><span class="dv">256</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">bntree&lt;-<span class="st"> </span><span class="dv">1000</span> <span class="co">#for testing purpose</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#Build the model</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">rFmodel.sub &lt;-<span class="st"> </span><span class="kw">randomForest</span>(classified <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> pbmc4.sub, <span class="dt">ntree =</span> bntree, <span class="dt">mtry =</span> bmtry, <span class="dt">importance =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="kw">save</span>(rFmodel.sub,<span class="dt">file =</span> <span class="st">"rFmodelsub.RData"</span>)</a></code></pre></div>
 <pre><code>Call:
  randomForest(formula = classified ~ ., data = pbmc4.sub, ntree = bntree,      mtry = bmtry, importance = TRUE) 
                Type of random forest: classification
@@ -216,9 +216,9 @@ Dendritic Cells, 2?                 0              0        0  0.05263158
 FCGR3A+ Monocytes                  93              0        0  0.17699115
 Megakaryocytes                      1             25        0  0.28571429
 NK cells                            0              0      249  0.13240418</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># To check important variables</span>
-<span class="kw">importance</span>(rFmodel)        
-<span class="kw">varImpPlot</span>(rFmodel)</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># To check important variables</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw">importance</span>(rFmodel.sub)        </a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="kw">varImpPlot</span>(rFmodel.sub)</a></code></pre></div>
 <div class="figure">
 <img src="https://i.imgur.com/h5d0aST.png" alt="Important variables"><p class="caption">Important variables</p>
 </div>
@@ -226,18 +226,18 @@ NK cells                            0              0      249  0.13240418</code>
 <div id="check-expression-patterns-of-important-genes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#check-expression-patterns-of-important-genes" class="anchor"></a>Check expression patterns of important genes</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="st">"rFmodelsub.RData"</span>)
-important &lt;-<span class="kw">as.data.frame</span>(<span class="kw">importance</span>(rFmodel.sub))
-<span class="co"># source('important_heatmap.R')</span>
-<span class="kw"><a href="../reference/important_heatmap.html">important_heatmap</a></span>(important, pbmc4k_avg, pbmc4k_meta, <span class="dv">20</span>, <span class="dv">30</span>)</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">load</span>(<span class="st">"rFmodelsub.RData"</span>)</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">important &lt;-<span class="kw">as.data.frame</span>(<span class="kw">importance</span>(rFmodel.sub))</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co"># source('important_heatmap.R')</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="kw"><a href="../reference/important_heatmap.html">important_heatmap</a></span>(important, pbmc4k_avg, pbmc4k_meta, <span class="dv">20</span>, <span class="dv">30</span>)</a></code></pre></div>
 <p>With MeanDecreaseAccuracy &gt;=20 and MeanDecreaseGini &gt;=30: <img src="https://i.imgur.com/8BQO3al.png" alt="Expression of best predictors"><br>With MeanDecreaseAccuracy &gt;=15 and MeanDecreaseGini &gt;=20: <img src="https://i.imgur.com/M32CMFE.png" alt="15_20"></p>
 </div>
 <div id="fit-the-model-with-new-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#fit-the-model-with-new-data" class="anchor"></a>Fit the model with new data</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pred &lt;-<span class="st"> </span><span class="kw">predict</span>(rFmodel.sub, pbmc5.sub, <span class="dt">type =</span> <span class="st">"class"</span>)
-<span class="co"># Checking classification accuracy</span>
-<span class="kw">table</span>(pred, pbmc5.sub<span class="op">$</span>classified) </code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">pred &lt;-<span class="st"> </span><span class="kw">predict</span>(rFmodel.sub, pbmc5.sub, <span class="dt">type =</span> <span class="st">"class"</span>)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co"># Checking classification accuracy</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw">table</span>(pred, pbmc5.sub<span class="op">$</span>classified) </a></code></pre></div>
 <p>Column names: cluster number from the pbmc5 dataset (testing set). Row names: predicted cell type</p>
 <pre><code>pred                     0    1   10   11   12    2    3    4    5    6    7    8    9
   B cells                0    0    0    2    3 1233    0    1    0    3    0    0    3
@@ -269,7 +269,7 @@ important &lt;-<span class="kw">as.data.frame</span>(<span class="kw">importance
 
 
       <footer><div class="copyright">
-  <p>Developed by Kent Riemondy, Austin Gillen, Rui Fu, Jay Hesselberth, Yue Hao, Chengzhe Tian, M. Day.</p>
+  <p>Developed by Kent Riemondy, Austin Gillen, Rui Fu, Jay Hesselberth, Yue Hao, Chengzhe Tian, Michelle Daya.</p>
 </div>
 
 <div class="pkgdown">

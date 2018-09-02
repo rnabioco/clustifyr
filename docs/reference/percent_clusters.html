@@ -6,24 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title><!-- % detected per cluster} -->
-
-percent_clusters(mat, cluster_info, cell_col = "rn",
-  cluster_col = "cluster", cut_num = 0.5)
-
-
-matexpression matrix
-
-cluster_infodata.frame with cells
-
-cell_colcolumn in cluster_info with cell ids
-
-cluster_colcolumn in cluster_info with cluster number
-
-cut_numbinary cutoff for detection
-
-
-<!-- % detected per cluster --> — percent_clusters • clustifyR</title>
+<title>Percentage detected per cluster — percent_clusters • clustifyR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -47,24 +30,9 @@ cut_numbinary cutoff for detection
 
 
 
-<meta property="og:title" content="<!-- % detected per cluster} -->
+<meta property="og:title" content="Percentage detected per cluster — percent_clusters" />
 
-percent_clusters(mat, cluster_info, cell_col = "rn",
-  cluster_col = "cluster", cut_num = 0.5)
-
-
-matexpression matrix
-
-cluster_infodata.frame with cells
-
-cell_colcolumn in cluster_info with cell ids
-
-cluster_colcolumn in cluster_info with cluster number
-
-cut_numbinary cutoff for detection
-
-
-<!-- % detected per cluster --> — percent_clusters" />
+<meta property="og:description" content="Percentage detected per cluster" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -106,6 +74,9 @@ cut_numbinary cutoff for detection
   </a>
 </li>
 <li>
+  <a href="../articles/clustifyR.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -126,9 +97,6 @@ cut_numbinary cutoff for detection
     </li>
     <li>
       <a href="../articles/get_recount_data.html">Downloading data from recount</a>
-    </li>
-    <li>
-      <a href="../articles/overview.html">Introduction to clustifyR</a>
     </li>
     <li>
       <a href="../articles/random_forest.html">randomForest model</a>
@@ -159,38 +127,51 @@ cut_numbinary cutoff for detection
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1><!-- % detected per cluster} -->
-
-percent_clusters(mat, cluster_info, cell_col = "rn",
-  cluster_col = "cluster", cut_num = 0.5)
-
-
-matexpression matrix
-
-cluster_infodata.frame with cells
-
-cell_colcolumn in cluster_info with cell ids
-
-cluster_colcolumn in cluster_info with cluster number
-
-cut_numbinary cutoff for detection
-
-
-<!-- % detected per cluster --></h1>
+    <h1>Percentage detected per cluster</h1>
     <small class="dont-index">Source: <a href='https://github.com/NCBI-Hackathons/clustifyR/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
     <div class="hidden name"><code>percent_clusters.Rd</code></div>
     </div>
 
     <div class="ref-description">
-
+    
+    <p>Percentage detected per cluster</p>
+    
     </div>
 
-        
+    <pre class="usage"><span class='fu'>percent_clusters</span>(<span class='no'>mat</span>, <span class='no'>cluster_info</span>, <span class='kw'>cell_col</span> <span class='kw'>=</span> <span class='st'>"rn"</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>, <span class='kw'>cut_num</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>mat</th>
+      <td><p>expression matrix</p></td>
+    </tr>
+    <tr>
+      <th>cluster_info</th>
+      <td><p>data.frame with cells</p></td>
+    </tr>
+    <tr>
+      <th>cell_col</th>
+      <td><p>column in cluster_info with cell ids</p></td>
+    </tr>
+    <tr>
+      <th>cluster_col</th>
+      <td><p>column in cluster_info with cluster number</p></td>
+    </tr>
+    <tr>
+      <th>cut_num</th>
+      <td><p>binary cutoff for detection</p></td>
+    </tr>
+    </table>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
                 </ul>
 
   </div>
@@ -198,7 +179,7 @@ cut_numbinary cutoff for detection
 
       <footer>
       <div class="copyright">
-  <p>Developed by Kent Riemondy, Austin Gillen, Rui Fu, Jay Hesselberth, Yue Hao, Chengzhe Tian, M. Day.</p>
+  <p>Developed by Kent Riemondy, Austin Gillen, Rui Fu, Jay Hesselberth, Yue Hao, Chengzhe Tian, Michelle Daya.</p>
 </div>
 
 <div class="pkgdown">

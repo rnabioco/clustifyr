@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{percent_clusters}
 \alias{percent_clusters}
-\title{% detected per cluster}
+\title{Percentage detected per cluster}
 \usage{
 percent_clusters(mat, cluster_info, cell_col = "rn",
   cluster_col = "cluster", cut_num = 0.5)
@@ -19,5 +19,5 @@ percent_clusters(mat, cluster_info, cell_col = "rn",
 \item{cut_num}{binary cutoff for detection}
 }
 \description{
-% detected per cluster
+Percentage detected per cluster
 }

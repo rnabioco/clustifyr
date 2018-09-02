@@ -106,6 +106,9 @@
     <loc>http://ncbi-hackathons.github.io/clustifyR/reference/use_seurat_comp.html</loc>
   </url>
   <url>
+    <loc>http://ncbi-hackathons.github.io/clustifyR/articles/clustifyR.html</loc>
+  </url>
+  <url>
     <loc>http://ncbi-hackathons.github.io/clustifyR/articles/compare_methods.html</loc>
   </url>
   <url>
@@ -116,9 +119,6 @@
   </url>
   <url>
     <loc>http://ncbi-hackathons.github.io/clustifyR/articles/get_recount_data.html</loc>
-  </url>
-  <url>
-    <loc>http://ncbi-hackathons.github.io/clustifyR/articles/overview.html</loc>
   </url>
   <url>
     <loc>http://ncbi-hackathons.github.io/clustifyR/articles/random_forest.html</loc>

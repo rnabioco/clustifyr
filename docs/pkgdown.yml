@@ -2,11 +2,11 @@ pandoc: 2.2.3.2
 pkgdown: 1.1.0.9000
 pkgdown_sha: ~
 articles:
+  clustifyR: clustifyR.html
   compare_methods: compare_methods.html
   exploratory_pca: exploratory_pca.html
   gene_list: gene_list.html
   get_recount_data: get_recount_data.html
-  overview: overview.html
   random_forest: random_forest.html
   refine_cluster: refine_cluster.html
 urls:
