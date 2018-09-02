@@ -5,7 +5,10 @@ output: github_document
 ```{r, echo = FALSE, message = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>")
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
 ```
 
 [![Build Status](https://travis-ci.org/rnabioco/clustifyR.svg?branch=master)](https://travis-ci.org/rnabioco/clustifyR)

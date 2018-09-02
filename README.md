@@ -61,10 +61,10 @@ plot_cor(
 #> Warning: Removed 10 rows containing missing values (geom_point).
 ```
 
-![](README_files/figure-gfm/example-1.png)<!-- -->
+<img src="man/figures/README-example-1.png" width="100%" />
 
     #> 
     #> [[2]]
     #> Warning: Removed 10 rows containing missing values (geom_point).
 
-![](README_files/figure-gfm/example-2.png)<!-- -->
+<img src="man/figures/README-example-2.png" width="100%" />
