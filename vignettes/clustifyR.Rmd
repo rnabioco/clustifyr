@@ -174,7 +174,7 @@ colnames(res) <- left_join(data_frame(cluster = colnames(res)),
 
 rownames(res) <- colnames(res)
 
-Heatmap(-log10(res), 
+Heatmap(-log10(res + 1), 
         cluster_rows = FALSE,
         cluster_columns = FALSE, 
         heatmap_legend_param = list(title = "-log10(adjP)"))
@@ -192,7 +192,7 @@ rownames(res2) <- left_join(data_frame(cluster = rownames(res2)),
                            by = "cluster") %>% 
   pull(classified)
 
-Heatmap(-log10(res2), 
+Heatmap(-log10(res2 + 1), 
         cluster_rows = FALSE, 
         cluster_columns = FALSE, 
         heatmap_legend_param = list(title = "-log10(adjP)"))
