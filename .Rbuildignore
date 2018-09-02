@@ -1,3 +1,5 @@
+^codecov\.yml$
+^appveyor\.yml$
 ^clustifyR\.Rproj$
 ^\.Rproj\.user$
 ^_pkgdown\.yml$

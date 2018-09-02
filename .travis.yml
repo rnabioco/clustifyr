@@ -12,3 +12,6 @@ r_packages:
   - devtools
 before_install:
   - tlmgr install index
+
+after_success:
+  - Rscript -e 'covr::codecov()'

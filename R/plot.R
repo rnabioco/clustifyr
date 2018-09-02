@@ -6,7 +6,7 @@
 #' @param feature feature to color by
 #' @param legend_name legend name to display, defaults to no name
 #' @param cols character vector of colors to built color gradient
-#' for continuous values. defaults to [`clustifyR::pretty_palette`]
+#' for continuous values. defaults to [`clustifyR::pretty_palette()`]
 #' @param pt_size point size
 #' @export
 plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
