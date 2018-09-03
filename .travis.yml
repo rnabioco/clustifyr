@@ -10,14 +10,12 @@ bioc_required: true
 bioc_use_devel: true
 r_packages:
   - devtools
+
 before_install:
-  - tlmgr install index
+  - chmod +x travis_setup.sh
+  - ./travis_setup.sh
 
 r:
-- 3.1
-- 3.2
-- 3.3
-- oldrel
 - release
 - devel
 
