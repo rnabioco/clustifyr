@@ -12,7 +12,7 @@ r_packages:
   - devtools
 
 before_install:
-  - sudo apt-get install libhdf5-dev
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; sudo apt-get install libhdf5-dev; fi
 
 r:
 - release
