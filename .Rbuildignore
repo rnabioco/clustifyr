@@ -5,4 +5,5 @@
 ^_pkgdown\.yml$
 ^docs$
 ^\.travis\.yml$
+^travis_setup\.sh$
 ^README\.Rmd$
