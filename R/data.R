@@ -108,3 +108,12 @@
 #'
 #' @source ["SRP051688"]
 "pbmc_bulk_matrix"
+
+#' Principal components analysis of XXX
+#'
+#' @format XXX
+#' \describe{
+#' }
+#'
+#' @source [google.com]
+"pbmc_pca"
