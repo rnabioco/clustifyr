@@ -11,8 +11,8 @@ bioc_use_devel: true
 r_packages:
   - devtools
 
-before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; sudo apt-get install libhdf5-dev; fi
+install:
+  - if [ $TRAVIS_OS_NAME = linux ]; sudo apt-get install libhdf5-dev; fi
 
 r:
 - release
