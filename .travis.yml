@@ -11,17 +11,12 @@ bioc_use_devel: true
 r_packages:
   - devtools
 
-install:
-  - if [ $TRAVIS_OS_NAME = linux ]; sudo apt-get install libhdf5-dev; fi
+before_install:
+  - sudo apt-get install libhdf5-dev
 
 r:
 - release
 - devel
-
-matrix:
-  include:
-  - r: release
-    os: osx
 
 after_success:
   - Rscript -e 'covr::codecov()'
