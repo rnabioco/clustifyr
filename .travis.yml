@@ -12,8 +12,7 @@ r_packages:
   - devtools
 
 before_install:
-  - chmod +x travis_setup.sh
-  - ./travis_setup.sh
+  - sudo apt-get install libhdf5-dev
 
 r:
 - release
