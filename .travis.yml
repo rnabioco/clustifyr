@@ -12,17 +12,11 @@ r_packages:
   - devtools
 
 before_install:
-  - chmod +x travis_setup.sh
-  - ./travis_setup.sh
+  - sudo apt-get install libhdf5-dev
 
 r:
 - release
 - devel
-
-matrix:
-  include:
-  - r: release
-    os: osx
 
 after_success:
   - Rscript -e 'covr::codecov()'
