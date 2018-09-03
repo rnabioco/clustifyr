@@ -22,18 +22,24 @@ Clustering is a crucial step in single cell RNA-seq (scRNA-seq) data analysis. M
 
 Let the expression profile of a single cell be $\vec{x\ }$ where each element refers to the expression level (counts/reads) of a gene. Assume the scRNA-seq data is to be clustered into $M$ clusters, and the first $N$ clusters have  reference bulk RNA-seq data of pre-defined cells. Here, we require $M\geq N$. Let $\vec{B_i}$ be the expression profile of the bulk data for $i$-th cluster, and we require $\vec{x\ }$ and $\vec{B_i}$ be organized in the same gene order.
 
-The function *refine_clusters* defines the probability of a cell $\vec{x\ }$ being assigned to cluster $i$ as a weighted product of the probability that $\vec{x\ }$ is similar to $\vec{B_i}$ and the probability that $\vec{x\ }$ is proximal to the centroid of clsuter $i$ (with mean $\vec{\mu_i}$ and standard deviation $\vec{\sigma_i}$). 
+The function `refine_clusters()` defines the probability of a cell $\vec{x\ }$ being assigned to cluster $i$ as a weighted product of the probability that $\vec{x\ }$ is similar to $\vec{B_i}$ and the probability that $\vec{x\ }$ is proximal to the centroid of clsuter $i$ (with mean $\vec{\mu_i}$ and standard deviation $\vec{\sigma_i}$). 
 
-The former probability is formulated as
+The former probability is formulated as:
+
 $$P(\vec{x\ }; \vec{B_i}) \propto \exp\{\epsilon S(\vec{x\ }, \vec{B_i})\}$$
-where $S(\vec{x\ }, \vec{B_i})$ represents the similarity score between $\vec{x\ }$ and $\vec{B_i}$. One example of similarity score is the correlation computed by *run_cor* function. For clusters without reference data, we assign a default similarity score. $\epsilon$ is a user-defined weighting parameter. 
 
-The latter probability is modeled as a Gaussian distribution, i.e. 
+where $S(\vec{x\ }, \vec{B_i})$ represents the similarity score between $\vec{x\ }$ and $\vec{B_i}$. One example of similarity score is the correlation computed by `clustify()` function. For clusters without reference data, we assign a default similarity score. $\epsilon$ is a user-defined weighting parameter. 
+
+The latter probability is modeled as a Gaussian distribution:
+
 $$P(\vec{x\ }; \vec{\mu_i}, \vec{\sigma_i}) \sim N(\vec{\mu_i}, \mathbf{\Sigma}^{(i)})$$
+
 where the covariance matrix $\mathbf{\Sigma}^{(i)}$ is a diagonal matrix where each element diagonal represents the variance of a gene's expression within the cluster $i$ ($\Sigma^{(i)}_{j,j} = \sigma_{i,j}^2$). 
 
-The overall probability is then expressed as
+The overall probability is then expressed as:
+
 $$P(\vec{x\ }; \mathrm{Cluster}\ i) = P(\vec{x\ }; \vec{B_i})^\lambda P(\vec{x\ }; \vec{\mu_i}, \vec{\sigma_i})^{1-\lambda}$$
+
 where $\lambda$ is a user-defined input parameter.
 
 For each single cell $\vec{x\ }$, the function *refine_clusters* computes the probability of it being assigned to each cluster, and assigns the cell to the cluster with highest probability. After assigning all single cells, a new clustering is formed and the function repeats the whole process until assignment is converged.
@@ -49,7 +55,6 @@ The algorithm works as follows
 4. Repeat Step 2-3 until convergence.
 
 ## Example
-### Dataset
 
 We make use of the *pbmc4k_matrix*, *pbmc4k_meta* and *pbmc_bulk_matrix* dataset. To satisfy the requirement of the function, we define six clusters (Monocytes, B Cells, T Cells, Dendritic Cells, NK Cells and Megakaryocytes) and re-assign each cell to one cluster based on its previous label. We further extract 5 samples (Monocytes, B Cells, T Cells, Dendritic Cells, NK Cells) from the bulk dataset to represent the reference expression profile for the first five clusters. No reference data for Megakaryocytes is provided.
 
@@ -77,9 +82,7 @@ colnames(bulk_expr) <- c("Monocytes", "B Cells", "T Cells", "Dendritic Cells", "
 cluster_names <- c("Monocytes", "B Cells", "T Cells", "Dendritic Cells", "NK Cells", "Megakaryocytes");
 ```
 
-### Execution
-
-To demonstrate the power of `refine_clusters`, we randomize the cluster assignment and use the function to re-assign clusters.
+To demonstrate the power of `refine_clusters()`, we randomize the cluster assignment and use the function to re-assign clusters.
 
 ```{execution, eval=FALSE}
 res <- refine_clusters(sc_expr, sample(sc_cluster, length(sc_cluster)), bulk_expr, lambda=0.5, epsilon=1, if_compute_sigma=TRUE, num_iteration=20, default_similiarity=-1, disagreement_freq=0.01, if_plot=TRUE, tsne_coord=sc_tsne_coord, cluster_names=cluster_names, compute_method=corr_coef);

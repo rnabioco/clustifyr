@@ -21,13 +21,6 @@ This vignette illustrates how one can explore how well different feature selecti
 
 ```{r setup, echo=T}
 library(clustifyR)
-data("pbmc4k_vargenes")
-data("pbmc4k_markers")
-data("pbmc4k_markers_M3Drop")
-data("pbmc_pca")
-data("pbmc4k_avg")
-data("pbmc_bulk_matrix")
-
 
 #Assign pre-labelled names to single cell clusters
 names(pbmc4k_avg) <- c(
@@ -52,7 +45,7 @@ names(pbmc4k_avg) <- c(
 
 ```{r function_corr_matrix}
 
-cor_mat <- run_cor(expr_mat = pbmc4k_matrix,
+cor_mat <- clustify(expr_mat = pbmc4k_matrix,
                metadata = pbmc4k_meta,
                bulk_mat = pbmc_bulk_matrix,
                query_gene_list = pbmc4k_vargenes,
@@ -87,7 +80,7 @@ knitr::kable(best_match_matrix)
 Using the above functions, we can now summarize and compare and contrast the best matches for each of the different feature selection methods.
 
 ```{r summary_table, echo=T}
-vargenes_cor_mat <- run_cor(expr_mat = pbmc4k_matrix,
+vargenes_cor_mat <- clustify(expr_mat = pbmc4k_matrix,
                metadata = pbmc4k_meta,
                bulk_mat = pbmc_bulk_matrix,
                query_gene_list = pbmc4k_vargenes,
@@ -96,7 +89,7 @@ vargenes_cor_mat <- run_cor(expr_mat = pbmc4k_matrix,
 
 vargenes_best_mat <- get_best_match_matrix(vargenes_cor_mat)
 
-markers_cor_mat <- run_cor(expr_mat = pbmc4k_matrix,
+markers_cor_mat <- clustify(expr_mat = pbmc4k_matrix,
                metadata = pbmc4k_meta,
                bulk_mat = pbmc_bulk_matrix,
                query_gene_list = pbmc4k_markers$gene,
@@ -106,7 +99,7 @@ markers_cor_mat <- run_cor(expr_mat = pbmc4k_matrix,
 markers_best_mat <- get_best_match_matrix(markers_cor_mat)
 
 
-m3drop_cor_mat <- run_cor(expr_mat = pbmc4k_matrix,
+m3drop_cor_mat <- clustify(expr_mat = pbmc4k_matrix,
                metadata = pbmc4k_meta,
                bulk_mat = pbmc_bulk_matrix,
                query_gene_list = pbmc4k_markers_M3Drop$Gene,
@@ -116,7 +109,7 @@ m3drop_cor_mat <- run_cor(expr_mat = pbmc4k_matrix,
 m3drop_best_mat <- get_best_match_matrix(m3drop_cor_mat)
 
 
-pca_cor_mat <- run_cor(expr_mat = pbmc4k_matrix,
+pca_cor_mat <- clustify(expr_mat = pbmc4k_matrix,
                metadata = pbmc4k_meta,
                bulk_mat = pbmc_bulk_matrix,
                query_gene_list = pbmc_pca,

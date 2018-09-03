@@ -44,7 +44,7 @@ clustify_seurat <- function(seurat_object,
     cluster_col <- "rn"
   }
 
-  res <- run_cor(expr_mat,
+  res <- clustify(expr_mat,
     metadata,
     bulk_mat,
     query_gene_list,

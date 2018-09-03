@@ -1,0 +1,34 @@
+#' Compare scRNA-seq data to bulk RNA-seq data.
+#'
+#' @param expr_mat single-cell expression matrix
+#' @param metadata clustering info of single-cell data
+#' @param bulk_mat bulk expression matrix
+#' @param query_genes genes of interest
+#' @param compute_method method(s) for computing similarity scores
+#' @param per_cell run per cell, otherwise per cluster.
+#' @param num_perm number of permutations
+#' @param scores include scores in result
+#'   correlation coefficient only.
+#' @param ... additional arguments to pass to compute_method function
+#'
+#' @export
+clustify <- function(expr_mat, metadata, bulk_mat, query_genes, compute_method, per_cell = FALSE,
+                     num_perm = 0, return_full = FALSE, ...) {
+
+  gene_spec <- list(rownames(expr_mat), rownames(bulk_mat), query_genes)
+  expr_mat <- select_gene_subset(expr_mat, gene_spec)
+  bulk_mat <- select_gene_subset(bulk_mat, gene_spec)
+
+  # run permutation
+  res <- permutation_similarity(
+    expr_mat, metadata, bulk_mat,
+    num_perm, per_cell, compute_method, ...
+  )
+
+  # extract score only by default
+  if (!return_full) {
+    res <- res$score
+  }
+
+  return(res)
+}

@@ -29,10 +29,10 @@ Imports:
     cowplot,
     dplyr,
     tidyr,
-biocViews:
-    recount,
     Seurat,
-    ComplexHeatmap
+    ComplexHeatmap,
+    data.table,
+    RColorBrewer
 Suggests:
     testthat,
     knitr,
@@ -43,3 +43,5 @@ Suggests:
     covr
 VignetteBuilder: knitr
 RoxygenNote: 6.1.0
+biocViews:
+    recount,
