@@ -13,5 +13,18 @@ r_packages:
 before_install:
   - tlmgr install index
 
+r:
+- 3.1
+- 3.2
+- 3.3
+- oldrel
+- release
+- devel
+
+matrix:
+  include:
+  - r: release
+    os: osx
+
 after_success:
   - Rscript -e 'covr::codecov()'
