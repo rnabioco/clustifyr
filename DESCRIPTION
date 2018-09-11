@@ -29,10 +29,6 @@ Imports:
     cowplot,
     dplyr,
     tidyr,
-biocViews:
-    recount,
-    Seurat,
-    ComplexHeatmap
 Suggests:
     testthat,
     knitr,
@@ -40,6 +36,10 @@ Suggests:
     randomForest,
     caret,
     mlbench,
-    covr
+    covr,
+    Seurat
 VignetteBuilder: knitr
 RoxygenNote: 6.1.0
+biocViews:
+    recount,
+    ComplexHeatmap
