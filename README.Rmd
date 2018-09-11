@@ -42,18 +42,17 @@ We then calculate correlation coefficients and plot them on a pre-calculated tSN
 ```{r example}
 library(clustifyR)
 
-res <- run_cor(
+res <- clustify(
   expr_mat = pbmc4k_matrix,
   metadata = pbmc4k_meta,
   bulk_mat = pbmc_bulk_matrix,
-  query_gene_list = pbmc4k_vargenes,
-  compute_method = corr_coef
+  query_genes = pbmc4k_vargenes, 
+  cluster_col = "cluster"
 )
 
 plot_cor(
   res,
   pbmc4k_meta,
-  colnames(res)[c(1, 5)],
-  cluster_col = "classified"
+  colnames(res)[c(1, 5)]
 )
 ```
