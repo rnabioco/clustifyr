@@ -22,7 +22,7 @@
     var links = $("#navbar ul li a");
     var max_length = -1;
     var pos = -1;
-    for (var i = 0; i < links.length - 1; i++) {
+    for (var i = 0; i < links.length; i++) {
       if (links[i].getAttribute("href") === "#")
         continue;
       var path = paths(links[i].pathname);

@@ -149,12 +149,12 @@
 <li>Column names are the bulk RNA sample names.</li>
 <li>Values are the pearson correlations between the average single cell RNA expression and the bulk RNA sample expression, for a given set of genes (determined by the feature selection methods).</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">cor_mat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/run_cor.html">run_cor</a></span>(<span class="dt">expr_mat =</span> pbmc4k_matrix,</a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">cor_mat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustify.html">clustify</a></span>(<span class="dt">expr_mat =</span> pbmc4k_matrix,</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">               <span class="dt">metadata =</span> pbmc4k_meta,</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">               <span class="dt">bulk_mat =</span> pbmc_bulk_matrix,</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">               <span class="dt">query_gene_list =</span> pbmc4k_vargenes,</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">               <span class="dt">query_genes =</span> pbmc4k_vargenes,</a>
 <a class="sourceLine" id="cb2-5" data-line-number="5">               <span class="dt">cluster_col =</span> <span class="st">"classified"</span>,</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">               <span class="dt">compute_method =</span> corr_coef)</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">               <span class="dt">compute_method =</span> <span class="st">"pearson"</span>)</a>
 <a class="sourceLine" id="cb2-7" data-line-number="7"></a>
 <a class="sourceLine" id="cb2-8" data-line-number="8">knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(<span class="kw">round</span>(cor_mat, <span class="dv">2</span>))</a></code></pre></div>
 <table class="table">
@@ -561,41 +561,41 @@
 <h2 class="hasAnchor">
 <a href="#summary-of-best-matches" class="anchor"></a>Summary of best matches</h2>
 <p>Using the above functions, we can now summarize and compare and contrast the best matches for each of the different feature selection methods.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">vargenes_cor_mat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/run_cor.html">run_cor</a></span>(<span class="dt">expr_mat =</span> pbmc4k_matrix,</a>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">vargenes_cor_mat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustify.html">clustify</a></span>(<span class="dt">expr_mat =</span> pbmc4k_matrix,</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">               <span class="dt">metadata =</span> pbmc4k_meta,</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3">               <span class="dt">bulk_mat =</span> pbmc_bulk_matrix,</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">               <span class="dt">query_gene_list =</span> pbmc4k_vargenes,</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">               <span class="dt">query_genes =</span> pbmc4k_vargenes,</a>
 <a class="sourceLine" id="cb4-5" data-line-number="5">               <span class="dt">cluster_col =</span> <span class="st">"classified"</span>,</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">               <span class="dt">compute_method =</span> corr_coef)</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">               <span class="dt">compute_method =</span> <span class="st">"pearson"</span>)</a>
 <a class="sourceLine" id="cb4-7" data-line-number="7"></a>
 <a class="sourceLine" id="cb4-8" data-line-number="8">vargenes_best_mat &lt;-<span class="st"> </span><span class="kw">get_best_match_matrix</span>(vargenes_cor_mat)</a>
 <a class="sourceLine" id="cb4-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">markers_cor_mat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/run_cor.html">run_cor</a></span>(<span class="dt">expr_mat =</span> pbmc4k_matrix,</a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">markers_cor_mat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustify.html">clustify</a></span>(<span class="dt">expr_mat =</span> pbmc4k_matrix,</a>
 <a class="sourceLine" id="cb4-11" data-line-number="11">               <span class="dt">metadata =</span> pbmc4k_meta,</a>
 <a class="sourceLine" id="cb4-12" data-line-number="12">               <span class="dt">bulk_mat =</span> pbmc_bulk_matrix,</a>
-<a class="sourceLine" id="cb4-13" data-line-number="13">               <span class="dt">query_gene_list =</span> pbmc4k_markers<span class="op">$</span>gene,</a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">               <span class="dt">query_genes =</span> pbmc4k_markers<span class="op">$</span>gene,</a>
 <a class="sourceLine" id="cb4-14" data-line-number="14">               <span class="dt">cluster_col =</span> <span class="st">"classified"</span>,</a>
-<a class="sourceLine" id="cb4-15" data-line-number="15">               <span class="dt">compute_method =</span> corr_coef)</a>
+<a class="sourceLine" id="cb4-15" data-line-number="15">               <span class="dt">compute_method =</span> <span class="st">"pearson"</span>)</a>
 <a class="sourceLine" id="cb4-16" data-line-number="16"></a>
 <a class="sourceLine" id="cb4-17" data-line-number="17">markers_best_mat &lt;-<span class="st"> </span><span class="kw">get_best_match_matrix</span>(markers_cor_mat)</a>
 <a class="sourceLine" id="cb4-18" data-line-number="18"></a>
 <a class="sourceLine" id="cb4-19" data-line-number="19"></a>
-<a class="sourceLine" id="cb4-20" data-line-number="20">m3drop_cor_mat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/run_cor.html">run_cor</a></span>(<span class="dt">expr_mat =</span> pbmc4k_matrix,</a>
+<a class="sourceLine" id="cb4-20" data-line-number="20">m3drop_cor_mat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustify.html">clustify</a></span>(<span class="dt">expr_mat =</span> pbmc4k_matrix,</a>
 <a class="sourceLine" id="cb4-21" data-line-number="21">               <span class="dt">metadata =</span> pbmc4k_meta,</a>
 <a class="sourceLine" id="cb4-22" data-line-number="22">               <span class="dt">bulk_mat =</span> pbmc_bulk_matrix,</a>
-<a class="sourceLine" id="cb4-23" data-line-number="23">               <span class="dt">query_gene_list =</span> pbmc4k_markers_M3Drop<span class="op">$</span>Gene,</a>
+<a class="sourceLine" id="cb4-23" data-line-number="23">               <span class="dt">query_genes =</span> pbmc4k_markers_M3Drop<span class="op">$</span>Gene,</a>
 <a class="sourceLine" id="cb4-24" data-line-number="24">               <span class="dt">cluster_col =</span> <span class="st">"classified"</span>,</a>
-<a class="sourceLine" id="cb4-25" data-line-number="25">               <span class="dt">compute_method =</span> corr_coef)</a>
+<a class="sourceLine" id="cb4-25" data-line-number="25">               <span class="dt">compute_method =</span> <span class="st">"pearson"</span>)</a>
 <a class="sourceLine" id="cb4-26" data-line-number="26"></a>
 <a class="sourceLine" id="cb4-27" data-line-number="27">m3drop_best_mat &lt;-<span class="st"> </span><span class="kw">get_best_match_matrix</span>(m3drop_cor_mat)</a>
 <a class="sourceLine" id="cb4-28" data-line-number="28"></a>
 <a class="sourceLine" id="cb4-29" data-line-number="29"></a>
-<a class="sourceLine" id="cb4-30" data-line-number="30">pca_cor_mat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/run_cor.html">run_cor</a></span>(<span class="dt">expr_mat =</span> pbmc4k_matrix,</a>
+<a class="sourceLine" id="cb4-30" data-line-number="30">pca_cor_mat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustify.html">clustify</a></span>(<span class="dt">expr_mat =</span> pbmc4k_matrix,</a>
 <a class="sourceLine" id="cb4-31" data-line-number="31">               <span class="dt">metadata =</span> pbmc4k_meta,</a>
 <a class="sourceLine" id="cb4-32" data-line-number="32">               <span class="dt">bulk_mat =</span> pbmc_bulk_matrix,</a>
-<a class="sourceLine" id="cb4-33" data-line-number="33">               <span class="dt">query_gene_list =</span> pbmc_pca,</a>
+<a class="sourceLine" id="cb4-33" data-line-number="33">               <span class="dt">query_genes =</span> pbmc_pca,</a>
 <a class="sourceLine" id="cb4-34" data-line-number="34">               <span class="dt">cluster_col =</span> <span class="st">"classified"</span>,</a>
-<a class="sourceLine" id="cb4-35" data-line-number="35">               <span class="dt">compute_method =</span> corr_coef)</a>
+<a class="sourceLine" id="cb4-35" data-line-number="35">               <span class="dt">compute_method =</span> <span class="st">"pearson"</span>)</a>
 <a class="sourceLine" id="cb4-36" data-line-number="36"></a>
 <a class="sourceLine" id="cb4-37" data-line-number="37">pca_best_mat &lt;-<span class="st"> </span><span class="kw">get_best_match_matrix</span>(pca_cor_mat)</a>
 <a class="sourceLine" id="cb4-38" data-line-number="38"></a>

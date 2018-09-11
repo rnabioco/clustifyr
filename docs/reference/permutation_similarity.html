@@ -143,8 +143,8 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>permutation_similarity</span>(<span class='no'>expr_mat</span>, <span class='no'>metadata</span>, <span class='no'>bulk_mat</span>, <span class='no'>num_perm</span>,
-  <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='no'>compute_method</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>permutation_similarity</span>(<span class='no'>expr_mat</span>, <span class='no'>bulk_mat</span>, <span class='no'>cluster_ids</span>, <span class='no'>num_perm</span>,
+  <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='no'>compute_method</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -152,11 +152,6 @@
     <tr>
       <th>expr_mat</th>
       <td><p>single-cell expression matrix</p></td>
-    </tr>
-    <tr>
-      <th>metadata</th>
-      <td><p>clustering info of single-cell data assume that
-genes have ALREADY BEEN filtered</p></td>
     </tr>
     <tr>
       <th>bulk_mat</th>
@@ -175,12 +170,17 @@ genes have ALREADY BEEN filtered</p></td>
       <td><p>method(s) for computing similarity scores</p></td>
     </tr>
     <tr>
-      <th>cluster_col</th>
-      <td><p>cluster_col column used for clustering</p></td>
-    </tr>
-    <tr>
       <th>...</th>
       <td><p>additional paramters to pass to run_one_round</p></td>
+    </tr>
+    <tr>
+      <th>metadata</th>
+      <td><p>clustering info of single-cell data assume that
+genes have ALREADY BEEN filtered</p></td>
+    </tr>
+    <tr>
+      <th>clust_ids</th>
+      <td><p>vector of cluster ids for each cell</p></td>
     </tr>
     </table>
     

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>clustifyR — clustifyR • clustifyR</title>
+<title>Main function to compare scRNA-seq data to bulk RNA-seq data. — clustify • clustifyR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,11 +30,9 @@
 
 
 
-<meta property="og:title" content="clustifyR — clustifyR" />
+<meta property="og:title" content="Main function to compare scRNA-seq data to bulk RNA-seq data. — clustify" />
 
-<meta property="og:description" content="
-Classify cells from single-cell RNA sequencing data using bulk
-  RNA-seq reference data." />
+<meta property="og:description" content="Main function to compare scRNA-seq data to bulk RNA-seq data." />
 
 <meta property="og:image" content="http://rnabioco.github.io/clustifyR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -134,47 +132,81 @@ Classify cells from single-cell RNA sequencing data using bulk
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>clustifyR</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rnabioco/clustifyR/blob/master/R/clustifyR-package.R'><code>R/clustifyR-package.R</code></a></small>
-    <div class="hidden name"><code>clustifyR.Rd</code></div>
+    <h1>Main function to compare scRNA-seq data to bulk RNA-seq data.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rnabioco/clustifyR/blob/master/R/main.R'><code>R/main.R</code></a></small>
+    <div class="hidden name"><code>clustify.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><img src='figures/logo.png' align='right' /></p>
-<p>Classify cells from single-cell RNA sequencing data using bulk
-  RNA-seq reference data.</p>
+    <p>Main function to compare scRNA-seq data to bulk RNA-seq data.</p>
     
     </div>
 
-        
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Report bugs at <a href='https://github.com/rnabioco/clustifyR/issues'>https://github.com/rnabioco/clustifyR/issues</a></p></div>
+    <pre class="usage"><span class='fu'>clustify</span>(<span class='no'>expr_mat</span>, <span class='no'>metadata</span>, <span class='no'>bulk_mat</span>, <span class='no'>query_genes</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cell_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='kw'>num_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>return_full</span> <span class='kw'>=</span> <span class='no'>F</span>,
+  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='no'>...</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>expr_mat</th>
+      <td><p>single-cell expression matrix</p></td>
+    </tr>
+    <tr>
+      <th>metadata</th>
+      <td><p>clustering info of single-cell data</p></td>
+    </tr>
+    <tr>
+      <th>bulk_mat</th>
+      <td><p>bulk expression matrix</p></td>
+    </tr>
+    <tr>
+      <th>query_genes</th>
+      <td><p>A vector of genes of interest.</p></td>
+    </tr>
+    <tr>
+      <th>cluster_col</th>
+      <td><p>column in metadata that contains cluster ids per cell. Will default to first
+column of metadata if not supplied. Not required if running correlation per cell.</p></td>
+    </tr>
+    <tr>
+      <th>cell_col</th>
+      <td><p>column in metadata that contains the cell ids that match to columns
+in the single-cell expression matrix. Will default to rownames of the metadata data.frame
+if not supplied. Not required if running correlation per cluster.</p></td>
+    </tr>
+    <tr>
+      <th>per_cell</th>
+      <td><p>if true run per cell, otherwise per cluster.</p></td>
+    </tr>
+    <tr>
+      <th>num_perm</th>
+      <td><p>number of permutations, set to 0 by default</p></td>
+    </tr>
+    <tr>
+      <th>return_full</th>
+      <td><p>Return full results includeing scores instead
+of correlation coefficient only.</p></td>
+    </tr>
+    <tr>
+      <th>compute_method</th>
+      <td><p>method(s) for computing similarity scores</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>additional arguments to pass to compute_method function</p></td>
+    </tr>
+    </table>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      
-      <li><a href="#see-also">See also</a></li>
-          </ul>
-
-    <h2>Author</h2>
-    
-<strong>Maintainer</strong>: Kent Riemondy <a href='mailto:kent.riemondy@ucdenver.edu'>kent.riemondy@ucdenver.edu</a>
-
-Authors:
-<ul>
-<li><p>Austin Gillen <a href='mailto:austin.gillen@ucdenver.edu'>austin.gillen@ucdenver.edu</a></p></li>
-<li><p>Rui Fu <a href='mailto:rui.fu@ucdenver.edu'>rui.fu@ucdenver.edu</a></p></li>
-<li><p>Jay Hesselberth <a href='mailto:jay.hesselberth@gmail.com'>jay.hesselberth@gmail.com</a></p></li>
-<li><p>Yue Hao <a href='mailto:haoyuethink@gmail.com'>haoyuethink@gmail.com</a></p></li>
-<li><p>Chengzhe Tian <a href='mailto:Chengzhe.Tian@colorado.edu'>Chengzhe.Tian@colorado.edu</a></p></li>
-<li><p>Michelle Daya <a href='mailto:michelle.daya@ucdenver.edu'>michelle.daya@ucdenver.edu</a></p></li>
-</ul>
-
+      <li><a href="#arguments">Arguments</a></li>
+                </ul>
 
   </div>
 </div>
