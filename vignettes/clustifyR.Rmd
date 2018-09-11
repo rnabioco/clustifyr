@@ -31,8 +31,6 @@ In this example, we take an example 10x Genomics 3' scRNA-seq dataset comprised 
 
 ```{r fig.height=8, fig.width=12, fig.cap="tSNE projection of PBMCs from a health human donor", warning = F, message = F}
 library(clustifyR)
-library(ComplexHeatmap)
-library(circlize)
 
 # load pacakge data
 data("pbmc4k_matrix")
@@ -47,8 +45,7 @@ plot_tsne(pbmc4k_meta, feature = "classified")
 Bulk RNA-Seq data can be obtained from any input source; here we will obtain a dataset from the [recount2](https://jhubiostatistics.shinyapps.io/recount/) database. This database provides > 2000 human RNA-Seq experiments that have been processed using a consistent pipeline. We have written a wrapper function to download a count matrix from `recount2`, given an SRA ID. 
 
 ```{r, warning=F, message=F}
-source(system.file("dl_recount.R", 
-                   package = "clustifyR"))
+source(system.file("dl_recount.R", package = "clustifyR"))
 
 pbmc_data <- dl_recount("SRP051688")
 
@@ -57,29 +54,30 @@ pbmc_data$read_counts[1:5, 1:5]
 pbmc_data$meta_data[1:5, ]
 ```
 
-`clustifyR` provides the `run_cor()` function, which takes as input a matrix of single cell RNA-seq expression values, a metadata table with cluster assignments, and a matrix with bulk RNA seq datasets. 
+`clustifyR` provides the `clustify()` function, which takes as input a matrix of single cell RNA-seq expression values, a metadata table with cluster assignments, and a matrix with bulk RNA seq datasets. 
 
 As the heatmap below shows, most cell types are accurately classified using the default correlation method (pearson) and a list of highly variable genes in the single cell dataset identified using `Seurat`'s VMR method.
 
 ```{r fig.height=8, fig.width=12}
 # run correlation (pearson by default)
-res <- run_cor(expr_mat = pbmc4k_matrix,
+res <- clustify(expr_mat = pbmc4k_matrix,
                metadata = pbmc4k_meta,
                bulk_mat = pbmc_bulk_matrix,
-               query_gene_list = pbmc4k_vargenes,
-               cluster_col = "classified",
-               compute_method = corr_coef)
+               query_genes = pbmc4k_vargenes,
+               cluster_col = "classified")
 
 # peek at correlation matrix
 res[1:5, 1:5]
 
 # view heatmap of correlation coefficients
-Heatmap(res, colorRamp2(c(0, 1), c("white", "black")))
+library(ComplexHeatmap)
+library(circlize)
+ComplexHeatmap::Heatmap(res, colorRamp2(c(0, 1), c("white", "black")))
 ```
 
 ### Plot cluster identities and correlation coefficients
 
-`clustifyR` provides functions to plot single cells uing pre-calculated tSNE embeddings (or those from any other dimensionality reduction method), and to plot correlation coefficients on those projections. The plots below again show that the highest correlations between these bulk RNA-seq data and the test scRNA-seq dataset are restricted to the correct cell clusters.
+`clustifyR` provides functions to plot single cells uing pre-calculated tSNE embeddings (or those from any other dimensionality reduction method), and to plot correlation coefficients on those projections. The plots below show that the highest correlations between these bulk RNA-seq data and the test scRNA-seq dataset are restricted to the correct cell clusters.
 
 ```{r plot, fig.height=8, fig.width=12}
 # plot tSNE using known identities
@@ -97,34 +95,32 @@ plot_cor(res,
 
 ```{r fig.height=8, fig.width=12}
 # run correlation (pearson by default)
-res <- run_cor(expr_mat = pbmc4k_matrix,
+res <- clustify(expr_mat = pbmc4k_matrix,
                metadata = pbmc4k_meta,
                bulk_mat = pbmc_bulk_matrix,
-               query_gene_list = pbmc4k_vargenes,
-               cluster_col = "rn",
-               compute_method = corr_coef, 
+               query_genes = pbmc4k_vargenes,
+               cell_col = "rn",
                per_cell = T)
 
 plot_cor(res,
          pbmc4k_meta,
          colnames(res)[c(1, 5)],
-         cluster_col = "classified")
+         cluster_col = "rn")
 ```
 
 
 ### Obtain p-value for similarity using a permutation test
 
-In addition to automatically generating a correlation matrix, `clustifyR` can calculate correlation p-values using permutation with the `run_cor()` function. As with raw correlation coefficients, plotting a heatmap of -log(p-values) demonstrates that the most significant correlations are between corresponding bulk and single cell clusters.
+In addition to automatically generating a correlation matrix, `clustifyR` can calculate correlation p-values using permutation with the `clustify()` function. As with raw correlation coefficients, plotting a heatmap of -log(p-values) demonstrates that the most significant correlations are between corresponding bulk and single cell clusters.
 
 ```{r fig.height = 8, fig.width = 12}
-# re-run run_cor with if_permute = TRUE, num_permute=1000 and return_full = TRUE
-res <- run_cor(pbmc4k_matrix,
+# re-run clustify with =num_permute=1000 and return_full = TRUE
+res <- clustify(pbmc4k_matrix,
                pbmc4k_meta,
                pbmc_bulk_matrix,
                pbmc4k_vargenes,
                num_perm = 1000,
                cluster_col = "classified",
-               compute_method = corr_coef,
                return_full = TRUE)
 
 res$p_val[1:5, 1:5]
@@ -146,6 +142,7 @@ head(pbmc4k_mm)
 NKm <- c("GNLY", "NKG7", "ZBTB32", "IL2RB")
 DCm <- c("FCER1A", "CST3", "ITGAX", "IRF8")
 Bm <- c("MS4A1", "CD79A","CD79B","CD37")
+
 markers <- data.frame(Bm, DCm, NKm)
 markers
 

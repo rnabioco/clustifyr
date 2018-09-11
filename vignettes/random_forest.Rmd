@@ -1,14 +1,6 @@
 ---
 title: 'randomForest model'
 date: '`r Sys.Date()`'
-output:
-  rmarkdown::html_vignette:
-    toc: true
-    toc_depth: 3
-    vignette: >
-      %\VignetteIndexEntry{randomforest}
-      %\VignetteEngine{knitr::rmarkdown}
-      %\VignetteEncoding{UTF-8}
 ---
 
 ```{r knitr_opts, echo = FALSE}
@@ -160,7 +152,7 @@ varImpPlot(rFmodel.sub)
 load("rFmodelsub.RData")
 important <-as.data.frame(importance(rFmodel.sub))
 # source('important_heatmap.R')
-important_heatmap(important, pbmc4k_avg, pbmc4k_meta, 20, 30)
+importance_heatmap(important, pbmc4k_avg, pbmc4k_meta, 20, 30)
 ```
 With MeanDecreaseAccuracy >=20 and MeanDecreaseGini >=30:
 ![Expression of best predictors](https://i.imgur.com/8BQO3al.png)

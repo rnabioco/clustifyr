@@ -29,6 +29,9 @@ Imports:
     cowplot,
     dplyr,
     tidyr,
+    scales,
+    data.table,
+    RColorBrewer
 Suggests:
     testthat,
     knitr,
@@ -37,7 +40,8 @@ Suggests:
     caret,
     mlbench,
     covr,
-    Seurat
+    Seurat,
+    ComplexHeatmap
 VignetteBuilder: knitr
 RoxygenNote: 6.1.0
 biocViews:
