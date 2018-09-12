@@ -6,7 +6,6 @@
 #' @seealso Report bugs at \url{https://github.com/rnabioco/clustifyR/issues}
 #'
 #' @importFrom stats prcomp dhyper cor p.adjust quantile heatmap
-#' @importFrom data.table setDT copy
 #' @import scales
 #' @import ggplot2
 #' @import tibble
