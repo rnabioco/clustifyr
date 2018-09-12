@@ -43,12 +43,12 @@ pre-calculated tSNE projection (stored in `pbmc4k_meta`).
 ``` r
 library(clustifyR)
 
-res <- run_cor(
+res <- clustify(
   expr_mat = pbmc4k_matrix,
   metadata = pbmc4k_meta,
   bulk_mat = pbmc_bulk_matrix,
-  query_gene_list = pbmc4k_vargenes,
-  compute_method = corr_coef
+  query_genes = pbmc4k_vargenes,
+  cluster_col = "classified"
 )
 
 plot_cor(
@@ -57,14 +57,11 @@ plot_cor(
   colnames(res)[c(1, 5)],
   cluster_col = "classified"
 )
-#> [[1]]
-#> Warning: Removed 10 rows containing missing values (geom_point).
 ```
 
 <img src="man/figures/README-example-1.png" width="100%" />
 
     #> 
     #> [[2]]
-    #> Warning: Removed 10 rows containing missing values (geom_point).
 
 <img src="man/figures/README-example-2.png" width="100%" />
