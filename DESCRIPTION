@@ -29,17 +29,16 @@ Imports:
     cowplot,
     dplyr,
     tidyr,
-biocViews:
-    recount,
-    Seurat,
-    ComplexHeatmap
+    scales,
+    RColorBrewer
 Suggests:
     testthat,
     knitr,
     rmarkdown,
-    randomForest,
-    caret,
-    mlbench,
-    covr
+    covr,
+    ComplexHeatmap
 VignetteBuilder: knitr
 RoxygenNote: 6.1.0
+biocViews:
+    recount,
+    ComplexHeatmap
