@@ -74,9 +74,9 @@ out <- lapply(colnames(pbmc4k_avg_d),
               function(x){
                 per_col <- lapply(colnames(pbmc4k_rm_d),
                                   function(y){
-                                    compute_similarity(pbmc4k_avg_d[,x],
-                                                       pbmc4k_rm_d[,y], corr_coef,
-                                                       method = "spearman")})
+                                    cor(pbmc4k_avg_d[,x],
+                                        pbmc4k_rm_d[,y],
+                                        method = "spearman")})
                 do.call(cbind, per_col)
               })
 

@@ -100,7 +100,7 @@
     <div class="page-header toc-ignore">
       <h1>randomForest model</h1>
             
-            <h4 class="date">2018-09-02</h4>
+            <h4 class="date">2018-09-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyR/blob/master/vignettes/random_forest.Rmd"><code>vignettes/random_forest.Rmd</code></a></small>
       <div class="hidden name"><code>random_forest.Rmd</code></div>
@@ -233,7 +233,7 @@ NK cells                            0              0      249  0.13240418</code>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">load</span>(<span class="st">"rFmodelsub.RData"</span>)</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">important &lt;-<span class="kw">as.data.frame</span>(<span class="kw">importance</span>(rFmodel.sub))</a>
 <a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co"># source('important_heatmap.R')</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="kw"><a href="../reference/important_heatmap.html">important_heatmap</a></span>(important, pbmc4k_avg, pbmc4k_meta, <span class="dv">20</span>, <span class="dv">30</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="kw"><a href="../reference/importance_heatmap.html">importance_heatmap</a></span>(important, pbmc4k_avg, pbmc4k_meta, <span class="dv">20</span>, <span class="dv">30</span>)</a></code></pre></div>
 <p>With MeanDecreaseAccuracy &gt;=20 and MeanDecreaseGini &gt;=30: <img src="https://i.imgur.com/8BQO3al.png" alt="Expression of best predictors"><br>With MeanDecreaseAccuracy &gt;=15 and MeanDecreaseGini &gt;=20: <img src="https://i.imgur.com/M32CMFE.png" alt="15_20"></p>
 </div>
 <div id="fit-the-model-with-new-data" class="section level3">

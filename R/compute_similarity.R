@@ -45,30 +45,26 @@ compute_similarity <- function(vec1, vec2, compute_method, ...) {
     stop("compute_similarity: two input vectors are not numeric or of different sizes.")
   }
 
+  if (!(compute_method %in% c("cosine", "kl_divergence"))){
+    stop(paste(compute_method, "not implemented"))
+  }
+
+  if(compute_method == "kl_divergence"){
+    res <- kl_divergence(vec1, vec2, ...)
+  } else if (compute_method == "cosine") {
+    res <- cosine(vec1, vec2, ...)
+  }
   # return the similarity score, must be
-  return(compute_method(vec1, vec2, ...))
+  return(res)
 }
 
-#' Correlation function
-#'
-#' @description Compute correlation between two vectors.
-#' Returned value is between -1 and 1, where 1 indicates highest
-#' positive correlation
-#' and -1 indicates highest negative correlation.
-#'
-#'
+#' Cosine distance
 #' @param vec1 test vector
 #' @param vec2 reference vector
-#' @param method pearson, spearman, cosine
 #' @export
-corr_coef <- function(vec1, vec2, method = "pearson") {
-  return(switch(method,
-    pearson = cor(vec1, vec2, method = "pearson"),
-    spearman = cor(vec1, vec2, method = "spearman"),
-    cosine = sum(vec1 * vec2) / sqrt(sum(vec1^2) * sum(vec2^2))
-  ))
+cosine <- function(vec1, vec2){
+  sum(vec1 * vec2) / sqrt(sum(vec1^2) * sum(vec2^2))
 }
-
 #' KL divergence
 #'
 #' @description Use package entropy to compute Kullback-Leibler divergence.
@@ -90,11 +86,12 @@ corr_coef <- function(vec1, vec2, method = "pearson") {
 #' @export
 kl_divergence <- function(vec1, vec2, if_logcounts = FALSE, total_reads = 1000, max_KL = 1) {
   if (if_logcounts) {
-    vec1 <- exp(vec1) - 1
-    vec2 <- exp(vec2) - 1
+    vec1 <- expm1(vec1)
+    vec2 <- expm1(vec2)
   }
   count1 <- round(vec1 * total_reads / sum(vec1))
   count2 <- round(vec2 * total_reads / sum(vec2))
-  est_KL <- entropy::KL.shrink(count1, count2, unit = "log2")
+  est_KL <- entropy::KL.shrink(count1, count2, unit = "log",
+                               verbose = FALSE)
   return((max_KL - est_KL) / max_KL * 2 - 1)
 }

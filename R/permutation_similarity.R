@@ -11,23 +11,21 @@
 #' @param num_perm number of permutations
 #' @param per_cell run per cell?
 #' @param compute_method method(s) for computing similarity scores
-#' @param cluster_col cluster_col column used for clustering
+#' @param clust_ids vector of cluster ids for each cell
 #' @param ... additional paramters to pass to run_one_round
 #' @export
-permutation_similarity <- function(expr_mat, metadata, bulk_mat, num_perm, per_cell = F,
-                                   compute_method, cluster_col = "cluster", ...) {
-
-  # get cluster or cell ids
-  clust_ids <- dplyr::pull(metadata, cluster_col)
+permutation_similarity <- function(expr_mat, bulk_mat, cluster_ids,
+                                   num_perm, per_cell = F,
+                                   compute_method, ...) {
 
   # get cell types
-  sc_clust <- sort(unique(clust_ids))
+  sc_clust <- sort(unique(cluster_ids))
   bulk_clust <- colnames(bulk_mat)
 
   if (!per_cell) {
     clust_avg <- compute_mean_expr(
       expr_mat,
-      clust_ids,
+      cluster_ids,
       sc_clust
     )
   } else {
@@ -37,8 +35,6 @@ permutation_similarity <- function(expr_mat, metadata, bulk_mat, num_perm, per_c
   assigned_score <- run_one_round(
     clust_avg,
     bulk_mat,
-    sc_clust,
-    bulk_clust,
     compute_method,
     ...
   )
@@ -52,29 +48,31 @@ permutation_similarity <- function(expr_mat, metadata, bulk_mat, num_perm, per_c
       new_score <- run_one_round(
         compute_mean_expr(
           expr_mat,
-          sample(dplyr::pull(metadata, cluster_col),
-            nrow(metadata),
+          sample(cluster_ids,
+            length(cluster_ids),
             replace = FALSE
           ),
           sc_clust
         ),
         bulk_mat,
-        sc_clust,
-        bulk_clust,
         compute_method,
         ...
       )
       sig_counts <- sig_counts + as.numeric(new_score > assigned_score)
     }
   } else {
-    sig_counts <- matrix(NA, nrow = length(sc_clust), ncol = length(bulk_clust))
+    sig_counts <- matrix(NA,
+                         nrow = length(sc_clust),
+                         ncol = length(bulk_clust))
   }
 
   rownames(assigned_score) <- sc_clust
   colnames(assigned_score) <- bulk_clust
   rownames(sig_counts) <- sc_clust
   colnames(sig_counts) <- bulk_clust
-  return(list(score = assigned_score, p_val = sig_counts / num_perm))
+
+  return(list(score = assigned_score,
+              p_val = sig_counts / num_perm))
 }
 
 #' compute mean of clusters
@@ -85,12 +83,22 @@ compute_mean_expr <- function(expr_mat, sc_assign, sc_clust) {
 
 #' compute similarity
 #' @noRd
-run_one_round <- function(sc_avg, bulk_mat, sc_clust, bulk_clust, compute_method, ...) {
-  num_sc_clust <- length(sc_clust)
-  num_bulk_clust <- length(bulk_clust)
-  similarity_score <- matrix(NA, nrow = num_sc_clust, ncol = num_bulk_clust)
-  for (i in 1:num_sc_clust) {
-    for (j in 1:num_bulk_clust) {
+run_one_round <- function(sc_avg, bulk_mat, compute_method, ...) {
+
+  # use stats::cor matrix method if possible
+  if(any(compute_method %in% c("pearson", "spearman"))) {
+    similarity_score <- cor(as.matrix(sc_avg),
+                            bulk_mat, method = compute_method)
+    return(similarity_score)
+  }
+
+  sc_clust <- colnames(sc_avg)
+  bulk_clust <- colnames(bulk_mat)
+  similarity_score <- matrix(NA,
+                             nrow = length(sc_clust),
+                             ncol = length(bulk_clust))
+  for (i in seq_along(sc_clust)) {
+    for (j in seq_along(bulk_clust)) {
       similarity_score[i, j] <- compute_similarity(sc_avg[, sc_clust[i]], bulk_mat[, bulk_clust[j]], compute_method, ...)
     }
   }

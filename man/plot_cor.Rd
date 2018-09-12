@@ -6,7 +6,7 @@
 \usage{
 plot_cor(correlation_matrix, metadata,
   bulk_data_to_plot = colnames(correlation_matrix),
-  cluster_col = "cluster")
+  cluster_col = "cluster", dim1_col = "tSNE_1", dim2_col = "tSNE_2")
 }
 \arguments{
 \item{correlation_matrix}{input similarity matrix}
@@ -16,6 +16,12 @@ plot_cor(correlation_matrix, metadata,
 \item{bulk_data_to_plot}{colname of data to plot, defaults to all}
 
 \item{cluster_col}{colname of cluster IDs, defaults to cluster}
+
+\item{dim1_col}{metadata column name with 1st axis dimension.
+defaults to "tSNE_1".}
+
+\item{dim2_col}{metadata column name with 2nd axis dimension.
+defaults to "tSNE_2".}
 
 \item{...}{passed to plot_tsne}
 }

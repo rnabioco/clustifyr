@@ -47,13 +47,19 @@ pretty_palette <- rev(RColorBrewer::brewer.pal(11, "RdGy")[c(1:5, 7)])
 #' @param metadata input metadata with tsne coordinates and cluster ids
 #' @param bulk_data_to_plot colname of data to plot, defaults to all
 #' @param cluster_col colname of cluster IDs, defaults to cluster
+#' @param dim1_col metadata column name with 1st axis dimension.
+#' defaults to "tSNE_1".
+#' @param dim2_col metadata column name with 2nd axis dimension.
+#' defaults to "tSNE_2".
 #' @param ... passed to plot_tsne
 #'
 #' @export
 plot_cor <- function(correlation_matrix,
                      metadata,
                      bulk_data_to_plot = colnames(correlation_matrix),
-                     cluster_col = "cluster") {
+                     cluster_col = "cluster",
+                     dim1_col = "tSNE_1",
+                     dim2_col = "tSNE_2") {
   if (!any(bulk_data_to_plot %in% colnames(correlation_matrix))) {
     stop("cluster ids not shared between metadata and correlation matrix")
   }
@@ -85,7 +91,9 @@ plot_cor <- function(correlation_matrix,
         plt_data,
         bulk_cluster == x
       )
-      plot_tsne(tmp_data, feature = "expr", legend_name = x)
+      plot_tsne(tmp_data,
+                x = dim1_col,
+                y = dim2_col, feature = "expr", legend_name = x)
     }
   )
 }

@@ -100,7 +100,7 @@
     <div class="page-header toc-ignore">
       <h1>Cluster classification using mark gene lists</h1>
             
-            <h4 class="date">2018-09-02</h4>
+            <h4 class="date">2018-09-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyR/blob/master/vignettes/gene_list.Rmd"><code>vignettes/gene_list.Rmd</code></a></small>
       <div class="hidden name"><code>gene_list.Rmd</code></div>
@@ -176,9 +176,9 @@
 <a class="sourceLine" id="cb9-5" data-line-number="5">              <span class="cf">function</span>(x){</a>
 <a class="sourceLine" id="cb9-6" data-line-number="6">                per_col &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="kw">colnames</span>(pbmc4k_rm_d),</a>
 <a class="sourceLine" id="cb9-7" data-line-number="7">                                  <span class="cf">function</span>(y){</a>
-<a class="sourceLine" id="cb9-8" data-line-number="8">                                    <span class="kw"><a href="../reference/compute_similarity.html">compute_similarity</a></span>(pbmc4k_avg_d[,x],</a>
-<a class="sourceLine" id="cb9-9" data-line-number="9">                                                       pbmc4k_rm_d[,y], corr_coef,</a>
-<a class="sourceLine" id="cb9-10" data-line-number="10">                                                       <span class="dt">method =</span> <span class="st">"spearman"</span>)})</a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">                                    <span class="kw">cor</span>(pbmc4k_avg_d[,x],</a>
+<a class="sourceLine" id="cb9-9" data-line-number="9">                                        pbmc4k_rm_d[,y],</a>
+<a class="sourceLine" id="cb9-10" data-line-number="10">                                        <span class="dt">method =</span> <span class="st">"spearman"</span>)})</a>
 <a class="sourceLine" id="cb9-11" data-line-number="11">                <span class="kw">do.call</span>(cbind, per_col)</a>
 <a class="sourceLine" id="cb9-12" data-line-number="12">              })</a>
 <a class="sourceLine" id="cb9-13" data-line-number="13"></a>

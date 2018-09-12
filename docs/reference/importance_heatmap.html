@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>clustifyR — clustifyR • clustifyR</title>
+<title>Heatmap of average expression of most predictive genes across cell types — importance_heatmap • clustifyR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,11 +30,9 @@
 
 
 
-<meta property="og:title" content="clustifyR — clustifyR" />
+<meta property="og:title" content="Heatmap of average expression of most predictive genes across cell types — importance_heatmap" />
 
-<meta property="og:description" content="
-Classify cells from single-cell RNA sequencing data using bulk
-  RNA-seq reference data." />
+<meta property="og:description" content="Heatmap of average expression of most predictive genes across cell types" />
 
 <meta property="og:image" content="http://rnabioco.github.io/clustifyR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -134,47 +132,52 @@ Classify cells from single-cell RNA sequencing data using bulk
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>clustifyR</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rnabioco/clustifyR/blob/master/R/clustifyR-package.R'><code>R/clustifyR-package.R</code></a></small>
-    <div class="hidden name"><code>clustifyR.Rd</code></div>
+    <h1>Heatmap of average expression of most predictive genes across cell types</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rnabioco/clustifyR/blob/master/R/importance_heatmap.R'><code>R/importance_heatmap.R</code></a></small>
+    <div class="hidden name"><code>importance_heatmap.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><img src='figures/logo.png' align='right' /></p>
-<p>Classify cells from single-cell RNA sequencing data using bulk
-  RNA-seq reference data.</p>
+    <p>Heatmap of average expression of most predictive genes across cell types</p>
     
     </div>
 
-        
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Report bugs at <a href='https://github.com/rnabioco/clustifyR/issues'>https://github.com/rnabioco/clustifyR/issues</a></p></div>
+    <pre class="usage"><span class='fu'>importance_heatmap</span>(<span class='no'>importance</span>, <span class='no'>avg_matrix</span>, <span class='no'>meta</span>, <span class='no'>MDA_thresh</span>, <span class='no'>MDG_thresh</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>importance</th>
+      <td><p>importance measurements of genes (predictors)
+from the random forest model</p></td>
+    </tr>
+    <tr>
+      <th>avg_matrix</th>
+      <td><p>average expression matrix</p></td>
+    </tr>
+    <tr>
+      <th>meta</th>
+      <td><p>contains cluster info and classified cell types</p></td>
+    </tr>
+    <tr>
+      <th>MDA_thresh</th>
+      <td><p>MeanDecreaseAccuracy threshold</p></td>
+    </tr>
+    <tr>
+      <th>MDG_thresh</th>
+      <td><p>MeanDecreaseGini threshold</p></td>
+    </tr>
+    </table>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      
-      <li><a href="#see-also">See also</a></li>
-          </ul>
-
-    <h2>Author</h2>
-    
-<strong>Maintainer</strong>: Kent Riemondy <a href='mailto:kent.riemondy@ucdenver.edu'>kent.riemondy@ucdenver.edu</a>
-
-Authors:
-<ul>
-<li><p>Austin Gillen <a href='mailto:austin.gillen@ucdenver.edu'>austin.gillen@ucdenver.edu</a></p></li>
-<li><p>Rui Fu <a href='mailto:rui.fu@ucdenver.edu'>rui.fu@ucdenver.edu</a></p></li>
-<li><p>Jay Hesselberth <a href='mailto:jay.hesselberth@gmail.com'>jay.hesselberth@gmail.com</a></p></li>
-<li><p>Yue Hao <a href='mailto:haoyuethink@gmail.com'>haoyuethink@gmail.com</a></p></li>
-<li><p>Chengzhe Tian <a href='mailto:Chengzhe.Tian@colorado.edu'>Chengzhe.Tian@colorado.edu</a></p></li>
-<li><p>Michelle Daya <a href='mailto:michelle.daya@ucdenver.edu'>michelle.daya@ucdenver.edu</a></p></li>
-</ul>
-
+      <li><a href="#arguments">Arguments</a></li>
+                </ul>
 
   </div>
 </div>

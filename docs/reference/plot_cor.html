@@ -145,7 +145,7 @@
 
     <pre class="usage"><span class='fu'>plot_cor</span>(<span class='no'>correlation_matrix</span>, <span class='no'>metadata</span>,
   <span class='kw'>bulk_data_to_plot</span> <span class='kw'>=</span> <span class='fu'>colnames</span>(<span class='no'>correlation_matrix</span>),
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>)</pre>
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>, <span class='kw'>dim1_col</span> <span class='kw'>=</span> <span class='st'>"tSNE_1"</span>, <span class='kw'>dim2_col</span> <span class='kw'>=</span> <span class='st'>"tSNE_2"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -165,6 +165,16 @@
     <tr>
       <th>cluster_col</th>
       <td><p>colname of cluster IDs, defaults to cluster</p></td>
+    </tr>
+    <tr>
+      <th>dim1_col</th>
+      <td><p>metadata column name with 1st axis dimension.
+defaults to "tSNE_1".</p></td>
+    </tr>
+    <tr>
+      <th>dim2_col</th>
+      <td><p>metadata column name with 2nd axis dimension.
+defaults to "tSNE_2".</p></td>
     </tr>
     <tr>
       <th>...</th>
