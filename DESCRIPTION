@@ -30,17 +30,12 @@ Imports:
     dplyr,
     tidyr,
     scales,
-    data.table,
     RColorBrewer
 Suggests:
     testthat,
     knitr,
     rmarkdown,
-    randomForest,
-    caret,
-    mlbench,
     covr,
-    Seurat,
     ComplexHeatmap
 VignetteBuilder: knitr
 RoxygenNote: 6.1.0
