@@ -5,17 +5,18 @@
 \title{Plot similarity measures on a tSNE}
 \usage{
 plot_cor(correlation_matrix, metadata,
-  bulk_data_to_plot = colnames(correlation_matrix),
-  cluster_col = "cluster", dim1_col = "tSNE_1", dim2_col = "tSNE_2")
+  bulk_data_to_plot = colnames(correlation_matrix), cluster_col = NULL,
+  dim1_col = "tSNE_1", dim2_col = "tSNE_2")
 }
 \arguments{
 \item{correlation_matrix}{input similarity matrix}
 
-\item{metadata}{input metadata with tsne coordinates and cluster ids}
+\item{metadata}{input metadata with per cell tsne coordinates and cluster ids}
 
 \item{bulk_data_to_plot}{colname of data to plot, defaults to all}
 
-\item{cluster_col}{colname of cluster IDs, defaults to cluster}
+\item{cluster_col}{colname of clustering data in metadata, defaults to rownames of the
+metadata if not supplied.}
 
 \item{dim1_col}{metadata column name with 1st axis dimension.
 defaults to "tSNE_1".}
