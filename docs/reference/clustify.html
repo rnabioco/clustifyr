@@ -143,39 +143,45 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>clustify</span>(<span class='no'>expr_mat</span>, <span class='no'>metadata</span>, <span class='no'>bulk_mat</span>, <span class='no'>query_genes</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>cell_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='kw'>num_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>return_full</span> <span class='kw'>=</span> <span class='no'>F</span>,
-  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>clustify</span>(<span class='no'>expr_mat</span>, <span class='no'>bulk_mat</span>, <span class='no'>metadata</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>use_var_genes</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for default</span>
+<span class='fu'>clustify</span>(<span class='no'>expr_mat</span>, <span class='no'>bulk_mat</span>, <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>num_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for seurat</span>
+<span class='fu'>clustify</span>(<span class='no'>seurat_object</span>, <span class='no'>bulk_mat</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"pearson"</span>, <span class='kw'>use_var_genes</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>expr_mat</th>
-      <td><p>single-cell expression matrix</p></td>
-    </tr>
-    <tr>
-      <th>metadata</th>
-      <td><p>clustering info of single-cell data</p></td>
+      <td><p>single-cell expression matrix or Seurat object</p></td>
     </tr>
     <tr>
       <th>bulk_mat</th>
       <td><p>bulk expression matrix</p></td>
     </tr>
     <tr>
+      <th>metadata</th>
+      <td><p>cell cluster assignments, supplied as a vector or data.frame. If
+data.frame is supplied then <code>cluster_col</code> and/or <code>cell_col</code> need to be set. Not required if running correlation per cell.</p></td>
+    </tr>
+    <tr>
       <th>query_genes</th>
-      <td><p>A vector of genes of interest.</p></td>
+      <td><p>A vector of genes of interest to compare. If NULL, then common genes between
+the expr_mat and bulk_mat will be used for comparision.</p></td>
     </tr>
     <tr>
       <th>cluster_col</th>
       <td><p>column in metadata that contains cluster ids per cell. Will default to first
 column of metadata if not supplied. Not required if running correlation per cell.</p></td>
-    </tr>
-    <tr>
-      <th>cell_col</th>
-      <td><p>column in metadata that contains the cell ids that match to columns
-in the single-cell expression matrix. Will default to rownames of the metadata data.frame
-if not supplied. Not required if running correlation per cluster.</p></td>
     </tr>
     <tr>
       <th>per_cell</th>
@@ -186,13 +192,13 @@ if not supplied. Not required if running correlation per cluster.</p></td>
       <td><p>number of permutations, set to 0 by default</p></td>
     </tr>
     <tr>
-      <th>return_full</th>
-      <td><p>Return full results includeing scores instead
-of correlation coefficient only.</p></td>
-    </tr>
-    <tr>
       <th>compute_method</th>
       <td><p>method(s) for computing similarity scores</p></td>
+    </tr>
+    <tr>
+      <th>use_var_genes</th>
+      <td><p>if providing a seurat object, use the variable genes
+(stored in seurat_object@var.genes) as the query_genes.</p></td>
     </tr>
     <tr>
       <th>...</th>

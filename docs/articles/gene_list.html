@@ -100,7 +100,7 @@
     <div class="page-header toc-ignore">
       <h1>Cluster classification using mark gene lists</h1>
             
-            <h4 class="date">2018-09-12</h4>
+            <h4 class="date">2018-09-13</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyR/blob/master/vignettes/gene_list.Rmd"><code>vignettes/gene_list.Rmd</code></a></small>
       <div class="hidden name"><code>gene_list.Rmd</code></div>
@@ -169,26 +169,28 @@
 <h2 class="hasAnchor">
 <a href="#ranked-list-classify" class="anchor"></a>Ranked list: Classify</h2>
 <p>Spearman correlation or other approaches implemented in the package can be applied.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">gene_constraints &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">rownames</span>(pbmc4k_avg),<span class="kw">rownames</span>(pbmc4k_rm))</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">pbmc4k_avg_d&lt;-<span class="st"> </span><span class="kw"><a href="../reference/select_gene_subset.html">select_gene_subset</a></span>(pbmc4k_avg, gene_constraints)</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">pbmc4k_rm_d &lt;-<span class="st"> </span><span class="kw"><a href="../reference/select_gene_subset.html">select_gene_subset</a></span>(pbmc4k_rm, gene_constraints)</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">out &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="kw">colnames</span>(pbmc4k_avg_d),</a>
-<a class="sourceLine" id="cb9-5" data-line-number="5">              <span class="cf">function</span>(x){</a>
-<a class="sourceLine" id="cb9-6" data-line-number="6">                per_col &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="kw">colnames</span>(pbmc4k_rm_d),</a>
-<a class="sourceLine" id="cb9-7" data-line-number="7">                                  <span class="cf">function</span>(y){</a>
-<a class="sourceLine" id="cb9-8" data-line-number="8">                                    <span class="kw">cor</span>(pbmc4k_avg_d[,x],</a>
-<a class="sourceLine" id="cb9-9" data-line-number="9">                                        pbmc4k_rm_d[,y],</a>
-<a class="sourceLine" id="cb9-10" data-line-number="10">                                        <span class="dt">method =</span> <span class="st">"spearman"</span>)})</a>
-<a class="sourceLine" id="cb9-11" data-line-number="11">                <span class="kw">do.call</span>(cbind, per_col)</a>
-<a class="sourceLine" id="cb9-12" data-line-number="12">              })</a>
-<a class="sourceLine" id="cb9-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb9-14" data-line-number="14">res &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind, out)</a>
-<a class="sourceLine" id="cb9-15" data-line-number="15"><span class="kw">rownames</span>(res) &lt;-<span class="st"> </span><span class="kw">colnames</span>(pbmc4k_avg_d)</a>
-<a class="sourceLine" id="cb9-16" data-line-number="16"><span class="kw">colnames</span>(res) &lt;-<span class="st"> </span><span class="kw">colnames</span>(pbmc4k_rm_d)</a>
-<a class="sourceLine" id="cb9-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb9-18" data-line-number="18"><span class="kw"><a href="../reference/plot_cor.html">plot_cor</a></span>(res,</a>
-<a class="sourceLine" id="cb9-19" data-line-number="19">         pbmc4k_meta,</a>
-<a class="sourceLine" id="cb9-20" data-line-number="20">         <span class="kw">colnames</span>(res)[<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>])</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">gene_constraints &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get_common_elements.html">get_common_elements</a></span>(<span class="kw">rownames</span>(pbmc4k_avg),</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">                                        <span class="kw">rownames</span>(pbmc4k_rm))</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">pbmc4k_avg_d&lt;-<span class="st"> </span>pbmc4k_avg[gene_constraints,]</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">pbmc4k_rm_d &lt;-<span class="st"> </span>pbmc4k_rm[gene_constraints, ]</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">out &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="kw">colnames</span>(pbmc4k_avg_d),</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">              <span class="cf">function</span>(x){</a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">                per_col &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="kw">colnames</span>(pbmc4k_rm_d),</a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">                                  <span class="cf">function</span>(y){</a>
+<a class="sourceLine" id="cb9-9" data-line-number="9">                                    <span class="kw">cor</span>(pbmc4k_avg_d[,x],</a>
+<a class="sourceLine" id="cb9-10" data-line-number="10">                                        pbmc4k_rm_d[,y],</a>
+<a class="sourceLine" id="cb9-11" data-line-number="11">                                        <span class="dt">method =</span> <span class="st">"spearman"</span>)})</a>
+<a class="sourceLine" id="cb9-12" data-line-number="12">                <span class="kw">do.call</span>(cbind, per_col)</a>
+<a class="sourceLine" id="cb9-13" data-line-number="13">              })</a>
+<a class="sourceLine" id="cb9-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb9-15" data-line-number="15">res &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind, out)</a>
+<a class="sourceLine" id="cb9-16" data-line-number="16"><span class="kw">rownames</span>(res) &lt;-<span class="st"> </span><span class="kw">colnames</span>(pbmc4k_avg_d)</a>
+<a class="sourceLine" id="cb9-17" data-line-number="17"><span class="kw">colnames</span>(res) &lt;-<span class="st"> </span><span class="kw">colnames</span>(pbmc4k_rm_d)</a>
+<a class="sourceLine" id="cb9-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb9-19" data-line-number="19"><span class="kw"><a href="../reference/plot_cor.html">plot_cor</a></span>(res,</a>
+<a class="sourceLine" id="cb9-20" data-line-number="20">         pbmc4k_meta,</a>
+<a class="sourceLine" id="cb9-21" data-line-number="21">         <span class="kw">colnames</span>(res)[<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>],</a>
+<a class="sourceLine" id="cb9-22" data-line-number="22">         <span class="dt">cluster_col =</span> <span class="st">"cluster"</span>)</a></code></pre></div>
 <pre><code>## [[1]]</code></pre>
 <p><img src="gene_list_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <pre><code>## 

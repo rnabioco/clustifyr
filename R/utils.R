@@ -97,13 +97,13 @@ get_best_str <- function(name,
 #' @description return entries found in all supplied vectors. If the vector supplied
 #' is NULL or NA, then it will be excluded from the comparision.
 #' @param ... vectors
-#' @example
+#' @examples
 #' a <- rep(1:5)
 #' b <- rep(4:10)
 #' c <- rep(4:6)
-#' get_common(a, b, c)
-#' @noRd
-get_commmon_elements <- function(...) {
+#' get_common_elements(a, b, c)
+#' @export
+get_common_elements <- function(...) {
   vecs <- list(...)
   # drop NULL elements of list
   vecs <- vecs[!sapply(vecs, is.null)]

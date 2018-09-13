@@ -67,9 +67,10 @@ pbmc4k_rm <- matrixize_markers(pbmc4k_markers, TRUE)
 ## Ranked list: Classify
 Spearman correlation or other approaches implemented in the package can be applied.
 ```{r}
-gene_constraints <- list(rownames(pbmc4k_avg),rownames(pbmc4k_rm))
-pbmc4k_avg_d<- select_gene_subset(pbmc4k_avg, gene_constraints)
-pbmc4k_rm_d <- select_gene_subset(pbmc4k_rm, gene_constraints)
+gene_constraints <- get_common_elements(rownames(pbmc4k_avg),
+                                        rownames(pbmc4k_rm))
+pbmc4k_avg_d<- pbmc4k_avg[gene_constraints,]
+pbmc4k_rm_d <- pbmc4k_rm[gene_constraints, ]
 out <- lapply(colnames(pbmc4k_avg_d),
               function(x){
                 per_col <- lapply(colnames(pbmc4k_rm_d),
@@ -86,7 +87,8 @@ colnames(res) <- colnames(pbmc4k_rm_d)
 
 plot_cor(res,
          pbmc4k_meta,
-         colnames(res)[1:7])
+         colnames(res)[1:7],
+         cluster_col = "cluster")
 ```
 
 ## Pancreas data from Indrop

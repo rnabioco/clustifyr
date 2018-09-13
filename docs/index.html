@@ -130,16 +130,16 @@
 <a class="sourceLine" id="cb2-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">res &lt;-<span class="st"> </span><span class="kw"><a href="reference/clustify.html">clustify</a></span>(</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="dt">expr_mat =</span> pbmc4k_matrix,</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">  <span class="dt">metadata =</span> pbmc4k_meta,</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">  <span class="dt">metadata =</span> pbmc4k_meta<span class="op">$</span>cluster,</a>
 <a class="sourceLine" id="cb2-6" data-line-number="6">  <span class="dt">bulk_mat =</span> pbmc_bulk_matrix,</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">  <span class="dt">query_genes =</span> pbmc4k_vargenes, </a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">  <span class="dt">cluster_col =</span> <span class="st">"cluster"</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">)</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="kw"><a href="reference/plot_cor.html">plot_cor</a></span>(</a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">  res,</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">  pbmc4k_meta,</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">  <span class="kw">colnames</span>(res)[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">5</span>)]</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">  <span class="dt">query_genes =</span> pbmc4k_vargenes</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">)</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="kw"><a href="reference/plot_cor.html">plot_cor</a></span>(</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">  res,</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">  pbmc4k_meta,</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">  <span class="kw">colnames</span>(res)[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">5</span>)],</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">  <span class="dt">cluster_col =</span> <span class="st">"cluster"</span></a>
 <a class="sourceLine" id="cb2-15" data-line-number="15">)</a>
 <a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; [[1]]</span></a></code></pre></div>
 <p><img src="reference/figures/README-example-1.png" width="100%"></p>

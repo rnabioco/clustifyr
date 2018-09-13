@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot similarity measures on a tSNE — plot_cor • clustifyR</title>
+<title>Compute similarity between two vectors — vector_similarity • clustifyR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,15 @@
 
 
 
-<meta property="og:title" content="Plot similarity measures on a tSNE — plot_cor" />
+<meta property="og:title" content="Compute similarity between two vectors — vector_similarity" />
 
-<meta property="og:description" content="Plot similarity measures on a tSNE" />
+<meta property="og:description" content="Compute the similarity score between two vectors using a
+customized scoring function
+Two vectors may be from either scRNA-seq or bulk RNA-seq data.
+The lengths of vec1 and vec2 must match, and must be arranged in the
+same order of genes.
+Both vectors should be provided to this function after pre-processing,
+feature selection and dimension reduction." />
 
 <meta property="og:image" content="http://rnabioco.github.io/clustifyR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -132,54 +138,43 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot similarity measures on a tSNE</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rnabioco/clustifyR/blob/master/R/plot.R'><code>R/plot.R</code></a></small>
-    <div class="hidden name"><code>plot_cor.Rd</code></div>
+    <h1>Compute similarity between two vectors</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rnabioco/clustifyR/blob/master/R/compute_similarity.R'><code>R/compute_similarity.R</code></a></small>
+    <div class="hidden name"><code>vector_similarity.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Plot similarity measures on a tSNE</p>
+    <p>Compute the similarity score between two vectors using a
+customized scoring function
+Two vectors may be from either scRNA-seq or bulk RNA-seq data.
+The lengths of vec1 and vec2 must match, and must be arranged in the
+same order of genes.
+Both vectors should be provided to this function after pre-processing,
+feature selection and dimension reduction.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>plot_cor</span>(<span class='no'>correlation_matrix</span>, <span class='no'>metadata</span>,
-  <span class='kw'>bulk_data_to_plot</span> <span class='kw'>=</span> <span class='fu'>colnames</span>(<span class='no'>correlation_matrix</span>), <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>dim1_col</span> <span class='kw'>=</span> <span class='st'>"tSNE_1"</span>, <span class='kw'>dim2_col</span> <span class='kw'>=</span> <span class='st'>"tSNE_2"</span>)</pre>
+    <pre class="usage"><span class='fu'>vector_similarity</span>(<span class='no'>vec1</span>, <span class='no'>vec2</span>, <span class='no'>compute_method</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>correlation_matrix</th>
-      <td><p>input similarity matrix</p></td>
+      <th>vec1</th>
+      <td><p>test vector</p></td>
     </tr>
     <tr>
-      <th>metadata</th>
-      <td><p>input metadata with per cell tsne coordinates and cluster ids</p></td>
+      <th>vec2</th>
+      <td><p>reference vector</p></td>
     </tr>
     <tr>
-      <th>bulk_data_to_plot</th>
-      <td><p>colname of data to plot, defaults to all</p></td>
-    </tr>
-    <tr>
-      <th>cluster_col</th>
-      <td><p>colname of clustering data in metadata, defaults to rownames of the
-metadata if not supplied.</p></td>
-    </tr>
-    <tr>
-      <th>dim1_col</th>
-      <td><p>metadata column name with 1st axis dimension.
-defaults to "tSNE_1".</p></td>
-    </tr>
-    <tr>
-      <th>dim2_col</th>
-      <td><p>metadata column name with 2nd axis dimension.
-defaults to "tSNE_2".</p></td>
+      <th>compute_method</th>
+      <td><p>method to run i.e. corr_coef</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>passed to plot_tsne</p></td>
+      <td><p>arguments to pass to compute_method function</p></td>
     </tr>
     </table>
     

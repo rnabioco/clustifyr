@@ -144,9 +144,11 @@
 <pre class="preparation"><code>data("pbmc4k_meta"); data("pbmc4k_matrix"); data("pbmc_bulk_matrix"); data("pbmc4k_markers_M3Drop")
 
 # construct sc_cluster
-gene_constraints &lt;- list(rownames(pbmc4k_matrix), rownames(pbmc_bulk_matrix), pbmc4k_markers_M3Drop[,'Gene']);
-sc_expr &lt;- select_gene_subset(pbmc4k_matrix, gene_constraints);
-bulk_expr &lt;- select_gene_subset(pbmc_bulk_matrix, gene_constraints);
+gene_constraints &lt;- get_common_elements(rownames(pbmc4k_matrix), 
+                                         rownames(pbmc_bulk_matrix),
+                                         pbmc4k_markers_M3Drop[,'Gene'])
+sc_expr &lt;- pbmc4k_matrix[gene_constraints, ]
+bulk_expr &lt;- pbmc_bulk_matrix[gene_constraints, ]
 sc_tsne_coord &lt;- pbmc4k_meta[,c('tSNE_1', 'tSNE_2')];
 sc_cluster &lt;- rep(0, ncol(sc_expr));
 sc_cluster[which(pbmc4k_meta[,'classified']=="CD14+ Monocytes")] &lt;- 1; # 1 monocytes

@@ -100,7 +100,7 @@
     <div class="page-header toc-ignore">
       <h1>Introduction to clustifyR</h1>
             
-            <h4 class="date">2018-09-12</h4>
+            <h4 class="date">2018-09-13</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyR/blob/master/vignettes/clustifyR.Rmd"><code>vignettes/clustifyR.Rmd</code></a></small>
       <div class="hidden name"><code>clustifyR.Rmd</code></div>
@@ -160,8 +160,8 @@ tSNE projection of PBMCs from a health human donor
 <p>As the heatmap below shows, most cell types are accurately classified using the default correlation method (pearson) and a list of highly variable genes in the single cell dataset identified using <code>Seurat</code>’s VMR method.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># run correlation (pearson by default)</span></a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustify.html">clustify</a></span>(<span class="dt">expr_mat =</span> pbmc4k_matrix,</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">               <span class="dt">metadata =</span> pbmc4k_meta,</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">               <span class="dt">bulk_mat =</span> pbmc_bulk_matrix,</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">               <span class="dt">bulk_mat =</span> pbmc_bulk_matrix,</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">               <span class="dt">metadata =</span> pbmc4k_meta,</a>
 <a class="sourceLine" id="cb3-5" data-line-number="5">               <span class="dt">query_genes =</span> pbmc4k_vargenes,</a>
 <a class="sourceLine" id="cb3-6" data-line-number="6">               <span class="dt">cluster_col =</span> <span class="st">"classified"</span>)</a>
 <a class="sourceLine" id="cb3-7" data-line-number="7"></a>
@@ -242,17 +242,14 @@ tSNE projection of PBMCs from a health human donor
 <a href="#correlation-per-cell" class="anchor"></a>Correlation per cell</h3>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># run correlation (pearson by default)</span></a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustify.html">clustify</a></span>(<span class="dt">expr_mat =</span> pbmc4k_matrix,</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">               <span class="dt">metadata =</span> pbmc4k_meta,</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">               <span class="dt">bulk_mat =</span> pbmc_bulk_matrix,</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">               <span class="dt">query_genes =</span> pbmc4k_vargenes,</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">               <span class="dt">cell_col =</span> <span class="st">"rn"</span>,</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">               <span class="dt">per_cell =</span> T)</a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="kw"><a href="../reference/plot_cor.html">plot_cor</a></span>(res,</a>
-<a class="sourceLine" id="cb7-10" data-line-number="10">         pbmc4k_meta,</a>
-<a class="sourceLine" id="cb7-11" data-line-number="11">         <span class="kw">colnames</span>(res)[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">5</span>)],</a>
-<a class="sourceLine" id="cb7-12" data-line-number="12">         <span class="dt">cluster_col =</span> <span class="st">"rn"</span>)</a>
-<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">#&gt; [[1]]</span></a></code></pre></div>
+<a class="sourceLine" id="cb7-3" data-line-number="3">               <span class="dt">bulk_mat =</span> pbmc_bulk_matrix,</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">               <span class="dt">query_genes =</span> pbmc4k_vargenes,</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">               <span class="dt">per_cell =</span> T)</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="kw"><a href="../reference/plot_cor.html">plot_cor</a></span>(res,</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">         pbmc4k_meta,</a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">         <span class="kw">colnames</span>(res)[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">5</span>)])</a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co">#&gt; [[1]]</span></a></code></pre></div>
 <p><img src="clustifyR_files/figure-html/unnamed-chunk-4-1.png" width="1152" style="display: block; margin: auto;"></p>
 <pre><code>#&gt; 
 #&gt; [[2]]</code></pre>
@@ -264,8 +261,8 @@ tSNE projection of PBMCs from a health human donor
 <p>In addition to automatically generating a correlation matrix, <code>clustifyR</code> can calculate correlation p-values using permutation with the <code><a href="../reference/clustify.html">clustify()</a></code> function. As with raw correlation coefficients, plotting a heatmap of -log(p-values) demonstrates that the most significant correlations are between corresponding bulk and single cell clusters.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># re-run clustify with =num_permute=1000 and return_full = TRUE</span></a>
 <a class="sourceLine" id="cb9-2" data-line-number="2">res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustify.html">clustify</a></span>(pbmc4k_matrix,</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">               pbmc4k_meta,</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">               pbmc_bulk_matrix,</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">               pbmc_bulk_matrix,</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">               pbmc4k_meta,</a>
 <a class="sourceLine" id="cb9-5" data-line-number="5">               pbmc4k_vargenes,</a>
 <a class="sourceLine" id="cb9-6" data-line-number="6">               <span class="dt">num_perm =</span> <span class="dv">1000</span>,</a>
 <a class="sourceLine" id="cb9-7" data-line-number="7">               <span class="dt">cluster_col =</span> <span class="st">"classified"</span>,</a>

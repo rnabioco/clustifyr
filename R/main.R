@@ -45,7 +45,7 @@ clustify.default <- function(expr_mat,
   }
 
   # select gene subsets
-  gene_constraints <- get_commmon_elements(rownames(expr_mat),
+  gene_constraints <- get_common_elements(rownames(expr_mat),
                                            rownames(bulk_mat),
                                            query_genes)
   expr_mat <- expr_mat[gene_constraints, ]
