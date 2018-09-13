@@ -2,36 +2,44 @@
 % Please edit documentation in R/main.R
 \name{clustify}
 \alias{clustify}
+\alias{clustify.default}
+\alias{clustify.seurat}
 \title{Main function to compare scRNA-seq data to bulk RNA-seq data.}
 \usage{
-clustify(expr_mat, metadata, bulk_mat, query_genes, cluster_col = NULL,
-  cell_col = NULL, per_cell = F, num_perm = 0, return_full = F,
-  compute_method = "spearman", ...)
+clustify(expr_mat, bulk_mat, metadata, query_genes = NULL,
+  cluster_col = NULL, per_cell = FALSE, num_perm = 0,
+  compute_method = "spearman", use_var_genes = FALSE, ...)
+
+\method{clustify}{default}(expr_mat, bulk_mat, metadata = NULL,
+  query_genes = NULL, cluster_col = NULL, per_cell = FALSE,
+  num_perm = 0, compute_method = "spearman", ...)
+
+\method{clustify}{seurat}(seurat_object, bulk_mat, query_genes = NULL,
+  per_cell = FALSE, num_perm = 0, cluster_col = NULL,
+  compute_method = "pearson", use_var_genes = FALSE)
 }
 \arguments{
-\item{expr_mat}{single-cell expression matrix}
-
-\item{metadata}{clustering info of single-cell data}
+\item{expr_mat}{single-cell expression matrix or Seurat object}
 
 \item{bulk_mat}{bulk expression matrix}
 
-\item{query_genes}{A vector of genes of interest.}
+\item{metadata}{cell cluster assignments, supplied as a vector or data.frame. If
+data.frame is supplied then \code{cluster_col} and/or \code{cell_col} need to be set. Not required if running correlation per cell.}
+
+\item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
+the expr_mat and bulk_mat will be used for comparision.}
 
 \item{cluster_col}{column in metadata that contains cluster ids per cell. Will default to first
 column of metadata if not supplied. Not required if running correlation per cell.}
-
-\item{cell_col}{column in metadata that contains the cell ids that match to columns
-in the single-cell expression matrix. Will default to rownames of the metadata data.frame
-if not supplied. Not required if running correlation per cluster.}
 
 \item{per_cell}{if true run per cell, otherwise per cluster.}
 
 \item{num_perm}{number of permutations, set to 0 by default}
 
-\item{return_full}{Return full results includeing scores instead
-of correlation coefficient only.}
-
 \item{compute_method}{method(s) for computing similarity scores}
+
+\item{use_var_genes}{if providing a seurat object, use the variable genes
+(stored in seurat_object@var.genes) as the query_genes.}
 
 \item{...}{additional arguments to pass to compute_method function}
 }
