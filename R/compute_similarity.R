@@ -1,29 +1,4 @@
 
-#' Pick and sort genes
-#'
-#'
-#' @description Data set from different sources may contain different gene sets.
-#' In order to establish a fair comparison, we select a subset of genes
-#'  shared by both datasets.
-#' This function can be also used to extract data for genes of interest,
-#' such as highly variable genes.
-#' Possible examples of candidate lists include row names of expression matrix
-#' and a list of highly variable genes.
-#'
-#'
-#' @param bin_mat Expression matrix with row names as the gene names. Use short
-#'  name for now
-#' @param gene_constraints A list of vectors, where each vector is a candidate
-#' list of selected genes.
-#' @export
-select_gene_subset <- function(bin_mat, gene_constraints) {
-  gene_subset <- gene_constraints[[1]]
-  for (i in 2:length(gene_constraints)) {
-    gene_subset <- intersect(gene_subset, gene_constraints[[i]])
-  }
-  return(bin_mat[sort(gene_subset), ])
-}
-
 #' Compute similarity between two vectors
 #'
 #' @description Compute the similarity score between two vectors using a
@@ -39,7 +14,7 @@ select_gene_subset <- function(bin_mat, gene_constraints) {
 #' @param compute_method method to run i.e. corr_coef
 #' @param ... arguments to pass to compute_method function
 #' @export
-compute_similarity <- function(vec1, vec2, compute_method, ...) {
+vector_similarity <- function(vec1, vec2, compute_method, ...) {
   # examine whether two vectors are of the same size
   if (!is.numeric(vec1) || !is.numeric(vec2) || length(vec1) != length(vec2)) {
     stop("compute_similarity: two input vectors are not numeric or of different sizes.")

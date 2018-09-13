@@ -44,15 +44,15 @@ library(clustifyR)
 
 res <- clustify(
   expr_mat = pbmc4k_matrix,
-  metadata = pbmc4k_meta,
+  metadata = pbmc4k_meta$cluster,
   bulk_mat = pbmc_bulk_matrix,
-  query_genes = pbmc4k_vargenes, 
-  cluster_col = "cluster"
+  query_genes = pbmc4k_vargenes
 )
 
 plot_cor(
   res,
   pbmc4k_meta,
-  colnames(res)[c(1, 5)]
+  colnames(res)[c(1, 5)],
+  cluster_col = "cluster"
 )
 ```
