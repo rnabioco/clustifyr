@@ -6,14 +6,18 @@
 #' @param feature feature to color by
 #' @param legend_name legend name to display, defaults to no name
 #' @param cols character vector of colors to built color gradient
-#' for continuous values. defaults to [`clustifyR::pretty_palette()`]
+#' for continuous values. defaults to [`clustifyR::pretty_palette`]
 #' @param pt_size point size
+#' @param scale_limits defaults to min = 0, max = max(data$x),
+#' otherwise a two-element numeric vector indicating min and max to plot
 #' @export
 plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
                       feature,
                       legend_name = "",
                       cols = pretty_palette,
-                      pt_size = 0.25) {
+                      pt_size = 0.25,
+                      scale_limits = NULL) {
+
   p <- ggplot(data, aes_string(x, y)) +
     geom_point(aes_string(color = feature),
       size = pt_size
@@ -28,7 +32,12 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
       name = legend_name
     )
   } else {
-    scale_limits <- c(0, max(data[[feature]]))
+    if (is.null(scale_limits)){
+      scale_limits <- c(ifelse(min(data[[feature]]) < 0,
+                             min(data[[feature]]),
+                             0),
+                      max(data[[feature]]))
+    }
     p <- p + scale_color_gradientn(
       colors = cols,
       name = legend_name,
@@ -54,6 +63,9 @@ pretty_palette <- rev(RColorBrewer::brewer.pal(11, "RdGy")[c(1:5, 7)])
 #' defaults to "tSNE_1".
 #' @param dim2_col metadata column name with 2nd axis dimension.
 #' defaults to "tSNE_2".
+#' @param scale_legends if TRUE scale all legends to maximum values in entire
+#' correlation matrix. if FALSE scale legends to maximum for each plot. A
+#' two-element numeric vector can also be passed to supply custom values i.e. c(0, 1)
 #' @param ... passed to plot_tsne
 #'
 #' @export
@@ -62,7 +74,8 @@ plot_cor <- function(correlation_matrix,
                      bulk_data_to_plot = colnames(correlation_matrix),
                      cluster_col = NULL,
                      dim1_col = "tSNE_1",
-                     dim2_col = "tSNE_2") {
+                     dim2_col = "tSNE_2",
+                     scale_legends = FALSE) {
   if (!any(bulk_data_to_plot %in% colnames(correlation_matrix))) {
     stop("cluster ids not shared between metadata and correlation matrix")
   }
@@ -94,20 +107,32 @@ plot_cor <- function(correlation_matrix,
     )
   }
 
-  lapply(
-    bulk_data_to_plot,
-    function(x) {
+  # determine scaling method, either same for all plots, or per plot (default)
+  if (typeof(scale_legends) == "logical" && scale_legends){
+    scale_limits <- c(ifelse(min(plt_data$expr) < 0,
+                               min(plt_data$expr),
+                               0),
+                        max(max(plt_data$expr)))
+  } else if (typeof(scale_legends) == "logical" && !scale_legends){
+    scale_limits = NULL
+  } else {
+    scale_limits = scale_legends
+  }
+
+  plts <- vector("list", length(bulk_data_to_plot))
+  for(i in seq_along(bulk_data_to_plot)){
       tmp_data <- dplyr::filter(
         plt_data,
-        bulk_cluster == x
+        bulk_cluster == bulk_data_to_plot[i]
       )
-      plot_tsne(tmp_data,
-                x = dim1_col,
-                y = dim2_col,
-                feature = "expr",
-                legend_name = x)
-    }
-  )
+      plts[[i]] <- plot_tsne(tmp_data,
+                             x = dim1_col,
+                             y = dim2_col,
+                             feature = "expr",
+                             legend_name = bulk_data_to_plot[i],
+                             scale_limits = scale_limits)
+  }
+  plts
 }
 
 #' Plot called clusters on a tSNE

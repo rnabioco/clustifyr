@@ -48,8 +48,9 @@ clustify.default <- function(expr_mat,
   gene_constraints <- get_common_elements(rownames(expr_mat),
                                            rownames(bulk_mat),
                                            query_genes)
-  expr_mat <- expr_mat[gene_constraints, ]
-  bulk_mat <- bulk_mat[gene_constraints, ]
+
+  expr_mat <- expr_mat[gene_constraints, , drop = FALSE]
+  bulk_mat <- bulk_mat[gene_constraints, , drop = FALSE]
 
   if(is.null(metadata) & !per_cell) {
     stop("metadata needed for per cluster analysis")
