@@ -6,7 +6,7 @@
 \usage{
 plot_cor(correlation_matrix, metadata,
   bulk_data_to_plot = colnames(correlation_matrix), cluster_col = NULL,
-  dim1_col = "tSNE_1", dim2_col = "tSNE_2")
+  dim1_col = "tSNE_1", dim2_col = "tSNE_2", scale_legends = FALSE)
 }
 \arguments{
 \item{correlation_matrix}{input similarity matrix}
@@ -23,6 +23,10 @@ defaults to "tSNE_1".}
 
 \item{dim2_col}{metadata column name with 2nd axis dimension.
 defaults to "tSNE_2".}
+
+\item{scale_legends}{if TRUE scale all legends to maximum values in entire
+correlation matrix. if FALSE scale legends to maximum for each plot. A
+two-element numeric vector can also be passed to supply custom values i.e. c(0, 1)}
 
 \item{...}{passed to plot_tsne}
 }
