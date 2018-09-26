@@ -2,7 +2,7 @@
 #'
 #' @param expr_mat single-cell expression matrix or Seurat object
 #' @param metadata cell cluster assignments, supplied as a vector or data.frame. If
-#' data.frame is supplied then `cluster_col` and/or `cell_col` need to be set. Not required if running correlation per cell.
+#' data.frame is supplied then `cluster_col` needs to be set. Not required if running correlation per cell.
 #' @param bulk_mat bulk expression matrix
 #' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
 #' the expr_mat and bulk_mat will be used for comparision.

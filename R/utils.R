@@ -1,21 +1,26 @@
 #' Average expression values per cluster
 #'
 #' @param mat expression matrix
-#' @param cluster_info data.frame with cells
+#' @param cluster_info data.frame or vector containing cluster assignments per cell.
+#' Order must match column order in supplied matrix. If a data.frame
+#' provide the cluster_col parameters.
 #' @param log_scale input data is natural log,
 #' averaging will be done on unlogged data
-#' @param cell_col column in cluster_info with cell ids
 #' @param cluster_col column in cluster_info with cluster number
 #'
 #' @export
 average_clusters <- function(mat, cluster_info,
                              log_scale = T,
-                             cell_col = "rn",
                              cluster_col = "cluster") {
-  cluster_ids <- split(
-    cluster_info[[cell_col]],
-    cluster_info[[cluster_col]]
-  )
+
+  if(is.vector(cluster_info)){
+    cluster_ids <- split(colnames(mat), cluster_info)
+  } else if (is.data.frame(cluster_info) & !is.null(cluster_col)){
+    cluster_ids <- split(colnames(mat), cluster_info[[cluster_col]])
+  } else {
+    stop("cluster_info not formatted correctly,
+         supply either a  vector or a dataframe")
+  }
 
   out <- lapply(
     cluster_ids,
@@ -42,13 +47,11 @@ average_clusters <- function(mat, cluster_info,
 #'
 #' @param mat expression matrix
 #' @param cluster_info data.frame with cells
-#' @param cell_col column in cluster_info with cell ids
 #' @param cluster_col column in cluster_info with cluster number
 #' @param cut_num binary cutoff for detection
 #'
 #' @export
 percent_clusters <- function(mat, cluster_info,
-                             cell_col = "rn",
                              cluster_col = "cluster",
                              cut_num = 0.5) {
   mat[mat >= cut_num] <- 1
@@ -56,7 +59,6 @@ percent_clusters <- function(mat, cluster_info,
 
   average_clusters(mat, cluster_info,
     log_scale = F,
-    cell_col = cell_col,
     cluster_col = cluster_col
   )
 }

@@ -30,7 +30,8 @@ Imports:
     dplyr,
     tidyr,
     scales,
-    RColorBrewer
+    RColorBrewer,
+    fgsea
 Suggests:
     testthat,
     knitr,
@@ -40,5 +41,6 @@ Suggests:
 VignetteBuilder: knitr
 RoxygenNote: 6.1.0
 biocViews:
+    fgsea,
     recount,
     ComplexHeatmap

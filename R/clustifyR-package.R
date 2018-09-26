@@ -14,5 +14,6 @@
 #' @import dplyr
 #' @importFrom tidyr gather
 #' @importFrom cowplot theme_cowplot
+#' @importFrom fgsea fgsea
 #' @import RColorBrewer
 "_PACKAGE"
