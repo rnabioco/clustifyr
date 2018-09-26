@@ -24,7 +24,7 @@ clustify(expr_mat, bulk_mat, metadata, query_genes = NULL,
 \item{bulk_mat}{bulk expression matrix}
 
 \item{metadata}{cell cluster assignments, supplied as a vector or data.frame. If
-data.frame is supplied then \code{cluster_col} and/or \code{cell_col} need to be set. Not required if running correlation per cell.}
+data.frame is supplied then \code{cluster_col} needs to be set. Not required if running correlation per cell.}
 
 \item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
 the expr_mat and bulk_mat will be used for comparision.}

@@ -4,15 +4,13 @@
 \alias{percent_clusters}
 \title{Percentage detected per cluster}
 \usage{
-percent_clusters(mat, cluster_info, cell_col = "rn",
-  cluster_col = "cluster", cut_num = 0.5)
+percent_clusters(mat, cluster_info, cluster_col = "cluster",
+  cut_num = 0.5)
 }
 \arguments{
 \item{mat}{expression matrix}
 
 \item{cluster_info}{data.frame with cells}
-
-\item{cell_col}{column in cluster_info with cell ids}
 
 \item{cluster_col}{column in cluster_info with cluster number}
 

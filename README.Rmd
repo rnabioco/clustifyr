@@ -32,9 +32,9 @@ devtools::install_github("rnabioco/clustifyR")
 
 In this example we use the following input data:
 
-- a correlation matrix from single cell RNA-seq data (`pbmc4k_matrix`)
-- a metadata table (`pbmc4k_meta`)
-- a list of variable genes (`pbmc4k_vargenes`)-
+- an expression matrix of single cell RNA-seq data (`pbmc4k_matrix`)
+- a metadata data.frame (`pbmc4k_meta`)
+- a vector of variable genes (`pbmc4k_vargenes`)-
 - a matrix of bulk RNA-seq read counts (`pbmc_bulk_matrix`):
 
 We then calculate correlation coefficients and plot them on a pre-calculated tSNE projection (stored in `pbmc4k_meta`).
