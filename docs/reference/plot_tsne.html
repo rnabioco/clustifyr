@@ -144,7 +144,8 @@
     </div>
 
     <pre class="usage"><span class='fu'>plot_tsne</span>(<span class='no'>data</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"tSNE_1"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"tSNE_2"</span>, <span class='no'>feature</span>,
-  <span class='kw'>legend_name</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>cols</span> <span class='kw'>=</span> <span class='no'>pretty_palette</span>, <span class='kw'>pt_size</span> <span class='kw'>=</span> <span class='fl'>0.25</span>)</pre>
+  <span class='kw'>legend_name</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>c_cols</span> <span class='kw'>=</span> <span class='no'>pretty_palette</span>, <span class='kw'>d_cols</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>pt_size</span> <span class='kw'>=</span> <span class='fl'>0.25</span>, <span class='kw'>scale_limits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -170,13 +171,23 @@
       <td><p>legend name to display, defaults to no name</p></td>
     </tr>
     <tr>
-      <th>cols</th>
+      <th>c_cols</th>
       <td><p>character vector of colors to built color gradient
-for continuous values. defaults to <code><a href='pretty_palette.html'>clustifyR::pretty_palette()</a></code></p></td>
+for continuous values. defaults to <code><a href='pretty_palette.html'>clustifyR::pretty_palette</a></code></p></td>
+    </tr>
+    <tr>
+      <th>d_cols</th>
+      <td><p>character vector of colors for discrete values.
+defaults to RColorBrewer paired palette</p></td>
     </tr>
     <tr>
       <th>pt_size</th>
       <td><p>point size</p></td>
+    </tr>
+    <tr>
+      <th>scale_limits</th>
+      <td><p>defaults to min = 0, max = max(data$x),
+otherwise a two-element numeric vector indicating min and max to plot</p></td>
     </tr>
     </table>
     

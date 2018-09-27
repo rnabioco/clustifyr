@@ -88,6 +88,9 @@
     <loc>http://rnabioco.github.io/clustifyR/reference/plot_cor.html</loc>
   </url>
   <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/plot_gene.html</loc>
+  </url>
+  <url>
     <loc>http://rnabioco.github.io/clustifyR/reference/plot_tsne.html</loc>
   </url>
   <url>
@@ -98,6 +101,9 @@
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyR/reference/refine_clusters.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/run_gsea.html</loc>
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyR/reference/use_seurat_comp.html</loc>

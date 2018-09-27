@@ -143,9 +143,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>clustify</span>(<span class='no'>expr_mat</span>, <span class='no'>bulk_mat</span>, <span class='no'>metadata</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>use_var_genes</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>clustify</span>(<span class='no'>expr_mat</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>clustify</span>(<span class='no'>expr_mat</span>, <span class='no'>bulk_mat</span>, <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -153,9 +151,9 @@
   <span class='kw'>num_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for seurat</span>
-<span class='fu'>clustify</span>(<span class='no'>seurat_object</span>, <span class='no'>bulk_mat</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+<span class='fu'>clustify</span>(<span class='no'>expr_mat</span>, <span class='no'>bulk_mat</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"pearson"</span>, <span class='kw'>use_var_genes</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"pearson"</span>, <span class='kw'>use_var_genes</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -165,13 +163,17 @@
       <td><p>single-cell expression matrix or Seurat object</p></td>
     </tr>
     <tr>
+      <th>...</th>
+      <td><p>additional arguments to pass to compute_method function</p></td>
+    </tr>
+    <tr>
       <th>bulk_mat</th>
       <td><p>bulk expression matrix</p></td>
     </tr>
     <tr>
       <th>metadata</th>
       <td><p>cell cluster assignments, supplied as a vector or data.frame. If
-data.frame is supplied then <code>cluster_col</code> and/or <code>cell_col</code> need to be set. Not required if running correlation per cell.</p></td>
+data.frame is supplied then <code>cluster_col</code> needs to be set. Not required if running correlation per cell.</p></td>
     </tr>
     <tr>
       <th>query_genes</th>
@@ -199,10 +201,6 @@ column of metadata if not supplied. Not required if running correlation per cell
       <th>use_var_genes</th>
       <td><p>if providing a seurat object, use the variable genes
 (stored in seurat_object@var.genes) as the query_genes.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>additional arguments to pass to compute_method function</p></td>
     </tr>
     </table>
     

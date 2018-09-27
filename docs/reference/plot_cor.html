@@ -145,7 +145,8 @@
 
     <pre class="usage"><span class='fu'>plot_cor</span>(<span class='no'>correlation_matrix</span>, <span class='no'>metadata</span>,
   <span class='kw'>bulk_data_to_plot</span> <span class='kw'>=</span> <span class='fu'>colnames</span>(<span class='no'>correlation_matrix</span>), <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>dim1_col</span> <span class='kw'>=</span> <span class='st'>"tSNE_1"</span>, <span class='kw'>dim2_col</span> <span class='kw'>=</span> <span class='st'>"tSNE_2"</span>)</pre>
+  <span class='kw'>dim1_col</span> <span class='kw'>=</span> <span class='st'>"tSNE_1"</span>, <span class='kw'>dim2_col</span> <span class='kw'>=</span> <span class='st'>"tSNE_2"</span>, <span class='kw'>scale_legends</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -176,6 +177,12 @@ defaults to "tSNE_1".</p></td>
       <th>dim2_col</th>
       <td><p>metadata column name with 2nd axis dimension.
 defaults to "tSNE_2".</p></td>
+    </tr>
+    <tr>
+      <th>scale_legends</th>
+      <td><p>if TRUE scale all legends to maximum values in entire
+correlation matrix. if FALSE scale legends to maximum for each plot. A
+two-element numeric vector can also be passed to supply custom values i.e. c(0, 1)</p></td>
     </tr>
     <tr>
       <th>...</th>
