@@ -19,7 +19,7 @@ run_gsea <- function(expr_mat, query_genes, cluster_ids = NULL,
     geneset_list <- query_genes
   }
 
-  if(ncol(expr_mat) != length(cluster_ids)){
+  if(!per_cell & (ncol(expr_mat) != length(cluster_ids))){
     stop("cluster_ids do not match number of cells (columns) in expr_mat ")
   }
 
