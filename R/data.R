@@ -6,8 +6,8 @@
 #'
 #' \describe{
 #' }
-#'
-#' @source [google.com]
+#'R
+#' @source (https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc4k)
 "pbmc4k_matrix"
 
 #' Matrix of average gene expression per cluster from single-cell RNA-seq PBMCs.
@@ -19,7 +19,7 @@
 #' \describe{
 #' }
 #'
-#' @source [google.com]
+#' @source `[pbmc4k_matrix]` averaged per cluster
 "pbmc4k_avg"
 
 #' Meta-data for single-cell RNA-seq PBMCs.
@@ -30,7 +30,7 @@
 #' \describe{
 #' }
 #'
-#' @source [google.com]
+#' @source `[pbmc4k_matrix]` processed by `[seurat]`
 "pbmc4k_meta"
 
 #' Marker genes identified by Seurat from single-cell RNA-seq PBMCs.
@@ -41,7 +41,7 @@
 #' \describe{
 #' }
 #'
-#' @source [google.com]
+#' @source `[pbmc4k_matrix]` processed by `[seurat]`
 "pbmc4k_markers"
 
 #' Marker genes identified by M3Drop from single-cell RNA-seq PBMCs.
@@ -52,7 +52,7 @@
 #' \describe{
 #' }
 #'
-#' @source [google.com]
+#' @source `[pbmc4k_matrix]` processed by `[M3Drop]`
 "pbmc4k_markers_M3Drop"
 
 #' variable genes identified by Seurat from single-cell RNA-seq PBMCs.
@@ -63,7 +63,7 @@
 #' \describe{
 #' }
 #'
-#' @source [google.com]
+#' @source `[pbmc4k_matrix]` processed by `[seurat]`
 "pbmc4k_vargenes"
 
 #' Matrix of single-cell RNA-seq PBMCs from 5'end kit.
@@ -74,7 +74,7 @@
 #' \describe{
 #' }
 #'
-#' @source [google.com]
+#' @source (https://support.10xgenomics.com/single-cell-vdj/datasets/2.2.0/vdj_v1_hs_pbmc_5gex)
 "pbmc5_matrix"
 
 #' Meta-data for single-cell RNA-seq PBMCs from 5'end kit.
@@ -85,7 +85,7 @@
 #' \describe{
 #' }
 #'
-#' @source [google.com]
+#' @source `[pbmc5_matrix]` processed by `[seurat]`
 "pbmc5_meta"
 
 #' Marker genes identified by Seurat from single-cell RNA-seq PBMCs from 5'end kit.
@@ -96,7 +96,7 @@
 #' \describe{
 #' }
 #'
-#' @source [google.com]
+#' @source `[pbmc5_matrix]` processed by `[seurat]`
 "pbmc5_markers"
 
 #' Bulk RNA-Seq data from sorted populations isolated from PBMCs.
@@ -106,14 +106,14 @@
 #' \describe{
 #' }
 #'
-#' @source ["SRP051688"]
+#' @source (http://duffel.rail.bio/recount/v2/SRP051688/rse_gene.Rdata)
 "pbmc_bulk_matrix"
 
-#' Principal components analysis of XXX
+#' Variable genes defined by Principal components analysis of pbmc4k data
 #'
 #' @format XXX
 #' \describe{
 #' }
 #'
-#' @source [google.com]
+#' @source  `[pbmc4k_matrix]` processed by `[seurat]`
 "pbmc_pca"

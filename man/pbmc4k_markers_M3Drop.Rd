@@ -8,7 +8,7 @@
 \describe{
 }}
 \source{
-\link{google.com}
+\code{[pbmc4k_matrix]} processed by \code{[M3Drop]}
 }
 \usage{
 pbmc4k_markers_M3Drop

@@ -8,7 +8,7 @@
 \describe{
 }}
 \source{
-\link{"SRP051688"}
+(http://duffel.rail.bio/recount/v2/SRP051688/rse_gene.Rdata)
 }
 \usage{
 pbmc_bulk_matrix
