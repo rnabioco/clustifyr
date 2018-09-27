@@ -8,7 +8,7 @@
 \describe{
 }}
 \source{
-\link{google.com}
+\code{[pbmc4k_matrix]} processed by \code{[seurat]}
 }
 \usage{
 pbmc4k_vargenes

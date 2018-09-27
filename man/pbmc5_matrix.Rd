@@ -8,7 +8,7 @@
 \describe{
 }}
 \source{
-\link{google.com}
+(https://support.10xgenomics.com/single-cell-vdj/datasets/2.2.0/vdj_v1_hs_pbmc_5gex)
 }
 \usage{
 pbmc5_matrix

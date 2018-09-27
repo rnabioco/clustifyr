@@ -9,7 +9,7 @@
 \describe{
 }}
 \source{
-\link{google.com}
+\code{[pbmc4k_matrix]} averaged per cluster
 }
 \usage{
 pbmc4k_avg

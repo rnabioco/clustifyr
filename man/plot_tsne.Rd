@@ -5,8 +5,8 @@
 \title{Plot a tSNE colored by feature.}
 \usage{
 plot_tsne(data, x = "tSNE_1", y = "tSNE_2", feature,
-  legend_name = "", cols = pretty_palette, pt_size = 0.25,
-  scale_limits = NULL)
+  legend_name = "", c_cols = pretty_palette, d_cols = NULL,
+  pt_size = 0.25, scale_limits = NULL)
 }
 \arguments{
 \item{data}{input data}
@@ -19,8 +19,11 @@ plot_tsne(data, x = "tSNE_1", y = "tSNE_2", feature,
 
 \item{legend_name}{legend name to display, defaults to no name}
 
-\item{cols}{character vector of colors to built color gradient
+\item{c_cols}{character vector of colors to built color gradient
 for continuous values. defaults to \code{\link[clustifyR:pretty_palette]{clustifyR::pretty_palette}}}
+
+\item{d_cols}{character vector of colors for discrete values.
+defaults to RColorBrewer paired palette}
 
 \item{pt_size}{point size}
 

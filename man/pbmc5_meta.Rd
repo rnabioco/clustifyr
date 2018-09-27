@@ -8,7 +8,7 @@
 \describe{
 }}
 \source{
-\link{google.com}
+\code{[pbmc5_matrix]} processed by \code{[seurat]}
 }
 \usage{
 pbmc5_meta
