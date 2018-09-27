@@ -6,7 +6,8 @@
 \usage{
 plot_cor(correlation_matrix, metadata,
   bulk_data_to_plot = colnames(correlation_matrix), cluster_col = NULL,
-  dim1_col = "tSNE_1", dim2_col = "tSNE_2", scale_legends = FALSE)
+  dim1_col = "tSNE_1", dim2_col = "tSNE_2", scale_legends = FALSE,
+  ...)
 }
 \arguments{
 \item{correlation_matrix}{input similarity matrix}

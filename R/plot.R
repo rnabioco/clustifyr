@@ -5,8 +5,10 @@
 #' @param y y variable
 #' @param feature feature to color by
 #' @param legend_name legend name to display, defaults to no name
-#' @param cols character vector of colors to built color gradient
+#' @param c_cols character vector of colors to built color gradient
 #' for continuous values. defaults to [`clustifyR::pretty_palette`]
+#' @param d_cols character vector of colors for discrete values.
+#' defaults to RColorBrewer paired palette
 #' @param pt_size point size
 #' @param scale_limits defaults to min = 0, max = max(data$x),
 #' otherwise a two-element numeric vector indicating min and max to plot
@@ -14,12 +16,16 @@
 plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
                       feature,
                       legend_name = "",
-                      cols = pretty_palette,
+                      c_cols = pretty_palette,
+                      d_cols = NULL,
                       pt_size = 0.25,
                       scale_limits = NULL) {
 
+  # sort data to avoid plotting null values over colors
+  data <- arrange(data, !!sym(feature))
+
   p <- ggplot(data, aes_string(x, y)) +
-    geom_point(aes_string(color = feature),
+    geom_point(aes_string(color = paste0("`", feature,"`")), # backticks protect special character gene names
       size = pt_size
     )
 
@@ -27,11 +33,20 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
     "character",
     "logical"
   ) | is.factor(data[[feature]])) {
-    p <- p + scale_color_brewer(
-      palette = "Paired",
-      name = legend_name
-    )
+    if(!is.null(d_cols)) {
+      # use colors provided
+      p <- p + scale_color_manual(
+        values = d_cols,
+        name = legend_name
+      )
+    } else {
+      p <- p + scale_color_brewer(
+        palette = "Paired",
+        name = legend_name
+      )
+    }
   } else {
+    # continuous values
     if (is.null(scale_limits)){
       scale_limits <- c(ifelse(min(data[[feature]]) < 0,
                              min(data[[feature]]),
@@ -39,7 +54,7 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
                       max(data[[feature]]))
     }
     p <- p + scale_color_gradientn(
-      colors = cols,
+      colors = c_cols,
       name = legend_name,
       limits = scale_limits
     )
@@ -75,7 +90,8 @@ plot_cor <- function(correlation_matrix,
                      cluster_col = NULL,
                      dim1_col = "tSNE_1",
                      dim2_col = "tSNE_2",
-                     scale_legends = FALSE) {
+                     scale_legends = FALSE,
+                     ...) {
   if (!any(bulk_data_to_plot %in% colnames(correlation_matrix))) {
     stop("cluster ids not shared between metadata and correlation matrix")
   }
@@ -130,9 +146,63 @@ plot_cor <- function(correlation_matrix,
                              y = dim2_col,
                              feature = "expr",
                              legend_name = bulk_data_to_plot[i],
-                             scale_limits = scale_limits)
+                             scale_limits = scale_limits,
+                             ...)
   }
   plts
+}
+
+#' Plot gene expression on to tSNE
+#'
+#'
+#' @param expr_mat input single cell matrix
+#' @param metadata data.frame with tSNE coordinates
+#' @param genes gene(s) to color tSNE
+#' @param cell_col column name in metadata containing cell ids, defaults
+#' to rownames if not supplied
+#' @param ... additional arguments passed to `[clustifyR::plot_tsne()]`
+#' @export
+plot_gene <- function(expr_mat,
+                      metadata,
+                      genes,
+                      cell_col = NULL,
+                      ...) {
+
+  genes_to_plot <- genes[genes %in% rownames(expr_mat)]
+  genes_missing <- setdiff(genes_to_plot, genes)
+
+  if (length(genes_missing) != 0) {
+    warning(paste0("the following genes were not present in the input matrix ",
+            paste(genes_missing, collapse = ",")))
+  }
+
+  if (length(genes_to_plot) == 0) {
+    stop("no genes present to plot")
+  }
+  expr_dat <- t(as.matrix(expr_mat[genes_to_plot, ]))
+  expr_dat <- tibble::rownames_to_column(as.data.frame(expr_dat), "cell")
+
+  if(is.null(cell_col)){
+    mdata <- tibble::rownames_to_column(metadata, "cell")
+    cell_col <- "cell"
+  } else {
+    mdata <- metadata
+  }
+
+  if(!cell_col %in% colnames(mdata)) {
+    stop("please supply a cell_col that is present in metadata")
+  }
+
+  plt_dat <- left_join(expr_dat, metadata,
+                       by = c("cell" = cell_col))
+
+  lapply(genes,
+         function(gene){
+           plot_tsne(plt_dat,
+                     feature = gene,
+                     legend_name = gene,
+                     ...)
+         })
 }
 
 #' Plot called clusters on a tSNE
