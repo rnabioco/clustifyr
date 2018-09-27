@@ -6,20 +6,20 @@
 \alias{clustify.seurat}
 \title{Main function to compare scRNA-seq data to bulk RNA-seq data.}
 \usage{
-clustify(expr_mat, bulk_mat, metadata, query_genes = NULL,
-  cluster_col = NULL, per_cell = FALSE, num_perm = 0,
-  compute_method = "spearman", use_var_genes = FALSE, ...)
+clustify(expr_mat, ...)
 
 \method{clustify}{default}(expr_mat, bulk_mat, metadata = NULL,
   query_genes = NULL, cluster_col = NULL, per_cell = FALSE,
   num_perm = 0, compute_method = "spearman", ...)
 
-\method{clustify}{seurat}(seurat_object, bulk_mat, query_genes = NULL,
+\method{clustify}{seurat}(expr_mat, bulk_mat, query_genes = NULL,
   per_cell = FALSE, num_perm = 0, cluster_col = NULL,
-  compute_method = "pearson", use_var_genes = FALSE)
+  compute_method = "pearson", use_var_genes = FALSE, ...)
 }
 \arguments{
 \item{expr_mat}{single-cell expression matrix or Seurat object}
+
+\item{...}{additional arguments to pass to compute_method function}
 
 \item{bulk_mat}{bulk expression matrix}
 
@@ -40,8 +40,6 @@ column of metadata if not supplied. Not required if running correlation per cell
 
 \item{use_var_genes}{if providing a seurat object, use the variable genes
 (stored in seurat_object@var.genes) as the query_genes.}
-
-\item{...}{additional arguments to pass to compute_method function}
 }
 \description{
 Main function to compare scRNA-seq data to bulk RNA-seq data.
