@@ -3,17 +3,17 @@
 \docType{data}
 \name{pbmc_pca}
 \alias{pbmc_pca}
-\title{Principal components analysis of XXX}
+\title{Variable genes defined by Principal components analysis of pbmc4k data}
 \format{XXX
 \describe{
 }}
 \source{
-\link{google.com}
+\code{[pbmc4k_matrix]} processed by \code{[seurat]}
 }
 \usage{
 pbmc_pca
 }
 \description{
-Principal components analysis of XXX
+Variable genes defined by Principal components analysis of pbmc4k data
 }
 \keyword{datasets}

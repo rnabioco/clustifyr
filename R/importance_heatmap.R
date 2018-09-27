@@ -8,13 +8,15 @@
 #' @param MDG_thresh MeanDecreaseGini threshold
 #'
 #' @export
-importance_heatmap <- function(importance, avg_matrix, meta, MDA_thresh, MDG_thresh) {
+importance_heatmap <- function(importance, avg_matrix, meta,
+                               MDA_thresh, MDG_thresh) {
 
   # Index contains cluster numbers and classified cell types
   index <- unique(meta[(ncol(meta) - 1):ncol(meta)])
 
   # A list of genes that are most predictive of cell types
-  gene_list <- rownames(important[(important$MeanDecreaseAccuracy >= MDA_thresh & important$MeanDecreaseGini >= MDG_thresh), ])
+  gene_list <- rownames(important[(important$MeanDecreaseAccuracy >= MDA_thresh &
+                                     important$MeanDecreaseGini >= MDG_thresh), ])
 
   # Reduce the average expression matrix
   avg_matrix <- avg_matrix[rownames(avg_matrix) %in% gene_list, ]

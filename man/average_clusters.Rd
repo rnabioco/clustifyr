@@ -4,18 +4,18 @@
 \alias{average_clusters}
 \title{Average expression values per cluster}
 \usage{
-average_clusters(mat, cluster_info, log_scale = T, cell_col = "rn",
+average_clusters(mat, cluster_info, log_scale = T,
   cluster_col = "cluster")
 }
 \arguments{
 \item{mat}{expression matrix}
 
-\item{cluster_info}{data.frame with cells}
+\item{cluster_info}{data.frame or vector containing cluster assignments per cell.
+Order must match column order in supplied matrix. If a data.frame
+provide the cluster_col parameters.}
 
 \item{log_scale}{input data is natural log,
 averaging will be done on unlogged data}
-
-\item{cell_col}{column in cluster_info with cell ids}
 
 \item{cluster_col}{column in cluster_info with cluster number}
 }

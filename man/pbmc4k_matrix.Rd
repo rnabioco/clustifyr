@@ -7,9 +7,10 @@
 \format{A sparseMatrix with genes as rows and cells as columns.
 
 \describe{
-}}
+}
+R}
 \source{
-\link{google.com}
+(https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc4k)
 }
 \usage{
 pbmc4k_matrix

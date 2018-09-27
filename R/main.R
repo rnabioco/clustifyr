@@ -1,8 +1,14 @@
 #' Main function to compare scRNA-seq data to bulk RNA-seq data.
 #'
+#'@export
+clustify <- function(expr_mat, ...) {
+  UseMethod("clustify", expr_mat)
+}
+
+#' @rdname clustify
 #' @param expr_mat single-cell expression matrix or Seurat object
 #' @param metadata cell cluster assignments, supplied as a vector or data.frame. If
-#' data.frame is supplied then `cluster_col` and/or `cell_col` need to be set. Not required if running correlation per cell.
+#' data.frame is supplied then `cluster_col` needs to be set. Not required if running correlation per cell.
 #' @param bulk_mat bulk expression matrix
 #' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
 #' the expr_mat and bulk_mat will be used for comparision.
@@ -14,21 +20,6 @@
 #' @param use_var_genes if providing a seurat object, use the variable genes
 #'  (stored in seurat_object@var.genes) as the query_genes.
 #' @param ... additional arguments to pass to compute_method function
-#' @export
-clustify <- function(expr_mat,
-                     bulk_mat,
-                     metadata,
-                     query_genes = NULL,
-                     cluster_col = NULL,
-                     per_cell = FALSE,
-                     num_perm = 0,
-                     compute_method = "spearman",
-                     use_var_genes = FALSE,
-                     ...) {
-  UseMethod("clustify", expr_mat)
-}
-
-#' @rdname clustify
 #' @export
 clustify.default <- function(expr_mat,
                              bulk_mat,
@@ -96,19 +87,20 @@ clustify.default <- function(expr_mat,
 
 #' @rdname clustify
 #' @export
-clustify.seurat <- function(seurat_object,
+clustify.seurat <- function(expr_mat,
                             bulk_mat,
                             query_genes = NULL,
                             per_cell = FALSE,
                             num_perm = 0,
                             cluster_col = NULL,
                             compute_method = "pearson",
-                            use_var_genes = FALSE) {
-  expr_mat <- seurat_object@data
-  metadata <- seurat_object@meta.data
+                            use_var_genes = FALSE,
+                            ...) {
+  expr_mat <- expr_mat@data
+  metadata <- expr_mat@meta.data
 
   if (use_var_genes){
-    query_genes <- seurat_object@var.genes
+    query_genes <- expr_mat@var.genes
   }
 
   res <- clustify(expr_mat,
@@ -118,7 +110,8 @@ clustify.seurat <- function(seurat_object,
                   per_cell = per_cell,
                   num_perm = num_perm,
                   cluster_col = cluster_col,
-                  compute_method = compute_method
+                  compute_method = compute_method,
+                  ...
   )
 
   res
