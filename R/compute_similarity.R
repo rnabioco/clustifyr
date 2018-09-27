@@ -59,14 +59,16 @@ cosine <- function(vec1, vec2){
 #' @param total_reads Pseudo-library size
 #' @param max_KL Maximal allowed value of KL-divergence.
 #' @export
-kl_divergence <- function(vec1, vec2, if_logcounts = FALSE, total_reads = 1000, max_KL = 1) {
+kl_divergence <- function(vec1, vec2, if_logcounts = FALSE,
+                          total_reads = 1000, max_KL = 1) {
   if (if_logcounts) {
     vec1 <- expm1(vec1)
     vec2 <- expm1(vec2)
   }
   count1 <- round(vec1 * total_reads / sum(vec1))
   count2 <- round(vec2 * total_reads / sum(vec2))
-  est_KL <- entropy::KL.shrink(count1, count2, unit = "log",
+  est_KL <- entropy::KL.shrink(count1, count2,
+                               unit = "log",
                                verbose = FALSE)
   return((max_KL - est_KL) / max_KL * 2 - 1)
 }
