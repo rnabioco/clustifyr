@@ -215,9 +215,35 @@ plot_gene <- function(expr_mat,
 #' @export
 plot_call <- function(correlation_matrix,
                       metadata,
-                      bulk_data_to_plot = colnames(correlation_matrix)) {
+                      bulk_data_to_plot = colnames(correlation_matrix),
+                      ...) {
   df_temp <- as.data.frame(t(apply(correlation_matrix, 1, function(x) x - max(x))))
   df_temp[df_temp == 0] <- "1"
   df_temp[df_temp != "1"] <- "0"
-  plot_cor(df_temp, metadata, bulk_data_to_plot)
+  plot_cor(df_temp,
+           metadata,
+           bulk_data_to_plot,
+           ...)
+}
+
+#' Plot called clusters on a tSNE
+#'
+#' @param correlation_matrix input similarity matrix
+#' @param metadata input metadata with tsne coordinates and cluster ids
+#' @param feature feature name, defaults to "type"
+#' @param ... passed to plot_tsne
+#'
+#' @export
+plot_best_call <- function(correlation_matrix,
+                           metadata,
+                           feature = "type",
+                           ...) {
+  df_temp <- tibble::as_tibble(correlation_matrix, rownames = "cluster")
+  df_temp <- tidyr::gather(df_temp, key = !!feature, value = r, -cluster)
+  df_temp <- dplyr::top_n(dplyr::group_by(df_temp, cluster), 1, r)
+  df_temp_full <- left_join(metadata, df_temp, by = "cluster")
+
+  plot_tsne(df_temp_full,
+            feature = feature,
+            ...)
 }
