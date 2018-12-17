@@ -247,14 +247,3 @@ plot_best_call <- function(correlation_matrix,
             feature = feature,
             ...)
 }
-
-plot_best_call <- function(correlation_matrix,
-                           metadata,
-                           feature = "type") {
-  df_temp <- tibble::as_tibble(correlation_matrix, rownames = "cluster")
-  df_temp <- tidyr::gather(df_temp, key = !!feature, value = r, -cluster)
-  df_temp <- dplyr::top_n(dplyr::group_by(df_temp, cluster), 1, r)
-  df_temp_full <- left_join(metadata, df_temp, by = "cluster")
-
-  plot_tsne(df_temp_full, feature = feature)
-}
