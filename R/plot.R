@@ -67,6 +67,10 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
 #' @export
 pretty_palette <- rev(RColorBrewer::brewer.pal(11, "RdGy")[c(1:5, 7)])
 
+#' Expanded color palette ramp for plotting discrete variables
+#' @export
+pretty_palette_ramp_d <- colorRampPalette(RColorBrewer::brewer.pal(12, "Paired"))
+
 #' Plot similarity measures on a tSNE
 #'
 #' @param correlation_matrix input similarity matrix
@@ -205,7 +209,7 @@ plot_gene <- function(expr_mat,
          })
 }
 
-#' Plot called clusters on a tSNE
+#' Plot called clusters on a tSNE, for each reference cluster given
 #'
 #' @param correlation_matrix input similarity matrix
 #' @param metadata input metadata with tsne coordinates and cluster ids
@@ -226,22 +230,36 @@ plot_call <- function(correlation_matrix,
            ...)
 }
 
-#' Plot called clusters on a tSNE
+#' Plot best calls for each cluster on a tSNE
 #'
 #' @param correlation_matrix input similarity matrix
 #' @param metadata input metadata with tsne coordinates and cluster ids
 #' @param feature feature name, defaults to "type"
+#' @param col metadata column, can be cluster or cellid
+#' @param collapse_to_cluster if a column name is provided, takes the most frequent call of entire cluster to color in plot
 #' @param ... passed to plot_tsne
 #'
 #' @export
 plot_best_call <- function(correlation_matrix,
                            metadata,
                            feature = "type",
+                           col = "cluster",
+                           collapse_to_cluster = FALSE,
                            ...) {
-  df_temp <- tibble::as_tibble(correlation_matrix, rownames = "cluster")
-  df_temp <- tidyr::gather(df_temp, key = !!feature, value = r, -cluster)
-  df_temp <- dplyr::top_n(dplyr::group_by(df_temp, cluster), 1, r)
-  df_temp_full <- left_join(metadata, df_temp, by = "cluster")
+  df_temp <- tibble::as_tibble(correlation_matrix, rownames = col)
+  df_temp <- tidyr::gather(df_temp, key = !!feature, value = r, -!!col)
+  df_temp <- dplyr::top_n(dplyr::group_by_at(df_temp, 1), 1, r)
+  df_temp_full <- left_join(metadata, df_temp, by = col)
+
+  if(collapse_to_cluster != FALSE){
+    df_temp_full <- df_temp_full %>%
+      mutate(type2 = metadata[[collapse_to_cluster]]) %>%
+      group_by(type, type2) %>%
+      tally(sort = TRUE) %>%
+      group_by(type2) %>%
+      top_n(1) %>%
+      right_join(df_temp_full %>% select(-type), by = setNames(collapse_to_cluster, "type2"))
+  }
 
   plot_tsne(df_temp_full,
             feature = feature,
