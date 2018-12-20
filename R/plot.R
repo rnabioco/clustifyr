@@ -234,20 +234,26 @@ plot_call <- function(correlation_matrix,
 #'
 #' @param correlation_matrix input similarity matrix
 #' @param metadata input metadata with tsne coordinates and cluster ids
-#' @param feature feature name, defaults to "type"
 #' @param col metadata column, can be cluster or cellid
 #' @param collapse_to_cluster if a column name is provided, takes the most frequent call of entire cluster to color in plot
+#' @param threshold minimum correlation coefficent cutoff for calling clusters
 #' @param ... passed to plot_tsne
 #'
 #' @export
 plot_best_call <- function(correlation_matrix,
                            metadata,
-                           feature = "type",
                            col = "cluster",
                            collapse_to_cluster = FALSE,
+                           threshold = 0,
                            ...) {
+  col_meta <- colnames(metadata)
+  if("type" %in% col_meta | "type2" %in% col_meta){
+    warning('metadata column name clash of "type"/"type2"')
+    return()
+  }
   df_temp <- tibble::as_tibble(correlation_matrix, rownames = col)
-  df_temp <- tidyr::gather(df_temp, key = !!feature, value = r, -!!col)
+  df_temp <- tidyr::gather(df_temp, key = type, value = r, -!!col)
+  df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold,", unassigned")
   df_temp <- dplyr::top_n(dplyr::group_by_at(df_temp, 1), 1, r)
   df_temp_full <- left_join(metadata, df_temp, by = col)
 
@@ -255,13 +261,16 @@ plot_best_call <- function(correlation_matrix,
     df_temp_full <- df_temp_full %>%
       mutate(type2 = metadata[[collapse_to_cluster]]) %>%
       group_by(type, type2) %>%
-      tally(sort = TRUE) %>%
+      summarize(sum = sum(r), n = n()) %>%
       group_by(type2) %>%
-      top_n(1) %>%
-      right_join(df_temp_full %>% select(-type), by = setNames(collapse_to_cluster, "type2"))
+      arrange(desc(n), desc(sum)) %>%
+      filter(type != paste0("r<", threshold,", unassigned")) %>%
+      dplyr::slice(1) %>%
+      right_join(df_temp_full %>% select(-type), by = setNames(collapse_to_cluster, "type2")) %>%
+      mutate(type = replace_na(type, paste0("r<", threshold,", unassigned")))
   }
 
   plot_tsne(df_temp_full,
-            feature = feature,
+            feature = "type",
             ...)
 }
