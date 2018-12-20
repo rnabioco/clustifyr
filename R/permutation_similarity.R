@@ -100,7 +100,7 @@ permute_similarity <- function(expr_mat,
         sc_clust
       )
     } else {
-      permuted_avg <- expr_mat[, resampled]
+      permuted_avg <- expr_mat[, resampled, drop = FALSE]
     }
 
       # permutate assignment
@@ -125,7 +125,7 @@ permute_similarity <- function(expr_mat,
 #' compute mean of clusters
 #' @noRd
 compute_mean_expr <- function(expr_mat, sc_assign, sc_clust) {
-  sapply(sc_clust, function(x) Matrix::rowMeans(expr_mat[, sc_assign == x]))
+  sapply(sc_clust, function(x) Matrix::rowMeans(expr_mat[, sc_assign == x, drop = FALSE]))
 }
 
 #' compute similarity
@@ -148,8 +148,8 @@ calc_similarity <- function(sc_avg,
                              ncol = length(bulk_clust))
   for (i in seq_along(sc_clust)) {
     for (j in seq_along(bulk_clust)) {
-      similarity_score[i, j] <- vector_similarity(sc_avg[, sc_clust[i]],
-                                                   bulk_mat[, bulk_clust[j]],
+      similarity_score[i, j] <- vector_similarity(sc_avg[, sc_clust[i], drop = FALSE],
+                                                   bulk_mat[, bulk_clust[j], drop = FALSE],
                                                    compute_method, ...)
     }
   }

@@ -29,9 +29,9 @@ average_clusters <- function(mat, cluster_info,
         stop("cell ids not found in input matrix")
       }
       if (log_scale) {
-        mat_data <- expm1(mat[, cell_ids])
+        mat_data <- expm1(mat[, cell_ids, drop = FALSE])
       } else {
-        mat_data <- mat[, cell_ids]
+        mat_data <- mat[, cell_ids, drop = FALSE]
       }
       res <- Matrix::rowMeans(mat_data)
       if (log_scale) {
