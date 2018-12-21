@@ -2,15 +2,23 @@
 #'
 #' @param expr_mat single-cell expression matrix
 #' @param n number of top expressing genes to keep
+#' @param cut cut off to set to 0
 #'
 #' @export
 binarize_expr <- function(expr_mat,
-                          n = 1000) {
-  expr_df <- as.data.frame(as.matrix(expr_mat))
-  df_temp <- apply(expr_df, 2, function(x) x - x[order(x, decreasing = TRUE)[n + 1]])
-  df_temp[df_temp > 0] <- 1
-  df_temp[df_temp < 0] <- 0
-  df_temp
+                          n = 1000,
+                          cut = 0) {
+  if(n < nrow(expr_mat)){
+    expr_df <- as.data.frame(as.matrix(expr_mat))
+    df_temp <- apply(expr_df, 2, function(x) x - x[order(x, decreasing = TRUE)[n + 1]])
+    df_temp[df_temp > cut] <- 1
+    df_temp[df_temp < cut] <- 0
+    as.matrix(df_temp)
+  } else {
+    expr_mat[expr_mat > cut] <- 1
+    expr_mat[expr_mat < cut] <- 0
+    expr_mat
+  }
 }
 
 #' convert candidate genes list into matrix
