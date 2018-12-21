@@ -114,3 +114,52 @@ get_common_elements <- function(...) {
 
   Reduce(intersect, vecs)
 }
+
+#' Intra-experiment cluster projection for one sample/set to the rest
+#'
+#' @param expr_mat single-cell expression matrix or Seurat object
+#' @param metadata cell cluster assignments, supplied as a vector or data.frame. If
+#' data.frame is supplied then `cluster_col` needs to be set. Not required if running correlation per cell.
+#' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
+#' the expr_mat and bulk_mat will be used for comparision.
+#' @param cluster_col column in metadata that contains cluster ids per cell. Will default to first
+#' column of metadata if not supplied. Not required if running correlation per cell.
+#' @param sample_col column in metadata that contains sample/subset info
+#' @param sample_id ids in column to serve as reference
+#' @param per_cell if true run per cell, otherwise per cluster.
+#' @param num_perm number of permutations, set to 0 by default
+#' @param compute_method method(s) for computing similarity scores
+#' @param use_var_genes if providing a seurat object, use the variable genes
+#'  (stored in seurat_object@var.genes) as the query_genes.
+#' @param ... additional arguments to pass to compute_method function
+#'
+#' @export
+clustify_intra <- function(expr_mat,
+                           metadata,
+                           query_genes,
+                           cluster_col,
+                           sample_col,
+                           sample_id,
+                           per_cell = FALSE,
+                           compute_method = "spearman",
+                           ...){
+  row_ref <- (metadata[[sample_col]] == sample_id)
+  expr_mat_ref <- expr_mat[,row_ref]
+  expr_mat_tar <- expr_mat[,!row_ref]
+  meta_ref <- metadata[row_ref,]
+  meta_tar <- metadata[!row_ref,]
+
+  avg_clusters_ref <- average_clusters(expr_mat_ref, meta_ref,
+                                       log_scale = F,
+                                       cluster_col = cluster_col)
+
+  r2 <- clustify(expr_mat_tar, avg_clusters_ref, meta_tar,
+                 query_genes = query_genes,
+                 cluster_col = cluster_col,
+                 per_cell = per_cell,
+                 num_perm = 0,
+                 compute_method = compute_method,
+                 use_var_genes = FALSE)
+
+  r2
+}
