@@ -163,3 +163,42 @@ clustify_intra <- function(expr_mat,
 
   r2
 }
+
+#' Average expression values per cluster, filtered by set parameter, defaults to calculating background
+#'
+#' @param mat expression matrix
+#' @param cluster_info data.frame or vector containing cluster assignments per cell, and attribute to filter on.
+#' Order must match column order in supplied matrix. If a data.frame
+#' provide the cluster_col parameters.
+#' @param log_scale input data is natural log,
+#' averaging will be done on unlogged data
+#' @param filter_on column in cluster_info to filter on
+#' @param filter_method "less", "equal", "greater" compared to filter_value
+#' @param filter_value
+#'
+#' @export
+average_clusters_filter <- function(mat, cluster_info,
+                                   log_scale = T,
+                                   filter_on = "nGene",
+                                   filter_method = "less",
+                                   filter_value = 300) {
+  if (filter_method == "less") {
+    cell_ids <- cluster_info[[filter_on]] < filter_value
+  } else if (filter_method == "greater") {
+    cell_ids <- cluster_info[[filter_on]] > filter_value
+  } else if (filter_method == "equal") {
+    cell_ids <- cluster_info[[filter_on]] == filter_value
+  }
+
+  if (log_scale) {
+    mat_data <- expm1(mat[, cell_ids, drop = FALSE])
+  } else {
+    mat_data <- mat[, cell_ids, drop = FALSE]
+  }
+  res <- Matrix::rowMeans(mat_data)
+  if (log_scale) {
+    res <- log1p(res)
+  }
+  res
+}
+
