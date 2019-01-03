@@ -108,7 +108,7 @@ get_vargenes <- function(marker_m) {
 #' calculate adjusted p-values for hypergeometric test of gene lists
 #' or jaccard index
 #'
-#' @param bin_mat binarized single-cell expression matrix
+#' @param bin_mat binarized single-cell expression matrix, feed in by_cluster mat, if desired
 #' @param marker_m matrix or dataframe of candidate genes for each cluster
 #' @param n number of genes in the genome
 #' @param metric adjusted p-value for hypergeometric test, or jaccard index
@@ -122,7 +122,7 @@ compare_lists <- function(bin_mat,
                           metric = "hyper",
                           output_high = TRUE) {
   # check if matrix is binarized
-  if (length(unique(bin_mat[, 1])) > 2) {
+  if ((length(unique(bin_mat[, 1])) > 2) & (metric != "gsea")) {
     metric <- "spearman"
   }
 
@@ -190,9 +190,25 @@ compare_lists <- function(bin_mat,
     )
   }
 
-  res <- do.call(rbind, out)
-  rownames(res) <- colnames(bin_mat)
-  colnames(res) <- colnames(marker_m)
+  if (metric != "gsea"){
+    res <- do.call(rbind, out)
+    rownames(res) <- colnames(bin_mat)
+    colnames(res) <- colnames(marker_m)
+  }
+
+  if (metric == "gsea") {
+    out <- lapply(
+      colnames(marker_m),
+      function(y) {
+        marker_list <- list()
+        marker_list[[1]] <- marker_m[ ,y]
+        names(marker_list) <- y
+        v1 <- marker_list
+        run_gsea(bin_mat, v1, n_perm = 1000, per_cell = T)
+      }
+    )
+    res <- do.call(cbind, out)
+  }
 
   if (output_high == TRUE) {
     if (metric == "hyper") {
