@@ -173,21 +173,18 @@ clustify_intra <- function(expr_mat,
 #' @param log_scale input data is natural log,
 #' averaging will be done on unlogged data
 #' @param filter_on column in cluster_info to filter on
-#' @param filter_method "less", "equal", "greater" compared to filter_value
+#' @param filter_method "<", "==", ">" compared to filter_value
 #' @param filter_value
 #'
 #' @export
 average_clusters_filter <- function(mat, cluster_info,
                                    log_scale = T,
                                    filter_on = "nGene",
-                                   filter_method = "less",
+                                   filter_method = "<=",
                                    filter_value = 300) {
-  if (filter_method == "less") {
-    cell_ids <- cluster_info[[filter_on]] < filter_value
-  } else if (filter_method == "greater") {
-    cell_ids <- cluster_info[[filter_on]] > filter_value
-  } else if (filter_method == "equal") {
-    cell_ids <- cluster_info[[filter_on]] == filter_value
+  eval(parse(text = paste0("cell_ids <- cluster_info[[filter_on]] ", sig, "filter_value")))
+  if (sum(cell_ids) == 0) {
+    stop("no cells kept after filtering")
   }
 
   if (log_scale) {
@@ -202,3 +199,25 @@ average_clusters_filter <- function(mat, cluster_info,
   res
 }
 
+#' Remove high background expression genes from matrix
+#'
+#' @param mat expression matrix
+#' @param background vector or dataframe or matrix of high expression genes in background
+#' @param n the number of top genes to exclude, 0 defaults to all
+#'
+#' @export
+
+remove_background <- function(mat, background, n = 0){
+  if (n == 0) {
+    n = length(background)
+  }
+
+  if (!is.vector(background)) {
+    background <- background[order(background[,1], decreasing = T), , drop = F]
+    background <- rownames(t3)[1:n]
+  } else if (!is.null(names(background))) {
+    background <- names(sort(background, decreasing = T)[1:n])
+  }
+
+  mat[!(rownames(mat) %in% background), ]
+}
