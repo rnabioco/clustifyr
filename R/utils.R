@@ -221,3 +221,30 @@ remove_background <- function(mat, background, n = 0){
 
   mat[!(rownames(mat) %in% background), ]
 }
+
+#' Convert expression matrix to GSEA pathway scores (would take a similar place in workflow before average_clusters/binarize)
+#'
+#' @param mat expression matrix
+#' @param pathway_list a list of vectors, each named for a specific pathway, or dataframe
+#' @param n_perm Number of permutation for fgsea function. Defaults to 1000.
+#' @param scale convert expr_mat into zscores prior to running GSEA?, default = FALSE
+
+#' @export
+
+calculate_pathway_gsea <- function(mat, pathway_list,
+                                   n_perm = 1000, scale = FALSE) {
+  out <- lapply(
+    names(pathway_list),
+    function(y) {
+      marker_list <- list()
+      marker_list[[1]] <- pathway_list[[y]]
+      names(marker_list) <- y
+      v1 <- marker_list
+      temp <- run_gsea(mat, v1, n_perm = n_perm, scale = scale, per_cell = T)
+      temp <- temp[ , 3, drop = F]
+    }
+  )
+  res <- do.call(cbind, out)
+  colnames(res) <- names(pathway_list)
+  res
+}
