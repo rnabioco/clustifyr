@@ -123,6 +123,7 @@ compare_lists <- function(bin_mat,
                           output_high = TRUE) {
   # check if matrix is binarized
   if ((length(unique(bin_mat[, 1])) > 2) & (metric != "gsea")) {
+    warning("non-binarized data, running spearman instead")
     metric <- "spearman"
   }
 
