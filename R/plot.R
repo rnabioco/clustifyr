@@ -12,6 +12,7 @@
 #' @param pt_size point size
 #' @param scale_limits defaults to min = 0, max = max(data$x),
 #' otherwise a two-element numeric vector indicating min and max to plot
+#' @param do.label whether to label each cluster at median center
 #' @export
 plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
                       feature,
@@ -19,7 +20,8 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
                       c_cols = pretty_palette,
                       d_cols = NULL,
                       pt_size = 0.25,
-                      scale_limits = NULL) {
+                      scale_limits = NULL,
+                      do.label = FALSE) {
 
   # sort data to avoid plotting null values over colors
   data <- arrange(data, !!sym(feature))
@@ -58,6 +60,15 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
       name = legend_name,
       limits = scale_limits
     )
+  }
+
+  if (do.label) {
+    data %>%
+      dplyr::group_by_(.dots = feature) %>%
+      summarize(tSNE_1 = median(tSNE_1), tSNE_2 = median(tSNE_2)) -> centers
+    p <- p +
+      geom_point(data = centers, mapping = aes(x = tSNE_1, y = tSNE_2), size = 0, alpha = 0) +
+      geom_text(data = centers, mapping = aes(label = centers[[feature]]))
   }
 
   p + cowplot::theme_cowplot()
