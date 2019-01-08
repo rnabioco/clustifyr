@@ -63,6 +63,20 @@ percent_clusters <- function(mat, cluster_info,
   )
 }
 
+#' Function to make best call from correlation matrix
+#'
+#' @param cor_mat correlation matrix
+#'
+#' @export
+get_best_match_matrix <- function(correlation_matrix) {
+
+  best_mat <- as.data.frame(t(apply(correlation_matrix, 1, function(x) x - max(x))))
+  best_mat[best_mat==0]="1"
+  best_mat[best_mat!="1"]="0"
+
+  return (best_mat)
+}
+
 #' Function to make call and attach score
 #'
 #' @param name name of row to query
@@ -255,3 +269,4 @@ calculate_pathway_gsea <- function(mat, pathway_list,
   colnames(res) <- names(pathway_list)
   res
 }
+
