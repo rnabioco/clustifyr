@@ -180,23 +180,30 @@ clustify_intra <- function(expr_mat,
 average_clusters_filter <- function(mat, cluster_info,
                                    log_scale = T,
                                    filter_on = "nGene",
+                                   group_by = NULL,
                                    filter_method = "<=",
                                    filter_value = 300) {
-  eval(parse(text = paste0("cell_ids <- cluster_info[[filter_on]] ", sig, "filter_value")))
+  eval(parse(text = paste0("cell_ids <- cluster_info[[filter_on]] ", filter_method, "filter_value")))
   if (sum(cell_ids) == 0) {
     stop("no cells kept after filtering")
   }
 
-  if (log_scale) {
-    mat_data <- expm1(mat[, cell_ids, drop = FALSE])
+  if (!is.null(group_by)) {
+    res <- average_clusters(mat, cluster_info,
+                     log_scale = log_scale,
+                     cluster_col = group_by)
   } else {
-    mat_data <- mat[, cell_ids, drop = FALSE]
+    if (log_scale) {
+      mat_data <- expm1(mat[, cell_ids, drop = FALSE])
+    } else {
+      mat_data <- mat[, cell_ids, drop = FALSE]
+    }
+    res <- Matrix::rowMeans(mat_data)
+    if (log_scale) {
+      res <- log1p(res)
+    }
+    res
   }
-  res <- Matrix::rowMeans(mat_data)
-  if (log_scale) {
-    res <- log1p(res)
-  }
-  res
 }
 
 #' Remove high background expression genes from matrix
