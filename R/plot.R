@@ -13,6 +13,7 @@
 #' @param scale_limits defaults to min = 0, max = max(data$x),
 #' otherwise a two-element numeric vector indicating min and max to plot
 #' @param do.label whether to label each cluster at median center
+#' @param do.legend
 #' @export
 plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
                       feature,
@@ -21,7 +22,8 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
                       d_cols = NULL,
                       pt_size = 0.25,
                       scale_limits = NULL,
-                      do.label = FALSE) {
+                      do.label = FALSE,
+                      do.legend = TRUE) {
 
   # sort data to avoid plotting null values over colors
   data <- arrange(data, !!sym(feature))
@@ -65,13 +67,19 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
   if (do.label) {
     data %>%
       dplyr::group_by_(.dots = feature) %>%
-      summarize(tSNE_1 = median(tSNE_1), tSNE_2 = median(tSNE_2)) -> centers
+      summarize(tSNE_1 = mean(tSNE_1), tSNE_2 = mean(tSNE_2)) -> centers
     p <- p +
       geom_point(data = centers, mapping = aes(x = tSNE_1, y = tSNE_2), size = 0, alpha = 0) +
       geom_text(data = centers, mapping = aes(label = centers[[feature]]))
   }
 
-  p + cowplot::theme_cowplot()
+  p <- p + cowplot::theme_cowplot()
+
+  if (do.legend == FALSE) {
+    p <- p + theme(legend.position="none")
+  }
+
+  p
 }
 
 #' Color palette for plotting continous variables
