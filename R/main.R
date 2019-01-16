@@ -93,10 +93,10 @@ clustify.seurat <- function(s_object,
                             per_cell = FALSE,
                             num_perm = 0,
                             cluster_col = NULL,
-                            compute_method = "pearson",
+                            compute_method = "spearman",
                             use_var_genes = TRUE,
                             dr = "tsne",
-                            seurat_out = FALSE,
+                            seurat_out = TRUE,
                             threshold = 0,
                             ...) {
   expr_mat <- s_object@data

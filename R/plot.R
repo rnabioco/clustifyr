@@ -97,9 +97,9 @@ pretty_palette_ramp_d <- colorRampPalette(RColorBrewer::brewer.pal(12, "Paired")
 #' @param bulk_data_to_plot colname of data to plot, defaults to all
 #' @param cluster_col colname of clustering data in metadata, defaults to rownames of the
 #' metadata if not supplied.
-#' @param dim1_col metadata column name with 1st axis dimension.
+#' @param x metadata column name with 1st axis dimension.
 #' defaults to "tSNE_1".
-#' @param dim2_col metadata column name with 2nd axis dimension.
+#' @param y metadata column name with 2nd axis dimension.
 #' defaults to "tSNE_2".
 #' @param scale_legends if TRUE scale all legends to maximum values in entire
 #' correlation matrix. if FALSE scale legends to maximum for each plot. A
@@ -111,8 +111,8 @@ plot_cor <- function(correlation_matrix,
                      metadata,
                      bulk_data_to_plot = colnames(correlation_matrix),
                      cluster_col = NULL,
-                     dim1_col = "tSNE_1",
-                     dim2_col = "tSNE_2",
+                     x = "tSNE_1",
+                     y = "tSNE_2",
                      scale_legends = FALSE,
                      ...) {
   if (!any(bulk_data_to_plot %in% colnames(correlation_matrix))) {
@@ -165,8 +165,8 @@ plot_cor <- function(correlation_matrix,
         bulk_cluster == bulk_data_to_plot[i]
       )
       plts[[i]] <- plot_tsne(tmp_data,
-                             x = dim1_col,
-                             y = dim2_col,
+                             x = x,
+                             y = y,
                              feature = "expr",
                              legend_name = bulk_data_to_plot[i],
                              scale_limits = scale_limits,
@@ -256,6 +256,8 @@ plot_call <- function(correlation_matrix,
 #' @param col metadata column, can be cluster or cellid
 #' @param collapse_to_cluster if a column name is provided, takes the most frequent call of entire cluster to color in plot
 #' @param threshold minimum correlation coefficent cutoff for calling clusters
+#' @param x x variable
+#' @param y y variable
 #' @param ... passed to plot_tsne
 #'
 #' @export
@@ -264,6 +266,7 @@ plot_best_call <- function(correlation_matrix,
                            col = "cluster",
                            collapse_to_cluster = FALSE,
                            threshold = 0,
+                           x = "tSNE_1", y = "tSNE_2",
                            ...) {
   col_meta <- colnames(metadata)
   if("type" %in% col_meta | "type2" %in% col_meta){
@@ -291,5 +294,6 @@ plot_best_call <- function(correlation_matrix,
 
   plot_tsne(df_temp_full,
             feature = "type",
+            x = x, y = y,
             ...)
 }
