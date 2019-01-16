@@ -37,3 +37,15 @@ use_seurat_comp <- function(seurat_object,
 
   temp_res
 }
+
+#' Function to convert labelled seurat object to fully prepared metadata
+#'
+#' @param seurat_object seurat_object after tsne projections and clustering
+#' @param dr dimension reduction method
+#' @export
+use_seurat_meta <- function(seurat_object,
+                            dr = "tsne") {
+  temp_dr <- seurat_object@dr[[dr]]@cell.embeddings %>% as.data.frame() %>% rownames_to_column("rn")
+  temp_meta <- seurat_object@meta.data %>% rownames_to_column("rn")
+  left_join(temp_meta, temp_dr, by = "rn") %>% column_to_rownames("rn")
+}
