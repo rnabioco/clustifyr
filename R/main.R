@@ -87,20 +87,23 @@ clustify.default <- function(expr_mat,
 
 #' @rdname clustify
 #' @export
-clustify.seurat <- function(expr_mat,
+clustify.seurat <- function(s_object,
                             bulk_mat,
                             query_genes = NULL,
                             per_cell = FALSE,
                             num_perm = 0,
                             cluster_col = NULL,
                             compute_method = "pearson",
-                            use_var_genes = FALSE,
+                            use_var_genes = TRUE,
+                            dr = "tsne",
+                            seurat_out = FALSE,
+                            threshold = 0,
                             ...) {
-  expr_mat <- expr_mat@data
-  metadata <- expr_mat@meta.data
+  expr_mat <- s_object@data
+  metadata <- use_seurat_meta(s_object, dr = dr)
 
   if (use_var_genes){
-    query_genes <- expr_mat@var.genes
+    query_genes <- s_object@var.genes
   }
 
   res <- clustify(expr_mat,
@@ -114,7 +117,27 @@ clustify.seurat <- function(expr_mat,
                   ...
   )
 
-  res
+  if (seurat_out == F) {
+    res
+  } else {
+    col_meta <- colnames(metadata)
+    if("type" %in% col_meta | "type2" %in% col_meta){
+      warning('metadata column name clash of "type"/"type2"')
+      return()
+    }
+    df_temp <- tibble::as_tibble(res, rownames = "rn")
+    df_temp <- tidyr::gather(df_temp, key = type, value = r, -rn)
+    df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold,", unassigned")
+    df_temp <- dplyr::top_n(dplyr::group_by_at(df_temp, 1), 1, r)
+    if (per_cell == F) {
+      df_temp <- df_temp %>% rename(!!cluster_col:=rn)
+      df_temp_full <- left_join(metadata %>% rownames_to_column("rn"), df_temp, by = cluster_col) %>% column_to_rownames("rn")
+      } else {
+      df_temp_full <- left_join(metadata %>% rownames_to_column("rn"), df_temp, by = "rn") %>% column_to_rownames("rn")
+    }
+    s_object@meta.data <- df_temp_full
+    s_object
+  }
 }
 
 #' Correlation functions available in clustifyR

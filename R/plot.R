@@ -202,7 +202,7 @@ plot_gene <- function(expr_mat,
   if (length(genes_to_plot) == 0) {
     stop("no genes present to plot")
   }
-  expr_dat <- t(as.matrix(expr_mat[genes_to_plot, ]))
+  expr_dat <- t(as.matrix(expr_mat[genes_to_plot, , drop = FALSE]))
   expr_dat <- tibble::rownames_to_column(as.data.frame(expr_dat), "cell")
 
   if(is.null(cell_col)){
@@ -216,7 +216,7 @@ plot_gene <- function(expr_mat,
     stop("please supply a cell_col that is present in metadata")
   }
 
-  plt_dat <- left_join(expr_dat, metadata,
+  plt_dat <- left_join(expr_dat, mdata,
                        by = c("cell" = cell_col))
 
   lapply(genes,
