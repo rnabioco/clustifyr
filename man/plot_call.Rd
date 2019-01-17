@@ -2,10 +2,10 @@
 % Please edit documentation in R/plot.R
 \name{plot_call}
 \alias{plot_call}
-\title{Plot called clusters on a tSNE}
+\title{Plot called clusters on a tSNE, for each reference cluster given}
 \usage{
 plot_call(correlation_matrix, metadata,
-  bulk_data_to_plot = colnames(correlation_matrix))
+  bulk_data_to_plot = colnames(correlation_matrix), ...)
 }
 \arguments{
 \item{correlation_matrix}{input similarity matrix}
@@ -17,5 +17,5 @@ plot_call(correlation_matrix, metadata,
 \item{...}{passed to plot_tsne}
 }
 \description{
-Plot called clusters on a tSNE
+Plot called clusters on a tSNE, for each reference cluster given
 }

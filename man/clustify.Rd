@@ -12,9 +12,10 @@ clustify(expr_mat, ...)
   query_genes = NULL, cluster_col = NULL, per_cell = FALSE,
   num_perm = 0, compute_method = "spearman", ...)
 
-\method{clustify}{seurat}(expr_mat, bulk_mat, query_genes = NULL,
+\method{clustify}{seurat}(s_object, bulk_mat, query_genes = NULL,
   per_cell = FALSE, num_perm = 0, cluster_col = NULL,
-  compute_method = "pearson", use_var_genes = FALSE, ...)
+  compute_method = "spearman", use_var_genes = TRUE, dr = "tsne",
+  seurat_out = TRUE, threshold = 0, ...)
 }
 \arguments{
 \item{expr_mat}{single-cell expression matrix or Seurat object}
