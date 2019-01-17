@@ -13,7 +13,7 @@
 #' @param scale_limits defaults to min = 0, max = max(data$x),
 #' otherwise a two-element numeric vector indicating min and max to plot
 #' @param do.label whether to label each cluster at median center
-#' @param do.legend
+#' @param do.legend whether to draw legend
 #' @export
 plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
                       feature,

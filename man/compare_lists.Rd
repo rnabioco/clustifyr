@@ -9,7 +9,7 @@ compare_lists(bin_mat, marker_m, n = 30000, metric = "hyper",
   output_high = TRUE)
 }
 \arguments{
-\item{bin_mat}{binarized single-cell expression matrix}
+\item{bin_mat}{binarized single-cell expression matrix, feed in by_cluster mat, if desired}
 
 \item{marker_m}{matrix or dataframe of candidate genes for each cluster}
 
