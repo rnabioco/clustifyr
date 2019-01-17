@@ -1,12 +1,12 @@
 #' Main function to compare scRNA-seq data to bulk RNA-seq data.
 #'
 #'@export
-clustify <- function(expr_mat, ...) {
-  UseMethod("clustify", expr_mat)
+clustify <- function(input, ...) {
+  UseMethod("clustify", input)
 }
 
 #' @rdname clustify
-#' @param expr_mat single-cell expression matrix or Seurat object
+#' @param input single-cell expression matrix or Seurat object
 #' @param metadata cell cluster assignments, supplied as a vector or data.frame. If
 #' data.frame is supplied then `cluster_col` needs to be set. Not required if running correlation per cell.
 #' @param bulk_mat bulk expression matrix
@@ -19,9 +19,11 @@ clustify <- function(expr_mat, ...) {
 #' @param compute_method method(s) for computing similarity scores
 #' @param use_var_genes if providing a seurat object, use the variable genes
 #'  (stored in seurat_object@var.genes) as the query_genes.
+#' @param dr stored dimension reduction
+#' @param seurat_out output cor matrix or called seurat object
 #' @param ... additional arguments to pass to compute_method function
 #' @export
-clustify.default <- function(expr_mat,
+clustify.default <- function(input,
                              bulk_mat,
                              metadata = NULL,
                              query_genes = NULL,
@@ -30,7 +32,7 @@ clustify.default <- function(expr_mat,
                              num_perm = 0,
                              compute_method = "spearman",
                              ...) {
-
+  expr_mat <- input
   if(!compute_method %in% clustifyr_methods){
     stop(paste(compute_method, "correlation method not implemented"))
   }
@@ -86,8 +88,22 @@ clustify.default <- function(expr_mat,
 }
 
 #' @rdname clustify
+#' @param bulk_mat bulk expression matrix
+#' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
+#' the expr_mat and bulk_mat will be used for comparision.
+#' @param cluster_col column in metadata that contains cluster ids per cell. Will default to first
+#' column of metadata if not supplied. Not required if running correlation per cell.
+#' @param per_cell if true run per cell, otherwise per cluster.
+#' @param num_perm number of permutations, set to 0 by default
+#' @param compute_method method(s) for computing similarity scores
+#' @param use_var_genes if providing a seurat object, use the variable genes
+#'  (stored in seurat_object@var.genes) as the query_genes.
+#' @param dr stored dimension reduction
+#' @param seurat_out output cor matrix or called seurat object
+#' @param ... additional arguments to pass to compute_method function
+
 #' @export
-clustify.seurat <- function(s_object,
+clustify.seurat <- function(input,
                             bulk_mat,
                             query_genes = NULL,
                             per_cell = FALSE,
@@ -99,6 +115,7 @@ clustify.seurat <- function(s_object,
                             seurat_out = TRUE,
                             threshold = 0,
                             ...) {
+  s_object <- input
   expr_mat <- s_object@data
   metadata <- use_seurat_meta(s_object, dr = dr)
 
