@@ -5,14 +5,16 @@
 \title{Function to convert labelled seurat object to avg expression matrix}
 \usage{
 use_seurat_comp(seurat_object, cluster_col = "classified",
-  var.genes_only = FALSE)
+  var.genes_only = FALSE, assay_name = NULL)
 }
 \arguments{
 \item{seurat_object}{seurat_object after tsne projections and clustering}
 
 \item{cluster_col}{column name where classified cluster names are stored in seurat meta data, cannot be "rn"}
 
-\item{var.genes_only}{whether to keep only var.genes in the final matrix output}
+\item{var.genes_only}{whether to keep only var.genes in the final matrix output, could also look up genes used for PCA}
+
+\item{assay_name}{any additional assay data, such as ADT, to include. If more than 1, pass a vector of names}
 }
 \description{
 Function to convert labelled seurat object to avg expression matrix

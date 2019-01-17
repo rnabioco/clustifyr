@@ -10,6 +10,6 @@ get_vargenes(marker_m)
 \item{marker_m}{matrix or dataframe of candidate genes for each cluster}
 }
 \description{
-Variable gene list is required for run_cor main function. This
+Variable gene list is required for \code{clustify} main function. This
 function parses variables genes from a matrix input.
 }

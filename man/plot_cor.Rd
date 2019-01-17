@@ -6,8 +6,7 @@
 \usage{
 plot_cor(correlation_matrix, metadata,
   bulk_data_to_plot = colnames(correlation_matrix), cluster_col = NULL,
-  dim1_col = "tSNE_1", dim2_col = "tSNE_2", scale_legends = FALSE,
-  ...)
+  x = "tSNE_1", y = "tSNE_2", scale_legends = FALSE, ...)
 }
 \arguments{
 \item{correlation_matrix}{input similarity matrix}
@@ -19,10 +18,10 @@ plot_cor(correlation_matrix, metadata,
 \item{cluster_col}{colname of clustering data in metadata, defaults to rownames of the
 metadata if not supplied.}
 
-\item{dim1_col}{metadata column name with 1st axis dimension.
+\item{x}{metadata column name with 1st axis dimension.
 defaults to "tSNE_1".}
 
-\item{dim2_col}{metadata column name with 2nd axis dimension.
+\item{y}{metadata column name with 2nd axis dimension.
 defaults to "tSNE_2".}
 
 \item{scale_legends}{if TRUE scale all legends to maximum values in entire
