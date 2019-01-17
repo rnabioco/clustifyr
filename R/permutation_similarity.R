@@ -8,7 +8,7 @@
 #' @param compute_method method(s) for computing similarity scores
 #' @param per_cell run per cell?
 #' @param ... additional parameters not used yet
-#' @noRd
+#' @export
 get_similarity <- function(expr_mat,
                            bulk_mat,
                            cluster_ids,
@@ -56,7 +56,7 @@ get_similarity <- function(expr_mat,
 #' @param per_cell run per cell?
 #' @param compute_method method(s) for computing similarity scores
 #' @param ... additional parameters
-#' @noRd
+#' @export
 permute_similarity <- function(expr_mat,
                                bulk_mat,
                                cluster_ids,
@@ -123,13 +123,13 @@ permute_similarity <- function(expr_mat,
 }
 
 #' compute mean of clusters
-#' @noRd
+#' @export
 compute_mean_expr <- function(expr_mat, sc_assign, sc_clust) {
   sapply(sc_clust, function(x) Matrix::rowMeans(expr_mat[, sc_assign == x, drop = FALSE]))
 }
 
 #' compute similarity
-#' @noRd
+#' @export
 calc_similarity <- function(sc_avg,
                           bulk_mat,
                           compute_method, ...) {
