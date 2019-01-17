@@ -277,6 +277,11 @@ plot_best_call <- function(correlation_matrix,
   df_temp <- tidyr::gather(df_temp, key = type, value = r, -!!col)
   df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold,", unassigned")
   df_temp <- dplyr::top_n(dplyr::group_by_at(df_temp, 1), 1, r)
+  if (nrow(df_temp) != nrow(correlation_matrix)) {
+    clash <- dplyr::group_by_at(df_temp, 1) %>% summarize(n = n()) %>% filter(n>1) %>% pull(1)
+    df_temp[lapply(df_temp[,1], FUN = function(x) x %in% clash)[[1]],2] <- paste0(df_temp[["type"]][lapply(df_temp[,1], FUN = function(x) x %in% clash)[[1]]], "-CLASH!")
+    df_temp <- df_temp %>% distinct_(1,3, .keep_all =T)
+  }
   df_temp_full <- left_join(metadata, df_temp, by = col)
 
   if(collapse_to_cluster != FALSE){
