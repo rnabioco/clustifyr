@@ -102,7 +102,7 @@ clustify.seurat <- function(s_object,
   expr_mat <- s_object@data
   metadata <- use_seurat_meta(s_object, dr = dr)
 
-  if (use_var_genes){
+  if (use_var_genes & is.null(query_genes)){
     query_genes <- s_object@var.genes
   }
 
@@ -129,6 +129,10 @@ clustify.seurat <- function(s_object,
     df_temp <- tidyr::gather(df_temp, key = type, value = r, -rn)
     df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold,", unassigned")
     df_temp <- dplyr::top_n(dplyr::group_by_at(df_temp, 1), 1, r)
+    if (nrow(df_temp) != nrow(res)) {
+      clash <- df_temp %>% group_by(rn) %>% summarize(n = n()) %>% filter(n>1) %>% pull(rn)
+      df_temp <- df_temp %>% mutate(type = ifelse(rn %in% clash, paste0(type, "-CLASH!"), type)) %>% distinct(rn, r, .keep_all = T)
+    }
     if (per_cell == F) {
       df_temp <- df_temp %>% rename(!!cluster_col:=rn)
       df_temp_full <- left_join(metadata %>% rownames_to_column("rn"), df_temp, by = cluster_col) %>% column_to_rownames("rn")
