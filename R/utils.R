@@ -252,8 +252,10 @@ remove_background <- function(mat, background, n = 0){
 
 #' @export
 
-calculate_pathway_gsea <- function(mat, pathway_list,
-                                   n_perm = 1000, scale = FALSE) {
+calculate_pathway_gsea <- function(mat,
+                                   pathway_list,
+                                   n_perm = 1000,
+                                   scale = FALSE) {
   out <- lapply(
     names(pathway_list),
     function(y) {
@@ -261,7 +263,10 @@ calculate_pathway_gsea <- function(mat, pathway_list,
       marker_list[[1]] <- pathway_list[[y]]
       names(marker_list) <- y
       v1 <- marker_list
-      temp <- run_gsea(mat, v1, n_perm = n_perm, scale = scale, per_cell = T)
+      temp <- run_gsea(mat, v1,
+                       n_perm = n_perm,
+                       scale = scale,
+                       per_cell = T)
       temp <- temp[ , 3, drop = F]
     }
   )

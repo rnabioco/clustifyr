@@ -258,6 +258,7 @@ plot_call <- function(correlation_matrix,
 #' @param threshold minimum correlation coefficent cutoff for calling clusters
 #' @param x x variable
 #' @param y y variable
+#' @param plot_r whether to include second plot of cor eff for best call
 #' @param ... passed to plot_tsne
 #'
 #' @export
@@ -267,6 +268,7 @@ plot_best_call <- function(correlation_matrix,
                            collapse_to_cluster = FALSE,
                            threshold = 0,
                            x = "tSNE_1", y = "tSNE_2",
+                           plot_r = FALSE,
                            ...) {
   col_meta <- colnames(metadata)
   if("type" %in% col_meta | "type2" %in% col_meta){
@@ -278,9 +280,12 @@ plot_best_call <- function(correlation_matrix,
   df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold,", unassigned")
   df_temp <- dplyr::top_n(dplyr::group_by_at(df_temp, 1), 1, r)
   if (nrow(df_temp) != nrow(correlation_matrix)) {
-    clash <- dplyr::group_by_at(df_temp, 1) %>% summarize(n = n()) %>% filter(n>1) %>% pull(1)
+    clash <- dplyr::group_by_at(df_temp, 1) %>%
+      summarize(n = n()) %>%
+      filter(n>1) %>%
+      pull(1)
     df_temp[lapply(df_temp[,1], FUN = function(x) x %in% clash)[[1]],2] <- paste0(df_temp[["type"]][lapply(df_temp[,1], FUN = function(x) x %in% clash)[[1]]], "-CLASH!")
-    df_temp <- df_temp %>% distinct_(1,3, .keep_all =T)
+    df_temp <- df_temp %>% distinct(exclude = "type", .keep_all =T)
   }
   df_temp_full <- left_join(metadata, df_temp, by = col)
 
@@ -297,8 +302,21 @@ plot_best_call <- function(correlation_matrix,
       mutate(type = replace_na(type, paste0("r<", threshold,", unassigned")))
   }
 
-  plot_tsne(df_temp_full,
+  g <- plot_tsne(df_temp_full,
             feature = "type",
             x = x, y = y,
             ...)
+
+  if (plot_r == T) {
+    l <- list()
+    l[[1]] <- g
+    l[[2]] <- plot_tsne(df_temp_full,
+              feature = "r",
+              x = x, y = y,
+              ...)
+  } else {
+    l <- g
+  }
+
+  l
 }
