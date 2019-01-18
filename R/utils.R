@@ -275,3 +275,51 @@ calculate_pathway_gsea <- function(mat,
   res
 }
 
+#' get best calls for each cluster
+#'
+#' @param correlation_matrix input similarity matrix
+#' @param metadata input metadata with tsne coordinates and cluster ids
+#' @param col metadata column, can be cluster or cellid
+#' @param collapse_to_cluster if a column name is provided, takes the most frequent call of entire cluster to color in plot
+#' @param threshold minimum correlation coefficent cutoff for calling clusters
+#'
+#' @export
+cor_to_call <- function(correlation_matrix,
+                        metadata = NULL,
+                        col = "cluster",
+                        collapse_to_cluster = FALSE,
+                        threshold = 0) {
+  df_temp <- tibble::as_tibble(correlation_matrix, rownames = col)
+  df_temp <- tidyr::gather(df_temp, key = type, value = r, -!!col)
+  df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold,", unassigned")
+  df_temp <- dplyr::top_n(dplyr::group_by_at(df_temp, 1), 1, r)
+  if (nrow(df_temp) != nrow(correlation_matrix)) {
+    clash <- dplyr::group_by_at(df_temp, 1) %>%
+      summarize(n = n()) %>%
+      filter(n>1) %>%
+      pull(1)
+    df_temp[lapply(df_temp[,1], FUN = function(x) x %in% clash)[[1]],2] <- paste0(df_temp[["type"]][lapply(df_temp[,1], FUN = function(x) x %in% clash)[[1]]], "-CLASH!")
+    df_temp <- df_temp %>% distinct(exclude = "type", .keep_all = T)
+  }
+  df_temp_full <- df_temp %>% select(-exclude)
+
+  if(collapse_to_cluster != FALSE){
+    if (!(col %in% colnames(metadata))) {
+      metadata <- metadata %>% tibble::as_tibble(rownames = col)
+    }
+    df_temp_full <- df_temp_full %>%
+      left_join(metadata, by = col)
+    df_temp_full[,"type2"] <- df_temp_full[[collapse_to_cluster]]
+    df_temp_full <- df_temp_full %>% group_by(type, type2) %>%
+      summarize(sum = sum(r), n = n()) %>%
+      group_by(type2) %>%
+      arrange(desc(n), desc(sum)) %>%
+      filter(type != paste0("r<", threshold,", unassigned")) %>%
+      dplyr::slice(1) %>%
+      right_join(df_temp_full %>% select(-type), by = setNames(collapse_to_cluster, "type2")) %>%
+      mutate(type = replace_na(type, paste0("r<", threshold,", unassigned")))
+  }
+
+  df_temp_full
+}
+

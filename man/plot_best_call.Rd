@@ -6,7 +6,7 @@
 \usage{
 plot_best_call(correlation_matrix, metadata, col = "cluster",
   collapse_to_cluster = FALSE, threshold = 0, x = "tSNE_1",
-  y = "tSNE_2", ...)
+  y = "tSNE_2", plot_r = FALSE, ...)
 }
 \arguments{
 \item{correlation_matrix}{input similarity matrix}
@@ -22,6 +22,8 @@ plot_best_call(correlation_matrix, metadata, col = "cluster",
 \item{x}{x variable}
 
 \item{y}{y variable}
+
+\item{plot_r}{whether to include second plot of cor eff for best call}
 
 \item{...}{passed to plot_tsne}
 }
