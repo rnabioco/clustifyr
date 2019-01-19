@@ -142,6 +142,9 @@ clustify.seurat <- function(input,
       warning('metadata column name clash of "type"/"type2"')
       return()
     }
+    if (num_perm != 0) {
+      res <- -log(res$p_val+.01,10)
+    }
     df_temp <- tibble::as_tibble(res, rownames = "rn")
     df_temp <- tidyr::gather(df_temp, key = type, value = r, -rn)
     df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold,", unassigned")
