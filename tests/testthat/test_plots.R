@@ -1,7 +1,7 @@
 context("plotting")
 
 res <- clustify(
-  expr_mat = pbmc4k_matrix,
+  input = pbmc4k_matrix,
   metadata = pbmc4k_meta,
   bulk_mat = pbmc_bulk_matrix,
   query_genes = pbmc4k_vargenes,
