@@ -87,7 +87,7 @@ pretty_palette <- rev(RColorBrewer::brewer.pal(11, "RdGy")[c(1:5, 7)])
 
 #' Expanded color palette ramp for plotting discrete variables
 #' @export
-pretty_palette_ramp_d <- grDevices::olorRampPalette(RColorBrewer::brewer.pal(12, "Paired"))
+pretty_palette_ramp_d <- grDevices::colorRampPalette(RColorBrewer::brewer.pal(12, "Paired"))
 
 #' Plot similarity measures on a tSNE
 #'
