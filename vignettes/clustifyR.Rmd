@@ -126,7 +126,7 @@ res$p_val[1:5, 1:5]
 Heatmap(-log(res$p_val+.01,10), colorRamp2(c(0, 2), c("white", "black")))
 ```
 
-### Using gene lists to classify cells (ranked or unranked)
+## Using gene lists to classify cells (ranked or unranked)
 
 ```{r}
 # generate a dataframe of markers from Seurat (a common format)
@@ -152,7 +152,7 @@ pbmc4k_avgb <- binarize_expr(pbmc4k_avg)
 pbmc4k_avgb[1:5, c(1, 2, 10)]
 ```
 
-#### Classify using a hypergeometric test
+### Classify using a hypergeometric test
 
 Here's an example using ~100 markers per cluster
 

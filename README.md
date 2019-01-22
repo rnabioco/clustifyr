@@ -44,7 +44,7 @@ pre-calculated tSNE projection (stored in `pbmc4k_meta`).
 library(clustifyR)
 
 res <- clustify(
-  expr_mat = pbmc4k_matrix,
+  input = pbmc4k_matrix,
   metadata = pbmc4k_meta$cluster,
   bulk_mat = pbmc_bulk_matrix,
   query_genes = pbmc4k_vargenes
@@ -65,3 +65,22 @@ plot_cor(
     #> [[2]]
 
 <img src="man/figures/README-example-2.png" width="100%" />
+
+``` r
+
+plot_best_call(res, pbmc4k_meta)
+```
+
+<img src="man/figures/README-example-3.png" width="100%" />
+
+Alternatively, `clustify` can take a clustered `seurat` object and
+assign identities.
+
+``` r
+res <- clustify(
+  input = s_object,
+  cluster_col = "cluster.ids"
+  bulk_mat = pbmc_bulk_matrix,
+  seurat_out = T
+)
+```
