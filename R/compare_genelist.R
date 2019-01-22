@@ -47,15 +47,20 @@ matrixize_markers <- function(marker_df,
 
   # if "gene" not present in column names, assume df is a matrix to be converted to ranked
   if (!("gene" %in% colnames(marker_df))) {
-    marker_df <- data.frame(lapply(marker_df, as.character), stringsAsFactors = FALSE) %>% tidyr::gather(factor_key = TRUE, key = "cluster", value = "gene")
+    marker_df <- data.frame(lapply(marker_df, as.character), stringsAsFactors = FALSE)
+    marker_df <-tidyr::gather(marker_df, factor_key = TRUE, key = "cluster", value = "gene")
   }
 
   if (unique == TRUE) {
-    nonunique <- marker_df %>% group_by(gene) %>% summarize(n = n()) %>% filter(n > 1)
+    nonunique <- group_by(marker_df, gene)
+    nonunique <- summarize(nonunique, n = n())
+    nonunique <- filter(nonunique, n > 1)
     marker_df <- anti_join(marker_df, nonunique, by = "gene")
   }
 
-  cut_num <- min((marker_df %>% group_by(cluster) %>% summarize(n = n()))$n)
+  cut_temp <- group_by(marker_df, cluster)
+  cut_temp <- summarize(cut_temp, n = n())
+  cut_num <- min(cut_temp$n)
 
   if (!is.null(n)) {
     if (n < cut_num) {
@@ -63,15 +68,19 @@ matrixize_markers <- function(marker_df,
     }
   }
 
-  marker_temp <- marker_df %>% dplyr::select(gene, cluster) %>% group_by(cluster) %>% dplyr::slice(1:cut_num)
+  marker_temp <- dplyr::select(marker_df, gene, cluster)
+  marker_temp <- group_by(marker_temp, cluster)
+  marker_temp <- dplyr::slice(marker_temp, 1:cut_num)
   if (ranked == TRUE) {
-    marker_temp <- marker_temp %>% mutate(n = seq(step_weight * cut_num, by = -step_weight, length.out = cut_num) + background_weight)
-    marker_temp2 <- as.data.frame(tidyr::spread(marker_temp, key = "cluster", value = n) %>% replace(is.na(.), 0))
+    marker_temp <- mutate(marker_temp, n = seq(step_weight * cut_num, by = -step_weight, length.out = cut_num) + background_weight)
+    marker_temp2 <- tidyr::spread(marker_temp, key = "cluster", value = n)
+    marker_temp2 <- as.data.frame(replace(is.na(.), 0))
     rownames(marker_temp2) <- marker_temp2$gene
-    marker_temp2 <- marker_temp2 %>% dplyr::select(-gene)
+    marker_temp2 <- dplyr::select(marker_temp2, -gene)
   } else {
-    marker_temp <- marker_temp %>% mutate(n = 1:cut_num)
-    marker_temp2 <- as.data.frame(tidyr::spread(marker_temp, key = "cluster", value = "gene") %>% dplyr::select(-n))
+    marker_temp <- mutate( marker_temp, n = 1:cut_num)
+    marker_temp2 <- tidyr::spread(marker_temp, key = "cluster", value = "gene")
+    marker_temp2 <- as.data.frame(dplyr::select(marker_temp2, -n))
   }
 
   # if labels is vector, adopt names in vector; if labels is a metadata dataframe, pulls names from "classified" column
@@ -83,9 +92,8 @@ matrixize_markers <- function(marker_df,
           cluster = labels$cluster,
           classified = labels$classified
         )),
-        by = "cluster"
-      ) %>%
-        pull(classified)
+        by = "cluster")
+      labels <- pull(labels, classified)
     }
     colnames(marker_temp2) <- labels
   }

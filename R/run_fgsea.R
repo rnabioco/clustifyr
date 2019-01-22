@@ -48,10 +48,8 @@ run_gsea <- function(expr_mat, query_genes, cluster_ids = NULL,
                        nperm = n_perm)
     res[[i]] <- gsea_res[, c("pathway", "pval", "NES")]
   }
-
-  gsea_res <- bind_rows(res) %>%
-    mutate(cell = colnames(avg_mat)) %>%
-    as.data.frame() %>%
-    tibble::column_to_rownames("cell")
+  gsea_res <- bind_rows(res)
+  gsea_res <- as.data.frame(mutate(gsea_res, cell = colnames(avg_mat)))
+  gsea_res <- tibble::column_to_rownames(gsea_res, "cell")
   gsea_res
 }

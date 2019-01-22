@@ -65,9 +65,8 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
   }
 
   if (do.label) {
-    data %>%
-      dplyr::group_by_(.dots = feature) %>%
-      summarize(tSNE_1 = mean(tSNE_1), tSNE_2 = mean(tSNE_2)) -> centers
+    centers <- dplyr::group_by_(data, .dots = feature)
+    centers <- summarize(centers, tSNE_1 = mean(tSNE_1), tSNE_2 = mean(tSNE_2))
     p <- p +
       geom_point(data = centers, mapping = aes(x = tSNE_1, y = tSNE_2), size = 0, alpha = 0) +
       geom_text(data = centers, mapping = aes(label = centers[[feature]]))
@@ -280,26 +279,25 @@ plot_best_call <- function(correlation_matrix,
   df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold,", unassigned")
   df_temp <- dplyr::top_n(dplyr::group_by_at(df_temp, 1), 1, r)
   if (nrow(df_temp) != nrow(correlation_matrix)) {
-    clash <- dplyr::group_by_at(df_temp, 1) %>%
-      summarize(n = n()) %>%
-      filter(n>1) %>%
-      pull(1)
+    clash <- dplyr::group_by_at(df_temp, 1)
+    clash <- summarize(clash, n = n())
+    clash <- filter(clash, n > 1)
+    clash <- pull(clash, 1)
     df_temp[lapply(df_temp[,1], FUN = function(x) x %in% clash)[[1]],2] <- paste0(df_temp[["type"]][lapply(df_temp[,1], FUN = function(x) x %in% clash)[[1]]], "-CLASH!")
-    df_temp <- df_temp %>% distinct(exclude = "type", .keep_all =T)
+    df_temp <- distinct(df_temp, exclude = "type", .keep_all =T)
   }
   df_temp_full <- left_join(metadata, df_temp, by = col)
 
   if(collapse_to_cluster != FALSE){
-    df_temp_full <- df_temp_full %>%
-      mutate(type2 = metadata[[collapse_to_cluster]]) %>%
-      group_by(type, type2) %>%
-      summarize(sum = sum(r), n = n()) %>%
-      group_by(type2) %>%
-      arrange(desc(n), desc(sum)) %>%
-      filter(type != paste0("r<", threshold,", unassigned")) %>%
-      dplyr::slice(1) %>%
-      right_join(df_temp_full %>% select(-type), by = setNames(collapse_to_cluster, "type2")) %>%
-      mutate(type = replace_na(type, paste0("r<", threshold,", unassigned")))
+    df_temp_full2 <- mutate(df_temp_full, type2 = metadata[[collapse_to_cluster]])
+    df_temp_full2 <- group_by(df_temp_full2, type, type2)
+    df_temp_full2 <- summarize(df_temp_full2, sum = sum(r), n = n())
+    df_temp_full2 <- group_by(df_temp_full2, type2)
+    df_temp_full2 <- arrange(df_temp_full2, desc(n), desc(sum))
+    df_temp_full2 <- filter(df_temp_full2, type != paste0("r<", threshold,", unassigned"))
+    df_temp_full2 <- dplyr::slice(df_temp_full2, 1)
+    df_temp_full2 <- right_join(df_temp_full2, select(df_temp_full, -type), by = setNames(collapse_to_cluster, "type2"))
+    df_temp_full <- mutate(type = replace_na(type, paste0("r<", threshold,", unassigned")))
   }
 
   g <- plot_tsne(df_temp_full,

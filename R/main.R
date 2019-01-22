@@ -150,22 +150,20 @@ clustify.seurat <- function(input,
     df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold,", unassigned")
     df_temp <- dplyr::top_n(dplyr::group_by_at(df_temp, 1), 1, r)
     if (nrow(df_temp) != nrow(res)) {
-      clash <- df_temp %>%
-        group_by(rn) %>%
-        summarize(n = n()) %>%
-        filter(n>1) %>%
-        pull(rn)
-      df_temp <- df_temp %>%
-        mutate(type = ifelse(rn %in% clash, paste0(type, "-CLASH!"), type)) %>%
-        distinct(rn, r, .keep_all = T)
+      clash <- group_by(df_temp, rn)
+      clash <- summarize(clash, n = n())
+      clash <- filter(clash, n > 1)
+      clash <- pull(clash, rn)
+      df_temp <- mutate(df_temp, type = ifelse(rn %in% clash, paste0(type, "-CLASH!"), type))
+      df_temp <- distinct(df_temp, rn, r, .keep_all = T)
     }
     if (per_cell == F) {
-      df_temp <- df_temp %>% rename(!!cluster_col:=rn)
-      df_temp_full <- left_join(metadata %>% rownames_to_column("rn"), df_temp, by = cluster_col) %>%
-        column_to_rownames("rn")
+      df_temp <- rename(df_temp, !!cluster_col:=rn)
+      df_temp_full <- left_join(rownames_to_column(metadata, "rn"), df_temp, by = cluster_col)
+      df_temp_full <- column_to_rownames(df_temp_full, "rn")
       } else {
-      df_temp_full <- left_join(metadata %>% rownames_to_column("rn"), df_temp, by = "rn") %>%
-        column_to_rownames("rn")
+      df_temp_full <- left_join(rownames_to_column(metadata, "rn"), df_temp, by = "rn")
+      df_temp_full <- column_to_rownames(df_temp_full, "rn")
     }
     s_object@meta.data <- df_temp_full
     s_object
