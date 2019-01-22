@@ -296,7 +296,7 @@ plot_best_call <- function(correlation_matrix,
     df_temp_full2 <- dplyr::arrange(df_temp_full2, desc(n), desc(sum))
     df_temp_full2 <- dplyr::filter(df_temp_full2, type != paste0("r<", threshold,", unassigned"))
     df_temp_full2 <- dplyr::slice(df_temp_full2, 1)
-    df_temp_full2 <- dplyr::right_join(df_temp_full2, select(df_temp_full, -type), by = setNames(collapse_to_cluster, "type2"))
+    df_temp_full2 <- dplyr::right_join(df_temp_full2, select(df_temp_full, -type), by = stats::setNames(collapse_to_cluster, "type2"))
     df_temp_full <- dplyr::mutate(type = replace_na(type, paste0("r<", threshold,", unassigned")))
   }
 
