@@ -52,14 +52,14 @@ matrixize_markers <- function(marker_df,
   }
 
   if (unique == TRUE) {
-    nonunique <- group_by(marker_df, gene)
-    nonunique <- summarize(nonunique, n = n())
-    nonunique <- filter(nonunique, n > 1)
-    marker_df <- anti_join(marker_df, nonunique, by = "gene")
+    nonunique <- dplyr::group_by(marker_df, gene)
+    nonunique <- dplyr::summarize(nonunique, n = n())
+    nonunique <- dplyr::filter(nonunique, n > 1)
+    marker_df <- dplyr::anti_join(marker_df, nonunique, by = "gene")
   }
 
-  cut_temp <- group_by(marker_df, cluster)
-  cut_temp <- summarize(cut_temp, n = n())
+  cut_temp <- dplyr::group_by(marker_df, cluster)
+  cut_temp <- dplyr::summarize(cut_temp, n = n())
   cut_num <- min(cut_temp$n)
 
   if (!is.null(n)) {
@@ -69,16 +69,16 @@ matrixize_markers <- function(marker_df,
   }
 
   marker_temp <- dplyr::select(marker_df, gene, cluster)
-  marker_temp <- group_by(marker_temp, cluster)
+  marker_temp <- dplyr::group_by(marker_temp, cluster)
   marker_temp <- dplyr::slice(marker_temp, 1:cut_num)
   if (ranked == TRUE) {
-    marker_temp <- mutate(marker_temp, n = seq(step_weight * cut_num, by = -step_weight, length.out = cut_num) + background_weight)
+    marker_temp <- dplyr::mutate(marker_temp, n = seq(step_weight * cut_num, by = -step_weight, length.out = cut_num) + background_weight)
     marker_temp2 <- tidyr::spread(marker_temp, key = "cluster", value = n)
     marker_temp2 <- as.data.frame(replace(is.na(.), 0))
     rownames(marker_temp2) <- marker_temp2$gene
     marker_temp2 <- dplyr::select(marker_temp2, -gene)
   } else {
-    marker_temp <- mutate( marker_temp, n = 1:cut_num)
+    marker_temp <- dplyr::mutate( marker_temp, n = 1:cut_num)
     marker_temp2 <- tidyr::spread(marker_temp, key = "cluster", value = "gene")
     marker_temp2 <- as.data.frame(dplyr::select(marker_temp2, -n))
   }
@@ -93,7 +93,7 @@ matrixize_markers <- function(marker_df,
           classified = labels$classified
         )),
         by = "cluster")
-      labels <- pull(labels, classified)
+      labels <- dplyr::pull(labels, classified)
     }
     colnames(marker_temp2) <- labels
   }

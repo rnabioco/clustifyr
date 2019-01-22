@@ -46,8 +46,8 @@ use_seurat_comp <- function(seurat_object,
 use_seurat_meta <- function(seurat_object,
                             dr = "tsne") {
   temp_dr <- as.data.frame(seurat_object@dr[[dr]]@cell.embeddings)
-  temp_dr <- rownames_to_column(temp_dr, "rn")
-  temp_meta <- rownames_to_column(seurat_object@meta.data, "rn")
-  temp <- left_join(temp_meta, temp_dr, by = "rn")
-  column_to_rownames(temp, "rn")
+  temp_dr <- tibble::rownames_to_column(temp_dr, "rn")
+  temp_meta <- tibble::rownames_to_column(seurat_object@meta.data, "rn")
+  temp <- dplyr::left_join(temp_meta, temp_dr, by = "rn")
+  tibble::column_to_rownames(temp, "rn")
 }
