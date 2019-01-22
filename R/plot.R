@@ -26,7 +26,7 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
                       do.legend = TRUE) {
 
   # sort data to avoid plotting null values over colors
-  data <- arrange(data, !!sym(feature))
+  data <- dplyr::arrange(data, !!sym(feature))
 
   p <- ggplot(data, aes_string(x, y)) +
     geom_point(aes_string(color = paste0("`", feature,"`")), # backticks protect special character gene names
@@ -65,9 +65,8 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
   }
 
   if (do.label) {
-    data %>%
-      dplyr::group_by_(.dots = feature) %>%
-      summarize(tSNE_1 = mean(tSNE_1), tSNE_2 = mean(tSNE_2)) -> centers
+    centers <- dplyr::group_by_(data, .dots = feature)
+    centers <- dplyr::summarize(centers, tSNE_1 = mean(tSNE_1), tSNE_2 = mean(tSNE_2))
     p <- p +
       geom_point(data = centers, mapping = aes(x = tSNE_1, y = tSNE_2), size = 0, alpha = 0) +
       geom_text(data = centers, mapping = aes(label = centers[[feature]]))
@@ -88,7 +87,7 @@ pretty_palette <- rev(RColorBrewer::brewer.pal(11, "RdGy")[c(1:5, 7)])
 
 #' Expanded color palette ramp for plotting discrete variables
 #' @export
-pretty_palette_ramp_d <- colorRampPalette(RColorBrewer::brewer.pal(12, "Paired"))
+pretty_palette_ramp_d <- grDevices::olorRampPalette(RColorBrewer::brewer.pal(12, "Paired"))
 
 #' Plot similarity measures on a tSNE
 #'
@@ -216,7 +215,7 @@ plot_gene <- function(expr_mat,
     stop("please supply a cell_col that is present in metadata")
   }
 
-  plt_dat <- left_join(expr_dat, mdata,
+  plt_dat <- dplyr::left_join(expr_dat, mdata,
                        by = c("cell" = cell_col))
 
   lapply(genes,
@@ -280,26 +279,25 @@ plot_best_call <- function(correlation_matrix,
   df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold,", unassigned")
   df_temp <- dplyr::top_n(dplyr::group_by_at(df_temp, 1), 1, r)
   if (nrow(df_temp) != nrow(correlation_matrix)) {
-    clash <- dplyr::group_by_at(df_temp, 1) %>%
-      summarize(n = n()) %>%
-      filter(n>1) %>%
-      pull(1)
+    clash <- dplyr::group_by_at(df_temp, 1)
+    clash <- dplyr::summarize(clash, n = n())
+    clash <- dplyr::filter(clash, n > 1)
+    clash <- dplyr::pull(clash, 1)
     df_temp[lapply(df_temp[,1], FUN = function(x) x %in% clash)[[1]],2] <- paste0(df_temp[["type"]][lapply(df_temp[,1], FUN = function(x) x %in% clash)[[1]]], "-CLASH!")
-    df_temp <- df_temp %>% distinct(exclude = "type", .keep_all =T)
+    df_temp <- dplyr::distinct(df_temp, exclude = "type", .keep_all =T)
   }
-  df_temp_full <- left_join(metadata, df_temp, by = col)
+  df_temp_full <- dplyr::left_join(metadata, df_temp, by = col)
 
   if(collapse_to_cluster != FALSE){
-    df_temp_full <- df_temp_full %>%
-      mutate(type2 = metadata[[collapse_to_cluster]]) %>%
-      group_by(type, type2) %>%
-      summarize(sum = sum(r), n = n()) %>%
-      group_by(type2) %>%
-      arrange(desc(n), desc(sum)) %>%
-      filter(type != paste0("r<", threshold,", unassigned")) %>%
-      dplyr::slice(1) %>%
-      right_join(df_temp_full %>% select(-type), by = setNames(collapse_to_cluster, "type2")) %>%
-      mutate(type = replace_na(type, paste0("r<", threshold,", unassigned")))
+    df_temp_full2 <- dplyr::mutate(df_temp_full, type2 = metadata[[collapse_to_cluster]])
+    df_temp_full2 <- dplyr::group_by(df_temp_full2, type, type2)
+    df_temp_full2 <- dplyr::summarize(df_temp_full2, sum = sum(r), n = n())
+    df_temp_full2 <- dplyr::group_by(df_temp_full2, type2)
+    df_temp_full2 <- dplyr::arrange(df_temp_full2, desc(n), desc(sum))
+    df_temp_full2 <- dplyr::filter(df_temp_full2, type != paste0("r<", threshold,", unassigned"))
+    df_temp_full2 <- dplyr::slice(df_temp_full2, 1)
+    df_temp_full2 <- dplyr::right_join(df_temp_full2, select(df_temp_full, -type), by = setNames(collapse_to_cluster, "type2"))
+    df_temp_full <- dplyr::mutate(type = replace_na(type, paste0("r<", threshold,", unassigned")))
   }
 
   g <- plot_tsne(df_temp_full,
