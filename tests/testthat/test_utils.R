@@ -1,4 +1,4 @@
-context("clustify")
+context("utils")
 
 test_that("get_vargenes works for both matrix and dataframe form", {
   pbmc4k_mm <- matrixize_markers(pbmc4k_markers)
