@@ -165,7 +165,7 @@ clustify.seurat <- function(input,
       df_temp_full <- dplyr::left_join(tibble::rownames_to_column(metadata, "rn"), df_temp, by = "rn")
       df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
     }
-    s_object@meta.data <- df_temp_full
+    tryCatch(s_object@meta.data <- df_temp_full, error=function(e) print("seurat not loaded, returning cor_mat instead"), finally = return(res))
     s_object
   }
 }
