@@ -110,7 +110,11 @@ matrixize_markers <- function(marker_df,
 #'
 #' @export
 get_vargenes <- function(marker_m) {
-  unique(unlist(marker_m, use.names = FALSE))
+  if (rownames(marker_m)[1] != "1") {
+    unique(rownames(marker_m))
+  } else {
+    unique(unlist(marker_m, use.names = FALSE))
+  }
 }
 
 #' calculate adjusted p-values for hypergeometric test of gene lists
