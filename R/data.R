@@ -117,3 +117,12 @@
 #'
 #' @source  `[pbmc4k_matrix]` processed by `[seurat]`
 "pbmc_pca"
+
+#' Small clustered Seurat object
+#'
+#' @format XXX
+#' \describe{
+#' }
+#'
+#' @source  `[pbmc_small]` processed by `[seurat]`
+"s_small"
