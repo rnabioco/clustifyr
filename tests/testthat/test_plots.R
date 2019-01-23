@@ -9,9 +9,14 @@ res <- clustify(
 )
 
 test_that("plots can be generated", {
+  plts <- plot_best_call(res, pbmc4k_meta)
+  expect_true(ggplot2::is.ggplot(plts))
+})
+
+test_that("call plots can be generated", {
   plts <- plot_cor(res, pbmc4k_meta,
-           bulk_data_to_plot = colnames(res)[1:2],
-           cluster_col = "cluster")
+                   bulk_data_to_plot = colnames(res)[1:2],
+                   cluster_col = "cluster")
 
   expect_true(is.list(plts))
   expect_true(ggplot2::is.ggplot(plts[[1]]))

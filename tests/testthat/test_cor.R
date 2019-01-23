@@ -79,3 +79,16 @@ test_that("test permutation", {
   expect_equal(length(res_full), 2)
   expect_true(all(res_full$p_val >= 0 | res_full$p_val <= 0))
 })
+
+test_that("run all gene list functions", {
+  pbmc4k_mm <- matrixize_markers(pbmc4k_markers)
+  pbmc4k_avgb <- binarize_expr(pbmc4k_avg)
+  gene_list_methods <- c("spearman", "hyper", "jaccard", "gsea")
+  results <- lapply(gene_list_methods,
+                    function(x) {
+                      res <- compare_lists(pbmc4k_avgb,
+                                           pbmc4k_mm,
+                                           metric = x)})
+
+  expect_equal(4, length(results))
+})
