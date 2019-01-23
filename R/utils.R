@@ -299,8 +299,10 @@ cor_to_call <- function(correlation_matrix,
     clash <- dplyr::pull(clash, 1)
     df_temp[lapply(df_temp[,1], FUN = function(x) x %in% clash)[[1]],2] <- paste0(df_temp[["type"]][lapply(df_temp[,1], FUN = function(x) x %in% clash)[[1]]], "-CLASH!")
     df_temp <- dplyr::distinct(df_temp, exclude = "type", .keep_all = T)
+    df_temp_full <- dplyr::select(df_temp, -exclude)
+  } else {
+    df_temp_full <- df_temp
   }
-  df_temp_full <- dplyr::select(df_temp, -exclude)
 
   if(collapse_to_cluster != FALSE){
     if (!(col %in% colnames(metadata))) {
