@@ -191,7 +191,7 @@ plot_gene <- function(expr_mat,
                       ...) {
 
   genes_to_plot <- genes[genes %in% rownames(expr_mat)]
-  genes_missing <- setdiff(genes_to_plot, genes)
+  genes_missing <- setdiff(genes, genes_to_plot)
 
   if (length(genes_missing) != 0) {
     warning(paste0("the following genes were not present in the input matrix ",
@@ -218,7 +218,7 @@ plot_gene <- function(expr_mat,
   plt_dat <- dplyr::left_join(expr_dat, mdata,
                        by = c("cell" = cell_col))
 
-  lapply(genes,
+  lapply(genes_to_plot,
          function(gene){
            plot_tsne(plt_dat,
                      feature = gene,
@@ -297,7 +297,7 @@ plot_best_call <- function(correlation_matrix,
     df_temp_full2 <- dplyr::filter(df_temp_full2, type != paste0("r<", threshold,", unassigned"))
     df_temp_full2 <- dplyr::slice(df_temp_full2, 1)
     df_temp_full2 <- dplyr::right_join(df_temp_full2, select(df_temp_full, -type), by = stats::setNames(collapse_to_cluster, "type2"))
-    df_temp_full <- dplyr::mutate(type = replace_na(type, paste0("r<", threshold,", unassigned")))
+    df_temp_full <- dplyr::mutate(df_temp_full2, type = tidyr::replace_na(type, paste0("r<", threshold,", unassigned")))
   }
 
   g <- plot_tsne(df_temp_full,

@@ -45,3 +45,21 @@ test_that("cor_to_call threshold works as intended", {
 
   expect_true("r<0.5, unassigned" %in% call1$type)
 })
+
+test_that("cor_to_call threshold works as intended, on per cell and collapsing", {
+  res <- clustify(
+    input = pbmc4k_matrix,
+    metadata = pbmc4k_meta,
+    bulk_mat = pbmc_bulk_matrix,
+    query_genes = pbmc4k_vargenes,
+    cluster_col = "cluster",
+    per_cell = T
+  )
+  call1 <- cor_to_call(res,
+                       metadata = pbmc4k_meta,
+                       col = "rn",
+                       collapse_to_cluster = "cluster",
+                       threshold = 0.1)
+
+  expect_true(!any(is.na(call1)))
+})
