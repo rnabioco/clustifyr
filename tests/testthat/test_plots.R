@@ -32,3 +32,34 @@ test_that("plot_gene can handle strange and normal genenames", {
   expect_true(is.list(plts))
   expect_true(all(sapply(plts, ggplot2::is.ggplot)))
 })
+
+test_that("plot_best_call threshold works as intended, on per cell and collapsing", {
+  res <- clustify(
+    input = pbmc4k_matrix,
+    metadata = pbmc4k_meta,
+    bulk_mat = pbmc_bulk_matrix,
+    query_genes = pbmc4k_vargenes,
+    cluster_col = "cluster",
+    per_cell = T
+  )
+  call1 <- plot_best_call(res,
+                          metadata = pbmc4k_meta,
+                          col = "rn",
+                          collapse_to_cluster = "cluster",
+                          threshold = 0.3)
+
+  expect_true(ggplot2::is.ggplot(call1))
+})
+
+test_that("plot_gene checks for presence of gene name", {
+  plot_gene(pbmc4k_matrix,
+            pbmc4k_meta,
+            c("ACTB","ZFP36L3"),
+            cell_col = "rn",
+            do.label = T,
+            do.legend =F)
+  expect_error(plot_gene(pbmc4k_matrix,
+            pbmc4k_meta,
+            c("ZFP36L3"),
+            cell_col = "rn"))
+})

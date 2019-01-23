@@ -160,6 +160,9 @@ compare_lists <- function(bin_mat,
         do.call(cbind, as.list(p.adjust(per_col)))
       }
     )
+    if (any(sapply(out, is.na))) {
+      error("NaN produced, possibly due to wrong n")
+    }
   }
 
   if (metric == "jaccard") {
