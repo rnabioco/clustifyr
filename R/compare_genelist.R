@@ -74,7 +74,7 @@ matrixize_markers <- function(marker_df,
   if (ranked == TRUE) {
     marker_temp <- dplyr::mutate(marker_temp, n = seq(step_weight * cut_num, by = -step_weight, length.out = cut_num) + background_weight)
     marker_temp2 <- tidyr::spread(marker_temp, key = "cluster", value = n)
-    marker_temp2 <- as.data.frame(replace(is.na(marker_temp2), 0))
+    marker_temp2 <- as.data.frame(replace(marker_temp2, is.na(marker_temp2), 0))
     rownames(marker_temp2) <- marker_temp2$gene
     marker_temp2 <- dplyr::select(marker_temp2, -gene)
   } else {
