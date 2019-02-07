@@ -63,3 +63,16 @@ test_that("cor_to_call threshold works as intended, on per cell and collapsing",
 
   expect_true(!any(is.na(call1)))
 })
+
+test_that("assign_ident works with equal length vectors and just 1 ident", {
+  m1 <- assign_ident(pbmc4k_meta,
+               ident_col = "classified",
+               clusters = c("1","2"),
+               idents = c("whatever1", "whatever2"))
+  m2 <- assign_ident(pbmc4k_meta,
+                     ident_col = "classified",
+                     clusters = c("1","2"),
+                     idents = "whatever1")
+  expect_true(nrow(m1) == nrow(m2))
+})
+

@@ -323,3 +323,33 @@ cor_to_call <- function(correlation_matrix,
   df_temp_full
 }
 
+#' manually change idents as needed
+#'
+#' @param metadata column of ident
+#' @param cluster_col column in metadata containing cluster info
+#' @param ident_col column in metadata containing identity assignment
+#' @param clusters names of clusters to change, string or vector of strings
+#' @param idents new idents to assign, must be length of 1 or same as clusters
+
+#' @export
+assign_ident <- function(metadata,
+                         cluster_col = "cluster",
+                         ident_col = "type",
+                         clusters,
+                         idents) {
+  if (!is.vector(clusters) | !is.vector(idents)) {
+    stop("unsupported clusters or idents")
+  } else {
+    if (length(idents) == 1) {
+      idents <- rep(idents, length(clusters))
+    } else if (length(idents) != length(clusters)) {
+      stop("unsupported lengths pairs of clusters and idents")
+    }
+  }
+
+  for (n in 1:length(clusters)) {
+    mindex <- metadata[[cluster_col]] == clusters[n]
+    metadata[mindex, ident_col] <- idents[n]
+  }
+  metadata
+}
