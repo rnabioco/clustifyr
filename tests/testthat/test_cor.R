@@ -81,9 +81,21 @@ test_that("test permutation", {
 })
 
 test_that("seurat object clustifying", {
-  res <- clustify(s_small, pbmc_bulk_matrix, cluster_col = "res.1")
-  res <- clustify(s_small, pbmc_bulk_matrix, cluster_col = "res.1", seurat_out = F, per_cell = T)
-  res <- clustify(s_small, pbmc_bulk_matrix, cluster_col = "res.1", seurat_out = F)
-  g <- plot_best_call(res, use_seurat_meta(s_small), col = "res.1", plot_r = T)
+  res <- clustify(s_small,
+                  pbmc_bulk_matrix,
+                  cluster_col = "res.1")
+  res <- clustify(s_small,
+                  pbmc_bulk_matrix,
+                  cluster_col = "res.1",
+                  seurat_out = F,
+                  per_cell = T)
+  res <- clustify(s_small,
+                  pbmc_bulk_matrix,
+                  cluster_col = "res.1",
+                  seurat_out = F)
+  g <- plot_best_call(res,
+                      use_seurat_meta(s_small),
+                      col = "res.1",
+                      plot_r = T)
   expect_true(ggplot2::is.ggplot(g[[1]]))
 })
