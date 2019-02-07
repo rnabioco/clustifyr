@@ -70,9 +70,9 @@ res <- clustify(
 )
 ```
 
-Correspondingly, `clustify_lists` can also handle identity assignment of matrix or `seurat` object.
+Correspondingly, `clustify_lists` can also handle identity assignment of matrix or `seurat` object based on marker gene lists.
 
-```{r example_seurat, eval = F}
+```{r example_seurat2, eval = F}
 res <- clustify_lists(pbmc4k_matrix,
                per_cell = F,
                cluster_info = pbmc4k_meta,

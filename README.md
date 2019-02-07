@@ -84,3 +84,23 @@ res <- clustify(
   seurat_out = T
 )
 ```
+
+Correspondingly, `clustify_lists` can also handle identity assignment of
+matrix or `seurat` object based on marker gene lists.
+
+``` r
+res <- clustify_lists(pbmc4k_matrix,
+               per_cell = F,
+               cluster_info = pbmc4k_meta,
+               marker = pbmc4k_markers,
+               marker_inmatrix = F,
+               metric = "hyper")
+
+res <- clustify_lists(s_small,
+               per_cell = F,
+               marker = pbmc4k_markers,
+               marker_inmatrix = F,
+               cluster_col = "res.1",
+               seurat_out = T
+)
+```
