@@ -353,3 +353,49 @@ assign_ident <- function(metadata,
   }
   metadata
 }
+
+#' get top calls for each cluster
+#'
+#' @param correlation_matrix input similarity matrix
+#' @param metadata input metadata with tsne coordinates and cluster ids
+#' @param col metadata column, can be cluster or cellid
+#' @param collapse_to_cluster if a column name is provided, takes the most frequent call of entire cluster to color in plot
+#' @param threshold minimum correlation coefficent cutoff for calling clusters
+#' @param topn number of calls for each cluster
+#'
+#' @export
+cor_to_call_topn <- function(correlation_matrix,
+                        metadata = NULL,
+                        col = "cluster",
+                        collapse_to_cluster = FALSE,
+                        threshold = 0,
+                        topn = 2) {
+  df_temp <- tibble::as_tibble(correlation_matrix, rownames = col)
+  df_temp <- tidyr::gather(df_temp, key = type, value = r, -!!col)
+  df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold,", unassigned")
+  df_temp <- dplyr::top_n(dplyr::group_by_at(df_temp, 1), topn, r)
+  df_temp_full <- df_temp
+
+  if(collapse_to_cluster != FALSE){
+    if (!(col %in% colnames(metadata))) {
+      metadata <- tibble::as_tibble(metadata, rownames = col)
+    }
+    df_temp_full <- dplyr::left_join(df_temp_full, metadata, by = col)
+    df_temp_full[,"type2"] <- df_temp_full[[collapse_to_cluster]]
+    df_temp_full2 <- dplyr::group_by(df_temp_full, type, type2)
+    df_temp_full2 <- dplyr::summarize(df_temp_full2, sum = sum(r), n = n())
+    df_temp_full2 <- dplyr::group_by(df_temp_full2, type2)
+    df_temp_full2 <- dplyr::arrange(df_temp_full2, desc(n), desc(sum))
+    df_temp_full2 <- dplyr::filter(df_temp_full2, type != paste0("r<", threshold,", unassigned"))
+    df_temp_full2 <- dplyr::slice(df_temp_full2, 1:topn)
+    df_temp_full2 <- dplyr::right_join(df_temp_full2, select(df_temp_full, -c(type, r)), by = stats::setNames(collapse_to_cluster, "type2"))
+    df_temp_full <- dplyr::mutate(df_temp_full2, type = tidyr::replace_na(type, paste0("r<", threshold,", unassigned")))
+    df_temp_full <- dplyr::group_by_(df_temp_full, .dots = col)
+    df_temp_full <- dplyr::distinct(df_temp_full, type, type2, .keep_all = T)
+    dplyr::arrange(df_temp_full, desc(n), desc(sum), .by_group = T)
+  } else {
+    df_temp_full <- dplyr::group_by_(df_temp_full, .dots = col)
+    dplyr::arrange(df_temp_full, desc(r), .by_group = T)
+  }
+
+}

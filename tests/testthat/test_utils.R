@@ -76,3 +76,37 @@ test_that("assign_ident works with equal length vectors and just 1 ident", {
   expect_true(nrow(m1) == nrow(m2))
 })
 
+test_that("cor_to_call_topn works as intended", {
+  res <- clustify(
+    input = pbmc4k_matrix,
+    metadata = pbmc4k_meta,
+    bulk_mat = pbmc_bulk_matrix,
+    query_genes = pbmc4k_vargenes,
+    cluster_col = "cluster"
+  )
+  call1 <- cor_to_call_topn(res,
+                       metadata = pbmc4k_meta,
+                       col = "cluster",
+                       collapse_to_cluster = FALSE,
+                       threshold = 0.5)
+
+  expect_true(nrow(call1) == 2*nrow(res))
+})
+
+test_that("cor_to_call_topn works as intended on collapse to cluster option", {
+  res <- clustify(
+    input = pbmc4k_matrix,
+    metadata = pbmc4k_meta,
+    bulk_mat = pbmc_bulk_matrix,
+    query_genes = pbmc4k_vargenes,
+    cluster_col = "cluster",
+    per_cell = T
+  )
+  call1 <- cor_to_call_topn(res,
+                            metadata = pbmc4k_meta,
+                            col = "rn",
+                            collapse_to_cluster = "cluster",
+                            threshold = 0)
+
+  expect_true(nrow(call1) == 2*nrow(res))
+})
