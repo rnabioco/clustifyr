@@ -38,7 +38,16 @@ test_that("run all gene list functions in clustify_lists", {
 })
 
 test_that("seurat object clustify_lists-ing", {
-  res <- clustify_lists(s_small, per_cell = F, marker = pbmc4k_markers, marker_inmatrix = F, metric = "jaccard", cluster_col = "res.1", seurat_out = F)
-  g <- plot_best_call(res, use_seurat_meta(s_small), col = "res.1", plot_r = T)
+  res <- clustify_lists(s_small,
+                        per_cell = F,
+                        marker = pbmc4k_markers,
+                        marker_inmatrix = F,
+                        metric = "jaccard",
+                        cluster_col = "res.1",
+                        seurat_out = F)
+  g <- plot_best_call(res,
+                      use_seurat_meta(s_small),
+                      col = "res.1",
+                      plot_r = T)
   expect_true(ggplot2::is.ggplot(g[[1]]))
 })
