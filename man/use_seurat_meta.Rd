@@ -4,12 +4,14 @@
 \alias{use_seurat_meta}
 \title{Function to convert labelled seurat object to fully prepared metadata}
 \usage{
-use_seurat_meta(seurat_object, dr = "tsne")
+use_seurat_meta(seurat_object, dr = "tsne", seurat3 = F)
 }
 \arguments{
 \item{seurat_object}{seurat_object after tsne projections and clustering}
 
 \item{dr}{dimension reduction method}
+
+\item{seurat3}{if using newest version}
 }
 \description{
 Function to convert labelled seurat object to fully prepared metadata
