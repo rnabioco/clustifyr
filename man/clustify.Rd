@@ -4,6 +4,7 @@
 \alias{clustify}
 \alias{clustify.default}
 \alias{clustify.seurat}
+\alias{clustify.Seurat}
 \title{Main function to compare scRNA-seq data to bulk RNA-seq data.}
 \usage{
 clustify(input, ...)
@@ -13,6 +14,11 @@ clustify(input, ...)
   num_perm = 0, compute_method = "spearman", ...)
 
 \method{clustify}{seurat}(input, bulk_mat, query_genes = NULL,
+  per_cell = FALSE, num_perm = 0, cluster_col = NULL,
+  compute_method = "spearman", use_var_genes = TRUE, dr = "tsne",
+  seurat_out = TRUE, threshold = 0, ...)
+
+\method{clustify}{Seurat}(input, bulk_mat, query_genes = NULL,
   per_cell = FALSE, num_perm = 0, cluster_col = NULL,
   compute_method = "spearman", use_var_genes = TRUE, dr = "tsne",
   seurat_out = TRUE, threshold = 0, ...)
@@ -45,6 +51,29 @@ column of metadata if not supplied. Not required if running correlation per cell
 \item{dr}{stored dimension reduction}
 
 \item{seurat_out}{output cor matrix or called seurat object}
+
+\item{bulk_mat}{bulk expression matrix}
+
+\item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
+the expr_mat and bulk_mat will be used for comparision.}
+
+\item{cluster_col}{column in metadata that contains cluster ids per cell. Will default to first
+column of metadata if not supplied. Not required if running correlation per cell.}
+
+\item{per_cell}{if true run per cell, otherwise per cluster.}
+
+\item{num_perm}{number of permutations, set to 0 by default}
+
+\item{compute_method}{method(s) for computing similarity scores}
+
+\item{use_var_genes}{if providing a seurat object, use the variable genes
+(stored in seurat_object@var.genes) as the query_genes.}
+
+\item{dr}{stored dimension reduction}
+
+\item{seurat_out}{output cor matrix or called seurat object}
+
+\item{...}{additional arguments to pass to compute_method function}
 
 \item{bulk_mat}{bulk expression matrix}
 
