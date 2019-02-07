@@ -184,3 +184,143 @@ clustifyr_methods <- c(
   "cosine",
   "kl_divergence"
 )
+
+#' Main function to compare scRNA-seq data to gene lists.
+#'
+#'@export
+clustify_lists <- function(input, ...) {
+  UseMethod("clustify_lists", input)
+}
+
+#' @rdname clustify_lists
+#' @param input single-cell expression matrix or Seurat object
+#' @param per_cell compare per cell or per cluster
+#' @param cluster_info data.frame or vector containing cluster assignments per cell.
+#' Order must match column order in supplied matrix. If a data.frame
+#' provide the cluster_col parameters.
+#' @param log_scale input data is natural log,
+#' averaging will be done on unlogged data
+#' @param cluster_col column in cluster_info with cluster number
+#' @param topn number of top expressing genes to keep from input matrix
+#' @param cut expression cut off from input matrix
+#' @param marker matrix or dataframe of candidate genes for each cluster
+#' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
+#' @param genomen number of genes in the genome
+#' @param metric adjusted p-value for hypergeometric test, or jaccard index
+#' @param output_high if true (by default to fit with rest of package),
+#' -log10 transform p-value
+#' @param ... passed to matrixize_markers
+#'
+#' @export
+
+clustify_lists.default <- function(input,
+                           per_cell = F,
+                           cluster_info = NULL,
+                           log_scale = T,
+                           cluster_col = "cluster",
+                           topn = 1000,
+                           cut = 0,
+                           marker,
+                           marker_inmatrix = T,
+                           genomen = 30000,
+                           metric = "hyper",
+                           output_high = TRUE,
+                           ...) {
+  if (per_cell == F) {
+    input <- average_clusters(input,
+                              cluster_info,
+                              log_scale = log_scale,
+                              cluster_col = cluster_col)
+  }
+
+  bin_input <- binarize_expr(input, n = topn, cut = cut)
+
+  if (marker_inmatrix != T) {
+    marker <- matrixize_markers(marker,
+                                ...)
+  }
+
+  compare_lists(bin_input,
+                marker_m = marker,
+                n = genomen,
+                metric = metric,
+                output_high = output_high)
+}
+
+#' @rdname clustify_lists
+#' @param input seurat object
+#' @param per_cell compare per cell or per cluster
+#' @param cluster_info data.frame or vector containing cluster assignments per cell.
+#' Order must match column order in supplied matrix. If a data.frame
+#' provide the cluster_col parameters.
+#' @param log_scale input data is natural log,
+#' averaging will be done on unlogged data
+#' @param cluster_col column in cluster_info with cluster number
+#' @param topn number of top expressing genes to keep from input matrix
+#' @param cut expression cut off from input matrix
+#' @param marker matrix or dataframe of candidate genes for each cluster
+#' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
+#' @param genomen number of genes in the genome
+#' @param metric adjusted p-value for hypergeometric test, or jaccard index
+#' @param output_high if true (by default to fit with rest of package),
+#' -log10 transform p-value
+#' @param dr stored dimension reduction
+#' @param seurat_out output cor matrix or called seurat object
+
+#' @param ... passed to matrixize_markers
+clustify_lists.seurat <- function(input,
+                                  per_cell = F,
+                                  cluster_info = NULL,
+                                  log_scale = T,
+                                  cluster_col = "cluster",
+                                  topn = 1000,
+                                  cut = 0,
+                                  marker,
+                                  marker_inmatrix = T,
+                                  genomen = 30000,
+                                  metric = "hyper",
+                                  output_high = TRUE,
+                                  dr = "tsne",
+                                  seurat_out = TRUE,
+                                  threshold = 0,
+                                  ...) {
+  s_object <- input
+  input <- s_object@data
+  cluster_info <- as.data.frame(use_seurat_meta(s_object, dr = dr))
+
+  res <- clustify_lists(input,
+                        per_cell = per_cell,
+                        cluster_info = cluster_info,
+                        log_scale = log_scale,
+                        cluster_col = cluster_col,
+                        topn = topn,
+                        cut = cut,
+                        marker,
+                        marker_inmatrix = marker_inmatrix,
+                        genomen = genomen,
+                        metric = metric,
+                        output_high = output_high,
+                        ...)
+
+  if (seurat_out == F) {
+    res
+  } else {
+    if (per_cell == F) {
+      df_temp <- cor_to_call(res, cluster_info, col = cluster_col, threshold = threshold)
+      df_temp_full <- dplyr::left_join(tibble::rownames_to_column(cluster_info, "rn"), df_temp, by = cluster_col)
+      df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
+    } else {
+      df_temp <- cor_to_call(res, cluster_info, col = "rn", threshold = threshold)
+      df_temp_full <- dplyr::left_join(tibble::rownames_to_column(cluster_info, "rn"), df_temp, by = "rn")
+      df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
+    }
+    if ("Seurat" %in% loadedNamespaces()) {
+      s_object@meta.data <- df_temp_full
+      return(s_object)
+    } else {
+      print("seurat not loaded, returning cor_mat instead")
+      return(res)
+    }
+    s_object
+  }
+}
