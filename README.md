@@ -73,19 +73,19 @@ plot_best_call(res, pbmc4k_meta)
 
 <img src="man/figures/README-example-3.png" width="100%" />
 
-Alternatively, `clustify` can take a clustered `seurat` object and
-assign identities.
+Alternatively, `clustify` can take a clustered `seurat` object (both v2
+and v3) and assign identities.
 
 ``` r
 res <- clustify(
-  input = s_object,
-  cluster_col = "cluster.ids"
+  input = s_small,
+  cluster_col = "res.1"
   bulk_mat = pbmc_bulk_matrix,
   seurat_out = T
 )
 ```
 
-Correspondingly, `clustify_lists` can also handle identity assignment of
+Similarly, `clustify_lists` can also handle identity assignment of
 matrix or `seurat` object based on marker gene lists.
 
 ``` r
