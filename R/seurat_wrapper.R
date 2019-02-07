@@ -42,10 +42,16 @@ use_seurat_comp <- function(seurat_object,
 #'
 #' @param seurat_object seurat_object after tsne projections and clustering
 #' @param dr dimension reduction method
+#' @param seurat3 if using newest version
 #' @export
 use_seurat_meta <- function(seurat_object,
-                            dr = "tsne") {
-  temp_dr <- as.data.frame(seurat_object@dr[[dr]]@cell.embeddings)
+                            dr = "tsne",
+                            seurat3 = F) {
+  if (seurat3 == F) {
+    temp_dr <- as.data.frame(seurat_object@dr[[dr]]@cell.embeddings)
+  } else {
+    temp_dr <- as.data.frame(seurat_object@reductions[[dr]]@cell.embeddings)
+  }
   temp_dr <- tibble::rownames_to_column(temp_dr, "rn")
   temp_meta <- tibble::rownames_to_column(seurat_object@meta.data, "rn")
   temp <- dplyr::left_join(temp_meta, temp_dr, by = "rn")
