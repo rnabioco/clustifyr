@@ -6,7 +6,7 @@
 \usage{
 matrixize_markers(marker_df, ranked = FALSE, n = NULL,
   step_weight = 1, background_weight = 0, unique = FALSE,
-  labels = NULL)
+  labels = NULL, remove_rp = F)
 }
 \arguments{
 \item{marker_df}{dataframe of candidate genes, must contain "gene" and "cluster" columns, or a matrix of gene names to convert to ranked}
@@ -24,6 +24,8 @@ added weight}
 \item{unique}{whether to use only unique markers to 1 cluster}
 
 \item{labels}{vector or dataframe of cluster names}
+
+\item{remove_rp}{do not include rps, rpl, rp\link{1-9} in markers}
 }
 \description{
 convert candidate genes list into matrix

@@ -8,6 +8,13 @@ test_that("get_vargenes works for both matrix and dataframe form", {
   expect_equal(var1[1], var2[1])
 })
 
+test_that("matrixize_markers with remove_rp option", {
+  pbmc4k_mm <- matrixize_markers(pbmc4k_markers)
+  pbmc4k_mm2 <- matrixize_markers(pbmc4k_markers, remove_rp = T)
+
+  expect_true(nrow(pbmc4k_mm) != nrow(pbmc4k_mm2))
+})
+
 test_that("average_clusters works as intended", {
   pbmc4k_avg2 <- average_clusters(pbmc4k_matrix, pbmc4k_meta)
   expect_equal(nrow(pbmc4k_avg2), nrow(pbmc4k_avg))
@@ -109,4 +116,17 @@ test_that("cor_to_call_topn works as intended on collapse to cluster option", {
                             threshold = 0)
 
   expect_true(nrow(call1) == 2*nrow(res))
+})
+
+test_that("gene_pct and gene_pct_markerm work as intended", {
+  res <- gene_pct(pbmc4k_matrix,
+                  cbmc_m$B,
+                  pbmc4k_meta$cluster)
+
+  res2 <- gene_pct_markerm(pbmc4k_matrix,
+                           cbmc_m,
+                           pbmc4k_meta,
+                           cluster_col = "cluster")
+
+  expect_true(nrow(res2) == 10)
 })

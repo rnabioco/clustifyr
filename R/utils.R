@@ -399,3 +399,47 @@ cor_to_call_topn <- function(correlation_matrix,
   }
 
 }
+
+#' pct of cells in each cluster that express genelist
+#'
+#' @param matrix expression matrix
+#' @param genelist vector of marker genes for one identity
+#' @param clusters vector of cluster identities
+#'
+#' @export
+gene_pct <- function(matrix, genelist, clusters){
+  genelist <- intersect(genelist, rownames(matrix))
+  unique_clusters <- unique(clusters)
+  sapply(unique_clusters, function(x) {
+    celllist <- clusters == x
+    tmp <- matrix[genelist, celllist, drop = F]
+    tmp[tmp > 0] <- 1
+    mean(Matrix::rowSums(tmp)/ncol(tmp))
+  })
+}
+
+#' pct of cells in every cluster that express a series of genelists
+#'
+#' @param matrix expression matrix
+#' @param marker_m matrixized markers
+#' @param cluster_info data.frame or vector containing cluster assignments per cell.
+#' Order must match column order in supplied matrix. If a data.frame
+#' provide the cluster_col parameters.
+#' @param cluster_col column in cluster_info with cluster number
+#'
+#' @export
+gene_pct_markerm <- function(matrix, marker_m, cluster_info, cluster_col = NULL) {
+  if(is.vector(cluster_info)){
+  } else if (is.data.frame(cluster_info) & !is.null(cluster_col)){
+    cluster_info <- cluster_info[[cluster_col]]
+  } else {
+    stop("cluster_info not formatted correctly,
+         supply either a  vector or a dataframe")
+  }
+
+  out <- sapply(colnames(marker_m), function(x) {
+    gene_pct(matrix, marker_m[[x]], cluster_info)
+  })
+
+  out
+  }
