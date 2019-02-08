@@ -32,6 +32,7 @@ binarize_expr <- function(expr_mat,
 #' added weight
 #' @param unique whether to use only unique markers to 1 cluster
 #' @param labels vector or dataframe of cluster names
+#' @param remove_rp do not include rps, rpl, rp[1-9] in markers
 #'
 #' @export
 matrixize_markers <- function(marker_df,
@@ -40,15 +41,20 @@ matrixize_markers <- function(marker_df,
                               step_weight = 1,
                               background_weight = 0,
                               unique = FALSE,
-                              labels = NULL) {
+                              labels = NULL,
+                              remove_rp = F) {
   # takes marker in dataframe form
   # equal number of marker genes per known cluster
-  marker_df <- as_tibble(marker_df)
+  marker_df <- dplyr::as_tibble(marker_df)
 
   # if "gene" not present in column names, assume df is a matrix to be converted to ranked
   if (!("gene" %in% colnames(marker_df))) {
     marker_df <- data.frame(lapply(marker_df, as.character), stringsAsFactors = FALSE)
     marker_df <-tidyr::gather(marker_df, factor_key = TRUE, key = "cluster", value = "gene")
+  }
+
+  if (remove_rp == T){
+    marker_df <- dplyr::filter(marker_df, !(stringr::str_detect(gene, "^RP[0-9,L,S]")))
   }
 
   if (unique == TRUE) {
@@ -230,7 +236,7 @@ compare_lists <- function(bin_mat,
     if (metric == "hyper") {
       res <- -log10(res)
     } else if (metric == "spearman") {
-      res <- -res
+      res <- -res + max(res)
     }
   }
 
