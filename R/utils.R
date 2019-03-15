@@ -442,4 +442,53 @@ gene_pct_markerm <- function(matrix, marker_m, cluster_info, cluster_col = NULL)
   })
 
   out
+}
+
+#' using marker gene percentage info to nudge cor calling
+#'
+#' @param input seurat 2 object
+#' @param bulk_mat bulk expression matrix
+#' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
+#' the expr_mat and bulk_mat will be used for comparision.
+#' @param cluster_col column in metadata that contains cluster ids per cell. Will default to first
+#' column of metadata if not supplied. Not required if running correlation per cell.
+#' @param compute_method method(s) for computing similarity scores
+#' @param dr stored dimension reduction
+#' @param seurat_out output cor matrix or called seurat object
+#' @param ... additional arguments to pass to compute_method function
+
+#' @export
+clustify_nudge <- function(input, bulk_mat, marker, cluster_col = NULL, query_genes = NULL,compute_method = "spearman", weight = 0.2, seurat_out = F, threshold = 0, dr = "tsne", set_ident = T){
+  resb <- gene_pct_markerm(input@data, marker, input@meta.data, cluster_col = cluster_col)
+  resb2 <- sweep(resb,2,apply(resb,2,max),"/")
+
+  resa <- clustify(
+    input = input,
+    bulk_mat = bulk_mat,
+    cluster_col = cluster_col,
+    query_genes = query_genes,
+    seurat_out = F,
+    per_cell = F
+  )
+
+  df_temp <- cor_to_call(resa[order(rownames(resa)), order(colnames(resa))] + resb2[order(rownames(resb2)), order(colnames(resb2))] * weight, threshold = threshold)
+  colnames(df_temp) <- c(cluster_col, "type", "score")
+
+  if (seurat_out == F) {
+    df_temp
+  } else {
+    cluster_info <- as.data.frame(use_seurat_meta(input, dr = dr, seurat3 = F))
+    df_temp_full <- dplyr::left_join(tibble::rownames_to_column(cluster_info, "rn"), df_temp, by = cluster_col)
+    df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
+    if ("Seurat" %in% loadedNamespaces()) {
+      input@meta.data <- df_temp_full
+      if (set_ident == T) {
+        SetAllIdent(input, "type")
+      }
+      return(input)
+    } else {
+      print("seurat not loaded, returning cor_mat instead")
+      return(df_temp)
+    }
   }
+}
