@@ -426,9 +426,10 @@ gene_pct <- function(matrix, genelist, clusters){
 #' Order must match column order in supplied matrix. If a data.frame
 #' provide the cluster_col parameters.
 #' @param cluster_col column in cluster_info with cluster number
+#' @param norm whether and how the results are normalized
 #'
 #' @export
-gene_pct_markerm <- function(matrix, marker_m, cluster_info, cluster_col = NULL) {
+gene_pct_markerm <- function(matrix, marker_m, cluster_info, cluster_col = NULL, norm = NULL) {
   if(is.vector(cluster_info)){
   } else if (is.data.frame(cluster_info) & !is.null(cluster_col)){
     cluster_info <- cluster_info[[cluster_col]]
@@ -441,6 +442,17 @@ gene_pct_markerm <- function(matrix, marker_m, cluster_info, cluster_col = NULL)
     gene_pct(matrix, marker_m[[x]], cluster_info)
   })
 
+  if (!(is.null(norm))) {
+    if (norm == "divide") {
+      out <- sweep(out,2,apply(out,2,max),"/")
+    } else if (norm == "diff") {
+      out <- sweep(out,2,apply(out,2,max),"-")
+    } else {
+      out <- sweep(out,2,apply(out,2,max) * norm)
+      out[out < 0] <- 0
+      out[out > 0] <- 1
+    }
+  }
   out
 }
 
@@ -456,11 +468,25 @@ gene_pct_markerm <- function(matrix, marker_m, cluster_info, cluster_col = NULL)
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
 #' @param ... additional arguments to pass to compute_method function
+#' @param norm whether and how the results are normalized
 
 #' @export
-clustify_nudge <- function(input, bulk_mat, marker, cluster_col = NULL, query_genes = NULL,compute_method = "spearman", weight = 0.2, seurat_out = F, threshold = 0, dr = "tsne", set_ident = T){
-  resb <- gene_pct_markerm(input@data, marker, input@meta.data, cluster_col = cluster_col)
-  resb2 <- sweep(resb,2,apply(resb,2,max),"/")
+clustify_nudge <- function(input,
+                           bulk_mat,
+                           marker,
+                           cluster_col = NULL,
+                           query_genes = NULL,
+                           compute_method = "spearman",
+                           weight = 1,
+                           seurat_out = T,
+                           threshold = -Inf,
+                           dr = "tsne",
+                           set_ident = T,
+                           norm = "diff"){
+  resb <- gene_pct_markerm(input@data, marker,
+                           input@meta.data,
+                           cluster_col = cluster_col,
+                           norm = norm)
 
   resa <- clustify(
     input = input,
@@ -471,7 +497,7 @@ clustify_nudge <- function(input, bulk_mat, marker, cluster_col = NULL, query_ge
     per_cell = F
   )
 
-  df_temp <- cor_to_call(resa[order(rownames(resa)), order(colnames(resa))] + resb2[order(rownames(resb2)), order(colnames(resb2))] * weight, threshold = threshold)
+  df_temp <- cor_to_call(resa[order(rownames(resa)), order(colnames(resa))] + resb[order(rownames(resb)), order(colnames(resb))] * weight, threshold = threshold)
   colnames(df_temp) <- c(cluster_col, "type", "score")
 
   if (seurat_out == F) {
@@ -483,7 +509,7 @@ clustify_nudge <- function(input, bulk_mat, marker, cluster_col = NULL, query_ge
     if ("Seurat" %in% loadedNamespaces()) {
       input@meta.data <- df_temp_full
       if (set_ident == T) {
-        SetAllIdent(input, "type")
+        input <- SetAllIdent(input, "type")
       }
       return(input)
     } else {
