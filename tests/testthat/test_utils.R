@@ -131,7 +131,7 @@ test_that("gene_pct and gene_pct_markerm work as intended", {
   expect_true(nrow(res2) == 10)
 })
 
-test_that("clustify_nudge works with optionss", {
+test_that("clustify_nudge works with options and seruat2", {
   res <- clustify_nudge(input = s_small,
                         bulk_mat = cbmc_ref,
                         marker = cbmc_m,
@@ -139,4 +139,15 @@ test_that("clustify_nudge works with optionss", {
                         threshold = 0.8,
                         seurat_out = F)
   expect_true(nrow(res) == 4)
+})
+
+test_that("clustify_nudge works with options", {
+  res <- clustify_nudge(input = pbmc4k_matrix,
+                        bulk_mat = cbmc_ref,
+                        metadata = pbmc4k_meta,
+                        marker = cbmc_m,
+                        query_genes = pbmc4k_vargenes,
+                        cluster_col = "cluster",
+                        threshold = 0.8)
+  expect_true(nrow(res) == 10)
 })
