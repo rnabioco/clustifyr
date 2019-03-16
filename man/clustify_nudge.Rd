@@ -2,16 +2,30 @@
 % Please edit documentation in R/utils.R
 \name{clustify_nudge}
 \alias{clustify_nudge}
-\title{using marker gene percentage info to nudge cor calling}
+\alias{clustify_nudge.seurat}
+\alias{clustify_nudge.default}
+\title{Combined function to compare scRNA-seq data to bulk RNA-seq data and marker list}
 \usage{
-clustify_nudge(input, bulk_mat, marker, cluster_col = NULL,
-  query_genes = NULL, compute_method = "spearman", weight = 0.2,
-  seurat_out = F, threshold = 0, dr = "tsne", set_ident = T)
+clustify_nudge(input, ...)
+
+\method{clustify_nudge}{seurat}(input, bulk_mat, marker,
+  cluster_col = NULL, query_genes = NULL,
+  compute_method = "spearman", weight = 1, seurat_out = T,
+  threshold = -Inf, dr = "tsne", set_ident = T, norm = "diff")
+
+\method{clustify_nudge}{default}(input, bulk_mat, metadata = NULL,
+  marker, cluster_col = NULL, query_genes = NULL,
+  compute_method = "spearman", weight = 1, seurat_out = T,
+  threshold = -Inf, dr = "tsne", set_ident = T, norm = "diff")
 }
 \arguments{
 \item{input}{seurat 2 object}
 
+\item{...}{additional arguments to pass to compute_method function}
+
 \item{bulk_mat}{bulk expression matrix}
+
+\item{marker}{matrix of markers}
 
 \item{cluster_col}{column in metadata that contains cluster ids per cell. Will default to first
 column of metadata if not supplied. Not required if running correlation per cell.}
@@ -25,8 +39,29 @@ the expr_mat and bulk_mat will be used for comparision.}
 
 \item{dr}{stored dimension reduction}
 
+\item{norm}{whether and how the results are normalized}
+
+\item{metadata}{cell cluster assignments, supplied as a vector or data.frame. If
+data.frame is supplied then \code{cluster_col} needs to be set.}
+
+\item{input}{seurat 2 object}
+
+\item{bulk_mat}{bulk expression matrix}
+
+\item{marker}{matrix of markers}
+
+\item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
+the expr_mat and bulk_mat will be used for comparision.}
+
+\item{cluster_col}{column in metadata that contains cluster ids per cell. Will default to first
+column of metadata if not supplied. Not required if running correlation per cell.}
+
+\item{compute_method}{method(s) for computing similarity scores}
+
 \item{...}{additional arguments to pass to compute_method function}
+
+\item{norm}{whether and how the results are normalized}
 }
 \description{
-using marker gene percentage info to nudge cor calling
+Combined function to compare scRNA-seq data to bulk RNA-seq data and marker list
 }
