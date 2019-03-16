@@ -456,10 +456,17 @@ gene_pct_markerm <- function(matrix, marker_m, cluster_info, cluster_col = NULL,
   out
 }
 
-#' using marker gene percentage info to nudge cor calling
+#' Combined function to compare scRNA-seq data to bulk RNA-seq data and marker list
 #'
+#'@export
+clustify_nudge <- function(input, ...) {
+  UseMethod("clustify_nudge", input)
+}
+
+#' @rdname clustify_nudge
 #' @param input seurat 2 object
 #' @param bulk_mat bulk expression matrix
+#' @param marker matrix of markers
 #' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
 #' the expr_mat and bulk_mat will be used for comparision.
 #' @param cluster_col column in metadata that contains cluster ids per cell. Will default to first
@@ -471,7 +478,7 @@ gene_pct_markerm <- function(matrix, marker_m, cluster_info, cluster_col = NULL,
 #' @param norm whether and how the results are normalized
 
 #' @export
-clustify_nudge <- function(input,
+clustify_nudge.seurat <- function(input,
                            bulk_mat,
                            marker,
                            cluster_col = NULL,
@@ -518,3 +525,52 @@ clustify_nudge <- function(input,
     }
   }
 }
+
+#' @rdname clustify_nudge
+#' @param input seurat 2 object
+#' @param bulk_mat bulk expression matrix
+#' @param metadata cell cluster assignments, supplied as a vector or data.frame. If
+#' data.frame is supplied then `cluster_col` needs to be set.
+#' @param marker matrix of markers
+#' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
+#' the expr_mat and bulk_mat will be used for comparision.
+#' @param cluster_col column in metadata that contains cluster ids per cell. Will default to first
+#' column of metadata if not supplied. Not required if running correlation per cell.
+#' @param compute_method method(s) for computing similarity scores
+#' @param ... additional arguments to pass to compute_method function
+#' @param norm whether and how the results are normalized
+
+#' @export
+clustify_nudge.default <- function(input,
+                                  bulk_mat,
+                                  metadata = NULL,
+                                  marker,
+                                  cluster_col = NULL,
+                                  query_genes = NULL,
+                                  compute_method = "spearman",
+                                  weight = 1,
+                                  seurat_out = T,
+                                  threshold = -Inf,
+                                  dr = "tsne",
+                                  set_ident = T,
+                                  norm = "diff"){
+  resb <- gene_pct_markerm(input, marker,
+                           metadata,
+                           cluster_col = cluster_col,
+                           norm = norm)
+
+  resa <- clustify(
+    input = input,
+    bulk_mat = bulk_mat,
+    metadata = metadata,
+    cluster_col = cluster_col,
+    query_genes = query_genes,
+    seurat_out = F,
+    per_cell = F
+  )
+
+  df_temp <- cor_to_call(resa[order(rownames(resa)), order(colnames(resa))] + resb[order(rownames(resb)), order(colnames(resb))] * weight, threshold = threshold)
+  colnames(df_temp) <- c(cluster_col, "type", "score")
+  df_temp
+}
+

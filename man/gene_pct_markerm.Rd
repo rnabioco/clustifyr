@@ -4,7 +4,8 @@
 \alias{gene_pct_markerm}
 \title{pct of cells in every cluster that express a series of genelists}
 \usage{
-gene_pct_markerm(matrix, marker_m, cluster_info, cluster_col = NULL)
+gene_pct_markerm(matrix, marker_m, cluster_info, cluster_col = NULL,
+  norm = NULL)
 }
 \arguments{
 \item{matrix}{expression matrix}
@@ -16,6 +17,8 @@ Order must match column order in supplied matrix. If a data.frame
 provide the cluster_col parameters.}
 
 \item{cluster_col}{column in cluster_info with cluster number}
+
+\item{norm}{whether and how the results are normalized}
 }
 \description{
 pct of cells in every cluster that express a series of genelists
