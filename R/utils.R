@@ -543,8 +543,8 @@ clustify_nudge.seurat <- function(input,
 #' @export
 clustify_nudge.default <- function(input,
                                   bulk_mat,
-                                  metadata = NULL,
                                   marker,
+                                  metadata = NULL,
                                   cluster_col = NULL,
                                   query_genes = NULL,
                                   compute_method = "spearman",
@@ -553,7 +553,21 @@ clustify_nudge.default <- function(input,
                                   threshold = -Inf,
                                   dr = "tsne",
                                   set_ident = T,
-                                  norm = "diff"){
+                                  norm = "diff",
+                                  ...){
+  if (!(stringr::str_detect(class(input), "atrix"))) {
+    input_original <- input
+    temp <- parse_loc_object(input, type = class(input), expr_loc = NULL, meta_loc = NULL, var_loc = NULL, cluster_col = cluster_col)
+    input <- temp[["expr"]]
+    metadata <- temp[["meta"]]
+    if (is.null(query_genes)) {
+    query_genes <- temp[["var"]]
+    }
+    if (is.null(cluster_col)) {
+      cluster_col <- temp[["col"]]
+    }
+  }
+
   resb <- gene_pct_markerm(input, marker,
                            metadata,
                            cluster_col = cluster_col,
@@ -574,3 +588,62 @@ clustify_nudge.default <- function(input,
   df_temp
 }
 
+#' more flexible parsing of single cell objects
+#'
+#' @param input input object
+#' @param type look up predefined slots/loc
+#' @param expr_loc expression matrix location
+#' @param meta_loc metadata location
+#' @param var_loc variable genes location
+#' @param cluster_col column of clustering from metadata
+#' @export
+parse_loc_object <- function(input, type = class(input), expr_loc = NULL, meta_loc = NULL, var_loc = NULL, cluster_col = NULL) {
+  # if (type == "SingleCellExperiment") {
+  #   parsed = list(input@assays$data$logcounts,
+  #                 as.data.frame(input@colData)),
+  #                 NULL,
+  #                 "cell_type1")
+  # }
+  #
+  # if (type == "URD") {
+  #   parsed = list(input@logupx.data,
+  #                 input@meta,
+  #                 input@var.genes,
+  #                 "cluster")
+  # }
+  #
+  # if (type == "FunctionalSingleCellExperiment") {
+  #   parsed = list(input@ExperimentList$rnaseq@assays$data$logcounts,
+  #                 input@ExperimentList$rnaseq@colData,
+  #                 NULL,
+  #                 "leiden_cluster")
+  # }
+  if (type %in% colnames(object_loc_lookup)) {
+    parsed = list(eval(parse(text=object_loc_lookup[[type]][1])),
+                  as.data.frame(eval(parse(text=object_loc_lookup[[type]][2]))),
+                  eval(parse(text=object_loc_lookup[[type]][3])),
+                  object_loc_lookup[[type]][4])
+  } else {
+    parsed = list(NULL, NULL, NULL, NULL)
+  }
+
+  names(parsed) <- c("expr", "meta", "var", "col")
+
+  if (!(is.null(expr_loc))) {
+    parsed[["expr"]] <- eval(parse(text = paste0("input",expr_loc)))
+  }
+
+  if (!(is.null(meta_loc))) {
+   parsed[["meta"]] <- as.data.frame(eval(parse(text = paste0("input",meta_loc))))
+  }
+
+  if (!(is.null(var_loc))) {
+    parsed[["var"]] <- eval(parse(text = paste0("input",var_loc)))
+  }
+
+  if (!(is.null(cluster_col))) {
+    parsed[["col"]] <- cluster_col
+  }
+
+  parsed
+}
