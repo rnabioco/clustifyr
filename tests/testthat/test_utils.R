@@ -151,3 +151,13 @@ test_that("clustify_nudge works with options", {
                         threshold = 0.8)
   expect_true(nrow(res) == 10)
 })
+
+test_that("overcluster_test works with defaults", {
+  g <- overcluster_test(pbmc4k_matrix,pbmc4k_meta, cluster_col = "cluster")
+  expect_true(ggplot2::is.ggplot(g))
+})
+
+test_that("overcluster_test works with defined other cluster column", {
+  g <- overcluster_test(pbmc4k_matrix,pbmc4k_meta, cluster_col = "cluster", newclustering = "classified", do.label = F)
+  expect_true(ggplot2::is.ggplot(g))
+})

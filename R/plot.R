@@ -24,7 +24,11 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
                       scale_limits = NULL,
                       do.label = FALSE,
                       do.legend = TRUE) {
-
+  if ((length(unique(data[[feature]])) > 12) & identical(c_cols, pretty_palette)) {
+    print("using ramp colors instead")
+    c_cols <- pretty_palette_ramp_d(length(unique(data[[feature]])))
+    d_cols <- pretty_palette_ramp_d(length(unique(data[[feature]])))
+  }
   # sort data to avoid plotting null values over colors
   data <- dplyr::arrange(data, !!sym(feature))
 
@@ -66,10 +70,10 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
 
   if (do.label) {
     centers <- dplyr::group_by_(data, .dots = feature)
-    centers <- dplyr::summarize(centers, tSNE_1 = mean(tSNE_1), tSNE_2 = mean(tSNE_2))
+    centers <- dplyr::summarize(centers, t1 = mean(!!sym(x)), t2 = mean(!!sym(y)))
     p <- p +
-      geom_point(data = centers, mapping = aes(x = tSNE_1, y = tSNE_2), size = 0, alpha = 0) +
-      geom_text(data = centers, mapping = aes(label = centers[[feature]]))
+      geom_point(data = centers, mapping = aes(x = t1, y = t2), size = 0, alpha = 0) +
+      geom_text(data = centers, mapping = aes(x = t1, y = t2, label = centers[[feature]]))
   }
 
   p <- p + cowplot::theme_cowplot()
