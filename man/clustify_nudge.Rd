@@ -13,10 +13,10 @@ clustify_nudge(input, ...)
   compute_method = "spearman", weight = 1, seurat_out = T,
   threshold = -Inf, dr = "tsne", set_ident = T, norm = "diff")
 
-\method{clustify_nudge}{default}(input, bulk_mat, metadata = NULL,
-  marker, cluster_col = NULL, query_genes = NULL,
+\method{clustify_nudge}{default}(input, bulk_mat, marker,
+  metadata = NULL, cluster_col = NULL, query_genes = NULL,
   compute_method = "spearman", weight = 1, seurat_out = T,
-  threshold = -Inf, dr = "tsne", set_ident = T, norm = "diff")
+  threshold = -Inf, dr = "tsne", set_ident = T, norm = "diff", ...)
 }
 \arguments{
 \item{input}{seurat 2 object}
