@@ -539,6 +539,7 @@ clustify_nudge.seurat <- function(input,
 #' @param compute_method method(s) for computing similarity scores
 #' @param ... additional arguments to pass to compute_method function
 #' @param norm whether and how the results are normalized
+#' @param call make call or just return score matrix
 
 #' @export
 clustify_nudge.default <- function(input,
@@ -554,6 +555,7 @@ clustify_nudge.default <- function(input,
                                   dr = "tsne",
                                   set_ident = T,
                                   norm = "diff",
+                                  call = T,
                                   ...){
   if (!(stringr::str_detect(class(input), "atrix"))) {
     input_original <- input
@@ -583,9 +585,13 @@ clustify_nudge.default <- function(input,
     per_cell = F
   )
 
-  df_temp <- cor_to_call(resa[order(rownames(resa)), order(colnames(resa))] + resb[order(rownames(resb)), order(colnames(resb))] * weight, threshold = threshold)
-  colnames(df_temp) <- c(cluster_col, "type", "score")
-  df_temp
+  if (call == T) {
+    df_temp <- cor_to_call(resa[order(rownames(resa)), order(colnames(resa))] + resb[order(rownames(resb)), order(colnames(resb))] * weight, threshold = threshold)
+    colnames(df_temp) <- c(cluster_col, "type", "score")
+    df_temp
+  } else {
+    resa[order(rownames(resa)), order(colnames(resa))] + resb[order(rownames(resb)), order(colnames(resb))] * weight
+  }
 }
 
 #' more flexible parsing of single cell objects
@@ -646,4 +652,37 @@ parse_loc_object <- function(input, type = class(input), expr_loc = NULL, meta_l
   }
 
   parsed
+}
+
+#' compare clustering parameters and classification outcomes
+#'
+#' @param expr expression matrix
+#' @param metadata metadata including cluster info and dimension reduction plotting
+#' @param cluster_col column of clustering from metadata
+#' @param x_col column of metadata for x axis plotting
+#' @param y_col column of metadata for y axis plotting
+#' @param n expand n-fold for over/under clustering
+#' @param do.label whether to label each cluster at median center
+#' @param seed set seed for kmeans
+#' @param newclustering use kmeans if NULL on dr or col name for second column of clustering
+
+#' @export
+overcluster_test <- function(expr, metadata, cluster_col, x_col = "tSNE_1", y_col = "tSNE_2", n = 5, do.label = T, seed = 42, newclustering = NULL) {
+  if (!(is.null(seed))) {
+    set.seed(seed)
+  }
+
+  if (is.null(newclustering)) {
+    metadata$new_clusters <- as.character(kmeans(metadata[,c(x_col, y_col)], centers = n * length(unique(metadata[[cluster_col]])))$clust)
+  } else {
+    metadata$new_clusters <- metadata[[newclustering]]
+    n <- length(unique(metadata[[newclustering]]))/length(unique(metadata[[cluster_col]]))
+  }
+  res1 <- clustify_nudge(expr, cbmc_ref, cbmc_m, metadata, query_genes = pbmc4k_markers_M3Drop$Gene, cluster_col = cluster_col, call = F)
+  res2 <- clustify_nudge(expr, cbmc_ref, cbmc_m, metadata, query_genes = pbmc4k_markers_M3Drop$Gene, cluster_col = "new_clusters", call = F)
+  o1 <- plot_tsne(metadata, feature = cluster_col, x = x_col, y = y_col, do.label = F, do.legend = F)
+  o2 <- plot_tsne(metadata, feature = "new_clusters", x = x_col, y = y_col, do.label = F, do.legend = F)
+  p1 <- plot_best_call(res1, metadata, cluster_col, do.label = do.label, x = x_col, y = y_col)
+  p2 <- plot_best_call(res2, metadata, "new_clusters", do.label = do.label, x = x_col, y = y_col)
+  cowplot::plot_grid(o1, o2, p1, p2, labels = c(length(unique(metadata[[cluster_col]])), n * length(unique(metadata[[cluster_col]]))))
 }
