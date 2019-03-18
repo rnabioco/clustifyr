@@ -16,7 +16,8 @@ clustify_nudge(input, ...)
 \method{clustify_nudge}{default}(input, bulk_mat, marker,
   metadata = NULL, cluster_col = NULL, query_genes = NULL,
   compute_method = "spearman", weight = 1, seurat_out = T,
-  threshold = -Inf, dr = "tsne", set_ident = T, norm = "diff", ...)
+  threshold = -Inf, dr = "tsne", set_ident = T, norm = "diff",
+  call = T, ...)
 }
 \arguments{
 \item{input}{seurat 2 object}
@@ -43,6 +44,8 @@ the expr_mat and bulk_mat will be used for comparision.}
 
 \item{metadata}{cell cluster assignments, supplied as a vector or data.frame. If
 data.frame is supplied then \code{cluster_col} needs to be set.}
+
+\item{call}{make call or just return score matrix}
 
 \item{input}{seurat 2 object}
 
