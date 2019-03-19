@@ -3,20 +3,20 @@
 #' @description Permute cluster labels to calculate empirical p-value
 #'
 #' @param expr_mat single-cell expression matrix
-#' @param bulk_mat bulk expression matrix
+#' @param ref_mat reference expression matrix
 #' @param cluster_ids vector of cluster ids for each cell
 #' @param compute_method method(s) for computing similarity scores
 #' @param per_cell run per cell?
 #' @param ... additional parameters not used yet
 #' @export
 get_similarity <- function(expr_mat,
-                           bulk_mat,
+                           ref_mat,
                            cluster_ids,
                            compute_method,
                            per_cell = FALSE,
                            ...) {
 
-  bulk_clust <- colnames(bulk_mat)
+  ref_clust <- colnames(ref_mat)
 
   if (!per_cell) {
     sc_clust <- sort(unique(cluster_ids))
@@ -32,13 +32,13 @@ get_similarity <- function(expr_mat,
 
   assigned_score <- calc_similarity(
     clust_avg,
-    bulk_mat,
+    ref_mat,
     compute_method,
     ...
   )
 
   rownames(assigned_score) <- sc_clust
-  colnames(assigned_score) <- bulk_clust
+  colnames(assigned_score) <- ref_clust
 
   return(assigned_score)
 }
@@ -51,20 +51,20 @@ get_similarity <- function(expr_mat,
 #' @param expr_mat single-cell expression matrix
 #' @param cluster_ids clustering info of single-cell data assume that
 #'  genes have ALREADY BEEN filtered
-#' @param bulk_mat bulk expression matrix
+#' @param ref_mat reference expression matrix
 #' @param num_perm number of permutations
 #' @param per_cell run per cell?
 #' @param compute_method method(s) for computing similarity scores
 #' @param ... additional parameters
 #' @export
 permute_similarity <- function(expr_mat,
-                               bulk_mat,
+                               ref_mat,
                                cluster_ids,
                                num_perm,
                                per_cell = F,
                                compute_method, ...) {
 
-  bulk_clust <- colnames(bulk_mat)
+  ref_clust <- colnames(ref_mat)
 
   if (!per_cell) {
     sc_clust <- sort(unique(cluster_ids))
@@ -80,13 +80,13 @@ permute_similarity <- function(expr_mat,
 
   assigned_score <- calc_similarity(
     clust_avg,
-    bulk_mat,
+    ref_mat,
     compute_method,
     ...
   )
 
   # perform permutation
-  sig_counts <- matrix(0L, nrow = length(sc_clust), ncol = length(bulk_clust))
+  sig_counts <- matrix(0L, nrow = length(sc_clust), ncol = length(ref_clust))
 
   for (i in 1:num_perm) {
     resampled <- sample(cluster_ids,
@@ -106,7 +106,7 @@ permute_similarity <- function(expr_mat,
       # permutate assignment
       new_score <- calc_similarity(
           permuted_avg,
-          bulk_mat,
+          ref_mat,
           compute_method,
           ...
       )
@@ -114,9 +114,9 @@ permute_similarity <- function(expr_mat,
     }
 
   rownames(assigned_score) <- sc_clust
-  colnames(assigned_score) <- bulk_clust
+  colnames(assigned_score) <- ref_clust
   rownames(sig_counts) <- sc_clust
-  colnames(sig_counts) <- bulk_clust
+  colnames(sig_counts) <- ref_clust
 
   return(list(score = assigned_score,
               p_val = sig_counts / num_perm))
@@ -131,28 +131,28 @@ compute_mean_expr <- function(expr_mat, sc_assign, sc_clust) {
 #' compute similarity
 #' @export
 calc_similarity <- function(sc_avg,
-                          bulk_mat,
+                          ref_mat,
                           compute_method, ...) {
 
   # use stats::cor matrix method if possible
   if(any(compute_method %in% c("pearson", "spearman"))) {
     similarity_score <- cor(as.matrix(sc_avg),
-                            bulk_mat, method = compute_method)
+                            ref_mat, method = compute_method)
     return(similarity_score)
   }
 
   sc_clust <- colnames(sc_avg)
-  bulk_clust <- colnames(bulk_mat)
-  features <- intersect(rownames(sc_avg), rownames(bulk_mat))
+  ref_clust <- colnames(ref_mat)
+  features <- intersect(rownames(sc_avg), rownames(ref_mat))
   sc_avg <- sc_avg[features,]
-  bulk_mat <- bulk_mat[features,]
+  ref_mat <- ref_mat[features,]
   similarity_score <- matrix(NA,
                              nrow = length(sc_clust),
-                             ncol = length(bulk_clust))
+                             ncol = length(ref_clust))
   for (i in seq_along(sc_clust)) {
-    for (j in seq_along(bulk_clust)) {
+    for (j in seq_along(ref_clust)) {
       similarity_score[i, j] <- vector_similarity(sc_avg[, sc_clust[i]],
-                                                   bulk_mat[, bulk_clust[j]],
+                                                   ref_mat[, ref_clust[j]],
                                                    compute_method, ...)
     }
   }

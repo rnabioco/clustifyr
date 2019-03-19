@@ -135,7 +135,7 @@ get_common_elements <- function(...) {
 #' @param metadata cell cluster assignments, supplied as a vector or data.frame. If
 #' data.frame is supplied then `cluster_col` needs to be set. Not required if running correlation per cell.
 #' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
-#' the expr_mat and bulk_mat will be used for comparision.
+#' the expr_mat and ref_mat will be used for comparision.
 #' @param cluster_col column in metadata that contains cluster ids per cell. Will default to first
 #' column of metadata if not supplied. Not required if running correlation per cell.
 #' @param sample_col column in metadata that contains sample/subset info
@@ -465,10 +465,10 @@ clustify_nudge <- function(input, ...) {
 
 #' @rdname clustify_nudge
 #' @param input seurat 2 object
-#' @param bulk_mat bulk expression matrix
+#' @param ref_mat reference expression matrix
 #' @param marker matrix of markers
 #' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
-#' the expr_mat and bulk_mat will be used for comparision.
+#' the expr_mat and ref_mat will be used for comparision.
 #' @param cluster_col column in metadata that contains cluster ids per cell. Will default to first
 #' column of metadata if not supplied. Not required if running correlation per cell.
 #' @param compute_method method(s) for computing similarity scores
@@ -479,7 +479,7 @@ clustify_nudge <- function(input, ...) {
 
 #' @export
 clustify_nudge.seurat <- function(input,
-                           bulk_mat,
+                           ref_mat,
                            marker,
                            cluster_col = NULL,
                            query_genes = NULL,
@@ -497,7 +497,7 @@ clustify_nudge.seurat <- function(input,
 
   resa <- clustify(
     input = input,
-    bulk_mat = bulk_mat,
+    ref_mat = ref_mat,
     cluster_col = cluster_col,
     query_genes = query_genes,
     seurat_out = F,
@@ -528,12 +528,12 @@ clustify_nudge.seurat <- function(input,
 
 #' @rdname clustify_nudge
 #' @param input seurat 2 object
-#' @param bulk_mat bulk expression matrix
+#' @param ref_mat reference expression matrix
 #' @param metadata cell cluster assignments, supplied as a vector or data.frame. If
 #' data.frame is supplied then `cluster_col` needs to be set.
 #' @param marker matrix of markers
 #' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
-#' the expr_mat and bulk_mat will be used for comparision.
+#' the expr_mat and ref_mat will be used for comparision.
 #' @param cluster_col column in metadata that contains cluster ids per cell. Will default to first
 #' column of metadata if not supplied. Not required if running correlation per cell.
 #' @param compute_method method(s) for computing similarity scores
@@ -543,7 +543,7 @@ clustify_nudge.seurat <- function(input,
 
 #' @export
 clustify_nudge.default <- function(input,
-                                  bulk_mat,
+                                  ref_mat,
                                   marker,
                                   metadata = NULL,
                                   cluster_col = NULL,
@@ -577,7 +577,7 @@ clustify_nudge.default <- function(input,
 
   resa <- clustify(
     input = input,
-    bulk_mat = bulk_mat,
+    ref_mat = ref_mat,
     metadata = metadata,
     cluster_col = cluster_col,
     query_genes = query_genes,

@@ -9,16 +9,16 @@
 \usage{
 clustify(input, ...)
 
-\method{clustify}{default}(input, bulk_mat, metadata = NULL,
+\method{clustify}{default}(input, ref_mat, metadata = NULL,
   query_genes = NULL, cluster_col = NULL, per_cell = FALSE,
   num_perm = 0, compute_method = "spearman", ...)
 
-\method{clustify}{seurat}(input, bulk_mat, query_genes = NULL,
+\method{clustify}{seurat}(input, ref_mat, query_genes = NULL,
   per_cell = FALSE, num_perm = 0, cluster_col = NULL,
   compute_method = "spearman", use_var_genes = TRUE, dr = "tsne",
   seurat_out = TRUE, threshold = 0, set_ident = T, ...)
 
-\method{clustify}{Seurat}(input, bulk_mat, query_genes = NULL,
+\method{clustify}{Seurat}(input, ref_mat, query_genes = NULL,
   per_cell = FALSE, num_perm = 0, cluster_col = NULL,
   compute_method = "spearman", use_var_genes = TRUE, dr = "tsne",
   seurat_out = TRUE, threshold = 0, set_ident = T, ...)
@@ -28,13 +28,13 @@ clustify(input, ...)
 
 \item{...}{additional arguments to pass to compute_method function}
 
-\item{bulk_mat}{bulk expression matrix}
+\item{ref_mat}{reference expression matrix}
 
 \item{metadata}{cell cluster assignments, supplied as a vector or data.frame. If
 data.frame is supplied then \code{cluster_col} needs to be set. Not required if running correlation per cell.}
 
 \item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
-the expr_mat and bulk_mat will be used for comparision.}
+the expr_mat and ref_mat will be used for comparision.}
 
 \item{cluster_col}{column in metadata that contains cluster ids per cell. Will default to first
 column of metadata if not supplied. Not required if running correlation per cell.}
@@ -54,10 +54,10 @@ column of metadata if not supplied. Not required if running correlation per cell
 
 \item{set_ident}{whether the output seurat object has ident set to called type}
 
-\item{bulk_mat}{bulk expression matrix}
+\item{ref_mat}{reference expression matrix}
 
 \item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
-the expr_mat and bulk_mat will be used for comparision.}
+the expr_mat and ref_mat will be used for comparision.}
 
 \item{cluster_col}{column in metadata that contains cluster ids per cell. Will default to first
 column of metadata if not supplied. Not required if running correlation per cell.}
@@ -77,10 +77,10 @@ column of metadata if not supplied. Not required if running correlation per cell
 
 \item{...}{additional arguments to pass to compute_method function}
 
-\item{bulk_mat}{bulk expression matrix}
+\item{ref_mat}{reference expression matrix}
 
 \item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
-the expr_mat and bulk_mat will be used for comparision.}
+the expr_mat and ref_mat will be used for comparision.}
 
 \item{cluster_col}{column in metadata that contains cluster ids per cell. Will default to first
 column of metadata if not supplied. Not required if running correlation per cell.}

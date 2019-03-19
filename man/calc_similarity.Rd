@@ -4,7 +4,7 @@
 \alias{calc_similarity}
 \title{compute similarity}
 \usage{
-calc_similarity(sc_avg, bulk_mat, compute_method, ...)
+calc_similarity(sc_avg, ref_mat, compute_method, ...)
 }
 \description{
 compute similarity

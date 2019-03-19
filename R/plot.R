@@ -97,7 +97,7 @@ pretty_palette_ramp_d <- grDevices::colorRampPalette(RColorBrewer::brewer.pal(12
 #'
 #' @param correlation_matrix input similarity matrix
 #' @param metadata input metadata with per cell tsne coordinates and cluster ids
-#' @param bulk_data_to_plot colname of data to plot, defaults to all
+#' @param ref_data_to_plot colname of data to plot, defaults to all
 #' @param cluster_col colname of clustering data in metadata, defaults to rownames of the
 #' metadata if not supplied.
 #' @param x metadata column name with 1st axis dimension.
@@ -112,13 +112,13 @@ pretty_palette_ramp_d <- grDevices::colorRampPalette(RColorBrewer::brewer.pal(12
 #' @export
 plot_cor <- function(correlation_matrix,
                      metadata,
-                     bulk_data_to_plot = colnames(correlation_matrix),
+                     ref_data_to_plot = colnames(correlation_matrix),
                      cluster_col = NULL,
                      x = "tSNE_1",
                      y = "tSNE_2",
                      scale_legends = FALSE,
                      ...) {
-  if (!any(bulk_data_to_plot %in% colnames(correlation_matrix))) {
+  if (!any(ref_data_to_plot %in% colnames(correlation_matrix))) {
     stop("cluster ids not shared between metadata and correlation matrix")
   }
 
@@ -131,7 +131,7 @@ plot_cor <- function(correlation_matrix,
   cor_df <- tibble::rownames_to_column(cor_df, cluster_col)
   cor_df_long <- tidyr::gather(
     cor_df,
-    bulk_cluster,
+    ref_cluster,
     expr,
     -dplyr::matches(cluster_col)
   )
@@ -161,17 +161,17 @@ plot_cor <- function(correlation_matrix,
     scale_limits = scale_legends
   }
 
-  plts <- vector("list", length(bulk_data_to_plot))
-  for(i in seq_along(bulk_data_to_plot)){
+  plts <- vector("list", length(ref_data_to_plot))
+  for(i in seq_along(ref_data_to_plot)){
       tmp_data <- dplyr::filter(
         plt_data,
-        bulk_cluster == bulk_data_to_plot[i]
+        ref_cluster == ref_data_to_plot[i]
       )
       plts[[i]] <- plot_tsne(tmp_data,
                              x = x,
                              y = y,
                              feature = "expr",
-                             legend_name = bulk_data_to_plot[i],
+                             legend_name = ref_data_to_plot[i],
                              scale_limits = scale_limits,
                              ...)
   }
@@ -235,20 +235,20 @@ plot_gene <- function(expr_mat,
 #'
 #' @param correlation_matrix input similarity matrix
 #' @param metadata input metadata with tsne coordinates and cluster ids
-#' @param bulk_data_to_plot colname of data to plot, defaults to all
+#' @param ref_data_to_plot colname of data to plot, defaults to all
 #' @param ... passed to plot_tsne
 #'
 #' @export
 plot_call <- function(correlation_matrix,
                       metadata,
-                      bulk_data_to_plot = colnames(correlation_matrix),
+                      ref_data_to_plot = colnames(correlation_matrix),
                       ...) {
   df_temp <- as.data.frame(t(apply(correlation_matrix, 1, function(x) x - max(x))))
   df_temp[df_temp == 0] <- "1"
   df_temp[df_temp != "1"] <- "0"
   plot_cor(df_temp,
            metadata,
-           bulk_data_to_plot,
+           ref_data_to_plot,
            ...)
 }
 

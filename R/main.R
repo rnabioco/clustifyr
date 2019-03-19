@@ -9,9 +9,9 @@ clustify <- function(input, ...) {
 #' @param input single-cell expression matrix or Seurat object
 #' @param metadata cell cluster assignments, supplied as a vector or data.frame. If
 #' data.frame is supplied then `cluster_col` needs to be set. Not required if running correlation per cell.
-#' @param bulk_mat bulk expression matrix
+#' @param ref_mat reference expression matrix
 #' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
-#' the expr_mat and bulk_mat will be used for comparision.
+#' the expr_mat and ref_mat will be used for comparision.
 #' @param cluster_col column in metadata that contains cluster ids per cell. Will default to first
 #' column of metadata if not supplied. Not required if running correlation per cell.
 #' @param per_cell if true run per cell, otherwise per cluster.
@@ -24,7 +24,7 @@ clustify <- function(input, ...) {
 #' @param ... additional arguments to pass to compute_method function
 #' @export
 clustify.default <- function(input,
-                             bulk_mat,
+                             ref_mat,
                              metadata = NULL,
                              query_genes = NULL,
                              cluster_col = NULL,
@@ -39,11 +39,11 @@ clustify.default <- function(input,
 
   # select gene subsets
   gene_constraints <- get_common_elements(rownames(expr_mat),
-                                           rownames(bulk_mat),
+                                           rownames(ref_mat),
                                            query_genes)
 
   expr_mat <- expr_mat[gene_constraints, , drop = FALSE]
-  bulk_mat <- bulk_mat[gene_constraints, , drop = FALSE]
+  ref_mat <- ref_mat[gene_constraints, , drop = FALSE]
 
   if(is.null(metadata) & !per_cell) {
     stop("metadata needed for per cluster analysis")
@@ -67,7 +67,7 @@ clustify.default <- function(input,
   if (num_perm == 0) {
     res <- get_similarity(
       expr_mat,
-      bulk_mat,
+      ref_mat,
       cluster_ids = cluster_ids,
       per_cell = per_cell,
       compute_method = compute_method, ...
@@ -76,7 +76,7 @@ clustify.default <- function(input,
     # run permutation
     res <- permute_similarity(
       expr_mat,
-      bulk_mat,
+      ref_mat,
       cluster_ids = cluster_ids,
       num_perm = num_perm,
       per_cell = per_cell,
@@ -88,9 +88,9 @@ clustify.default <- function(input,
 }
 
 #' @rdname clustify
-#' @param bulk_mat bulk expression matrix
+#' @param ref_mat reference expression matrix
 #' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
-#' the expr_mat and bulk_mat will be used for comparision.
+#' the expr_mat and ref_mat will be used for comparision.
 #' @param cluster_col column in metadata that contains cluster ids per cell. Will default to first
 #' column of metadata if not supplied. Not required if running correlation per cell.
 #' @param per_cell if true run per cell, otherwise per cluster.
@@ -105,7 +105,7 @@ clustify.default <- function(input,
 
 #' @export
 clustify.seurat <- function(input,
-                            bulk_mat,
+                            ref_mat,
                             query_genes = NULL,
                             per_cell = FALSE,
                             num_perm = 0,
@@ -127,7 +127,7 @@ clustify.seurat <- function(input,
   }
 
   res <- clustify(expr_mat,
-                  bulk_mat,
+                  ref_mat,
                   metadata,
                   query_genes,
                   per_cell = per_cell,
@@ -183,9 +183,9 @@ clustify.seurat <- function(input,
 }
 
 #' @rdname clustify
-#' @param bulk_mat bulk expression matrix
+#' @param ref_mat reference expression matrix
 #' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
-#' the expr_mat and bulk_mat will be used for comparision.
+#' the expr_mat and ref_mat will be used for comparision.
 #' @param cluster_col column in metadata that contains cluster ids per cell. Will default to first
 #' column of metadata if not supplied. Not required if running correlation per cell.
 #' @param per_cell if true run per cell, otherwise per cluster.
@@ -200,7 +200,7 @@ clustify.seurat <- function(input,
 
 #' @export
 clustify.Seurat <- function(input,
-                            bulk_mat,
+                            ref_mat,
                             query_genes = NULL,
                             per_cell = FALSE,
                             num_perm = 0,
@@ -222,7 +222,7 @@ clustify.Seurat <- function(input,
   }
 
   res <- clustify(expr_mat,
-                  bulk_mat,
+                  ref_mat,
                   metadata,
                   query_genes,
                   per_cell = per_cell,

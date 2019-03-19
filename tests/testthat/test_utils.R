@@ -40,7 +40,7 @@ test_that("cor_to_call threshold works as intended", {
   res <- clustify(
     input = pbmc4k_matrix,
     metadata = pbmc4k_meta,
-    bulk_mat = pbmc_bulk_matrix,
+    ref_mat = pbmc_bulk_matrix,
     query_genes = pbmc4k_vargenes,
     cluster_col = "cluster"
   )
@@ -57,7 +57,7 @@ test_that("cor_to_call threshold works as intended, on per cell and collapsing",
   res <- clustify(
     input = pbmc4k_matrix,
     metadata = pbmc4k_meta,
-    bulk_mat = pbmc_bulk_matrix,
+    ref_mat = pbmc_bulk_matrix,
     query_genes = pbmc4k_vargenes,
     cluster_col = "cluster",
     per_cell = T
@@ -87,7 +87,7 @@ test_that("cor_to_call_topn works as intended", {
   res <- clustify(
     input = pbmc4k_matrix,
     metadata = pbmc4k_meta,
-    bulk_mat = pbmc_bulk_matrix,
+    ref_mat = pbmc_bulk_matrix,
     query_genes = pbmc4k_vargenes,
     cluster_col = "cluster"
   )
@@ -104,7 +104,7 @@ test_that("cor_to_call_topn works as intended on collapse to cluster option", {
   res <- clustify(
     input = pbmc4k_matrix,
     metadata = pbmc4k_meta,
-    bulk_mat = pbmc_bulk_matrix,
+    ref_mat = pbmc_bulk_matrix,
     query_genes = pbmc4k_vargenes,
     cluster_col = "cluster",
     per_cell = T
@@ -133,7 +133,7 @@ test_that("gene_pct and gene_pct_markerm work as intended", {
 
 test_that("clustify_nudge works with options and seruat2", {
   res <- clustify_nudge(input = s_small,
-                        bulk_mat = cbmc_ref,
+                        ref_mat = cbmc_ref,
                         marker = cbmc_m,
                         cluster_col = "res.1",
                         threshold = 0.8,
@@ -143,7 +143,7 @@ test_that("clustify_nudge works with options and seruat2", {
 
 test_that("clustify_nudge works with options", {
   res <- clustify_nudge(input = pbmc4k_matrix,
-                        bulk_mat = cbmc_ref,
+                        ref_mat = cbmc_ref,
                         metadata = pbmc4k_meta,
                         marker = cbmc_m,
                         query_genes = pbmc4k_vargenes,

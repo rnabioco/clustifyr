@@ -8,13 +8,13 @@
 \usage{
 clustify_nudge(input, ...)
 
-\method{clustify_nudge}{seurat}(input, bulk_mat, marker,
+\method{clustify_nudge}{seurat}(input, ref_mat, marker,
   cluster_col = NULL, query_genes = NULL,
   compute_method = "spearman", weight = 1, seurat_out = T,
   threshold = -Inf, dr = "tsne", set_ident = T, norm = "diff")
 
-\method{clustify_nudge}{default}(input, bulk_mat, marker,
-  metadata = NULL, cluster_col = NULL, query_genes = NULL,
+\method{clustify_nudge}{default}(input, ref_mat, marker, metadata = NULL,
+  cluster_col = NULL, query_genes = NULL,
   compute_method = "spearman", weight = 1, seurat_out = T,
   threshold = -Inf, dr = "tsne", set_ident = T, norm = "diff",
   call = T, ...)
@@ -24,7 +24,7 @@ clustify_nudge(input, ...)
 
 \item{...}{additional arguments to pass to compute_method function}
 
-\item{bulk_mat}{bulk expression matrix}
+\item{ref_mat}{reference expression matrix}
 
 \item{marker}{matrix of markers}
 
@@ -32,7 +32,7 @@ clustify_nudge(input, ...)
 column of metadata if not supplied. Not required if running correlation per cell.}
 
 \item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
-the expr_mat and bulk_mat will be used for comparision.}
+the expr_mat and ref_mat will be used for comparision.}
 
 \item{compute_method}{method(s) for computing similarity scores}
 
@@ -49,12 +49,12 @@ data.frame is supplied then \code{cluster_col} needs to be set.}
 
 \item{input}{seurat 2 object}
 
-\item{bulk_mat}{bulk expression matrix}
+\item{ref_mat}{reference expression matrix}
 
 \item{marker}{matrix of markers}
 
 \item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
-the expr_mat and bulk_mat will be used for comparision.}
+the expr_mat and ref_mat will be used for comparision.}
 
 \item{cluster_col}{column in metadata that contains cluster ids per cell. Will default to first
 column of metadata if not supplied. Not required if running correlation per cell.}
