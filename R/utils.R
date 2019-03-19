@@ -708,7 +708,7 @@ overcluster_test <- function(expr,
   }
 
   if (is.null(newclustering)) {
-    metadata$new_clusters <- as.character(kmeans(metadata[,c(x_col, y_col)],
+    metadata$new_clusters <- as.character(stats::kmeans(metadata[,c(x_col, y_col)],
                                                  centers = n * length(unique(metadata[[cluster_col]])))$clust)
   } else {
     metadata$new_clusters <- metadata[[newclustering]]
