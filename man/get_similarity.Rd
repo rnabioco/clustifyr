@@ -4,13 +4,13 @@
 \alias{get_similarity}
 \title{Compute the p-value for similarity using permutation}
 \usage{
-get_similarity(expr_mat, bulk_mat, cluster_ids, compute_method,
+get_similarity(expr_mat, ref_mat, cluster_ids, compute_method,
   per_cell = FALSE, ...)
 }
 \arguments{
 \item{expr_mat}{single-cell expression matrix}
 
-\item{bulk_mat}{bulk expression matrix}
+\item{ref_mat}{reference expression matrix}
 
 \item{cluster_ids}{vector of cluster ids for each cell}
 

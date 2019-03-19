@@ -4,7 +4,7 @@
 \alias{refine_clusters}
 \title{Refine clustering using reference data}
 \usage{
-refine_clusters(expr_mat, sc_cluster, bulk_mat, lambda = 0.5,
+refine_clusters(expr_mat, sc_cluster, ref_mat, lambda = 0.5,
   epsilon = 1, if_compute_sigma = TRUE, num_iteration = 100,
   default_similiarity = -5, disagreement_freq = 0.001,
   if_plot = FALSE, tsne_coord = NULL, cluster_names = NULL,
@@ -18,7 +18,7 @@ Note that the number of bulk cell types must be no more than
 the number of clusters. for additional clusters,
 there is an assignment of default_similiarity}
 
-\item{bulk_mat}{input bulk data after gene subsetting}
+\item{ref_mat}{input reference data after gene subsetting}
 
 \item{lambda}{control parameters}
 
