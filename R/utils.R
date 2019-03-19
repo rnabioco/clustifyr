@@ -474,8 +474,9 @@ clustify_nudge <- function(input, ...) {
 #' @param compute_method method(s) for computing similarity scores
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
-#' @param ... additional arguments to pass to compute_method function
+#' @param ... passed to matrixize_markers
 #' @param norm whether and how the results are normalized
+#' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
 
 #' @export
 clustify_nudge.seurat <- function(input,
@@ -489,7 +490,14 @@ clustify_nudge.seurat <- function(input,
                            threshold = -Inf,
                            dr = "tsne",
                            set_ident = T,
-                           norm = "diff"){
+                           norm = "diff",
+                           marker_inmatrix = T,
+                           ...){
+  if (marker_inmatrix != T) {
+    marker <- matrixize_markers(marker,
+                                ...)
+  }
+
   resb <- gene_pct_markerm(input@data, marker,
                            input@meta.data,
                            cluster_col = cluster_col,
@@ -537,9 +545,10 @@ clustify_nudge.seurat <- function(input,
 #' @param cluster_col column in metadata that contains cluster ids per cell. Will default to first
 #' column of metadata if not supplied. Not required if running correlation per cell.
 #' @param compute_method method(s) for computing similarity scores
-#' @param ... additional arguments to pass to compute_method function
+#' @param ... passed to matrixize_markers
 #' @param norm whether and how the results are normalized
 #' @param call make call or just return score matrix
+#' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
 
 #' @export
 clustify_nudge.default <- function(input,
@@ -556,7 +565,13 @@ clustify_nudge.default <- function(input,
                                   set_ident = T,
                                   norm = "diff",
                                   call = T,
-                                  ...){
+                                  marker_inmatrix = T,
+                                  ...) {
+  if (marker_inmatrix != T) {
+    marker <- matrixize_markers(marker,
+                                ...)
+  }
+
   if (!(stringr::str_detect(class(input), "atrix"))) {
     input_original <- input
     temp <- parse_loc_object(input, type = class(input), expr_loc = NULL, meta_loc = NULL, var_loc = NULL, cluster_col = cluster_col)

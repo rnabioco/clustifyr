@@ -64,7 +64,7 @@ Alternatively, `clustify` can take a clustered `seurat` object (both v2 and v3) 
 ```{r example_seurat, eval = F}
 res <- clustify(
   input = s_small,
-  cluster_col = "res.1"
+  cluster_col = "res.1",
   ref_mat = pbmc_bulk_matrix,
   seurat_out = T
 )

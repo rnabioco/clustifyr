@@ -138,7 +138,7 @@ compare_lists <- function(bin_mat,
                           marker_m,
                           n = 30000,
                           metric = "hyper",
-                          output_high = TRUE) {
+                          output_high = T) {
   # check if matrix is binarized
   if ((length(unique(bin_mat[, 1])) > 2) & (metric != "gsea")) {
     warning("non-binarized data, running spearman instead")

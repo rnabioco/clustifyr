@@ -75,7 +75,7 @@ from `seurat` object as well.
 ``` r
 res <- clustify(
   input = s_small,
-  cluster_col = "res.1"
+  cluster_col = "res.1",
   ref_mat = pbmc_bulk_matrix,
   seurat_out = T
 )

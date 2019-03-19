@@ -6,7 +6,7 @@
 or jaccard index}
 \usage{
 compare_lists(bin_mat, marker_m, n = 30000, metric = "hyper",
-  output_high = TRUE)
+  output_high = T)
 }
 \arguments{
 \item{bin_mat}{binarized single-cell expression matrix, feed in by_cluster mat, if desired}
