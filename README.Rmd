@@ -92,3 +92,7 @@ res <- clustify_lists(s_small,
                seurat_out = T
 )
 ```
+
+## Additional reference data
+
+More reference data (including tabula muris) can be found at https://github.com/rnabioco/clustifyrdata.
