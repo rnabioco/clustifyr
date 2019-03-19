@@ -16,12 +16,12 @@ clustify(input, ...)
 \method{clustify}{seurat}(input, ref_mat, query_genes = NULL,
   per_cell = FALSE, num_perm = 0, cluster_col = NULL,
   compute_method = "spearman", use_var_genes = TRUE, dr = "tsne",
-  seurat_out = TRUE, threshold = 0, set_ident = T, ...)
+  seurat_out = TRUE, threshold = 0, ...)
 
 \method{clustify}{Seurat}(input, ref_mat, query_genes = NULL,
   per_cell = FALSE, num_perm = 0, cluster_col = NULL,
   compute_method = "spearman", use_var_genes = TRUE, dr = "tsne",
-  seurat_out = TRUE, threshold = 0, set_ident = T, ...)
+  seurat_out = TRUE, threshold = 0, ...)
 }
 \arguments{
 \item{input}{single-cell expression matrix or Seurat object}
@@ -52,8 +52,6 @@ column of metadata if not supplied. Not required if running correlation per cell
 
 \item{seurat_out}{output cor matrix or called seurat object}
 
-\item{set_ident}{whether the output seurat object has ident set to called type}
-
 \item{ref_mat}{reference expression matrix}
 
 \item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
@@ -99,8 +97,6 @@ column of metadata if not supplied. Not required if running correlation per cell
 \item{seurat_out}{output cor matrix or called seurat object}
 
 \item{...}{additional arguments to pass to compute_method function}
-
-\item{set_ident}{whether the output seurat object has ident set to called type}
 }
 \description{
 Main function to compare scRNA-seq data to bulk RNA-seq data.

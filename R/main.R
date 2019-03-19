@@ -101,7 +101,6 @@ clustify.default <- function(input,
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
 #' @param ... additional arguments to pass to compute_method function
-#' @param set_ident whether the output seurat object has ident set to called type
 
 #' @export
 clustify.seurat <- function(input,
@@ -115,7 +114,6 @@ clustify.seurat <- function(input,
                             dr = "tsne",
                             seurat_out = TRUE,
                             threshold = 0,
-                            set_ident = T,
                             ...) {
   s_object <- input
   # for seurat < 3.0
@@ -170,9 +168,6 @@ clustify.seurat <- function(input,
     }
     if ("Seurat" %in% loadedNamespaces()) {
       s_object@meta.data <- df_temp_full
-      if (set_ident == T) {
-        s_object <- SetAllIdent(s_object, "type")
-      }
       return(s_object)
       } else {
       print("seurat not loaded, returning cor_mat instead")
@@ -196,7 +191,6 @@ clustify.seurat <- function(input,
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
 #' @param ... additional arguments to pass to compute_method function
-#' @param set_ident whether the output seurat object has ident set to called type
 
 #' @export
 clustify.Seurat <- function(input,
@@ -210,7 +204,6 @@ clustify.Seurat <- function(input,
                             dr = "tsne",
                             seurat_out = TRUE,
                             threshold = 0,
-                            set_ident = T,
                             ...) {
   s_object <- input
   # for seurat 3.0 +
@@ -265,9 +258,6 @@ clustify.Seurat <- function(input,
     }
     if ("Seurat" %in% loadedNamespaces()) {
       s_object@meta.data <- df_temp_full
-      if (set_ident == T) {
-        Idents(s_object) <- "type"
-      }
       return(s_object)
     } else {
       print("seurat not loaded, returning cor_mat instead")
@@ -325,7 +315,6 @@ clustify_lists.default <- function(input,
                            genomen = 30000,
                            metric = "hyper",
                            output_high = TRUE,
-                           set_ident = T,
                            ...) {
   if (per_cell == F) {
     input <- average_clusters(input,
@@ -367,7 +356,6 @@ clustify_lists.default <- function(input,
 #' -log10 transform p-value
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
-#' @param set_ident whether the output seurat object has ident set to called type
 
 #' @param ... passed to matrixize_markers
 clustify_lists.seurat <- function(input,
@@ -385,7 +373,6 @@ clustify_lists.seurat <- function(input,
                                   dr = "tsne",
                                   seurat_out = TRUE,
                                   threshold = 0,
-                                  set_ident = T,
                                   ...) {
   s_object <- input
   # for seurat < 3.0
@@ -420,9 +407,6 @@ clustify_lists.seurat <- function(input,
     }
     if ("Seurat" %in% loadedNamespaces()) {
       s_object@meta.data <- df_temp_full
-      if (set_ident == T) {
-        s_object <- SetAllIdent(s_object, "type")
-      }
       return(s_object)
     } else {
       print("seurat not loaded, returning cor_mat instead")
@@ -450,7 +434,6 @@ clustify_lists.seurat <- function(input,
 #' -log10 transform p-value
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
-#' @param set_ident whether the output seurat object has ident set to called type
 
 #' @param ... passed to matrixize_markers
 clustify_lists.Seurat <- function(input,
@@ -468,7 +451,6 @@ clustify_lists.Seurat <- function(input,
                                   dr = "tsne",
                                   seurat_out = TRUE,
                                   threshold = 0,
-                                  set_ident = T,
                                   ...) {
   s_object <- input
   # for seurat 3.0 +
@@ -503,9 +485,6 @@ clustify_lists.Seurat <- function(input,
     }
     if ("Seurat" %in% loadedNamespaces()) {
       s_object@meta.data <- df_temp_full
-      if (set_ident == T) {
-        Idents(s_object) <- "type"
-      }
       return(s_object)
     } else {
       print("seurat not loaded, returning cor_mat instead")
