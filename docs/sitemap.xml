@@ -4,10 +4,28 @@
     <loc>http://rnabioco.github.io/clustifyR/index.html</loc>
   </url>
   <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/assign_ident.html</loc>
+  </url>
+  <url>
     <loc>http://rnabioco.github.io/clustifyR/reference/average_clusters.html</loc>
   </url>
   <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/average_clusters_filter.html</loc>
+  </url>
+  <url>
     <loc>http://rnabioco.github.io/clustifyR/reference/binarize_expr.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/calc_similarity.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/calculate_pathway_gsea.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/cbmc_m.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/cbmc_ref.html</loc>
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyR/reference/clustify.html</loc>
@@ -16,22 +34,52 @@
     <loc>http://rnabioco.github.io/clustifyR/reference/clustifyR.html</loc>
   </url>
   <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/clustify_intra.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/clustify_lists.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/clustify_nudge.html</loc>
+  </url>
+  <url>
     <loc>http://rnabioco.github.io/clustifyR/reference/clustifyr_methods.html</loc>
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyR/reference/compare_lists.html</loc>
   </url>
   <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/compute_mean_expr.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/cor_to_call.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/cor_to_call_topn.html</loc>
+  </url>
+  <url>
     <loc>http://rnabioco.github.io/clustifyR/reference/cosine.html</loc>
   </url>
   <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/gene_pct.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/gene_pct_markerm.html</loc>
+  </url>
+  <url>
     <loc>http://rnabioco.github.io/clustifyR/reference/getPCAGenes.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/get_best_match_matrix.html</loc>
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyR/reference/get_best_str.html</loc>
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyR/reference/get_common_elements.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/get_similarity.html</loc>
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyR/reference/get_vargenes.html</loc>
@@ -44,6 +92,15 @@
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyR/reference/matrixize_markers.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/object_loc_lookup.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/overcluster_test.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/parse_loc_object.html</loc>
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyR/reference/pbmc4k_avg.html</loc>
@@ -82,6 +139,12 @@
     <loc>http://rnabioco.github.io/clustifyR/reference/percent_clusters.html</loc>
   </url>
   <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/permute_similarity.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/plot_best_call.html</loc>
+  </url>
+  <url>
     <loc>http://rnabioco.github.io/clustifyR/reference/plot_call.html</loc>
   </url>
   <url>
@@ -97,16 +160,28 @@
     <loc>http://rnabioco.github.io/clustifyR/reference/pretty_palette.html</loc>
   </url>
   <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/pretty_palette_ramp_d.html</loc>
+  </url>
+  <url>
     <loc>http://rnabioco.github.io/clustifyR/reference/reduce_expr_matrix.html</loc>
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyR/reference/refine_clusters.html</loc>
   </url>
   <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/remove_background.html</loc>
+  </url>
+  <url>
     <loc>http://rnabioco.github.io/clustifyR/reference/run_gsea.html</loc>
   </url>
   <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/s_small.html</loc>
+  </url>
+  <url>
     <loc>http://rnabioco.github.io/clustifyR/reference/use_seurat_comp.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/use_seurat_meta.html</loc>
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyR/reference/vector_similarity.html</loc>
@@ -115,21 +190,9 @@
     <loc>http://rnabioco.github.io/clustifyR/articles/clustifyR.html</loc>
   </url>
   <url>
-    <loc>http://rnabioco.github.io/clustifyR/articles/compare_methods.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/articles/otherformats.html</loc>
   </url>
   <url>
-    <loc>http://rnabioco.github.io/clustifyR/articles/exploratory_pca.html</loc>
-  </url>
-  <url>
-    <loc>http://rnabioco.github.io/clustifyR/articles/gene_list.html</loc>
-  </url>
-  <url>
-    <loc>http://rnabioco.github.io/clustifyR/articles/get_recount_data.html</loc>
-  </url>
-  <url>
-    <loc>http://rnabioco.github.io/clustifyR/articles/random_forest.html</loc>
-  </url>
-  <url>
-    <loc>http://rnabioco.github.io/clustifyR/articles/refine_cluster.html</loc>
+    <loc>http://rnabioco.github.io/clustifyR/articles/references.html</loc>
   </url>
 </urlset>
