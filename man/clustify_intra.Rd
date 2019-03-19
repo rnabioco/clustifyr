@@ -14,7 +14,7 @@ clustify_intra(expr_mat, metadata, query_genes, cluster_col, sample_col,
 data.frame is supplied then \code{cluster_col} needs to be set. Not required if running correlation per cell.}
 
 \item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
-the expr_mat and bulk_mat will be used for comparision.}
+the expr_mat and ref_mat will be used for comparision.}
 
 \item{cluster_col}{column in metadata that contains cluster ids per cell. Will default to first
 column of metadata if not supplied. Not required if running correlation per cell.}

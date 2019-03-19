@@ -3,7 +3,7 @@
 #'
 #'
 #' @param expr_mat input single cell data after gene subsetting
-#' @param bulk_mat input bulk data after gene subsetting
+#' @param ref_mat input reference data after gene subsetting
 #' @param sc_cluster initial clustering assignment.
 #' Note that the number of bulk cell types must be no more than
 #' the number of clusters. for additional clusters,
@@ -25,14 +25,14 @@
 #' @param compute_method corr_coef
 #' @param ... control parameters for calculating similarity score
 #' @export
-refine_clusters <- function(expr_mat, sc_cluster, bulk_mat, lambda = 0.5, epsilon = 1,
+refine_clusters <- function(expr_mat, sc_cluster, ref_mat, lambda = 0.5, epsilon = 1,
                             if_compute_sigma = TRUE, num_iteration = 100, default_similiarity = -5,
                             disagreement_freq = 0.001, if_plot = FALSE, tsne_coord = NULL,
                             cluster_names = NULL, compute_method, ...) {
   # step 1. check input conditions
   num_cells <- ncol(expr_mat)
   num_cluster <- max(sc_cluster)
-  num_bulk <- ncol(bulk_mat)
+  num_bulk <- ncol(ref_mat)
   if (num_cluster < num_bulk) {
     error("refine_clusters: there are more bulk samples than clusters")
   }
@@ -43,7 +43,7 @@ refine_clusters <- function(expr_mat, sc_cluster, bulk_mat, lambda = 0.5, epsilo
     print(plot_tsne(data.frame(tSNE_1 = tsne_coord[, "tSNE_1"], tSNE_2 = tsne_coord[, "tSNE_2"], Classification = cluster_names[curr_cluster]), feature = "Classification", legend_name = "Initial"))
   }
   curr_num_iteration <- 0
-  bulk_info <- compute_bulk_score(expr_mat, bulk_mat, num_cluster, default_similiarity, compute_method, ...) # the bulk info has nothing to do with current clusters
+  ref_info <- compute_ref_score(expr_mat, ref_mat, num_cluster, default_similiarity, compute_method, ...) # the bulk info has nothing to do with current clusters
   while (1) {
     curr_num_iteration <- curr_num_iteration + 1
     print(paste("Iteration: ", curr_num_iteration, sep = ""))
@@ -54,7 +54,7 @@ refine_clusters <- function(expr_mat, sc_cluster, bulk_mat, lambda = 0.5, epsilo
     }
 
     # compute log probability (up to a constant) for each single cell and each cluster
-    log_score <- lambda * epsilon * bulk_info # similarity prob between each single cell and each bulk sample
+    log_score <- lambda * epsilon * ref_info # similarity prob between each single cell and each bulk sample
     for (j in 1:num_bulk) { # for each cluster
       id <- which(centroid_info$sigma[, j] > 0)
       log_score[, j] <- log_score[, j] + sapply(1:num_cells, function(i) -(1 - lambda) / 2 * mean((expr_mat[id, i] - centroid_info$mu[id, j])^2 / centroid_info$sigma[id, j]^2) - (1 - lambda) * mean(log(centroid_info$sigma[id, j])))
@@ -95,20 +95,20 @@ compute_centroid <- function(expr_mat, sc_cluster) {
 }
 
 #' @noRd
-compute_bulk_score <- function(expr_mat, bulk_mat, num_cluster, default_similiarity, compute_method, ...) {
+compute_ref_score <- function(expr_mat, ref_mat, num_cluster, default_similiarity, compute_method, ...) {
   # for clusters corresponding to bulk data: compute similarity score
   num_cells <- ncol(expr_mat)
-  num_bulk <- ncol(bulk_mat)
-  bulk_score <- matrix(NA, nrow = num_cells, ncol = num_bulk)
+  num_bulk <- ncol(ref_mat)
+  ref_score <- matrix(NA, nrow = num_cells, ncol = num_bulk)
   for (i in 1:num_cells) {
     curr_cell_expr <- expr_mat[, i]
-    bulk_score[i, ] <- sapply(1:num_bulk, function(x) calc_similarity(curr_cell_expr, bulk_mat[, x], compute_method, ...))
+    ref_score[i, ] <- sapply(1:num_bulk, function(x) calc_similarity(curr_cell_expr, ref_mat[, x], compute_method, ...))
   }
   # for clusters without bulk data, use a default value
   if (num_cluster > num_bulk) {
     for (j in (num_bulk + 1):num_cluster) {
-      bulk_score <- cbind(bulk_score, rep(default_similiarity, num_cells))
+      ref_score <- cbind(ref_score, rep(default_similiarity, num_cells))
     }
   }
-  return(bulk_score)
+  return(ref_score)
 }

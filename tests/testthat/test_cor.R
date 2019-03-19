@@ -4,14 +4,14 @@ test_that("output is correctly formatted", {
   res <- clustify(
            input = pbmc4k_matrix,
            metadata = pbmc4k_meta,
-           bulk_mat = pbmc_bulk_matrix,
+           ref_mat = pbmc_bulk_matrix,
            query_genes = pbmc4k_vargenes,
            cluster_col = "cluster"
   )
   n_clusters <- length(unique(pbmc4k_meta$cluster))
-  n_bulk_samples <- ncol(pbmc_bulk_matrix)
+  n_ref_samples <- ncol(pbmc_bulk_matrix)
 
-  expect_equal(ncol(res), n_bulk_samples)
+  expect_equal(ncol(res), n_ref_samples)
   expect_equal(n_clusters, nrow(res))
   })
 
@@ -21,7 +21,7 @@ test_that("run all correlation functions", {
            clustify(
            input = pbmc4k_matrix,
     metadata = pbmc4k_meta,
-    bulk_mat = pbmc_bulk_matrix,
+    ref_mat = pbmc_bulk_matrix,
     query_genes = pbmc4k_vargenes,
     cluster_col = "cluster",
     compute_method = x
@@ -37,7 +37,7 @@ test_that("test bad inputs", {
   expect_error(clustify(
     input = pbmc4k_matrix,
     metadata = pbmc4k_meta,
-    bulk_mat = pbmc_bulk_matrix,
+    ref_mat = pbmc_bulk_matrix,
     query_genes = pbmc4k_vargenes,
     compute_method = "foo"
   ))
@@ -47,7 +47,7 @@ test_that("test per cell", {
   res <- clustify(
     input = pbmc4k_matrix,
     metadata = pbmc4k_meta,
-    bulk_mat = pbmc_bulk_matrix,
+    ref_mat = pbmc_bulk_matrix,
     query_genes = pbmc4k_vargenes,
     cell_col = "rn",
     per_cell = T
@@ -61,7 +61,7 @@ test_that("test permutation", {
   res1 <- clustify(
     input = pbmc4k_matrix,
     metadata = pbmc4k_meta,
-    bulk_mat = pbmc_bulk_matrix,
+    ref_mat = pbmc_bulk_matrix,
     query_genes = pbmc4k_vargenes,
     cluster_col = "cluster"
   )
@@ -69,7 +69,7 @@ test_that("test permutation", {
   res_full <- clustify(
     input = pbmc4k_matrix,
     metadata = pbmc4k_meta,
-    bulk_mat = pbmc_bulk_matrix,
+    ref_mat = pbmc_bulk_matrix,
     query_genes = pbmc4k_vargenes,
     cluster_col = "cluster",
     num_perm = 2, return_full = T
