@@ -3,7 +3,7 @@ context("plotting")
 res <- clustify(
   input = pbmc4k_matrix,
   metadata = pbmc4k_meta,
-  bulk_mat = pbmc_bulk_matrix,
+  ref_mat = pbmc_bulk_matrix,
   query_genes = pbmc4k_vargenes,
   cluster_col = "cluster"
 )
@@ -15,7 +15,7 @@ test_that("plots can be generated", {
 
 test_that("call plots can be generated", {
   plts <- plot_cor(res, pbmc4k_meta,
-                   bulk_data_to_plot = colnames(res)[1:2],
+                   ref_data_to_plot = colnames(res)[1:2],
                    cluster_col = "cluster")
 
   expect_true(is.list(plts))
@@ -37,7 +37,7 @@ test_that("plot_best_call threshold works as intended, on per cell and collapsin
   res <- clustify(
     input = pbmc4k_matrix,
     metadata = pbmc4k_meta,
-    bulk_mat = pbmc_bulk_matrix,
+    ref_mat = pbmc_bulk_matrix,
     query_genes = pbmc4k_vargenes,
     cluster_col = "cluster",
     per_cell = T

@@ -5,7 +5,7 @@
 \title{Plot similarity measures on a tSNE}
 \usage{
 plot_cor(correlation_matrix, metadata,
-  bulk_data_to_plot = colnames(correlation_matrix), cluster_col = NULL,
+  ref_data_to_plot = colnames(correlation_matrix), cluster_col = NULL,
   x = "tSNE_1", y = "tSNE_2", scale_legends = FALSE, ...)
 }
 \arguments{
@@ -13,7 +13,7 @@ plot_cor(correlation_matrix, metadata,
 
 \item{metadata}{input metadata with per cell tsne coordinates and cluster ids}
 
-\item{bulk_data_to_plot}{colname of data to plot, defaults to all}
+\item{ref_data_to_plot}{colname of data to plot, defaults to all}
 
 \item{cluster_col}{colname of clustering data in metadata, defaults to rownames of the
 metadata if not supplied.}
