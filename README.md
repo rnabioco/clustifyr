@@ -9,8 +9,8 @@ status](https://codecov.io/gh/rnabioco/clustifyR/branch/master/graph/badge.svg)]
 # clustifyR <img src="man/figures/logo.png" align="right">
 
 clustifyR classifies cells and clusters in single-cell RNA sequencing
-experiments using reference bulk RNA-seq data sets, gene signatures, or
-marker genes.
+experiments using reference bulk RNA-seq data sets, single-cell gene
+signatures, or marker genes.
 
 Single cell transcriptomes are difficult to annotate without extensive
 knowledge of the underlying biology of the system in question. Even with
@@ -30,7 +30,7 @@ devtools::install_github("rnabioco/clustifyR")
 
 ## Example usage
 
-In this example we use the following input data:
+In this example we use the following built-in input data:
 
   - an expression matrix of single cell RNA-seq data (`pbmc4k_matrix`)
   - a metadata data.frame (`pbmc4k_meta`)
@@ -46,14 +46,14 @@ library(clustifyR)
 res <- clustify(
   input = pbmc4k_matrix,
   metadata = pbmc4k_meta$cluster,
-  bulk_mat = pbmc_bulk_matrix,
+  ref_mat = pbmc_bulk_matrix,
   query_genes = pbmc4k_vargenes
 )
 
 plot_cor(
   res,
   pbmc4k_meta,
-  colnames(res)[c(1, 5)],
+  colnames(res)[1],
   cluster_col = "cluster"
 )
 #> [[1]]
@@ -61,28 +61,28 @@ plot_cor(
 
 <img src="man/figures/README-example-1.png" width="100%" />
 
-    #> 
-    #> [[2]]
-
-<img src="man/figures/README-example-2.png" width="100%" />
-
 ``` r
 
 plot_best_call(res, pbmc4k_meta)
 ```
 
-<img src="man/figures/README-example-3.png" width="100%" />
+<img src="man/figures/README-example-2.png" width="100%" />
 
 Alternatively, `clustify` can take a clustered `seurat` object (both v2
-and v3) and assign identities.
+and v3) and assign identities. New reference matrix can be made directly
+from `seurat` object as well.
 
 ``` r
 res <- clustify(
   input = s_small,
   cluster_col = "res.1"
-  bulk_mat = pbmc_bulk_matrix,
+  ref_mat = pbmc_bulk_matrix,
   seurat_out = T
 )
+
+new_ref_matrix <- use_seurat_comp(s_small,
+                                  cluster_col = "res.1",
+                                  var.genes_only = FALSE)
 ```
 
 Similarly, `clustify_lists` can also handle identity assignment of
@@ -104,3 +104,8 @@ res <- clustify_lists(s_small,
                seurat_out = T
 )
 ```
+
+## Additional reference data
+
+More reference data (including tabula muris) can be found at
+<https://github.com/rnabioco/clustifyrdata>.
