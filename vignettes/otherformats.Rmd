@@ -1,0 +1,67 @@
+---
+title: 'Support for various single cell object formats'
+date: '`r Sys.Date()`'
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 3
+    vignette: >
+      %\VignetteIndexEntry{clustifyR-formats}
+      %\VignetteEngine{knitr::rmarkdown}
+      %\VignetteEncoding{UTF-8}
+---
+
+```{r knitr_opts, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = "center"
+)
+```
+
+## Direct handling of `seurat` objects, v2 and v3
+
+```{r, eval = F, warning = F, message = F}
+# can even returning a new object with `type` added to metadata.
+res <- clustify(
+  input = s_small,
+  cluster_col = "res.1",
+  ref_mat = pbmc_bulk_matrix,
+  seurat_out = T
+)
+
+# or return a correlation matrix
+res <- clustify_lists(s_small,
+               per_cell = F,
+               marker = pbmc4k_markers,
+               marker_inmatrix = F,
+               cluster_col = "res.1",
+               seurat_out = F
+)
+
+# and combined ref matrix and marker info
+res <- clustify_nudge(input = s_small,
+                      ref_mat = cbmc_ref,
+                      marker = cbmc_m,
+                      cluster_col = "res.1",
+                      threshold = 0.8,
+                      seurat_out = F)
+```
+
+## Other formats are easily supported
+
+```{r lookup, warning = F, message = F}
+# location of data in object in this format
+library(clustifyR)
+object_loc_lookup
+```
+
+sample code for `scrunchy` is as easy as:
+```{r scrunchy, warning = F, message = F, eval = F}
+res <- clustify_nudge(fsce_small, 
+               cbmc_ref, 
+               cbmc_m, 
+               query_genes = pbmc4k_vargenes,
+               cluster_col = "k_cluster"
+               )
+```

@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 
 In its simplest form, a reference matrix is built by averaging expression of a single cell RNA-seq expression matrix by cluster. Both log transformed or raw count matrices are supported.
 
-```{r average}
+```{r average, warning = F, message = F}
 library(clustifyR)
 new_ref_matrix <- average_clusters(pbmc4k_matrix, 
                                    cluster_info = pbmc4k_meta$cluster,
@@ -64,7 +64,7 @@ pbmc_data$meta_data[1:5, ]
 
 `clustify_lists` and `clustify_nudge` uses dataframe or matrix of candidate genes for classification. Example formatting are shown below.
 
-```{r genelist}
+```{r genelist, warning = F, message = F}
 head(pbmc4k_markers)
 
 head(cbmc_m)
