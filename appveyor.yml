@@ -48,4 +48,4 @@ environment:
   global:
     #either seems to be the temp fix
     #USE_RTOOLS: true
-    PKGTYPE = win.binary
+    PKGTYPE: win.binary
