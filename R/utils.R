@@ -439,7 +439,9 @@ gene_pct_markerm <- function(matrix, marker_m, cluster_info, cluster_col = NULL,
   }
 
   out <- sapply(colnames(marker_m), function(x) {
-    gene_pct(matrix, marker_m[[x]], cluster_info)
+    gene_pct(matrix,
+             marker_m[[x]],
+             cluster_info)
   })
 
   if (!(is.null(norm))) {
@@ -504,7 +506,9 @@ clustify_nudge.seurat <- function(input,
     per_cell = F
   )
 
-  df_temp <- cor_to_call(resa[order(rownames(resa)), order(colnames(resa))] + resb[order(rownames(resb)), order(colnames(resb))] * weight, threshold = threshold)
+  df_temp <- cor_to_call(resa[order(rownames(resa)), order(colnames(resa))] +
+                           resb[order(rownames(resb)), order(colnames(resb))] * weight,
+                         threshold = threshold)
   colnames(df_temp) <- c(cluster_col, "type", "score")
 
   if (seurat_out == F) {
@@ -559,7 +563,12 @@ clustify_nudge.default <- function(input,
                                   ...){
   if (!(stringr::str_detect(class(input), "atrix"))) {
     input_original <- input
-    temp <- parse_loc_object(input, type = class(input), expr_loc = NULL, meta_loc = NULL, var_loc = NULL, cluster_col = cluster_col)
+    temp <- parse_loc_object(input,
+                             type = class(input),
+                             expr_loc = NULL,
+                             meta_loc = NULL,
+                             var_loc = NULL,
+                             cluster_col = cluster_col)
     input <- temp[["expr"]]
     metadata <- temp[["meta"]]
     if (is.null(query_genes)) {
@@ -586,11 +595,14 @@ clustify_nudge.default <- function(input,
   )
 
   if (call == T) {
-    df_temp <- cor_to_call(resa[order(rownames(resa)), order(colnames(resa))] + resb[order(rownames(resb)), order(colnames(resb))] * weight, threshold = threshold)
+    df_temp <- cor_to_call(resa[order(rownames(resa)), order(colnames(resa))] +
+                             resb[order(rownames(resb)), order(colnames(resb))] * weight,
+                           threshold = threshold)
     colnames(df_temp) <- c(cluster_col, "type", "score")
     df_temp
   } else {
-    resa[order(rownames(resa)), order(colnames(resa))] + resb[order(rownames(resb)), order(colnames(resb))] * weight
+    resa[order(rownames(resa)), order(colnames(resa))] +
+      resb[order(rownames(resb)), order(colnames(resb))] * weight
   }
 }
 
@@ -603,7 +615,12 @@ clustify_nudge.default <- function(input,
 #' @param var_loc variable genes location
 #' @param cluster_col column of clustering from metadata
 #' @export
-parse_loc_object <- function(input, type = class(input), expr_loc = NULL, meta_loc = NULL, var_loc = NULL, cluster_col = NULL) {
+parse_loc_object <- function(input,
+                             type = class(input),
+                             expr_loc = NULL,
+                             meta_loc = NULL,
+                             var_loc = NULL,
+                             cluster_col = NULL) {
   # if (type == "SingleCellExperiment") {
   #   parsed = list(input@assays$data$logcounts,
   #                 as.data.frame(input@colData)),
@@ -667,22 +684,65 @@ parse_loc_object <- function(input, type = class(input), expr_loc = NULL, meta_l
 #' @param newclustering use kmeans if NULL on dr or col name for second column of clustering
 
 #' @export
-overcluster_test <- function(expr, metadata, cluster_col, x_col = "tSNE_1", y_col = "tSNE_2", n = 5, do.label = T, seed = 42, newclustering = NULL) {
+overcluster_test <- function(expr,
+                             metadata,
+                             cluster_col,
+                             x_col = "tSNE_1",
+                             y_col = "tSNE_2",
+                             n = 5,
+                             do.label = T,
+                             seed = 42,
+                             newclustering = NULL) {
   if (!(is.null(seed))) {
     set.seed(seed)
   }
 
   if (is.null(newclustering)) {
-    metadata$new_clusters <- as.character(kmeans(metadata[,c(x_col, y_col)], centers = n * length(unique(metadata[[cluster_col]])))$clust)
+    metadata$new_clusters <- as.character(kmeans(metadata[,c(x_col, y_col)],
+                                                 centers = n * length(unique(metadata[[cluster_col]])))$clust)
   } else {
     metadata$new_clusters <- metadata[[newclustering]]
     n <- length(unique(metadata[[newclustering]]))/length(unique(metadata[[cluster_col]]))
   }
-  res1 <- clustify_nudge(expr, cbmc_ref, cbmc_m, metadata, query_genes = pbmc4k_markers_M3Drop$Gene, cluster_col = cluster_col, call = F)
-  res2 <- clustify_nudge(expr, cbmc_ref, cbmc_m, metadata, query_genes = pbmc4k_markers_M3Drop$Gene, cluster_col = "new_clusters", call = F)
-  o1 <- plot_tsne(metadata, feature = cluster_col, x = x_col, y = y_col, do.label = F, do.legend = F)
-  o2 <- plot_tsne(metadata, feature = "new_clusters", x = x_col, y = y_col, do.label = F, do.legend = F)
-  p1 <- plot_best_call(res1, metadata, cluster_col, do.label = do.label, x = x_col, y = y_col)
-  p2 <- plot_best_call(res2, metadata, "new_clusters", do.label = do.label, x = x_col, y = y_col)
-  cowplot::plot_grid(o1, o2, p1, p2, labels = c(length(unique(metadata[[cluster_col]])), n * length(unique(metadata[[cluster_col]]))))
+  res1 <- clustify_nudge(expr,
+                         cbmc_ref,
+                         cbmc_m,
+                         metadata,
+                         query_genes = pbmc4k_markers_M3Drop$Gene,
+                         cluster_col = cluster_col,
+                         call = F)
+  res2 <- clustify_nudge(expr,
+                         cbmc_ref,
+                         cbmc_m,
+                         metadata,
+                         query_genes = pbmc4k_markers_M3Drop$Gene,
+                         cluster_col = "new_clusters",
+                         call = F)
+  o1 <- plot_tsne(metadata,
+                  feature = cluster_col,
+                  x = x_col,
+                  y = y_col,
+                  do.label = F,
+                  do.legend = F)
+  o2 <- plot_tsne(metadata,
+                  feature = "new_clusters",
+                  x = x_col,
+                  y = y_col,
+                  do.label = F,
+                  do.legend = F)
+  p1 <- plot_best_call(res1,
+                       metadata,
+                       cluster_col,
+                       do.label = do.label,
+                       x = x_col,
+                       y = y_col)
+  p2 <- plot_best_call(res2,
+                       metadata,
+                       "new_clusters",
+                       do.label = do.label,
+                       x = x_col,
+                       y = y_col)
+  cowplot::plot_grid(o1, o2, p1, p2,
+                     labels = c(length(unique(metadata[[cluster_col]])),
+                                n * length(unique(metadata[[cluster_col]]))))
 }

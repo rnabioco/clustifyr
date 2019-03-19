@@ -10,20 +10,23 @@ test_that("get_vargenes works for both matrix and dataframe form", {
 
 test_that("matrixize_markers with remove_rp option", {
   pbmc4k_mm <- matrixize_markers(pbmc4k_markers)
-  pbmc4k_mm2 <- matrixize_markers(pbmc4k_markers, remove_rp = T)
+  pbmc4k_mm2 <- matrixize_markers(pbmc4k_markers,
+                                  remove_rp = T)
 
   expect_true(nrow(pbmc4k_mm) != nrow(pbmc4k_mm2))
 })
 
 test_that("average_clusters works as intended", {
-  pbmc4k_avg2 <- average_clusters(pbmc4k_matrix, pbmc4k_meta)
+  pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
+                                  pbmc4k_meta)
   expect_equal(nrow(pbmc4k_avg2), nrow(pbmc4k_avg))
 })
 
 test_that("average_clusters works when one cluster contains only 1 cell", {
   pbmc4k_meta2 <- pbmc4k_meta
   pbmc4k_meta2[1,"cluster"] <- 15
-  pbmc4k_avg2 <- average_clusters(pbmc4k_matrix, pbmc4k_meta2)
+  pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
+                                  pbmc4k_meta2)
   expect_equal(ncol(pbmc4k_avg2), ncol(pbmc4k_avg) + 1)
 })
 
@@ -153,11 +156,17 @@ test_that("clustify_nudge works with options", {
 })
 
 test_that("overcluster_test works with defaults", {
-  g <- overcluster_test(pbmc4k_matrix,pbmc4k_meta, cluster_col = "cluster")
+  g <- overcluster_test(pbmc4k_matrix,
+                        pbmc4k_meta,
+                        cluster_col = "cluster")
   expect_true(ggplot2::is.ggplot(g))
 })
 
 test_that("overcluster_test works with defined other cluster column", {
-  g <- overcluster_test(pbmc4k_matrix,pbmc4k_meta, cluster_col = "cluster", newclustering = "classified", do.label = F)
+  g <- overcluster_test(pbmc4k_matrix,
+                        pbmc4k_meta,
+                        cluster_col = "cluster",
+                        newclustering = "classified",
+                        do.label = F)
   expect_true(ggplot2::is.ggplot(g))
 })
