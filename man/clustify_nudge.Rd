@@ -11,14 +11,14 @@ clustify_nudge(input, ...)
 \method{clustify_nudge}{seurat}(input, ref_mat, marker,
   cluster_col = NULL, query_genes = NULL,
   compute_method = "spearman", weight = 1, seurat_out = T,
-  threshold = -Inf, dr = "tsne", set_ident = T, norm = "diff",
+  threshold = -Inf, dr = "tsne", norm = "diff",
   marker_inmatrix = T, ...)
 
 \method{clustify_nudge}{default}(input, ref_mat, marker, metadata = NULL,
   cluster_col = NULL, query_genes = NULL,
   compute_method = "spearman", weight = 1, seurat_out = T,
-  threshold = -Inf, dr = "tsne", set_ident = T, norm = "diff",
-  call = T, marker_inmatrix = T, ...)
+  threshold = -Inf, dr = "tsne", norm = "diff", call = T,
+  marker_inmatrix = T, ...)
 }
 \arguments{
 \item{input}{seurat 2 object}

@@ -12,22 +12,19 @@ clustify_lists(input, ...)
 \method{clustify_lists}{default}(input, per_cell = F,
   cluster_info = NULL, log_scale = T, cluster_col = "cluster",
   topn = 1000, cut = 0, marker, marker_inmatrix = T,
-  genomen = 30000, metric = "hyper", output_high = TRUE,
-  set_ident = T, ...)
+  genomen = 30000, metric = "hyper", output_high = TRUE, ...)
 
 \method{clustify_lists}{seurat}(input, per_cell = F,
   cluster_info = NULL, log_scale = T, cluster_col = "cluster",
   topn = 1000, cut = 0, marker, marker_inmatrix = T,
   genomen = 30000, metric = "hyper", output_high = TRUE,
-  dr = "tsne", seurat_out = TRUE, threshold = 0, set_ident = T,
-  ...)
+  dr = "tsne", seurat_out = TRUE, threshold = 0, ...)
 
 \method{clustify_lists}{Seurat}(input, per_cell = F,
   cluster_info = NULL, log_scale = T, cluster_col = "cluster",
   topn = 1000, cut = 0, marker, marker_inmatrix = T,
   genomen = 30000, metric = "hyper", output_high = TRUE,
-  dr = "tsne", seurat_out = TRUE, threshold = 0, set_ident = T,
-  ...)
+  dr = "tsne", seurat_out = TRUE, threshold = 0, ...)
 }
 \arguments{
 \item{input}{single-cell expression matrix or Seurat object}
@@ -60,8 +57,6 @@ averaging will be done on unlogged data}
 \item{output_high}{if true (by default to fit with rest of package),
 -log10 transform p-value}
 
-\item{set_ident}{whether the output seurat object has ident set to called type}
-
 \item{dr}{stored dimension reduction}
 
 \item{seurat_out}{output cor matrix or called seurat object}
@@ -127,8 +122,6 @@ averaging will be done on unlogged data}
 \item{dr}{stored dimension reduction}
 
 \item{seurat_out}{output cor matrix or called seurat object}
-
-\item{set_ident}{whether the output seurat object has ident set to called type}
 
 \item{...}{passed to matrixize_markers}
 }

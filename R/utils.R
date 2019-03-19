@@ -489,7 +489,6 @@ clustify_nudge.seurat <- function(input,
                            seurat_out = T,
                            threshold = -Inf,
                            dr = "tsne",
-                           set_ident = T,
                            norm = "diff",
                            marker_inmatrix = T,
                            ...){
@@ -523,9 +522,6 @@ clustify_nudge.seurat <- function(input,
     df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
     if ("Seurat" %in% loadedNamespaces()) {
       input@meta.data <- df_temp_full
-      if (set_ident == T) {
-        input <- SetAllIdent(input, "type")
-      }
       return(input)
     } else {
       print("seurat not loaded, returning cor_mat instead")
@@ -562,7 +558,6 @@ clustify_nudge.default <- function(input,
                                   seurat_out = T,
                                   threshold = -Inf,
                                   dr = "tsne",
-                                  set_ident = T,
                                   norm = "diff",
                                   call = T,
                                   marker_inmatrix = T,
