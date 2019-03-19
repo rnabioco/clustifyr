@@ -126,3 +126,30 @@
 #'
 #' @source  `[pbmc_small]` processed by `[seurat]`
 "s_small"
+
+#' reference matrix from seurat citeseq CBMC
+#'
+#' @format XXX
+#' \describe{
+#' }
+#'
+#' @source  `[seurat]` tutorial, averaged per cluster
+"cbmc_ref"
+
+#' reference marker matrix from seurat citeseq CBMC
+#'
+#' @format XXX
+#' \describe{
+#' }
+#'
+#' @source  `[seurat]` tutorial, matrixized top markers
+"cbmc_m"
+
+#' lookup table for single cell object structures
+#'
+#' @format XXX
+#' \describe{
+#' }
+#'
+#' @source  various packages
+"object_loc_lookup"
