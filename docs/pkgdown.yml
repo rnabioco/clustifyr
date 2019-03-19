@@ -1,14 +1,10 @@
-pandoc: 2.2.3.2
-pkgdown: 1.1.0.9000
-pkgdown_sha: 6feddc6202be27878016b507f3f69e892ba8e1e1
+pandoc: '2.4'
+pkgdown: 1.3.0
+pkgdown_sha: ~
 articles:
   clustifyR: clustifyR.html
-  compare_methods: compare_methods.html
-  exploratory_pca: exploratory_pca.html
-  gene_list: gene_list.html
-  get_recount_data: get_recount_data.html
-  random_forest: random_forest.html
-  refine_cluster: refine_cluster.html
+  otherformats: otherformats.html
+  references: references.html
 urls:
   reference: http://rnabioco.github.io/clustifyR/reference
   article: http://rnabioco.github.io/clustifyR/articles
