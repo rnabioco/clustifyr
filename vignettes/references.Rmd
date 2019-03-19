@@ -1,0 +1,84 @@
+---
+title: 'Reference building for clustifyR'
+date: '`r Sys.Date()`'
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 3
+    vignette: >
+      %\VignetteIndexEntry{clustifyR-reference}
+      %\VignetteEngine{knitr::rmarkdown}
+      %\VignetteEncoding{UTF-8}
+---
+
+```{r knitr_opts, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = "center"
+)
+```
+
+## Building reference matrix from single cell expression matrix
+
+In its simplest form, a reference matrix is built by averaging expression of a single cell RNA-seq expression matrix by cluster. Both log transformed or raw count matrices are supported.
+
+```{r average}
+library(clustifyR)
+new_ref_matrix <- average_clusters(pbmc4k_matrix, 
+                                   cluster_info = pbmc4k_meta$cluster,
+                                   log_scale = T)
+
+head(new_ref_matrix)
+```
+
+## Building reference matrix from `seurat` object
+
+For further convenience, a shortcut function for generating reference matrix from  `seurat` object is used here.
+
+```{r seruat, warning=F, message=F}
+new_ref_matrix <- use_seurat_comp(s_small,
+                                  cluster_col = "res.1",
+                                  var.genes_only = FALSE)
+
+head(new_ref_matrix)
+```
+
+## Building reference matrix from Recount2
+
+Bulk RNA-Seq data can be obtained from any input source; in this example we will obtain a dataset from the [recount2](https://jhubiostatistics.shinyapps.io/recount/) database. This database provides > 2000 human RNA-Seq experiments that have been processed using a consistent pipeline. We have written a wrapper function to download a count matrix from `recount2`, given an SRA ID. 
+
+```{r recount, warning=F, message=F, eval = F}
+source(system.file("dl_recount.R", package = "clustifyR"))
+
+pbmc_data <- dl_recount("SRP051688")
+
+pbmc_data$read_counts[1:5, 1:5]
+
+pbmc_data$meta_data[1:5, ]
+
+# assign colnames as needed
+```
+
+## Building reference gene list
+
+`clustify_lists` and `clustify_nudge` uses dataframe or matrix of candidate genes for classification. Example formatting are shown below.
+
+```{r genelist}
+head(pbmc4k_markers)
+
+head(cbmc_m)
+```
+
+## Prebuilt references, in clustifyR
+
+A few reference datasets are built into clustifyR for vignettes and testing:
+`pbmc4k_avg`,
+`pbmc_bulk_matrix`,
+`cbmc_ref`,
+`pbmc4k_markers`,
+`cbmc_m`
+
+## Prebuilt references, in clustifyrdata
+
+More reference data (including tabula muris) can be found at https://github.com/rnabioco/clustifyrdata.

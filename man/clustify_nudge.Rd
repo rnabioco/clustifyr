@@ -11,18 +11,19 @@ clustify_nudge(input, ...)
 \method{clustify_nudge}{seurat}(input, ref_mat, marker,
   cluster_col = NULL, query_genes = NULL,
   compute_method = "spearman", weight = 1, seurat_out = T,
-  threshold = -Inf, dr = "tsne", set_ident = T, norm = "diff")
+  threshold = -Inf, dr = "tsne", set_ident = T, norm = "diff",
+  marker_inmatrix = T, ...)
 
 \method{clustify_nudge}{default}(input, ref_mat, marker, metadata = NULL,
   cluster_col = NULL, query_genes = NULL,
   compute_method = "spearman", weight = 1, seurat_out = T,
   threshold = -Inf, dr = "tsne", set_ident = T, norm = "diff",
-  call = T, ...)
+  call = T, marker_inmatrix = T, ...)
 }
 \arguments{
 \item{input}{seurat 2 object}
 
-\item{...}{additional arguments to pass to compute_method function}
+\item{...}{passed to matrixize_markers}
 
 \item{ref_mat}{reference expression matrix}
 
@@ -41,6 +42,8 @@ the expr_mat and ref_mat will be used for comparision.}
 \item{dr}{stored dimension reduction}
 
 \item{norm}{whether and how the results are normalized}
+
+\item{marker_inmatrix}{whether markers genes are already in preprocessed matrix form}
 
 \item{metadata}{cell cluster assignments, supplied as a vector or data.frame. If
 data.frame is supplied then \code{cluster_col} needs to be set.}
@@ -61,9 +64,11 @@ column of metadata if not supplied. Not required if running correlation per cell
 
 \item{compute_method}{method(s) for computing similarity scores}
 
-\item{...}{additional arguments to pass to compute_method function}
+\item{...}{passed to matrixize_markers}
 
 \item{norm}{whether and how the results are normalized}
+
+\item{marker_inmatrix}{whether markers genes are already in preprocessed matrix form}
 }
 \description{
 Combined function to compare scRNA-seq data to bulk RNA-seq data and marker list
