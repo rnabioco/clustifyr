@@ -57,6 +57,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/benchmark.html">Benchmarking clustifyR</a>
+    </li>
+    <li>
       <a href="../articles/otherformats.html">Support for various single cell object formats</a>
     </li>
     <li>
@@ -89,7 +92,7 @@
     <div class="page-header toc-ignore">
       <h1>Reference building for clustifyR</h1>
             
-            <h4 class="date">2019-03-19</h4>
+            <h4 class="date">2019-03-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyR/blob/master/vignettes/references.Rmd"><code>vignettes/references.Rmd</code></a></small>
       <div class="hidden name"><code>references.Rmd</code></div>
@@ -144,15 +147,80 @@
 <h2 class="hasAnchor">
 <a href="#building-reference-matrix-from-recount2" class="anchor"></a>Building reference matrix from Recount2</h2>
 <p>Bulk RNA-Seq data can be obtained from any input source; in this example we will obtain a dataset from the <a href="https://jhubiostatistics.shinyapps.io/recount/">recount2</a> database. This database provides &gt; 2000 human RNA-Seq experiments that have been processed using a consistent pipeline. We have written a wrapper function to download a count matrix from <code>recount2</code>, given an SRA ID.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/source">source</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"dl_recount.R"</span>, <span class="dt">package =</span> <span class="st">"clustifyR"</span>))</a>
-<a class="sourceLine" id="cb3-2" title="2"></a>
-<a class="sourceLine" id="cb3-3" title="3">pbmc_data &lt;-<span class="st"> </span><span class="kw">dl_recount</span>(<span class="st">"SRP051688"</span>)</a>
-<a class="sourceLine" id="cb3-4" title="4"></a>
-<a class="sourceLine" id="cb3-5" title="5">pbmc_data<span class="op">$</span>read_counts[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(purrr)</a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyr)</a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(stringr)</a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(recount)</a>
 <a class="sourceLine" id="cb3-6" title="6"></a>
-<a class="sourceLine" id="cb3-7" title="7">pbmc_data<span class="op">$</span>meta_data[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ]</a>
-<a class="sourceLine" id="cb3-8" title="8"></a>
-<a class="sourceLine" id="cb3-9" title="9"><span class="co"># assign colnames as needed</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-7" title="7">dl_recount &lt;-<span class="st"> </span><span class="cf">function</span>(sra_id){</a>
+<a class="sourceLine" id="cb3-8" title="8">  <span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/files">file.exists</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(sra_id, <span class="st">"rse_gene.Rdata"</span>))) {</a>
+<a class="sourceLine" id="cb3-9" title="9">    <span class="kw"><a href="https://www.rdocumentation.org/packages/recount/topics/download_study">download_study</a></span>(sra_id)</a>
+<a class="sourceLine" id="cb3-10" title="10">  }</a>
+<a class="sourceLine" id="cb3-11" title="11">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/load">load</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(sra_id, <span class="st">"rse_gene.Rdata"</span>))</a>
+<a class="sourceLine" id="cb3-12" title="12">  <span class="co"># no longer need to downloaded data</span></a>
+<a class="sourceLine" id="cb3-13" title="13">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unlink">unlink</a></span>(sra_id, <span class="dt">recursive =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb3-14" title="14">  rse &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/recount/topics/scale_counts">scale_counts</a></span>(rse_gene)</a>
+<a class="sourceLine" id="cb3-15" title="15">  read_counts &lt;-<span class="st"> </span><span class="kw">assay</span>(rse, <span class="st">"counts"</span>)</a>
+<a class="sourceLine" id="cb3-16" title="16">  gene_ids &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">rownames</a></span>(read_counts)</a>
+<a class="sourceLine" id="cb3-17" title="17">  <span class="co"># get gene symbols, which are stored in rowData</span></a>
+<a class="sourceLine" id="cb3-18" title="18">  id2symbol &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">data_frame</a></span>(<span class="dt">ids =</span> <span class="kw">rowData</span>(rse_gene)<span class="op">$</span>gene_id,</a>
+<a class="sourceLine" id="cb3-19" title="19">             <span class="dt">symbols =</span> <span class="kw">rowData</span>(rse_gene)<span class="op">$</span>symbol<span class="op">@</span>listData) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-20" title="20"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">symbols =</span> <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span>(symbols, <span class="op">~</span>.x[<span class="dv">1</span>]))</a>
+<a class="sourceLine" id="cb3-21" title="21"></a>
+<a class="sourceLine" id="cb3-22" title="22">  <span class="co"># clean up metadata into a dataframe</span></a>
+<a class="sourceLine" id="cb3-23" title="23">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(<span class="st">"cleaning up meta"</span>)</a>
+<a class="sourceLine" id="cb3-24" title="24">  mdata &lt;-<span class="st"> </span><span class="kw">colData</span>(rse)</a>
+<a class="sourceLine" id="cb3-25" title="25">  mdata_cols &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">lapply</a></span>(mdata<span class="op">$</span>characteristics,</a>
+<a class="sourceLine" id="cb3-26" title="26">      <span class="cf">function</span>(x){<span class="kw"><a href="https://stringr.tidyverse.org/reference/str_match.html">str_match</a></span>(x, <span class="st">"^([^:]+):"</span>)[, <span class="dv">2</span>]}) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-27" title="27"><span class="st">        </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unique">unique</a></span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-28" title="28"><span class="st">        </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unlist">unlist</a></span>()</a>
+<a class="sourceLine" id="cb3-29" title="29"></a>
+<a class="sourceLine" id="cb3-30" title="30">  mdata &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">data_frame</a></span>(<span class="dt">run =</span>  mdata<span class="op">$</span>run,</a>
+<a class="sourceLine" id="cb3-31" title="31">                      <span class="dt">all_data =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">as.list</a></span>(mdata<span class="op">$</span>characteristics)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-32" title="32"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">out =</span> purrr<span class="op">::</span><span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span>(all_data,</a>
+<a class="sourceLine" id="cb3-33" title="33">                                <span class="op">~</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c</a></span>(.x, <span class="dt">collapse =</span> <span class="st">"::"</span>))) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-34" title="34"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span>(out,</a>
+<a class="sourceLine" id="cb3-35" title="35">                  <span class="dt">sep =</span> <span class="st">"::"</span>,</a>
+<a class="sourceLine" id="cb3-36" title="36">                  <span class="dt">into =</span> mdata_cols) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-37" title="37"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>all_data) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-38" title="38"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_at</a></span>(<span class="dt">.vars =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="op">-</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">matches</a></span>(<span class="st">"run"</span>)),</a>
+<a class="sourceLine" id="cb3-39" title="39">              <span class="dt">.funs =</span> <span class="cf">function</span>(x) <span class="kw"><a href="https://stringr.tidyverse.org/reference/str_match.html">str_match</a></span>(x, <span class="st">": (.+)"</span>)[, <span class="dv">2</span>])</a>
+<a class="sourceLine" id="cb3-40" title="40"></a>
+<a class="sourceLine" id="cb3-41" title="41">  <span class="co"># convert ids to symbols</span></a>
+<a class="sourceLine" id="cb3-42" title="42">  row_ids_to_symbols &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">data_frame</a></span>(<span class="dt">ids =</span> gene_ids),</a>
+<a class="sourceLine" id="cb3-43" title="43">            id2symbol, <span class="dt">by =</span> <span class="st">"ids"</span>)</a>
+<a class="sourceLine" id="cb3-44" title="44"></a>
+<a class="sourceLine" id="cb3-45" title="45">  <span class="cf">if</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(gene_ids) <span class="op">!=</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(row_ids_to_symbols)) {</a>
+<a class="sourceLine" id="cb3-46" title="46">    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/warning">warning</a></span>(<span class="st">"gene id mapping to symbols produce more or less ids"</span>)</a>
+<a class="sourceLine" id="cb3-47" title="47">  }</a>
+<a class="sourceLine" id="cb3-48" title="48"></a>
+<a class="sourceLine" id="cb3-49" title="49">  row_ids_to_symbols &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(row_ids_to_symbols, <span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(symbols))</a>
+<a class="sourceLine" id="cb3-50" title="50">  out_df &lt;-<span class="st"> </span>read_counts <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-51" title="51"><span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-52" title="52"><span class="st">    </span>tibble<span class="op">::</span><span class="kw"><a href="https://tibble.tidyverse.org/reference/rownames.html">rownames_to_column</a></span>(<span class="st">"gene_id"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-53" title="53"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(., row_ids_to_symbols,</a>
+<a class="sourceLine" id="cb3-54" title="54">              <span class="dt">by =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"gene_id"</span> =<span class="st"> "ids"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-55" title="55"><span class="st">    </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>gene_id) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-56" title="56"><span class="st">    </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(symbols, <span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">everything</a></span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-57" title="57"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(symbols))</a>
+<a class="sourceLine" id="cb3-58" title="58"></a>
+<a class="sourceLine" id="cb3-59" title="59">  out_matrix &lt;-<span class="st"> </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a></span>(out_df, library, expr, <span class="op">-</span>symbols) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-60" title="60"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(symbols, library) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-61" title="61"><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span>(<span class="dt">expr =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sum">sum</a></span>(expr)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-62" title="62"><span class="st">    </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/spread.html">spread</a></span>(library, expr) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-63" title="63"><span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-64" title="64"><span class="st">    </span>tibble<span class="op">::</span><span class="kw"><a href="https://tibble.tidyverse.org/reference/rownames.html">column_to_rownames</a></span>(<span class="st">"symbols"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-65" title="65"><span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">as.matrix</a></span>()</a>
+<a class="sourceLine" id="cb3-66" title="66"></a>
+<a class="sourceLine" id="cb3-67" title="67">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">read_counts =</span> out_matrix,</a>
+<a class="sourceLine" id="cb3-68" title="68">       <span class="dt">meta_data =</span> mdata)</a>
+<a class="sourceLine" id="cb3-69" title="69">}</a>
+<a class="sourceLine" id="cb3-70" title="70"></a>
+<a class="sourceLine" id="cb3-71" title="71">gtex_data &lt;-<span class="st"> </span><span class="kw">dl_recount</span>(<span class="st">"SRP012682"</span>)</a>
+<a class="sourceLine" id="cb3-72" title="72"></a>
+<a class="sourceLine" id="cb3-73" title="73">gtex_data<span class="op">$</span>read_counts[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a>
+<a class="sourceLine" id="cb3-74" title="74">gtex_data<span class="op">$</span>meta_data[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ]</a></code></pre></div>
 </div>
 <div id="building-reference-gene-list" class="section level2">
 <h2 class="hasAnchor">
