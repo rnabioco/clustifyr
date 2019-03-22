@@ -91,6 +91,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/benchmark.html">Benchmarking clustifyR</a>
+    </li>
+    <li>
       <a href="../articles/otherformats.html">Support for various single cell object formats</a>
     </li>
     <li>
@@ -139,15 +142,15 @@
 <span class='fu'>clustify_nudge</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>, <span class='no'>marker</span>,
   <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>weight</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='no'>T</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>, <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>, <span class='kw'>set_ident</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>norm</span> <span class='kw'>=</span> <span class='st'>"diff"</span>,
+  <span class='kw'>threshold</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>, <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>, <span class='kw'>norm</span> <span class='kw'>=</span> <span class='st'>"diff"</span>,
   <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>clustify_nudge</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>, <span class='no'>marker</span>, <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>weight</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='no'>T</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>, <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>, <span class='kw'>set_ident</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>norm</span> <span class='kw'>=</span> <span class='st'>"diff"</span>,
-  <span class='kw'>call</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>threshold</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>, <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>, <span class='kw'>norm</span> <span class='kw'>=</span> <span class='st'>"diff"</span>, <span class='kw'>call</span> <span class='kw'>=</span> <span class='no'>T</span>,
+  <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

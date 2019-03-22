@@ -91,6 +91,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/benchmark.html">Benchmarking clustifyR</a>
+    </li>
+    <li>
       <a href="../articles/otherformats.html">Support for various single cell object formats</a>
     </li>
     <li>
@@ -144,13 +147,13 @@
 <span class='fu'>clustify</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>use_var_genes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>,
-  <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>set_ident</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='no'>...</span>)
+  <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for Seurat</span>
 <span class='fu'>clustify</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>use_var_genes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>,
-  <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>set_ident</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -208,10 +211,6 @@ column of metadata if not supplied. Not required if running correlation per cell
       <td><p>output cor matrix or called seurat object</p></td>
     </tr>
     <tr>
-      <th>set_ident</th>
-      <td><p>whether the output seurat object has ident set to called type</p></td>
-    </tr>
-    <tr>
       <th>ref_mat</th>
       <td><p>reference expression matrix</p></td>
     </tr>
@@ -296,10 +295,6 @@ column of metadata if not supplied. Not required if running correlation per cell
     <tr>
       <th>...</th>
       <td><p>additional arguments to pass to compute_method function</p></td>
-    </tr>
-    <tr>
-      <th>set_ident</th>
-      <td><p>whether the output seurat object has ident set to called type</p></td>
     </tr>
     </table>
     

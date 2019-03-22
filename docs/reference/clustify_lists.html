@@ -91,6 +91,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/benchmark.html">Benchmarking clustifyR</a>
+    </li>
+    <li>
       <a href="../articles/otherformats.html">Support for various single cell object formats</a>
     </li>
     <li>
@@ -139,24 +142,21 @@
 <span class='fu'>clustify_lists</span>(<span class='no'>input</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='no'>F</span>,
   <span class='kw'>cluster_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>log_scale</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>,
   <span class='kw'>topn</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>cut</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>marker</span>, <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='no'>T</span>,
-  <span class='kw'>genomen</span> <span class='kw'>=</span> <span class='fl'>30000</span>, <span class='kw'>metric</span> <span class='kw'>=</span> <span class='st'>"hyper"</span>, <span class='kw'>output_high</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>set_ident</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='no'>...</span>)
+  <span class='kw'>genomen</span> <span class='kw'>=</span> <span class='fl'>30000</span>, <span class='kw'>metric</span> <span class='kw'>=</span> <span class='st'>"hyper"</span>, <span class='kw'>output_high</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for seurat</span>
 <span class='fu'>clustify_lists</span>(<span class='no'>input</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='no'>F</span>,
   <span class='kw'>cluster_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>log_scale</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>,
   <span class='kw'>topn</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>cut</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>marker</span>, <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='no'>T</span>,
   <span class='kw'>genomen</span> <span class='kw'>=</span> <span class='fl'>30000</span>, <span class='kw'>metric</span> <span class='kw'>=</span> <span class='st'>"hyper"</span>, <span class='kw'>output_high</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>, <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>set_ident</span> <span class='kw'>=</span> <span class='no'>T</span>,
-  <span class='no'>...</span>)
+  <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>, <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for Seurat</span>
 <span class='fu'>clustify_lists</span>(<span class='no'>input</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='no'>F</span>,
   <span class='kw'>cluster_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>log_scale</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>,
   <span class='kw'>topn</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>cut</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>marker</span>, <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='no'>T</span>,
   <span class='kw'>genomen</span> <span class='kw'>=</span> <span class='fl'>30000</span>, <span class='kw'>metric</span> <span class='kw'>=</span> <span class='st'>"hyper"</span>, <span class='kw'>output_high</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>, <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>set_ident</span> <span class='kw'>=</span> <span class='no'>T</span>,
-  <span class='no'>...</span>)</pre>
+  <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>, <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -218,10 +218,6 @@ averaging will be done on unlogged data</p></td>
 -log10 transform p-value</p></td>
     </tr>
     <tr>
-      <th>set_ident</th>
-      <td><p>whether the output seurat object has ident set to called type</p></td>
-    </tr>
-    <tr>
       <th>dr</th>
       <td><p>stored dimension reduction</p></td>
     </tr>
@@ -344,10 +340,6 @@ averaging will be done on unlogged data</p></td>
     <tr>
       <th>seurat_out</th>
       <td><p>output cor matrix or called seurat object</p></td>
-    </tr>
-    <tr>
-      <th>set_ident</th>
-      <td><p>whether the output seurat object has ident set to called type</p></td>
     </tr>
     <tr>
       <th>...</th>

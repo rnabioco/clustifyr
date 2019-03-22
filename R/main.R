@@ -42,6 +42,8 @@ clustify.default <- function(input,
                                            rownames(ref_mat),
                                            query_genes)
 
+  print(paste0("using # of genes: ", length(gene_constraints)))
+
   expr_mat <- expr_mat[gene_constraints, , drop = FALSE]
   ref_mat <- ref_mat[gene_constraints, , drop = FALSE]
 
