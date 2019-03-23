@@ -170,3 +170,8 @@ test_that("overcluster_test works with defined other cluster column", {
                         do.label = F)
   expect_true(ggplot2::is.ggplot(g))
 })
+
+test_that("ref_feature_select chooses the correct number of features", {
+  g <- ref_feature_select(pbmc4k_avg[1:100,], 5)
+  expect_true(length(g) == 5)
+})

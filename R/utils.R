@@ -756,3 +756,19 @@ overcluster_test <- function(expr,
                      labels = c(length(unique(metadata[[cluster_col]])),
                                 n * length(unique(metadata[[cluster_col]]))))
 }
+
+#' feature select from reference matrix
+#'
+#' @param mat reference matrix
+#' @param n number of genes to return
+
+#' @export
+ref_feature_select <- function(mat, n = 3000) {
+  cor_mat <- cor(t(mat), method = "spearman")
+  diag(cor_mat) <- rep(0, times = nrow(cor_mat))
+  score <- apply(cor_mat, 1, function(x) {max(abs(x), na.rm = T)})
+  names(score) <- rownames(cor_mat);
+  score <- score[order(-score)]
+  cor_genes <- names(score[1:n])
+  cor_genes
+}

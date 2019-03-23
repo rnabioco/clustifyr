@@ -63,3 +63,14 @@ test_that("plot_gene checks for presence of gene name", {
             c("ZFP36L3"),
             cell_col = "rn"))
 })
+
+test_that("plot_cols returns a ggplot object", {
+  g <- plot_cols(pbmc4k_meta,
+            "cluster",
+            "classified",
+            "tSNE_1",
+            pbmc4k_meta,
+            "cluster",
+            "tSNE_1")
+  expect_true(ggplot2::is.ggplot(g))
+})

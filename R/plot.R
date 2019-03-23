@@ -325,3 +325,52 @@ plot_best_call <- function(correlation_matrix,
 
   l
 }
+
+#' Plot variable median per cluster from reference metadata vs new assigned metadata, for visually evaluating classification
+#'
+#' @param metadata clustify-ed metadata
+#' @param cluster_col metadata column for original clustering
+#' @param cluster_col_called metadata column for clustifyR assignments
+#' @param plot_col metadata column to plot
+#' @param metadata_ref reference single cell RNA seq metadata
+#' @param cluster_col_ref metadata column for cluster for reference
+#' @param plot_col_ref metadata column to plot for reference
+#' @export
+plot_cols <- function(metadata,
+                      cluster_col,
+                      cluster_col_called,
+                      plot_col,
+                      metadata_ref,
+                      cluster_col_ref,
+                      plot_col_ref) {
+  temp1 <- dplyr::group_by_at(metadata, vars(cluster_col, cluster_col_called))
+  temp1 <- dplyr::summarise(temp1, med = median(!!sym(plot_col), na.rm = T))
+  colnames(temp1) <- c("original_cluster", "type", paste(plot_col, "query", sep = "_"))
+
+  temp2 <- dplyr::group_by_at(metadata_ref,cluster_col_ref)
+  temp2 <- dplyr::summarise(temp2, med = median(!!sym(plot_col_ref), na.rm = T))
+  colnames(temp2) <- c("type", paste(plot_col, "ref", sep = "_"))
+
+  temp <- dplyr::left_join(temp1,
+                           temp2,
+                           by = "type")
+  temp[is.na(temp)] <- 0
+  temp[["full"]] <- stringr::str_c(temp[["original_cluster"]], temp[["type"]], sep = "->")
+  xmax <- max(temp[,4])
+  ymax <- max(temp[,3])
+
+  ggplot(temp,
+         aes_string(x = colnames(temp)[4],
+                    y = colnames(temp)[3],
+                    label = "full")) +
+    geom_point(alpha = 0.23) +
+    geom_label(alpha = 0.23,
+               aes(color = type),
+               vjust="inward",
+               hjust="inward") +
+    cowplot::theme_cowplot() +
+    scale_x_continuous(expand = c(0, 0),
+                       limits = c(0,xmax * 1.1)) +
+    scale_y_continuous(expand = c(0, 0),
+                       limits = c(0,ymax * 1.1))
+}
