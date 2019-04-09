@@ -685,10 +685,12 @@ parse_loc_object <- function(input,
 #'
 #' @param expr expression matrix
 #' @param metadata metadata including cluster info and dimension reduction plotting
+#' @param ref_mat reference matrix
 #' @param cluster_col column of clustering from metadata
 #' @param x_col column of metadata for x axis plotting
 #' @param y_col column of metadata for y axis plotting
 #' @param n expand n-fold for over/under clustering
+#' @param ngenes number of genes to use for feature selection, use all genes if NULL
 #' @param do.label whether to label each cluster at median center
 #' @param seed set seed for kmeans
 #' @param newclustering use kmeans if NULL on dr or col name for second column of clustering
@@ -696,10 +698,12 @@ parse_loc_object <- function(input,
 #' @export
 overcluster_test <- function(expr,
                              metadata,
+                             ref_mat,
                              cluster_col,
                              x_col = "tSNE_1",
                              y_col = "tSNE_2",
                              n = 5,
+                             ngenes = NULL,
                              do.label = T,
                              seed = 42,
                              newclustering = NULL) {
@@ -714,20 +718,24 @@ overcluster_test <- function(expr,
     metadata$new_clusters <- metadata[[newclustering]]
     n <- length(unique(metadata[[newclustering]]))/length(unique(metadata[[cluster_col]]))
   }
-  res1 <- clustify_nudge(expr,
-                         cbmc_ref,
-                         cbmc_m,
+
+  if (is.null(ngenes)) {
+    genes <- rownames(expr)
+  } else {
+    genes <- ref_feature_select(expr, ngenes)
+  }
+  res1 <- clustify(expr,
+                         ref_mat,
                          metadata,
-                         query_genes = pbmc4k_markers_M3Drop$Gene,
+                         query_genes = genes,
                          cluster_col = cluster_col,
-                         call = F)
-  res2 <- clustify_nudge(expr,
-                         cbmc_ref,
-                         cbmc_m,
+                         seurat_out = F)
+  res2 <- clustify(expr,
+                         ref_mat,
                          metadata,
-                         query_genes = pbmc4k_markers_M3Drop$Gene,
+                         query_genes = genes,
                          cluster_col = "new_clusters",
-                         call = F)
+                   seurat_out = F)
   o1 <- plot_tsne(metadata,
                   feature = cluster_col,
                   x = x_col,
@@ -752,9 +760,10 @@ overcluster_test <- function(expr,
                        do.label = do.label,
                        x = x_col,
                        y = y_col)
-  cowplot::plot_grid(o1, o2, p1, p2,
+  g <- cowplot::plot_grid(o1, o2, p1, p2,
                      labels = c(length(unique(metadata[[cluster_col]])),
                                 n * length(unique(metadata[[cluster_col]]))))
+  return(g)
 }
 
 #' feature select from reference matrix
