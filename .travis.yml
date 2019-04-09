@@ -7,7 +7,7 @@ warnings_are_errors: false
 
 matrix:
   include:
-    - r: bioc-release
+  - r: bioc-release
     after_success:
     - Rscript -e 'covr::codecov()'
     before_deploy:
@@ -16,4 +16,4 @@ matrix:
       provider: script
       script: Rscript -e 'pkgdown::deploy_site_github(verbose = TRUE)'
       skip_cleanup: true
-    - r: bioc-devel
+  - r: bioc-devel
