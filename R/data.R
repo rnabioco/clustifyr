@@ -66,39 +66,6 @@
 #' @source `[pbmc4k_matrix]` processed by `[seurat]`
 "pbmc4k_vargenes"
 
-#' Matrix of single-cell RNA-seq PBMCs from 5'end kit.
-#'
-#' A sample of 8000 cells from a bigger experiment
-#'
-#' @format A sparseMatrix with genes as rows and cells as columns.
-#' \describe{
-#' }
-#'
-#' @source (https://support.10xgenomics.com/single-cell-vdj/datasets/2.2.0/vdj_v1_hs_pbmc_5gex)
-"pbmc5_matrix"
-
-#' Meta-data for single-cell RNA-seq PBMCs from 5'end kit.
-#'
-#' A sample of 8000 cells from a bigger experiment
-#'
-#' @format A data frame with 4 variables:
-#' \describe{
-#' }
-#'
-#' @source `[pbmc5_matrix]` processed by `[seurat]`
-"pbmc5_meta"
-
-#' Marker genes identified by Seurat from single-cell RNA-seq PBMCs from 5'end kit.
-#'
-#' A sample of 8000 cells from a bigger experiment
-#'
-#' @format A data frame with 7 variables:
-#' \describe{
-#' }
-#'
-#' @source `[pbmc5_matrix]` processed by `[seurat]`
-"pbmc5_markers"
-
 #' Bulk RNA-Seq data from sorted populations isolated from PBMCs.
 #'
 #'

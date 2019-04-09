@@ -4,14 +4,16 @@
 \alias{overcluster_test}
 \title{compare clustering parameters and classification outcomes}
 \usage{
-overcluster_test(expr, metadata, cluster_col, x_col = "tSNE_1",
-  y_col = "tSNE_2", n = 5, do.label = T, seed = 42,
-  newclustering = NULL)
+overcluster_test(expr, metadata, ref_mat, cluster_col, x_col = "tSNE_1",
+  y_col = "tSNE_2", n = 5, ngenes = NULL, do.label = T,
+  seed = 42, newclustering = NULL)
 }
 \arguments{
 \item{expr}{expression matrix}
 
 \item{metadata}{metadata including cluster info and dimension reduction plotting}
+
+\item{ref_mat}{reference matrix}
 
 \item{cluster_col}{column of clustering from metadata}
 
@@ -20,6 +22,8 @@ overcluster_test(expr, metadata, cluster_col, x_col = "tSNE_1",
 \item{y_col}{column of metadata for y axis plotting}
 
 \item{n}{expand n-fold for over/under clustering}
+
+\item{ngenes}{number of genes to use for feature selection, use all genes if NULL}
 
 \item{do.label}{whether to label each cluster at median center}
 
