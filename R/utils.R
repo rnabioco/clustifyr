@@ -781,3 +781,48 @@ ref_feature_select <- function(mat, n = 3000) {
   cor_genes <- names(score[1:n])
   cor_genes
 }
+
+#' Returns a list of variable genes based on PCA
+#'
+#' @description  Extract genes, i.e. "features", based on the top
+#' loadings of principal components
+#' formed from the bulk expression data set
+#'
+#' @param mat Expression matrix. Rownames are genes,
+#' colnames are single cell cluster name, and
+#' values are average single cell expression (log transformed).
+#' @param pcs Precalculated pcs if available, will skip over processing on mat.
+#' @param n_pcs Number of PCs to selected gene loadings from.
+#' See the explore_PCA_corr.Rmd vignette for details.
+#' @param percentile Select the percentile of absolute values of
+#' PCA loadings to select genes from. E.g. 0.999 would select the
+#' top point 1 percent of genes with the largest loadings.
+#' @param log_scale whether the data is already log transformed
+#' @return The list of genes to use as features.
+#'
+#' @export
+feature_select_PCA <- function(mat = NULL,
+                               pcs = NULL,
+                               n_pcs = 10,
+                               percentile = 0.99,
+                               log_scale = T) {
+  if (log_scale == F) {
+    mat <- log(mat + 1)
+  }
+
+  # Get the PCs
+  if (is.null(pcs)) {
+    pca <- prcomp(t(as.matrix(mat)))$rotation
+  } else {
+    pca <- pcs
+  }
+
+  # For the given number PCs, select the genes with the largest loadings
+  genes <- c()
+  for (i in 1:n_pcs) {
+    cutoff <- quantile(abs(pca[, i]), probs = percentile)
+    genes <- c(genes, rownames(pca[abs(pca[, i]) >= cutoff, ]))
+  }
+
+  return(genes)
+}
