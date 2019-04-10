@@ -174,6 +174,19 @@ test_that("overcluster_test works with defined other cluster column", {
 })
 
 test_that("ref_feature_select chooses the correct number of features", {
-  g <- ref_feature_select(pbmc4k_avg[1:100,], 5)
-  expect_true(length(g) == 5)
+  res <- ref_feature_select(pbmc4k_avg[1:100,], 5)
+  expect_true(length(res) == 5)
+})
+
+test_that("feature_select_PCA will log transform", {
+  res <- feature_select_PCA(pbmc_bulk_matrix, log_scale = F)
+  res2 <- feature_select_PCA(pbmc_bulk_matrix, log_scale = T)
+  expect_true(length(res) > 0)
+})
+
+test_that("feature_select_PCA can handle precalculated PCA", {
+  pcs <- prcomp(t(as.matrix(pbmc_bulk_matrix)))$rotation
+  res <- feature_select_PCA(pbmc_bulk_matrix, log_scale = T)
+  res2 <- feature_select_PCA(pcs = pcs, log_scale = T)
+  expect_true(all.equal(rownames(res), rownames(res2)))
 })
