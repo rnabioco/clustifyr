@@ -11,7 +11,7 @@
 #' @param scale convert expr_mat into zscores prior to running GSEA?, default = FALSE
 #' @export
 run_gsea <- function(expr_mat, query_genes, cluster_ids = NULL,
-                     n_perm = 1000, per_cell = FALSE, scale = FALSE) {
+                     n_perm = 1000, per_cell = FALSE, scale = FALSE, no_warnings = T) {
 
   if (!is.list(query_genes)){
     geneset_list <- list("query_genes" = query_genes)
@@ -40,12 +40,21 @@ run_gsea <- function(expr_mat, query_genes, cluster_ids = NULL,
   res <- list()
   for(i in seq_along(colnames(avg_mat))){
 
-    gsea_res <- fgsea::fgsea(geneset_list,
-                       avg_mat[, i],
-                       minSize = 1,
-                       maxSize = max(sapply(geneset_list, length)),
-                       nproc = 1,
-                       nperm = n_perm)
+    if (no_warnings == F) {
+      gsea_res <- fgsea::fgsea(geneset_list,
+                         avg_mat[, i],
+                         minSize = 1,
+                         maxSize = max(sapply(geneset_list, length)),
+                         nproc = 1,
+                         nperm = n_perm)
+    } else {
+      suppressWarnings(gsea_res <- fgsea::fgsea(geneset_list,
+                                                avg_mat[, i],
+                                                minSize = 1,
+                                                maxSize = max(sapply(geneset_list, length)),
+                                                nproc = 1,
+                                                nperm = n_perm))
+    }
     res[[i]] <- gsea_res[, c("pathway", "pval", "NES")]
   }
   gsea_res <- dplyr::bind_rows(res)

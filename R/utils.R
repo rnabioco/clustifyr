@@ -255,7 +255,9 @@ remove_background <- function(mat, background, n = 0){
 calculate_pathway_gsea <- function(mat,
                                    pathway_list,
                                    n_perm = 1000,
-                                   scale = FALSE) {
+                                   scale = T,
+                                   no_warnings = T) {
+  # pathway_list can be user defined or `my_pathways <- fgsea::reactomePathways(rownames(pbmc4k_matrix))`
   out <- lapply(
     names(pathway_list),
     function(y) {
@@ -266,7 +268,8 @@ calculate_pathway_gsea <- function(mat,
       temp <- run_gsea(mat, v1,
                        n_perm = n_perm,
                        scale = scale,
-                       per_cell = T)
+                       per_cell = T,
+                       no_warnings = no_warnings)
       temp <- temp[ , 3, drop = F]
     }
   )
@@ -826,3 +829,39 @@ feature_select_PCA <- function(mat = NULL,
 
   return(genes)
 }
+
+#' convert gmt format of pathways to list of vectors
+#'
+#' @param path gmt file path
+#' @param cutoff remove pathways with less genes than this cutoff
+
+#' @export
+gmt_to_list <- function(path, cutoff = 0) {
+  df <- readr::read_csv(path, col_names = F)
+  df <- tidyr::separate(df, X1, sep = "\thttp://www.broadinstitute.org/gsea/msigdb/cards/.*?\t", into = c("path", "genes"))
+  pathways <- stringr::str_split(df$genes, "\t")
+  names(pathways) <- stringr::str_replace(df$path, "REACTOME_", "")
+  if (cutoff > 0) {
+    ids <- sapply(pathways, function(i) length(i) < cutoff)
+    pathways <- pathways[!ids]
+  }
+  return(pathways)
+}
+
+#' plot GSEA pathway scores as heatmap, returns a list containing results and plot.
+#'
+#' @param mat expression matrix
+#' @param pathway_list a list of vectors, each named for a specific pathway, or dataframe
+#' @param n_perm Number of permutation for fgsea function. Defaults to 1000.
+#' @param scale convert expr_mat into zscores prior to running GSEA?, default = T
+#' @param topn number of top pathways to plot
+
+#' @export
+plot_pathway_gsea <- function(mat, pathway_list, n_perm = 1000, scale = T, topn = 5) {
+  res <- calculate_pathway_gsea(mat, pathway_list, n_perm, scale = scale)
+  coltopn <- unique(cor_to_call_topn(res, topn = topn, threshold = -Inf)$type)
+  res[is.na(res)] <- 0
+  g <- ComplexHeatmap::Heatmap(res[,coltopn], column_names_gp = grid::gpar(fontsize = 6))
+  return(list(res, g))
+}
+
