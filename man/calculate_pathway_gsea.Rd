@@ -4,7 +4,8 @@
 \alias{calculate_pathway_gsea}
 \title{Convert expression matrix to GSEA pathway scores (would take a similar place in workflow before average_clusters/binarize)}
 \usage{
-calculate_pathway_gsea(mat, pathway_list, n_perm = 1000, scale = FALSE)
+calculate_pathway_gsea(mat, pathway_list, n_perm = 1000, scale = T,
+  no_warnings = T)
 }
 \arguments{
 \item{mat}{expression matrix}
