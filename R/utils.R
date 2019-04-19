@@ -773,13 +773,20 @@ overcluster_test <- function(expr,
 #'
 #' @param mat reference matrix
 #' @param n number of genes to return
-
+#' @param rm.lowvar whether to remove lower variation genes first
+#'
 #' @export
-ref_feature_select <- function(mat, n = 3000) {
-  cor_mat <- cor(t(mat), method = "spearman")
+ref_feature_select <- function(mat, n = 3000, rm.lowvar = T) {
+  if (rm.lowvar == T) {
+    v <- RowVar(mat)
+    v2 <- v[order(-v)][1:(length(v)/2)]
+    mat <- mat[names(v2),]
+  }
+
+  cor_mat <- cor(t(as.matrix(mat)), method = "spearman")
   diag(cor_mat) <- rep(0, times = nrow(cor_mat))
-  score <- apply(cor_mat, 1, function(x) {max(abs(x), na.rm = T)})
-  names(score) <- rownames(cor_mat);
+  cor_mat <- abs(cor_mat)
+  score <- apply(cor_mat, 1, max, na.rm = T)
   score <- score[order(-score)]
   cor_genes <- names(score[1:n])
   cor_genes
@@ -865,3 +872,12 @@ plot_pathway_gsea <- function(mat, pathway_list, n_perm = 1000, scale = T, topn 
   return(list(res, g))
 }
 
+#' get var per row for matrix
+#'
+#' @param x expression matrix
+#' @param na.rm logical. Should missing values (including NaN) be omitted from the calculations?
+
+#' @export
+RowVar <- function(x, na.rm = T) {
+  rowSums((x - rowMeans(x, na.rm = na.rm))^2, na.rm = na.rm)/(dim(x)[2] - 1)
+}
