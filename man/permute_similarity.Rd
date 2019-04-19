@@ -6,9 +6,6 @@
 \usage{
 permute_similarity(expr_mat, ref_mat, cluster_ids, num_perm,
   per_cell = F, compute_method, ...)
-
-permute_similarity(expr_mat, ref_mat, cluster_ids, num_perm,
-  per_cell = F, compute_method, ...)
 }
 \arguments{
 \item{expr_mat}{single-cell expression matrix}
@@ -25,24 +22,7 @@ genes have ALREADY BEEN filtered}
 \item{compute_method}{method(s) for computing similarity scores}
 
 \item{...}{additional parameters}
-
-\item{expr_mat}{single-cell expression matrix}
-
-\item{cluster_ids}{clustering info of single-cell data assume that
-genes have ALREADY BEEN filtered}
-
-\item{ref_mat}{reference expression matrix}
-
-\item{num_perm}{number of permutations}
-
-\item{per_cell}{run per cell?}
-
-\item{compute_method}{method(s) for computing similarity scores}
-
-\item{...}{additional parameters}
 }
 \description{
-Permute cluster labels to calculate empirical p-value
-
 Permute cluster labels to calculate empirical p-value
 }

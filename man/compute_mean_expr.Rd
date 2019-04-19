@@ -5,11 +5,7 @@
 \title{compute mean of clusters}
 \usage{
 compute_mean_expr(expr_mat, sc_assign, sc_clust)
-
-compute_mean_expr(expr_mat, sc_assign, sc_clust)
 }
 \description{
-compute mean of clusters
-
 compute mean of clusters
 }

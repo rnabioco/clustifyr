@@ -6,9 +6,6 @@
 \usage{
 get_similarity(expr_mat, ref_mat, cluster_ids, compute_method,
   per_cell = FALSE, ...)
-
-get_similarity(expr_mat, ref_mat, cluster_ids, compute_method,
-  per_cell = FALSE, ...)
 }
 \arguments{
 \item{expr_mat}{single-cell expression matrix}
@@ -22,21 +19,7 @@ get_similarity(expr_mat, ref_mat, cluster_ids, compute_method,
 \item{per_cell}{run per cell?}
 
 \item{...}{additional parameters not used yet}
-
-\item{expr_mat}{single-cell expression matrix}
-
-\item{ref_mat}{reference expression matrix}
-
-\item{cluster_ids}{vector of cluster ids for each cell}
-
-\item{compute_method}{method(s) for computing similarity scores}
-
-\item{per_cell}{run per cell?}
-
-\item{...}{additional parameters not used yet}
 }
 \description{
-Permute cluster labels to calculate empirical p-value
-
 Permute cluster labels to calculate empirical p-value
 }
