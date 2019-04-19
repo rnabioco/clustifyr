@@ -142,12 +142,11 @@ calc_similarity <- function(sc_avg,
   }
 
   # remove 0s ?
-  # print(1)
   # if(any(compute_method %in% c("spearman"))) {
+  #   print("considering 0 as missing data")
   #   sc_avg[sc_avg == 0] <- NA
-  #   a <<- sc_avg[1:5,1:5]
   #   similarity_score <- cor(as.matrix(sc_avg),
-  #                           ref_mat, method = "spearman", use = "complete.obs")
+  #                           ref_mat, method = "spearman", use = "pairwise.complete.obs")
   #   return(similarity_score)
   # }
 
