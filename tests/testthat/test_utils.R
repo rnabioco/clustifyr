@@ -30,6 +30,22 @@ test_that("average_clusters works when one cluster contains only 1 cell", {
   expect_equal(ncol(pbmc4k_avg2), ncol(pbmc4k_avg) + 1)
 })
 
+test_that("average_clusters works when low cell number clusters should be removed", {
+  pbmc4k_meta2 <- pbmc4k_meta
+  pbmc4k_meta2[1,"cluster"] <- 15
+  pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
+                                  pbmc4k_meta2, low_threshold = 2)
+  expect_equal(ncol(pbmc4k_avg2), ncol(pbmc4k_avg))
+})
+
+test_that("average_clusters works when cluster info contains NA", {
+  pbmc4k_meta2 <- pbmc4k_meta
+  pbmc4k_meta2[1,"cluster"] <- NA
+  pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
+                                  pbmc4k_meta2, low_threshold = 2)
+  expect_equal(ncol(pbmc4k_avg2), ncol(pbmc4k_avg))
+})
+
 test_that("average_clusters_filter works on strings", {
   avg1 <- average_clusters_filter(pbmc4k_matrix, pbmc4k_meta,
                                   filter_on = "cluster",
