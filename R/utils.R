@@ -7,11 +7,13 @@
 #' @param log_scale input data is natural log,
 #' averaging will be done on unlogged data
 #' @param cluster_col column in cluster_info with cluster number
+#' @param low_threshold option to remove clusters with too few cells
 #'
 #' @export
 average_clusters <- function(mat, cluster_info,
                              log_scale = T,
-                             cluster_col = "cluster") {
+                             cluster_col = "cluster",
+                             low_threshold = 0) {
 
   if(is.vector(cluster_info)){
     cluster_ids <- split(colnames(mat), cluster_info)
@@ -40,7 +42,13 @@ average_clusters <- function(mat, cluster_info,
       res
     }
   )
-  return(do.call(cbind, out))
+
+  out <- do.call(cbind, out)
+  if (low_threshold > 0) {
+    fil <- sapply(cluster_ids, FUN = length) > low_threshold
+    out <- out[, as.vector(fil)]
+  }
+  return(out)
 }
 
 #' Percentage detected per cluster

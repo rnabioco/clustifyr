@@ -99,3 +99,20 @@ test_that("seurat object clustifying", {
                       plot_r = T)
   expect_true(ggplot2::is.ggplot(g[[1]]))
 })
+
+test_that("get_similarity handles NA entries", {
+  pbmc4k_meta2 <- pbmc4k_meta
+  pbmc4k_meta2[1,"cluster"] <- NA
+  res <- clustify(
+    input = pbmc4k_matrix,
+    metadata = pbmc4k_meta2,
+    ref_mat = pbmc_bulk_matrix,
+    query_genes = pbmc4k_vargenes,
+    cluster_col = "cluster"
+  )
+  n_clusters <- length(unique(pbmc4k_meta$cluster))
+  n_ref_samples <- ncol(pbmc_bulk_matrix)
+
+  expect_equal(ncol(res), n_ref_samples)
+  expect_equal(n_clusters + 1, nrow(res))
+})
