@@ -17,9 +17,12 @@ get_similarity <- function(expr_mat,
                            ...) {
 
   ref_clust <- colnames(ref_mat)
+  cluster_ids <- factor(cluster_ids)
+  cluster_ids <- factor(cluster_ids, levels = c(levels(cluster_ids), NA), labels = c(levels(cluster_ids), "unknown"), exclude = NULL)
 
   if (!per_cell) {
     sc_clust <- sort(unique(cluster_ids))
+    # print(sc_clust)
     clust_avg <- compute_mean_expr(
       expr_mat,
       cluster_ids,
