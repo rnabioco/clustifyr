@@ -16,11 +16,11 @@ test_that("run all gene list functions", {
 test_that("gene list function options", {
   pbmc4k_mm <- matrixize_markers(pbmc4k_markers)
   pbmc4k_avgb <- binarize_expr(pbmc4k_avg)
-  expect_error(res <- compare_lists(pbmc4k_avgb,
+  expect_error(suppressWarnings(res <- compare_lists(pbmc4k_avgb,
                                     pbmc4k_mm,
                                     metric = "hyper",
                                     output_high = F,
-                                    n = 5))
+                                    n = 5)))
 })
 
 test_that("run all gene list functions in clustify_lists", {
