@@ -18,6 +18,7 @@ get_similarity <- function(expr_mat,
 
   ref_clust <- colnames(ref_mat)
   if (sum(is.na(cluster_ids)) > 0) {
+    print("reassigning NAs to unknown")
     cluster_ids <- factor(cluster_ids)
     cluster_ids <- factor(cluster_ids, levels = c(levels(cluster_ids), NA), labels = c(levels(cluster_ids), "unknown"), exclude = NULL)
   }
