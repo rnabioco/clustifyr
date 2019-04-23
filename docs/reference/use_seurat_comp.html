@@ -137,7 +137,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>use_seurat_comp</span>(<span class='no'>seurat_object</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
-  <span class='kw'>var.genes_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>assay_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>var.genes_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>assay_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mean"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -157,6 +157,10 @@
     <tr>
       <th>assay_name</th>
       <td><p>any additional assay data, such as ADT, to include. If more than 1, pass a vector of names</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>whether to take mean (default) or median</p></td>
     </tr>
     </table>
     

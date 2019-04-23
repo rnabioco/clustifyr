@@ -137,7 +137,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>average_clusters</span>(<span class='no'>mat</span>, <span class='no'>cluster_info</span>, <span class='kw'>log_scale</span> <span class='kw'>=</span> <span class='no'>T</span>,
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>)</pre>
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>, <span class='kw'>low_threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mean"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -160,6 +160,14 @@ averaging will be done on unlogged data</p></td>
     <tr>
       <th>cluster_col</th>
       <td><p>column in cluster_info with cluster number</p></td>
+    </tr>
+    <tr>
+      <th>low_threshold</th>
+      <td><p>option to remove clusters with too few cells</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>whether to take mean (default) or median</p></td>
     </tr>
     </table>
     

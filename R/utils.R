@@ -8,12 +8,14 @@
 #' averaging will be done on unlogged data
 #' @param cluster_col column in cluster_info with cluster number
 #' @param low_threshold option to remove clusters with too few cells
+#' @param method whether to take mean (default) or median
 #'
 #' @export
 average_clusters <- function(mat, cluster_info,
                              log_scale = T,
                              cluster_col = "cluster",
-                             low_threshold = 0) {
+                             low_threshold = 0,
+                             method = "mean") {
 
   if(is.vector(cluster_info)){
     cluster_ids <- split(colnames(mat), cluster_info)
@@ -24,24 +26,37 @@ average_clusters <- function(mat, cluster_info,
          supply either a  vector or a dataframe")
   }
 
-  out <- lapply(
-    cluster_ids,
-    function(cell_ids) {
-      if (!all(cell_ids %in% colnames(mat))) {
-        stop("cell ids not found in input matrix")
-      }
-      if (log_scale) {
-        mat_data <- expm1(mat[, cell_ids, drop = FALSE])
-      } else {
+  if (method == "mean") {
+    out <- lapply(
+      cluster_ids,
+      function(cell_ids) {
+        if (!all(cell_ids %in% colnames(mat))) {
+          stop("cell ids not found in input matrix")
+        }
+        if (log_scale) {
+          mat_data <- expm1(mat[, cell_ids, drop = FALSE])
+        } else {
+          mat_data <- mat[, cell_ids, drop = FALSE]
+        }
+        res <- Matrix::rowMeans(mat_data)
+        if (log_scale) {
+          res <- log1p(res)
+        }
+        res
+      })
+  } else {
+    out <- lapply(
+      cluster_ids,
+      function(cell_ids) {
+        if (!all(cell_ids %in% colnames(mat))) {
+          stop("cell ids not found in input matrix")
+        }
         mat_data <- mat[, cell_ids, drop = FALSE]
-      }
-      res <- Matrix::rowMeans(mat_data)
-      if (log_scale) {
-        res <- log1p(res)
-      }
-      res
-    }
-  )
+        res <- apply(mat_data,1,function(x){median(x[x>0])})
+        res[is.na(res)] <- 0
+        res
+      })
+  }
 
   out <- do.call(cbind, out)
   if (low_threshold > 0) {

@@ -4,12 +4,15 @@
 #' @param cluster_col column name where classified cluster names are stored in seurat meta data, cannot be "rn"
 #' @param var.genes_only whether to keep only var.genes in the final matrix output, could also look up genes used for PCA
 #' @param assay_name any additional assay data, such as ADT, to include. If more than 1, pass a vector of names
+#' @param method whether to take mean (default) or median
+
 #'
 #' @export
 use_seurat_comp <- function(seurat_object,
                             cluster_col = "classified",
                             var.genes_only = FALSE,
-                            assay_name = NULL) {
+                            assay_name = NULL,
+                            method = "mean") {
   temp_mat <- seurat_object@data
 
   if (!is.null(assay_name)){
@@ -33,7 +36,8 @@ use_seurat_comp <- function(seurat_object,
   temp_res <- average_clusters(temp_mat,
                                seurat_object@meta.data,
                                log_scale = TRUE,
-                               cluster_col = cluster_col)
+                               cluster_col = cluster_col,
+                               method = method)
 
   temp_res
 }

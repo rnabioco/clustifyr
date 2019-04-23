@@ -18,7 +18,15 @@ test_that("matrixize_markers with remove_rp option", {
 
 test_that("average_clusters works as intended", {
   pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
-                                  pbmc4k_meta)
+                                  pbmc4k_meta,
+                                  log_scale = F)
+  expect_equal(nrow(pbmc4k_avg2), nrow(pbmc4k_avg))
+})
+
+test_that("average_clusters works with median option", {
+  pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
+                                  pbmc4k_meta,
+                                  method = "median")
   expect_equal(nrow(pbmc4k_avg2), nrow(pbmc4k_avg))
 })
 
