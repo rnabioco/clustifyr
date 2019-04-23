@@ -91,4 +91,326 @@ print(res_allgenes, n = nrow(res_allgenes))
 ```
 
 ## Comparison with other methods
-To do
+using Tablua Muris (drop and facs samples) 12 shared tissues
+
+comparing:
+
+default clustify, using var.genes from downloaded seurat objects
+
+clustify with M3Drop for feature selection
+
+scmap-cluster
+
+singleR without fine tuning (takes hours)
+
+<img src="../../man/figures/test.png" align="center"/>
+
+```{r tab, include = F, eval=F}
+library(clustifyR)
+library(tidyverse)
+files_facs <- list.files(path = "/Users/rf/", pattern = "facs.*\\.Robj$")
+files_drop <- list.files(path = "/Users/rf/", pattern = "droplet.*\\.Robj$")
+
+tissue_facs <- str_extract(files_facs, "facs_.+?_") %>% str_sub(6, -2)
+tissue_drop <- str_extract(files_drop, "droplet_.+?_") %>% str_sub(9, -2)
+tissue_both <- intersect(tissue_drop, tissue_facs)
+files_facs_fil <- files_facs[tissue_facs %in% tissue_drop]
+files_drop_fil <- files_drop[tissue_drop %in% tissue_facs]
+
+load_obj <- function(f) {
+  env <- new.env()
+  nm <- load(f, env)[1]
+  env[[nm]]
+  }
+```
+
+```{r ref, include = F, eval=F}
+for (n in 1:length(files_drop_fil)) {
+  print(files_drop_fil[n])
+  s <- load_obj(paste0("/Users/rf/", files_drop_fil[n]))
+  #avg <- use_seurat_comp(s, cluster_col = "cell_ontology_class")
+  if (sum(is.na(s@meta.data$free_annotation)) > nrow(s@meta.data)) {
+    avg <- use_seurat_comp(s, cluster_col = "free_annotation")
+  } else {
+    avg <- use_seurat_comp(s, cluster_col = "cell_ontology_class")
+  }  #avg <- cbind(avg, avg2)
+  colnames(avg) <- str_c(colnames(avg), str_sub(str_extract(files_drop_fil[n], "_.+?_"), 2, -2), sep = "-")
+  if (n==1) {
+    ref <- avg
+  } else {
+    ref <- cbind(ref, avg)
+  }
+}
+
+saveRDS(ref, "tabula_muris_ref_drop_042119.rds")
+
+for (n in 1:length(files_facs_fil)) {
+  print(files_facs_fil[n])
+  s <- load_obj(paste0("/Users/rf/", files_facs_fil[n]))
+  #avg <- use_seurat_comp(s, cluster_col = "cell_ontology_class")
+  if (sum(is.na(s@meta.data$free_annotation)) > nrow(s@meta.data)) {
+    avg <- use_seurat_comp(s, cluster_col = "free_annotation")
+  } else {
+    avg <- use_seurat_comp(s, cluster_col = "cell_ontology_class")
+  }
+  #avg <- cbind(avg, avg2)
+  colnames(avg) <- str_c(colnames(avg), str_sub(str_extract(files_facs_fil[n], "_.+?_"), 2, -2), sep = "-")
+  if (n==1) {
+    ref <- avg
+  } else {
+    ref <- cbind(ref, avg)
+  }
+}
+
+saveRDS(ref, "tabula_muris_ref_facs_042119.rds")
+```
+
+```{r test, include = F, eval=F}
+# ref <- readRDS("tabula_muris_ref_drop_042119.rds")
+times <- list()
+for (n in 1:length(tissue_both)) {
+  print(tissue_both[n])
+  s_d <- load_obj(paste0("/Users/rf/", files_facs_fil[n]))
+  s_f <- load_obj(paste0("/Users/rf/", files_drop_fil[n]))
+
+  start <- proc.time()
+  if (sum(is.na(s_f@meta.data$free_annotation)) + sum(is.na(s_d@meta.data$free_annotation)) < (nrow(s_f@meta.data) + nrow(s_d@meta.data)) * 0.25) {
+    print("use free_annotation")
+    if (length(unique(s_f@meta.data$free_annotation)) < length(unique(s_d@meta.data$free_annotation))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    avg <- use_seurat_comp(s_f, cluster_col = "free_annotation")
+    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "free_annotation")
+  } else {
+    print("use cell_ontology_class")
+    if (length(unique(s_f@meta.data$cell_ontology_class)) < length(unique(s_d@meta.data$cell_ontology_class))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    avg <- use_seurat_comp(s_f, cluster_col = "cell_ontology_class")
+    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "cell_ontology_class")
+  }  #avg <- cbind(avg, avg2)
+  res2 <- cor_to_call(res) %>% mutate(call = ifelse(cluster == type, 1, 0))
+  end <- proc.time()
+  times[n] = end - start
+  res2$tissue <- tissue_both[n]
+  if (n==1) {
+    resall <- res2
+  } else {
+    resall <- rbind(resall, res2)
+  }
+}
+
+resall2 <- resall %>% filter(cluster != "unknown")
+#resall2neg <- resall2 %>% filter(call == 0)
+# keep <- c(1,2,4,5,8,9,10,12,13,15,16,17,18,19,20, 21,23)
+# resall2negcor <- resall2neg[keep,]
+# resall2 <- resall2 %>% mutate(finalcall = ifelse(call == 1, 1, ifelse(str_c(cluster, type) %in% str_c(resall2negcor_all$cluster, resall2negcor_all$type), 1, 0)))
+# mean(resall2$finalcall) # 92.86%
+# 
+# resall2negcor_all
+# saveRDS(resall2, "clustify_resall2")
+```
+
+```{r m3drop, include = F, eval=F}
+# ref <- readRDS("tabula_muris_ref_drop_042119.rds")
+library(M3Drop)
+times3 <- list()
+for (n in 1:length(tissue_both)) {
+  print(tissue_both[n])
+  s_d <- load_obj(paste0("/Users/rf/", files_facs_fil[n]))
+  s_f <- load_obj(paste0("/Users/rf/", files_drop_fil[n]))
+
+  start <- proc.time()
+  if (sum(is.na(s_f@meta.data$free_annotation)) < nrow(s_f@meta.data)/2) {
+    print("use free_annotation")
+    if (length(unique(s_f@meta.data$free_annotation)) < length(unique(s_d@meta.data$free_annotation))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    avg <- use_seurat_comp(s_f, cluster_col = "free_annotation")
+    
+    tm <- expm1(as.matrix(s_d@data))
+    Normalized_data <- M3DropCleanData(tm,
+                                    labels = rownames(s_d@data),
+                                    is.counts=FALSE)
+    fits <- M3DropDropoutModels(Normalized_data$data)
+    DE_genes <- M3DropDifferentialExpression(Normalized_data$data,
+                                          mt_method="fdr", mt_threshold=0.01)
+    
+    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "free_annotation", query_genes = DE_genes$Gene)
+  } else {
+    print("use cell_ontology_class")
+    if (length(unique(s_f@meta.data$cell_ontology_class)) < length(unique(s_d@meta.data$cell_ontology_class))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    
+    tm <- expm1(as.matrix(s_d@data))
+    Normalized_data <- M3DropCleanData(tm,
+                                    labels = rownames(s_d@data),
+                                    is.counts=FALSE)
+    fits <- M3DropDropoutModels(Normalized_data$data)
+    DE_genes <- M3DropDifferentialExpression(Normalized_data$data,
+                                          mt_method="fdr", mt_threshold=0.01)
+    
+    avg <- use_seurat_comp(s_f, cluster_col = "cell_ontology_class")
+    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "cell_ontology_class", query_genes = DE_genes$Gene)
+  }  #avg <- cbind(avg, avg2)
+  res2 <- cor_to_call(res) %>% mutate(call = ifelse(cluster == type, 1, 0))
+  end <- proc.time()
+  times3[n] = end - start
+  
+  res2$tissue <- tissue_both[n]
+  if (n==1) {
+    resall <- res2
+  } else {
+    resall <- rbind(resall, res2)
+  }
+}
+
+resall2 <- resall %>% filter(cluster != "unknown")
+# resall2neg <- resall2 %>% filter(call == 0)
+# keep2 <- c(1,3,5,6,7,9,11,12,13, 15,16,17,18,19,20,21,23)
+# resall2negcor2 <- resall2neg[keep2,]
+
+#resall2negcor_all <- rbind(resall2negcor,resall2negcor2) %>% distinct(type, cluster, .keep_all = T)
+
+resall2 <- resall2 %>% mutate(finalcall = ifelse(call == 1, 1, ifelse(str_c(cluster, type) %in% str_c(resall2negcor_all$cluster, resall2negcor_all$type), 1, 0)))
+mean(resall2$finalcall) # 92.54% with mt_threshold 0.01 or 0.001, no difference
+
+# saveRDS(resall2negcor_all, "resall2negcor_all") # no early-pro B in reference
+```
+
+```{r allgenes, include = F, eval=F}
+# ref <- readRDS("tabula_muris_ref_drop_042119.rds")
+
+for (n in 1:length(tissue_both)) {
+  print(tissue_both[n])
+  s_d <- load_obj(paste0("/Users/rf/", files_facs_fil[n]))
+  s_f <- load_obj(paste0("/Users/rf/", files_drop_fil[n]))
+
+  start <- proc.time()
+  if (sum(is.na(s_f@meta.data$free_annotation)) < nrow(s_f@meta.data)/2) {
+    print("use free_annotation")
+    if (length(unique(s_f@meta.data$free_annotation)) < length(unique(s_d@meta.data$free_annotation))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    avg <- use_seurat_comp(s_f, cluster_col = "free_annotation")
+    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "free_annotation", query_genes = rownames(s_d@data))
+  } else {
+    print("use cell_ontology_class")
+    if (length(unique(s_f@meta.data$cell_ontology_class)) < length(unique(s_d@meta.data$cell_ontology_class))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    avg <- use_seurat_comp(s_f, cluster_col = "cell_ontology_class")
+    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "cell_ontology_class", query_genes = rownames(s_d@data))
+  }  #avg <- cbind(avg, avg2)
+  res2 <- cor_to_call(res) %>% mutate(call = ifelse(cluster == type, 1, 0))
+  end <- proc.time()
+  times3[n] = end - start
+  res2$tissue <- tissue_both[n]
+  if (n==1) {
+    resall <- res2
+  } else {
+    resall <- rbind(resall, res2)
+  }
+}
+
+resall2 <- resall %>% filter(cluster != "unknown")
+resall2neg <- resall2 %>% filter(call == 0)
+# keep <- c(1,2,4,5,8,9,10,12,13,15,16,17,18,19,20, 21,23)
+# resall2negcor <- resall2neg[keep,]
+resall2 <- resall2 %>% mutate(finalcall = ifelse(call == 1, 1, ifelse(str_c(cluster, type) %in% str_c(resall2negcor_all$cluster, resall2negcor_all$type), 1, 0)))
+mean(resall2$finalcall) # 91.04 %
+```
+
+```{r test_single, include = F, eval=F}
+library(M3Drop)
+# ref <- readRDS("tabula_muris_ref_drop_042119.rds")
+times <- list()
+for (n in 1:length(tissue_both)) {
+  print(tissue_both[n])
+  s_d <- load_obj(paste0("/Users/rf/", files_facs_fil[n]))
+  s_f <- load_obj(paste0("/Users/rf/", files_drop_fil[n]))
+
+  start <- proc.time()
+  if (sum(is.na(s_f@meta.data$free_annotation)) + sum(is.na(s_d@meta.data$free_annotation)) < (nrow(s_f@meta.data) + nrow(s_d@meta.data)) * 0.25) {
+    print("use free_annotation")
+    if (length(unique(s_f@meta.data$free_annotation)) < length(unique(s_d@meta.data$free_annotation))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    ids <- s_d@meta.data[["free_annotation"]]
+    avg <- use_seurat_comp(s_f, cluster_col = "free_annotation")
+    tm <- expm1(as.matrix(s_d@data))
+    Normalized_data <- M3DropCleanData(tm,
+                                    labels = rownames(s_d@data),
+                                    is.counts=FALSE)
+    fits <- M3DropDropoutModels(Normalized_data$data)
+    DE_genes <- M3DropDifferentialExpression(Normalized_data$data,
+                                          mt_method="fdr", mt_threshold=0.01)
+    
+    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "free_annotation", query_genes = DE_genes$Gene, per_cell = T)
+  } else {
+    print("use cell_ontology_class")
+    if (length(unique(s_f@meta.data$cell_ontology_class)) < length(unique(s_d@meta.data$cell_ontology_class))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    ids <- s_d@meta.data[["cell_ontology_class"]]
+    tm <- expm1(as.matrix(s_d@data))
+    Normalized_data <- M3DropCleanData(tm,
+                                    labels = rownames(s_d@data),
+                                    is.counts=FALSE)
+    fits <- M3DropDropoutModels(Normalized_data$data)
+    DE_genes <- M3DropDifferentialExpression(Normalized_data$data,
+                                          mt_method="fdr", mt_threshold=0.01)
+    
+    avg <- use_seurat_comp(s_f, cluster_col = "cell_ontology_class")
+    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "cell_ontology_class", query_genes = DE_genes$Gene, per_cell = T)
+  }  #avg <- cbind(avg, avg2)
+  res2 <- cor_to_call(res) 
+  res2$cluster <- ids
+  res2 <- res2 %>% select(-r) %>% group_by_all() %>% tally() %>% mutate(call = ifelse(cluster == type, 1, 0))
+  
+  end <- proc.time()
+  times[n] = end - start
+  res2$tissue <- tissue_both[n]
+  if (n==1) {
+    resall <- res2
+  } else {
+    resall <- rbind(resall, res2)
+  }
+}
+
+resall2 <- resall %>% filter(cluster != "unknown")
+#resall2neg <- resall2 %>% filter(call == 0)
+# keep <- c(1,2,4,5,8,9,10,12,13,15,16,17,18,19,20, 21,23)
+# resall2negcor <- resall2neg[keep,]
+resall2 <- resall2 %>% mutate(finalcall = ifelse(call == 1, 1, ifelse(str_c(cluster, type) %in% str_c(resall2negcor_all$cluster, resall2negcor_all$type), 1, 0)))
+mean(resall2$finalcall) # 92.86%
+# 
+# resall2negcor_all
+# saveRDS(resall2, "clustify_resall2")
+saveRDS(times, "clustify_cell_times")
+```

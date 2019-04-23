@@ -144,6 +144,12 @@
       <tr>
         
         <td>
+          <p><code><a href="RowVar.html">RowVar()</a></code> </p>
+        </td>
+        <td><p>get var per row for matrix</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="assign_ident.html">assign_ident()</a></code> </p>
         </td>
         <td><p>manually change idents as needed</p></td>
@@ -259,6 +265,12 @@ or jaccard index</p></td>
       </tr><tr>
         
         <td>
+          <p><code><a href="feature_select_PCA.html">feature_select_PCA()</a></code> </p>
+        </td>
+        <td><p>Returns a list of variable genes based on PCA</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="gene_pct.html">gene_pct()</a></code> </p>
         </td>
         <td><p>pct of cells in each cluster that express genelist</p></td>
@@ -268,12 +280,6 @@ or jaccard index</p></td>
           <p><code><a href="gene_pct_markerm.html">gene_pct_markerm()</a></code> </p>
         </td>
         <td><p>pct of cells in every cluster that express a series of genelists</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="getPCAGenes.html">getPCAGenes()</a></code> </p>
-        </td>
-        <td><p>Returns a list of variable genes based on PCA</p></td>
       </tr><tr>
         
         <td>
@@ -307,9 +313,9 @@ or jaccard index</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="importance_heatmap.html">importance_heatmap()</a></code> </p>
+          <p><code><a href="gmt_to_list.html">gmt_to_list()</a></code> </p>
         </td>
-        <td><p>Heatmap of average expression of most predictive genes across cell types</p></td>
+        <td><p>convert gmt format of pathways to list of vectors</p></td>
       </tr><tr>
         
         <td>
@@ -379,24 +385,6 @@ or jaccard index</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="pbmc5_markers.html">pbmc5_markers</a></code> </p>
-        </td>
-        <td><p>Marker genes identified by Seurat from single-cell RNA-seq PBMCs from 5'end kit.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pbmc5_matrix.html">pbmc5_matrix</a></code> </p>
-        </td>
-        <td><p>Matrix of single-cell RNA-seq PBMCs from 5'end kit.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pbmc5_meta.html">pbmc5_meta</a></code> </p>
-        </td>
-        <td><p>Meta-data for single-cell RNA-seq PBMCs from 5'end kit.</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="pbmc_bulk_matrix.html">pbmc_bulk_matrix</a></code> </p>
         </td>
         <td><p>Bulk RNA-Seq data from sorted populations isolated from PBMCs.</p></td>
@@ -433,6 +421,12 @@ or jaccard index</p></td>
       </tr><tr>
         
         <td>
+          <p><code><a href="plot_cols.html">plot_cols()</a></code> </p>
+        </td>
+        <td><p>Plot variable median per cluster from reference metadata vs new assigned metadata, for visually evaluating classification</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="plot_cor.html">plot_cor()</a></code> </p>
         </td>
         <td><p>Plot similarity measures on a tSNE</p></td>
@@ -442,6 +436,12 @@ or jaccard index</p></td>
           <p><code><a href="plot_gene.html">plot_gene()</a></code> </p>
         </td>
         <td><p>Plot gene expression on to tSNE</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot_pathway_gsea.html">plot_pathway_gsea()</a></code> </p>
+        </td>
+        <td><p>plot GSEA pathway scores as heatmap, returns a list containing results and plot.</p></td>
       </tr><tr>
         
         <td>
@@ -463,15 +463,9 @@ or jaccard index</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="reduce_expr_matrix.html">reduce_expr_matrix()</a></code> </p>
+          <p><code><a href="ref_feature_select.html">ref_feature_select()</a></code> </p>
         </td>
-        <td><p>Reduce expression matrix to variable genes and binarize.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="refine_clusters.html">refine_clusters()</a></code> </p>
-        </td>
-        <td><p>Refine clustering using reference data</p></td>
+        <td><p>feature select from reference matrix</p></td>
       </tr><tr>
         
         <td>

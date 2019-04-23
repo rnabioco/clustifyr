@@ -136,9 +136,9 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>overcluster_test</span>(<span class='no'>expr</span>, <span class='no'>metadata</span>, <span class='no'>cluster_col</span>, <span class='kw'>x_col</span> <span class='kw'>=</span> <span class='st'>"tSNE_1"</span>,
-  <span class='kw'>y_col</span> <span class='kw'>=</span> <span class='st'>"tSNE_2"</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>do.label</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>42</span>,
-  <span class='kw'>newclustering</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>overcluster_test</span>(<span class='no'>expr</span>, <span class='no'>metadata</span>, <span class='no'>ref_mat</span>, <span class='no'>cluster_col</span>, <span class='kw'>x_col</span> <span class='kw'>=</span> <span class='st'>"tSNE_1"</span>,
+  <span class='kw'>y_col</span> <span class='kw'>=</span> <span class='st'>"tSNE_2"</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>ngenes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>do.label</span> <span class='kw'>=</span> <span class='no'>T</span>,
+  <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>42</span>, <span class='kw'>newclustering</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -150,6 +150,10 @@
     <tr>
       <th>metadata</th>
       <td><p>metadata including cluster info and dimension reduction plotting</p></td>
+    </tr>
+    <tr>
+      <th>ref_mat</th>
+      <td><p>reference matrix</p></td>
     </tr>
     <tr>
       <th>cluster_col</th>
@@ -166,6 +170,10 @@
     <tr>
       <th>n</th>
       <td><p>expand n-fold for over/under clustering</p></td>
+    </tr>
+    <tr>
+      <th>ngenes</th>
+      <td><p>number of genes to use for feature selection, use all genes if NULL</p></td>
     </tr>
     <tr>
       <th>do.label</th>

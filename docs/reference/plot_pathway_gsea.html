@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Compute the p-value for similarity using permutation — get_similarity • clustifyR</title>
+<title>plot GSEA pathway scores as heatmap, returns a list containing results and plot. — plot_pathway_gsea • clustifyR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Compute the p-value for similarity using permutation — get_similarity" />
+<meta property="og:title" content="plot GSEA pathway scores as heatmap, returns a list containing results and plot. — plot_pathway_gsea" />
 
-<meta property="og:description" content="Permute cluster labels to calculate empirical p-value" />
+<meta property="og:description" content="plot GSEA pathway scores as heatmap, returns a list containing results and plot." />
 
 <meta property="og:image" content="http://rnabioco.github.io/clustifyR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -125,46 +125,42 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Compute the p-value for similarity using permutation</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rnabioco/clustifyR/blob/master/R/compute_similarity.R'><code>R/compute_similarity.R</code></a></small>
-    <div class="hidden name"><code>get_similarity.Rd</code></div>
+    <h1>plot GSEA pathway scores as heatmap, returns a list containing results and plot.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rnabioco/clustifyR/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
+    <div class="hidden name"><code>plot_pathway_gsea.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Permute cluster labels to calculate empirical p-value</p>
+    <p>plot GSEA pathway scores as heatmap, returns a list containing results and plot.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>get_similarity</span>(<span class='no'>expr_mat</span>, <span class='no'>ref_mat</span>, <span class='no'>cluster_ids</span>, <span class='no'>compute_method</span>,
-  <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>plot_pathway_gsea</span>(<span class='no'>mat</span>, <span class='no'>pathway_list</span>, <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='no'>T</span>,
+  <span class='kw'>topn</span> <span class='kw'>=</span> <span class='fl'>5</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>expr_mat</th>
-      <td><p>single-cell expression matrix</p></td>
+      <th>mat</th>
+      <td><p>expression matrix</p></td>
     </tr>
     <tr>
-      <th>ref_mat</th>
-      <td><p>reference expression matrix</p></td>
+      <th>pathway_list</th>
+      <td><p>a list of vectors, each named for a specific pathway, or dataframe</p></td>
     </tr>
     <tr>
-      <th>cluster_ids</th>
-      <td><p>vector of cluster ids for each cell</p></td>
+      <th>n_perm</th>
+      <td><p>Number of permutation for fgsea function. Defaults to 1000.</p></td>
     </tr>
     <tr>
-      <th>compute_method</th>
-      <td><p>method(s) for computing similarity scores</p></td>
+      <th>scale</th>
+      <td><p>convert expr_mat into zscores prior to running GSEA?, default = T</p></td>
     </tr>
     <tr>
-      <th>per_cell</th>
-      <td><p>run per cell?</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>additional parameters not used yet</p></td>
+      <th>topn</th>
+      <td><p>number of top pathways to plot</p></td>
     </tr>
     </table>
     
