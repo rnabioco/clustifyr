@@ -92,7 +92,7 @@
     <div class="page-header toc-ignore">
       <h1>Benchmarking clustifyR</h1>
             
-            <h4 class="date">2019-04-23</h4>
+            <h4 class="date">2019-04-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyR/blob/master/vignettes/benchmark.Rmd"><code>vignettes/benchmark.Rmd</code></a></small>
       <div class="hidden name"><code>benchmark.Rmd</code></div>
@@ -134,7 +134,7 @@
 <a class="sourceLine" id="cb1-23" title="23"></a>
 <a class="sourceLine" id="cb1-24" title="24"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(end <span class="op">-</span><span class="st"> </span>start)</a>
 <a class="sourceLine" id="cb1-25" title="25"><span class="co">#&gt;    user  system elapsed </span></a>
-<a class="sourceLine" id="cb1-26" title="26"><span class="co">#&gt;   1.244   0.424   1.673</span></a>
+<a class="sourceLine" id="cb1-26" title="26"><span class="co">#&gt;   1.211   0.464   1.677</span></a>
 <a class="sourceLine" id="cb1-27" title="27"></a>
 <a class="sourceLine" id="cb1-28" title="28"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(res_allgenes, <span class="dt">n =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(res_allgenes))</a>
 <a class="sourceLine" id="cb1-29" title="29"><span class="co">#&gt; # A tibble: 32 x 3</span></a>
@@ -177,12 +177,19 @@
 <div id="comparison-with-other-methods" class="section level2">
 <h2 class="hasAnchor">
 <a href="#comparison-with-other-methods" class="anchor"></a>Comparison with other methods</h2>
-<p>using Tablua Muris (drop and facs samples) 12 shared tissues</p>
-<p>comparing:</p>
-<p>default clustify, using var.genes from downloaded seurat objects</p>
-<p>clustify with M3Drop for feature selection</p>
-<p>scmap-cluster</p>
-<p>singleR without fine tuning (takes hours)</p>
+<p>using Tablua Muris (drop and facs samples) 12 shared tissues, which can be downloaded as <code>seurat</code> objects</p>
+<ol style="list-style-type: decimal">
+<li>Building reference and then mapping:</li>
+</ol>
+<p>default <code>clustify</code>, with all genes</p>
+<p><code>clustify</code>, pulling <code>var.genes</code> from <code>seurat</code> objects</p>
+<p><code>clustify</code>, using <code>M3Drop</code> for feature selection</p>
+<p><code>scmap-cluster</code></p>
+<ol start="2" style="list-style-type: decimal">
+<li>Mapping from prebuilt all-encompassing references to the drop samples:</li>
+</ol>
+<p><code>clustify</code>, using <code>ref_tabula_muris_facs</code></p>
+<p><code>singleR</code>, using default built-in mouse references without fine tuning</p>
 <p><img src="../reference/figures/test.png" align="center"></p>
 </div>
   </div>
