@@ -374,3 +374,19 @@ plot_cols <- function(metadata,
     scale_y_continuous(expand = c(0, 0),
                        limits = c(0,ymax * 1.1))
 }
+
+#' Plot similarity measures on heatmap
+#'
+#' @param correlation_matrix input similarity matrix
+#' @param metadata input metadata with per cell tsne coordinates and cluster ids
+#' @param cluster_col colname of clustering data in metadata, defaults to rownames of the
+#' metadata if not supplied.
+#' @param ... passed to Heatmap
+#'
+#' @export
+plot_cor_heatmap <- function(correlation_matrix,
+                     metadata = NULL,
+                     cluster_col = NULL,
+                     ...) {
+  ComplexHeatmap::Heatmap(correlation_matrix, ...)
+}
