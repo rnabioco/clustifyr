@@ -21,6 +21,9 @@ average_clusters <- function(mat, cluster_info,
     cluster_ids <- split(colnames(mat), cluster_info)
   } else if (is.data.frame(cluster_info) & !is.null(cluster_col)){
     cluster_ids <- split(colnames(mat), cluster_info[[cluster_col]])
+  } else if (class(cluster_info) == "factor") {
+    cluster_info <- as.character(cluster_info)
+    cluster_ids <- split(colnames(mat), cluster_info)
   } else {
     stop("cluster_info not formatted correctly,
          supply either a  vector or a dataframe")

@@ -23,6 +23,14 @@ test_that("average_clusters works as intended", {
   expect_equal(nrow(pbmc4k_avg2), nrow(pbmc4k_avg))
 })
 
+test_that("average_clusters able to coerce factors", {
+  col <- factor(pbmc4k_meta$cluster)
+  pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
+                                  col,
+                                  log_scale = F)
+  expect_equal(nrow(pbmc4k_avg2), nrow(pbmc4k_avg))
+})
+
 test_that("average_clusters works with median option", {
   pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
                                   pbmc4k_meta,

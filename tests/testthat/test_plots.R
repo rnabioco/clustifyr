@@ -74,3 +74,16 @@ test_that("plot_cols returns a ggplot object", {
             "tSNE_1")
   expect_true(ggplot2::is.ggplot(g))
 })
+
+test_that("plot_cor_heatmap returns a ggplot object", {
+  res <- clustify(
+    input = pbmc4k_matrix,
+    metadata = pbmc4k_meta,
+    ref_mat = pbmc_bulk_matrix,
+    query_genes = pbmc4k_vargenes,
+    cluster_col = "cluster",
+    per_cell = F
+  )
+  g <- plot_cor_heatmap(res)
+  expect_true(class(g) == "Heatmap")
+})
