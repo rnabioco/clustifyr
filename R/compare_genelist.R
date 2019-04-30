@@ -226,10 +226,15 @@ compare_lists <- function(bin_mat,
         marker_list[[1]] <- marker_m[ ,y]
         names(marker_list) <- y
         v1 <- marker_list
-        run_gsea(bin_mat, v1, n_perm = 1000, per_cell = T)
+        run_gsea(bin_mat, v1, n_perm = 1000, per_cell = T,)
       }
     )
     res <- do.call(cbind, out)
+    n <- ncol(res)
+    res2 <- res[, 3*c(1:(ncol(res)/3)), drop = F]
+    rownames(res2) <- rownames(res)
+    colnames(res2) <- colnames(marker_m)
+    res <- res2
   }
 
   if (output_high == TRUE) {

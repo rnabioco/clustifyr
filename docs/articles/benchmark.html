@@ -92,7 +92,7 @@
     <div class="page-header toc-ignore">
       <h1>Benchmarking clustifyR</h1>
             
-            <h4 class="date">2019-04-24</h4>
+            <h4 class="date">2019-04-30</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyR/blob/master/vignettes/benchmark.Rmd"><code>vignettes/benchmark.Rmd</code></a></small>
       <div class="hidden name"><code>benchmark.Rmd</code></div>
@@ -134,7 +134,7 @@
 <a class="sourceLine" id="cb1-23" title="23"></a>
 <a class="sourceLine" id="cb1-24" title="24"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(end <span class="op">-</span><span class="st"> </span>start)</a>
 <a class="sourceLine" id="cb1-25" title="25"><span class="co">#&gt;    user  system elapsed </span></a>
-<a class="sourceLine" id="cb1-26" title="26"><span class="co">#&gt;   1.211   0.464   1.677</span></a>
+<a class="sourceLine" id="cb1-26" title="26"><span class="co">#&gt;   1.395   0.545   1.964</span></a>
 <a class="sourceLine" id="cb1-27" title="27"></a>
 <a class="sourceLine" id="cb1-28" title="28"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(res_allgenes, <span class="dt">n =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(res_allgenes))</a>
 <a class="sourceLine" id="cb1-29" title="29"><span class="co">#&gt; # A tibble: 32 x 3</span></a>
@@ -190,6 +190,10 @@
 </ol>
 <p><code>clustify</code>, using <code>ref_tabula_muris_facs</code></p>
 <p><code>singleR</code>, using default built-in mouse references without fine tuning</p>
+<ol start="3" style="list-style-type: decimal">
+<li>Generate marker gene list (of 30 genes per reference identity), and then mapping</li>
+</ol>
+<p>default <code>clustify_list</code></p>
 <p><img src="../reference/figures/test.png" align="center"></p>
 </div>
   </div>

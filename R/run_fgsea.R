@@ -60,5 +60,6 @@ run_gsea <- function(expr_mat, query_genes, cluster_ids = NULL,
   gsea_res <- dplyr::bind_rows(res)
   gsea_res <- as.data.frame(dplyr::mutate(gsea_res, cell = colnames(avg_mat)))
   gsea_res <- tibble::column_to_rownames(gsea_res, "cell")
+
   gsea_res
 }
