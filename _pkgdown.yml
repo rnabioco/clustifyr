@@ -2,3 +2,8 @@ url: http://rnabioco.github.io/clustifyR
 
 development:
   mode: unreleased
+
+home:
+  links:
+  - text: External data sets
+    href: http://github.com/rnabioco/clustifyrdata
