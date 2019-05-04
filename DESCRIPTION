@@ -30,7 +30,6 @@ Imports:
     dplyr,
     tidyr,
     scales,
-    RColorBrewer,
     fgsea
 Suggests:
     testthat,
