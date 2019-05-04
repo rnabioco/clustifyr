@@ -93,11 +93,11 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
 
 #' Color palette for plotting continous variables
 #' @export
-pretty_palette <- rev(RColorBrewer::brewer.pal(11, "RdGy")[c(1:5, 7)])
+pretty_palette <- rev(scales::brewer_pal(palette = "RdGy")(6))
 
 #' Expanded color palette ramp for plotting discrete variables
 #' @export
-pretty_palette_ramp_d <- grDevices::colorRampPalette(RColorBrewer::brewer.pal(12, "Paired"))
+pretty_palette_ramp_d <- grDevices::colorRampPalette(scales::brewer_pal(palette = "Paired")(12))
 
 #' Plot similarity measures on a tSNE
 #'
