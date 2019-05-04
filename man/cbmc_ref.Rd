@@ -4,9 +4,7 @@
 \name{cbmc_ref}
 \alias{cbmc_ref}
 \title{reference matrix from seurat citeseq CBMC}
-\format{XXX
-\describe{
-}}
+\format{XXX}
 \source{
 \code{[seurat]} tutorial, averaged per cluster
 }

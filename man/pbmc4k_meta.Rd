@@ -4,9 +4,7 @@
 \name{pbmc4k_meta}
 \alias{pbmc4k_meta}
 \title{Meta-data for single-cell RNA-seq PBMCs.}
-\format{A data frame with 5 variables:
-\describe{
-}}
+\format{A data frame with 5 variables:}
 \source{
 \code{[pbmc4k_matrix]} processed by \code{[seurat]}
 }

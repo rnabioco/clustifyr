@@ -5,6 +5,9 @@ dist: xenial
 cache: packages
 warnings_are_errors: false
 
+before_install:
+  - sudo apt-get install libhdf5-dev
+
 matrix:
   include:
   - r: bioc-release

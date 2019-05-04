@@ -4,9 +4,7 @@
 \name{s_small}
 \alias{s_small}
 \title{Small clustered Seurat object}
-\format{XXX
-\describe{
-}}
+\format{XXX}
 \source{
 \code{[pbmc_small]} processed by \code{[seurat]}
 }

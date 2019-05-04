@@ -4,9 +4,7 @@
 \name{pbmc4k_markers}
 \alias{pbmc4k_markers}
 \title{Marker genes identified by Seurat from single-cell RNA-seq PBMCs.}
-\format{A data frame with 7 variables:
-\describe{
-}}
+\format{A data frame with 7 variables:}
 \source{
 \code{[pbmc4k_matrix]} processed by \code{[seurat]}
 }

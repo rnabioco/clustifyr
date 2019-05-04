@@ -4,9 +4,7 @@
 \name{pbmc_bulk_matrix}
 \alias{pbmc_bulk_matrix}
 \title{Bulk RNA-Seq data from sorted populations isolated from PBMCs.}
-\format{A read count matrix with 14 variables:
-\describe{
-}}
+\format{A read count matrix with 14 variables:}
 \source{
 (http://duffel.rail.bio/recount/v2/SRP051688/rse_gene.Rdata)
 }

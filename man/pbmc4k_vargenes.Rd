@@ -4,9 +4,7 @@
 \name{pbmc4k_vargenes}
 \alias{pbmc4k_vargenes}
 \title{variable genes identified by Seurat from single-cell RNA-seq PBMCs.}
-\format{A vector:
-\describe{
-}}
+\format{A vector:}
 \source{
 \code{[pbmc4k_matrix]} processed by \code{[seurat]}
 }

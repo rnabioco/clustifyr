@@ -4,10 +4,7 @@
 \name{pbmc4k_avg}
 \alias{pbmc4k_avg}
 \title{Matrix of average gene expression per cluster from single-cell RNA-seq PBMCs.}
-\format{A sparseMatrix with genes as rows and clusters as columns.
-
-\describe{
-}}
+\format{A sparseMatrix with genes as rows and clusters as columns.}
 \source{
 \code{[pbmc4k_matrix]} averaged per cluster
 }

@@ -4,9 +4,7 @@
 \name{pbmc_pca}
 \alias{pbmc_pca}
 \title{Variable genes defined by Principal components analysis of pbmc4k data}
-\format{XXX
-\describe{
-}}
+\format{XXX}
 \source{
 \code{[pbmc4k_matrix]} processed by \code{[seurat]}
 }

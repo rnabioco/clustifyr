@@ -4,11 +4,7 @@
 \name{pbmc4k_matrix}
 \alias{pbmc4k_matrix}
 \title{Matrix of single-cell RNA-seq PBMCs.}
-\format{A sparseMatrix with genes as rows and cells as columns.
-
-\describe{
-}
-R}
+\format{A sparseMatrix with genes as rows and cells as columns.}
 \source{
 (https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc4k)
 }

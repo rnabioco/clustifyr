@@ -4,9 +4,7 @@
 \name{cbmc_m}
 \alias{cbmc_m}
 \title{reference marker matrix from seurat citeseq CBMC}
-\format{XXX
-\describe{
-}}
+\format{XXX}
 \source{
 \code{[seurat]} tutorial, matrixized top markers
 }

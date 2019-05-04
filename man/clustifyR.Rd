@@ -15,16 +15,20 @@ Classify cells from single-cell RNA sequencing data using bulk
 Report bugs at \url{https://github.com/rnabioco/clustifyR/issues}
 }
 \author{
-\strong{Maintainer}: Kent Riemondy \email{kent.riemondy@ucdenver.edu}
+\strong{Maintainer}: Rui Fu \email{rui.fu@ucdenver.edu}
 
 Authors:
 \itemize{
+  \item Kent Riemondy \email{kent.riemondy@ucdenver.edu}
   \item Austin Gillen \email{austin.gillen@ucdenver.edu}
-  \item Rui Fu \email{rui.fu@ucdenver.edu}
   \item Jay Hesselberth \email{jay.hesselberth@gmail.com}
-  \item Yue Hao \email{haoyuethink@gmail.com}
   \item Chengzhe Tian \email{Chengzhe.Tian@colorado.edu}
-  \item Michelle Daya \email{michelle.daya@ucdenver.edu}
+}
+
+Other contributors:
+\itemize{
+  \item Yue Hao \email{haoyuethink@gmail.com} [contributor]
+  \item Michelle Daya \email{michelle.daya@ucdenver.edu} [contributor]
 }
 
 }
