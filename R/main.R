@@ -1,6 +1,6 @@
 #' Main function to compare scRNA-seq data to bulk RNA-seq data.
 #'
-#'@export
+#' @export
 clustify <- function(input, ...) {
   UseMethod("clustify", input)
 }
@@ -33,28 +33,30 @@ clustify.default <- function(input,
                              compute_method = "spearman",
                              ...) {
   expr_mat <- input
-  if(!compute_method %in% clustifyr_methods){
+  if (!compute_method %in% clustifyr_methods) {
     stop(paste(compute_method, "correlation method not implemented"))
   }
 
   # select gene subsets
-  gene_constraints <- get_common_elements(rownames(expr_mat),
-                                           rownames(ref_mat),
-                                           query_genes)
+  gene_constraints <- get_common_elements(
+    rownames(expr_mat),
+    rownames(ref_mat),
+    query_genes
+  )
 
   print(paste0("using # of genes: ", length(gene_constraints)))
 
   expr_mat <- expr_mat[gene_constraints, , drop = FALSE]
   ref_mat <- ref_mat[gene_constraints, , drop = FALSE]
 
-  if(is.null(metadata) & !per_cell) {
+  if (is.null(metadata) & !per_cell) {
     stop("metadata needed for per cluster analysis")
   }
 
-  if(!per_cell){
-    if(is.vector(metadata)){
+  if (!per_cell) {
+    if (is.vector(metadata)) {
       cluster_ids <- metadata
-    } else if (is.data.frame(metadata) & !is.null(cluster_col)){
+    } else if (is.data.frame(metadata) & !is.null(cluster_col)) {
       cluster_ids <- metadata[[cluster_col]]
     } else {
       stop("metadata not formatted correctly,
@@ -62,7 +64,7 @@ clustify.default <- function(input,
     }
   }
 
-  if(per_cell){
+  if (per_cell) {
     cluster_ids <- colnames(expr_mat)
   }
 
@@ -122,35 +124,35 @@ clustify.seurat <- function(input,
   expr_mat <- s_object@data
   metadata <- use_seurat_meta(s_object, dr = dr, seurat3 = F)
 
-  if (use_var_genes & is.null(query_genes)){
+  if (use_var_genes & is.null(query_genes)) {
     query_genes <- s_object@var.genes
   }
 
   res <- clustify(expr_mat,
-                  ref_mat,
-                  metadata,
-                  query_genes,
-                  per_cell = per_cell,
-                  num_perm = num_perm,
-                  cluster_col = cluster_col,
-                  compute_method = compute_method,
-                  ...
+    ref_mat,
+    metadata,
+    query_genes,
+    per_cell = per_cell,
+    num_perm = num_perm,
+    cluster_col = cluster_col,
+    compute_method = compute_method,
+    ...
   )
 
   if (seurat_out == F) {
     res
   } else {
     col_meta <- colnames(metadata)
-    if("type" %in% col_meta | "type2" %in% col_meta){
+    if ("type" %in% col_meta | "type2" %in% col_meta) {
       warning('metadata column name clash of "type"/"type2"')
       return()
     }
     if (num_perm != 0) {
-      res <- -log(res$p_val+.01,10)
+      res <- -log(res$p_val + .01, 10)
     }
     df_temp <- tibble::as_tibble(res, rownames = "rn")
     df_temp <- tidyr::gather(df_temp, key = type, value = r, -rn)
-    df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold,", unassigned")
+    df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold, ", unassigned")
     df_temp <- dplyr::top_n(dplyr::group_by_at(df_temp, 1), 1, r)
     if (nrow(df_temp) != nrow(res)) {
       clash <- dplyr::group_by(df_temp, rn)
@@ -161,20 +163,20 @@ clustify.seurat <- function(input,
       df_temp <- dplyr::distinct(df_temp, rn, r, .keep_all = T)
     }
     if (per_cell == F) {
-      df_temp <- dplyr::rename(df_temp, !!cluster_col:=rn)
+      df_temp <- dplyr::rename(df_temp, !!cluster_col := rn)
       df_temp_full <- dplyr::left_join(tibble::rownames_to_column(metadata, "rn"), df_temp, by = cluster_col)
       df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
-      } else {
+    } else {
       df_temp_full <- dplyr::left_join(tibble::rownames_to_column(metadata, "rn"), df_temp, by = "rn")
       df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
     }
     if ("Seurat" %in% loadedNamespaces()) {
       s_object@meta.data <- df_temp_full
       return(s_object)
-      } else {
+    } else {
       print("seurat not loaded, returning cor_mat instead")
       return(res)
-      }
+    }
     s_object
   }
 }
@@ -212,35 +214,35 @@ clustify.Seurat <- function(input,
   expr_mat <- s_object@assays$RNA@data
   metadata <- use_seurat_meta(s_object, dr = dr, seurat3 = T)
 
-  if (use_var_genes & is.null(query_genes)){
+  if (use_var_genes & is.null(query_genes)) {
     query_genes <- s_object@assays$RNA@var.features
   }
 
   res <- clustify(expr_mat,
-                  ref_mat,
-                  metadata,
-                  query_genes,
-                  per_cell = per_cell,
-                  num_perm = num_perm,
-                  cluster_col = cluster_col,
-                  compute_method = compute_method,
-                  ...
+    ref_mat,
+    metadata,
+    query_genes,
+    per_cell = per_cell,
+    num_perm = num_perm,
+    cluster_col = cluster_col,
+    compute_method = compute_method,
+    ...
   )
 
   if (seurat_out == F) {
     res
   } else {
     col_meta <- colnames(metadata)
-    if("type" %in% col_meta | "type2" %in% col_meta){
+    if ("type" %in% col_meta | "type2" %in% col_meta) {
       warning('metadata column name clash of "type"/"type2"')
       return()
     }
     if (num_perm != 0) {
-      res <- -log(res$p_val+.01,10)
+      res <- -log(res$p_val + .01, 10)
     }
     df_temp <- tibble::as_tibble(res, rownames = "rn")
     df_temp <- tidyr::gather(df_temp, key = type, value = r, -rn)
-    df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold,", unassigned")
+    df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold, ", unassigned")
     df_temp <- dplyr::top_n(dplyr::group_by_at(df_temp, 1), 1, r)
     if (nrow(df_temp) != nrow(res)) {
       clash <- dplyr::group_by(df_temp, rn)
@@ -251,7 +253,7 @@ clustify.Seurat <- function(input,
       df_temp <- dplyr::distinct(df_temp, rn, r, .keep_all = T)
     }
     if (per_cell == F) {
-      df_temp <- dplyr::rename(df_temp, !!cluster_col:=rn)
+      df_temp <- dplyr::rename(df_temp, !!cluster_col := rn)
       df_temp_full <- dplyr::left_join(tibble::rownames_to_column(metadata, "rn"), df_temp, by = cluster_col)
       df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
     } else {
@@ -269,7 +271,7 @@ clustify.Seurat <- function(input,
   }
 }
 #' Correlation functions available in clustifyR
-#'@export
+#' @export
 clustifyr_methods <- c(
   "pearson",
   "spearman",
@@ -279,7 +281,7 @@ clustifyr_methods <- c(
 
 #' Main function to compare scRNA-seq data to gene lists.
 #'
-#'@export
+#' @export
 clustify_lists <- function(input, ...) {
   UseMethod("clustify_lists", input)
 }
@@ -306,37 +308,41 @@ clustify_lists <- function(input, ...) {
 #' @export
 
 clustify_lists.default <- function(input,
-                           per_cell = F,
-                           cluster_info = NULL,
-                           log_scale = T,
-                           cluster_col = "cluster",
-                           topn = 3000,
-                           cut = 0,
-                           marker,
-                           marker_inmatrix = T,
-                           genomen = 30000,
-                           metric = "hyper",
-                           output_high = TRUE,
-                           ...) {
+                                   per_cell = F,
+                                   cluster_info = NULL,
+                                   log_scale = T,
+                                   cluster_col = "cluster",
+                                   topn = 3000,
+                                   cut = 0,
+                                   marker,
+                                   marker_inmatrix = T,
+                                   genomen = 30000,
+                                   metric = "hyper",
+                                   output_high = TRUE,
+                                   ...) {
   if (per_cell == F) {
     input <- average_clusters(input,
-                              cluster_info,
-                              log_scale = log_scale,
-                              cluster_col = cluster_col)
+      cluster_info,
+      log_scale = log_scale,
+      cluster_col = cluster_col
+    )
   }
 
   bin_input <- binarize_expr(input, n = topn, cut = cut)
 
   if (marker_inmatrix != T) {
-    marker <- matrixize_markers(marker,
-                                ...)
+    marker <- matrixize_markers(
+      marker,
+      ...
+    )
   }
 
   compare_lists(bin_input,
-                marker_m = marker,
-                n = genomen,
-                metric = metric,
-                output_high = output_high)
+    marker_m = marker,
+    n = genomen,
+    metric = metric,
+    output_high = output_high
+  )
 }
 
 #' @rdname clustify_lists
@@ -382,18 +388,19 @@ clustify_lists.seurat <- function(input,
   cluster_info <- as.data.frame(use_seurat_meta(s_object, dr = dr, seurat3 = F))
 
   res <- clustify_lists(input,
-                        per_cell = per_cell,
-                        cluster_info = cluster_info,
-                        log_scale = log_scale,
-                        cluster_col = cluster_col,
-                        topn = topn,
-                        cut = cut,
-                        marker,
-                        marker_inmatrix = marker_inmatrix,
-                        genomen = genomen,
-                        metric = metric,
-                        output_high = output_high,
-                        ...)
+    per_cell = per_cell,
+    cluster_info = cluster_info,
+    log_scale = log_scale,
+    cluster_col = cluster_col,
+    topn = topn,
+    cut = cut,
+    marker,
+    marker_inmatrix = marker_inmatrix,
+    genomen = genomen,
+    metric = metric,
+    output_high = output_high,
+    ...
+  )
 
   if (seurat_out == F) {
     res
@@ -460,18 +467,19 @@ clustify_lists.Seurat <- function(input,
   cluster_info <- as.data.frame(use_seurat_meta(s_object, dr = dr, seurat3 = T))
 
   res <- clustify_lists(input,
-                        per_cell = per_cell,
-                        cluster_info = cluster_info,
-                        log_scale = log_scale,
-                        cluster_col = cluster_col,
-                        topn = topn,
-                        cut = cut,
-                        marker,
-                        marker_inmatrix = marker_inmatrix,
-                        genomen = genomen,
-                        metric = metric,
-                        output_high = output_high,
-                        ...)
+    per_cell = per_cell,
+    cluster_info = cluster_info,
+    log_scale = log_scale,
+    cluster_col = cluster_col,
+    topn = topn,
+    cut = cut,
+    marker,
+    marker_inmatrix = marker_inmatrix,
+    genomen = genomen,
+    metric = metric,
+    output_high = output_high,
+    ...
+  )
 
   if (seurat_out == F) {
     res

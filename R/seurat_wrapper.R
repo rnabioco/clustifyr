@@ -15,7 +15,7 @@ use_seurat_comp <- function(seurat_object,
                             method = "mean") {
   temp_mat <- seurat_object@data
 
-  if (!is.null(assay_name)){
+  if (!is.null(assay_name)) {
     if (!is.vector(assay_name)) {
       temp_mat2 <- seurat_object@assay[[assay_name]]@raw.data
       temp_mat <- rbind(temp_mat, as.matrix(temp_mat2))
@@ -34,10 +34,11 @@ use_seurat_comp <- function(seurat_object,
   }
 
   temp_res <- average_clusters(temp_mat,
-                               seurat_object@meta.data,
-                               log_scale = TRUE,
-                               cluster_col = cluster_col,
-                               method = method)
+    seurat_object@meta.data,
+    log_scale = TRUE,
+    cluster_col = cluster_col,
+    method = method
+  )
 
   temp_res
 }
