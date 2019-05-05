@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1557006285435.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "B83CEDDC",
+    "lastKnownWriteTime" : 1557015831,
+    "last_content_update" : 1557015831,
+    "path" : "~/devel/clustifyR/R/plot.R",
+    "project_path" : "R/plot.R",
+    "properties" : {
+        "cursorPosition" : "97,25",
+        "marks" : "<:0,0\n>:0,0",
+        "scrollLine" : "89"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
