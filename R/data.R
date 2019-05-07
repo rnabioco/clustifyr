@@ -73,7 +73,7 @@
 #' @source  `[pbmc4k_matrix]` processed by `[seurat]`
 "pbmc_pca"
 
-#' Small clustered Seurat object
+#' Small clustered Seurat2 object
 #'
 #' @format XXX
 #' \describe{
@@ -81,6 +81,15 @@
 #'
 #' @source  `[pbmc_small]` processed by `[seurat]`
 "s_small"
+
+#' Small clustered Seurat3 object
+#'
+#' @format XXX
+#' \describe{
+#' }
+#'
+#' @source  `[pbmc_small]` processed by `[Seurat]`
+"s_small3"
 
 #' reference matrix from seurat citeseq CBMC
 #'

@@ -253,7 +253,7 @@ test_that("clustify_nudge works with seurat_out option", {
     marker = cbmc_m,
     cluster_col = "res.1",
     threshold = 0.8,
-    seurat_out = T,
+    seurat_out = F,
     marker_inmatrix = F
   )
   expect_true(nrow(res) == 4)
@@ -369,3 +369,25 @@ test_that("get_best_str finds correct values", {
   expect_equal(stringr::str_sub(a, 1, 3), stringr::str_sub(a2, 1, 3))
 })
 
+test_that("use_seurat_comp gets correct averages", {
+  avg <- use_seurat_comp(s_small,
+                         cluster_col = "res.1",
+                         var.genes_only = T)
+  avg2 <- use_seurat_comp(s_small,
+                         cluster_col = "res.1",
+                         var.genes_only = "PCA")
+  expect_true(ncol(avg) == 4)
+})
+
+test_that("use_seurat_comp gets correct averages with seurat3 object", {
+  avg <- use_seurat_comp(s_small3,
+                         cluster_col = "RNA_snn_res.1",
+                         var.genes_only = T)
+  avg <- use_seurat3_comp(s_small3,
+                         cluster_col = "RNA_snn_res.1",
+                         var.genes_only = T)
+  avg2 <- use_seurat_comp(s_small3,
+                          cluster_col = "RNA_snn_res.1",
+                          var.genes_only = "PCA")
+  expect_true(ncol(avg) == 3)
+})
