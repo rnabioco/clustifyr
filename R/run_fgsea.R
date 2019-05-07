@@ -22,7 +22,7 @@ run_gsea <- function(expr_mat, query_genes, cluster_ids = NULL,
     stop("cluster_ids do not match number of cells (columns) in expr_mat ")
   }
 
-  if (n_perm > 1e5 & per_cell) {
+  if (n_perm > 1e4 & per_cell) {
     warning("run_gsea() take a long time if running many permutations and running per cell")
   }
 

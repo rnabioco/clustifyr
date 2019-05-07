@@ -17,12 +17,33 @@ test_that("matrixize_markers with remove_rp option", {
   expect_true(nrow(pbmc4k_mm) != nrow(pbmc4k_mm2))
 })
 
+test_that("matrixize_markers to turn matrix into ranked list", {
+  pbmc4k_mm <- matrixize_markers(pbmc4k_markers, n = 50)
+  pbmc4k_mm2 <- matrixize_markers(pbmc4k_mm, ranked = T, unique = T)
+
+  expect_true(nrow(pbmc4k_mm) < nrow(pbmc4k_mm2))
+})
+
+test_that("matrixize_markers uses supplied labels", {
+  pbmc4k_mm <- matrixize_markers(pbmc4k_markers, n = 50, labels = pbmc4k_meta)
+  pbmc4k_mm2 <- matrixize_markers(pbmc4k_mm, labels = unique(pbmc4k_meta$classified), ranked = T)
+
+  expect_true(nrow(pbmc4k_mm) < nrow(pbmc4k_mm2))
+})
+
 test_that("average_clusters works as intended", {
   pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
     pbmc4k_meta,
     log_scale = F
   )
   expect_equal(nrow(pbmc4k_avg2), 2663)
+})
+
+test_that("average_clusters detects wrong cluster ident", {
+  expect_error(pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
+                                               matrix(5,5),
+                                               log_scale = F
+  ))
 })
 
 test_that("average_clusters able to coerce factors", {
@@ -182,6 +203,33 @@ test_that("gene_pct and gene_pct_markerm work as intended", {
     pbmc4k_meta,
     cluster_col = "cluster"
   )
+  expect_error(res2 <- gene_pct_markerm(pbmc4k_matrix,
+                                        cbmc_m,
+                                        matrix(5,5),
+                                        cluster_col = "cluster"
+  ))
+  expect_true(nrow(res2) == 10)
+})
+
+test_that("gene_pct_markerm norm options work", {
+  res <- gene_pct_markerm(pbmc4k_matrix,
+                           cbmc_m,
+                           pbmc4k_meta,
+                           cluster_col = "cluster",
+                           norm = NULL
+  )
+  res2 <- gene_pct_markerm(pbmc4k_matrix,
+                           cbmc_m,
+                           pbmc4k_meta,
+                           cluster_col = "cluster",
+                           norm = "divide"
+  )
+  res3 <- gene_pct_markerm(pbmc4k_matrix,
+                          cbmc_m,
+                          pbmc4k_meta,
+                          cluster_col = "cluster",
+                          norm = 0.3
+  )
 
   expect_true(nrow(res2) == 10)
 })
@@ -198,24 +246,45 @@ test_that("clustify_nudge works with options and seruat2", {
   expect_true(nrow(res) == 4)
 })
 
-test_that("clustify_nudge works with options", {
+test_that("clustify_nudge works with seurat_out option", {
+  res <- clustify_nudge(
+    input = s_small,
+    ref_mat = cbmc_ref,
+    marker = cbmc_m,
+    cluster_col = "res.1",
+    threshold = 0.8,
+    seurat_out = T,
+    marker_inmatrix = F
+  )
+  expect_true(nrow(res) == 4)
+})
+
+test_that("clustify_nudge works with list of markers", {
   res <- clustify_nudge(
     input = pbmc4k_matrix,
-    ref_mat = cbmc_ref,
+    ref_mat = average_clusters(pbmc4k_matrix, pbmc4k_meta),
     metadata = pbmc4k_meta,
-    marker = cbmc_m,
+    marker = pbmc4k_markers,
     query_genes = pbmc4k_vargenes,
     cluster_col = "cluster",
-    threshold = 0.8
+    threshold = 0.8,
+    call = F,
+    marker_inmatrix = F
   )
   expect_true(nrow(res) == 10)
 })
 
-test_that("overcluster_test works with defaults", {
+test_that("overcluster_test works with ngenes option", {
   g <- overcluster_test(pbmc4k_matrix,
     pbmc4k_meta,
     cbmc_ref,
     cluster_col = "cluster"
+  )
+  g2 <- overcluster_test(pbmc4k_matrix,
+                         pbmc4k_meta,
+                         cbmc_ref,
+                         cluster_col = "cluster",
+                         ngenes = 100
   )
   expect_true(ggplot2::is.ggplot(g))
 })
@@ -278,3 +347,25 @@ test_that("downsample_matrix can select same number of cells per cluster", {
 
   expect_true(all.equal(ncol(mat1), 30*length(unique(pbmc4k_meta$cluster))))
 })
+
+test_that("percent_clusters works with defaults", {
+  res <- percent_clusters(pbmc4k_matrix,
+                          pbmc4k_meta)
+  expect_equal(nrow(res), nrow(pbmc4k_matrix))
+})
+
+test_that("get_best_str finds correct values", {
+  res <- clustify(
+    input = pbmc4k_matrix,
+    metadata = pbmc4k_meta,
+    ref_mat = pbmc_bulk_matrix,
+    query_genes = pbmc4k_vargenes,
+    cluster_col = "cluster",
+    per_cell = F
+  )
+  a <- get_best_str("0", get_best_match_matrix(res), res)
+  a2 <- get_best_str("0", get_best_match_matrix(res), res, carry_cor = F)
+
+  expect_equal(stringr::str_sub(a, 1, 3), stringr::str_sub(a2, 1, 3))
+})
+
