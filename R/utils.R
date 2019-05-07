@@ -830,7 +830,9 @@ overcluster_test <- function(expr,
 #' @param rm.lowvar whether to remove lower variation genes first
 #'
 #' @export
-ref_feature_select <- function(mat, n = 3000, rm.lowvar = T) {
+ref_feature_select <- function(mat,
+                               n = 3000,
+                               rm.lowvar = T) {
   if (rm.lowvar == T) {
     v <- RowVar(mat)
     v2 <- v[order(-v)][1:(length(v) / 2)]
@@ -897,11 +899,19 @@ feature_select_PCA <- function(mat = NULL,
 #' @param cutoff remove pathways with less genes than this cutoff
 
 #' @export
-gmt_to_list <- function(path, cutoff = 0) {
-  df <- readr::read_csv(path, col_names = F)
-  df <- tidyr::separate(df, X1, sep = "\thttp://www.broadinstitute.org/gsea/msigdb/cards/.*?\t", into = c("path", "genes"))
-  pathways <- stringr::str_split(df$genes, "\t")
-  names(pathways) <- stringr::str_replace(df$path, "REACTOME_", "")
+gmt_to_list <- function(path,
+                        cutoff = 0) {
+  df <- readr::read_csv(path,
+                        col_names = F)
+  df <- tidyr::separate(df,
+                        X1,
+                        sep = "\thttp://www.broadinstitute.org/gsea/msigdb/cards/.*?\t",
+                        into = c("path", "genes"))
+  pathways <- stringr::str_split(df$genes,
+                                 "\t")
+  names(pathways) <- stringr::str_replace(df$path,
+                                          "REACTOME_",
+                                          "")
   if (cutoff > 0) {
     ids <- sapply(pathways, function(i) length(i) < cutoff)
     pathways <- pathways[!ids]
@@ -918,8 +928,15 @@ gmt_to_list <- function(path, cutoff = 0) {
 #' @param topn number of top pathways to plot
 
 #' @export
-plot_pathway_gsea <- function(mat, pathway_list, n_perm = 1000, scale = T, topn = 5) {
-  res <- calculate_pathway_gsea(mat, pathway_list, n_perm, scale = scale)
+plot_pathway_gsea <- function(mat,
+                              pathway_list,
+                              n_perm = 1000,
+                              scale = T,
+                              topn = 5) {
+  res <- calculate_pathway_gsea(mat,
+                                pathway_list,
+                                n_perm,
+                                scale = scale)
   coltopn <- unique(cor_to_call_topn(res, topn = topn, threshold = -Inf)$type)
   res[is.na(res)] <- 0
   g <- ComplexHeatmap::Heatmap(res[, coltopn], column_names_gp = grid::gpar(fontsize = 6))
@@ -934,4 +951,47 @@ plot_pathway_gsea <- function(mat, pathway_list, n_perm = 1000, scale = T, topn 
 #' @export
 RowVar <- function(x, na.rm = T) {
   rowSums((x - rowMeans(x, na.rm = na.rm))^2, na.rm = na.rm) / (dim(x)[2] - 1)
+}
+
+#' downsample matrix by cluster or completely random
+#'
+#' @param mat expression matrix
+#' @param n number per cluster or fraction to keep
+#' @param keep_cluster_proportions whether to subsample
+#' @param set_seed random seed
+
+#' @export
+downsample_matrix <- function(mat,
+                              n = 1,
+                              keep_cluster_proportions = T,
+                              cluster_info = NULL,
+                              cluster_col = "cluster",
+                              set_seed = NULL) {
+  if (keep_cluster_proportions == F) {
+    cluster_ids <- colnames(mat)
+    if (n < 1) {
+      n <- as.integer(ncol(mat)*n)
+    }
+    set.seed(set_seed)
+    cluster_ids_new <- sample(cluster_ids, n)
+  } else {
+    if(is.vector(cluster_info)){
+      cluster_ids <- split(colnames(mat), cluster_info)
+    } else if (is.data.frame(cluster_info) & !is.null(cluster_col)){
+      cluster_ids <- split(colnames(mat), cluster_info[[cluster_col]])
+    } else if (class(cluster_info) == "factor") {
+      cluster_info <- as.character(cluster_info)
+      cluster_ids <- split(colnames(mat), cluster_info)
+    } else {
+      stop("cluster_info not formatted correctly,
+         supply either a  vector or a dataframe")
+    }
+    if (n < 1) {
+      n2 <- sapply(cluster_ids, function(x) as.integer(length(x)*n))
+      n <- n2
+    }
+    set.seed(set_seed)
+    cluster_ids_new <- mapply(sample, cluster_ids, n, SIMPLIFY = F)
+  }
+  return(mat[,unlist(cluster_ids_new)])
 }

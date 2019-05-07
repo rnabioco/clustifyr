@@ -2,6 +2,7 @@ context("compare_list")
 
 test_that("run all gene list functions", {
   pbmc4k_mm <- matrixize_markers(pbmc4k_markers)
+  pbmc4k_avg <- average_clusters(pbmc4k_matrix, pbmc4k_meta)
   pbmc4k_avgb <- binarize_expr(pbmc4k_avg)
   gene_list_methods <- c("spearman", "hyper", "jaccard", "gsea")
   results <- lapply(
@@ -19,6 +20,7 @@ test_that("run all gene list functions", {
 
 test_that("gene list function options", {
   pbmc4k_mm <- matrixize_markers(pbmc4k_markers)
+  pbmc4k_avg <- average_clusters(pbmc4k_matrix, pbmc4k_meta)
   pbmc4k_avgb <- binarize_expr(pbmc4k_avg)
   expect_error(suppressWarnings(res <- compare_lists(pbmc4k_avgb,
     pbmc4k_mm,
@@ -44,6 +46,18 @@ test_that("run all gene list functions in clustify_lists", {
   )
 
   expect_equal(4, length(results))
+})
+
+test_that("gsea outputs in cor matrix format", {
+  res <- clustify_lists(pbmc4k_matrix,
+                        per_cell = F,
+                        cluster_info = pbmc4k_meta,
+                        marker = pbmc4k_markers,
+                        marker_inmatrix = F,
+                        metric = "gsea")
+  res2 <- cor_to_call(res)
+
+  expect_equal(10, nrow(res2))
 })
 
 test_that("seurat object clustify_lists-ing", {
