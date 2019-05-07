@@ -23,9 +23,8 @@ test_that("call plots can be generated", {
 })
 
 test_that("plot_gene can handle strange and normal genenames", {
-  genes <- c("RP11-196G18.24",
-             "RP11-442N24__B.1",
-             "ACTB")
+  genes <- c("RP4-673M15.1",
+             "CD24")
   plts <- plot_gene(pbmc4k_matrix, pbmc4k_meta,
             genes = genes, cell_col = "rn")
 
@@ -54,7 +53,7 @@ test_that("plot_best_call threshold works as intended, on per cell and collapsin
 test_that("plot_gene checks for presence of gene name", {
   plot_gene(pbmc4k_matrix,
             pbmc4k_meta,
-            c("ACTB","ZFP36L3"),
+            c("CD24","ZFP36L3"),
             cell_col = "rn",
             do.label = T,
             do.legend =F)

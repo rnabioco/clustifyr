@@ -14,6 +14,6 @@
 pbmc4k_meta
 }
 \description{
-A sample of 4000 cells from a bigger experiment
+A sample of 300 PBMC cells, downsampled from a bigger experiment, 30 cells per cluster
 }
 \keyword{datasets}
