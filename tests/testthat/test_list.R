@@ -1,5 +1,24 @@
 context("compare_list")
 
+test_that("warning if matrix is not binarized", {
+  pbmc4k_mm <- matrixize_markers(pbmc4k_markers)
+  pbmc4k_avg <- average_clusters(pbmc4k_matrix, pbmc4k_meta)
+  pbmc4k_avgb <- binarize_expr(pbmc4k_avg)
+  gene_list_methods <- c("hyper")
+  results <- lapply(
+    gene_list_methods,
+    function(x) {
+      compare_lists(pbmc4k_avg,
+                    pbmc4k_mm,
+                    metric = x
+      )
+    }
+  )
+
+  expect_true(results[[1]][1,1] > 0)
+})
+
+
 test_that("run all gene list functions", {
   pbmc4k_mm <- matrixize_markers(pbmc4k_markers)
   pbmc4k_avg <- average_clusters(pbmc4k_matrix, pbmc4k_meta)
