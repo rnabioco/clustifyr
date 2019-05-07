@@ -122,3 +122,26 @@ test_that("get_similarity handles NA entries", {
   expect_equal(ncol(res), n_ref_samples)
   expect_equal(n_clusters + 1, nrow(res))
 })
+
+test_that("permute_similarity runs per cell", {
+  res <- permute_similarity(
+    pbmc4k_matrix[c("RBM28","CCDC136","TNPO3"),c(7,11)],
+    cbmc_ref[c("RBM28","CCDC136","TNPO3"),1:3],
+    colnames(pbmc4k_matrix[c("RBM28","CCDC136","TNPO3"),c(7,11)]),
+    num_perm = 2,
+    per_cell = T,
+    compute_method = "spearman"
+  )
+  expect_equal(length(res), 2)
+})
+
+test_that("error for unsupported method", {
+  expect_error(res <- permute_similarity(
+    pbmc4k_matrix[c("RBM28","CCDC136","TNPO3"),c(7,11)],
+    cbmc_ref[c("RBM28","CCDC136","TNPO3"),1:3],
+    pbmc4k_meta$rn[c(7,11)],
+    num_perm = 2,
+    per_cell = T,
+    compute_method = "a"
+  ))
+})
