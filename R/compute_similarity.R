@@ -15,7 +15,6 @@ get_similarity <- function(expr_mat,
                            compute_method,
                            per_cell = FALSE,
                            ...) {
-
   ref_clust <- colnames(ref_mat)
   if (sum(is.na(cluster_ids)) > 0) {
     print("reassigning NAs to unknown")
@@ -68,7 +67,6 @@ permute_similarity <- function(expr_mat,
                                num_perm,
                                per_cell = F,
                                compute_method, ...) {
-
   ref_clust <- colnames(ref_mat)
 
   if (!per_cell) {
@@ -95,8 +93,9 @@ permute_similarity <- function(expr_mat,
 
   for (i in 1:num_perm) {
     resampled <- sample(cluster_ids,
-                        length(cluster_ids),
-                        replace = FALSE)
+      length(cluster_ids),
+      replace = FALSE
+    )
 
     if (!per_cell) {
       permuted_avg <- compute_mean_expr(
@@ -123,8 +122,10 @@ permute_similarity <- function(expr_mat,
   rownames(sig_counts) <- sc_clust
   colnames(sig_counts) <- ref_clust
 
-  return(list(score = assigned_score,
-              p_val = sig_counts / num_perm))
+  return(list(
+    score = assigned_score,
+    p_val = sig_counts / num_perm
+  ))
 }
 
 #' compute mean of clusters
@@ -140,9 +141,11 @@ calc_similarity <- function(sc_avg,
                             compute_method, ...) {
 
   # use stats::cor matrix method if possible
-  if(any(compute_method %in% c("pearson", "spearman"))) {
+  if (any(compute_method %in% c("pearson", "spearman"))) {
     similarity_score <- cor(as.matrix(sc_avg),
-                            ref_mat, method = compute_method)
+      ref_mat,
+      method = compute_method
+    )
     return(similarity_score)
   }
 
@@ -158,16 +161,19 @@ calc_similarity <- function(sc_avg,
   sc_clust <- colnames(sc_avg)
   ref_clust <- colnames(ref_mat)
   features <- intersect(rownames(sc_avg), rownames(ref_mat))
-  sc_avg <- sc_avg[features,]
-  ref_mat <- ref_mat[features,]
+  sc_avg <- sc_avg[features, ]
+  ref_mat <- ref_mat[features, ]
   similarity_score <- matrix(NA,
-                             nrow = length(sc_clust),
-                             ncol = length(ref_clust))
+    nrow = length(sc_clust),
+    ncol = length(ref_clust)
+  )
   for (i in seq_along(sc_clust)) {
     for (j in seq_along(ref_clust)) {
-      similarity_score[i, j] <- vector_similarity(sc_avg[, sc_clust[i]],
-                                                  ref_mat[, ref_clust[j]],
-                                                  compute_method, ...)
+      similarity_score[i, j] <- vector_similarity(
+        sc_avg[, sc_clust[i]],
+        ref_mat[, ref_clust[j]],
+        compute_method, ...
+      )
     }
   }
   return(similarity_score)
@@ -194,11 +200,11 @@ vector_similarity <- function(vec1, vec2, compute_method, ...) {
     stop("compute_similarity: two input vectors are not numeric or of different sizes.")
   }
 
-  if (!(compute_method %in% c("cosine", "kl_divergence"))){
+  if (!(compute_method %in% c("cosine", "kl_divergence"))) {
     stop(paste(compute_method, "not implemented"))
   }
 
-  if(compute_method == "kl_divergence"){
+  if (compute_method == "kl_divergence") {
     res <- kl_divergence(vec1, vec2, ...)
   } else if (compute_method == "cosine") {
     res <- cosine(vec1, vec2, ...)
@@ -211,7 +217,7 @@ vector_similarity <- function(vec1, vec2, compute_method, ...) {
 #' @param vec1 test vector
 #' @param vec2 reference vector
 #' @export
-cosine <- function(vec1, vec2){
+cosine <- function(vec1, vec2) {
   sum(vec1 * vec2) / sqrt(sum(vec1^2) * sum(vec2^2))
 }
 #' KL divergence
@@ -242,8 +248,8 @@ kl_divergence <- function(vec1, vec2, if_logcounts = FALSE,
   count1 <- round(vec1 * total_reads / sum(vec1))
   count2 <- round(vec2 * total_reads / sum(vec2))
   est_KL <- entropy::KL.shrink(count1, count2,
-                               unit = "log",
-                               verbose = FALSE)
+    unit = "log",
+    verbose = FALSE
+  )
   return((max_KL - est_KL) / max_KL * 2 - 1)
 }
-

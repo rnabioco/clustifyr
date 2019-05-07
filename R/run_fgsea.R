@@ -12,48 +12,48 @@
 #' @export
 run_gsea <- function(expr_mat, query_genes, cluster_ids = NULL,
                      n_perm = 1000, per_cell = FALSE, scale = FALSE, no_warnings = T) {
-
-  if (!is.list(query_genes)){
+  if (!is.list(query_genes)) {
     geneset_list <- list("query_genes" = query_genes)
   } else {
     geneset_list <- query_genes
   }
 
-  if(!per_cell & (ncol(expr_mat) != length(cluster_ids))){
+  if (!per_cell & (ncol(expr_mat) != length(cluster_ids))) {
     stop("cluster_ids do not match number of cells (columns) in expr_mat ")
   }
 
-  if(n_perm > 1e5 & per_cell) {
+  if (n_perm > 1e5 & per_cell) {
     warning("run_gsea() take a long time if running many permutations and running per cell")
   }
 
-  if(scale){
+  if (scale) {
     expr_mat <- t(scale(t(as.matrix(expr_mat))))
   }
 
-  if(!per_cell) {
+  if (!per_cell) {
     avg_mat <- average_clusters(expr_mat, cluster_info = cluster_ids)
   } else {
     avg_mat <- expr_mat
   }
 
   res <- list()
-  for(i in seq_along(colnames(avg_mat))){
-
+  for (i in seq_along(colnames(avg_mat))) {
     if (no_warnings == F) {
       gsea_res <- fgsea::fgsea(geneset_list,
-                         avg_mat[, i],
-                         minSize = 1,
-                         maxSize = max(sapply(geneset_list, length)),
-                         nproc = 1,
-                         nperm = n_perm)
+        avg_mat[, i],
+        minSize = 1,
+        maxSize = max(sapply(geneset_list, length)),
+        nproc = 1,
+        nperm = n_perm
+      )
     } else {
       suppressWarnings(gsea_res <- fgsea::fgsea(geneset_list,
-                                                avg_mat[, i],
-                                                minSize = 1,
-                                                maxSize = max(sapply(geneset_list, length)),
-                                                nproc = 1,
-                                                nperm = n_perm))
+        avg_mat[, i],
+        minSize = 1,
+        maxSize = max(sapply(geneset_list, length)),
+        nproc = 1,
+        nperm = n_perm
+      ))
     }
     res[[i]] <- gsea_res[, c("pathway", "pval", "NES")]
   }

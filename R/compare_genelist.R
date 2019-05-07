@@ -8,7 +8,7 @@
 binarize_expr <- function(expr_mat,
                           n = 1000,
                           cut = 0) {
-  if(n < nrow(expr_mat)){
+  if (n < nrow(expr_mat)) {
     expr_df <- as.data.frame(as.matrix(expr_mat))
     df_temp <- apply(expr_df, 2, function(x) x - x[order(x, decreasing = TRUE)[n + 1]])
     df_temp[df_temp > cut] <- 1
@@ -50,10 +50,10 @@ matrixize_markers <- function(marker_df,
   # if "gene" not present in column names, assume df is a matrix to be converted to ranked
   if (!("gene" %in% colnames(marker_df))) {
     marker_df <- data.frame(lapply(marker_df, as.character), stringsAsFactors = FALSE)
-    marker_df <-tidyr::gather(marker_df, factor_key = TRUE, key = "cluster", value = "gene")
+    marker_df <- tidyr::gather(marker_df, factor_key = TRUE, key = "cluster", value = "gene")
   }
 
-  if (remove_rp == T){
+  if (remove_rp == T) {
     marker_df <- dplyr::filter(marker_df, !(stringr::str_detect(gene, "^RP[0-9,L,S]")))
   }
 
@@ -84,7 +84,7 @@ matrixize_markers <- function(marker_df,
     rownames(marker_temp2) <- marker_temp2$gene
     marker_temp2 <- dplyr::select(marker_temp2, -gene)
   } else {
-    marker_temp <- dplyr::mutate( marker_temp, n = 1:cut_num)
+    marker_temp <- dplyr::mutate(marker_temp, n = 1:cut_num)
     marker_temp2 <- tidyr::spread(marker_temp, key = "cluster", value = "gene")
     marker_temp2 <- as.data.frame(dplyr::select(marker_temp2, -n))
   }
@@ -98,7 +98,8 @@ matrixize_markers <- function(marker_df,
           cluster = labels$cluster,
           classified = labels$classified
         )),
-        by = "cluster")
+        by = "cluster"
+      )
       labels <- dplyr::pull(labels, classified)
     }
     colnames(marker_temp2) <- labels
@@ -214,7 +215,7 @@ compare_lists <- function(bin_mat,
     )
   }
 
-  if (metric != "gsea"){
+  if (metric != "gsea") {
     res <- do.call(rbind, out)
     rownames(res) <- colnames(bin_mat)
     colnames(res) <- colnames(marker_m)
@@ -225,15 +226,15 @@ compare_lists <- function(bin_mat,
       colnames(marker_m),
       function(y) {
         marker_list <- list()
-        marker_list[[1]] <- marker_m[ ,y]
+        marker_list[[1]] <- marker_m[, y]
         names(marker_list) <- y
         v1 <- marker_list
-        run_gsea(bin_mat, v1, n_perm = 1000, per_cell = T,)
+        run_gsea(bin_mat, v1, n_perm = 1000, per_cell = T, )
       }
     )
     res <- do.call(cbind, out)
     n <- ncol(res)
-    res2 <- res[, 3*c(1:(ncol(res)/3)), drop = F]
+    res2 <- res[, 3 * c(1:(ncol(res) / 3)), drop = F]
     rownames(res2) <- rownames(res)
     colnames(res2) <- colnames(marker_m)
     res <- res2

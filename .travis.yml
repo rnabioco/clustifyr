@@ -1,22 +1,25 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
+dist: xenial
 language: R
-sudo: false
+sudo: required
 cache: packages
 warnings_are_errors: false
 r_build_args: '--no-build-vignettes'
 r_check_args: '--as-cran --ignore-vignettes --no-manual'
-bioc_required: true
-bioc_use_devel: false
-r_packages:
-  - devtools
 
 before_install:
   - sudo apt-get install libhdf5-dev
 
-r:
-- release
-- devel
-
-after_success:
-  - Rscript -e 'covr::codecov()'
+matrix:
+  include:
+  - r: bioc-release
+    after_success:
+    - Rscript -e 'covr::codecov()'
+    #before_deploy:
+    #- Rscript -e 'remotes::install_cran("pkgdown")'
+    #deploy:
+    #  provider: script
+    #  script: Rscript -e 'pkgdown::deploy_site_github(verbose = TRUE)'
+    #  skip_cleanup: true
+  - r: bioc-devel

@@ -4,16 +4,16 @@ Title: Classification of Cell Types in Single-Cell RNA Sequencing Data
 Description: Classify cells from single-cell RNA sequencing data using bulk
   RNA-seq reference data.
 Authors@R: c(
-  person("Kent", "Riemondy", , "kent.riemondy@ucdenver.edu", role = c("aut", "cre")),
+  person("Rui", "Fu", , "rui.fu@ucdenver.edu", role = c("aut", "cre")),
+  person("Kent", "Riemondy", , "kent.riemondy@ucdenver.edu", role = c("aut")), 
   person("Austin", "Gillen", , "austin.gillen@ucdenver.edu", role = c("aut")),
-  person("Rui", "Fu", , "rui.fu@ucdenver.edu", role = c("aut")),
-  person("Jay", "Hesselberth", , "jay.hesselberth@gmail.com", role = c("aut")),
-  person("Yue", "Hao", , "haoyuethink@gmail.com", role = c("aut")),
   person("Chengzhe", "Tian", , "Chengzhe.Tian@colorado.edu", role = c("aut")),
-  person("Michelle", "Daya", , "michelle.daya@ucdenver.edu", role = c("aut"))
+  person("Jay", "Hesselberth", , "jay.hesselberth@gmail.com", role = c("aut")),
+  person("Yue", "Hao", , "haoyuethink@gmail.com", role = c("ctb")),
+  person("Michelle", "Daya", , "michelle.daya@ucdenver.edu", role = c("ctb"))
   )
 Depends:
-  R (>= 3.1.2)
+  R (>= 3.2.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -30,7 +30,6 @@ Imports:
     dplyr,
     tidyr,
     scales,
-    RColorBrewer,
     fgsea
 Suggests:
     testthat,
@@ -40,7 +39,3 @@ Suggests:
     ComplexHeatmap
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
-biocViews:
-    fgsea,
-    recount,
-    ComplexHeatmap

@@ -36,7 +36,7 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
   data <- dplyr::arrange(data, !!sym(feature))
 
   p <- ggplot(data, aes_string(x, y)) +
-    geom_point(aes_string(color = paste0("`", feature,"`")), # backticks protect special character gene names
+    geom_point(aes_string(color = paste0("`", feature, "`")), # backticks protect special character gene names
       size = pt_size
     )
 
@@ -44,7 +44,7 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
     "character",
     "logical"
   ) | is.factor(data[[feature]])) {
-    if(!is.null(d_cols)) {
+    if (!is.null(d_cols)) {
       # use colors provided
       p <- p + scale_color_manual(
         values = d_cols,
@@ -58,11 +58,14 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
     }
   } else {
     # continuous values
-    if (is.null(scale_limits)){
-      scale_limits <- c(ifelse(min(data[[feature]]) < 0,
-                             min(data[[feature]]),
-                             0),
-                      max(data[[feature]]))
+    if (is.null(scale_limits)) {
+      scale_limits <- c(
+        ifelse(min(data[[feature]]) < 0,
+          min(data[[feature]]),
+          0
+        ),
+        max(data[[feature]])
+      )
     }
     p <- p + scale_color_gradientn(
       colors = c_cols,
@@ -82,7 +85,7 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
   p <- p + cowplot::theme_cowplot()
 
   if (do.legend == FALSE) {
-    p <- p + theme(legend.position="none")
+    p <- p + theme(legend.position = "none")
   }
 
   p
@@ -90,11 +93,11 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
 
 #' Color palette for plotting continous variables
 #' @export
-pretty_palette <- rev(RColorBrewer::brewer.pal(11, "RdGy")[c(1:5, 7)])
+pretty_palette <- rev(scales::brewer_pal(palette = "RdGy")(6))
 
 #' Expanded color palette ramp for plotting discrete variables
 #' @export
-pretty_palette_ramp_d <- grDevices::colorRampPalette(RColorBrewer::brewer.pal(12, "Paired"))
+pretty_palette_ramp_d <- grDevices::colorRampPalette(scales::brewer_pal(palette = "Paired")(12))
 
 #' Plot similarity measures on a tSNE
 #'
@@ -125,7 +128,7 @@ plot_cor <- function(correlation_matrix,
     stop("cluster ids not shared between metadata and correlation matrix")
   }
 
-  if(is.null(cluster_col)){
+  if (is.null(cluster_col)) {
     cluster_col <- "rownames"
     metadata <- tibble::rownames_to_column(metadata, cluster_col)
   }
@@ -153,30 +156,34 @@ plot_cor <- function(correlation_matrix,
   }
 
   # determine scaling method, either same for all plots, or per plot (default)
-  if (typeof(scale_legends) == "logical" && scale_legends){
-    scale_limits <- c(ifelse(min(plt_data$expr) < 0,
-                               min(plt_data$expr),
-                               0),
-                        max(max(plt_data$expr)))
-  } else if (typeof(scale_legends) == "logical" && !scale_legends){
-    scale_limits = NULL
+  if (typeof(scale_legends) == "logical" && scale_legends) {
+    scale_limits <- c(
+      ifelse(min(plt_data$expr) < 0,
+        min(plt_data$expr),
+        0
+      ),
+      max(max(plt_data$expr))
+    )
+  } else if (typeof(scale_legends) == "logical" && !scale_legends) {
+    scale_limits <- NULL
   } else {
-    scale_limits = scale_legends
+    scale_limits <- scale_legends
   }
 
   plts <- vector("list", length(ref_data_to_plot))
-  for(i in seq_along(ref_data_to_plot)){
-      tmp_data <- dplyr::filter(
-        plt_data,
-        ref_cluster == ref_data_to_plot[i]
-      )
-      plts[[i]] <- plot_tsne(tmp_data,
-                             x = x,
-                             y = y,
-                             feature = "expr",
-                             legend_name = ref_data_to_plot[i],
-                             scale_limits = scale_limits,
-                             ...)
+  for (i in seq_along(ref_data_to_plot)) {
+    tmp_data <- dplyr::filter(
+      plt_data,
+      ref_cluster == ref_data_to_plot[i]
+    )
+    plts[[i]] <- plot_tsne(tmp_data,
+      x = x,
+      y = y,
+      feature = "expr",
+      legend_name = ref_data_to_plot[i],
+      scale_limits = scale_limits,
+      ...
+    )
   }
   plts
 }
@@ -196,13 +203,14 @@ plot_gene <- function(expr_mat,
                       genes,
                       cell_col = NULL,
                       ...) {
-
   genes_to_plot <- genes[genes %in% rownames(expr_mat)]
   genes_missing <- setdiff(genes, genes_to_plot)
 
   if (length(genes_missing) != 0) {
-    warning(paste0("the following genes were not present in the input matrix ",
-            paste(genes_missing, collapse = ",")))
+    warning(paste0(
+      "the following genes were not present in the input matrix ",
+      paste(genes_missing, collapse = ",")
+    ))
   }
 
   if (length(genes_to_plot) == 0) {
@@ -211,27 +219,31 @@ plot_gene <- function(expr_mat,
   expr_dat <- t(as.matrix(expr_mat[genes_to_plot, , drop = FALSE]))
   expr_dat <- tibble::rownames_to_column(as.data.frame(expr_dat), "cell")
 
-  if(is.null(cell_col)){
+  if (is.null(cell_col)) {
     mdata <- tibble::rownames_to_column(metadata, "cell")
     cell_col <- "cell"
   } else {
     mdata <- metadata
   }
 
-  if(!cell_col %in% colnames(mdata)) {
+  if (!cell_col %in% colnames(mdata)) {
     stop("please supply a cell_col that is present in metadata")
   }
 
   plt_dat <- dplyr::left_join(expr_dat, mdata,
-                       by = c("cell" = cell_col))
+    by = c("cell" = cell_col)
+  )
 
-  lapply(genes_to_plot,
-         function(gene){
-           plot_tsne(plt_dat,
-                     feature = gene,
-                     legend_name = gene,
-                     ...)
-         })
+  lapply(
+    genes_to_plot,
+    function(gene) {
+      plot_tsne(plt_dat,
+        feature = gene,
+        legend_name = gene,
+        ...
+      )
+    }
+  )
 }
 
 #' Plot called clusters on a tSNE, for each reference cluster given
@@ -249,10 +261,12 @@ plot_call <- function(correlation_matrix,
   df_temp <- as.data.frame(t(apply(correlation_matrix, 1, function(x) x - max(x))))
   df_temp[df_temp == 0] <- "1"
   df_temp[df_temp != "1"] <- "0"
-  plot_cor(df_temp,
-           metadata,
-           ref_data_to_plot,
-           ...)
+  plot_cor(
+    df_temp,
+    metadata,
+    ref_data_to_plot,
+    ...
+  )
 }
 
 #' Plot best calls for each cluster on a tSNE
@@ -277,48 +291,50 @@ plot_best_call <- function(correlation_matrix,
                            plot_r = FALSE,
                            ...) {
   col_meta <- colnames(metadata)
-  if("type" %in% col_meta | "type2" %in% col_meta){
+  if ("type" %in% col_meta | "type2" %in% col_meta) {
     warning('metadata column name clash of "type"/"type2"')
     return()
   }
   df_temp <- tibble::as_tibble(correlation_matrix, rownames = col)
   df_temp <- tidyr::gather(df_temp, key = type, value = r, -!!col)
-  df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold,", unassigned")
+  df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold, ", unassigned")
   df_temp <- dplyr::top_n(dplyr::group_by_at(df_temp, 1), 1, r)
   if (nrow(df_temp) != nrow(correlation_matrix)) {
     clash <- dplyr::group_by_at(df_temp, 1)
     clash <- dplyr::summarize(clash, n = n())
     clash <- dplyr::filter(clash, n > 1)
     clash <- dplyr::pull(clash, 1)
-    df_temp[lapply(df_temp[,1], FUN = function(x) x %in% clash)[[1]],2] <- paste0(df_temp[["type"]][lapply(df_temp[,1], FUN = function(x) x %in% clash)[[1]]], "-CLASH!")
-    df_temp <- dplyr::distinct(df_temp, exclude = "type", .keep_all =T)
+    df_temp[lapply(df_temp[, 1], FUN = function(x) x %in% clash)[[1]], 2] <- paste0(df_temp[["type"]][lapply(df_temp[, 1], FUN = function(x) x %in% clash)[[1]]], "-CLASH!")
+    df_temp <- dplyr::distinct(df_temp, exclude = "type", .keep_all = T)
   }
   df_temp_full <- dplyr::left_join(metadata, df_temp, by = col)
 
-  if(collapse_to_cluster != FALSE){
+  if (collapse_to_cluster != FALSE) {
     df_temp_full2 <- dplyr::mutate(df_temp_full, type2 = metadata[[collapse_to_cluster]])
     df_temp_full2 <- dplyr::group_by(df_temp_full2, type, type2)
     df_temp_full2 <- dplyr::summarize(df_temp_full2, sum = sum(r), n = n())
     df_temp_full2 <- dplyr::group_by(df_temp_full2, type2)
     df_temp_full2 <- dplyr::arrange(df_temp_full2, desc(n), desc(sum))
-    df_temp_full2 <- dplyr::filter(df_temp_full2, type != paste0("r<", threshold,", unassigned"))
+    df_temp_full2 <- dplyr::filter(df_temp_full2, type != paste0("r<", threshold, ", unassigned"))
     df_temp_full2 <- dplyr::slice(df_temp_full2, 1)
     df_temp_full2 <- dplyr::right_join(df_temp_full2, select(df_temp_full, -type), by = stats::setNames(collapse_to_cluster, "type2"))
-    df_temp_full <- dplyr::mutate(df_temp_full2, type = tidyr::replace_na(type, paste0("r<", threshold,", unassigned")))
+    df_temp_full <- dplyr::mutate(df_temp_full2, type = tidyr::replace_na(type, paste0("r<", threshold, ", unassigned")))
   }
 
   g <- plot_tsne(df_temp_full,
-            feature = "type",
-            x = x, y = y,
-            ...)
+    feature = "type",
+    x = x, y = y,
+    ...
+  )
 
   if (plot_r == T) {
     l <- list()
     l[[1]] <- g
     l[[2]] <- plot_tsne(df_temp_full,
-              feature = "r",
-              x = x, y = y,
-              ...)
+      feature = "r",
+      x = x, y = y,
+      ...
+    )
   } else {
     l <- g
   }
@@ -347,32 +363,43 @@ plot_cols <- function(metadata,
   temp1 <- dplyr::summarise(temp1, med = median(!!sym(plot_col), na.rm = T))
   colnames(temp1) <- c("original_cluster", "type", paste(plot_col, "query", sep = "_"))
 
-  temp2 <- dplyr::group_by_at(metadata_ref,cluster_col_ref)
+  temp2 <- dplyr::group_by_at(metadata_ref, cluster_col_ref)
   temp2 <- dplyr::summarise(temp2, med = median(!!sym(plot_col_ref), na.rm = T))
   colnames(temp2) <- c("type", paste(plot_col, "ref", sep = "_"))
 
   temp <- dplyr::left_join(temp1,
-                           temp2,
-                           by = "type")
+    temp2,
+    by = "type"
+  )
   temp[is.na(temp)] <- 0
   temp[["full"]] <- stringr::str_c(temp[["original_cluster"]], temp[["type"]], sep = "->")
-  xmax <- max(temp[,4])
-  ymax <- max(temp[,3])
+  xmax <- max(temp[, 4])
+  ymax <- max(temp[, 3])
 
-  ggplot(temp,
-         aes_string(x = colnames(temp)[4],
-                    y = colnames(temp)[3],
-                    label = "full")) +
+  ggplot(
+    temp,
+    aes_string(
+      x = colnames(temp)[4],
+      y = colnames(temp)[3],
+      label = "full"
+    )
+  ) +
     geom_point(alpha = 0.23) +
-    geom_label(alpha = 0.23,
-               aes(color = type),
-               vjust="inward",
-               hjust="inward") +
+    geom_label(
+      alpha = 0.23,
+      aes(color = type),
+      vjust = "inward",
+      hjust = "inward"
+    ) +
     cowplot::theme_cowplot() +
-    scale_x_continuous(expand = c(0, 0),
-                       limits = c(0,xmax * 1.1)) +
-    scale_y_continuous(expand = c(0, 0),
-                       limits = c(0,ymax * 1.1))
+    scale_x_continuous(
+      expand = c(0, 0),
+      limits = c(0, xmax * 1.1)
+    ) +
+    scale_y_continuous(
+      expand = c(0, 0),
+      limits = c(0, ymax * 1.1)
+    )
 }
 
 #' Plot similarity measures on heatmap
@@ -385,8 +412,8 @@ plot_cols <- function(metadata,
 #'
 #' @export
 plot_cor_heatmap <- function(correlation_matrix,
-                     metadata = NULL,
-                     cluster_col = NULL,
-                     ...) {
+                             metadata = NULL,
+                             cluster_col = NULL,
+                             ...) {
   ComplexHeatmap::Heatmap(correlation_matrix, ...)
 }

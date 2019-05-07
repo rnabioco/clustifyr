@@ -11,62 +11,73 @@ test_that("get_vargenes works for both matrix and dataframe form", {
 test_that("matrixize_markers with remove_rp option", {
   pbmc4k_mm <- matrixize_markers(pbmc4k_markers)
   pbmc4k_mm2 <- matrixize_markers(pbmc4k_markers,
-                                  remove_rp = T)
+    remove_rp = T
+  )
 
   expect_true(nrow(pbmc4k_mm) != nrow(pbmc4k_mm2))
 })
 
 test_that("average_clusters works as intended", {
   pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
-                                  pbmc4k_meta,
-                                  log_scale = F)
+    pbmc4k_meta,
+    log_scale = F
+  )
   expect_equal(nrow(pbmc4k_avg2), 2663)
 })
 
 test_that("average_clusters able to coerce factors", {
   col <- factor(pbmc4k_meta$cluster)
   pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
-                                  col,
-                                  log_scale = F)
+    col,
+    log_scale = F
+  )
   expect_equal(nrow(pbmc4k_avg2), 2663)
 })
 
 test_that("average_clusters works with median option", {
   pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
-                                  pbmc4k_meta,
-                                  method = "median")
+    pbmc4k_meta,
+    method = "median"
+  )
   expect_equal(nrow(pbmc4k_avg2), 2663)
 })
 
 test_that("average_clusters works when one cluster contains only 1 cell", {
   pbmc4k_meta2 <- pbmc4k_meta
-  pbmc4k_meta2[1,"cluster"] <- 15
-  pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
-                                  pbmc4k_meta2)
+  pbmc4k_meta2[1, "cluster"] <- 15
+  pbmc4k_avg2 <- average_clusters(
+    pbmc4k_matrix,
+    pbmc4k_meta2
+  )
   expect_equal(ncol(pbmc4k_avg2), 10 + 1)
 })
 
 test_that("average_clusters works when low cell number clusters should be removed", {
   pbmc4k_meta2 <- pbmc4k_meta
-  pbmc4k_meta2[1,"cluster"] <- 15
+  pbmc4k_meta2[1, "cluster"] <- 15
   pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
-                                  pbmc4k_meta2, low_threshold = 2)
+    pbmc4k_meta2,
+    low_threshold = 2
+  )
   expect_equal(ncol(pbmc4k_avg2), 10)
 })
 
 test_that("average_clusters works when cluster info contains NA", {
   pbmc4k_meta2 <- pbmc4k_meta
-  pbmc4k_meta2[1,"cluster"] <- NA
+  pbmc4k_meta2[1, "cluster"] <- NA
   pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
-                                  pbmc4k_meta2, low_threshold = 2)
+    pbmc4k_meta2,
+    low_threshold = 2
+  )
   expect_equal(ncol(pbmc4k_avg2), 10)
 })
 
 test_that("average_clusters_filter works on strings", {
   avg1 <- average_clusters_filter(pbmc4k_matrix, pbmc4k_meta,
-                                  filter_on = "cluster",
-                                  filter_method = "==",
-                                  filter_value = "1")
+    filter_on = "cluster",
+    filter_method = "==",
+    filter_value = "1"
+  )
   remove_background(pbmc4k_matrix, avg1, 1)
   expect_equal(class(avg1), "numeric")
 })
@@ -80,10 +91,11 @@ test_that("cor_to_call threshold works as intended", {
     cluster_col = "cluster"
   )
   call1 <- cor_to_call(res,
-              metadata = pbmc4k_meta,
-              col = "cluster",
-              collapse_to_cluster = FALSE,
-              threshold = 0.5)
+    metadata = pbmc4k_meta,
+    col = "cluster",
+    collapse_to_cluster = FALSE,
+    threshold = 0.5
+  )
 
   expect_true("r<0.5, unassigned" %in% call1$type)
 })
@@ -98,23 +110,26 @@ test_that("cor_to_call threshold works as intended, on per cell and collapsing",
     per_cell = T
   )
   call1 <- cor_to_call(res,
-                       metadata = pbmc4k_meta,
-                       col = "rn",
-                       collapse_to_cluster = "cluster",
-                       threshold = 0.1)
+    metadata = pbmc4k_meta,
+    col = "rn",
+    collapse_to_cluster = "cluster",
+    threshold = 0.1
+  )
 
   expect_true(!any(is.na(call1)))
 })
 
 test_that("assign_ident works with equal length vectors and just 1 ident", {
   m1 <- assign_ident(pbmc4k_meta,
-               ident_col = "classified",
-               clusters = c("1","2"),
-               idents = c("whatever1", "whatever2"))
+    ident_col = "classified",
+    clusters = c("1", "2"),
+    idents = c("whatever1", "whatever2")
+  )
   m2 <- assign_ident(pbmc4k_meta,
-                     ident_col = "classified",
-                     clusters = c("1","2"),
-                     idents = "whatever1")
+    ident_col = "classified",
+    clusters = c("1", "2"),
+    idents = "whatever1"
+  )
   expect_true(nrow(m1) == nrow(m2))
 })
 
@@ -127,12 +142,13 @@ test_that("cor_to_call_topn works as intended", {
     cluster_col = "cluster"
   )
   call1 <- cor_to_call_topn(res,
-                       metadata = pbmc4k_meta,
-                       col = "cluster",
-                       collapse_to_cluster = FALSE,
-                       threshold = 0.5)
+    metadata = pbmc4k_meta,
+    col = "cluster",
+    collapse_to_cluster = FALSE,
+    threshold = 0.5
+  )
 
-  expect_true(nrow(call1) == 2*nrow(res))
+  expect_true(nrow(call1) == 2 * nrow(res))
 })
 
 test_that("cor_to_call_topn works as intended on collapse to cluster option", {
@@ -145,69 +161,79 @@ test_that("cor_to_call_topn works as intended on collapse to cluster option", {
     per_cell = T
   )
   call1 <- cor_to_call_topn(res,
-                            metadata = pbmc4k_meta,
-                            col = "rn",
-                            collapse_to_cluster = "cluster",
-                            threshold = 0)
+    metadata = pbmc4k_meta,
+    col = "rn",
+    collapse_to_cluster = "cluster",
+    threshold = 0
+  )
 
-  expect_true(nrow(call1) == 2*nrow(res))
+  expect_true(nrow(call1) == 2 * nrow(res))
 })
 
 test_that("gene_pct and gene_pct_markerm work as intended", {
-  res <- gene_pct(pbmc4k_matrix,
-                  cbmc_m$B,
-                  pbmc4k_meta$cluster)
+  res <- gene_pct(
+    pbmc4k_matrix,
+    cbmc_m$B,
+    pbmc4k_meta$cluster
+  )
 
   res2 <- gene_pct_markerm(pbmc4k_matrix,
-                           cbmc_m,
-                           pbmc4k_meta,
-                           cluster_col = "cluster")
+    cbmc_m,
+    pbmc4k_meta,
+    cluster_col = "cluster"
+  )
 
   expect_true(nrow(res2) == 10)
 })
 
 test_that("clustify_nudge works with options and seruat2", {
-  res <- clustify_nudge(input = s_small,
-                        ref_mat = cbmc_ref,
-                        marker = cbmc_m,
-                        cluster_col = "res.1",
-                        threshold = 0.8,
-                        seurat_out = F)
+  res <- clustify_nudge(
+    input = s_small,
+    ref_mat = cbmc_ref,
+    marker = cbmc_m,
+    cluster_col = "res.1",
+    threshold = 0.8,
+    seurat_out = F
+  )
   expect_true(nrow(res) == 4)
 })
 
 test_that("clustify_nudge works with options", {
-  res <- clustify_nudge(input = pbmc4k_matrix,
-                        ref_mat = cbmc_ref,
-                        metadata = pbmc4k_meta,
-                        marker = cbmc_m,
-                        query_genes = pbmc4k_vargenes,
-                        cluster_col = "cluster",
-                        threshold = 0.8)
+  res <- clustify_nudge(
+    input = pbmc4k_matrix,
+    ref_mat = cbmc_ref,
+    metadata = pbmc4k_meta,
+    marker = cbmc_m,
+    query_genes = pbmc4k_vargenes,
+    cluster_col = "cluster",
+    threshold = 0.8
+  )
   expect_true(nrow(res) == 10)
 })
 
 test_that("overcluster_test works with defaults", {
   g <- overcluster_test(pbmc4k_matrix,
-                        pbmc4k_meta,
-                        cbmc_ref,
-                        cluster_col = "cluster")
+    pbmc4k_meta,
+    cbmc_ref,
+    cluster_col = "cluster"
+  )
   expect_true(ggplot2::is.ggplot(g))
 })
 
 test_that("overcluster_test works with defined other cluster column", {
   g <- overcluster_test(pbmc4k_matrix,
-                        pbmc4k_meta,
-                        cbmc_ref,
-                        cluster_col = "cluster",
-                        newclustering = "classified",
-                        do.label = F)
+    pbmc4k_meta,
+    cbmc_ref,
+    cluster_col = "cluster",
+    newclustering = "classified",
+    do.label = F
+  )
   expect_true(ggplot2::is.ggplot(g))
 })
 
 test_that("ref_feature_select chooses the correct number of features", {
   pbmc4k_avg <- average_clusters(pbmc4k_matrix, pbmc4k_meta)
-  res <- ref_feature_select(pbmc4k_avg[1:100,], 5)
+  res <- ref_feature_select(pbmc4k_avg[1:100, ], 5)
   expect_true(length(res) == 5)
 })
 

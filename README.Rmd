@@ -11,11 +11,11 @@ knitr::opts_chunk$set(
 )
 ```
 
+# clustifyR <img src="man/figures/logo.png" align="right">
+
 [![Build Status](https://travis-ci.org/rnabioco/clustifyR.svg?branch=master)](https://travis-ci.org/rnabioco/clustifyR)
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/rnabioco/clustifyR?branch=master&svg=true)](https://ci.appveyor.com/project/rnabioco/clustifyR)
 [![Coverage status](https://codecov.io/gh/rnabioco/clustifyR/branch/master/graph/badge.svg)](https://codecov.io/github/rnabioco/clustifyR?branch=master)
-
-# clustifyR <img src="man/figures/logo.png" align="right">
 
 clustifyR classifies cells and clusters in single-cell RNA sequencing experiments using reference bulk RNA-seq data sets, single-cell gene signatures, or marker genes. 
 
@@ -69,30 +69,35 @@ res <- clustify(
   seurat_out = T
 )
 
-new_ref_matrix <- use_seurat_comp(s_small,
-                                  cluster_col = "res.1",
-                                  var.genes_only = FALSE)
+new_ref_matrix <- use_seurat_comp(
+  s_small,
+  cluster_col = "res.1",
+  var.genes_only = FALSE
+)
 ```
 
 Similarly, `clustify_lists` can also handle identity assignment of matrix or `seurat` object based on marker gene lists.
 
 ```{r example_seurat2, eval = F}
-res <- clustify_lists(pbmc4k_matrix,
-               per_cell = F,
-               cluster_info = pbmc4k_meta,
-               marker = pbmc4k_markers,
-               marker_inmatrix = F,
-               metric = "hyper")
+res <- clustify_lists(
+  pbmc4k_matrix,
+  per_cell = FALSE,
+  cluster_info = pbmc4k_meta,
+  marker = pbmc4k_markers,
+  marker_inmatrix = FALSE,
+  metric = "hyper"
+)
 
-res <- clustify_lists(s_small,
-               per_cell = F,
-               marker = pbmc4k_markers,
-               marker_inmatrix = F,
-               cluster_col = "res.1",
-               seurat_out = T
+res <- clustify_lists(
+  s_small,
+  per_cell = FALSE,
+  marker = pbmc4k_markers,
+  marker_inmatrix = FALSE,
+  cluster_col = "res.1",
+  seurat_out = TRUE
 )
 ```
 
 ## Additional reference data
 
-More reference data (including tabula muris) can be found at https://github.com/rnabioco/clustifyrdata.
+More reference data (including tabula muris) is available at https://github.com/rnabioco/clustifyrdata.
