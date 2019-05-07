@@ -106,6 +106,30 @@ test_that("seurat object clustifying", {
   expect_true(ggplot2::is.ggplot(g[[1]]))
 })
 
+test_that("seurat3 object clustifying", {
+  res <- clustify(s_small3,
+                  pbmc_bulk_matrix,
+                  cluster_col = "RNA_snn_res.1"
+  )
+  res <- clustify(s_small3,
+                  pbmc_bulk_matrix,
+                  cluster_col = "RNA_snn_res.1",
+                  seurat_out = F,
+                  per_cell = T
+  )
+  res <- clustify(s_small3,
+                  pbmc_bulk_matrix,
+                  cluster_col = "RNA_snn_res.1",
+                  seurat_out = F
+  )
+  g <- plot_best_call(res,
+                      use_seurat_meta(s_small3),
+                      col = "RNA_snn_res.1",
+                      plot_r = T
+  )
+  expect_true(ggplot2::is.ggplot(g[[1]]))
+})
+
 test_that("get_similarity handles NA entries", {
   pbmc4k_meta2 <- pbmc4k_meta
   pbmc4k_meta2[1, "cluster"] <- NA
