@@ -6,7 +6,7 @@
 #'
 #' \describe{
 #' }
-#'R
+#' R
 #' @source (https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc4k)
 "pbmc4k_matrix"
 
