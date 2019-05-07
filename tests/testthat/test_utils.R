@@ -20,7 +20,7 @@ test_that("average_clusters works as intended", {
   pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
                                   pbmc4k_meta,
                                   log_scale = F)
-  expect_equal(nrow(pbmc4k_avg2), nrow(pbmc4k_avg))
+  expect_equal(nrow(pbmc4k_avg2), 2663)
 })
 
 test_that("average_clusters able to coerce factors", {
@@ -28,14 +28,14 @@ test_that("average_clusters able to coerce factors", {
   pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
                                   col,
                                   log_scale = F)
-  expect_equal(nrow(pbmc4k_avg2), nrow(pbmc4k_avg))
+  expect_equal(nrow(pbmc4k_avg2), 2663)
 })
 
 test_that("average_clusters works with median option", {
   pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
                                   pbmc4k_meta,
                                   method = "median")
-  expect_equal(nrow(pbmc4k_avg2), nrow(pbmc4k_avg))
+  expect_equal(nrow(pbmc4k_avg2), 2663)
 })
 
 test_that("average_clusters works when one cluster contains only 1 cell", {
@@ -43,7 +43,7 @@ test_that("average_clusters works when one cluster contains only 1 cell", {
   pbmc4k_meta2[1,"cluster"] <- 15
   pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
                                   pbmc4k_meta2)
-  expect_equal(ncol(pbmc4k_avg2), ncol(pbmc4k_avg) + 1)
+  expect_equal(ncol(pbmc4k_avg2), 10 + 1)
 })
 
 test_that("average_clusters works when low cell number clusters should be removed", {
@@ -51,7 +51,7 @@ test_that("average_clusters works when low cell number clusters should be remove
   pbmc4k_meta2[1,"cluster"] <- 15
   pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
                                   pbmc4k_meta2, low_threshold = 2)
-  expect_equal(ncol(pbmc4k_avg2), ncol(pbmc4k_avg))
+  expect_equal(ncol(pbmc4k_avg2), 10)
 })
 
 test_that("average_clusters works when cluster info contains NA", {
@@ -59,7 +59,7 @@ test_that("average_clusters works when cluster info contains NA", {
   pbmc4k_meta2[1,"cluster"] <- NA
   pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
                                   pbmc4k_meta2, low_threshold = 2)
-  expect_equal(ncol(pbmc4k_avg2), ncol(pbmc4k_avg))
+  expect_equal(ncol(pbmc4k_avg2), 10)
 })
 
 test_that("average_clusters_filter works on strings", {
@@ -206,6 +206,7 @@ test_that("overcluster_test works with defined other cluster column", {
 })
 
 test_that("ref_feature_select chooses the correct number of features", {
+  pbmc4k_avg <- average_clusters(pbmc4k_matrix, pbmc4k_meta)
   res <- ref_feature_select(pbmc4k_avg[1:100,], 5)
   expect_true(length(res) == 5)
 })
@@ -221,4 +222,33 @@ test_that("feature_select_PCA can handle precalculated PCA", {
   res <- feature_select_PCA(pbmc_bulk_matrix, log_scale = T)
   res2 <- feature_select_PCA(pcs = pcs, log_scale = T)
   expect_true(all.equal(rownames(res), rownames(res2)))
+})
+
+test_that("downsample_matrix sets seed correctly", {
+  mat1 <- downsample_matrix(pbmc4k_matrix,
+                            cluster_info = pbmc4k_meta$cluster,
+                            n = 0.5,
+                            keep_cluster_proportions = T,
+                            set_seed = 41)
+  mat2 <- downsample_matrix(pbmc4k_matrix,
+                            cluster_info = pbmc4k_meta$cluster,
+                            n = 0.5,
+                            keep_cluster_proportions = T,
+                            set_seed = 41)
+  expect_true(all.equal(colnames(mat1), colnames(mat2)))
+})
+
+test_that("downsample_matrix can select same number of cells per cluster", {
+  mat1 <- downsample_matrix(pbmc4k_matrix,
+                            cluster_info = pbmc4k_meta$cluster,
+                            n = 30,
+                            keep_cluster_proportions = T,
+                            set_seed = 41)
+  mat2 <- downsample_matrix(pbmc4k_matrix,
+                            cluster_info = pbmc4k_meta$cluster,
+                            n = 30,
+                            keep_cluster_proportions = F,
+                            set_seed = 41)
+
+  expect_true(all.equal(ncol(mat1), 30*length(unique(pbmc4k_meta$cluster))))
 })

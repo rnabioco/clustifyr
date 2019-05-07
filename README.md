@@ -49,6 +49,7 @@ res <- clustify(
   ref_mat = pbmc_bulk_matrix,
   query_genes = pbmc4k_vargenes
 )
+#> [1] "using # of genes: 2123"
 
 plot_cor(
   res,

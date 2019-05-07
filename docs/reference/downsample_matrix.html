@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Meta-data for single-cell RNA-seq PBMCs. — pbmc4k_meta • clustifyR</title>
+<title>downsample matrix by cluster or completely random — downsample_matrix • clustifyR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Meta-data for single-cell RNA-seq PBMCs. — pbmc4k_meta" />
+<meta property="og:title" content="downsample matrix by cluster or completely random — downsample_matrix" />
 
-<meta property="og:description" content="A sample of 300 PBMC cells, downsampled from a bigger experiment, 30 cells per cluster" />
+<meta property="og:description" content="downsample matrix by cluster or completely random" />
 
 <meta property="og:image" content="http://rnabioco.github.io/clustifyR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -125,38 +125,48 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Meta-data for single-cell RNA-seq PBMCs.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rnabioco/clustifyR/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>pbmc4k_meta.Rd</code></div>
+    <h1>downsample matrix by cluster or completely random</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rnabioco/clustifyR/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
+    <div class="hidden name"><code>downsample_matrix.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>A sample of 300 PBMC cells, downsampled from a bigger experiment, 30 cells per cluster</p>
+    <p>downsample matrix by cluster or completely random</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>pbmc4k_meta</span></pre>
-        
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>A data frame with 5 variables:</p><dl class='dl-horizontal'>
-</dl>
+    <pre class="usage"><span class='fu'>downsample_matrix</span>(<span class='no'>mat</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>keep_cluster_proportions</span> <span class='kw'>=</span> <span class='no'>T</span>,
+  <span class='kw'>cluster_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>, <span class='kw'>set_seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    <p><code>[pbmc4k_matrix]</code> processed by <code>[seurat]</code></p>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>mat</th>
+      <td><p>expression matrix</p></td>
+    </tr>
+    <tr>
+      <th>n</th>
+      <td><p>number per cluster or fraction to keep</p></td>
+    </tr>
+    <tr>
+      <th>keep_cluster_proportions</th>
+      <td><p>whether to subsample</p></td>
+    </tr>
+    <tr>
+      <th>set_seed</th>
+      <td><p>random seed</p></td>
+    </tr>
+    </table>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      
-      <li><a href="#format">Format</a></li>
-
-      <li><a href="#source">Source</a></li>
-          </ul>
+      <li><a href="#arguments">Arguments</a></li>
+                </ul>
 
   </div>
 </div>

@@ -1,6 +1,6 @@
 #' Matrix of single-cell RNA-seq PBMCs.
 #'
-#' A sample of 4000 PBMC cells from a bigger experiment
+#' A sample of 300 PBMC cells, downsampled from a bigger experiment, 30 cells per cluster
 #'
 #' @format A sparseMatrix with genes as rows and cells as columns.
 #'
@@ -10,21 +10,9 @@
 #' @source (https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc4k)
 "pbmc4k_matrix"
 
-#' Matrix of average gene expression per cluster from single-cell RNA-seq PBMCs.
-#'
-#' A sample of 4000 PBMC cells from a bigger experiment
-#'
-#' @format A sparseMatrix with genes as rows and clusters as columns.
-#'
-#' \describe{
-#' }
-#'
-#' @source `[pbmc4k_matrix]` averaged per cluster
-"pbmc4k_avg"
-
 #' Meta-data for single-cell RNA-seq PBMCs.
 #'
-#' A sample of 4000 cells from a bigger experiment
+#' A sample of 300 PBMC cells, downsampled from a bigger experiment, 30 cells per cluster
 #'
 #' @format A data frame with 5 variables:
 #' \describe{

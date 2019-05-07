@@ -138,7 +138,6 @@ head(cbmc_m)
 ## Prebuilt references, in clustifyR
 
 A few reference datasets are built into clustifyR for vignettes and testing:
-`pbmc4k_avg`,
 `pbmc_bulk_matrix`,
 `cbmc_ref`,
 `pbmc4k_markers`,
