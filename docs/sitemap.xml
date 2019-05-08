@@ -178,6 +178,12 @@
     <loc>http://rnabioco.github.io/clustifyR/reference/s_small.html</loc>
   </url>
   <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/s_small3.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/use_seurat3_comp.html</loc>
+  </url>
+  <url>
     <loc>http://rnabioco.github.io/clustifyR/reference/use_seurat_comp.html</loc>
   </url>
   <url>
@@ -197,5 +203,8 @@
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyR/articles/references.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyR/articles/visualizations.html</loc>
   </url>
 </urlset>

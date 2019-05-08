@@ -11,17 +11,17 @@ clustify(input, ...)
 
 \method{clustify}{default}(input, ref_mat, metadata = NULL,
   query_genes = NULL, cluster_col = NULL, per_cell = FALSE,
-  num_perm = 0, compute_method = "spearman", ...)
+  num_perm = 0, compute_method = "spearman", verbose = F, ...)
 
 \method{clustify}{seurat}(input, ref_mat, query_genes = NULL,
   per_cell = FALSE, num_perm = 0, cluster_col = NULL,
   compute_method = "spearman", use_var_genes = TRUE, dr = "tsne",
-  seurat_out = TRUE, threshold = 0, ...)
+  seurat_out = TRUE, threshold = 0, verbose = F, ...)
 
 \method{clustify}{Seurat}(input, ref_mat, query_genes = NULL,
   per_cell = FALSE, num_perm = 0, cluster_col = NULL,
   compute_method = "spearman", use_var_genes = TRUE, dr = "tsne",
-  seurat_out = TRUE, threshold = 0, ...)
+  seurat_out = TRUE, threshold = 0, verbose = F, ...)
 }
 \arguments{
 \item{input}{single-cell expression matrix or Seurat object}
@@ -45,6 +45,8 @@ column of metadata if not supplied. Not required if running correlation per cell
 
 \item{compute_method}{method(s) for computing similarity scores}
 
+\item{verbose}{whether to report certain variables chosen}
+
 \item{use_var_genes}{if providing a seurat object, use the variable genes
 (stored in seurat_object@var.genes) as the query_genes.}
 
@@ -72,6 +74,8 @@ column of metadata if not supplied. Not required if running correlation per cell
 \item{dr}{stored dimension reduction}
 
 \item{seurat_out}{output cor matrix or called seurat object}
+
+\item{verbose}{whether to report certain variables chosen}
 
 \item{...}{additional arguments to pass to compute_method function}
 
@@ -95,6 +99,8 @@ column of metadata if not supplied. Not required if running correlation per cell
 \item{dr}{stored dimension reduction}
 
 \item{seurat_out}{output cor matrix or called seurat object}
+
+\item{verbose}{whether to report certain variables chosen}
 
 \item{...}{additional arguments to pass to compute_method function}
 }

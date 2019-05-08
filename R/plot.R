@@ -28,7 +28,7 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
     "character",
     "logical"
   ))) {
-    print("using ramp colors instead")
+    # print("using ramp colors instead")
     c_cols <- pretty_palette_ramp_d(length(unique(data[[feature]])))
     d_cols <- pretty_palette_ramp_d(length(unique(data[[feature]])))
   }

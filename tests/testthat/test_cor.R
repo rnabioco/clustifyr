@@ -6,7 +6,8 @@ test_that("output is correctly formatted", {
     metadata = pbmc4k_meta,
     ref_mat = pbmc_bulk_matrix,
     query_genes = pbmc4k_vargenes,
-    cluster_col = "cluster"
+    cluster_col = "cluster",
+    verbose = T
   )
   n_clusters <- length(unique(pbmc4k_meta$cluster))
   n_ref_samples <- ncol(pbmc_bulk_matrix)

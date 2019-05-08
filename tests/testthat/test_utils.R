@@ -246,6 +246,17 @@ test_that("clustify_nudge works with options and seruat2", {
   expect_true(nrow(res) == 4)
 })
 
+test_that("clustify_nudge works with options and seruat3", {
+  res <- clustify_nudge(
+    input = s_small3,
+    ref_mat = cbmc_ref,
+    marker = cbmc_m,
+    threshold = 0.8,
+    seurat_out = F
+  )
+  expect_true(nrow(res) == 3)
+})
+
 test_that("clustify_nudge works with seurat_out option", {
   res <- clustify_nudge(
     input = s_small,
