@@ -463,13 +463,22 @@ gene_pct <- function(matrix, genelist, clusters) {
 #' @param norm whether and how the results are normalized
 #'
 #' @export
-gene_pct_markerm <- function(matrix, marker_m, cluster_info, cluster_col = NULL, norm = NULL) {
+gene_pct_markerm <- function(matrix,
+                             marker_m,
+                             cluster_info,
+                             cluster_col = NULL,
+                             norm = NULL) {
   if (is.vector(cluster_info)) {
   } else if (is.data.frame(cluster_info) & !is.null(cluster_col)) {
     cluster_info <- cluster_info[[cluster_col]]
   } else {
     stop("cluster_info not formatted correctly,
          supply either a  vector or a dataframe")
+  }
+
+  # coerce factors in character
+  if (is.factor(cluster_info)) {
+    cluster_info <- as.character(cluster_info)
   }
 
   out <- sapply(colnames(marker_m), function(x) {
@@ -491,6 +500,9 @@ gene_pct_markerm <- function(matrix, marker_m, cluster_info, cluster_col = NULL,
       out[out > 0] <- 1
     }
   }
+
+  # edge cases where all markers can't be found for a cluster
+  out[is.na(out)] <- 0
   out
 }
 
