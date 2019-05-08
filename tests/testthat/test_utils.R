@@ -379,15 +379,65 @@ test_that("use_seurat_comp gets correct averages", {
   expect_true(ncol(avg) == 4)
 })
 
+test_that("use_seurat_comp gets other assay slots", {
+  setClass("custom", representation(raw.data = "matrix"))
+  a <- new("custom", raw.data = matrix(data = 1,
+                                       nrow = 2,
+                                       ncol = nrow(s_small@meta.data),
+                                       dimnames = list(c("A","B"), rownames(s_small@meta.data))))
+  b <- new("custom", raw.data = matrix(data = 1,
+                                       nrow = 2,
+                                       ncol = nrow(s_small@meta.data),
+                                       dimnames = list(c("C","D"), rownames(s_small@meta.data))))
+  s_small2 <- s_small
+  s_small2@assay <- list("ADT" = a, "ADT2" = b)
+  avg <- use_seurat_comp(s_small2,
+                         cluster_col = "res.1",
+                         assay_name = "ADT",
+                         var.genes_only = T)
+  avg2 <- use_seurat_comp(s_small2,
+                         cluster_col = "res.1",
+                         assay_name = c("ADT","ADT2"),
+                         var.genes_only = T)
+  expect_true(nrow(avg2) - nrow(avg) == 2)
+})
+
 test_that("use_seurat_comp gets correct averages with seurat3 object", {
-  avg <- use_seurat_comp(s_small3,
+  setClass("custom", representation(counts = "matrix"))
+  a <- new("custom", counts = matrix(data = 1,
+                                       nrow = 2,
+                                       ncol = nrow(s_small3@meta.data),
+                                       dimnames = list(c("A","B"), rownames(s_small@meta.data))))
+  b <- new("custom", counts = matrix(data = 1,
+                                       nrow = 2,
+                                       ncol = nrow(s_small3@meta.data),
+                                       dimnames = list(c("C","D"), rownames(s_small@meta.data))))
+  s_small2 <- s_small3
+  s_small2@assays <- list("RNA" = s_small2@assays$RNA, "ADT" = a, "ADT2" = b)
+  avg <- use_seurat_comp(s_small2,
                          cluster_col = "RNA_snn_res.1",
+                         assay_name = c("ADT","ADT2"),
                          var.genes_only = T)
-  avg <- use_seurat3_comp(s_small3,
+  avg <- use_seurat3_comp(s_small2,
                          cluster_col = "RNA_snn_res.1",
+                         assay_name = c("ADT"),
                          var.genes_only = T)
-  avg2 <- use_seurat_comp(s_small3,
+  avg2 <- use_seurat_comp(s_small2,
                           cluster_col = "RNA_snn_res.1",
+                          assay_name = c("ADT","ADT2"),
                           var.genes_only = "PCA")
-  expect_true(ncol(avg) == 3)
+  expect_true(nrow(avg2) - nrow(avg) == 2)
+})
+
+test_that("clustify_intra works on test data", {
+  pbmc4k_meta2 <- pbmc4k_meta
+  pbmc4k_meta2$sample <- c(rep("A",150), rep("B",150))
+  pbmc4k_meta2$cluster <- c(pbmc4k_meta2$classified[1:150], pbmc4k_meta2$cluster[151:300])
+  res <- clustify_intra(pbmc4k_matrix,
+                        pbmc4k_meta2,
+                        query_genes = pbmc4k_vargenes,
+                        cluster_col = "cluster",
+                        sample_col = "sample",
+                        sample_id = "A")
+  expect_true(ncol(res) == length(unique(pbmc4k_meta2$classified[1:150])))
 })
