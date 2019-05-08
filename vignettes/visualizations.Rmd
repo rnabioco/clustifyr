@@ -1,0 +1,92 @@
+---
+title: 'Visualization of clustifyR results'
+date: '`r Sys.Date()`'
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 3
+    vignette: >
+      %\VignetteIndexEntry{clustifyR-viz}
+      %\VignetteEngine{knitr::rmarkdown}
+      %\VignetteEncoding{UTF-8}
+---
+
+```{r knitr_opts, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = "center"
+)
+```
+
+The direct output of `clustify` is a matrix of correlation coefficients. And for `clustify_lists` and `clustify_nudge`, positive scores. Built-in functions are available to visualize this results.
+
+## TSNE/UMAP
+
+```{r, warning = F, message = F}
+library(clustifyR)
+library(here)
+full_pbmc4k_matrix <- readRDS(here("full_pbmc4k_matrix"))
+full_pbmc4k_meta <- readRDS(here("full_pbmc4k_meta"))
+
+# clustify
+res <- clustify(
+  input = full_pbmc4k_matrix,
+  metadata = full_pbmc4k_meta,
+  cluster_col = "cluster",
+  ref_mat = cbmc_ref
+)
+
+# plot_cor generates a plot per reference cluster
+g <- plot_cor(
+  res,
+  full_pbmc4k_meta,
+  cluster_col = "cluster",
+  x = "tSNE_1", 
+  y = "tSNE_2"
+)
+
+length(g) == ncol(cbmc_ref)
+
+g[[1]]
+
+# plot_best_call to view called identities in one plot
+plot_best_call(
+  res,
+  full_pbmc4k_meta,
+  do.label = T
+)
+
+# intentionally overcluster and clustify to assess idents
+# in this case, overclustered local averages agree with cluster clustify results
+overcluster_test(
+  full_pbmc4k_matrix,
+  full_pbmc4k_meta,
+  cbmc_ref,
+  cluster_col = "cluster",
+  n = 5
+  )
+```
+
+## Heatmap
+```{r, warning = F, message = F}
+res <- clustify(
+  input = full_pbmc4k_matrix,
+  metadata = full_pbmc4k_meta,
+  cluster_col = "cluster",
+  ref_mat = cbmc_ref
+)
+
+plot_cor_heatmap(res)
+
+res2 <- clustify_lists(
+  input = full_pbmc4k_matrix,
+  cluster_info = full_pbmc4k_meta,
+  cluster_col = "cluster",
+  marker = pbmc4k_markers,
+  marker_inmatrix = F
+)
+
+plot_cor_heatmap(res2)
+```
+
