@@ -106,6 +106,21 @@ test_that("seurat object clustifying", {
   expect_true(ggplot2::is.ggplot(g[[1]]))
 })
 
+test_that("clustify reinserts seurat metadata correctly", {
+  res <- clustify(s_small,
+                  pbmc_bulk_matrix,
+                  cluster_col = "res.1",
+                  seurat_out = T,
+                  per_cell = T
+  )
+  res2 <- clustify(s_small,
+                  pbmc_bulk_matrix,
+                  cluster_col = "res.1",
+                  seurat_out = T
+  )
+  expect_true(class(res) %in% c("matrix", "seurat"))
+})
+
 test_that("seurat3 object clustifying", {
   res <- clustify(s_small3,
                   pbmc_bulk_matrix,
@@ -128,6 +143,21 @@ test_that("seurat3 object clustifying", {
                       plot_r = T
   )
   expect_true(ggplot2::is.ggplot(g[[1]]))
+})
+
+test_that("clustify reinserts seurat3 metadata correctly", {
+  res <- clustify(s_small3,
+                  pbmc_bulk_matrix,
+                  cluster_col = "RNA_snn_res.1",
+                  seurat_out = T,
+                  per_cell = T
+  )
+  res2 <- clustify(s_small3,
+                   pbmc_bulk_matrix,
+                   cluster_col = "RNA_snn_res.1",
+                   seurat_out = T
+  )
+  expect_true(class(res) %in% c("matrix", "Seurat"))
 })
 
 test_that("get_similarity handles NA entries", {

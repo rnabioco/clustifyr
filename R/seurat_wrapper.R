@@ -24,6 +24,12 @@ use_seurat_comp <- function(seurat_object,
   }
 
   temp_mat <- seurat_object@data
+  if (var.genes_only == TRUE) {
+    temp_mat <- temp_mat[seurat_object@var.genes, ]
+  } else if (var.genes_only == "PCA") {
+    temp_mat <- temp_mat[rownames(seurat_object@dr$pca@gene.loadings), ]
+  }
+
   if (!is.null(assay_name)) {
     if (!is.vector(assay_name)) {
       temp_mat2 <- seurat_object@assay[[assay_name]]@raw.data
@@ -34,12 +40,6 @@ use_seurat_comp <- function(seurat_object,
         temp_mat <- rbind(temp_mat, as.matrix(temp_mat2))
       }
     }
-  }
-
-  if (var.genes_only == TRUE) {
-    temp_mat <- temp_mat[seurat_object@var.genes, ]
-  } else if (var.genes_only == "PCA") {
-    temp_mat <- temp_mat[rownames(seurat_object@dr$pca@gene.loadings), ]
   }
 
   temp_res <- average_clusters(temp_mat,
@@ -69,6 +69,13 @@ use_seurat3_comp <- function(seurat_object,
                             assay_name = NULL,
                             method = "mean") {
   temp_mat <- seurat_object@assays$RNA@data
+
+  if (var.genes_only == TRUE) {
+    temp_mat <- temp_mat[seurat_object@assays$RNA@var.features, ]
+  } else if (var.genes_only == "PCA") {
+    temp_mat <- temp_mat[rownames(seurat_object@reductions$pca@feature.loadings), ]
+  }
+
   if (!is.null(assay_name)) {
     if (!is.vector(assay_name)) {
       temp_mat2 <- seurat_object@assays[[assay_name]]@counts
@@ -79,12 +86,6 @@ use_seurat3_comp <- function(seurat_object,
         temp_mat <- rbind(temp_mat, as.matrix(temp_mat2))
       }
     }
-  }
-
-  if (var.genes_only == TRUE) {
-    temp_mat <- temp_mat[seurat_object@assays$RNA@var.features, ]
-  } else if (var.genes_only == "PCA") {
-    temp_mat <- temp_mat[rownames(seurat_object@reductions$pca@feature.loadings), ]
   }
 
   temp_res <- average_clusters(temp_mat,
