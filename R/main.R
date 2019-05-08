@@ -21,6 +21,7 @@ clustify <- function(input, ...) {
 #'  (stored in seurat_object@var.genes) as the query_genes.
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
+#' @param verbose whether to report certain variables chosen
 #' @param ... additional arguments to pass to compute_method function
 #' @export
 clustify.default <- function(input,
@@ -31,6 +32,7 @@ clustify.default <- function(input,
                              per_cell = FALSE,
                              num_perm = 0,
                              compute_method = "spearman",
+                             verbose = F,
                              ...) {
   expr_mat <- input
   if (!compute_method %in% clustifyr_methods) {
@@ -44,7 +46,9 @@ clustify.default <- function(input,
     query_genes
   )
 
-  print(paste0("using # of genes: ", length(gene_constraints)))
+  if (verbose == T) {
+    print(paste0("using # of genes: ", length(gene_constraints)))
+  }
 
   expr_mat <- expr_mat[gene_constraints, , drop = FALSE]
   ref_mat <- ref_mat[gene_constraints, , drop = FALSE]
@@ -104,6 +108,7 @@ clustify.default <- function(input,
 #'  (stored in seurat_object@var.genes) as the query_genes.
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
+#' @param verbose whether to report certain variables chosen
 #' @param ... additional arguments to pass to compute_method function
 
 #' @export
@@ -118,6 +123,7 @@ clustify.seurat <- function(input,
                             dr = "tsne",
                             seurat_out = TRUE,
                             threshold = 0,
+                            verbose = F,
                             ...) {
   s_object <- input
   # for seurat < 3.0
@@ -136,6 +142,7 @@ clustify.seurat <- function(input,
     num_perm = num_perm,
     cluster_col = cluster_col,
     compute_method = compute_method,
+    verbose = verbose,
     ...
   )
 
@@ -194,6 +201,7 @@ clustify.seurat <- function(input,
 #'  (stored in seurat_object@var.genes) as the query_genes.
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
+#' @param verbose whether to report certain variables chosen
 #' @param ... additional arguments to pass to compute_method function
 
 #' @export
@@ -208,6 +216,7 @@ clustify.Seurat <- function(input,
                             dr = "tsne",
                             seurat_out = TRUE,
                             threshold = 0,
+                            verbose = F,
                             ...) {
   s_object <- input
   # for seurat 3.0 +
@@ -226,6 +235,7 @@ clustify.Seurat <- function(input,
     num_perm = num_perm,
     cluster_col = cluster_col,
     compute_method = compute_method,
+    verbose = verbose,
     ...
   )
 
@@ -366,6 +376,8 @@ clustify_lists.default <- function(input,
 #' @param seurat_out output cor matrix or called seurat object
 
 #' @param ... passed to matrixize_markers
+#'
+#' @export
 clustify_lists.seurat <- function(input,
                                   per_cell = F,
                                   cluster_info = NULL,

@@ -21,13 +21,15 @@ knitr::opts_chunk$set(
 
 ## Building reference matrix from single cell expression matrix
 
-In its simplest form, a reference matrix is built by averaging expression of a single cell RNA-seq expression matrix by cluster. Both log transformed or raw count matrices are supported.
+In its simplest form, a reference matrix is built by averaging expression (also includes an option to take the median) of a single cell RNA-seq expression matrix by cluster. Both log transformed or raw count matrices are supported.
 
 ```{r average, warning = F, message = F}
 library(clustifyR)
-new_ref_matrix <- average_clusters(pbmc4k_matrix, 
-                                   cluster_info = pbmc4k_meta$cluster,
-                                   log_scale = T)
+new_ref_matrix <- average_clusters(
+  pbmc4k_matrix, 
+  cluster_info = pbmc4k_meta$cluster,
+  log_scale = T
+)
 
 head(new_ref_matrix)
 ```
@@ -37,11 +39,35 @@ head(new_ref_matrix)
 For further convenience, a shortcut function for generating reference matrix from  `seurat` object is used here.
 
 ```{r seruat, warning=F, message=F}
-new_ref_matrix <- use_seurat_comp(s_small,
-                                  cluster_col = "res.1",
-                                  var.genes_only = FALSE)
+new_ref_matrix_v2 <- use_seurat_comp(
+  s_small,
+  cluster_col = "res.1"
+)
 
-head(new_ref_matrix)
+new_ref_matrix_v3 <- use_seurat_comp(
+  s_small3,
+  cluster_col = "RNA_snn_res.1"
+)
+
+tail(new_ref_matrix_v3)
+```
+
+If given additional `assay_name`, output ref will include features from the designated slots (such as for CITE-seq data).
+
+```{r seruat2, warning=F, message=F}
+new_ref_matrix_v2 <- use_seurat_comp(
+  s_small,
+  cluster_col = "res.1",
+  assay_name = c("ADT","ADT2")
+)
+
+new_ref_matrix_v3 <- use_seurat_comp(
+  s_small3,
+  cluster_col = "RNA_snn_res.1",
+  assay_name = c("ADT","ADT2")
+)
+
+tail(new_ref_matrix_v3)
 ```
 
 ## Building reference matrix from Recount2
@@ -130,9 +156,23 @@ gtex_data$meta_data[1:5, ]
 `clustify_lists` and `clustify_nudge` uses dataframe or matrix of candidate genes for classification. Example formatting are shown below.
 
 ```{r genelist, warning = F, message = F}
+# directly from seurat function
 head(pbmc4k_markers)
 
-head(cbmc_m)
+# manually enter into dataframe format
+betam <- c("INS", "IGF2", "IAPP","MAFA","NPTX2")
+alpham <- c("GCG", "PDK4","LOXL2","IRX2","GC")
+deltam <- c("SST", "RBP4","HHEX","PCSK1","LEPR")
+data.frame(alpham, betam, deltam)
+
+# use matrixize_markers function to convert
+mm <- matrixize_markers(
+  pbmc4k_markers, 
+  remove_rp = T, 
+  unique = T, 
+  n = 10
+)
+head(mm)
 ```
 
 ## Prebuilt references, in clustifyR
@@ -145,4 +185,4 @@ A few reference datasets are built into clustifyR for vignettes and testing:
 
 ## Prebuilt references, in clustifyrdata
 
-More reference data (including tabula muris) can be found at https://github.com/rnabioco/clustifyrdata.
+More reference data, including tabula muris, and code used to generate them are available at https://github.com/rnabioco/clustifyrdata.
