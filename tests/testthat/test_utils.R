@@ -380,22 +380,11 @@ test_that("use_seurat_comp gets correct averages", {
 })
 
 test_that("use_seurat_comp gets other assay slots", {
-  setClass("custom", representation(raw.data = "matrix"))
-  a <- new("custom", raw.data = matrix(data = 1,
-                                       nrow = 2,
-                                       ncol = nrow(s_small@meta.data),
-                                       dimnames = list(c("A","B"), rownames(s_small@meta.data))))
-  b <- new("custom", raw.data = matrix(data = 1,
-                                       nrow = 2,
-                                       ncol = nrow(s_small@meta.data),
-                                       dimnames = list(c("C","D"), rownames(s_small@meta.data))))
-  s_small2 <- s_small
-  s_small2@assay <- list("ADT" = a, "ADT2" = b)
-  avg <- use_seurat_comp(s_small2,
+  avg <- use_seurat_comp(s_small,
                          cluster_col = "res.1",
                          assay_name = "ADT",
                          var.genes_only = T)
-  avg2 <- use_seurat_comp(s_small2,
+  avg2 <- use_seurat_comp(s_small,
                          cluster_col = "res.1",
                          assay_name = c("ADT","ADT2"),
                          var.genes_only = T)
@@ -403,26 +392,15 @@ test_that("use_seurat_comp gets other assay slots", {
 })
 
 test_that("use_seurat_comp gets correct averages with seurat3 object", {
-  setClass("custom", representation(counts = "matrix"))
-  a <- new("custom", counts = matrix(data = 1,
-                                       nrow = 2,
-                                       ncol = nrow(s_small3@meta.data),
-                                       dimnames = list(c("A","B"), rownames(s_small@meta.data))))
-  b <- new("custom", counts = matrix(data = 1,
-                                       nrow = 2,
-                                       ncol = nrow(s_small3@meta.data),
-                                       dimnames = list(c("C","D"), rownames(s_small@meta.data))))
-  s_small2 <- s_small3
-  s_small2@assays <- list("RNA" = s_small2@assays$RNA, "ADT" = a, "ADT2" = b)
-  avg <- use_seurat_comp(s_small2,
+  avg <- use_seurat_comp(s_small3,
                          cluster_col = "RNA_snn_res.1",
                          assay_name = c("ADT","ADT2"),
                          var.genes_only = T)
-  avg <- use_seurat3_comp(s_small2,
+  avg <- use_seurat3_comp(s_small3,
                          cluster_col = "RNA_snn_res.1",
                          assay_name = c("ADT"),
                          var.genes_only = T)
-  avg2 <- use_seurat_comp(s_small2,
+  avg2 <- use_seurat_comp(s_small3,
                           cluster_col = "RNA_snn_res.1",
                           assay_name = c("ADT","ADT2"),
                           var.genes_only = "PCA")
