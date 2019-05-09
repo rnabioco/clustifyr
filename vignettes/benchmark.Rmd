@@ -619,3 +619,72 @@ mean(resall2$finalcall) # 91.41 %
 # resall2negcor_all
 # saveRDS(resall2, "clustify_resall2")
 ```
+
+```{r test_sctransform, include = F, eval=F, warning=F}
+sctransform_s2 <- function(s) {
+  mat <- sctransform::vst(as(as.matrix(s@raw.data), "dgCMatrix"))$y
+  l1 <- colnames(mat)
+  l2 <- rownames(s@meta.data)
+  l <- intersect(l1, l2)
+  meta <- s@meta.data[l,]
+  mat <- mat[,l]
+  s@data <- mat
+  s@meta.data <- meta
+  s
+}
+# ref <- readRDS("tabula_muris_ref_drop_042119.rds")
+times <- list()
+for (n in 7:length(tissue_both)) {# n = 6 and 12 fails
+  print(tissue_both[n])
+  s_d <- load_obj(paste0("/Users/rf/", files_facs_fil[n]))
+  s_f <- load_obj(paste0("/Users/rf/", files_drop_fil[n]))
+  s_d <- sctransform_s2(s_d)
+  s_f <- sctransform_s2(s_f)
+
+  start <- proc.time()
+  if (sum(is.na(s_f@meta.data$free_annotation)) + sum(is.na(s_d@meta.data$free_annotation)) < (nrow(s_f@meta.data) + nrow(s_d@meta.data)) * 0.25) {
+    print("use free_annotation")
+    if (length(unique(s_f@meta.data$free_annotation)) < length(unique(s_d@meta.data$free_annotation))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    avg <- use_seurat_comp(s_f, cluster_col = "free_annotation")
+    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "free_annotation")
+  } else {
+    print("use cell_ontology_class")
+    if (length(unique(s_f@meta.data$cell_ontology_class)) < length(unique(s_d@meta.data$cell_ontology_class))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    avg <- use_seurat_comp(s_f, cluster_col = "cell_ontology_class")
+    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "cell_ontology_class")
+  }  #avg <- cbind(avg, avg2)
+  res2 <- cor_to_call(res) %>% mutate(call = ifelse(cluster == type, 1, 0))
+  end <- proc.time()
+  times[n] = end - start
+  res2$tissue <- tissue_both[n]
+  if (n==1) {
+    resall <- res2
+  } else {
+    resall <- rbind(resall, res2)
+  }
+}
+
+saveRDS(resall, "sctransform_resall")
+resall2 <- resall %>% filter(cluster != "unknown")
+resall2negcor_all <- readRDS("/Users/rf/cluster/devel/3rd/clustifyR/resall2negcor_all")
+resall2 <- resall2 %>% filter(!is.na(cluster)) %>% mutate(call = ifelse(cluster == type, 1, 0)) %>% mutate(finalcall = ifelse(call == 1, 1, ifelse(str_c(cluster, type) %in% str_c(resall2negcor_all$cluster, resall2negcor_all$type), 1, 0)))
+mean(resall2$finalcall) 
+#resall2neg <- resall2 %>% filter(call == 0)
+# keep <- c(1,2,4,5,8,9,10,12,13,15,16,17,18,19,20, 21,23)
+# resall2negcor <- resall2neg[keep,]
+# resall2 <- resall2 %>% mutate(finalcall = ifelse(call == 1, 1, ifelse(str_c(cluster, type) %in% str_c(resall2negcor_all$cluster, resall2negcor_all$type), 1, 0)))
+# mean(resall2$finalcall) # 92.86%
+# 
+# resall2negcor_all
+# saveRDS(resall2, "clustify_resall2")
+```
