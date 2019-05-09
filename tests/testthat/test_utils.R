@@ -431,16 +431,24 @@ test_that("clustify_intra works on test data", {
   expect_true(ncol(res) == length(unique(pbmc4k_meta2$classified[1:150])))
 })
 
-test_that("object parsing works for fsce_small", {
+test_that("object parsing works for custom object", {
+  s3 <- s_small3
+  class(s3) <- "ser3"
+  object_loc_lookup2 <- data.frame(ser3 = c(expr = "input@assays$RNA@data",
+                                            meta = "input@meta.data",
+                                            var = "input@assays$RNA@var.features",
+                                            col = "RNA_snn_res.1"), stringsAsFactors = F)
   res2 <- clustify(
-    fsce_small,
-    cbmc_ref
+    s3,
+    cbmc_ref,
+    lookuptable = object_loc_lookup2
   )
 
   res <- clustify_lists(
-    fsce_small,
+    s3,
     marker = pbmc4k_markers,
-    marker_inmatrix = F
+    marker_inmatrix = F,
+    lookuptable = object_loc_lookup2
   )
 
   expect_true(nrow(res) == nrow(res2))

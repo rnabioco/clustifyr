@@ -5,7 +5,8 @@
 \title{more flexible parsing of single cell objects}
 \usage{
 parse_loc_object(input, type = class(input), expr_loc = NULL,
-  meta_loc = NULL, var_loc = NULL, cluster_col = NULL)
+  meta_loc = NULL, var_loc = NULL, cluster_col = NULL,
+  lookuptable = NULL)
 }
 \arguments{
 \item{input}{input object}
@@ -19,6 +20,8 @@ parse_loc_object(input, type = class(input), expr_loc = NULL,
 \item{var_loc}{variable genes location}
 
 \item{cluster_col}{column of clustering from metadata}
+
+\item{lookuptable}{if not supplied, will look in built-in table for object parsing}
 }
 \description{
 more flexible parsing of single cell objects

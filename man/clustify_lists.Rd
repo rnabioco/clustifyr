@@ -12,7 +12,8 @@ clustify_lists(input, ...)
 \method{clustify_lists}{default}(input, per_cell = F,
   cluster_info = NULL, log_scale = T, cluster_col = NULL,
   topn = 3000, cut = 0, marker, marker_inmatrix = T,
-  genomen = 30000, metric = "hyper", output_high = TRUE, ...)
+  genomen = 30000, metric = "hyper", output_high = TRUE,
+  lookuptable = NULL, ...)
 
 \method{clustify_lists}{seurat}(input, per_cell = F,
   cluster_info = NULL, log_scale = T, cluster_col = NULL,
@@ -56,6 +57,8 @@ averaging will be done on unlogged data}
 
 \item{output_high}{if true (by default to fit with rest of package),
 -log10 transform p-value}
+
+\item{lookuptable}{if not supplied, will look in built-in table for object parsing}
 
 \item{dr}{stored dimension reduction}
 
