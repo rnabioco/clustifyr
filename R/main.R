@@ -34,6 +34,25 @@ clustify.default <- function(input,
                              compute_method = "spearman",
                              verbose = F,
                              ...) {
+  if (!(stringr::str_detect(class(input), "atrix"))) {
+    input_original <- input
+    temp <- parse_loc_object(input,
+                             type = class(input),
+                             expr_loc = NULL,
+                             meta_loc = NULL,
+                             var_loc = NULL,
+                             cluster_col = cluster_col
+    )
+    input <- temp[["expr"]]
+    metadata <- temp[["meta"]]
+    if (is.null(query_genes)) {
+      query_genes <- temp[["var"]]
+    }
+    if (is.null(cluster_col)) {
+      cluster_col <- temp[["col"]]
+    }
+  }
+
   expr_mat <- input
   if (!compute_method %in% clustifyr_methods) {
     stop(paste(compute_method, "correlation method not implemented"))
@@ -321,7 +340,7 @@ clustify_lists.default <- function(input,
                                    per_cell = F,
                                    cluster_info = NULL,
                                    log_scale = T,
-                                   cluster_col = "cluster",
+                                   cluster_col = NULL,
                                    topn = 3000,
                                    cut = 0,
                                    marker,
@@ -330,6 +349,23 @@ clustify_lists.default <- function(input,
                                    metric = "hyper",
                                    output_high = TRUE,
                                    ...) {
+  if (!(stringr::str_detect(class(input), "atrix"))) {
+    input_original <- input
+    temp <- parse_loc_object(input,
+                             type = class(input),
+                             expr_loc = NULL,
+                             meta_loc = NULL,
+                             var_loc = NULL,
+                             cluster_col = cluster_col
+    )
+    input <- temp[["expr"]]
+    metadata <- temp[["meta"]]
+    cluster_info <- metadata
+    if (is.null(cluster_col)) {
+      cluster_col <- temp[["col"]]
+    }
+  }
+
   if (per_cell == F) {
     input <- average_clusters(input,
       cluster_info,
@@ -382,7 +418,7 @@ clustify_lists.seurat <- function(input,
                                   per_cell = F,
                                   cluster_info = NULL,
                                   log_scale = T,
-                                  cluster_col = "cluster",
+                                  cluster_col = NULL,
                                   topn = 3000,
                                   cut = 0,
                                   marker,
@@ -461,7 +497,7 @@ clustify_lists.Seurat <- function(input,
                                   per_cell = F,
                                   cluster_info = NULL,
                                   log_scale = T,
-                                  cluster_col = "cluster",
+                                  cluster_col = NULL,
                                   topn = 3000,
                                   cut = 0,
                                   marker,

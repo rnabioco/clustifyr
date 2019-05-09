@@ -430,3 +430,18 @@ test_that("clustify_intra works on test data", {
                         sample_id = "A")
   expect_true(ncol(res) == length(unique(pbmc4k_meta2$classified[1:150])))
 })
+
+test_that("object parsing works for fsce_small", {
+  res2 <- clustify(
+    fsce_small,
+    cbmc_ref
+  )
+
+  res <- clustify_lists(
+    fsce_small,
+    marker = pbmc4k_markers,
+    marker_inmatrix = F
+  )
+
+  expect_true(nrow(res) == nrow(res2))
+})

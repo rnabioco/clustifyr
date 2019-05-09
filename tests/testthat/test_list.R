@@ -57,6 +57,7 @@ test_that("run all gene list functions in clustify_lists", {
       clustify_lists(pbmc4k_matrix,
         per_cell = F,
         cluster_info = pbmc4k_meta,
+        cluster_col = "cluster",
         marker = pbmc4k_markers,
         marker_inmatrix = F,
         metric = x
@@ -71,6 +72,7 @@ test_that("gsea outputs in cor matrix format", {
   res <- clustify_lists(pbmc4k_matrix,
                         per_cell = F,
                         cluster_info = pbmc4k_meta,
+                        cluster_col = "cluster",
                         marker = pbmc4k_markers,
                         marker_inmatrix = F,
                         metric = "gsea")
