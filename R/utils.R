@@ -643,12 +643,14 @@ clustify_nudge.default <- function(input,
       cluster_col <- temp[["col"]]
     }
   }
+  # print(cluster_col)
 
   resb <- gene_pct_markerm(input, marker,
     metadata,
     cluster_col = cluster_col,
     norm = norm
   )
+  # b<<-resb
 
   resa <- clustify(
     input = input,
@@ -659,7 +661,7 @@ clustify_nudge.default <- function(input,
     seurat_out = F,
     per_cell = F
   )
-
+  # a<<-resa
   if (call == T) {
     df_temp <- cor_to_call(resa[order(rownames(resa)), order(colnames(resa))] +
       resb[order(rownames(resb)), order(colnames(resb))] * weight,

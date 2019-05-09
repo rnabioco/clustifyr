@@ -53,7 +53,7 @@ res3 <- clustify_nudge(
 )
 ```
 
-## Other scRNA-seq object formats are easily supported, by adding defaults to a lookup file `object_loc_lookup`
+## Other scRNA-seq object formats are easily supported, by adding defaults to a lookup file `object_loc_lookup`, currently including `SCE`, `URD`, `CDS`, `FSCE`.
 
 ```{r lookup, warning = F, message = F}
 # location of data in object in this format
@@ -69,6 +69,7 @@ object_loc_lookup$Seurat <- c(expr = "input@assays$RNA@data",
 ```
 
 For example, sample code for `scrunchy` is as easy as:
+
 ```{r scrunchy, warning = F, message = F, eval = F}
 res <- clustify_nudge(
   fsce_small,
