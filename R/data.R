@@ -91,6 +91,15 @@
 #' @source  `[pbmc_small]` processed by `[Seurat]`
 "s_small3"
 
+#' Small clustered FSCE object
+#'
+#' @format XXX
+#' \describe{
+#' }
+#'
+#' @source  `[fsce_small]` processed by `[Scrunchy]`
+"fsce_small"
+
 #' reference matrix from seurat citeseq CBMC
 #'
 #' @format XXX

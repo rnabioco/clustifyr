@@ -123,21 +123,20 @@
 <a class="sourceLine" id="cb1-10" title="10">  <span class="dt">cluster_col =</span> <span class="st">"cluster"</span>,</a>
 <a class="sourceLine" id="cb1-11" title="11">  <span class="dt">ref_mat =</span> cbmc_ref</a>
 <a class="sourceLine" id="cb1-12" title="12">)</a>
-<a class="sourceLine" id="cb1-13" title="13"><span class="co">#&gt; [1] "using # of genes: 14882"</span></a>
-<a class="sourceLine" id="cb1-14" title="14"></a>
-<a class="sourceLine" id="cb1-15" title="15"><span class="co"># plot_cor generates a plot per reference cluster</span></a>
-<a class="sourceLine" id="cb1-16" title="16">g &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plot_cor.html">plot_cor</a></span>(</a>
-<a class="sourceLine" id="cb1-17" title="17">  res,</a>
-<a class="sourceLine" id="cb1-18" title="18">  full_pbmc4k_meta,</a>
-<a class="sourceLine" id="cb1-19" title="19">  <span class="dt">cluster_col =</span> <span class="st">"cluster"</span>,</a>
-<a class="sourceLine" id="cb1-20" title="20">  <span class="dt">x =</span> <span class="st">"tSNE_1"</span>, </a>
-<a class="sourceLine" id="cb1-21" title="21">  <span class="dt">y =</span> <span class="st">"tSNE_2"</span></a>
-<a class="sourceLine" id="cb1-22" title="22">)</a>
-<a class="sourceLine" id="cb1-23" title="23"></a>
-<a class="sourceLine" id="cb1-24" title="24"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(g) <span class="op">==</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">ncol</a></span>(cbmc_ref)</a>
-<a class="sourceLine" id="cb1-25" title="25"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb1-26" title="26"></a>
-<a class="sourceLine" id="cb1-27" title="27">g[[<span class="dv">1</span>]]</a></code></pre></div>
+<a class="sourceLine" id="cb1-13" title="13"></a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="co"># plot_cor generates a plot per reference cluster</span></a>
+<a class="sourceLine" id="cb1-15" title="15">g &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plot_cor.html">plot_cor</a></span>(</a>
+<a class="sourceLine" id="cb1-16" title="16">  res,</a>
+<a class="sourceLine" id="cb1-17" title="17">  full_pbmc4k_meta,</a>
+<a class="sourceLine" id="cb1-18" title="18">  <span class="dt">cluster_col =</span> <span class="st">"cluster"</span>,</a>
+<a class="sourceLine" id="cb1-19" title="19">  <span class="dt">x =</span> <span class="st">"tSNE_1"</span>, </a>
+<a class="sourceLine" id="cb1-20" title="20">  <span class="dt">y =</span> <span class="st">"tSNE_2"</span></a>
+<a class="sourceLine" id="cb1-21" title="21">)</a>
+<a class="sourceLine" id="cb1-22" title="22"></a>
+<a class="sourceLine" id="cb1-23" title="23"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(g) <span class="op">==</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">ncol</a></span>(cbmc_ref)</a>
+<a class="sourceLine" id="cb1-24" title="24"><span class="co">#&gt; [1] TRUE</span></a>
+<a class="sourceLine" id="cb1-25" title="25"></a>
+<a class="sourceLine" id="cb1-26" title="26">g[[<span class="dv">1</span>]]</a></code></pre></div>
 <p><img src="visualizations_files/figure-html/unnamed-chunk-1-1.png" width="700" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"></a>
 <a class="sourceLine" id="cb2-2" title="2"><span class="co"># plot_best_call to view called identities in one plot</span></a>
@@ -156,10 +155,7 @@
 <a class="sourceLine" id="cb3-7" title="7">  cbmc_ref,</a>
 <a class="sourceLine" id="cb3-8" title="8">  <span class="dt">cluster_col =</span> <span class="st">"cluster"</span>,</a>
 <a class="sourceLine" id="cb3-9" title="9">  <span class="dt">n =</span> <span class="dv">5</span></a>
-<a class="sourceLine" id="cb3-10" title="10">  )</a>
-<a class="sourceLine" id="cb3-11" title="11"><span class="co">#&gt; [1] "using # of genes: 14882"</span></a>
-<a class="sourceLine" id="cb3-12" title="12"><span class="co">#&gt; [1] "using # of genes: 14882"</span></a>
-<a class="sourceLine" id="cb3-13" title="13"><span class="co">#&gt; [1] "using ramp colors instead"</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-10" title="10">  )</a></code></pre></div>
 <p><img src="visualizations_files/figure-html/unnamed-chunk-1-3.png" width="700" style="display: block; margin: auto;"></p>
 </div>
 <div id="heatmap" class="section level2">
@@ -171,9 +167,8 @@
 <a class="sourceLine" id="cb4-4" title="4">  <span class="dt">cluster_col =</span> <span class="st">"cluster"</span>,</a>
 <a class="sourceLine" id="cb4-5" title="5">  <span class="dt">ref_mat =</span> cbmc_ref</a>
 <a class="sourceLine" id="cb4-6" title="6">)</a>
-<a class="sourceLine" id="cb4-7" title="7"><span class="co">#&gt; [1] "using # of genes: 14882"</span></a>
-<a class="sourceLine" id="cb4-8" title="8"></a>
-<a class="sourceLine" id="cb4-9" title="9"><span class="kw"><a href="../reference/plot_cor_heatmap.html">plot_cor_heatmap</a></span>(res)</a></code></pre></div>
+<a class="sourceLine" id="cb4-7" title="7"></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="kw"><a href="../reference/plot_cor_heatmap.html">plot_cor_heatmap</a></span>(res)</a></code></pre></div>
 <p><img src="visualizations_files/figure-html/unnamed-chunk-2-1.png" width="700" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"></a>
 <a class="sourceLine" id="cb5-2" title="2">res2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustify_lists.html">clustify_lists</a></span>(</a>

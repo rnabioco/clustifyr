@@ -160,13 +160,18 @@
 <a class="sourceLine" id="cb2-16" title="16"><span class="co">#&gt; meta               input@meta.data</span></a>
 <a class="sourceLine" id="cb2-17" title="17"><span class="co">#&gt; var  input@assays$RNA@var.features</span></a>
 <a class="sourceLine" id="cb2-18" title="18"><span class="co">#&gt; col                  RNA_snn_res.1</span></a>
-<a class="sourceLine" id="cb2-19" title="19"></a>
-<a class="sourceLine" id="cb2-20" title="20"><span class="co"># adding seurat3 locations</span></a>
-<a class="sourceLine" id="cb2-21" title="21">object_loc_lookup<span class="op">$</span>Seurat &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">expr =</span> <span class="st">"input@assays$RNA@data"</span>, </a>
-<a class="sourceLine" id="cb2-22" title="22">                              <span class="dt">meta =</span> <span class="st">"input@meta.data"</span>, </a>
-<a class="sourceLine" id="cb2-23" title="23">                              <span class="dt">var =</span> <span class="st">"input@assays$RNA@var.features"</span>,</a>
-<a class="sourceLine" id="cb2-24" title="24">                              <span class="dt">col =</span> <span class="st">"RNA_snn_res.1"</span></a>
-<a class="sourceLine" id="cb2-25" title="25">                              )</a></code></pre></div>
+<a class="sourceLine" id="cb2-19" title="19"><span class="co">#&gt;                                                                                                                CellDataSet</span></a>
+<a class="sourceLine" id="cb2-20" title="20"><span class="co">#&gt; expr do.call(function(x) {row.names(x) &lt;- input@featureData@data$gene_short_name; return(x)}, list(input@assayData$exprs))</span></a>
+<a class="sourceLine" id="cb2-21" title="21"><span class="co">#&gt; meta                                                                                   as.data.frame(input@phenoData@data)</span></a>
+<a class="sourceLine" id="cb2-22" title="22"><span class="co">#&gt; var                     as.character(input@featureData@data$gene_short_name[input@featureData@data$use_for_ordering == T])</span></a>
+<a class="sourceLine" id="cb2-23" title="23"><span class="co">#&gt; col                                                                                                           Main_Cluster</span></a>
+<a class="sourceLine" id="cb2-24" title="24"></a>
+<a class="sourceLine" id="cb2-25" title="25"><span class="co"># adding seurat3 locations</span></a>
+<a class="sourceLine" id="cb2-26" title="26">object_loc_lookup<span class="op">$</span>Seurat &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">expr =</span> <span class="st">"input@assays$RNA@data"</span>, </a>
+<a class="sourceLine" id="cb2-27" title="27">                              <span class="dt">meta =</span> <span class="st">"input@meta.data"</span>, </a>
+<a class="sourceLine" id="cb2-28" title="28">                              <span class="dt">var =</span> <span class="st">"input@assays$RNA@var.features"</span>,</a>
+<a class="sourceLine" id="cb2-29" title="29">                              <span class="dt">col =</span> <span class="st">"RNA_snn_res.1"</span></a>
+<a class="sourceLine" id="cb2-30" title="30">                              )</a></code></pre></div>
 <p>For example, sample code for <code>scrunchy</code> is as easy as:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustify_nudge.html">clustify_nudge</a></span>(</a>
 <a class="sourceLine" id="cb3-2" title="2">  fsce_small,</a>

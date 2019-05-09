@@ -10,18 +10,18 @@
 clustify_lists(input, ...)
 
 \method{clustify_lists}{default}(input, per_cell = F,
-  cluster_info = NULL, log_scale = T, cluster_col = "cluster",
+  cluster_info = NULL, log_scale = T, cluster_col = NULL,
   topn = 3000, cut = 0, marker, marker_inmatrix = T,
   genomen = 30000, metric = "hyper", output_high = TRUE, ...)
 
 \method{clustify_lists}{seurat}(input, per_cell = F,
-  cluster_info = NULL, log_scale = T, cluster_col = "cluster",
+  cluster_info = NULL, log_scale = T, cluster_col = NULL,
   topn = 3000, cut = 0, marker, marker_inmatrix = T,
   genomen = 30000, metric = "hyper", output_high = TRUE,
   dr = "tsne", seurat_out = TRUE, threshold = 0, ...)
 
 \method{clustify_lists}{Seurat}(input, per_cell = F,
-  cluster_info = NULL, log_scale = T, cluster_col = "cluster",
+  cluster_info = NULL, log_scale = T, cluster_col = NULL,
   topn = 3000, cut = 0, marker, marker_inmatrix = T,
   genomen = 30000, metric = "hyper", output_high = TRUE,
   dr = "tsne", seurat_out = TRUE, threshold = 0, ...)

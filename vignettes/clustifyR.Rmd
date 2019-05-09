@@ -102,6 +102,7 @@ plot_cor(res,
 res2 <- clustify_lists(pbmc4k_matrix,
                per_cell = F,
                cluster_info = pbmc4k_meta,
+               cluster_col = "cluster",
                marker = cbmc_m,
                marker_inmatrix = T,
                metric = "hyper")
