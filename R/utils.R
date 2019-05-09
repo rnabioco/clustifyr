@@ -683,13 +683,17 @@ clustify_nudge.default <- function(input,
 #' @param meta_loc metadata location
 #' @param var_loc variable genes location
 #' @param cluster_col column of clustering from metadata
+#' @param lookuptable if not supplied, will look in built-in table for object parsing
+
 #' @export
 parse_loc_object <- function(input,
                              type = class(input),
                              expr_loc = NULL,
                              meta_loc = NULL,
                              var_loc = NULL,
-                             cluster_col = NULL) {
+                             cluster_col = NULL,
+                             lookuptable = NULL
+                             ) {
   # if (type == "SingleCellExperiment") {
   #   parsed = list(input@assays$data$logcounts,
   #                 as.data.frame(input@colData)),
@@ -710,12 +714,18 @@ parse_loc_object <- function(input,
   #                 NULL,
   #                 "leiden_cluster")
   # }
-  if (type %in% colnames(object_loc_lookup)) {
+  if (is.null(lookuptable)) {
+    object_loc_lookup1 <- clustifyR::object_loc_lookup
+  } else {
+    object_loc_lookup1 <- lookuptable
+  }
+
+  if (type %in% colnames(object_loc_lookup1)) {
     parsed <- list(
-      eval(parse(text = object_loc_lookup[[type]][1])),
-      as.data.frame(eval(parse(text = object_loc_lookup[[type]][2]))),
-      eval(parse(text = object_loc_lookup[[type]][3])),
-      object_loc_lookup[[type]][4]
+      eval(parse(text = object_loc_lookup1[[type]][1])),
+      as.data.frame(eval(parse(text = object_loc_lookup1[[type]][2]))),
+      eval(parse(text = object_loc_lookup1[[type]][3])),
+      object_loc_lookup1[[type]][4]
     )
   } else {
     parsed <- list(NULL, NULL, NULL, NULL)

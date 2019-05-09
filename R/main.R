@@ -22,6 +22,7 @@ clustify <- function(input, ...) {
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
 #' @param verbose whether to report certain variables chosen
+#' @param lookuptable if not supplied, will look in built-in table for object parsing
 #' @param ... additional arguments to pass to compute_method function
 #' @export
 clustify.default <- function(input,
@@ -33,6 +34,7 @@ clustify.default <- function(input,
                              num_perm = 0,
                              compute_method = "spearman",
                              verbose = F,
+                             lookuptable = NULL,
                              ...) {
   if (!(stringr::str_detect(class(input), "atrix"))) {
     input_original <- input
@@ -41,8 +43,12 @@ clustify.default <- function(input,
                              expr_loc = NULL,
                              meta_loc = NULL,
                              var_loc = NULL,
-                             cluster_col = cluster_col
+                             cluster_col = cluster_col,
+                             lookuptable = lookuptable
     )
+    if (!(is.null(temp[["expr"]]))) {
+      print(paste0("recognized object type - ", class(input)))
+    }
     input <- temp[["expr"]]
     metadata <- temp[["meta"]]
     if (is.null(query_genes)) {
@@ -332,6 +338,8 @@ clustify_lists <- function(input, ...) {
 #' @param metric adjusted p-value for hypergeometric test, or jaccard index
 #' @param output_high if true (by default to fit with rest of package),
 #' -log10 transform p-value
+#' @param lookuptable if not supplied, will look in built-in table for object parsing
+
 #' @param ... passed to matrixize_markers
 #'
 #' @export
@@ -348,6 +356,7 @@ clustify_lists.default <- function(input,
                                    genomen = 30000,
                                    metric = "hyper",
                                    output_high = TRUE,
+                                   lookuptable = NULL,
                                    ...) {
   if (!(stringr::str_detect(class(input), "atrix"))) {
     input_original <- input
@@ -356,7 +365,8 @@ clustify_lists.default <- function(input,
                              expr_loc = NULL,
                              meta_loc = NULL,
                              var_loc = NULL,
-                             cluster_col = cluster_col
+                             cluster_col = cluster_col,
+                             lookuptable = lookuptable
     )
     input <- temp[["expr"]]
     metadata <- temp[["meta"]]

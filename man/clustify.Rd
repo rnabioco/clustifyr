@@ -11,7 +11,8 @@ clustify(input, ...)
 
 \method{clustify}{default}(input, ref_mat, metadata = NULL,
   query_genes = NULL, cluster_col = NULL, per_cell = FALSE,
-  num_perm = 0, compute_method = "spearman", verbose = F, ...)
+  num_perm = 0, compute_method = "spearman", verbose = F,
+  lookuptable = NULL, ...)
 
 \method{clustify}{seurat}(input, ref_mat, query_genes = NULL,
   per_cell = FALSE, num_perm = 0, cluster_col = NULL,
@@ -46,6 +47,8 @@ column of metadata if not supplied. Not required if running correlation per cell
 \item{compute_method}{method(s) for computing similarity scores}
 
 \item{verbose}{whether to report certain variables chosen}
+
+\item{lookuptable}{if not supplied, will look in built-in table for object parsing}
 
 \item{use_var_genes}{if providing a seurat object, use the variable genes
 (stored in seurat_object@var.genes) as the query_genes.}
