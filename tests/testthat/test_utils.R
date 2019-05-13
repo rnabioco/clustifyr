@@ -390,6 +390,19 @@ test_that("use_seurat_comp gets correct averages", {
   expect_true(ncol(avg) == 4)
 })
 
+test_that("use_object_comp gets correct averages", {
+  s3 <- s_small3
+  class(s3) <- "ser3"
+  object_loc_lookup2 <- data.frame(ser3 = c(expr = "input@assays$RNA@data",
+                                            meta = "input@meta.data",
+                                            var = "input@assays$RNA@var.features",
+                                            col = "RNA_snn_res.1"), stringsAsFactors = F)
+  avg <- use_object_comp(s3,
+                         lookuptable = object_loc_lookup2,
+                         var.genes_only = T)
+  expect_true(ncol(avg) == 3)
+})
+
 test_that("use_seurat_comp gets other assay slots", {
   avg <- use_seurat_comp(s_small,
                          cluster_col = "res.1",

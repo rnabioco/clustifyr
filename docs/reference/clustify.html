@@ -147,7 +147,8 @@
 <span class='co'># S3 method for default</span>
 <span class='fu'>clustify</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>, <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>num_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='no'>...</span>)
+  <span class='kw'>num_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='no'>F</span>,
+  <span class='kw'>lookuptable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for seurat</span>
 <span class='fu'>clustify</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -206,6 +207,10 @@ column of metadata if not supplied. Not required if running correlation per cell
     <tr>
       <th>verbose</th>
       <td><p>whether to report certain variables chosen</p></td>
+    </tr>
+    <tr>
+      <th>lookuptable</th>
+      <td><p>if not supplied, will look in built-in table for object parsing</p></td>
     </tr>
     <tr>
       <th>use_var_genes</th>

@@ -120,3 +120,57 @@ use_seurat_meta <- function(seurat_object,
   temp <- dplyr::left_join(temp_meta, temp_dr, by = "rn")
   tibble::column_to_rownames(temp, "rn")
 }
+
+#' Function to convert labelled object to avg expression matrix
+#'
+#' @param input object after tsne projections and clustering
+#' @param cluster_col column name where classified cluster names are stored in seurat meta data, cannot be "rn"
+#' @param var.genes_only whether to keep only var.genes in the final matrix output, could also look up genes used for PCA
+#' @param assay_name any additional assay data, such as ADT, to include. If more than 1, pass a vector of names
+#' @param method whether to take mean (default) or median
+#' @param lookuptable if not supplied, will look in built-in table for object parsing
+
+#'
+#' @export
+use_object_comp <- function(input,
+                            cluster_col = NULL,
+                            var.genes_only = FALSE,
+                            assay_name = NULL,
+                            method = "mean",
+                            lookuptable = NULL) {
+  if (!(stringr::str_detect(class(input), "eurat"))) {
+    input_original <- input
+    temp <- parse_loc_object(input,
+                             type = class(input),
+                             expr_loc = NULL,
+                             meta_loc = NULL,
+                             var_loc = NULL,
+                             cluster_col = cluster_col,
+                             lookuptable = lookuptable
+    )
+    if (!(is.null(temp[["expr"]]))) {
+      print(paste0("recognized object type - ", class(input)))
+    }
+    input <- temp[["expr"]]
+    metadata <- temp[["meta"]]
+    query_genes <- temp[["var"]]
+    if (is.null(cluster_col)) {
+      cluster_col <- temp[["col"]]
+    }
+  }
+  print(cluster_col)
+
+  temp_mat <- input
+  if (var.genes_only == TRUE) {
+    temp_mat <- temp_mat[query_genes, ]
+  }
+
+  temp_res <- average_clusters(temp_mat,
+                               metadata,
+                               log_scale = TRUE,
+                               cluster_col = cluster_col,
+                               method = method
+  )
+
+  temp_res
+}

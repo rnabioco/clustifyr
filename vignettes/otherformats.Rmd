@@ -79,3 +79,17 @@ res <- clustify_nudge(
   cluster_col = "k_cluster"
 )
 ```
+
+## Making new references from objects
+Making scRNA-seq objects into references is assisted by wrappers as well.
+
+```{r ref, warning = F, message = F, eval = F}
+# for both v2 and v3
+seurat_ref <- use_seurat_comp(
+  s_small3,
+  cluster_col = "RNA_snn_res.1"
+)
+
+# and other object types with lookup
+object_ref <- use_object_comp(input = input)
+```

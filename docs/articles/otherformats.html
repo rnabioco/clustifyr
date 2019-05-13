@@ -98,7 +98,7 @@
     <div class="page-header toc-ignore">
       <h1>Support for various single cell object formats</h1>
             
-            <h4 class="date">2019-05-09</h4>
+            <h4 class="date">2019-05-13</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyR/blob/master/vignettes/otherformats.Rmd"><code>vignettes/otherformats.Rmd</code></a></small>
       <div class="hidden name"><code>otherformats.Rmd</code></div>
@@ -181,6 +181,19 @@
 <a class="sourceLine" id="cb3-6" title="6">  <span class="dt">cluster_col =</span> <span class="st">"k_cluster"</span></a>
 <a class="sourceLine" id="cb3-7" title="7">)</a></code></pre></div>
 </div>
+<div id="making-new-references-from-objects" class="section level2">
+<h2 class="hasAnchor">
+<a href="#making-new-references-from-objects" class="anchor"></a>Making new references from objects</h2>
+<p>Making scRNA-seq objects into references is assisted by wrappers as well.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># for both v2 and v3</span></a>
+<a class="sourceLine" id="cb4-2" title="2">seurat_ref &lt;-<span class="st"> </span><span class="kw"><a href="../reference/use_seurat_comp.html">use_seurat_comp</a></span>(</a>
+<a class="sourceLine" id="cb4-3" title="3">  s_small3,</a>
+<a class="sourceLine" id="cb4-4" title="4">  <span class="dt">cluster_col =</span> <span class="st">"RNA_snn_res.1"</span></a>
+<a class="sourceLine" id="cb4-5" title="5">)</a>
+<a class="sourceLine" id="cb4-6" title="6"></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="co"># and other object types with lookup</span></a>
+<a class="sourceLine" id="cb4-8" title="8">object_ref &lt;-<span class="st"> </span><span class="kw"><a href="../reference/use_object_comp.html">use_object_comp</a></span>(<span class="dt">input =</span> input)</a></code></pre></div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -190,6 +203,7 @@
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#direct-handling-of-seurat-objects-v2-and-v3-extracting-the-required-data-and-inserting-called-cell-types-directly-into-the-objects">Direct handling of <code>seurat</code> objects, v2 and v3, extracting the required data, and inserting called cell types directly into the objects</a></li>
       <li><a href="#other-scrna-seq-object-formats-are-easily-supported-by-adding-defaults-to-a-lookup-file-object_loc_lookup-currently-including-sce-urd-cds-fsce-">Other scRNA-seq object formats are easily supported, by adding defaults to a lookup file <code>object_loc_lookup</code>, currently including <code>SCE</code>, <code>URD</code>, <code>CDS</code>, <code>FSCE</code>.</a></li>
+      <li><a href="#making-new-references-from-objects">Making new references from objects</a></li>
       </ul>
 </div>
       </div>
