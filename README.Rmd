@@ -17,9 +17,9 @@ knitr::opts_chunk$set(
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/rnabioco/clustifyR?branch=master&svg=true)](https://ci.appveyor.com/project/rnabioco/clustifyR)
 [![Coverage status](https://codecov.io/gh/rnabioco/clustifyR/branch/master/graph/badge.svg)](https://codecov.io/github/rnabioco/clustifyR?branch=master)
 
-clustifyR classifies cells and clusters in single-cell RNA sequencing experiments using reference bulk RNA-seq data sets, single-cell gene signatures, or marker genes. 
+clustifyR classifies cells and clusters in single-cell RNA sequencing experiments using reference bulk RNA-seq data sets, sorted microarray expression data, single-cell gene signatures, or marker genes. 
 
-Single cell transcriptomes are difficult to annotate without extensive knowledge of the underlying biology of the system in question. Even with this knowledge, accurate identification can be challenging due to the lack of detectable expression of common marker genes. ClustifyR solves this problem by automatically annotating single cells or clusters using bulk RNA-seq data or marker gene lists. Additional functions allow for exploratory analysis of similarities between single cell RNA-seq datasets and reference data.
+Single cell transcriptomes are difficult to annotate without extensive knowledge of the underlying biology of the system in question. Even with this knowledge, accurate identification can be challenging due to the lack of detectable expression of common marker genes. ClustifyR solves this problem by automatically annotating single cells or clusters using scRNA-seq, bulk RNA-seq data, microarray or marker gene lists. Additional functions allow for exploratory analysis of similarities between single cell RNA-seq datasets and reference data.
 
 ## Installation
 

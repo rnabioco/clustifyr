@@ -20,11 +20,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Samples
-
-MCA lung dataset annotation using `ref_tabula_muris_drop` reference
-
-## Benchmark
+## Benchmark 1. MCA lung dataset annotation using `ref_tabula_muris_drop` reference
 
 ```{r library, include = F, eval = F}
 library(Seurat)
@@ -90,6 +86,28 @@ print(end - start)
 print(res_allgenes, n = nrow(res_allgenes))
 ```
 
+## benchmark 2. Using sorted microarray data to classify 10x PBMC example data, available in `clustifyrdata` package
+
+```{r micro, message=FALSE, warning=FALSE}
+pbmc4k_matrix_full <- readRDS(here("full_pbmc4k_matrix"))
+pbmc4k_meta_full <- readRDS(here("full_pbmc4k_meta"))
+microarray_ref <- clustifyrdata::hema_microarray_matrix
+
+start <- proc.time()
+res <- clustify(pbmc4k_matrix_full, 
+                microarray_ref, 
+                pbmc4k_meta_full, 
+                query_genes = pbmc4k_vargenes,
+                cluster_col = "classified")
+
+res2 <- cor_to_call(res)
+end <- proc.time()
+names(res2) <- c("manual annotation", "clustifyR call", "r")
+
+print(end - start)
+
+print(res2, n = nrow(res2))
+```
 ## Comparison with other methods
 using Tablua Muris (drop and facs samples) 12 shared tissues, which can be downloaded as `seurat` objects
 

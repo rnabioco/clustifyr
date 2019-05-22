@@ -4,12 +4,15 @@
 \alias{gmt_to_list}
 \title{convert gmt format of pathways to list of vectors}
 \usage{
-gmt_to_list(path, cutoff = 0)
+gmt_to_list(path, cutoff = 0,
+  sep = "\\thttp://www.broadinstitute.org/gsea/msigdb/cards/.*?\\t")
 }
 \arguments{
 \item{path}{gmt file path}
 
 \item{cutoff}{remove pathways with less genes than this cutoff}
+
+\item{sep}{sep used in file to split path and genes}
 }
 \description{
 convert gmt format of pathways to list of vectors

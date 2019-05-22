@@ -921,15 +921,17 @@ feature_select_PCA <- function(mat = NULL,
 #'
 #' @param path gmt file path
 #' @param cutoff remove pathways with less genes than this cutoff
+#' @param sep sep used in file to split path and genes
 
 #' @export
 gmt_to_list <- function(path,
-                        cutoff = 0) {
+                        cutoff = 0,
+                        sep = "\thttp://www.broadinstitute.org/gsea/msigdb/cards/.*?\t") {
   df <- readr::read_csv(path,
                         col_names = F)
   df <- tidyr::separate(df,
                         X1,
-                        sep = "\thttp://www.broadinstitute.org/gsea/msigdb/cards/.*?\t",
+                        sep = sep,
                         into = c("path", "genes"))
   pathways <- stringr::str_split(df$genes,
                                  "\t")
@@ -950,13 +952,15 @@ gmt_to_list <- function(path,
 #' @param n_perm Number of permutation for fgsea function. Defaults to 1000.
 #' @param scale convert expr_mat into zscores prior to running GSEA?, default = T
 #' @param topn number of top pathways to plot
+#' @param returning to return "both" list and plot, or either one
 
 #' @export
 plot_pathway_gsea <- function(mat,
                               pathway_list,
                               n_perm = 1000,
                               scale = T,
-                              topn = 5) {
+                              topn = 5,
+                              returning = "both") {
   res <- calculate_pathway_gsea(mat,
                                 pathway_list,
                                 n_perm,
@@ -964,7 +968,15 @@ plot_pathway_gsea <- function(mat,
   coltopn <- unique(cor_to_call_topn(res, topn = topn, threshold = -Inf)$type)
   res[is.na(res)] <- 0
   g <- ComplexHeatmap::Heatmap(res[, coltopn], column_names_gp = grid::gpar(fontsize = 6))
-  return(list(res, g))
+
+  if (returning == "both") {
+    return(list(res, g))
+  } else if (returning == "plot") {
+    return(g)
+  } else {
+    return(res)
+  }
+
 }
 
 #' get var per row for matrix
