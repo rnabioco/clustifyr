@@ -98,7 +98,7 @@
     <div class="page-header toc-ignore">
       <h1>Benchmarking clustifyR</h1>
             
-            <h4 class="date">2019-05-13</h4>
+            <h4 class="date">2019-05-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyR/blob/master/vignettes/benchmark.Rmd"><code>vignettes/benchmark.Rmd</code></a></small>
       <div class="hidden name"><code>benchmark.Rmd</code></div>
@@ -107,14 +107,9 @@
 
     
     
-<div id="samples" class="section level2">
+<div id="benchmark-1--mca-lung-dataset-annotation-using-ref_tabula_muris_drop-reference" class="section level2">
 <h2 class="hasAnchor">
-<a href="#samples" class="anchor"></a>Samples</h2>
-<p>MCA lung dataset annotation using <code>ref_tabula_muris_drop</code> reference</p>
-</div>
-<div id="benchmark" class="section level2">
-<h2 class="hasAnchor">
-<a href="#benchmark" class="anchor"></a>Benchmark</h2>
+<a href="#benchmark-1--mca-lung-dataset-annotation-using-ref_tabula_muris_drop-reference" class="anchor"></a>Benchmark 1. MCA lung dataset annotation using <code>ref_tabula_muris_drop</code> reference</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(here)</a>
 <a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(clustifyR)</a>
 <a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyverse)</a>
@@ -139,7 +134,7 @@
 <a class="sourceLine" id="cb1-22" title="22"></a>
 <a class="sourceLine" id="cb1-23" title="23"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(end <span class="op">-</span><span class="st"> </span>start)</a>
 <a class="sourceLine" id="cb1-24" title="24"><span class="co">#&gt;    user  system elapsed </span></a>
-<a class="sourceLine" id="cb1-25" title="25"><span class="co">#&gt;   1.286   0.416   1.710</span></a>
+<a class="sourceLine" id="cb1-25" title="25"><span class="co">#&gt;   1.973   0.645   2.877</span></a>
 <a class="sourceLine" id="cb1-26" title="26"></a>
 <a class="sourceLine" id="cb1-27" title="27"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(res_allgenes, <span class="dt">n =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(res_allgenes))</a>
 <a class="sourceLine" id="cb1-28" title="28"><span class="co">#&gt; # A tibble: 32 x 3</span></a>
@@ -179,6 +174,44 @@
 <a class="sourceLine" id="cb1-62" title="62"><span class="co">#&gt; 31 Interstitial macrophage(Lung)  dendritic cells and interstital ma… 0.806</span></a>
 <a class="sourceLine" id="cb1-63" title="63"><span class="co">#&gt; 32 Monocyte progenitor cell(Lung) dendritic cells and interstital ma… 0.581</span></a></code></pre></div>
 </div>
+<div id="benchmark-2--using-sorted-microarray-data-to-classify-10x-pbmc-example-data-available-in-clustifyrdata-package" class="section level2">
+<h2 class="hasAnchor">
+<a href="#benchmark-2--using-sorted-microarray-data-to-classify-10x-pbmc-example-data-available-in-clustifyrdata-package" class="anchor"></a>benchmark 2. Using sorted microarray data to classify 10x PBMC example data, available in <code>clustifyrdata</code> package</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">pbmc4k_matrix_full &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">readRDS</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/here/topics/here">here</a></span>(<span class="st">"full_pbmc4k_matrix"</span>))</a>
+<a class="sourceLine" id="cb2-2" title="2">pbmc4k_meta_full &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">readRDS</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/here/topics/here">here</a></span>(<span class="st">"full_pbmc4k_meta"</span>))</a>
+<a class="sourceLine" id="cb2-3" title="3">microarray_ref &lt;-<span class="st"> </span>clustifyrdata<span class="op">::</span>hema_microarray_matrix</a>
+<a class="sourceLine" id="cb2-4" title="4"></a>
+<a class="sourceLine" id="cb2-5" title="5">start &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/proc.time">proc.time</a></span>()</a>
+<a class="sourceLine" id="cb2-6" title="6">res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustify.html">clustify</a></span>(pbmc4k_matrix_full, </a>
+<a class="sourceLine" id="cb2-7" title="7">                microarray_ref, </a>
+<a class="sourceLine" id="cb2-8" title="8">                pbmc4k_meta_full, </a>
+<a class="sourceLine" id="cb2-9" title="9">                <span class="dt">query_genes =</span> pbmc4k_vargenes,</a>
+<a class="sourceLine" id="cb2-10" title="10">                <span class="dt">cluster_col =</span> <span class="st">"classified"</span>)</a>
+<a class="sourceLine" id="cb2-11" title="11"></a>
+<a class="sourceLine" id="cb2-12" title="12">res2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cor_to_call.html">cor_to_call</a></span>(res)</a>
+<a class="sourceLine" id="cb2-13" title="13">end &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/proc.time">proc.time</a></span>()</a>
+<a class="sourceLine" id="cb2-14" title="14"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(res2) &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"manual annotation"</span>, <span class="st">"clustifyR call"</span>, <span class="st">"r"</span>)</a>
+<a class="sourceLine" id="cb2-15" title="15"></a>
+<a class="sourceLine" id="cb2-16" title="16"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(end <span class="op">-</span><span class="st"> </span>start)</a>
+<a class="sourceLine" id="cb2-17" title="17"><span class="co">#&gt;    user  system elapsed </span></a>
+<a class="sourceLine" id="cb2-18" title="18"><span class="co">#&gt;   0.146   0.022   0.180</span></a>
+<a class="sourceLine" id="cb2-19" title="19"></a>
+<a class="sourceLine" id="cb2-20" title="20"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(res2, <span class="dt">n =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(res2))</a>
+<a class="sourceLine" id="cb2-21" title="21"><span class="co">#&gt; # A tibble: 10 x 3</span></a>
+<a class="sourceLine" id="cb2-22" title="22"><span class="co">#&gt; # Groups:   cluster [10]</span></a>
+<a class="sourceLine" id="cb2-23" title="23"><span class="co">#&gt;    `manual annotation` `clustifyR call`                    r</span></a>
+<a class="sourceLine" id="cb2-24" title="24"><span class="co">#&gt;    &lt;chr&gt;               &lt;chr&gt;                           &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb2-25" title="25"><span class="co">#&gt;  1 CD4 T cells, 2      CD4+ Effector Memory            0.588</span></a>
+<a class="sourceLine" id="cb2-26" title="26"><span class="co">#&gt;  2 CD8 T cells         CD8+ Effector Memory            0.584</span></a>
+<a class="sourceLine" id="cb2-27" title="27"><span class="co">#&gt;  3 FCGR3A+ Monocytes   Mature NK cell_CD56- CD16+ CD3- 0.578</span></a>
+<a class="sourceLine" id="cb2-28" title="28"><span class="co">#&gt;  4 NK cells            Mature NK cell_CD56+ CD16+ CD3- 0.585</span></a>
+<a class="sourceLine" id="cb2-29" title="29"><span class="co">#&gt;  5 Megakaryocytes      Megakaryocyte                   0.418</span></a>
+<a class="sourceLine" id="cb2-30" title="30"><span class="co">#&gt;  6 CD14+ Monocytes     Monocyte                        0.644</span></a>
+<a class="sourceLine" id="cb2-31" title="31"><span class="co">#&gt;  7 Dendritic cells, 1  Myeloid Dendritic Cell          0.562</span></a>
+<a class="sourceLine" id="cb2-32" title="32"><span class="co">#&gt;  8 B cells             Naïve B-cells                   0.600</span></a>
+<a class="sourceLine" id="cb2-33" title="33"><span class="co">#&gt;  9 CD4 T cells, 1      Naive CD8+ T-cell               0.583</span></a>
+<a class="sourceLine" id="cb2-34" title="34"><span class="co">#&gt; 10 Dendritic Cells, 2? Plasmacytoid Dendritic Cell     0.460</span></a></code></pre></div>
+</div>
 <div id="comparison-with-other-methods" class="section level2">
 <h2 class="hasAnchor">
 <a href="#comparison-with-other-methods" class="anchor"></a>Comparison with other methods</h2>
@@ -208,8 +241,8 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#samples">Samples</a></li>
-      <li><a href="#benchmark">Benchmark</a></li>
+<li><a href="#benchmark-1--mca-lung-dataset-annotation-using-ref_tabula_muris_drop-reference">Benchmark 1. MCA lung dataset annotation using <code>ref_tabula_muris_drop</code> reference</a></li>
+      <li><a href="#benchmark-2--using-sorted-microarray-data-to-classify-10x-pbmc-example-data-available-in-clustifyrdata-package">benchmark 2. Using sorted microarray data to classify 10x PBMC example data, available in <code>clustifyrdata</code> package</a></li>
       <li><a href="#comparison-with-other-methods">Comparison with other methods</a></li>
       </ul>
 </div>

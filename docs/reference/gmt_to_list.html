@@ -142,7 +142,8 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>gmt_to_list</span>(<span class='no'>path</span>, <span class='kw'>cutoff</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
+    <pre class="usage"><span class='fu'>gmt_to_list</span>(<span class='no'>path</span>, <span class='kw'>cutoff</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"\thttp://www.broadinstitute.org/gsea/msigdb/cards/.*?\t"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -154,6 +155,10 @@
     <tr>
       <th>cutoff</th>
       <td><p>remove pathways with less genes than this cutoff</p></td>
+    </tr>
+    <tr>
+      <th>sep</th>
+      <td><p>sep used in file to split path and genes</p></td>
     </tr>
     </table>
     

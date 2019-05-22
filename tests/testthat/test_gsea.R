@@ -65,3 +65,14 @@ test_that("plot_pathway_gsea gives appropriate output", {
   g <- plot_pathway_gsea(pbmc4k_avg, gl, 5)
   expect_equal(length(g), 2)
 })
+
+test_that("plot_pathway_gsea gives output depending on returning option", {
+  gl <- list(
+    "nmd" = c("UPF1", "SMG1", "UPF2"),
+    "amd" = c("ZFP36", "ZFP36L1", "ZFP36L2")
+  )
+  pbmc4k_avg <- average_clusters(pbmc4k_matrix, pbmc4k_meta)
+  g <- plot_pathway_gsea(pbmc4k_avg, gl, 5, returning = "plot")
+  g2 <- plot_pathway_gsea(pbmc4k_avg, gl, 5, returning = "res")
+  expect_true(class(g) == "Heatmap" & class(g2) == "data.frame")
+})

@@ -98,7 +98,7 @@
     <div class="page-header toc-ignore">
       <h1>Visualization of clustifyR results</h1>
             
-            <h4 class="date">2019-05-13</h4>
+            <h4 class="date">2019-05-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyR/blob/master/vignettes/visualizations.Rmd"><code>vignettes/visualizations.Rmd</code></a></small>
       <div class="hidden name"><code>visualizations.Rmd</code></div>
@@ -182,6 +182,32 @@
 <a class="sourceLine" id="cb5-10" title="10"><span class="kw"><a href="../reference/plot_cor_heatmap.html">plot_cor_heatmap</a></span>(res2)</a></code></pre></div>
 <p><img src="visualizations_files/figure-html/unnamed-chunk-2-2.png" width="700" style="display: block; margin: auto;"></p>
 </div>
+<div id="gsea-top-hits-per-cluster" class="section level2">
+<h2 class="hasAnchor">
+<a href="#gsea-top-hits-per-cluster" class="anchor"></a>GSEA top hits per cluster</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># gene lists can be converted from gmt files (Broad)</span></a>
+<a class="sourceLine" id="cb6-2" title="2">list_reactome &lt;-<span class="st"> </span><span class="kw"><a href="../reference/gmt_to_list.html">gmt_to_list</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/here/topics/here">here</a></span>(<span class="st">"c2.cp.reactome.v6.2.symbols.gmt"</span>))</a>
+<a class="sourceLine" id="cb6-3" title="3"></a>
+<a class="sourceLine" id="cb6-4" title="4">full_pbmc4k_avg &lt;-<span class="st"> </span><span class="kw"><a href="../reference/average_clusters.html">average_clusters</a></span>(</a>
+<a class="sourceLine" id="cb6-5" title="5">  full_pbmc4k_matrix, </a>
+<a class="sourceLine" id="cb6-6" title="6">  full_pbmc4k_meta, </a>
+<a class="sourceLine" id="cb6-7" title="7">  <span class="dt">cluster_col =</span> <span class="st">"classified"</span></a>
+<a class="sourceLine" id="cb6-8" title="8">)</a>
+<a class="sourceLine" id="cb6-9" title="9"></a>
+<a class="sourceLine" id="cb6-10" title="10">res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plot_pathway_gsea.html">plot_pathway_gsea</a></span>(</a>
+<a class="sourceLine" id="cb6-11" title="11">  full_pbmc4k_avg[,<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], </a>
+<a class="sourceLine" id="cb6-12" title="12">  list_reactome, </a>
+<a class="sourceLine" id="cb6-13" title="13">  <span class="dt">topn =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb6-14" title="14"></a>
+<a class="sourceLine" id="cb6-15" title="15"><span class="co"># returns dataframe of gsea analysis</span></a>
+<a class="sourceLine" id="cb6-16" title="16">res[[<span class="dv">1</span>]][<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb6-17" title="17"><span class="co">#&gt;                 GLYCOGEN_BREAKDOWN_GLYCOGENOLYSIS TRANSLATION</span></a>
+<a class="sourceLine" id="cb6-18" title="18"><span class="co">#&gt; B cells                                 -1.535351    3.262957</span></a>
+<a class="sourceLine" id="cb6-19" title="19"><span class="co">#&gt; CD14+ Monocytes                          1.340259   -3.207698</span></a>
+<a class="sourceLine" id="cb6-20" title="20"><span class="co"># and plot</span></a>
+<a class="sourceLine" id="cb6-21" title="21">res[[<span class="dv">2</span>]]</a></code></pre></div>
+<p><img src="visualizations_files/figure-html/unnamed-chunk-3-1.png" width="700" style="display: block; margin: auto;"></p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -191,6 +217,7 @@
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#tsneumap">TSNE/UMAP</a></li>
       <li><a href="#heatmap">Heatmap</a></li>
+      <li><a href="#gsea-top-hits-per-cluster">GSEA top hits per cluster</a></li>
       </ul>
 </div>
       </div>

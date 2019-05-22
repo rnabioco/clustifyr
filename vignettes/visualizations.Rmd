@@ -90,3 +90,24 @@ res2 <- clustify_lists(
 plot_cor_heatmap(res2)
 ```
 
+## GSEA top hits per cluster
+```{r, warning = F, message = F}
+# gene lists can be converted from gmt files (Broad)
+list_reactome <- gmt_to_list(here("c2.cp.reactome.v6.2.symbols.gmt"))
+
+full_pbmc4k_avg <- average_clusters(
+  full_pbmc4k_matrix, 
+  full_pbmc4k_meta, 
+  cluster_col = "classified"
+)
+
+res <- plot_pathway_gsea(
+  full_pbmc4k_avg[,1:2], 
+  list_reactome, 
+  topn = 3)
+
+# returns dataframe of gsea analysis
+res[[1]][1:2,1:2]
+# and plot
+res[[2]]
+```
