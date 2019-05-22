@@ -5,7 +5,7 @@
 \title{plot GSEA pathway scores as heatmap, returns a list containing results and plot.}
 \usage{
 plot_pathway_gsea(mat, pathway_list, n_perm = 1000, scale = T,
-  topn = 5)
+  topn = 5, returning = "both")
 }
 \arguments{
 \item{mat}{expression matrix}
@@ -17,6 +17,8 @@ plot_pathway_gsea(mat, pathway_list, n_perm = 1000, scale = T,
 \item{scale}{convert expr_mat into zscores prior to running GSEA?, default = T}
 
 \item{topn}{number of top pathways to plot}
+
+\item{returning}{to return "both" list and plot, or either one}
 }
 \description{
 plot GSEA pathway scores as heatmap, returns a list containing results and plot.
