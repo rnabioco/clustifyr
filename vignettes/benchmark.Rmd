@@ -119,6 +119,8 @@ default `clustify`, with all genes
 
 `clustify`, using `M3Drop` for feature selection
 
+`clustify`, using `per_cell = T` option, and then assign cluster consensus ident with `collapse_to_cluster = T`
+
 `scmap-cluster`
 
 2. Mapping from prebuilt all-encompassing references to the drop samples:
@@ -369,8 +371,6 @@ mean(resall2$finalcall) # 91.04 %
 ```
 
 ```{r test_single, include = F, eval=F}
-library(M3Drop)
-# ref <- readRDS("tabula_muris_ref_drop_042119.rds")
 times <- list()
 for (n in 1:length(tissue_both)) {
   print(tissue_both[n])
@@ -388,15 +388,8 @@ for (n in 1:length(tissue_both)) {
     }
     ids <- s_d@meta.data[["free_annotation"]]
     avg <- use_seurat_comp(s_f, cluster_col = "free_annotation")
-    tm <- expm1(as.matrix(s_d@data))
-    Normalized_data <- M3DropCleanData(tm,
-                                    labels = rownames(s_d@data),
-                                    is.counts=FALSE)
-    fits <- M3DropDropoutModels(Normalized_data$data)
-    DE_genes <- M3DropDifferentialExpression(Normalized_data$data,
-                                          mt_method="fdr", mt_threshold=0.01)
-    
-    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "free_annotation", query_genes = DE_genes$Gene, per_cell = T)
+    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "free_annotation", per_cell = T)
+    res2 <- cor_to_call(res, metadata = s_d@meta.data %>% rownames_to_column("id"), col = "id", collapse_to_cluster = "free_annotation") %>% distinct(type, type2)
   } else {
     print("use cell_ontology_class")
     if (length(unique(s_f@meta.data$cell_ontology_class)) < length(unique(s_d@meta.data$cell_ontology_class))) {
@@ -406,20 +399,12 @@ for (n in 1:length(tissue_both)) {
       print("switch")
     }
     ids <- s_d@meta.data[["cell_ontology_class"]]
-    tm <- expm1(as.matrix(s_d@data))
-    Normalized_data <- M3DropCleanData(tm,
-                                    labels = rownames(s_d@data),
-                                    is.counts=FALSE)
-    fits <- M3DropDropoutModels(Normalized_data$data)
-    DE_genes <- M3DropDifferentialExpression(Normalized_data$data,
-                                          mt_method="fdr", mt_threshold=0.01)
-    
     avg <- use_seurat_comp(s_f, cluster_col = "cell_ontology_class")
-    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "cell_ontology_class", query_genes = DE_genes$Gene, per_cell = T)
-  }  #avg <- cbind(avg, avg2)
-  res2 <- cor_to_call(res) 
-  res2$cluster <- ids
-  res2 <- res2 %>% select(-r) %>% group_by_all() %>% tally() %>% mutate(call = ifelse(cluster == type, 1, 0))
+    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "cell_ontology_class", per_cell = T)
+    res2 <- cor_to_call(res, metadata = s_d@meta.data %>% rownames_to_column("id"), col = "id", collapse_to_cluster = "cell_ontology_class") %>% distinct(type, type2)
+  }
+  colnames(res2) <- c("cluster", "type")
+  res2 <- res2 %>% group_by_all() %>% tally() %>% mutate(call = ifelse(cluster == type, 1, 0))
   
   end <- proc.time()
   times[n] = end - start
@@ -435,11 +420,14 @@ resall2 <- resall %>% filter(cluster != "unknown")
 #resall2neg <- resall2 %>% filter(call == 0)
 # keep <- c(1,2,4,5,8,9,10,12,13,15,16,17,18,19,20, 21,23)
 # resall2negcor <- resall2neg[keep,]
-resall2 <- resall2 %>% mutate(finalcall = ifelse(call == 1, 1, ifelse(str_c(cluster, type) %in% str_c(resall2negcor_all$cluster, resall2negcor_all$type), 1, 0)))
-mean(resall2$finalcall) # 92.86%
+saveRDS(resall2negcor_all, "resall2negcor_all")
+resall2negcor_all <- readRDS("resall2negcor_all")
+resall2 <- resall2 %>% mutate(finalcall = ifelse(call == 1, 1, ifelse(str_c(cluster, type) %in% str_c(resall2negcor_all$cluster, resall2negcor_all$type), 1, 0))) %>% replace_na(list(finalcall = 0))
+resall2
+mean(resall2$finalcall) # 0.875 %
 # 
 # resall2negcor_all
-# saveRDS(resall2, "clustify_resall2")
+saveRDS(resall2, "clustify_cell_resall2")
 saveRDS(times, "clustify_cell_times")
 ```
 
