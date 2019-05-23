@@ -98,7 +98,7 @@
     <div class="page-header toc-ignore">
       <h1>Reference building for clustifyR</h1>
             
-            <h4 class="date">2019-05-22</h4>
+            <h4 class="date">2019-05-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyR/blob/master/vignettes/references.Rmd"><code>vignettes/references.Rmd</code></a></small>
       <div class="hidden name"><code>references.Rmd</code></div>
@@ -257,54 +257,98 @@
 <a class="sourceLine" id="cb4-73" title="73">gtex_data<span class="op">$</span>read_counts[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a>
 <a class="sourceLine" id="cb4-74" title="74">gtex_data<span class="op">$</span>meta_data[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ]</a></code></pre></div>
 </div>
+<div id="building-reference-matrix-from-microarray-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#building-reference-matrix-from-microarray-data" class="anchor"></a>Building reference matrix from microarray data</h2>
+<p><code>clustifyR</code> works with microarray data-derived gene expression matrix as well (see Benchmark page). An example of generating a matrix for sorted immune cell type can be found below. The matrix can be found at <code><a href="https://www.rdocumentation.org/packages/clustifyrdata/topics/hema_microarray_matrix">clustifyrdata::hema_microarray_matrix</a></code></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyverse)</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="co"># read series matrix for column names</span></a>
+<a class="sourceLine" id="cb5-3" title="3">GSE24759 &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">"GSE24759/GSE24759_series_matrix.txt"</span>, <span class="dt">skip =</span> <span class="dv">25</span>, <span class="dt">n_max =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb5-4" title="4"></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="co"># read series matrix for full dataset; apply column names</span></a>
+<a class="sourceLine" id="cb5-6" title="6">GSE24759 &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">"GSE24759//GSE24759_series_matrix.txt"</span>, <span class="dt">skip =</span> <span class="dv">57</span>, <span class="dt">col_names =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(GSE24759)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">rename</a></span>(<span class="dt">ID =</span> <span class="st">`</span><span class="dt">!Sample_title</span><span class="st">`</span>)</a>
+<a class="sourceLine" id="cb5-7" title="7"></a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="co"># read array metadata table, remove control probes and missing gene symbols</span></a>
+<a class="sourceLine" id="cb5-9" title="9">GPL4685 &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">"/Users/rf/microarray/GSE24759/GPL4685-15513.txt"</span>, <span class="dt">skip =</span> <span class="dv">14</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-10" title="10"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(<span class="st">`</span><span class="dt">Gene Symbol</span><span class="st">`</span>), <span class="st">`</span><span class="dt">Sequence Type</span><span class="st">`</span> <span class="op">!=</span><span class="st"> "Control sequence"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-11" title="11"><span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span>(<span class="st">`</span><span class="dt">Gene Symbol</span><span class="st">`</span>, <span class="dt">into =</span> <span class="st">"gene_symbol"</span>, <span class="dt">sep =</span> <span class="st">' '</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-12" title="12"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(ID,gene_symbol)</a>
+<a class="sourceLine" id="cb5-13" title="13"></a>
+<a class="sourceLine" id="cb5-14" title="14"><span class="co"># join data and metadata, collapse gene symbols</span></a>
+<a class="sourceLine" id="cb5-15" title="15">GSE24759 &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(GSE24759, GPL4685) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-16" title="16"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>ID) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-17" title="17"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(gene_symbol) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-18" title="18"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_at</a></span>(<span class="dt">.vars =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="op">-</span>gene_symbol), <span class="dt">.funs =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="op">~</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log2</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(<span class="dv">2</span><span class="op">^</span>.))))</a>
+<a class="sourceLine" id="cb5-19" title="19"></a>
+<a class="sourceLine" id="cb5-20" title="20"><span class="co"># convert to matrix, add rownames</span></a>
+<a class="sourceLine" id="cb5-21" title="21">GSE24759_mat &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span>(GSE24759) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>gene_symbol) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/matrix">as.matrix</a></span>()</a>
+<a class="sourceLine" id="cb5-22" title="22"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/row.names">row.names</a></span>(GSE24759_mat) &lt;-<span class="st"> </span>GSE24759<span class="op">$</span>gene_symbol</a>
+<a class="sourceLine" id="cb5-23" title="23"></a>
+<a class="sourceLine" id="cb5-24" title="24"><span class="co"># merge samples</span></a>
+<a class="sourceLine" id="cb5-25" title="25">hema_microarray_matrix &lt;-<span class="st"> </span>GSE24759_mat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/t">t</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rownames_to_column</span>(<span class="st">"sample"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">sample =</span> <span class="kw"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span>(sample, <span class="st">", .*"</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(sample) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/summarise_all.html">summarise_all</a></span>(<span class="dt">.funs =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="op">~</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log2</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(<span class="dv">2</span><span class="op">^</span>.)))) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">column_to_rownames</span>(<span class="st">"sample"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/t">t</a></span>()</a></code></pre></div>
+<p>Essentially, any data in matrix form is accepted by <code>clustifyR</code>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">clustifyrdata<span class="op">::</span>hema_microarray_matrix[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="co">#&gt;        Basophils CD4+ Central Memory CD4+ Effector Memory</span></a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="co">#&gt; DDR1    6.084244            5.967502             5.933039</span></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="co">#&gt; RFC2    6.280044            6.028615             6.047005</span></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="co">#&gt; HSPA6   6.535444            5.811475             5.746326</span></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="co">#&gt; PAX8    6.669153            5.896401             6.118577</span></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="co">#&gt; GUCA1A  5.239230            5.232116             5.206960</span></a>
+<a class="sourceLine" id="cb6-8" title="8"><span class="co">#&gt;        CD8+ Central Memory CD8+ Effector Memory</span></a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="co">#&gt; DDR1              6.005278             5.895926</span></a>
+<a class="sourceLine" id="cb6-10" title="10"><span class="co">#&gt; RFC2              5.992979             5.942426</span></a>
+<a class="sourceLine" id="cb6-11" title="11"><span class="co">#&gt; HSPA6             5.928349             5.942670</span></a>
+<a class="sourceLine" id="cb6-12" title="12"><span class="co">#&gt; PAX8              6.270870             6.323922</span></a>
+<a class="sourceLine" id="cb6-13" title="13"><span class="co">#&gt; GUCA1A            5.227415             5.090882</span></a></code></pre></div>
+</div>
 <div id="building-reference-gene-list" class="section level2">
 <h2 class="hasAnchor">
 <a href="#building-reference-gene-list" class="anchor"></a>Building reference gene list</h2>
 <p><code>clustify_lists</code> and <code>clustify_nudge</code> uses dataframe or matrix of candidate genes for classification. Example formatting are shown below.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># directly from seurat function</span></a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(pbmc4k_markers)</a>
-<a class="sourceLine" id="cb5-3" title="3"><span class="co">#&gt;       p_val avg_logFC pct.1 pct.2 p_val_adj cluster  gene</span></a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="co">#&gt; RPL31     0 0.6125630 0.994 0.972         0       0 RPL31</span></a>
-<a class="sourceLine" id="cb5-5" title="5"><span class="co">#&gt; RPS6      0 0.5734365 0.998 0.983         0       0  RPS6</span></a>
-<a class="sourceLine" id="cb5-6" title="6"><span class="co">#&gt; RPS25     0 0.5392711 0.995 0.970         0       0 RPS25</span></a>
-<a class="sourceLine" id="cb5-7" title="7"><span class="co">#&gt; RPS12     0 0.5025934 0.996 0.980         0       0 RPS12</span></a>
-<a class="sourceLine" id="cb5-8" title="8"><span class="co">#&gt; RPS27     0 0.4904361 0.999 0.990         0       0 RPS27</span></a>
-<a class="sourceLine" id="cb5-9" title="9"><span class="co">#&gt; RPL32     0 0.4835099 0.998 0.987         0       0 RPL32</span></a>
-<a class="sourceLine" id="cb5-10" title="10"></a>
-<a class="sourceLine" id="cb5-11" title="11"><span class="co"># manually enter into dataframe format</span></a>
-<a class="sourceLine" id="cb5-12" title="12">betam &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"INS"</span>, <span class="st">"IGF2"</span>, <span class="st">"IAPP"</span>,<span class="st">"MAFA"</span>,<span class="st">"NPTX2"</span>)</a>
-<a class="sourceLine" id="cb5-13" title="13">alpham &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"GCG"</span>, <span class="st">"PDK4"</span>,<span class="st">"LOXL2"</span>,<span class="st">"IRX2"</span>,<span class="st">"GC"</span>)</a>
-<a class="sourceLine" id="cb5-14" title="14">deltam &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"SST"</span>, <span class="st">"RBP4"</span>,<span class="st">"HHEX"</span>,<span class="st">"PCSK1"</span>,<span class="st">"LEPR"</span>)</a>
-<a class="sourceLine" id="cb5-15" title="15"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(alpham, betam, deltam)</a>
-<a class="sourceLine" id="cb5-16" title="16"><span class="co">#&gt;   alpham betam deltam</span></a>
-<a class="sourceLine" id="cb5-17" title="17"><span class="co">#&gt; 1    GCG   INS    SST</span></a>
-<a class="sourceLine" id="cb5-18" title="18"><span class="co">#&gt; 2   PDK4  IGF2   RBP4</span></a>
-<a class="sourceLine" id="cb5-19" title="19"><span class="co">#&gt; 3  LOXL2  IAPP   HHEX</span></a>
-<a class="sourceLine" id="cb5-20" title="20"><span class="co">#&gt; 4   IRX2  MAFA  PCSK1</span></a>
-<a class="sourceLine" id="cb5-21" title="21"><span class="co">#&gt; 5     GC NPTX2   LEPR</span></a>
-<a class="sourceLine" id="cb5-22" title="22"></a>
-<a class="sourceLine" id="cb5-23" title="23"><span class="co"># use matrixize_markers function to convert</span></a>
-<a class="sourceLine" id="cb5-24" title="24">mm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/matrixize_markers.html">matrixize_markers</a></span>(</a>
-<a class="sourceLine" id="cb5-25" title="25">  pbmc4k_markers, </a>
-<a class="sourceLine" id="cb5-26" title="26">  <span class="dt">remove_rp =</span> T, </a>
-<a class="sourceLine" id="cb5-27" title="27">  <span class="dt">unique =</span> T, </a>
-<a class="sourceLine" id="cb5-28" title="28">  <span class="dt">n =</span> <span class="dv">10</span></a>
-<a class="sourceLine" id="cb5-29" title="29">)</a>
-<a class="sourceLine" id="cb5-30" title="30"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(mm)</a>
-<a class="sourceLine" id="cb5-31" title="31"><span class="co">#&gt;        0       1         2      3       4      5       6      7      8</span></a>
-<a class="sourceLine" id="cb5-32" title="32"><span class="co">#&gt; 1   LEF1  S100A9     CD79A   AQP3    GZMK FGFBP2 CLEC10A   HES4 LILRA4</span></a>
-<a class="sourceLine" id="cb5-33" title="33"><span class="co">#&gt; 2 EEF1A1 S100A12      IGHM  NPDC1    LAG3  SPON2    ENHO CDKN1C LRRC26</span></a>
-<a class="sourceLine" id="cb5-34" title="34"><span class="co">#&gt; 3   CCR7    VCAN     CD79B CD40LG   EOMES  KLRF1   CLIC2 TCF7L2   TPM2</span></a>
-<a class="sourceLine" id="cb5-35" title="35"><span class="co">#&gt; 4   NPM1   CXCL8      IGHD  TRADD TRG-AS1   XCL2    FLT3    CKB    SCT</span></a>
-<a class="sourceLine" id="cb5-36" title="36"><span class="co">#&gt; 5 EEF1B2    CD14     MS4A1 INPP4B ZFP36L2  TTC38    PKIB  CSF1R  PTPRS</span></a>
-<a class="sourceLine" id="cb5-37" title="37"><span class="co">#&gt; 6  SARAF    RBP7 LINC00926  GATA3  ZBTB38 PRSS23    CD1C  HMOX1 CLEC4C</span></a>
-<a class="sourceLine" id="cb5-38" title="38"><span class="co">#&gt;        9</span></a>
-<a class="sourceLine" id="cb5-39" title="39"><span class="co">#&gt; 1    PF4</span></a>
-<a class="sourceLine" id="cb5-40" title="40"><span class="co">#&gt; 2   SDPR</span></a>
-<a class="sourceLine" id="cb5-41" title="41"><span class="co">#&gt; 3  TUBB1</span></a>
-<a class="sourceLine" id="cb5-42" title="42"><span class="co">#&gt; 4  ACRBP</span></a>
-<a class="sourceLine" id="cb5-43" title="43"><span class="co">#&gt; 5    GP9</span></a>
-<a class="sourceLine" id="cb5-44" title="44"><span class="co">#&gt; 6 TMEM40</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># directly from seurat function</span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(pbmc4k_markers)</a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="co">#&gt;       p_val avg_logFC pct.1 pct.2 p_val_adj cluster  gene</span></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="co">#&gt; RPL31     0 0.6125630 0.994 0.972         0       0 RPL31</span></a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="co">#&gt; RPS6      0 0.5734365 0.998 0.983         0       0  RPS6</span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="co">#&gt; RPS25     0 0.5392711 0.995 0.970         0       0 RPS25</span></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="co">#&gt; RPS12     0 0.5025934 0.996 0.980         0       0 RPS12</span></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="co">#&gt; RPS27     0 0.4904361 0.999 0.990         0       0 RPS27</span></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="co">#&gt; RPL32     0 0.4835099 0.998 0.987         0       0 RPL32</span></a>
+<a class="sourceLine" id="cb7-10" title="10"></a>
+<a class="sourceLine" id="cb7-11" title="11"><span class="co"># manually enter into dataframe format</span></a>
+<a class="sourceLine" id="cb7-12" title="12">betam &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"INS"</span>, <span class="st">"IGF2"</span>, <span class="st">"IAPP"</span>,<span class="st">"MAFA"</span>,<span class="st">"NPTX2"</span>)</a>
+<a class="sourceLine" id="cb7-13" title="13">alpham &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"GCG"</span>, <span class="st">"PDK4"</span>,<span class="st">"LOXL2"</span>,<span class="st">"IRX2"</span>,<span class="st">"GC"</span>)</a>
+<a class="sourceLine" id="cb7-14" title="14">deltam &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"SST"</span>, <span class="st">"RBP4"</span>,<span class="st">"HHEX"</span>,<span class="st">"PCSK1"</span>,<span class="st">"LEPR"</span>)</a>
+<a class="sourceLine" id="cb7-15" title="15"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(alpham, betam, deltam)</a>
+<a class="sourceLine" id="cb7-16" title="16"><span class="co">#&gt;   alpham betam deltam</span></a>
+<a class="sourceLine" id="cb7-17" title="17"><span class="co">#&gt; 1    GCG   INS    SST</span></a>
+<a class="sourceLine" id="cb7-18" title="18"><span class="co">#&gt; 2   PDK4  IGF2   RBP4</span></a>
+<a class="sourceLine" id="cb7-19" title="19"><span class="co">#&gt; 3  LOXL2  IAPP   HHEX</span></a>
+<a class="sourceLine" id="cb7-20" title="20"><span class="co">#&gt; 4   IRX2  MAFA  PCSK1</span></a>
+<a class="sourceLine" id="cb7-21" title="21"><span class="co">#&gt; 5     GC NPTX2   LEPR</span></a>
+<a class="sourceLine" id="cb7-22" title="22"></a>
+<a class="sourceLine" id="cb7-23" title="23"><span class="co"># use matrixize_markers function to convert</span></a>
+<a class="sourceLine" id="cb7-24" title="24">mm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/matrixize_markers.html">matrixize_markers</a></span>(</a>
+<a class="sourceLine" id="cb7-25" title="25">  pbmc4k_markers, </a>
+<a class="sourceLine" id="cb7-26" title="26">  <span class="dt">remove_rp =</span> T, </a>
+<a class="sourceLine" id="cb7-27" title="27">  <span class="dt">unique =</span> T, </a>
+<a class="sourceLine" id="cb7-28" title="28">  <span class="dt">n =</span> <span class="dv">10</span></a>
+<a class="sourceLine" id="cb7-29" title="29">)</a>
+<a class="sourceLine" id="cb7-30" title="30"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(mm)</a>
+<a class="sourceLine" id="cb7-31" title="31"><span class="co">#&gt;        0       1         2      3       4      5       6      7      8</span></a>
+<a class="sourceLine" id="cb7-32" title="32"><span class="co">#&gt; 1   LEF1  S100A9     CD79A   AQP3    GZMK FGFBP2 CLEC10A   HES4 LILRA4</span></a>
+<a class="sourceLine" id="cb7-33" title="33"><span class="co">#&gt; 2 EEF1A1 S100A12      IGHM  NPDC1    LAG3  SPON2    ENHO CDKN1C LRRC26</span></a>
+<a class="sourceLine" id="cb7-34" title="34"><span class="co">#&gt; 3   CCR7    VCAN     CD79B CD40LG   EOMES  KLRF1   CLIC2 TCF7L2   TPM2</span></a>
+<a class="sourceLine" id="cb7-35" title="35"><span class="co">#&gt; 4   NPM1   CXCL8      IGHD  TRADD TRG-AS1   XCL2    FLT3    CKB    SCT</span></a>
+<a class="sourceLine" id="cb7-36" title="36"><span class="co">#&gt; 5 EEF1B2    CD14     MS4A1 INPP4B ZFP36L2  TTC38    PKIB  CSF1R  PTPRS</span></a>
+<a class="sourceLine" id="cb7-37" title="37"><span class="co">#&gt; 6  SARAF    RBP7 LINC00926  GATA3  ZBTB38 PRSS23    CD1C  HMOX1 CLEC4C</span></a>
+<a class="sourceLine" id="cb7-38" title="38"><span class="co">#&gt;        9</span></a>
+<a class="sourceLine" id="cb7-39" title="39"><span class="co">#&gt; 1    PF4</span></a>
+<a class="sourceLine" id="cb7-40" title="40"><span class="co">#&gt; 2   SDPR</span></a>
+<a class="sourceLine" id="cb7-41" title="41"><span class="co">#&gt; 3  TUBB1</span></a>
+<a class="sourceLine" id="cb7-42" title="42"><span class="co">#&gt; 4  ACRBP</span></a>
+<a class="sourceLine" id="cb7-43" title="43"><span class="co">#&gt; 5    GP9</span></a>
+<a class="sourceLine" id="cb7-44" title="44"><span class="co">#&gt; 6 TMEM40</span></a></code></pre></div>
 </div>
 <div id="prebuilt-references-in-clustifyr" class="section level2">
 <h2 class="hasAnchor">
@@ -326,6 +370,7 @@
 <li><a href="#building-reference-matrix-from-single-cell-expression-matrix">Building reference matrix from single cell expression matrix</a></li>
       <li><a href="#building-reference-matrix-from-seurat-object">Building reference matrix from <code>seurat</code> object</a></li>
       <li><a href="#building-reference-matrix-from-recount2">Building reference matrix from Recount2</a></li>
+      <li><a href="#building-reference-matrix-from-microarray-data">Building reference matrix from microarray data</a></li>
       <li><a href="#building-reference-gene-list">Building reference gene list</a></li>
       <li><a href="#prebuilt-references-in-clustifyr">Prebuilt references, in clustifyR</a></li>
       <li><a href="#prebuilt-references-in-clustifyrdata">Prebuilt references, in clustifyrdata</a></li>
