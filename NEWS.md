@@ -1,4 +1,10 @@
-# clustifyR 0.1
+# clustifyR 05-29-19
+
+* Updated discussions, benchmark, and visualization example pages
+
+* reorganized `clustifyrdata` data package
+
+# clustifyR 02-01-19
 
 * Added direct support for `seurat` and other object classes
 
