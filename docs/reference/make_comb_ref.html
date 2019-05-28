@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Changelog • clustifyR</title>
+<title>make combination ref matrix to assess intermixing — make_comb_ref • clustifyR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +30,9 @@
 
 
 
-<meta property="og:title" content="Changelog" />
+<meta property="og:title" content="make combination ref matrix to assess intermixing — make_comb_ref" />
+
+<meta property="og:description" content="make combination ref matrix to assess intermixing" />
 
 <meta property="og:image" content="http://rnabioco.github.io/clustifyR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -50,7 +52,7 @@
   </head>
 
   <body>
-    <div class="container template-news">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -129,47 +131,45 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/rnabioco/clustifyR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+    <h1>make combination ref matrix to assess intermixing</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rnabioco/clustifyR/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
+    <div class="hidden name"><code>make_comb_ref.Rd</code></div>
     </div>
 
-    <div id="clustifyr-05-29-19" class="section level1">
-<h1 class="page-header">
-<a href="#clustifyr-05-29-19" class="anchor"></a>clustifyR 05-29-19</h1>
-<ul>
-<li><p>Updated discussions, benchmark, and visualization example pages</p></li>
-<li><p>reorganized <code>clustifyrdata</code> data package</p></li>
-</ul>
-</div>
-    <div id="clustifyr-02-01-19" class="section level1">
-<h1 class="page-header">
-<a href="#clustifyr-02-01-19" class="anchor"></a>clustifyR 02-01-19</h1>
-<ul>
-<li><p>Added direct support for <code>seurat</code> and other object classes</p></li>
-<li><p>Updated readme and tutorial pages</p></li>
-<li><p>Moved some larger reference data to <code>clustifyrdata</code></p></li>
-</ul>
-</div>
-    <div id="clustifyr-0-0-0-9000" class="section level1">
-<h1 class="page-header">
-<a href="#clustifyr-0-0-0-9000" class="anchor"></a>clustifyR 0.0.0.9000</h1>
-<ul>
-<li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
-</ul>
-</div>
-  </div>
+    <div class="ref-description">
+    
+    <p>make combination ref matrix to assess intermixing</p>
+    
+    </div>
 
+    <pre class="usage"><span class='fu'>make_comb_ref</span>(<span class='no'>ref_mat</span>, <span class='kw'>log_scale</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"_and_"</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>ref_mat</th>
+      <td><p>reference expression matrix</p></td>
+    </tr>
+    <tr>
+      <th>log_scale</th>
+      <td><p>whether input data is natural</p></td>
+    </tr>
+    <tr>
+      <th>sep</th>
+      <td><p>separator for name combinations</p></td>
+    </tr>
+    </table>
+    
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div id="tocnav">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#clustifyr-05-29-19">05-29-19</a></li>
-        <li><a href="#clustifyr-02-01-19">02-01-19</a></li>
-        <li><a href="#clustifyr-0-0-0-9000">0.0.0.9000</a></li>
-      </ul>
-    </div>
-  </div>
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+                </ul>
 
+  </div>
 </div>
 
       <footer>
