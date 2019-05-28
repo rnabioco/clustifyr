@@ -4,7 +4,14 @@
 \alias{calc_similarity}
 \title{compute similarity}
 \usage{
-calc_similarity(sc_avg, ref_mat, compute_method, ...)
+calc_similarity(sc_avg, ref_mat, compute_method, rm0 = F, ...)
+}
+\arguments{
+\item{sc_avg}{query data matrix}
+
+\item{ref_mat}{reference data matrix}
+
+\item{rm0}{consider 0 as missing data, recommended for per_cell}
 }
 \description{
 compute similarity
