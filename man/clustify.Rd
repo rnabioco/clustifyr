@@ -12,17 +12,17 @@ clustify(input, ...)
 \method{clustify}{default}(input, ref_mat, metadata = NULL,
   query_genes = NULL, cluster_col = NULL, per_cell = FALSE,
   num_perm = 0, compute_method = "spearman", verbose = F,
-  lookuptable = NULL, ...)
+  lookuptable = NULL, rm0 = F, ...)
 
 \method{clustify}{seurat}(input, ref_mat, query_genes = NULL,
   per_cell = FALSE, num_perm = 0, cluster_col = NULL,
   compute_method = "spearman", use_var_genes = TRUE, dr = "tsne",
-  seurat_out = TRUE, threshold = 0, verbose = F, ...)
+  seurat_out = TRUE, threshold = 0, verbose = F, rm0 = F, ...)
 
 \method{clustify}{Seurat}(input, ref_mat, query_genes = NULL,
   per_cell = FALSE, num_perm = 0, cluster_col = NULL,
   compute_method = "spearman", use_var_genes = TRUE, dr = "tsne",
-  seurat_out = TRUE, threshold = 0, verbose = F, ...)
+  seurat_out = TRUE, threshold = 0, verbose = F, rm0 = rm0, ...)
 }
 \arguments{
 \item{input}{single-cell expression matrix or Seurat object}
@@ -50,6 +50,8 @@ column of metadata if not supplied. Not required if running correlation per cell
 
 \item{lookuptable}{if not supplied, will look in built-in table for object parsing}
 
+\item{rm0}{consider 0 as missing data, recommended for per_cell}
+
 \item{use_var_genes}{if providing a seurat object, use the variable genes
 (stored in seurat_object@var.genes) as the query_genes.}
 
@@ -79,6 +81,8 @@ column of metadata if not supplied. Not required if running correlation per cell
 \item{seurat_out}{output cor matrix or called seurat object}
 
 \item{verbose}{whether to report certain variables chosen}
+
+\item{rm0}{consider 0 as missing data, recommended for per_cell}
 
 \item{...}{additional arguments to pass to compute_method function}
 
@@ -104,6 +108,8 @@ column of metadata if not supplied. Not required if running correlation per cell
 \item{seurat_out}{output cor matrix or called seurat object}
 
 \item{verbose}{whether to report certain variables chosen}
+
+\item{rm0}{consider 0 as missing data, recommended for per_cell}
 
 \item{...}{additional arguments to pass to compute_method function}
 }

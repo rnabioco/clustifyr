@@ -23,6 +23,7 @@ clustify <- function(input, ...) {
 #' @param seurat_out output cor matrix or called seurat object
 #' @param verbose whether to report certain variables chosen
 #' @param lookuptable if not supplied, will look in built-in table for object parsing
+#' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param ... additional arguments to pass to compute_method function
 #' @export
 clustify.default <- function(input,
@@ -35,6 +36,7 @@ clustify.default <- function(input,
                              compute_method = "spearman",
                              verbose = F,
                              lookuptable = NULL,
+                             rm0 = F,
                              ...) {
   if (!(stringr::str_detect(class(input), "atrix"))) {
     input_original <- input
@@ -103,7 +105,9 @@ clustify.default <- function(input,
       ref_mat,
       cluster_ids = cluster_ids,
       per_cell = per_cell,
-      compute_method = compute_method, ...
+      compute_method = compute_method,
+      rm0 = rm0,
+      ...
     )
   } else {
     # run permutation
@@ -113,7 +117,9 @@ clustify.default <- function(input,
       cluster_ids = cluster_ids,
       num_perm = num_perm,
       per_cell = per_cell,
-      compute_method = compute_method, ...
+      compute_method = compute_method,
+      rm0 = rm0,
+      ...
     )
   }
 
@@ -134,6 +140,7 @@ clustify.default <- function(input,
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
 #' @param verbose whether to report certain variables chosen
+#' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param ... additional arguments to pass to compute_method function
 
 #' @export
@@ -149,6 +156,7 @@ clustify.seurat <- function(input,
                             seurat_out = TRUE,
                             threshold = 0,
                             verbose = F,
+                            rm0 = F,
                             ...) {
   s_object <- input
   # for seurat < 3.0
@@ -168,6 +176,7 @@ clustify.seurat <- function(input,
     cluster_col = cluster_col,
     compute_method = compute_method,
     verbose = verbose,
+    rm0 = rm0,
     ...
   )
 
@@ -227,6 +236,7 @@ clustify.seurat <- function(input,
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
 #' @param verbose whether to report certain variables chosen
+#' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param ... additional arguments to pass to compute_method function
 
 #' @export
@@ -242,6 +252,7 @@ clustify.Seurat <- function(input,
                             seurat_out = TRUE,
                             threshold = 0,
                             verbose = F,
+                            rm0 = rm0,
                             ...) {
   s_object <- input
   # for seurat 3.0 +
@@ -261,6 +272,7 @@ clustify.Seurat <- function(input,
     cluster_col = cluster_col,
     compute_method = compute_method,
     verbose = verbose,
+    rm0 = rm0,
     ...
   )
 

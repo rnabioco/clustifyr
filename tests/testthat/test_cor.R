@@ -178,6 +178,20 @@ test_that("get_similarity handles NA entries", {
   expect_equal(n_clusters + 1, nrow(res))
 })
 
+test_that("get_similarity can exclude 0s as missing data", {
+  res <- clustify(
+    input = pbmc4k_matrix,
+    metadata = pbmc4k_meta,
+    ref_mat = pbmc_bulk_matrix,
+    query_genes = pbmc4k_vargenes,
+    cluster_col = "cluster",
+    per_cell = T,
+    rm0 = T
+  )
+
+  expect_equal(ncol(pbmc4k_matrix), nrow(res))
+})
+
 test_that("permute_similarity runs per cell", {
   res <- permute_similarity(
     pbmc4k_matrix[c("RBM28","CCDC136","TNPO3"),c(7,11)],

@@ -7,6 +7,7 @@
 #' @param cluster_ids vector of cluster ids for each cell
 #' @param compute_method method(s) for computing similarity scores
 #' @param per_cell run per cell?
+#' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param ... additional parameters not used yet
 #' @export
 get_similarity <- function(expr_mat,
@@ -14,6 +15,7 @@ get_similarity <- function(expr_mat,
                            cluster_ids,
                            compute_method,
                            per_cell = FALSE,
+                           rm0 = F,
                            ...) {
   ref_clust <- colnames(ref_mat)
   if (sum(is.na(cluster_ids)) > 0) {
@@ -38,6 +40,7 @@ get_similarity <- function(expr_mat,
     clust_avg,
     ref_mat,
     compute_method,
+    rm0 = rm0,
     ...
   )
 
@@ -59,6 +62,7 @@ get_similarity <- function(expr_mat,
 #' @param num_perm number of permutations
 #' @param per_cell run per cell?
 #' @param compute_method method(s) for computing similarity scores
+#' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param ... additional parameters
 #' @export
 permute_similarity <- function(expr_mat,
@@ -66,7 +70,9 @@ permute_similarity <- function(expr_mat,
                                cluster_ids,
                                num_perm,
                                per_cell = F,
-                               compute_method, ...) {
+                               compute_method,
+                               rm0 =F,
+                               ...) {
   ref_clust <- colnames(ref_mat)
 
   if (!per_cell) {
@@ -85,6 +91,7 @@ permute_similarity <- function(expr_mat,
     clust_avg,
     ref_mat,
     compute_method,
+    rm0 = rm0,
     ...
   )
 
@@ -112,6 +119,7 @@ permute_similarity <- function(expr_mat,
       permuted_avg,
       ref_mat,
       compute_method,
+      rm0 = rm0,
       ...
     )
     sig_counts <- sig_counts + as.numeric(new_score > assigned_score)
@@ -135,28 +143,31 @@ compute_mean_expr <- function(expr_mat, sc_assign, sc_clust) {
 }
 
 #' compute similarity
+#' @param sc_avg query data matrix
+#' @param ref_mat reference data matrix
+#' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @export
 calc_similarity <- function(sc_avg,
                             ref_mat,
-                            compute_method, ...) {
-
-  # use stats::cor matrix method if possible
-  if (any(compute_method %in% c("pearson", "spearman"))) {
-    similarity_score <- cor(as.matrix(sc_avg),
-      ref_mat,
-      method = compute_method
-    )
-    return(similarity_score)
-  }
-
+                            compute_method,
+                            rm0 = F,
+                            ...) {
   # remove 0s ?
-  # if(any(compute_method %in% c("spearman"))) {
-  #   print("considering 0 as missing data")
-  #   sc_avg[sc_avg == 0] <- NA
-  #   similarity_score <- cor(as.matrix(sc_avg),
-  #                           ref_mat, method = "spearman", use = "pairwise.complete.obs")
-  #   return(similarity_score)
-  # }
+  if(rm0 == T) {
+    print("considering 0 as missing data")
+    sc_avg[sc_avg == 0] <- NA
+    similarity_score <- cor(as.matrix(sc_avg),
+                            ref_mat, method = compute_method, use = "pairwise.complete.obs")
+    return(similarity_score)
+  } else {
+    if (any(compute_method %in% c("pearson", "spearman"))) {
+      similarity_score <- cor(as.matrix(sc_avg),
+                              ref_mat,
+                              method = compute_method
+      )
+      return(similarity_score)
+    }
+  }
 
   sc_clust <- colnames(sc_avg)
   ref_clust <- colnames(ref_mat)
