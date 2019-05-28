@@ -22,7 +22,7 @@ clustify(input, ...)
 \method{clustify}{Seurat}(input, ref_mat, query_genes = NULL,
   per_cell = FALSE, num_perm = 0, cluster_col = NULL,
   compute_method = "spearman", use_var_genes = TRUE, dr = "tsne",
-  seurat_out = TRUE, threshold = 0, verbose = F, rm0 = rm0, ...)
+  seurat_out = TRUE, threshold = 0, verbose = F, rm0 = F, ...)
 }
 \arguments{
 \item{input}{single-cell expression matrix or Seurat object}

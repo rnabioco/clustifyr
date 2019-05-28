@@ -34,7 +34,8 @@ res <- clustify(
   input = full_pbmc4k_matrix,
   metadata = full_pbmc4k_meta,
   cluster_col = "cluster",
-  ref_mat = cbmc_ref
+  ref_mat = cbmc_ref,
+  query_genes = pbmc4k_vargenes
 )
 
 # plot_cor generates a plot per reference cluster
@@ -66,6 +67,22 @@ overcluster_test(
   cluster_col = "cluster",
   n = 5
   )
+
+# `clustify` against reference combinations also informs clustering
+# in this case, several clusters seems to be a mixture with neighboring idents
+comb_ref <- make_comb_ref(cbmc_ref)
+res2 <- clustify(
+  input = full_pbmc4k_matrix,
+  metadata = full_pbmc4k_meta,
+  cluster_col = "cluster",
+  ref_mat = comb_ref,
+  query_genes = pbmc4k_vargenes
+)
+plot_best_call(
+  res2,
+  full_pbmc4k_meta,
+  do.label = T
+)
 ```
 
 ## Heatmap

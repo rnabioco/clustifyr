@@ -252,7 +252,7 @@ clustify.Seurat <- function(input,
                             seurat_out = TRUE,
                             threshold = 0,
                             verbose = F,
-                            rm0 = rm0,
+                            rm0 = F,
                             ...) {
   s_object <- input
   # for seurat 3.0 +
