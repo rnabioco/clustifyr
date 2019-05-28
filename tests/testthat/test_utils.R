@@ -466,3 +466,9 @@ test_that("object parsing works for custom object", {
 
   expect_true(nrow(res) == nrow(res2))
 })
+
+test_that("make_comb_ref uses correct sep", {
+  ref2 <- make_comb_ref(cbmc_ref,
+                        sep = "AAA")
+  expect_true((ncol(ref2) > ncol(cbmc_ref)) & grepl("AAA", colnames(ref2)[12]))
+})

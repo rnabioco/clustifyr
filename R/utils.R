@@ -1031,3 +1031,24 @@ downsample_matrix <- function(mat,
   }
   return(mat[,unlist(cluster_ids_new)])
 }
+
+#' make combination ref matrix to assess intermixing
+#'
+#' @param ref_mat reference expression matrix
+#' @param log_scale whether input data is natural
+#' @param sep separator for name combinations
+#'
+#' @export
+make_comb_ref <- function(ref_mat, log_scale = T, sep = "_and_") {
+  if (log_scale == T) {
+    ref_mat <- expm1(ref_mat)
+  }
+  combs <- combn(x = colnames(ref_mat), m = 2, simplify = F)
+  comb_mat <- sapply(combs, FUN = function(x) Matrix::rowMeans(ref_mat[, unlist(x)]))
+  colnames(comb_mat) <- sapply(combs, FUN = function(x) stringr::str_c(unlist(x), collapse = sep))
+  new_mat <- cbind(ref_mat, comb_mat)
+  if (log_scale == T) {
+    new_mat <- log1p(new_mat)
+  }
+  new_mat
+}
