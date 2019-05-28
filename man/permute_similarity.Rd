@@ -5,7 +5,7 @@
 \title{Compute a p-value for similarity using permutation}
 \usage{
 permute_similarity(expr_mat, ref_mat, cluster_ids, num_perm,
-  per_cell = F, compute_method, ...)
+  per_cell = F, compute_method, rm0 = F, ...)
 }
 \arguments{
 \item{expr_mat}{single-cell expression matrix}
@@ -20,6 +20,8 @@ genes have ALREADY BEEN filtered}
 \item{per_cell}{run per cell?}
 
 \item{compute_method}{method(s) for computing similarity scores}
+
+\item{rm0}{consider 0 as missing data, recommended for per_cell}
 
 \item{...}{additional parameters}
 }
