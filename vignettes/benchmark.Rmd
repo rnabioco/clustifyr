@@ -121,6 +121,8 @@ default `clustify`, with all genes
 
 `clustify`, using `per_cell = T` option, and then assign cluster consensus ident with `collapse_to_cluster = T`
 
+`clustify`, after `ALRA` imputation, using `per_cell = T` option, and then assign cluster consensus ident with `collapse_to_cluster = T`
+
 `scmap-cluster`
 
 2. Mapping from prebuilt all-encompassing references to the drop samples:
@@ -424,11 +426,147 @@ saveRDS(resall2negcor_all, "resall2negcor_all")
 resall2negcor_all <- readRDS("resall2negcor_all")
 resall2 <- resall2 %>% mutate(finalcall = ifelse(call == 1, 1, ifelse(str_c(cluster, type) %in% str_c(resall2negcor_all$cluster, resall2negcor_all$type), 1, 0))) %>% replace_na(list(finalcall = 0))
 resall2
-mean(resall2$finalcall) # 0.875 %
+mean(resall2$finalcall) # 0.914 %
 # 
 # resall2negcor_all
 saveRDS(resall2, "clustify_cell_resall2")
+resall2 <- readRDS("clustify_cell_resall2")
+
 saveRDS(times, "clustify_cell_times")
+```
+
+```{r test_single_rm0, include = F, eval=F}
+times <- list()
+for (n in 1:length(tissue_both)) {
+  print(tissue_both[n])
+  s_d <- load_obj(paste0("/Users/rf/", files_facs_fil[n]))
+  s_f <- load_obj(paste0("/Users/rf/", files_drop_fil[n]))
+
+  start <- proc.time()
+  if (sum(is.na(s_f@meta.data$free_annotation)) + sum(is.na(s_d@meta.data$free_annotation)) < (nrow(s_f@meta.data) + nrow(s_d@meta.data)) * 0.25) {
+    print("use free_annotation")
+    if (length(unique(s_f@meta.data$free_annotation)) < length(unique(s_d@meta.data$free_annotation))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    ids <- s_d@meta.data[["free_annotation"]]
+    avg <- use_seurat_comp(s_f, cluster_col = "free_annotation")
+    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "free_annotation", per_cell = T, rm0 = T)
+    res2 <- cor_to_call(res, metadata = s_d@meta.data %>% rownames_to_column("id"), col = "id", collapse_to_cluster = "free_annotation") %>% distinct(type, type2)
+  } else {
+    print("use cell_ontology_class")
+    if (length(unique(s_f@meta.data$cell_ontology_class)) < length(unique(s_d@meta.data$cell_ontology_class))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    ids <- s_d@meta.data[["cell_ontology_class"]]
+    avg <- use_seurat_comp(s_f, cluster_col = "cell_ontology_class")
+    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "cell_ontology_class", per_cell = T, rm0 = T)
+    res2 <- cor_to_call(res, metadata = s_d@meta.data %>% rownames_to_column("id"), col = "id", collapse_to_cluster = "cell_ontology_class") %>% distinct(type, type2)
+  }
+  colnames(res2) <- c("cluster", "type")
+  res2 <- res2 %>% group_by_all() %>% tally() %>% mutate(call = ifelse(cluster == type, 1, 0))
+  
+  end <- proc.time()
+  times[n] = end - start
+  res2$tissue <- tissue_both[n]
+  if (n==1) {
+    resall <- res2
+  } else {
+    resall <- rbind(resall, res2)
+  }
+}
+
+resall2 <- resall %>% filter(cluster != "unknown")
+#resall2neg <- resall2 %>% filter(call == 0)
+# keep <- c(1,2,4,5,8,9,10,12,13,15,16,17,18,19,20, 21,23)
+# resall2negcor <- resall2neg[keep,]
+resall2negcor_all <- readRDS("resall2negcor_all")
+
+saveRDS(resall2negcor_all, "resall2negcor_all")
+resall2negcor_all <- readRDS("resall2negcor_all")
+resall2 <- resall2 %>% mutate(finalcall = ifelse(call == 1, 1, ifelse(str_c(cluster, type) %in% str_c(resall2negcor_all$cluster, resall2negcor_all$type), 1, 0))) %>% replace_na(list(finalcall = 0)) %>% filter(!is.na(type))
+resall2
+mean(resall2$finalcall) # 0.857 %
+# 
+# resall2negcor_all
+saveRDS(resall2, "clustify_cell_resall_rm0")
+resall2 <- readRDS("clustify_cell_resall_rm0")
+a <- readRDS("clustify_cell_resall2")
+saveRDS(times, "clustify_cell_time_rm0s")
+```
+
+```{r test_single_alra, include = F, eval=F}
+source("/Users/rf/git_libs/ALRA/alra.R")
+source("/Users/rf/git_libs/ALRA/alraSeurat2.R")
+library(Matrix)
+times <- list()
+for (n in 1:length(tissue_both)) {
+  print(tissue_both[n])
+  s_d <- load_obj(paste0("/Users/rf/", files_facs_fil[n]))
+  s_f <- load_obj(paste0("/Users/rf/", files_drop_fil[n]))
+
+  start <- proc.time()
+  if (sum(is.na(s_f@meta.data$free_annotation)) + sum(is.na(s_d@meta.data$free_annotation)) < (nrow(s_f@meta.data) + nrow(s_d@meta.data)) * 0.25) {
+    print("use free_annotation")
+    if (length(unique(s_f@meta.data$free_annotation)) < length(unique(s_d@meta.data$free_annotation))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    ids <- s_d@meta.data[["free_annotation"]]
+    avg <- use_seurat_comp(s_f, cluster_col = "free_annotation")
+    s_d <- alraSeurat2(s_d)
+    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "free_annotation", per_cell = T)
+    res2 <- cor_to_call(res, metadata = s_d@meta.data %>% rownames_to_column("id"), col = "id", collapse_to_cluster = "free_annotation") %>% distinct(type, type2)
+  } else {
+    print("use cell_ontology_class")
+    if (length(unique(s_f@meta.data$cell_ontology_class)) < length(unique(s_d@meta.data$cell_ontology_class))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    ids <- s_d@meta.data[["cell_ontology_class"]]
+    avg <- use_seurat_comp(s_f, cluster_col = "cell_ontology_class")
+    s_d <- alraSeurat2(s_d)
+    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "cell_ontology_class", per_cell = T)
+    res2 <- cor_to_call(res, metadata = s_d@meta.data %>% rownames_to_column("id"), col = "id", collapse_to_cluster = "cell_ontology_class") %>% distinct(type, type2)
+  }
+  colnames(res2) <- c("cluster", "type")
+  res2 <- res2 %>% group_by_all() %>% tally() %>% mutate(call = ifelse(cluster == type, 1, 0))
+  
+  end <- proc.time()
+  times[n] = end - start
+  res2$tissue <- tissue_both[n]
+  if (n==1) {
+    resall <- res2
+  } else {
+    resall <- rbind(resall, res2)
+  }
+}
+
+resall2 <- resall %>% filter(cluster != "unknown")
+#resall2neg <- resall2 %>% filter(call == 0)
+# keep <- c(1,2,4,5,8,9,10,12,13,15,16,17,18,19,20, 21,23)
+# resall2negcor <- resall2neg[keep,]
+resall2negcor_all <- readRDS("resall2negcor_all")
+
+saveRDS(resall2negcor_all, "resall2negcor_all")
+resall2negcor_all <- readRDS("resall2negcor_all")
+resall2 <- resall2 %>% mutate(finalcall = ifelse(call == 1, 1, ifelse(str_c(cluster, type) %in% str_c(resall2negcor_all$cluster, resall2negcor_all$type), 1, 0))) %>% replace_na(list(finalcall = 0)) %>% filter(!is.na(type))
+resall2
+mean(resall2$finalcall) # 0.9 %
+# 
+# resall2negcor_all
+saveRDS(resall2, "clustify_cell_resall_alra")
+a <- readRDS("clustify_cell_resall2")
+saveRDS(times, "clustify_cell_times_alra")
 ```
 
 ```{r test_all, include = F, eval=F}
