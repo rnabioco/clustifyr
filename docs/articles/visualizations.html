@@ -98,7 +98,7 @@
     <div class="page-header toc-ignore">
       <h1>Visualization of clustifyR results</h1>
             
-            <h4 class="date">2019-05-28</h4>
+            <h4 class="date">2019-05-29</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyR/blob/master/vignettes/visualizations.Rmd"><code>vignettes/visualizations.Rmd</code></a></small>
       <div class="hidden name"><code>visualizations.Rmd</code></div>
@@ -113,8 +113,8 @@
 <a href="#tsneumap" class="anchor"></a>TSNE/UMAP</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(clustifyR)</a>
 <a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(here)</a>
-<a class="sourceLine" id="cb1-3" title="3">full_pbmc4k_matrix &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">readRDS</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/here/topics/here">here</a></span>(<span class="st">"full_pbmc4k_matrix"</span>))</a>
-<a class="sourceLine" id="cb1-4" title="4">full_pbmc4k_meta &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">readRDS</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/here/topics/here">here</a></span>(<span class="st">"full_pbmc4k_meta"</span>))</a>
+<a class="sourceLine" id="cb1-3" title="3">full_pbmc4k_matrix &lt;-<span class="st"> </span>clustifyrdata<span class="op">::</span>pbmc4k_matrix</a>
+<a class="sourceLine" id="cb1-4" title="4">full_pbmc4k_meta &lt;-<span class="st"> </span>clustifyrdata<span class="op">::</span>pbmc4k_meta</a>
 <a class="sourceLine" id="cb1-5" title="5"></a>
 <a class="sourceLine" id="cb1-6" title="6"><span class="co"># clustify</span></a>
 <a class="sourceLine" id="cb1-7" title="7">res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustify.html">clustify</a></span>(</a>
@@ -203,6 +203,7 @@
 <div id="gsea-top-hits-per-cluster" class="section level2">
 <h2 class="hasAnchor">
 <a href="#gsea-top-hits-per-cluster" class="anchor"></a>GSEA top hits per cluster</h2>
+<p>Using the gsea method implemented, we can also convert reactome/GO/pathway gene lists into forms that can be scored and plotted.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># gene lists can be converted from gmt files (Broad)</span></a>
 <a class="sourceLine" id="cb7-2" title="2">list_reactome &lt;-<span class="st"> </span><span class="kw"><a href="../reference/gmt_to_list.html">gmt_to_list</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/here/topics/here">here</a></span>(<span class="st">"c2.cp.reactome.v6.2.symbols.gmt"</span>))</a>
 <a class="sourceLine" id="cb7-3" title="3"></a>
@@ -226,6 +227,11 @@
 <a class="sourceLine" id="cb7-21" title="21">res[[<span class="dv">2</span>]]</a></code></pre></div>
 <p><img src="visualizations_files/figure-html/unnamed-chunk-3-1.png" width="700" style="display: block; margin: auto;"></p>
 </div>
+<div id="other-attributes-in-the-metadata" class="section level2">
+<h2 class="hasAnchor">
+<a href="#other-attributes-in-the-metadata" class="anchor"></a>other attributes in the metadata</h2>
+<p>Visualization of other attributes shared in the metadata between ref and query by <code>plot_cols</code>, such as nGene, nUMI, mt_percentage, as another way of identity confirmation after <code>clustify</code>. Certain cell types have distinct patterns, more genes detected, for example.</p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -236,6 +242,7 @@
 <li><a href="#tsneumap">TSNE/UMAP</a></li>
       <li><a href="#heatmap">Heatmap</a></li>
       <li><a href="#gsea-top-hits-per-cluster">GSEA top hits per cluster</a></li>
+      <li><a href="#other-attributes-in-the-metadata">other attributes in the metadata</a></li>
       </ul>
 </div>
       </div>

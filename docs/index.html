@@ -125,24 +125,26 @@
 </ul>
 <p>We then calculate correlation coefficients and plot them on a pre-calculated tSNE projection (stored in <code>pbmc4k_meta</code>).</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(clustifyR)</a>
-<a class="sourceLine" id="cb2-2" title="2"></a>
-<a class="sourceLine" id="cb2-3" title="3">res &lt;-<span class="st"> </span><span class="kw"><a href="reference/clustify.html">clustify</a></span>(</a>
-<a class="sourceLine" id="cb2-4" title="4">  <span class="dt">input =</span> pbmc4k_matrix,</a>
-<a class="sourceLine" id="cb2-5" title="5">  <span class="dt">metadata =</span> pbmc4k_meta<span class="op">$</span>cluster,</a>
-<a class="sourceLine" id="cb2-6" title="6">  <span class="dt">ref_mat =</span> pbmc_bulk_matrix,</a>
-<a class="sourceLine" id="cb2-7" title="7">  <span class="dt">query_genes =</span> pbmc4k_vargenes</a>
-<a class="sourceLine" id="cb2-8" title="8">)</a>
-<a class="sourceLine" id="cb2-9" title="9"></a>
-<a class="sourceLine" id="cb2-10" title="10"><span class="kw"><a href="reference/plot_cor.html">plot_cor</a></span>(</a>
-<a class="sourceLine" id="cb2-11" title="11">  res,</a>
-<a class="sourceLine" id="cb2-12" title="12">  pbmc4k_meta,</a>
-<a class="sourceLine" id="cb2-13" title="13">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(res)[<span class="dv">1</span>],</a>
-<a class="sourceLine" id="cb2-14" title="14">  <span class="dt">cluster_col =</span> <span class="st">"cluster"</span></a>
-<a class="sourceLine" id="cb2-15" title="15">)</a>
-<a class="sourceLine" id="cb2-16" title="16"><span class="co">#&gt; [[1]]</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-2" title="2">full_pbmc4k_matrix &lt;-<span class="st"> </span>clustifyrdata<span class="op">::</span>pbmc4k_matrix</a>
+<a class="sourceLine" id="cb2-3" title="3">full_pbmc4k_meta &lt;-<span class="st"> </span>clustifyrdata<span class="op">::</span>pbmc4k_meta</a>
+<a class="sourceLine" id="cb2-4" title="4"></a>
+<a class="sourceLine" id="cb2-5" title="5">res &lt;-<span class="st"> </span><span class="kw"><a href="reference/clustify.html">clustify</a></span>(</a>
+<a class="sourceLine" id="cb2-6" title="6">  <span class="dt">input =</span> full_pbmc4k_matrix,</a>
+<a class="sourceLine" id="cb2-7" title="7">  <span class="dt">metadata =</span> full_pbmc4k_meta<span class="op">$</span>cluster,</a>
+<a class="sourceLine" id="cb2-8" title="8">  <span class="dt">ref_mat =</span> pbmc_bulk_matrix,</a>
+<a class="sourceLine" id="cb2-9" title="9">  <span class="dt">query_genes =</span> pbmc4k_vargenes</a>
+<a class="sourceLine" id="cb2-10" title="10">)</a>
+<a class="sourceLine" id="cb2-11" title="11"></a>
+<a class="sourceLine" id="cb2-12" title="12"><span class="kw"><a href="reference/plot_cor.html">plot_cor</a></span>(</a>
+<a class="sourceLine" id="cb2-13" title="13">  res,</a>
+<a class="sourceLine" id="cb2-14" title="14">  full_pbmc4k_meta,</a>
+<a class="sourceLine" id="cb2-15" title="15">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">colnames</a></span>(res)[<span class="dv">1</span>],</a>
+<a class="sourceLine" id="cb2-16" title="16">  <span class="dt">cluster_col =</span> <span class="st">"cluster"</span></a>
+<a class="sourceLine" id="cb2-17" title="17">)</a>
+<a class="sourceLine" id="cb2-18" title="18"><span class="co">#&gt; [[1]]</span></a></code></pre></div>
 <p><img src="reference/figures/README-example-1.png" width="100%"></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"></a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="reference/plot_best_call.html">plot_best_call</a></span>(res, pbmc4k_meta)</a></code></pre></div>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="reference/plot_best_call.html">plot_best_call</a></span>(res, full_pbmc4k_meta)</a></code></pre></div>
 <p><img src="reference/figures/README-example-2.png" width="100%"></p>
 <p>Alternatively, <code>clustify</code> can take a clustered <code>seurat</code> object (both v2 and v3) and assign identities. New reference matrix can be made directly from <code>seurat</code> object as well.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">res &lt;-<span class="st"> </span><span class="kw"><a href="reference/clustify.html">clustify</a></span>(</a>
@@ -180,7 +182,7 @@
 <div id="additional-reference-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#additional-reference-data" class="anchor"></a>Additional reference data</h2>
-<p>More reference data (including tabula muris) is available at <a href="https://github.com/rnabioco/clustifyrdata" class="uri">https://github.com/rnabioco/clustifyrdata</a>.</p>
+<p>More reference data (including tabula muris, immgen, etc) is available at <a href="https://github.com/rnabioco/clustifyrdata" class="uri">https://github.com/rnabioco/clustifyrdata</a>.</p>
 </div>
 </div>
   </div>

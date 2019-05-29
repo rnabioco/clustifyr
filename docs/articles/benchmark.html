@@ -98,7 +98,7 @@
     <div class="page-header toc-ignore">
       <h1>Benchmarking clustifyR</h1>
             
-            <h4 class="date">2019-05-28</h4>
+            <h4 class="date">2019-05-29</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyR/blob/master/vignettes/benchmark.Rmd"><code>vignettes/benchmark.Rmd</code></a></small>
       <div class="hidden name"><code>benchmark.Rmd</code></div>
@@ -134,7 +134,7 @@
 <a class="sourceLine" id="cb1-22" title="22"></a>
 <a class="sourceLine" id="cb1-23" title="23"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(end <span class="op">-</span><span class="st"> </span>start)</a>
 <a class="sourceLine" id="cb1-24" title="24"><span class="co">#&gt;    user  system elapsed </span></a>
-<a class="sourceLine" id="cb1-25" title="25"><span class="co">#&gt;   1.422   0.521   1.993</span></a>
+<a class="sourceLine" id="cb1-25" title="25"><span class="co">#&gt;   2.320   4.438  10.780</span></a>
 <a class="sourceLine" id="cb1-26" title="26"></a>
 <a class="sourceLine" id="cb1-27" title="27"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(res_allgenes, <span class="dt">n =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(res_allgenes))</a>
 <a class="sourceLine" id="cb1-28" title="28"><span class="co">#&gt; # A tibble: 32 x 3</span></a>
@@ -177,14 +177,14 @@
 <div id="benchmark-2--using-sorted-microarray-data-to-classify-10x-pbmc-example-data-available-in-clustifyrdata-package" class="section level2">
 <h2 class="hasAnchor">
 <a href="#benchmark-2--using-sorted-microarray-data-to-classify-10x-pbmc-example-data-available-in-clustifyrdata-package" class="anchor"></a>benchmark 2. Using sorted microarray data to classify 10x PBMC example data, available in <code>clustifyrdata</code> package</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">pbmc4k_matrix_full &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">readRDS</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/here/topics/here">here</a></span>(<span class="st">"full_pbmc4k_matrix"</span>))</a>
-<a class="sourceLine" id="cb2-2" title="2">pbmc4k_meta_full &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">readRDS</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/here/topics/here">here</a></span>(<span class="st">"full_pbmc4k_meta"</span>))</a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">full_pbmc4k_matrix &lt;-<span class="st"> </span>clustifyrdata<span class="op">::</span>pbmc4k_matrix</a>
+<a class="sourceLine" id="cb2-2" title="2">full_pbmc4k_meta &lt;-<span class="st"> </span>clustifyrdata<span class="op">::</span>pbmc4k_meta</a>
 <a class="sourceLine" id="cb2-3" title="3">microarray_ref &lt;-<span class="st"> </span>clustifyrdata<span class="op">::</span>hema_microarray_matrix</a>
 <a class="sourceLine" id="cb2-4" title="4"></a>
 <a class="sourceLine" id="cb2-5" title="5">start &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/proc.time">proc.time</a></span>()</a>
-<a class="sourceLine" id="cb2-6" title="6">res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustify.html">clustify</a></span>(pbmc4k_matrix_full, </a>
+<a class="sourceLine" id="cb2-6" title="6">res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustify.html">clustify</a></span>(full_pbmc4k_matrix, </a>
 <a class="sourceLine" id="cb2-7" title="7">                microarray_ref, </a>
-<a class="sourceLine" id="cb2-8" title="8">                pbmc4k_meta_full, </a>
+<a class="sourceLine" id="cb2-8" title="8">                full_pbmc4k_meta, </a>
 <a class="sourceLine" id="cb2-9" title="9">                <span class="dt">query_genes =</span> pbmc4k_vargenes,</a>
 <a class="sourceLine" id="cb2-10" title="10">                <span class="dt">cluster_col =</span> <span class="st">"classified"</span>)</a>
 <a class="sourceLine" id="cb2-11" title="11"></a>
@@ -194,7 +194,7 @@
 <a class="sourceLine" id="cb2-15" title="15"></a>
 <a class="sourceLine" id="cb2-16" title="16"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(end <span class="op">-</span><span class="st"> </span>start)</a>
 <a class="sourceLine" id="cb2-17" title="17"><span class="co">#&gt;    user  system elapsed </span></a>
-<a class="sourceLine" id="cb2-18" title="18"><span class="co">#&gt;   0.094   0.015   0.111</span></a>
+<a class="sourceLine" id="cb2-18" title="18"><span class="co">#&gt;   0.122   0.020   0.154</span></a>
 <a class="sourceLine" id="cb2-19" title="19"></a>
 <a class="sourceLine" id="cb2-20" title="20"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(res2, <span class="dt">n =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(res2))</a>
 <a class="sourceLine" id="cb2-21" title="21"><span class="co">#&gt; # A tibble: 10 x 3</span></a>

@@ -42,17 +42,19 @@ pre-calculated tSNE projection (stored in `pbmc4k_meta`).
 
 ``` r
 library(clustifyR)
+full_pbmc4k_matrix <- clustifyrdata::pbmc4k_matrix
+full_pbmc4k_meta <- clustifyrdata::pbmc4k_meta
 
 res <- clustify(
-  input = pbmc4k_matrix,
-  metadata = pbmc4k_meta$cluster,
+  input = full_pbmc4k_matrix,
+  metadata = full_pbmc4k_meta$cluster,
   ref_mat = pbmc_bulk_matrix,
   query_genes = pbmc4k_vargenes
 )
 
 plot_cor(
   res,
-  pbmc4k_meta,
+  full_pbmc4k_meta,
   colnames(res)[1],
   cluster_col = "cluster"
 )
@@ -63,7 +65,7 @@ plot_cor(
 
 ``` r
 
-plot_best_call(res, pbmc4k_meta)
+plot_best_call(res, full_pbmc4k_meta)
 ```
 
 <img src="man/figures/README-example-2.png" width="100%" />
@@ -113,5 +115,5 @@ res <- clustify_lists(
 
 ## Additional reference data
 
-More reference data (including tabula muris) is available at
-<https://github.com/rnabioco/clustifyrdata>.
+More reference data (including tabula muris, immgen, etc) is available
+at <https://github.com/rnabioco/clustifyrdata>.

@@ -89,14 +89,14 @@ print(res_allgenes, n = nrow(res_allgenes))
 ## benchmark 2. Using sorted microarray data to classify 10x PBMC example data, available in `clustifyrdata` package
 
 ```{r micro, message=FALSE, warning=FALSE}
-pbmc4k_matrix_full <- readRDS(here("full_pbmc4k_matrix"))
-pbmc4k_meta_full <- readRDS(here("full_pbmc4k_meta"))
+full_pbmc4k_matrix <- clustifyrdata::pbmc4k_matrix
+full_pbmc4k_meta <- clustifyrdata::pbmc4k_meta
 microarray_ref <- clustifyrdata::hema_microarray_matrix
 
 start <- proc.time()
-res <- clustify(pbmc4k_matrix_full, 
+res <- clustify(full_pbmc4k_matrix, 
                 microarray_ref, 
-                pbmc4k_meta_full, 
+                full_pbmc4k_meta, 
                 query_genes = pbmc4k_vargenes,
                 cluster_col = "classified")
 
