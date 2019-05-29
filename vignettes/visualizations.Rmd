@@ -26,8 +26,8 @@ The direct output of `clustify` is a matrix of correlation coefficients. And for
 ```{r, warning = F, message = F}
 library(clustifyR)
 library(here)
-full_pbmc4k_matrix <- readRDS(here("full_pbmc4k_matrix"))
-full_pbmc4k_meta <- readRDS(here("full_pbmc4k_meta"))
+full_pbmc4k_matrix <- clustifyrdata::pbmc4k_matrix
+full_pbmc4k_meta <- clustifyrdata::pbmc4k_meta
 
 # clustify
 res <- clustify(
@@ -108,6 +108,7 @@ plot_cor_heatmap(res2)
 ```
 
 ## GSEA top hits per cluster
+Using the gsea method implemented, we can also convert reactome/GO/pathway gene lists into forms that can be scored and plotted.
 ```{r, warning = F, message = F}
 # gene lists can be converted from gmt files (Broad)
 list_reactome <- gmt_to_list(here("c2.cp.reactome.v6.2.symbols.gmt"))
@@ -128,3 +129,6 @@ res[[1]][1:2,1:2]
 # and plot
 res[[2]]
 ```
+
+## other attributes in the metadata
+Visualization of other attributes shared in the metadata between ref and query by `plot_cols`, such as nGene, nUMI, mt_percentage, as another way of identity confirmation after `clustify`. Certain cell types have distinct patterns, more genes detected, for example.

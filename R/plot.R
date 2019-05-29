@@ -417,6 +417,7 @@ plot_cols <- function(metadata,
 #' @param cluster_col colname of clustering data in metadata, defaults to rownames of the
 #' metadata if not supplied.
 #' @param col color ramp to use
+#' @param legend_title legend title to pass to Heatmap
 #' @param ... passed to Heatmap
 #'
 #' @export
@@ -424,8 +425,10 @@ plot_cor_heatmap <- function(correlation_matrix,
                              metadata = NULL,
                              cluster_col = NULL,
                              col = not_pretty_palette,
+                             legend_title = NULL,
                              ...) {
   ComplexHeatmap::Heatmap(correlation_matrix,
                           col = col,
+                          heatmap_legend_param = list(title = legend_title),
                           ...)
 }
