@@ -103,6 +103,9 @@
     <loc>http://rnabioco.github.io/clustifyR/reference/matrixize_markers.html</loc>
   </url>
   <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/not_pretty_palette.html</loc>
+  </url>
+  <url>
     <loc>http://rnabioco.github.io/clustifyR/reference/object_loc_lookup.html</loc>
   </url>
   <url>
@@ -164,6 +167,9 @@
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyR/reference/pretty_palette.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyR/reference/pretty_palette2.html</loc>
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyR/reference/pretty_palette_ramp_d.html</loc>

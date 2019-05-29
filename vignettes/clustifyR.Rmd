@@ -32,14 +32,11 @@ In this example, we take an example 10x Genomics 3' scRNA-seq dataset comprised 
 ```{r fig.height=8, fig.width=12, warning = F, message = F}
 library(clustifyR)
 
-# load pacakge data
-data("pbmc4k_matrix")
-data("pbmc4k_meta")
-data("pbmc4k_vargenes")
-data("pbmc_bulk_matrix")
+full_pbmc4k_matrix <- clustifyrdata::pbmc4k_matrix
+full_pbmc4k_meta <- clustifyrdata::pbmc4k_meta
 
 # plot tSNE using known identities
-plot_tsne(pbmc4k_meta, feature = "classified")
+plot_tsne(full_pbmc4k_meta, feature = "classified")
 ```
 
 `clustifyR` provides the `clustify()` function, which takes as input a matrix of single cell RNA-seq expression values, a metadata table with cluster assignments, and a matrix with bulk RNA seq datasets. 
@@ -48,9 +45,9 @@ As the heatmap below shows, most cell types are accurately classified using the 
 
 ```{r fig.height=8, fig.width=12, warning = F, message = F}
 # run correlation (pearson by default)
-res <- clustify(input = pbmc4k_matrix,
+res <- clustify(input = full_pbmc4k_matrix,
                ref_mat = pbmc_bulk_matrix,
-               metadata = pbmc4k_meta,
+               metadata = full_pbmc4k_meta,
                query_genes = pbmc4k_vargenes,
                cluster_col = "cluster")
 
@@ -58,9 +55,7 @@ res <- clustify(input = pbmc4k_matrix,
 res[1:5, 1:5]
 
 # view heatmap of correlation coefficients
-library(ComplexHeatmap)
-library(circlize)
-ComplexHeatmap::Heatmap(res, colorRamp2(c(0, 1), c("white", "black")))
+plot_cor_heatmap(res)
 ```
 
 ### Plot cluster identities and correlation coefficients
@@ -68,30 +63,27 @@ ComplexHeatmap::Heatmap(res, colorRamp2(c(0, 1), c("white", "black")))
 `clustifyR` provides functions to plot single cells using pre-calculated tSNE embeddings (or those from any other dimensionality reduction method), and to plot correlation coefficients on those projections. The plots below show that the highest correlations between these bulk RNA-seq data and the test scRNA-seq dataset are restricted to the correct cell clusters.
 
 ```{r plot, fig.height=8, fig.width=12, warning = F, message = F}
-# plot tSNE using known identities
-plot_tsne(pbmc4k_meta, feature = "classified")
-
-# plot correlation coefficients on tSNE for each identity class
-plot_cor(res,
-         pbmc4k_meta,
-         colnames(res)[1],
-         cluster_col = "cluster")
-
 # plot called identities
-plot_best_call(res, pbmc4k_meta)
+plot_best_call(res, full_pbmc4k_meta)
+
+# plot correlation coefficients on tSNE for first 2 identity classes
+plot_cor(res,
+         full_pbmc4k_meta,
+         colnames(res)[1:2],
+         cluster_col = "cluster")
 ```
 
 ### Correlation per cell
 
 ```{r fig.height=8, fig.width=12, warning = F, message = F}
 # run correlation (pearson by default)
-res <- clustify(input = pbmc4k_matrix,
+res <- clustify(input = full_pbmc4k_matrix,
                ref_mat = pbmc_bulk_matrix,
                query_genes = pbmc4k_vargenes,
                per_cell = T)
 
 plot_cor(res,
-         pbmc4k_meta,
+         full_pbmc4k_meta,
          colnames(res)[c(1, 5)])
 ```
 
@@ -99,19 +91,19 @@ plot_cor(res,
 
 ```{r fig.height=8, fig.width=12, warning = F, message = F}
 # available metrics are "hyper", "jaccard", "spearman", "gsea"
-res2 <- clustify_lists(pbmc4k_matrix,
+res2 <- clustify_lists(full_pbmc4k_matrix,
                per_cell = F,
-               cluster_info = pbmc4k_meta,
+               cluster_info = full_pbmc4k_meta,
                cluster_col = "cluster",
                marker = cbmc_m,
                marker_inmatrix = T,
                metric = "hyper")
 
 # view as heatmap, or plot_best_call
-ComplexHeatmap::Heatmap(res2, 
-        cluster_rows = FALSE, 
-        cluster_columns = FALSE, 
-        heatmap_legend_param = list(title = "-log10(adjP)"))
+plot_cor_heatmap(res2,
+                 cluster_rows = FALSE,
+                 cluster_columns = FALSE,
+                 legend_title = "-log10(adjP)")
 ```
 
 
