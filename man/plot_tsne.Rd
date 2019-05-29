@@ -5,7 +5,7 @@
 \title{Plot a tSNE colored by feature.}
 \usage{
 plot_tsne(data, x = "tSNE_1", y = "tSNE_2", feature,
-  legend_name = "", c_cols = pretty_palette, d_cols = NULL,
+  legend_name = "", c_cols = pretty_palette2, d_cols = NULL,
   pt_size = 0.25, scale_limits = NULL, do.label = FALSE,
   do.legend = TRUE)
 }

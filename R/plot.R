@@ -18,7 +18,7 @@
 plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
                       feature,
                       legend_name = "",
-                      c_cols = pretty_palette,
+                      c_cols = pretty_palette2,
                       d_cols = NULL,
                       pt_size = 0.25,
                       scale_limits = NULL,
@@ -94,6 +94,14 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
 #' Color palette for plotting continous variables
 #' @export
 pretty_palette <- rev(scales::brewer_pal(palette = "RdGy")(6))
+
+#' Color palette for plotting continous variables, starting at gray
+#' @export
+pretty_palette2 <- scales::brewer_pal(palette = "Reds")(9)
+
+#' black and white palette for plotting continous variables
+#' @export
+not_pretty_palette <- scales::brewer_pal(palette = "Greys")(9)
 
 #' Expanded color palette ramp for plotting discrete variables
 #' @export
@@ -408,12 +416,16 @@ plot_cols <- function(metadata,
 #' @param metadata input metadata with per cell tsne coordinates and cluster ids
 #' @param cluster_col colname of clustering data in metadata, defaults to rownames of the
 #' metadata if not supplied.
+#' @param col color ramp to use
 #' @param ... passed to Heatmap
 #'
 #' @export
 plot_cor_heatmap <- function(correlation_matrix,
                              metadata = NULL,
                              cluster_col = NULL,
+                             col = not_pretty_palette,
                              ...) {
-  ComplexHeatmap::Heatmap(correlation_matrix, ...)
+  ComplexHeatmap::Heatmap(correlation_matrix,
+                          col = col,
+                          ...)
 }
