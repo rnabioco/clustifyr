@@ -317,13 +317,15 @@ calculate_pathway_gsea <- function(mat,
 #' @param col metadata column, can be cluster or cellid
 #' @param collapse_to_cluster if a column name is provided, takes the most frequent call of entire cluster to color in plot
 #' @param threshold minimum correlation coefficent cutoff for calling clusters
+#' @param rename_suff suffix to add to type and r column names
 #'
 #' @export
 cor_to_call <- function(correlation_matrix,
                         metadata = NULL,
                         col = "cluster",
                         collapse_to_cluster = FALSE,
-                        threshold = 0) {
+                        threshold = 0,
+                        rename_suff = NULL) {
   df_temp <- tibble::as_tibble(correlation_matrix, rownames = col)
   df_temp <- tidyr::gather(df_temp, key = type, value = r, -!!col)
   df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold, ", unassigned")
@@ -353,8 +355,13 @@ cor_to_call <- function(correlation_matrix,
     df_temp_full2 <- dplyr::slice(df_temp_full2, 1)
     df_temp_full2 <- dplyr::right_join(df_temp_full2, select(df_temp_full, -type), by = stats::setNames(collapse_to_cluster, "type2"))
     df_temp_full <- dplyr::mutate(df_temp_full2, type = tidyr::replace_na(type, paste0("r<", threshold, ", unassigned")))
+    eval(parse(text = paste0("df_temp_full <- dplyr::rename(df_temp_full,", collapse_to_cluster, " = type2.y)")))
+    df_temp_full <- dplyr::select(dplyr::ungroup(df_temp_full), -type2)
   }
 
+  if (!is.null(rename_suff)) {
+    eval(parse(text = paste0("df_temp_full <- dplyr::rename(df_temp_full, ", paste0(rename_suff, "_type"), " = type, ", paste0(rename_suff, "_r"), " = r)")))
+  }
   df_temp_full
 }
 

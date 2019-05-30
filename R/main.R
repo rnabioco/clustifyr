@@ -141,6 +141,7 @@ clustify.default <- function(input,
 #' @param seurat_out output cor matrix or called seurat object
 #' @param verbose whether to report certain variables chosen
 #' @param rm0 consider 0 as missing data, recommended for per_cell
+#' @param rename_suff suffix to add to type and r column names
 #' @param ... additional arguments to pass to compute_method function
 
 #' @export
@@ -157,6 +158,7 @@ clustify.seurat <- function(input,
                             threshold = 0,
                             verbose = F,
                             rm0 = F,
+                            rename_suff = NULL,
                             ...) {
   s_object <- input
   # for seurat < 3.0
@@ -211,6 +213,11 @@ clustify.seurat <- function(input,
       df_temp_full <- dplyr::left_join(tibble::rownames_to_column(metadata, "rn"), df_temp, by = "rn")
       df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
     }
+
+    if (!is.null(rename_suff)) {
+      eval(parse(text = paste0("df_temp_full <- dplyr::rename(df_temp_full, ", paste0(rename_suff, "_type"), " = type, ", paste0(rename_suff, "_r"), " = r)")))
+    }
+
     if ("Seurat" %in% loadedNamespaces()) {
       s_object@meta.data <- df_temp_full
       return(s_object)
@@ -237,6 +244,7 @@ clustify.seurat <- function(input,
 #' @param seurat_out output cor matrix or called seurat object
 #' @param verbose whether to report certain variables chosen
 #' @param rm0 consider 0 as missing data, recommended for per_cell
+#' @param rename_suff suffix to add to type and r column names
 #' @param ... additional arguments to pass to compute_method function
 
 #' @export
@@ -253,6 +261,7 @@ clustify.Seurat <- function(input,
                             threshold = 0,
                             verbose = F,
                             rm0 = F,
+                            rename_suff = NULL,
                             ...) {
   s_object <- input
   # for seurat 3.0 +
@@ -280,8 +289,8 @@ clustify.Seurat <- function(input,
     res
   } else {
     col_meta <- colnames(metadata)
-    if ("type" %in% col_meta | "type2" %in% col_meta) {
-      warning('metadata column name clash of "type"/"type2"')
+    if ("type" %in% col_meta | "type2" %in% col_meta & is.null(rename_suff)) {
+      warning('metadata column name clash of "type"/"type2", consider renaming or using rename_suff option')
       return()
     }
     if (num_perm != 0) {
@@ -307,6 +316,11 @@ clustify.Seurat <- function(input,
       df_temp_full <- dplyr::left_join(tibble::rownames_to_column(metadata, "rn"), df_temp, by = "rn")
       df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
     }
+
+    if (!is.null(rename_suff)) {
+      eval(parse(text = paste0("df_temp_full <- dplyr::rename(df_temp_full, ", paste0(rename_suff, "_type"), " = type, ", paste0(rename_suff, "_r"), " = r)")))
+    }
+
     if ("Seurat" %in% loadedNamespaces()) {
       s_object@meta.data <- df_temp_full
       return(s_object)

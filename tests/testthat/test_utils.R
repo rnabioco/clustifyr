@@ -472,3 +472,52 @@ test_that("make_comb_ref uses correct sep", {
                         sep = "AAA")
   expect_true((ncol(ref2) > ncol(cbmc_ref)) & grepl("AAA", colnames(ref2)[12]))
 })
+
+test_that("cor_to_call renaming with suffix input works as intended, per_cell or otherwise", {
+  res <- clustify(
+    input = pbmc4k_matrix,
+    metadata = pbmc4k_meta,
+    ref_mat = pbmc_bulk_matrix,
+    query_genes = pbmc4k_vargenes,
+    cluster_col = "cluster"
+  )
+  call1 <- cor_to_call(res,
+                       metadata = pbmc4k_meta,
+                       col = "cluster",
+                       collapse_to_cluster = FALSE,
+                       threshold = 0.5,
+                       rename_suff = "a"
+  )
+  res2 <- clustify(
+    input = pbmc4k_matrix,
+    metadata = pbmc4k_meta,
+    ref_mat = pbmc_bulk_matrix,
+    query_genes = pbmc4k_vargenes,
+    cluster_col = "cluster",
+    per_cell = T
+  )
+  call2 <- cor_to_call(res2,
+                       metadata = pbmc4k_meta,
+                       col = "rn",
+                       collapse_to_cluster = "cluster",
+                       threshold = 0,
+                       rename_suff = "a"
+  )
+  expect_true("a_type" %in% colnames(call1) & "a_type" %in% colnames(call2))
+})
+
+test_that("renaming with suffix input works as intended with clusify wrapper", {
+  res <- clustify(
+    input = s_small,
+    ref_mat = pbmc_bulk_matrix,
+    cluster_col = "res.1",
+    rename_suff = "a"
+  )
+  res2 <- clustify(
+    input = s_small3,
+    ref_mat = pbmc_bulk_matrix,
+    cluster_col = "RNA_snn_res.1",
+    rename_suff = "a"
+  )
+  expect_true(!is.null(res))
+})

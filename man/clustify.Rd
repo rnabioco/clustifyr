@@ -17,12 +17,14 @@ clustify(input, ...)
 \method{clustify}{seurat}(input, ref_mat, query_genes = NULL,
   per_cell = FALSE, num_perm = 0, cluster_col = NULL,
   compute_method = "spearman", use_var_genes = TRUE, dr = "tsne",
-  seurat_out = TRUE, threshold = 0, verbose = F, rm0 = F, ...)
+  seurat_out = TRUE, threshold = 0, verbose = F, rm0 = F,
+  rename_suff = NULL, ...)
 
 \method{clustify}{Seurat}(input, ref_mat, query_genes = NULL,
   per_cell = FALSE, num_perm = 0, cluster_col = NULL,
   compute_method = "spearman", use_var_genes = TRUE, dr = "tsne",
-  seurat_out = TRUE, threshold = 0, verbose = F, rm0 = F, ...)
+  seurat_out = TRUE, threshold = 0, verbose = F, rm0 = F,
+  rename_suff = NULL, ...)
 }
 \arguments{
 \item{input}{single-cell expression matrix or Seurat object}
@@ -59,6 +61,8 @@ column of metadata if not supplied. Not required if running correlation per cell
 
 \item{seurat_out}{output cor matrix or called seurat object}
 
+\item{rename_suff}{suffix to add to type and r column names}
+
 \item{ref_mat}{reference expression matrix}
 
 \item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
@@ -110,6 +114,8 @@ column of metadata if not supplied. Not required if running correlation per cell
 \item{verbose}{whether to report certain variables chosen}
 
 \item{rm0}{consider 0 as missing data, recommended for per_cell}
+
+\item{rename_suff}{suffix to add to type and r column names}
 
 \item{...}{additional arguments to pass to compute_method function}
 }
