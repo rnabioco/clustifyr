@@ -5,7 +5,8 @@
 \title{Plot similarity measures on heatmap}
 \usage{
 plot_cor_heatmap(correlation_matrix, metadata = NULL,
-  cluster_col = NULL, col = not_pretty_palette, ...)
+  cluster_col = NULL, col = not_pretty_palette, legend_title = NULL,
+  ...)
 }
 \arguments{
 \item{correlation_matrix}{input similarity matrix}
@@ -16,6 +17,8 @@ plot_cor_heatmap(correlation_matrix, metadata = NULL,
 metadata if not supplied.}
 
 \item{col}{color ramp to use}
+
+\item{legend_title}{legend title to pass to Heatmap}
 
 \item{...}{passed to Heatmap}
 }
