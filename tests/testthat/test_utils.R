@@ -317,6 +317,12 @@ test_that("ref_feature_select chooses the correct number of features", {
   expect_true(length(res) == 5)
 })
 
+test_that("ref_feature_select chooses the correct number of features with options", {
+  pbmc4k_avg <- average_clusters(pbmc4k_matrix, pbmc4k_meta)
+  res <- ref_feature_select(pbmc4k_avg[1:100, ], 5, mode = "cor")
+  expect_true(length(res) == 5)
+})
+
 test_that("feature_select_PCA will log transform", {
   res <- feature_select_PCA(pbmc_bulk_matrix, log_scale = F)
   res2 <- feature_select_PCA(pbmc_bulk_matrix, log_scale = T)
@@ -520,4 +526,11 @@ test_that("renaming with suffix input works as intended with clusify wrapper", {
     rename_suff = "a"
   )
   expect_true(!is.null(res))
+})
+
+test_that("ref_marker_select works with cutoffs", {
+  res1 <-ref_marker_select(cbmc_ref, cut = 0)
+  mm <- matrixize_markers(res1, n = 5, unique = T, remove_rp = T)
+  res2 <- ref_marker_select(cbmc_ref, cut = 2)
+  expect_true(nrow(res1) != nrow(res2))
 })

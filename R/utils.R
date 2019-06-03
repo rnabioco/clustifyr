@@ -858,24 +858,30 @@ overcluster_test <- function(expr,
 #'
 #' @param mat reference matrix
 #' @param n number of genes to return
+#' @param mode the method of selecting features
 #' @param rm.lowvar whether to remove lower variation genes first
 #'
 #' @export
 ref_feature_select <- function(mat,
                                n = 3000,
+                               mode = "var",
                                rm.lowvar = T) {
   if (rm.lowvar == T) {
     v <- RowVar(mat)
     v2 <- v[order(-v)][1:(length(v) / 2)]
-    mat <- mat[names(v2), ]
+    mat <- mat[names(v2)[!is.na(names(v2))], ]
   }
 
-  cor_mat <- cor(t(as.matrix(mat)), method = "spearman")
-  diag(cor_mat) <- rep(0, times = nrow(cor_mat))
-  cor_mat <- abs(cor_mat)
-  score <- apply(cor_mat, 1, max, na.rm = T)
-  score <- score[order(-score)]
-  cor_genes <- names(score[1:n])
+  if (mode == "cor") {
+    cor_mat <- cor(t(as.matrix(mat)), method = "spearman")
+    diag(cor_mat) <- rep(0, times = nrow(cor_mat))
+    cor_mat <- abs(cor_mat)
+    score <- apply(cor_mat, 1, max, na.rm = T)
+    score <- score[order(-score)]
+    cor_genes <- names(score[1:n])
+  } else if (mode == "var") {
+    cor_genes <- names(v2[1:n])
+  }
   cor_genes
 }
 
@@ -1058,4 +1064,49 @@ make_comb_ref <- function(ref_mat, log_scale = T, sep = "_and_") {
     new_mat <- log1p(new_mat)
   }
   new_mat
+}
+
+#' marker selection from reference matrix
+#'
+#' @param mat reference matrix
+#' @param cut an expression minimum cutoff
+#' @param arrange whether to arrange (lower means better)
+#' @param compto compare max expression to the value of next 1 or more
+#'
+#' @export
+ref_marker_select <- function(mat, cut = 0.5, arrange = T, compto = 1) {
+  mat <- mat[!is.na(rownames(mat)),]
+  mat <- mat[Matrix::rowSums(mat) != 0,]
+  ref_cols <- colnames(mat)
+  res <- apply(mat, 1, marker_select, ref_cols, cut, compto = compto)
+  if (class(res) == "list") {
+    res <- res[!sapply(res, is.null)]
+  }
+  resdf <- t(as.data.frame(res, stringsAsFactors = F))
+  resdf<- tibble::rownames_to_column(as.data.frame(resdf, stringsAsFactors = F), "gene")
+  colnames(resdf) <- c("gene", "cluster", "ratio")
+  resdf <- dplyr::mutate(resdf, ratio = as.numeric(ratio))
+  if (arrange == T) {
+    resdf <- dplyr::group_by(resdf, cluster)
+    resdf <- dplyr::arrange(resdf, ratio, .by_group = T)
+    resdf <- dplyr::ungroup(resdf)
+  }
+  resdf
+}
+
+#' decide for one gene whether it is a marker for a certain cell type
+#' @param row1 a numeric vector of expression values (row)
+#' @param cols a vector of cell types (column)
+#' @param mat reference expression matrix
+#' @param cut an expression minimum cutoff
+#' @param compto compare max expression to the value of next 1 or more
+#'
+#' @export
+marker_select <- function(row1, cols, cut = 1, compto = 1) {
+  row_sorted <- sort(row1, decreasing = TRUE)
+  col_sorted <- names(row_sorted)
+  num_sorted <- unname(row_sorted)
+  if (num_sorted[1] >= cut) {
+    return(c(col_sorted[1], (num_sorted[1 + compto]/num_sorted[1])))
+  }
 }
