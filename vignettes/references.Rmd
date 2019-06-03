@@ -210,6 +210,14 @@ mm <- matrixize_markers(
   n = 10
 )
 head(mm)
+
+# get markers from ref_matrix, and then matrixize_markers
+cbmc_m <- matrixize_markers(
+  ref_marker_select(cbmc_ref),
+  remove_rp = T,
+  unique = T,
+  n = 3
+)
 ```
 
 ## Prebuilt references, in clustifyR
