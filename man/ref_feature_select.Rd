@@ -4,12 +4,14 @@
 \alias{ref_feature_select}
 \title{feature select from reference matrix}
 \usage{
-ref_feature_select(mat, n = 3000, rm.lowvar = T)
+ref_feature_select(mat, n = 3000, mode = "var", rm.lowvar = T)
 }
 \arguments{
 \item{mat}{reference matrix}
 
 \item{n}{number of genes to return}
+
+\item{mode}{the method of selecting features}
 
 \item{rm.lowvar}{whether to remove lower variation genes first}
 }
