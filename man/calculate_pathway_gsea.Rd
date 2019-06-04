@@ -15,6 +15,8 @@ calculate_pathway_gsea(mat, pathway_list, n_perm = 1000, scale = T,
 \item{n_perm}{Number of permutation for fgsea function. Defaults to 1000.}
 
 \item{scale}{convert expr_mat into zscores prior to running GSEA?, default = FALSE}
+
+\item{no_warnings}{suppress warnings from gsea ties}
 }
 \description{
 Convert expression matrix to GSEA pathway scores (would take a similar place in workflow before average_clusters/binarize)

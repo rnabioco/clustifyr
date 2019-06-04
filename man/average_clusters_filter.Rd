@@ -20,9 +20,11 @@ averaging will be done on unlogged data}
 
 \item{filter_on}{column in cluster_info to filter on}
 
+\item{group_by}{column name to use for cluster identity}
+
 \item{filter_method}{"<", "==", ">" compared to filter_value}
 
-\item{filter_value}{}
+\item{filter_value}{baseline minimum as background cutoff}
 }
 \description{
 Average expression values per cluster, filtered by set parameter, defaults to calculating background

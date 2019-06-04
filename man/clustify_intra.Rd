@@ -28,11 +28,6 @@ column of metadata if not supplied. Not required if running correlation per cell
 \item{compute_method}{method(s) for computing similarity scores}
 
 \item{...}{additional arguments to pass to compute_method function}
-
-\item{num_perm}{number of permutations, set to 0 by default}
-
-\item{use_var_genes}{if providing a seurat object, use the variable genes
-(stored in seurat_object@var.genes) as the query_genes.}
 }
 \description{
 Intra-experiment cluster projection for one sample/set to the rest

@@ -17,8 +17,6 @@ use_seurat_comp(seurat_object, cluster_col = "classified",
 \item{assay_name}{any additional assay data, such as ADT, to include. If more than 1, pass a vector of names}
 
 \item{method}{whether to take mean (default) or median}
-
-\item{seurat3}{if using newest version}
 }
 \description{
 Function to convert labelled seurat object to avg expression matrix

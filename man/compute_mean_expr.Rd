@@ -6,6 +6,13 @@
 \usage{
 compute_mean_expr(expr_mat, sc_assign, sc_clust)
 }
+\arguments{
+\item{expr_mat}{matrix of gene expression}
+
+\item{sc_assign}{vector of cluster assignments}
+
+\item{sc_clust}{unique vector of cluster assignments}
+}
 \description{
 compute mean of clusters
 }
