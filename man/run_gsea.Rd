@@ -21,6 +21,8 @@ matches columns in \code{expr_mat}. Not required if running per cell.}
 \item{per_cell}{if true run per cell, otherwise per cluster.}
 
 \item{scale}{convert expr_mat into zscores prior to running GSEA?, default = FALSE}
+
+\item{no_warnings}{suppress warnings from gsea ties}
 }
 \description{
 Use fgsea algorithm to compute normalized enrichment scores and pvalues for gene

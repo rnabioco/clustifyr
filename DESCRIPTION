@@ -29,6 +29,8 @@ Imports:
     cowplot,
     dplyr,
     tidyr,
+    readr,
+    stringr,
     scales,
     fgsea
 Suggests:
