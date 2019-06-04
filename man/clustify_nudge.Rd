@@ -37,7 +37,11 @@ the expr_mat and ref_mat will be used for comparision.}
 
 \item{compute_method}{method(s) for computing similarity scores}
 
+\item{weight}{relative weight for the gene list scores, when added to correlation score}
+
 \item{seurat_out}{output cor matrix or called seurat object}
+
+\item{threshold}{identity calling minimum score threshold}
 
 \item{dr}{stored dimension reduction}
 

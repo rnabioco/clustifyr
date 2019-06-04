@@ -4,7 +4,7 @@
 \alias{get_best_match_matrix}
 \title{Function to make best call from correlation matrix}
 \usage{
-get_best_match_matrix(correlation_matrix)
+get_best_match_matrix(cor_mat)
 }
 \arguments{
 \item{cor_mat}{correlation matrix}

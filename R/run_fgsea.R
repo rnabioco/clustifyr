@@ -9,9 +9,16 @@
 #' @param n_perm Number of permutation for fgsea function. Defaults to 1000.
 #' @param per_cell if true run per cell, otherwise per cluster.
 #' @param scale convert expr_mat into zscores prior to running GSEA?, default = FALSE
+#' @param no_warnings suppress warnings from gsea ties
+#'
 #' @export
-run_gsea <- function(expr_mat, query_genes, cluster_ids = NULL,
-                     n_perm = 1000, per_cell = FALSE, scale = FALSE, no_warnings = T) {
+run_gsea <- function(expr_mat,
+                     query_genes,
+                     cluster_ids = NULL,
+                     n_perm = 1000,
+                     per_cell = FALSE,
+                     scale = FALSE,
+                     no_warnings = T) {
   if (!is.list(query_genes)) {
     geneset_list <- list("query_genes" = query_genes)
   } else {

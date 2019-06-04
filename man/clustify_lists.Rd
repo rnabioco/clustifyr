@@ -64,6 +64,8 @@ averaging will be done on unlogged data}
 
 \item{seurat_out}{output cor matrix or called seurat object}
 
+\item{threshold}{identity calling minimum score threshold}
+
 \item{input}{seurat object}
 
 \item{per_cell}{compare per cell or per cluster}
@@ -125,6 +127,8 @@ averaging will be done on unlogged data}
 \item{dr}{stored dimension reduction}
 
 \item{seurat_out}{output cor matrix or called seurat object}
+
+\item{threshold}{identity calling minimum score threshold}
 
 \item{...}{passed to matrixize_markers}
 }

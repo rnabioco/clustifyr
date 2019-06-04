@@ -137,14 +137,21 @@ permute_similarity <- function(expr_mat,
 }
 
 #' compute mean of clusters
+#' @param expr_mat matrix of gene expression
+#' @param sc_assign vector of cluster assignments
+#' @param sc_clust unique vector of cluster assignments
+#'
 #' @export
-compute_mean_expr <- function(expr_mat, sc_assign, sc_clust) {
+compute_mean_expr <- function(expr_mat,
+                              sc_assign,
+                              sc_clust) {
   sapply(sc_clust, function(x) Matrix::rowMeans(expr_mat[, sc_assign == x, drop = FALSE]))
 }
 
 #' compute similarity
 #' @param sc_avg query data matrix
 #' @param ref_mat reference data matrix
+#' @param compute_method method(s) for computing similarity scores
 #' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @export
 calc_similarity <- function(sc_avg,

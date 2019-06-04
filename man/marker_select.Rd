@@ -14,8 +14,6 @@ marker_select(row1, cols, cut = 1, compto = 1)
 \item{cut}{an expression minimum cutoff}
 
 \item{compto}{compare max expression to the value of next 1 or more}
-
-\item{mat}{reference expression matrix}
 }
 \description{
 decide for one gene whether it is a marker for a certain cell type

@@ -25,7 +25,7 @@ added weight}
 
 \item{labels}{vector or dataframe of cluster names}
 
-\item{remove_rp}{do not include rps, rpl, rp\link{1-9} in markers}
+\item{remove_rp}{do not include rps, rpl, rp1-9 in markers}
 }
 \description{
 convert candidate genes list into matrix
