@@ -5,8 +5,6 @@
 #' @param var.genes_only whether to keep only var.genes in the final matrix output, could also look up genes used for PCA
 #' @param assay_name any additional assay data, such as ADT, to include. If more than 1, pass a vector of names
 #' @param method whether to take mean (default) or median
-#' @param seurat3 if using newest version
-
 #'
 #' @export
 use_seurat_comp <- function(seurat_object,
@@ -59,8 +57,6 @@ use_seurat_comp <- function(seurat_object,
 #' @param var.genes_only whether to keep only var.genes in the final matrix output, could also look up genes used for PCA
 #' @param assay_name any additional assay data, such as ADT, to include. If more than 1, pass a vector of names
 #' @param method whether to take mean (default) or median
-#' @param seurat3 if using newest version
-
 #'
 #' @export
 use_seurat3_comp <- function(seurat_object,

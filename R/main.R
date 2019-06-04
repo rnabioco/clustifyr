@@ -139,6 +139,7 @@ clustify.default <- function(input,
 #'  (stored in seurat_object@var.genes) as the query_genes.
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
+#' @param threshold identity calling minimum correlation score threshold
 #' @param verbose whether to report certain variables chosen
 #' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param rename_suff suffix to add to type and r column names
@@ -242,6 +243,7 @@ clustify.seurat <- function(input,
 #'  (stored in seurat_object@var.genes) as the query_genes.
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
+#' @param threshold identity calling minimum correlation score threshold
 #' @param verbose whether to report certain variables chosen
 #' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param rename_suff suffix to add to type and r column names
@@ -446,6 +448,7 @@ clustify_lists.default <- function(input,
 #' -log10 transform p-value
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
+#' @param threshold identity calling minimum score threshold
 
 #' @param ... passed to matrixize_markers
 #'
@@ -527,6 +530,7 @@ clustify_lists.seurat <- function(input,
 #' -log10 transform p-value
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
+#' @param threshold identity calling minimum score threshold
 
 #' @param ... passed to matrixize_markers
 clustify_lists.Seurat <- function(input,

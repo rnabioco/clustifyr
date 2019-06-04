@@ -104,6 +104,7 @@ pretty_palette2 <- scales::brewer_pal(palette = "Reds")(9)
 not_pretty_palette <- scales::brewer_pal(palette = "Greys")(9)
 
 #' Expanded color palette ramp for plotting discrete variables
+#' @param n number of colors to use
 #' @export
 pretty_palette_ramp_d <- grDevices::colorRampPalette(scales::brewer_pal(palette = "Paired")(12))
 
@@ -145,8 +146,8 @@ plot_cor <- function(correlation_matrix,
   cor_df <- tibble::rownames_to_column(cor_df, cluster_col)
   cor_df_long <- tidyr::gather(
     cor_df,
-    ref_cluster,
-    expr,
+    "ref_cluster",
+    "expr",
     -dplyr::matches(cluster_col)
   )
 

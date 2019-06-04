@@ -97,8 +97,8 @@ percent_clusters <- function(mat, cluster_info,
 #' @param cor_mat correlation matrix
 #'
 #' @export
-get_best_match_matrix <- function(correlation_matrix) {
-  best_mat <- as.data.frame(t(apply(correlation_matrix, 1, function(x) x - max(x))))
+get_best_match_matrix <- function(cor_mat) {
+  best_mat <- as.data.frame(t(apply(cor_mat, 1, function(x) x - max(x))))
   best_mat[best_mat == 0] <- "1"
   best_mat[best_mat != "1"] <- "0"
 
@@ -169,10 +169,7 @@ get_common_elements <- function(...) {
 #' @param sample_col column in metadata that contains sample/subset info
 #' @param sample_id ids in column to serve as reference
 #' @param per_cell if true run per cell, otherwise per cluster.
-#' @param num_perm number of permutations, set to 0 by default
 #' @param compute_method method(s) for computing similarity scores
-#' @param use_var_genes if providing a seurat object, use the variable genes
-#'  (stored in seurat_object@var.genes) as the query_genes.
 #' @param ... additional arguments to pass to compute_method function
 #'
 #' @export
@@ -217,8 +214,9 @@ clustify_intra <- function(expr_mat,
 #' @param log_scale input data is natural log,
 #' averaging will be done on unlogged data
 #' @param filter_on column in cluster_info to filter on
+#' @param group_by column name to use for cluster identity
 #' @param filter_method "<", "==", ">" compared to filter_value
-#' @param filter_value
+#' @param filter_value baseline minimum as background cutoff
 #'
 #' @export
 average_clusters_filter <- function(mat, cluster_info,
@@ -227,6 +225,7 @@ average_clusters_filter <- function(mat, cluster_info,
                                     group_by = NULL,
                                     filter_method = "<=",
                                     filter_value = 300) {
+  cell_ids <- 0
   eval(parse(text = paste0("cell_ids <- cluster_info[[filter_on]] ", filter_method, "filter_value")))
   if (sum(cell_ids) == 0) {
     stop("no cells kept after filtering")
@@ -280,6 +279,7 @@ remove_background <- function(mat, background, n = 0) {
 #' @param pathway_list a list of vectors, each named for a specific pathway, or dataframe
 #' @param n_perm Number of permutation for fgsea function. Defaults to 1000.
 #' @param scale convert expr_mat into zscores prior to running GSEA?, default = FALSE
+#' @param no_warnings suppress warnings from gsea ties
 
 #' @export
 
@@ -529,11 +529,13 @@ clustify_nudge <- function(input, ...) {
 #' @param cluster_col column in metadata that contains cluster ids per cell. Will default to first
 #' column of metadata if not supplied. Not required if running correlation per cell.
 #' @param compute_method method(s) for computing similarity scores
+#' @param weight relative weight for the gene list scores, when added to correlation score
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
-#' @param ... passed to matrixize_markers
+#' @param threshold identity calling minimum score threshold
 #' @param norm whether and how the results are normalized
 #' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
+#' @param ... passed to matrixize_markers
 
 #' @export
 clustify_nudge.seurat <- function(input,
@@ -1007,6 +1009,10 @@ RowVar <- function(x, na.rm = T) {
 #' @param mat expression matrix
 #' @param n number per cluster or fraction to keep
 #' @param keep_cluster_proportions whether to subsample
+#' @param cluster_info data.frame or vector containing cluster assignments per cell.
+#' Order must match column order in supplied matrix. If a data.frame
+#' provide the cluster_col parameters.
+#' @param cluster_col column in cluster_info with cluster number
 #' @param set_seed random seed
 
 #' @export
@@ -1056,7 +1062,7 @@ make_comb_ref <- function(ref_mat, log_scale = T, sep = "_and_") {
   if (log_scale == T) {
     ref_mat <- expm1(ref_mat)
   }
-  combs <- combn(x = colnames(ref_mat), m = 2, simplify = F)
+  combs <- utils::combn(x = colnames(ref_mat), m = 2, simplify = F)
   comb_mat <- sapply(combs, FUN = function(x) Matrix::rowMeans(ref_mat[, unlist(x)]))
   colnames(comb_mat) <- sapply(combs, FUN = function(x) stringr::str_c(unlist(x), collapse = sep))
   new_mat <- cbind(ref_mat, comb_mat)
@@ -1097,7 +1103,6 @@ ref_marker_select <- function(mat, cut = 0.5, arrange = T, compto = 1) {
 #' decide for one gene whether it is a marker for a certain cell type
 #' @param row1 a numeric vector of expression values (row)
 #' @param cols a vector of cell types (column)
-#' @param mat reference expression matrix
 #' @param cut an expression minimum cutoff
 #' @param compto compare max expression to the value of next 1 or more
 #'

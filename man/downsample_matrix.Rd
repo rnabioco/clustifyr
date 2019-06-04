@@ -14,6 +14,12 @@ downsample_matrix(mat, n = 1, keep_cluster_proportions = T,
 
 \item{keep_cluster_proportions}{whether to subsample}
 
+\item{cluster_info}{data.frame or vector containing cluster assignments per cell.
+Order must match column order in supplied matrix. If a data.frame
+provide the cluster_col parameters.}
+
+\item{cluster_col}{column in cluster_info with cluster number}
+
 \item{set_seed}{random seed}
 }
 \description{

@@ -61,6 +61,8 @@ column of metadata if not supplied. Not required if running correlation per cell
 
 \item{seurat_out}{output cor matrix or called seurat object}
 
+\item{threshold}{identity calling minimum correlation score threshold}
+
 \item{rename_suff}{suffix to add to type and r column names}
 
 \item{ref_mat}{reference expression matrix}
@@ -110,6 +112,8 @@ column of metadata if not supplied. Not required if running correlation per cell
 \item{dr}{stored dimension reduction}
 
 \item{seurat_out}{output cor matrix or called seurat object}
+
+\item{threshold}{identity calling minimum correlation score threshold}
 
 \item{verbose}{whether to report certain variables chosen}
 

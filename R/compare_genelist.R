@@ -32,7 +32,7 @@ binarize_expr <- function(expr_mat,
 #' added weight
 #' @param unique whether to use only unique markers to 1 cluster
 #' @param labels vector or dataframe of cluster names
-#' @param remove_rp do not include rps, rpl, rp[1-9] in markers
+#' @param remove_rp do not include rps, rpl, rp1-9 in markers
 #'
 #' @export
 matrixize_markers <- function(marker_df,
