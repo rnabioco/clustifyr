@@ -24,11 +24,12 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
                       scale_limits = NULL,
                       do.label = FALSE,
                       do.legend = TRUE) {
-  if ((length(unique(data[[feature]])) > 12) & identical(c_cols, pretty_palette) & (typeof(data[[feature]]) %in% c(
+  if ((length(unique(data[[feature]])) > 12) & identical(c_cols, pretty_palette2) & (typeof(data[[feature]]) %in% c(
     "character",
-    "logical"
+    "logical",
+    "factor"
   ))) {
-    # print("using ramp colors instead")
+    #print("too many required, using ramp colors instead")
     c_cols <- pretty_palette_ramp_d(length(unique(data[[feature]])))
     d_cols <- pretty_palette_ramp_d(length(unique(data[[feature]])))
   }

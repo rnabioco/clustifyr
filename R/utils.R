@@ -9,13 +9,15 @@
 #' @param cluster_col column in cluster_info with cluster number
 #' @param low_threshold option to remove clusters with too few cells
 #' @param method whether to take mean (default) or median
+#' @param output_log whether to report log results
 #'
 #' @export
 average_clusters <- function(mat, cluster_info,
                              log_scale = T,
                              cluster_col = "cluster",
                              low_threshold = 0,
-                             method = "mean") {
+                             method = "mean",
+                             output_log = T) {
   if (is.vector(cluster_info)) {
     cluster_ids <- split(colnames(mat), cluster_info)
   } else if (is.data.frame(cluster_info) & !is.null(cluster_col)) {
@@ -40,8 +42,8 @@ average_clusters <- function(mat, cluster_info,
         } else {
           mat_data <- mat[, cell_ids, drop = FALSE]
         }
-        res <- Matrix::rowMeans(mat_data)
-        if (log_scale) {
+        res <- Matrix::rowMeans(mat_data, na.rm = T)
+        if (output_log) {
           res <- log1p(res)
         }
         res
@@ -535,6 +537,7 @@ clustify_nudge <- function(input, ...) {
 #' @param threshold identity calling minimum score threshold
 #' @param norm whether and how the results are normalized
 #' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
+#' @param mode use marker expression % or ranked cor score for nudging
 #' @param ... passed to matrixize_markers
 
 #' @export
@@ -550,6 +553,7 @@ clustify_nudge.seurat <- function(input,
                                   dr = "tsne",
                                   norm = "diff",
                                   marker_inmatrix = T,
+                                  mode = "rank",
                                   ...) {
   if (marker_inmatrix != T) {
     marker <- matrixize_markers(
@@ -557,13 +561,6 @@ clustify_nudge.seurat <- function(input,
       ...
     )
   }
-
-  resb <- gene_pct_markerm(input@data, marker,
-    input@meta.data,
-    cluster_col = cluster_col,
-    norm = norm
-  )
-
   resa <- clustify(
     input = input,
     ref_mat = ref_mat,
@@ -572,6 +569,23 @@ clustify_nudge.seurat <- function(input,
     seurat_out = F,
     per_cell = F
   )
+
+  if (mode == "pct") {
+    resb <- gene_pct_markerm(input@data,
+                             marker,
+                             input@meta.data,
+                             cluster_col = cluster_col,
+                             norm = norm
+    )} else if (mode == "rank") {
+      resb <- pos_neg_select(input@data,
+                             marker,
+                             metadata = input@meta.data,
+                             cluster_col = cluster_col,
+                             cutoff_score = norm)
+      empty_vec <- setdiff(colnames(resa), colnames(resb))
+      empty_mat <- matrix(0, nrow = nrow(resb), ncol = length(empty_vec), dimnames = list(rownames(resb), empty_vec))
+      resb <- cbind(resb, empty_mat)
+    }
 
   df_temp <- cor_to_call(resa[order(rownames(resa)), order(colnames(resa))] +
     resb[order(rownames(resb)), order(colnames(resb))] * weight,
@@ -610,6 +624,7 @@ clustify_nudge.seurat <- function(input,
 #' @param norm whether and how the results are normalized
 #' @param call make call or just return score matrix
 #' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
+#' @param mode use marker expression % or ranked cor score for nudging
 
 #' @export
 clustify_nudge.default <- function(input,
@@ -626,6 +641,7 @@ clustify_nudge.default <- function(input,
                                    norm = "diff",
                                    call = T,
                                    marker_inmatrix = T,
+                                   mode = "rank",
                                    ...) {
   if (marker_inmatrix != T) {
     marker <- matrixize_markers(
@@ -652,14 +668,6 @@ clustify_nudge.default <- function(input,
       cluster_col <- temp[["col"]]
     }
   }
-  # print(cluster_col)
-
-  resb <- gene_pct_markerm(input, marker,
-    metadata,
-    cluster_col = cluster_col,
-    norm = norm
-  )
-  # b<<-resb
 
   resa <- clustify(
     input = input,
@@ -670,7 +678,25 @@ clustify_nudge.default <- function(input,
     seurat_out = F,
     per_cell = F
   )
-  # a<<-resa
+
+  if (mode == "pct") {
+    resb <- gene_pct_markerm(input,
+                             marker,
+                             metadata,
+                             cluster_col = cluster_col,
+                             norm = norm
+    )} else if (mode == "rank") {
+      resb <- pos_neg_select(input,
+                             marker,
+                             metadata,
+                             cluster_col = cluster_col,
+                             cutoff_score = norm)
+      empty_vec <- setdiff(colnames(resa), colnames(resb))
+      empty_mat <- matrix(0, nrow = nrow(resb), ncol = length(empty_vec), dimnames = list(rownames(resb), empty_vec))
+      resb <- cbind(resb, empty_mat)
+    }
+  # a <<- resa
+  # b <<- resb
   if (call == T) {
     df_temp <- cor_to_call(resa[order(rownames(resa)), order(colnames(resa))] +
       resb[order(rownames(resb)), order(colnames(resb))] * weight,
@@ -771,6 +797,7 @@ parse_loc_object <- function(input,
 #' @param y_col column of metadata for y axis plotting
 #' @param n expand n-fold for over/under clustering
 #' @param ngenes number of genes to use for feature selection, use all genes if NULL
+#' @param query_genes vector, otherwise genes with be recalculated
 #' @param do.label whether to label each cluster at median center
 #' @param seed set seed for kmeans
 #' @param newclustering use kmeans if NULL on dr or col name for second column of clustering
@@ -784,6 +811,7 @@ overcluster_test <- function(expr,
                              y_col = "tSNE_2",
                              n = 5,
                              ngenes = NULL,
+                             query_genes = NULL,
                              do.label = T,
                              seed = 42,
                              newclustering = NULL) {
@@ -800,10 +828,14 @@ overcluster_test <- function(expr,
     n <- length(unique(metadata[[newclustering]])) / length(unique(metadata[[cluster_col]]))
   }
 
-  if (is.null(ngenes)) {
-    genes <- rownames(expr)
+  if (is.null(query_genes)) {
+    if (is.null(ngenes)) {
+      genes <- rownames(expr)
+    } else {
+      genes <- ref_feature_select(expr, ngenes)
+    }
   } else {
-    genes <- ref_feature_select(expr, ngenes)
+   genes <- query_genes
   }
   res1 <- clustify(expr,
     ref_mat,
@@ -819,6 +851,7 @@ overcluster_test <- function(expr,
     cluster_col = "new_clusters",
     seurat_out = F
   )
+  #print(length(unique(metadata[["new_clusters"]])))
   o1 <- plot_tsne(metadata,
     feature = cluster_col,
     x = x_col,
@@ -1114,4 +1147,49 @@ marker_select <- function(row1, cols, cut = 1, compto = 1) {
   if (num_sorted[1] >= cut) {
     return(c(col_sorted[1], (num_sorted[1 + compto]/num_sorted[1])))
   }
+}
+
+#' adapt clustify to tweak score for pos and neg markers
+#' @param input single-cell expression matrix
+#' @param metadata cell cluster assignments, supplied as a vector or data.frame. If
+#' data.frame is supplied then `cluster_col` needs to be set. Not required if running correlation per cell.
+#' @param ref_mat reference expression matrix with positive and negative markers(set expression at 0)
+#' @param cluster_col column in metadata that contains cluster ids per cell. Will default to first
+#' column of metadata if not supplied. Not required if running correlation per cell.
+#' @param cutoff_n expression cutoff where genes ranked below n are considered non-expressing
+#' @param cutoff_score positive score lower than this cutoff will be considered as 0 to not influence scores
+
+#' @param ... additional arguments to pass to compute_method function
+#' @export
+pos_neg_select <- function(input,
+                           ref_mat,
+                           metadata,
+                           cluster_col = "cluster",
+                           cutoff_n = 0,
+                           cutoff_score = 0.5) {
+
+  suppressWarnings(res <- clustify(rbind(input, "clustifyr0" = 0),
+                  ref_mat,
+                  metadata,
+                  cluster_col = cluster_col,
+                  per_cell = T, verbose = T))
+  res[is.na(res)] <- 0
+  suppressWarnings(res2 <- average_clusters(t(res),
+                   metadata,
+                   cluster_col = cluster_col,
+                   log_scale = F,
+                   output_log = F))
+  res2 <- t(res2)
+
+  if (!(is.null(cutoff_score))) {
+    res2 <- apply(res2, 2, function(x) {
+      maxr <- max(x)
+      if (maxr > 0.1) {
+        x[x > 0 & x < cutoff_score * maxr] <- 0
+      }
+      x
+      })
+  }
+
+  res2
 }

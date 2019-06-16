@@ -12,13 +12,13 @@ clustify_nudge(input, ...)
   cluster_col = NULL, query_genes = NULL,
   compute_method = "spearman", weight = 1, seurat_out = T,
   threshold = -Inf, dr = "tsne", norm = "diff",
-  marker_inmatrix = T, ...)
+  marker_inmatrix = T, mode = "rank", ...)
 
 \method{clustify_nudge}{default}(input, ref_mat, marker, metadata = NULL,
   cluster_col = NULL, query_genes = NULL,
   compute_method = "spearman", weight = 1, seurat_out = T,
   threshold = -Inf, dr = "tsne", norm = "diff", call = T,
-  marker_inmatrix = T, ...)
+  marker_inmatrix = T, mode = "rank", ...)
 }
 \arguments{
 \item{input}{seurat 2 object}
@@ -49,6 +49,8 @@ the expr_mat and ref_mat will be used for comparision.}
 
 \item{marker_inmatrix}{whether markers genes are already in preprocessed matrix form}
 
+\item{mode}{use marker expression % or ranked cor score for nudging}
+
 \item{metadata}{cell cluster assignments, supplied as a vector or data.frame. If
 data.frame is supplied then \code{cluster_col} needs to be set.}
 
@@ -73,6 +75,8 @@ column of metadata if not supplied. Not required if running correlation per cell
 \item{norm}{whether and how the results are normalized}
 
 \item{marker_inmatrix}{whether markers genes are already in preprocessed matrix form}
+
+\item{mode}{use marker expression % or ranked cor score for nudging}
 }
 \description{
 Combined function to compare scRNA-seq data to bulk RNA-seq data and marker list
