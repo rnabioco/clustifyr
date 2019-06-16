@@ -241,7 +241,8 @@ test_that("clustify_nudge works with options and seruat2", {
     marker = cbmc_m,
     cluster_col = "res.1",
     threshold = 0.8,
-    seurat_out = F
+    seurat_out = F,
+    mode = "pct"
   )
   expect_true(nrow(res) == 4)
 })
@@ -252,7 +253,8 @@ test_that("clustify_nudge works with options and seruat3", {
     ref_mat = cbmc_ref,
     marker = cbmc_m,
     threshold = 0.8,
-    seurat_out = F
+    seurat_out = F,
+    mode = "pct"
   )
   expect_true(nrow(res) == 3)
 })
@@ -265,7 +267,8 @@ test_that("clustify_nudge works with seurat_out option", {
     cluster_col = "res.1",
     threshold = 0.8,
     seurat_out = F,
-    marker_inmatrix = F
+    marker_inmatrix = F,
+    mode = "pct"
   )
   expect_true(nrow(res) == 4)
 })
@@ -280,7 +283,8 @@ test_that("clustify_nudge works with list of markers", {
     cluster_col = "cluster",
     threshold = 0.8,
     call = F,
-    marker_inmatrix = F
+    marker_inmatrix = F,
+    mode = "pct"
   )
   expect_true(nrow(res) == 10)
 })
@@ -533,4 +537,30 @@ test_that("ref_marker_select works with cutoffs", {
   mm <- matrixize_markers(res1, n = 5, unique = T, remove_rp = T)
   res2 <- ref_marker_select(cbmc_ref, cut = 2)
   expect_true(nrow(res1) != nrow(res2))
+})
+
+test_that("pos_neg_select takes dataframe of 1 col or more", {
+  pn_ref <- data.frame("CD4" = c(1,0,0),
+                        "CD8" = c(0,0,1),
+                        row.names = c("CD4", "clustifyr0", "CD8B"))
+  pn_ref2 <- data.frame("CD8" = c(0,0,1),
+                        row.names = c("CD4", "clustifyr0", "CD8B"))
+  res <- pos_neg_select(pbmc4k_matrix, pn_ref, pbmc4k_meta, "classified")
+  res2 <- pos_neg_select(pbmc4k_matrix, pn_ref2, pbmc4k_meta, "classified")
+  expect_identical(res[,2], res2[,1])
+})
+
+test_that("pos_neg_select normalizes res", {
+  pn_ref2 <- data.frame("CD8" = c(0,0,1),
+                        row.names = c("CD4", "clustifyr0", "CD8B"))
+  res <- pos_neg_select(pbmc4k_matrix, pn_ref2, pbmc4k_meta, "classified", cutoff_score = 0.8)
+  res2 <- pos_neg_select(pbmc4k_matrix, pn_ref2, pbmc4k_meta, "classified", cutoff_score = NULL)
+  expect_true(res[1] != res2[1])
+})
+
+test_that("clustify_nudge works with pos_neg_select", {
+  pn_ref2 <- data.frame("CD8 T" = c(0,0,1),
+                        row.names = c("CD4", "clustifyr0", "CD8B"), check.names = F)
+  res <- clustify_nudge(pbmc4k_matrix, cbmc_ref, pn_ref2, metadata = pbmc4k_meta, cluster_col = "classified", norm = 0.5)
+  expect_true(all(dim(res) == c(10,3)))
 })

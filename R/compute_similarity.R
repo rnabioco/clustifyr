@@ -153,6 +153,7 @@ compute_mean_expr <- function(expr_mat,
 #' @param ref_mat reference data matrix
 #' @param compute_method method(s) for computing similarity scores
 #' @param rm0 consider 0 as missing data, recommended for per_cell
+#' @param ...  additional parameters
 #' @export
 calc_similarity <- function(sc_avg,
                             ref_mat,
