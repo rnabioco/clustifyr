@@ -5,7 +5,8 @@
 \title{Average expression values per cluster}
 \usage{
 average_clusters(mat, cluster_info, log_scale = T,
-  cluster_col = "cluster", low_threshold = 0, method = "mean")
+  cluster_col = "cluster", low_threshold = 0, method = "mean",
+  output_log = T)
 }
 \arguments{
 \item{mat}{expression matrix}
@@ -22,6 +23,8 @@ averaging will be done on unlogged data}
 \item{low_threshold}{option to remove clusters with too few cells}
 
 \item{method}{whether to take mean (default) or median}
+
+\item{output_log}{whether to report log results}
 }
 \description{
 Average expression values per cluster
