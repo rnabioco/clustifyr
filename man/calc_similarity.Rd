@@ -14,6 +14,8 @@ calc_similarity(sc_avg, ref_mat, compute_method, rm0 = F, ...)
 \item{compute_method}{method(s) for computing similarity scores}
 
 \item{rm0}{consider 0 as missing data, recommended for per_cell}
+
+\item{...}{additional parameters}
 }
 \description{
 compute similarity
