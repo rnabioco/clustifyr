@@ -39,6 +39,24 @@ test_that("average_clusters works as intended", {
   expect_equal(nrow(pbmc4k_avg2), 2663)
 })
 
+test_that("average_clusters works with disordered data", {
+  pbmc4k_meta2 <- rbind(pbmc4k_meta[151:300,], pbmc4k_meta[1:150,])
+  pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
+                                  pbmc4k_meta,
+                                  log_scale = T,
+                                  cell_col = "rn",
+                                  cluster_col = "classified"
+  )
+  pbmc4k_avg3 <- average_clusters(pbmc4k_matrix,
+                                  pbmc4k_meta2,
+                                  log_scale = T,
+                                  cell_col = "rn",
+                                  cluster_col = "classified"
+  )
+  expect_equal(pbmc4k_avg2, pbmc4k_avg3)
+})
+
+
 test_that("average_clusters detects wrong cluster ident", {
   expect_error(pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
                                                matrix(5,5),
@@ -211,6 +229,23 @@ test_that("gene_pct and gene_pct_markerm work as intended", {
   expect_true(nrow(res2) == 10)
 })
 
+test_that("gene_pct can give min or max output", {
+  res <- gene_pct(
+    pbmc4k_matrix,
+    cbmc_m$B,
+    pbmc4k_meta$cluster,
+    returning = "min"
+  )
+  res2 <- gene_pct(
+    pbmc4k_matrix,
+    cbmc_m$B,
+    pbmc4k_meta$cluster,
+    returning = "max"
+  )
+
+  expect_true(all(res2 > res))
+})
+
 test_that("gene_pct_markerm norm options work", {
   res <- gene_pct_markerm(pbmc4k_matrix,
                            cbmc_m,
@@ -279,6 +314,22 @@ test_that("clustify_nudge works with list of markers", {
     ref_mat = average_clusters(pbmc4k_matrix, pbmc4k_meta),
     metadata = pbmc4k_meta,
     marker = pbmc4k_markers,
+    query_genes = pbmc4k_vargenes,
+    cluster_col = "cluster",
+    threshold = 0.8,
+    call = F,
+    marker_inmatrix = F,
+    mode = "pct"
+  )
+  expect_true(nrow(res) == 10)
+})
+
+test_that("clustify_nudge autoconverts when markers are in matrix", {
+  res <- clustify_nudge(
+    input = pbmc4k_matrix,
+    ref_mat = cbmc_ref,
+    metadata = pbmc4k_meta,
+    marker = as.matrix(cbmc_m),
     query_genes = pbmc4k_vargenes,
     cluster_col = "cluster",
     threshold = 0.8,
@@ -551,11 +602,11 @@ test_that("pos_neg_select takes dataframe of 1 col or more", {
 })
 
 test_that("pos_neg_select normalizes res", {
-  pn_ref2 <- data.frame("CD8" = c(0,0,1),
+  pn_ref2 <- data.frame("CD4" = c(1,0.01,0),
                         row.names = c("CD4", "clustifyr0", "CD8B"))
   res <- pos_neg_select(pbmc4k_matrix, pn_ref2, pbmc4k_meta, "classified", cutoff_score = 0.8)
   res2 <- pos_neg_select(pbmc4k_matrix, pn_ref2, pbmc4k_meta, "classified", cutoff_score = NULL)
-  expect_true(res[1] != res2[1])
+  expect_true(res[2] != res2[2])
 })
 
 test_that("clustify_nudge works with pos_neg_select", {
@@ -563,4 +614,10 @@ test_that("clustify_nudge works with pos_neg_select", {
                         row.names = c("CD4", "clustifyr0", "CD8B"), check.names = F)
   res <- clustify_nudge(pbmc4k_matrix, cbmc_ref, pn_ref2, metadata = pbmc4k_meta, cluster_col = "classified", norm = 0.5)
   expect_true(all(dim(res) == c(10,3)))
+})
+
+test_that("reverse_marker_matrix takes matrix of markers input", {
+  m1 <- reverse_marker_matrix(cbmc_m)
+  m2 <- reverse_marker_matrix(as.matrix(cbmc_m))
+  expect_identical(m1, m2)
 })

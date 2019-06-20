@@ -49,7 +49,7 @@ the expr_mat and ref_mat will be used for comparision.}
 
 \item{marker_inmatrix}{whether markers genes are already in preprocessed matrix form}
 
-\item{mode}{use marker expression % or ranked cor score for nudging}
+\item{mode}{use marker expression pct or ranked cor score for nudging}
 
 \item{metadata}{cell cluster assignments, supplied as a vector or data.frame. If
 data.frame is supplied then \code{cluster_col} needs to be set.}
@@ -76,7 +76,7 @@ column of metadata if not supplied. Not required if running correlation per cell
 
 \item{marker_inmatrix}{whether markers genes are already in preprocessed matrix form}
 
-\item{mode}{use marker expression % or ranked cor score for nudging}
+\item{mode}{use marker expression pct or ranked cor score for nudging}
 }
 \description{
 Combined function to compare scRNA-seq data to bulk RNA-seq data and marker list
