@@ -5,8 +5,8 @@
 \title{Average expression values per cluster}
 \usage{
 average_clusters(mat, cluster_info, log_scale = T,
-  cluster_col = "cluster", low_threshold = 0, method = "mean",
-  output_log = T)
+  cluster_col = "cluster", cell_col = NULL, low_threshold = 0,
+  method = "mean", output_log = T)
 }
 \arguments{
 \item{mat}{expression matrix}
@@ -19,6 +19,8 @@ provide the cluster_col parameters.}
 averaging will be done on unlogged data}
 
 \item{cluster_col}{column in cluster_info with cluster number}
+
+\item{cell_col}{if provided, will reorder matrix first}
 
 \item{low_threshold}{option to remove clusters with too few cells}
 

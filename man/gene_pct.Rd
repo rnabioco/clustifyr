@@ -4,7 +4,7 @@
 \alias{gene_pct}
 \title{pct of cells in each cluster that express genelist}
 \usage{
-gene_pct(matrix, genelist, clusters)
+gene_pct(matrix, genelist, clusters, returning = "mean")
 }
 \arguments{
 \item{matrix}{expression matrix}
@@ -12,6 +12,8 @@ gene_pct(matrix, genelist, clusters)
 \item{genelist}{vector of marker genes for one identity}
 
 \item{clusters}{vector of cluster identities}
+
+\item{returning}{whether to return mean, min, or max of the gene pct in the gene list}
 }
 \description{
 pct of cells in each cluster that express genelist
