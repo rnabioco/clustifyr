@@ -16,6 +16,22 @@ test_that("output is correctly formatted", {
   expect_equal(n_clusters, nrow(res))
 })
 
+test_that("clustify takes accidental dataframe as well", {
+  res <- clustify(
+    input = as.data.frame(as.matrix(pbmc4k_matrix)),
+    metadata = pbmc4k_meta,
+    ref_mat = pbmc_bulk_matrix,
+    query_genes = pbmc4k_vargenes,
+    cluster_col = "cluster",
+    verbose = T
+  )
+  n_clusters <- length(unique(pbmc4k_meta$cluster))
+  n_ref_samples <- ncol(pbmc_bulk_matrix)
+
+  expect_equal(ncol(res), n_ref_samples)
+  expect_equal(n_clusters, nrow(res))
+})
+
 test_that("run all correlation functions", {
   results <- lapply(
     clustifyr_methods,

@@ -7,6 +7,7 @@
 #' @param log_scale input data is natural log,
 #' averaging will be done on unlogged data
 #' @param cluster_col column in cluster_info with cluster number
+#' @param cell_col if provided, will reorder matrix first
 #' @param low_threshold option to remove clusters with too few cells
 #' @param method whether to take mean (default) or median
 #' @param output_log whether to report log results
@@ -15,9 +16,15 @@
 average_clusters <- function(mat, cluster_info,
                              log_scale = T,
                              cluster_col = "cluster",
+                             cell_col = NULL,
                              low_threshold = 0,
                              method = "mean",
                              output_log = T) {
+  if (!(is.null(cell_col))) {
+    if (!(all(colnames(mat) == cluster_info[[cell_col]]))) {
+      mat <- mat[, cluster_info[[cell_col]]]
+    }
+  }
   if (is.vector(cluster_info)) {
     cluster_ids <- split(colnames(mat), cluster_info)
   } else if (is.data.frame(cluster_info) & !is.null(cluster_col)) {
@@ -448,17 +455,40 @@ cor_to_call_topn <- function(correlation_matrix,
 #' @param matrix expression matrix
 #' @param genelist vector of marker genes for one identity
 #' @param clusters vector of cluster identities
+#' @param returning whether to return mean, min, or max of the gene pct in the gene list
 #'
 #' @export
-gene_pct <- function(matrix, genelist, clusters) {
+gene_pct <- function(matrix,
+                     genelist,
+                     clusters,
+                     returning = "mean") {
   genelist <- intersect(genelist, rownames(matrix))
+  clusters[is.na(clusters)] <- "orig.NA"
   unique_clusters <- unique(clusters)
-  sapply(unique_clusters, function(x) {
-    celllist <- clusters == x
-    tmp <- matrix[genelist, celllist, drop = F]
-    tmp[tmp > 0] <- 1
-    mean(Matrix::rowSums(tmp) / ncol(tmp))
-  })
+
+
+  if (returning == "mean") {
+    sapply(unique_clusters, function(x) {
+      celllist <- clusters == x
+      tmp <- matrix[genelist, celllist, drop = F]
+      tmp[tmp > 0] <- 1
+      mean(Matrix::rowSums(tmp) / ncol(tmp))
+    })
+  } else if (returning == "min") {
+      sapply(unique_clusters, function(x) {
+        celllist <- clusters == x
+        tmp <- matrix[genelist, celllist, drop = F]
+        tmp[tmp > 0] <- 1
+        min(Matrix::rowSums(tmp) / ncol(tmp))
+    })
+  } else if (returning == "max") {
+    sapply(unique_clusters, function(x) {
+      celllist <- clusters == x
+      tmp <- matrix[genelist, celllist, drop = F]
+      tmp[tmp > 0] <- 1
+      max(Matrix::rowSums(tmp) / ncol(tmp))
+    })
+  }
 }
 
 #' pct of cells in every cluster that express a series of genelists
@@ -488,6 +518,10 @@ gene_pct_markerm <- function(matrix,
   # coerce factors in character
   if (is.factor(cluster_info)) {
     cluster_info <- as.character(cluster_info)
+  }
+
+  if (class(marker_m) != "data.frame") {
+    marker_m <- as.data.frame(marker_m)
   }
 
   out <- sapply(colnames(marker_m), function(x) {
@@ -537,7 +571,7 @@ clustify_nudge <- function(input, ...) {
 #' @param threshold identity calling minimum score threshold
 #' @param norm whether and how the results are normalized
 #' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
-#' @param mode use marker expression % or ranked cor score for nudging
+#' @param mode use marker expression pct or ranked cor score for nudging
 #' @param ... passed to matrixize_markers
 
 #' @export
@@ -624,7 +658,7 @@ clustify_nudge.seurat <- function(input,
 #' @param norm whether and how the results are normalized
 #' @param call make call or just return score matrix
 #' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
-#' @param mode use marker expression % or ranked cor score for nudging
+#' @param mode use marker expression pct or ranked cor score for nudging
 
 #' @export
 clustify_nudge.default <- function(input,
@@ -695,8 +729,7 @@ clustify_nudge.default <- function(input,
       empty_mat <- matrix(0, nrow = nrow(resb), ncol = length(empty_vec), dimnames = list(rownames(resb), empty_vec))
       resb <- cbind(resb, empty_mat)
     }
-  # a <<- resa
-  # b <<- resb
+
   if (call == T) {
     df_temp <- cor_to_call(resa[order(rownames(resa)), order(colnames(resa))] +
       resb[order(rownames(resb)), order(colnames(resb))] * weight,
@@ -916,6 +949,8 @@ ref_feature_select <- function(mat,
     cor_genes <- names(score[1:n])
   } else if (mode == "var") {
     cor_genes <- names(v2[1:n])
+  } else if (mode == "hybrid") {
+
   }
   cor_genes
 }
@@ -1158,7 +1193,6 @@ marker_select <- function(row1, cols, cut = 1, compto = 1) {
 #' column of metadata if not supplied. Not required if running correlation per cell.
 #' @param cutoff_n expression cutoff where genes ranked below n are considered non-expressing
 #' @param cutoff_score positive score lower than this cutoff will be considered as 0 to not influence scores
-
 #' @param ... additional arguments to pass to compute_method function
 #' @export
 pos_neg_select <- function(input,
@@ -1168,7 +1202,7 @@ pos_neg_select <- function(input,
                            cutoff_n = 0,
                            cutoff_score = 0.5) {
 
-  suppressWarnings(res <- clustify(rbind(input, "clustifyr0" = 0),
+  suppressWarnings(res <- clustify(rbind(input, "clustifyr0" = 0.01),
                   ref_mat,
                   metadata,
                   cluster_col = cluster_col,
@@ -1192,4 +1226,40 @@ pos_neg_select <- function(input,
   }
 
   res2
+}
+
+#' generate negative markers from a list of exclusive positive markers
+#' @param mat matrix or dataframe of markers
+#' @export
+reverse_marker_matrix <- function(mat) {
+  full_vec <- as.vector(t(mat))
+  mat_rev <- apply(mat, 2, function(x) {
+    full_vec[!(full_vec %in% x)]
+  })
+  as.data.frame(mat_rev)
+}
+
+#' takes files with positive and negative markers, as described in garnett, and returns list of markers
+#' @param filename txt file to load
+#' @export
+file_marker_parse <- function(filename) {
+  lines <- readLines(filename)
+  count <- 0
+  ident_names <- c()
+  ident_pos <- c()
+  ident_neg <- c()
+  for (line in lines) {
+    tag <- substr(line, 1, 1)
+    if (tag == ">") {
+      count <- count + 1
+      ident_names[count] <- substr(line, 2, nchar(line))
+    } else if (tag == "e") {
+      ident_pos[count] <- strsplit(substr(line, 12, nchar(line)), split = ", ")
+    } else if (tag == "n") {
+      ident_neg[count] <- strsplit(substr(line, 16, nchar(line)), split = ", ")
+    }
+  }
+  names(ident_neg) <- ident_names
+  names(ident_pos) <- ident_names
+  list("pos" = ident_pos, "neg" = ident_neg)
 }

@@ -38,7 +38,7 @@ clustify.default <- function(input,
                              lookuptable = NULL,
                              rm0 = F,
                              ...) {
-  if (!(stringr::str_detect(class(input), "atrix"))) {
+  if (!(stringr::str_detect(class(input), "atrix|data\\.frame"))) {
     input_original <- input
     temp <- parse_loc_object(input,
                              type = class(input),
@@ -93,6 +93,7 @@ clustify.default <- function(input,
       stop("metadata not formatted correctly,
            supply either a character vector or a dataframe")
     }
+    cluster_ids[is.na(cluster_ids)] <- "orig.NA"
   }
 
   if (per_cell) {
