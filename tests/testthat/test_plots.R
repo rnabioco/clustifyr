@@ -36,8 +36,8 @@ test_that("call plots can be generated", {
   )
 
   expect_error(plts <- plot_cor(res, pbmc4k_meta,
-                                ref_data_to_plot = "nonsense",
-                                cluster_col = "cluster"
+    ref_data_to_plot = "nonsense",
+    cluster_col = "cluster"
   ))
 
   expect_true(is.list(plts))
@@ -46,13 +46,13 @@ test_that("call plots can be generated", {
 
 test_that("plot_cor for all clusters by default", {
   plts <- plot_cor(res,
-                   pbmc4k_meta,
-                   cluster_col = "cluster"
+    pbmc4k_meta,
+    cluster_col = "cluster"
   )
 
   plts2 <- plot_cor(res2,
-                   pbmc4k_meta,
-                   cluster_col = "cluster"
+    pbmc4k_meta,
+    cluster_col = "cluster"
   )
 
   expect_true(length(plts) == 14)
@@ -60,15 +60,15 @@ test_that("plot_cor for all clusters by default", {
 
 test_that("plot_cor works with scale_legends option", {
   plts <- plot_cor(res,
-                   pbmc4k_meta,
-                   cluster_col = "cluster",
-                   scale_legends = T
+    pbmc4k_meta,
+    cluster_col = "cluster",
+    scale_legends = T
   )
 
   plts2 <- plot_cor(res,
-                   pbmc4k_meta,
-                   cluster_col = "cluster",
-                   scale_legends = c(0,1)
+    pbmc4k_meta,
+    cluster_col = "cluster",
+    scale_legends = c(0, 1)
   )
   expect_true(length(plts) == 14)
 })
@@ -91,14 +91,14 @@ test_that("plot_gene automatically plots all cells", {
     "TNPO3"
   )
   expect_error(plts <- plot_gene(pbmc4k_matrix,
-                                 tibble::column_to_rownames(pbmc4k_meta, "rn"),
-                                 genes = genes,
-                                 cell_col = "nonsense"
+    tibble::column_to_rownames(pbmc4k_meta, "rn"),
+    genes = genes,
+    cell_col = "nonsense"
   ))
 
   plts <- plot_gene(pbmc4k_matrix,
-                    tibble::column_to_rownames(pbmc4k_meta, "rn"),
-                    genes = genes
+    tibble::column_to_rownames(pbmc4k_meta, "rn"),
+    genes = genes
   )
 
   expect_true(all(sapply(plts, ggplot2::is.ggplot)))
@@ -166,8 +166,9 @@ test_that("plot_cor_heatmap returns a ggplot object", {
 
 test_that("plot_call works on defaults", {
   g <- plot_call(res,
-                 pbmc4k_meta,
-                 cluster_col = "cluster")
+    pbmc4k_meta,
+    cluster_col = "cluster"
+  )
 
   expect_true(ggplot2::is.ggplot(g[[1]]))
 })

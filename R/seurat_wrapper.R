@@ -13,12 +13,13 @@ use_seurat_comp <- function(seurat_object,
                             assay_name = NULL,
                             method = "mean") {
   if (class(seurat_object) == "Seurat") {
-    return(use_seurat3_comp(seurat_object,
-                            cluster_col,
-                            var.genes_only,
-                            assay_name,
-                            method
-                            ))
+    return(use_seurat3_comp(
+      seurat_object,
+      cluster_col,
+      var.genes_only,
+      assay_name,
+      method
+    ))
   }
 
   temp_mat <- seurat_object@data
@@ -60,10 +61,10 @@ use_seurat_comp <- function(seurat_object,
 #'
 #' @export
 use_seurat3_comp <- function(seurat_object,
-                            cluster_col = "classified",
-                            var.genes_only = FALSE,
-                            assay_name = NULL,
-                            method = "mean") {
+                             cluster_col = "classified",
+                             var.genes_only = FALSE,
+                             assay_name = NULL,
+                             method = "mean") {
   temp_mat <- seurat_object@assays$RNA@data
 
   if (var.genes_only == TRUE) {
@@ -85,10 +86,10 @@ use_seurat3_comp <- function(seurat_object,
   }
 
   temp_res <- average_clusters(temp_mat,
-                               seurat_object@meta.data,
-                               log_scale = TRUE,
-                               cluster_col = cluster_col,
-                               method = method
+    seurat_object@meta.data,
+    log_scale = TRUE,
+    cluster_col = cluster_col,
+    method = method
   )
 
   temp_res
@@ -104,7 +105,7 @@ use_seurat_meta <- function(seurat_object,
                             dr = "tsne",
                             seurat3 = F) {
   if (class(seurat_object) == "Seurat") {
-    seurat3 = T
+    seurat3 <- T
   }
   if (seurat3 == F) {
     temp_dr <- as.data.frame(seurat_object@dr[[dr]]@cell.embeddings)
@@ -137,12 +138,12 @@ use_object_comp <- function(input,
   if (!(stringr::str_detect(class(input), "eurat"))) {
     input_original <- input
     temp <- parse_loc_object(input,
-                             type = class(input),
-                             expr_loc = NULL,
-                             meta_loc = NULL,
-                             var_loc = NULL,
-                             cluster_col = cluster_col,
-                             lookuptable = lookuptable
+      type = class(input),
+      expr_loc = NULL,
+      meta_loc = NULL,
+      var_loc = NULL,
+      cluster_col = cluster_col,
+      lookuptable = lookuptable
     )
     if (!(is.null(temp[["expr"]]))) {
       print(paste0("recognized object type - ", class(input)))
@@ -162,10 +163,10 @@ use_object_comp <- function(input,
   }
 
   temp_res <- average_clusters(temp_mat,
-                               metadata,
-                               log_scale = TRUE,
-                               cluster_col = cluster_col,
-                               method = method
+    metadata,
+    log_scale = TRUE,
+    cluster_col = cluster_col,
+    method = method
   )
 
   temp_res

@@ -475,11 +475,11 @@ gene_pct <- function(matrix,
       mean(Matrix::rowSums(tmp) / ncol(tmp))
     })
   } else if (returning == "min") {
-      sapply(unique_clusters, function(x) {
-        celllist <- clusters == x
-        tmp <- matrix[genelist, celllist, drop = F]
-        tmp[tmp > 0] <- 1
-        min(Matrix::rowSums(tmp) / ncol(tmp))
+    sapply(unique_clusters, function(x) {
+      celllist <- clusters == x
+      tmp <- matrix[genelist, celllist, drop = F]
+      tmp[tmp > 0] <- 1
+      min(Matrix::rowSums(tmp) / ncol(tmp))
     })
   } else if (returning == "max") {
     sapply(unique_clusters, function(x) {
@@ -606,20 +606,22 @@ clustify_nudge.seurat <- function(input,
 
   if (mode == "pct") {
     resb <- gene_pct_markerm(input@data,
-                             marker,
-                             input@meta.data,
-                             cluster_col = cluster_col,
-                             norm = norm
-    )} else if (mode == "rank") {
-      resb <- pos_neg_select(input@data,
-                             marker,
-                             metadata = input@meta.data,
-                             cluster_col = cluster_col,
-                             cutoff_score = norm)
-      empty_vec <- setdiff(colnames(resa), colnames(resb))
-      empty_mat <- matrix(0, nrow = nrow(resb), ncol = length(empty_vec), dimnames = list(rownames(resb), empty_vec))
-      resb <- cbind(resb, empty_mat)
-    }
+      marker,
+      input@meta.data,
+      cluster_col = cluster_col,
+      norm = norm
+    )
+  } else if (mode == "rank") {
+    resb <- pos_neg_select(input@data,
+      marker,
+      metadata = input@meta.data,
+      cluster_col = cluster_col,
+      cutoff_score = norm
+    )
+    empty_vec <- setdiff(colnames(resa), colnames(resb))
+    empty_mat <- matrix(0, nrow = nrow(resb), ncol = length(empty_vec), dimnames = list(rownames(resb), empty_vec))
+    resb <- cbind(resb, empty_mat)
+  }
 
   df_temp <- cor_to_call(resa[order(rownames(resa)), order(colnames(resa))] +
     resb[order(rownames(resb)), order(colnames(resb))] * weight,
@@ -715,20 +717,22 @@ clustify_nudge.default <- function(input,
 
   if (mode == "pct") {
     resb <- gene_pct_markerm(input,
-                             marker,
-                             metadata,
-                             cluster_col = cluster_col,
-                             norm = norm
-    )} else if (mode == "rank") {
-      resb <- pos_neg_select(input,
-                             marker,
-                             metadata,
-                             cluster_col = cluster_col,
-                             cutoff_score = norm)
-      empty_vec <- setdiff(colnames(resa), colnames(resb))
-      empty_mat <- matrix(0, nrow = nrow(resb), ncol = length(empty_vec), dimnames = list(rownames(resb), empty_vec))
-      resb <- cbind(resb, empty_mat)
-    }
+      marker,
+      metadata,
+      cluster_col = cluster_col,
+      norm = norm
+    )
+  } else if (mode == "rank") {
+    resb <- pos_neg_select(input,
+      marker,
+      metadata,
+      cluster_col = cluster_col,
+      cutoff_score = norm
+    )
+    empty_vec <- setdiff(colnames(resa), colnames(resb))
+    empty_mat <- matrix(0, nrow = nrow(resb), ncol = length(empty_vec), dimnames = list(rownames(resb), empty_vec))
+    resb <- cbind(resb, empty_mat)
+  }
 
   if (call == T) {
     df_temp <- cor_to_call(resa[order(rownames(resa)), order(colnames(resa))] +
@@ -760,8 +764,7 @@ parse_loc_object <- function(input,
                              meta_loc = NULL,
                              var_loc = NULL,
                              cluster_col = NULL,
-                             lookuptable = NULL
-                             ) {
+                             lookuptable = NULL) {
   # if (type == "SingleCellExperiment") {
   #   parsed = list(input@assays$data$logcounts,
   #                 as.data.frame(input@colData)),
@@ -868,7 +871,7 @@ overcluster_test <- function(expr,
       genes <- ref_feature_select(expr, ngenes)
     }
   } else {
-   genes <- query_genes
+    genes <- query_genes
   }
   res1 <- clustify(expr,
     ref_mat,
@@ -884,7 +887,7 @@ overcluster_test <- function(expr,
     cluster_col = "new_clusters",
     seurat_out = F
   )
-  #print(length(unique(metadata[["new_clusters"]])))
+  # print(length(unique(metadata[["new_clusters"]])))
   o1 <- plot_tsne(metadata,
     feature = cluster_col,
     x = x_col,
@@ -1011,16 +1014,22 @@ gmt_to_list <- function(path,
                         cutoff = 0,
                         sep = "\thttp://www.broadinstitute.org/gsea/msigdb/cards/.*?\t") {
   df <- readr::read_csv(path,
-                        col_names = F)
+    col_names = F
+  )
   df <- tidyr::separate(df,
-                        X1,
-                        sep = sep,
-                        into = c("path", "genes"))
-  pathways <- stringr::str_split(df$genes,
-                                 "\t")
-  names(pathways) <- stringr::str_replace(df$path,
-                                          "REACTOME_",
-                                          "")
+    X1,
+    sep = sep,
+    into = c("path", "genes")
+  )
+  pathways <- stringr::str_split(
+    df$genes,
+    "\t"
+  )
+  names(pathways) <- stringr::str_replace(
+    df$path,
+    "REACTOME_",
+    ""
+  )
   if (cutoff > 0) {
     ids <- sapply(pathways, function(i) length(i) < cutoff)
     pathways <- pathways[!ids]
@@ -1045,9 +1054,10 @@ plot_pathway_gsea <- function(mat,
                               topn = 5,
                               returning = "both") {
   res <- calculate_pathway_gsea(mat,
-                                pathway_list,
-                                n_perm,
-                                scale = scale)
+    pathway_list,
+    n_perm,
+    scale = scale
+  )
   coltopn <- unique(cor_to_call_topn(res, topn = topn, threshold = -Inf)$type)
   res[is.na(res)] <- 0
   g <- ComplexHeatmap::Heatmap(res[, coltopn], column_names_gp = grid::gpar(fontsize = 6))
@@ -1059,7 +1069,6 @@ plot_pathway_gsea <- function(mat,
   } else {
     return(res)
   }
-
 }
 
 #' get var per row for matrix
@@ -1093,14 +1102,14 @@ downsample_matrix <- function(mat,
   if (keep_cluster_proportions == F) {
     cluster_ids <- colnames(mat)
     if (n < 1) {
-      n <- as.integer(ncol(mat)*n)
+      n <- as.integer(ncol(mat) * n)
     }
     set.seed(set_seed)
     cluster_ids_new <- sample(cluster_ids, n)
   } else {
-    if(is.vector(cluster_info)){
+    if (is.vector(cluster_info)) {
       cluster_ids <- split(colnames(mat), cluster_info)
-    } else if (is.data.frame(cluster_info) & !is.null(cluster_col)){
+    } else if (is.data.frame(cluster_info) & !is.null(cluster_col)) {
       cluster_ids <- split(colnames(mat), cluster_info[[cluster_col]])
     } else if (class(cluster_info) == "factor") {
       cluster_info <- as.character(cluster_info)
@@ -1110,13 +1119,13 @@ downsample_matrix <- function(mat,
          supply either a  vector or a dataframe")
     }
     if (n < 1) {
-      n2 <- sapply(cluster_ids, function(x) as.integer(length(x)*n))
+      n2 <- sapply(cluster_ids, function(x) as.integer(length(x) * n))
       n <- n2
     }
     set.seed(set_seed)
     cluster_ids_new <- mapply(sample, cluster_ids, n, SIMPLIFY = F)
   }
-  return(mat[,unlist(cluster_ids_new)])
+  return(mat[, unlist(cluster_ids_new)])
 }
 
 #' make combination ref matrix to assess intermixing
@@ -1149,15 +1158,15 @@ make_comb_ref <- function(ref_mat, log_scale = T, sep = "_and_") {
 #'
 #' @export
 ref_marker_select <- function(mat, cut = 0.5, arrange = T, compto = 1) {
-  mat <- mat[!is.na(rownames(mat)),]
-  mat <- mat[Matrix::rowSums(mat) != 0,]
+  mat <- mat[!is.na(rownames(mat)), ]
+  mat <- mat[Matrix::rowSums(mat) != 0, ]
   ref_cols <- colnames(mat)
   res <- apply(mat, 1, marker_select, ref_cols, cut, compto = compto)
   if (class(res) == "list") {
     res <- res[!sapply(res, is.null)]
   }
   resdf <- t(as.data.frame(res, stringsAsFactors = F))
-  resdf<- tibble::rownames_to_column(as.data.frame(resdf, stringsAsFactors = F), "gene")
+  resdf <- tibble::rownames_to_column(as.data.frame(resdf, stringsAsFactors = F), "gene")
   colnames(resdf) <- c("gene", "cluster", "ratio")
   resdf <- dplyr::mutate(resdf, ratio = as.numeric(ratio))
   if (arrange == T) {
@@ -1180,7 +1189,7 @@ marker_select <- function(row1, cols, cut = 1, compto = 1) {
   col_sorted <- names(row_sorted)
   num_sorted <- unname(row_sorted)
   if (num_sorted[1] >= cut) {
-    return(c(col_sorted[1], (num_sorted[1 + compto]/num_sorted[1])))
+    return(c(col_sorted[1], (num_sorted[1 + compto] / num_sorted[1])))
   }
 }
 
@@ -1201,18 +1210,19 @@ pos_neg_select <- function(input,
                            cluster_col = "cluster",
                            cutoff_n = 0,
                            cutoff_score = 0.5) {
-
   suppressWarnings(res <- clustify(rbind(input, "clustifyr0" = 0.01),
-                  ref_mat,
-                  metadata,
-                  cluster_col = cluster_col,
-                  per_cell = T, verbose = T))
+    ref_mat,
+    metadata,
+    cluster_col = cluster_col,
+    per_cell = T, verbose = T
+  ))
   res[is.na(res)] <- 0
   suppressWarnings(res2 <- average_clusters(t(res),
-                   metadata,
-                   cluster_col = cluster_col,
-                   log_scale = F,
-                   output_log = F))
+    metadata,
+    cluster_col = cluster_col,
+    log_scale = F,
+    output_log = F
+  ))
   res2 <- t(res2)
 
   if (!(is.null(cutoff_score))) {
@@ -1222,7 +1232,7 @@ pos_neg_select <- function(input,
         x[x > 0 & x < cutoff_score * maxr] <- 0
       }
       x
-      })
+    })
   }
 
   res2

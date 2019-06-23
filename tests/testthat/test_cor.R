@@ -125,54 +125,54 @@ test_that("seurat object clustifying", {
 
 test_that("clustify reinserts seurat metadata correctly", {
   res <- clustify(s_small,
-                  pbmc_bulk_matrix,
-                  cluster_col = "res.1",
-                  seurat_out = T,
-                  per_cell = T
+    pbmc_bulk_matrix,
+    cluster_col = "res.1",
+    seurat_out = T,
+    per_cell = T
   )
   res2 <- clustify(s_small,
-                  pbmc_bulk_matrix,
-                  cluster_col = "res.1",
-                  seurat_out = T
+    pbmc_bulk_matrix,
+    cluster_col = "res.1",
+    seurat_out = T
   )
   expect_true(class(res) %in% c("matrix", "seurat"))
 })
 
 test_that("seurat3 object clustifying", {
   res <- clustify(s_small3,
-                  pbmc_bulk_matrix,
-                  cluster_col = "RNA_snn_res.1"
+    pbmc_bulk_matrix,
+    cluster_col = "RNA_snn_res.1"
   )
   res <- clustify(s_small3,
-                  pbmc_bulk_matrix,
-                  cluster_col = "RNA_snn_res.1",
-                  seurat_out = F,
-                  per_cell = T
+    pbmc_bulk_matrix,
+    cluster_col = "RNA_snn_res.1",
+    seurat_out = F,
+    per_cell = T
   )
   res <- clustify(s_small3,
-                  pbmc_bulk_matrix,
-                  cluster_col = "RNA_snn_res.1",
-                  seurat_out = F
+    pbmc_bulk_matrix,
+    cluster_col = "RNA_snn_res.1",
+    seurat_out = F
   )
   g <- plot_best_call(res,
-                      use_seurat_meta(s_small3),
-                      col = "RNA_snn_res.1",
-                      plot_r = T
+    use_seurat_meta(s_small3),
+    col = "RNA_snn_res.1",
+    plot_r = T
   )
   expect_true(ggplot2::is.ggplot(g[[1]]))
 })
 
 test_that("clustify reinserts seurat3 metadata correctly", {
   res <- clustify(s_small3,
-                  pbmc_bulk_matrix,
-                  cluster_col = "RNA_snn_res.1",
-                  seurat_out = T,
-                  per_cell = T
+    pbmc_bulk_matrix,
+    cluster_col = "RNA_snn_res.1",
+    seurat_out = T,
+    per_cell = T
   )
   res2 <- clustify(s_small3,
-                   pbmc_bulk_matrix,
-                   cluster_col = "RNA_snn_res.1",
-                   seurat_out = T
+    pbmc_bulk_matrix,
+    cluster_col = "RNA_snn_res.1",
+    seurat_out = T
   )
   expect_true(class(res) %in% c("matrix", "Seurat"))
 })
@@ -210,9 +210,9 @@ test_that("get_similarity can exclude 0s as missing data", {
 
 test_that("permute_similarity runs per cell", {
   res <- permute_similarity(
-    pbmc4k_matrix[c("RBM28","CCDC136","TNPO3"),c(7,11)],
-    cbmc_ref[c("RBM28","CCDC136","TNPO3"),1:3],
-    colnames(pbmc4k_matrix[c("RBM28","CCDC136","TNPO3"),c(7,11)]),
+    pbmc4k_matrix[c("RBM28", "CCDC136", "TNPO3"), c(7, 11)],
+    cbmc_ref[c("RBM28", "CCDC136", "TNPO3"), 1:3],
+    colnames(pbmc4k_matrix[c("RBM28", "CCDC136", "TNPO3"), c(7, 11)]),
     num_perm = 2,
     per_cell = T,
     compute_method = "spearman"
@@ -222,9 +222,9 @@ test_that("permute_similarity runs per cell", {
 
 test_that("error for unsupported method", {
   expect_error(res <- permute_similarity(
-    pbmc4k_matrix[c("RBM28","CCDC136","TNPO3"),c(7,11)],
-    cbmc_ref[c("RBM28","CCDC136","TNPO3"),1:3],
-    pbmc4k_meta$rn[c(7,11)],
+    pbmc4k_matrix[c("RBM28", "CCDC136", "TNPO3"), c(7, 11)],
+    cbmc_ref[c("RBM28", "CCDC136", "TNPO3"), 1:3],
+    pbmc4k_meta$rn[c(7, 11)],
     num_perm = 2,
     per_cell = T,
     compute_method = "a"

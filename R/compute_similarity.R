@@ -71,7 +71,7 @@ permute_similarity <- function(expr_mat,
                                num_perm,
                                per_cell = F,
                                compute_method,
-                               rm0 =F,
+                               rm0 = F,
                                ...) {
   ref_clust <- colnames(ref_mat)
 
@@ -161,17 +161,19 @@ calc_similarity <- function(sc_avg,
                             rm0 = F,
                             ...) {
   # remove 0s ?
-  if(rm0 == T) {
+  if (rm0 == T) {
     print("considering 0 as missing data")
     sc_avg[sc_avg == 0] <- NA
     similarity_score <- cor(as.matrix(sc_avg),
-                            ref_mat, method = compute_method, use = "pairwise.complete.obs")
+      ref_mat,
+      method = compute_method, use = "pairwise.complete.obs"
+    )
     return(similarity_score)
   } else {
     if (any(compute_method %in% c("pearson", "spearman"))) {
       similarity_score <- cor(as.matrix(sc_avg),
-                              ref_mat,
-                              method = compute_method
+        ref_mat,
+        method = compute_method
       )
       return(similarity_score)
     }

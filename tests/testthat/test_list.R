@@ -9,13 +9,13 @@ test_that("warning if matrix is not binarized", {
     gene_list_methods,
     function(x) {
       compare_lists(pbmc4k_avg,
-                    pbmc4k_mm,
-                    metric = x
+        pbmc4k_mm,
+        metric = x
       )
     }
   )
 
-  expect_true(results[[1]][1,1] > 0)
+  expect_true(results[[1]][1, 1] > 0)
 })
 
 
@@ -70,12 +70,13 @@ test_that("run all gene list functions in clustify_lists", {
 
 test_that("gsea outputs in cor matrix format", {
   res <- clustify_lists(pbmc4k_matrix,
-                        per_cell = F,
-                        cluster_info = pbmc4k_meta,
-                        cluster_col = "cluster",
-                        marker = pbmc4k_markers,
-                        marker_inmatrix = F,
-                        metric = "gsea")
+    per_cell = F,
+    cluster_info = pbmc4k_meta,
+    cluster_col = "cluster",
+    marker = pbmc4k_markers,
+    marker_inmatrix = F,
+    metric = "gsea"
+  )
   res2 <- cor_to_call(res)
 
   expect_equal(10, nrow(res2))
@@ -108,65 +109,65 @@ test_that("seurat object clustify_lists-ing", {
 
 test_that("clustify_lists inserts seurat metadata correctly", {
   res <- clustify_lists(s_small,
-                        per_cell = F,
-                        marker = pbmc4k_markers,
-                        marker_inmatrix = F,
-                        metric = "jaccard",
-                        cluster_col = "res.1",
-                        seurat_out = T
+    per_cell = F,
+    marker = pbmc4k_markers,
+    marker_inmatrix = F,
+    metric = "jaccard",
+    cluster_col = "res.1",
+    seurat_out = T
   )
   res2 <- clustify_lists(s_small,
-                        per_cell = T,
-                        marker = pbmc4k_markers,
-                        marker_inmatrix = F,
-                        metric = "jaccard",
-                        cluster_col = "res.1",
-                        seurat_out = T
+    per_cell = T,
+    marker = pbmc4k_markers,
+    marker_inmatrix = F,
+    metric = "jaccard",
+    cluster_col = "res.1",
+    seurat_out = T
   )
   expect_true(class(res) %in% c("matrix", "seurat"))
 })
 
 test_that("seurat3 object clustify_lists-ing", {
   res <- clustify_lists(s_small3,
-                        per_cell = F,
-                        marker = pbmc4k_markers,
-                        marker_inmatrix = F,
-                        metric = "jaccard",
-                        cluster_col = "RNA_snn_res.1",
-                        seurat_out = T
+    per_cell = F,
+    marker = pbmc4k_markers,
+    marker_inmatrix = F,
+    metric = "jaccard",
+    cluster_col = "RNA_snn_res.1",
+    seurat_out = T
   )
   res <- clustify_lists(s_small3,
-                        per_cell = F,
-                        marker = pbmc4k_markers,
-                        marker_inmatrix = F,
-                        metric = "jaccard",
-                        cluster_col = "RNA_snn_res.1",
-                        seurat_out = F
+    per_cell = F,
+    marker = pbmc4k_markers,
+    marker_inmatrix = F,
+    metric = "jaccard",
+    cluster_col = "RNA_snn_res.1",
+    seurat_out = F
   )
   g <- plot_best_call(res,
-                      use_seurat_meta(s_small3),
-                      col = "RNA_snn_res.1",
-                      plot_r = T
+    use_seurat_meta(s_small3),
+    col = "RNA_snn_res.1",
+    plot_r = T
   )
   expect_true(ggplot2::is.ggplot(g[[1]]))
 })
 
 test_that("clustify_lists inserts seurat3 metadata correctly", {
   res <- clustify_lists(s_small3,
-                        per_cell = F,
-                        marker = pbmc4k_markers,
-                        marker_inmatrix = F,
-                        metric = "jaccard",
-                        cluster_col = "RNA_snn_res.1",
-                        seurat_out = T
+    per_cell = F,
+    marker = pbmc4k_markers,
+    marker_inmatrix = F,
+    metric = "jaccard",
+    cluster_col = "RNA_snn_res.1",
+    seurat_out = T
   )
   res2 <- clustify_lists(s_small3,
-                         per_cell = T,
-                         marker = pbmc4k_markers,
-                         marker_inmatrix = F,
-                         metric = "jaccard",
-                         cluster_col = "RNA_snn_res.1",
-                         seurat_out = T
+    per_cell = T,
+    marker = pbmc4k_markers,
+    marker_inmatrix = F,
+    metric = "jaccard",
+    cluster_col = "RNA_snn_res.1",
+    seurat_out = T
   )
   expect_true(class(res) %in% c("matrix", "Seurat"))
 })
