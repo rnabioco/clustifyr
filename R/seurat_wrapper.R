@@ -105,7 +105,7 @@ use_seurat_meta <- function(seurat_object,
                             dr = "tsne",
                             seurat3 = FALSE) {
   if (class(seurat_object) == "Seurat") {
-    seurat3 = TRUE
+    seurat3 <- TRUE
   }
   if (seurat3 == FALSE) {
     temp_dr <- as.data.frame(seurat_object@dr[[dr]]@cell.embeddings)
@@ -155,7 +155,7 @@ use_object_comp <- function(input,
       cluster_col <- temp[["col"]]
     }
   }
-  #print(cluster_col)
+  # print(cluster_col)
 
   temp_mat <- input
   if (var.genes_only == TRUE) {

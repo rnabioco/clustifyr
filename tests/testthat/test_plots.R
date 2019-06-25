@@ -60,9 +60,9 @@ test_that("plot_cor for all clusters by default", {
 
 test_that("plot_cor works with scale_legends option", {
   plts <- plot_cor(res,
-                   pbmc4k_meta,
-                   cluster_col = "cluster",
-                   scale_legends = TRUE
+    pbmc4k_meta,
+    cluster_col = "cluster",
+    scale_legends = TRUE
   )
 
   plts2 <- plot_cor(res,

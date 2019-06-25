@@ -70,7 +70,7 @@ permute_similarity <- function(expr_mat,
                                num_perm,
                                per_cell = FALSE,
                                compute_method,
-                               rm0 =FALSE,
+                               rm0 = FALSE,
                                ...) {
   ref_clust <- colnames(ref_mat)
 
@@ -160,7 +160,7 @@ calc_similarity <- function(sc_avg,
                             rm0 = FALSE,
                             ...) {
   # remove 0s ?
-  if(rm0 == TRUE) {
+  if (rm0 == TRUE) {
     message("considering 0 as missing data")
     sc_avg[sc_avg == 0] <- NA
     similarity_score <- cor(as.matrix(sc_avg),

@@ -125,15 +125,15 @@ test_that("seurat object clustifying", {
 
 test_that("clustify reinserts seurat metadata correctly", {
   res <- clustify(s_small,
-                  pbmc_bulk_matrix,
-                  cluster_col = "res.1",
-                  seurat_out = TRUE,
-                  per_cell = TRUE
+    pbmc_bulk_matrix,
+    cluster_col = "res.1",
+    seurat_out = TRUE,
+    per_cell = TRUE
   )
   res2 <- clustify(s_small,
-                  pbmc_bulk_matrix,
-                  cluster_col = "res.1",
-                  seurat_out = TRUE
+    pbmc_bulk_matrix,
+    cluster_col = "res.1",
+    seurat_out = TRUE
   )
   expect_true(class(res) %in% c("matrix", "seurat"))
 })
@@ -144,35 +144,35 @@ test_that("seurat3 object clustifying", {
     cluster_col = "RNA_snn_res.1"
   )
   res <- clustify(s_small3,
-                  pbmc_bulk_matrix,
-                  cluster_col = "RNA_snn_res.1",
-                  seurat_out = FALSE,
-                  per_cell = TRUE
+    pbmc_bulk_matrix,
+    cluster_col = "RNA_snn_res.1",
+    seurat_out = FALSE,
+    per_cell = TRUE
   )
   res <- clustify(s_small3,
-                  pbmc_bulk_matrix,
-                  cluster_col = "RNA_snn_res.1",
-                  seurat_out = FALSE
+    pbmc_bulk_matrix,
+    cluster_col = "RNA_snn_res.1",
+    seurat_out = FALSE
   )
   g <- plot_best_call(res,
-                      use_seurat_meta(s_small3),
-                      col = "RNA_snn_res.1",
-                      plot_r = TRUE
+    use_seurat_meta(s_small3),
+    col = "RNA_snn_res.1",
+    plot_r = TRUE
   )
   expect_true(ggplot2::is.ggplot(g[[1]]))
 })
 
 test_that("clustify reinserts seurat3 metadata correctly", {
   res <- clustify(s_small3,
-                  pbmc_bulk_matrix,
-                  cluster_col = "RNA_snn_res.1",
-                  seurat_out = TRUE,
-                  per_cell = TRUE
+    pbmc_bulk_matrix,
+    cluster_col = "RNA_snn_res.1",
+    seurat_out = TRUE,
+    per_cell = TRUE
   )
   res2 <- clustify(s_small3,
-                   pbmc_bulk_matrix,
-                   cluster_col = "RNA_snn_res.1",
-                   seurat_out = TRUE
+    pbmc_bulk_matrix,
+    cluster_col = "RNA_snn_res.1",
+    seurat_out = TRUE
   )
   expect_true(class(res) %in% c("matrix", "Seurat"))
 })

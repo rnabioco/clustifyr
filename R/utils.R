@@ -475,11 +475,11 @@ gene_pct <- function(matrix,
       mean(Matrix::rowSums(tmp) / ncol(tmp))
     })
   } else if (returning == "min") {
-      sapply(unique_clusters, function(x) {
-        celllist <- clusters == x
-        tmp <- matrix[genelist, celllist, drop = FALSE]
-        tmp[tmp > 0] <- 1
-        min(Matrix::rowSums(tmp) / ncol(tmp))
+    sapply(unique_clusters, function(x) {
+      celllist <- clusters == x
+      tmp <- matrix[genelist, celllist, drop = FALSE]
+      tmp[tmp > 0] <- 1
+      min(Matrix::rowSums(tmp) / ncol(tmp))
     })
   } else if (returning == "max") {
     sapply(unique_clusters, function(x) {
@@ -1013,7 +1013,8 @@ gmt_to_list <- function(path,
                         cutoff = 0,
                         sep = "\thttp://www.broadinstitute.org/gsea/msigdb/cards/.*?\t") {
   df <- readr::read_csv(path,
-                        col_names = FALSE)
+    col_names = FALSE
+  )
   df <- tidyr::separate(df,
     X1,
     sep = sep,
@@ -1156,15 +1157,15 @@ make_comb_ref <- function(ref_mat, log_scale = TRUE, sep = "_and_") {
 #'
 #' @export
 ref_marker_select <- function(mat, cut = 0.5, arrange = TRUE, compto = 1) {
-  mat <- mat[!is.na(rownames(mat)),]
-  mat <- mat[Matrix::rowSums(mat) != 0,]
+  mat <- mat[!is.na(rownames(mat)), ]
+  mat <- mat[Matrix::rowSums(mat) != 0, ]
   ref_cols <- colnames(mat)
   res <- apply(mat, 1, marker_select, ref_cols, cut, compto = compto)
   if (class(res) == "list") {
     res <- res[!sapply(res, is.null)]
   }
   resdf <- t(as.data.frame(res, stringsAsFactors = FALSE))
-  resdf<- tibble::rownames_to_column(as.data.frame(resdf, stringsAsFactors = FALSE), "gene")
+  resdf <- tibble::rownames_to_column(as.data.frame(resdf, stringsAsFactors = FALSE), "gene")
   colnames(resdf) <- c("gene", "cluster", "ratio")
   resdf <- dplyr::mutate(resdf, ratio = as.numeric(ratio))
   if (arrange == TRUE) {
@@ -1209,16 +1210,18 @@ pos_neg_select <- function(input,
                            cutoff_n = 0,
                            cutoff_score = 0.5) {
   suppressWarnings(res <- clustify(rbind(input, "clustifyr0" = 0.01),
-                  ref_mat,
-                  metadata,
-                  cluster_col = cluster_col,
-                  per_cell = TRUE, verbose = TRUE))
+    ref_mat,
+    metadata,
+    cluster_col = cluster_col,
+    per_cell = TRUE, verbose = TRUE
+  ))
   res[is.na(res)] <- 0
   suppressWarnings(res2 <- average_clusters(t(res),
-                   metadata,
-                   cluster_col = cluster_col,
-                   log_scale = FALSE,
-                   output_log = FALSE))
+    metadata,
+    cluster_col = cluster_col,
+    log_scale = FALSE,
+    output_log = FALSE
+  ))
   res2 <- t(res2)
 
   if (!(is.null(cutoff_score))) {
