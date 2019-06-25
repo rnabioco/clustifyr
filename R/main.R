@@ -49,7 +49,7 @@ clustify.default <- function(input,
                              lookuptable = lookuptable
     )
     if (!(is.null(temp[["expr"]]))) {
-      print(paste0("recognized object type - ", class(input)))
+      message(paste0("recognized object type - ", class(input)))
     }
     input <- temp[["expr"]]
     metadata <- temp[["meta"]]
@@ -74,7 +74,7 @@ clustify.default <- function(input,
   )
 
   if (verbose == T) {
-    print(paste0("using # of genes: ", length(gene_constraints)))
+    message(paste0("using # of genes: ", length(gene_constraints)))
   }
 
   expr_mat <- expr_mat[gene_constraints, , drop = FALSE]
@@ -224,7 +224,7 @@ clustify.seurat <- function(input,
       s_object@meta.data <- df_temp_full
       return(s_object)
     } else {
-      print("seurat not loaded, returning cor_mat instead")
+      message("seurat not loaded, returning cor_mat instead")
       return(res)
     }
     s_object
@@ -328,7 +328,7 @@ clustify.Seurat <- function(input,
       s_object@meta.data <- df_temp_full
       return(s_object)
     } else {
-      print("seurat not loaded, returning cor_mat instead")
+      message("seurat not loaded, returning cor_mat instead")
       return(res)
     }
     s_object
@@ -506,7 +506,7 @@ clustify_lists.seurat <- function(input,
       s_object@meta.data <- df_temp_full
       return(s_object)
     } else {
-      print("seurat not loaded, returning cor_mat instead")
+      message("seurat not loaded, returning cor_mat instead")
       return(res)
     }
   }
@@ -586,7 +586,7 @@ clustify_lists.Seurat <- function(input,
       s_object@meta.data <- df_temp_full
       return(s_object)
     } else {
-      print("seurat not loaded, returning cor_mat instead")
+      message("seurat not loaded, returning cor_mat instead")
       return(res)
     }
   }

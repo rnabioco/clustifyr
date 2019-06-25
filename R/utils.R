@@ -637,7 +637,7 @@ clustify_nudge.seurat <- function(input,
       input@meta.data <- df_temp_full
       return(input)
     } else {
-      print("seurat not loaded, returning cor_mat instead")
+      message("seurat not loaded, returning cor_mat instead")
       return(df_temp)
     }
   }
@@ -884,7 +884,6 @@ overcluster_test <- function(expr,
     cluster_col = "new_clusters",
     seurat_out = F
   )
-  #print(length(unique(metadata[["new_clusters"]])))
   o1 <- plot_tsne(metadata,
     feature = cluster_col,
     x = x_col,

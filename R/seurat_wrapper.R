@@ -145,7 +145,7 @@ use_object_comp <- function(input,
                              lookuptable = lookuptable
     )
     if (!(is.null(temp[["expr"]]))) {
-      print(paste0("recognized object type - ", class(input)))
+      message(paste0("recognized object type - ", class(input)))
     }
     input <- temp[["expr"]]
     metadata <- temp[["meta"]]
@@ -154,7 +154,7 @@ use_object_comp <- function(input,
       cluster_col <- temp[["col"]]
     }
   }
-  print(cluster_col)
+  #print(cluster_col)
 
   temp_mat <- input
   if (var.genes_only == TRUE) {

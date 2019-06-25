@@ -19,13 +19,12 @@ get_similarity <- function(expr_mat,
                            ...) {
   ref_clust <- colnames(ref_mat)
   if (sum(is.na(cluster_ids)) > 0) {
-    print("reassigning NAs to unknown")
+    message("reassigning NAs to unknown")
     cluster_ids <- factor(cluster_ids)
     cluster_ids <- factor(cluster_ids, levels = c(levels(cluster_ids), NA), labels = c(levels(cluster_ids), "unknown"), exclude = NULL)
   }
   if (!per_cell) {
     sc_clust <- sort(unique(cluster_ids))
-    # print(sc_clust)
     clust_avg <- compute_mean_expr(
       expr_mat,
       cluster_ids,
@@ -162,7 +161,7 @@ calc_similarity <- function(sc_avg,
                             ...) {
   # remove 0s ?
   if(rm0 == T) {
-    print("considering 0 as missing data")
+    message("considering 0 as missing data")
     sc_avg[sc_avg == 0] <- NA
     similarity_score <- cor(as.matrix(sc_avg),
                             ref_mat, method = compute_method, use = "pairwise.complete.obs")
