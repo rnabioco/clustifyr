@@ -41,12 +41,12 @@ clustify.default <- function(input,
   if (!(stringr::str_detect(class(input), "atrix|data\\.frame"))) {
     input_original <- input
     temp <- parse_loc_object(input,
-                             type = class(input),
-                             expr_loc = NULL,
-                             meta_loc = NULL,
-                             var_loc = NULL,
-                             cluster_col = cluster_col,
-                             lookuptable = lookuptable
+      type = class(input),
+      expr_loc = NULL,
+      meta_loc = NULL,
+      var_loc = NULL,
+      cluster_col = cluster_col,
+      lookuptable = lookuptable
     )
     if (!(is.null(temp[["expr"]]))) {
       message(paste0("recognized object type - ", class(input)))
@@ -390,12 +390,12 @@ clustify_lists.default <- function(input,
   if (!(stringr::str_detect(class(input), "atrix"))) {
     input_original <- input
     temp <- parse_loc_object(input,
-                             type = class(input),
-                             expr_loc = NULL,
-                             meta_loc = NULL,
-                             var_loc = NULL,
-                             cluster_col = cluster_col,
-                             lookuptable = lookuptable
+      type = class(input),
+      expr_loc = NULL,
+      meta_loc = NULL,
+      var_loc = NULL,
+      cluster_col = cluster_col,
+      lookuptable = lookuptable
     )
     input <- temp[["expr"]]
     metadata <- temp[["meta"]]

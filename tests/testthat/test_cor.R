@@ -140,8 +140,8 @@ test_that("clustify reinserts seurat metadata correctly", {
 
 test_that("seurat3 object clustifying", {
   res <- clustify(s_small3,
-                  pbmc_bulk_matrix,
-                  cluster_col = "RNA_snn_res.1"
+    pbmc_bulk_matrix,
+    cluster_col = "RNA_snn_res.1"
   )
   res <- clustify(s_small3,
                   pbmc_bulk_matrix,
@@ -210,9 +210,9 @@ test_that("get_similarity can exclude 0s as missing data", {
 
 test_that("permute_similarity runs per cell", {
   res <- permute_similarity(
-    pbmc4k_matrix[c("RBM28","CCDC136","TNPO3"),c(7,11)],
-    cbmc_ref[c("RBM28","CCDC136","TNPO3"),1:3],
-    colnames(pbmc4k_matrix[c("RBM28","CCDC136","TNPO3"),c(7,11)]),
+    pbmc4k_matrix[c("RBM28", "CCDC136", "TNPO3"), c(7, 11)],
+    cbmc_ref[c("RBM28", "CCDC136", "TNPO3"), 1:3],
+    colnames(pbmc4k_matrix[c("RBM28", "CCDC136", "TNPO3"), c(7, 11)]),
     num_perm = 2,
     per_cell = TRUE,
     compute_method = "spearman"
@@ -222,9 +222,9 @@ test_that("permute_similarity runs per cell", {
 
 test_that("error for unsupported method", {
   expect_error(res <- permute_similarity(
-    pbmc4k_matrix[c("RBM28","CCDC136","TNPO3"),c(7,11)],
-    cbmc_ref[c("RBM28","CCDC136","TNPO3"),1:3],
-    pbmc4k_meta$rn[c(7,11)],
+    pbmc4k_matrix[c("RBM28", "CCDC136", "TNPO3"), c(7, 11)],
+    cbmc_ref[c("RBM28", "CCDC136", "TNPO3"), 1:3],
+    pbmc4k_meta$rn[c(7, 11)],
     num_perm = 2,
     per_cell = TRUE,
     compute_method = "a"

@@ -1,43 +1,66 @@
 Package: clustifyR
+Title: Classification of Cell Types in Single-Cell RNA
+    Sequencing Data
 Version: 0.0.0.9000
-Title: Classification of Cell Types in Single-Cell RNA Sequencing Data
-Description: Classify cells from single-cell RNA sequencing data using bulk
-  RNA-seq reference data.
-Authors@R: c(
-  person("Rui", "Fu", , "rui.fu@ucdenver.edu", role = c("aut", "cre")),
-  person("Kent", "Riemondy", , "kent.riemondy@ucdenver.edu", role = c("aut")), 
-  person("Austin", "Gillen", , "austin.gillen@ucdenver.edu", role = c("aut")),
-  person("Chengzhe", "Tian", , "Chengzhe.Tian@colorado.edu", role = c("aut")),
-  person("Jay", "Hesselberth", , "jay.hesselberth@gmail.com", role = c("aut")),
-  person("Yue", "Hao", , "haoyuethink@gmail.com", role = c("ctb")),
-  person("Michelle", "Daya", , "michelle.daya@ucdenver.edu", role = c("ctb"))
-  )
-Depends:
-  R (>= 3.2.0)
+Authors@R: 
+    c(person(given = "Rui",
+             family = "Fu",
+             role = c("aut", "cre"),
+             email = "rui.fu@ucdenver.edu"),
+      person(given = "Kent",
+             family = "Riemondy",
+             role = "aut",
+             email = "kent.riemondy@ucdenver.edu"),
+      person(given = "Austin",
+             family = "Gillen",
+             role = "aut",
+             email = "austin.gillen@ucdenver.edu"),
+      person(given = "Chengzhe",
+             family = "Tian",
+             role = "aut",
+             email = "Chengzhe.Tian@colorado.edu"),
+      person(given = "Jay",
+             family = "Hesselberth",
+             role = "aut",
+             email = "jay.hesselberth@gmail.com"),
+      person(given = "Yue",
+             family = "Hao",
+             role = "ctb",
+             email = "haoyuethink@gmail.com"),
+      person(given = "Michelle",
+             family = "Daya",
+             role = "ctb",
+             email = "michelle.daya@ucdenver.edu"))
+Description: Classify cells from single-cell RNA sequencing data
+    using bulk RNA-seq reference data.
 License: MIT + file LICENSE
-Encoding: UTF-8
-LazyData: true
-ByteCompile: true
-Roxygen: list(markdown = TRUE)
-URL: http://github.com/rnabioco/clustifyR#readme, https://rnabioco.github.io/clustifyR/
+URL: http://github.com/rnabioco/clustifyR#readme,
+    https://rnabioco.github.io/clustifyR/
 BugReports: https://github.com/rnabioco/clustifyR/issues
+Depends:
+    R (>= 3.2.0)
 Imports: 
-    tibble,
-    ggplot2,
-    entropy,
-    Matrix,
     cowplot,
     dplyr,
-    tidyr,
+    entropy,
+    fgsea,
+    ggplot2,
+    Matrix,
     readr,
-    stringr,
     scales,
-    fgsea
+    stringr,
+    tibble,
+    tidyr
 Suggests:
-    testthat,
+    ComplexHeatmap,
+    covr,
     knitr,
     rmarkdown,
-    covr,
-    ComplexHeatmap
-VignetteBuilder: knitr
+    testthat
+VignetteBuilder: 
+    knitr
+ByteCompile: true
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1

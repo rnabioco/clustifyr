@@ -9,13 +9,13 @@ test_that("warning if matrix is not binarized", {
     gene_list_methods,
     function(x) {
       compare_lists(pbmc4k_avg,
-                    pbmc4k_mm,
-                    metric = x
+        pbmc4k_mm,
+        metric = x
       )
     }
   )
 
-  expect_true(results[[1]][1,1] > 0)
+  expect_true(results[[1]][1, 1] > 0)
 })
 
 

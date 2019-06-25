@@ -29,7 +29,7 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
     "logical",
     "factor"
   ))) {
-    #print("too many required, using ramp colors instead")
+    # print("too many required, using ramp colors instead")
     c_cols <- pretty_palette_ramp_d(length(unique(data[[feature]])))
     d_cols <- pretty_palette_ramp_d(length(unique(data[[feature]])))
   }
@@ -430,7 +430,8 @@ plot_cor_heatmap <- function(correlation_matrix,
                              legend_title = NULL,
                              ...) {
   ComplexHeatmap::Heatmap(correlation_matrix,
-                          col = col,
-                          heatmap_legend_param = list(title = legend_title),
-                          ...)
+    col = col,
+    heatmap_legend_param = list(title = legend_title),
+    ...
+  )
 }
