@@ -23,23 +23,23 @@ test_that("run_gsea checks for matching number of clusters", {
 
 test_that("run_gsea warns slow runs", {
   data("pbmc4k_vargenes")
-  res <- run_gsea(pbmc4k_matrix[,1:3],
-                  query_genes = pbmc4k_vargenes[1:2],
-                  n_perm = 10001,
-                  per_cell = TRUE,
-                  cluster_ids = pbmc4k_meta$cluster
+  res <- run_gsea(pbmc4k_matrix[, 1:3],
+    query_genes = pbmc4k_vargenes[1:2],
+    n_perm = 10001,
+    per_cell = TRUE,
+    cluster_ids = pbmc4k_meta$cluster
   )
   expect_equal(length(res), 3)
 })
 
 test_that("run_gsea warning suppression", {
   data("pbmc4k_vargenes")
-  res <- run_gsea(pbmc4k_matrix[,1:3],
-                  query_genes = pbmc4k_vargenes[1:2],
-                  n_perm = 1,
-                  per_cell = TRUE,
-                  cluster_ids = pbmc4k_meta$cluster,
-                  no_warnings = FALSE
+  res <- run_gsea(pbmc4k_matrix[, 1:3],
+    query_genes = pbmc4k_vargenes[1:2],
+    n_perm = 1,
+    per_cell = TRUE,
+    cluster_ids = pbmc4k_meta$cluster,
+    no_warnings = FALSE
   )
   expect_equal(length(res), 3)
 })
