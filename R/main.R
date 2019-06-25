@@ -34,9 +34,9 @@ clustify.default <- function(input,
                              per_cell = FALSE,
                              num_perm = 0,
                              compute_method = "spearman",
-                             verbose = F,
+                             verbose = FALSE,
                              lookuptable = NULL,
-                             rm0 = F,
+                             rm0 = FALSE,
                              ...) {
   if (!(stringr::str_detect(class(input), "atrix|data\\.frame"))) {
     input_original <- input
@@ -73,7 +73,7 @@ clustify.default <- function(input,
     query_genes
   )
 
-  if (verbose == T) {
+  if (verbose == TRUE) {
     message(paste0("using # of genes: ", length(gene_constraints)))
   }
 
@@ -158,14 +158,14 @@ clustify.seurat <- function(input,
                             dr = "tsne",
                             seurat_out = TRUE,
                             threshold = 0,
-                            verbose = F,
-                            rm0 = F,
+                            verbose = FALSE,
+                            rm0 = FALSE,
                             rename_suff = NULL,
                             ...) {
   s_object <- input
   # for seurat < 3.0
   expr_mat <- s_object@data
-  metadata <- use_seurat_meta(s_object, dr = dr, seurat3 = F)
+  metadata <- use_seurat_meta(s_object, dr = dr, seurat3 = FALSE)
 
   if (use_var_genes & is.null(query_genes)) {
     query_genes <- s_object@var.genes
@@ -184,7 +184,7 @@ clustify.seurat <- function(input,
     ...
   )
 
-  if (seurat_out == F) {
+  if (seurat_out == FALSE) {
     res
   } else {
     col_meta <- colnames(metadata)
@@ -205,9 +205,9 @@ clustify.seurat <- function(input,
       clash <- dplyr::filter(clash, n > 1)
       clash <- dplyr::pull(clash, rn)
       df_temp <- dplyr::mutate(df_temp, type = ifelse(rn %in% clash, paste0(type, "-CLASH!"), type))
-      df_temp <- dplyr::distinct(df_temp, rn, r, .keep_all = T)
+      df_temp <- dplyr::distinct(df_temp, rn, r, .keep_all = TRUE)
     }
-    if (per_cell == F) {
+    if (per_cell == FALSE) {
       df_temp <- dplyr::rename(df_temp, !!cluster_col := rn)
       df_temp_full <- dplyr::left_join(tibble::rownames_to_column(metadata, "rn"), df_temp, by = cluster_col)
       df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
@@ -262,14 +262,14 @@ clustify.Seurat <- function(input,
                             dr = "tsne",
                             seurat_out = TRUE,
                             threshold = 0,
-                            verbose = F,
-                            rm0 = F,
+                            verbose = FALSE,
+                            rm0 = FALSE,
                             rename_suff = NULL,
                             ...) {
   s_object <- input
   # for seurat 3.0 +
   expr_mat <- s_object@assays$RNA@data
-  metadata <- use_seurat_meta(s_object, dr = dr, seurat3 = T)
+  metadata <- use_seurat_meta(s_object, dr = dr, seurat3 = TRUE)
 
   if (use_var_genes & is.null(query_genes)) {
     query_genes <- s_object@assays$RNA@var.features
@@ -288,7 +288,7 @@ clustify.Seurat <- function(input,
     ...
   )
 
-  if (seurat_out == F) {
+  if (seurat_out == FALSE) {
     res
   } else {
     col_meta <- colnames(metadata)
@@ -309,9 +309,9 @@ clustify.Seurat <- function(input,
       clash <- dplyr::filter(clash, n > 1)
       clash <- dplyr::pull(clash, rn)
       df_temp <- dplyr::mutate(df_temp, type = ifelse(rn %in% clash, paste0(type, "-CLASH!"), type))
-      df_temp <- dplyr::distinct(df_temp, rn, r, .keep_all = T)
+      df_temp <- dplyr::distinct(df_temp, rn, r, .keep_all = TRUE)
     }
-    if (per_cell == F) {
+    if (per_cell == FALSE) {
       df_temp <- dplyr::rename(df_temp, !!cluster_col := rn)
       df_temp_full <- dplyr::left_join(tibble::rownames_to_column(metadata, "rn"), df_temp, by = cluster_col)
       df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
@@ -374,14 +374,14 @@ clustify_lists <- function(input, ...) {
 #' @export
 
 clustify_lists.default <- function(input,
-                                   per_cell = F,
+                                   per_cell = FALSE,
                                    cluster_info = NULL,
-                                   log_scale = T,
+                                   log_scale = TRUE,
                                    cluster_col = NULL,
                                    topn = 3000,
                                    cut = 0,
                                    marker,
-                                   marker_inmatrix = T,
+                                   marker_inmatrix = TRUE,
                                    genomen = 30000,
                                    metric = "hyper",
                                    output_high = TRUE,
@@ -405,7 +405,7 @@ clustify_lists.default <- function(input,
     }
   }
 
-  if (per_cell == F) {
+  if (per_cell == FALSE) {
     input <- average_clusters(input,
       cluster_info,
       log_scale = log_scale,
@@ -415,7 +415,7 @@ clustify_lists.default <- function(input,
 
   bin_input <- binarize_expr(input, n = topn, cut = cut)
 
-  if (marker_inmatrix != T) {
+  if (marker_inmatrix != TRUE) {
     marker <- matrixize_markers(
       marker,
       ...
@@ -455,14 +455,14 @@ clustify_lists.default <- function(input,
 #'
 #' @export
 clustify_lists.seurat <- function(input,
-                                  per_cell = F,
+                                  per_cell = FALSE,
                                   cluster_info = NULL,
-                                  log_scale = T,
+                                  log_scale = TRUE,
                                   cluster_col = NULL,
                                   topn = 3000,
                                   cut = 0,
                                   marker,
-                                  marker_inmatrix = T,
+                                  marker_inmatrix = TRUE,
                                   genomen = 30000,
                                   metric = "hyper",
                                   output_high = TRUE,
@@ -473,7 +473,7 @@ clustify_lists.seurat <- function(input,
   s_object <- input
   # for seurat < 3.0
   input <- s_object@data
-  cluster_info <- as.data.frame(use_seurat_meta(s_object, dr = dr, seurat3 = F))
+  cluster_info <- as.data.frame(use_seurat_meta(s_object, dr = dr, seurat3 = FALSE))
 
   res <- clustify_lists(input,
     per_cell = per_cell,
@@ -490,10 +490,10 @@ clustify_lists.seurat <- function(input,
     ...
   )
 
-  if (seurat_out == F) {
+  if (seurat_out == FALSE) {
     res
   } else {
-    if (per_cell == F) {
+    if (per_cell == FALSE) {
       df_temp <- cor_to_call(res, cluster_info, col = cluster_col, threshold = threshold)
       df_temp_full <- dplyr::left_join(tibble::rownames_to_column(cluster_info, "rn"), df_temp, by = cluster_col)
       df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
@@ -535,14 +535,14 @@ clustify_lists.seurat <- function(input,
 
 #' @param ... passed to matrixize_markers
 clustify_lists.Seurat <- function(input,
-                                  per_cell = F,
+                                  per_cell = FALSE,
                                   cluster_info = NULL,
-                                  log_scale = T,
+                                  log_scale = TRUE,
                                   cluster_col = NULL,
                                   topn = 3000,
                                   cut = 0,
                                   marker,
-                                  marker_inmatrix = T,
+                                  marker_inmatrix = TRUE,
                                   genomen = 30000,
                                   metric = "hyper",
                                   output_high = TRUE,
@@ -553,7 +553,7 @@ clustify_lists.Seurat <- function(input,
   s_object <- input
   # for seurat 3.0 +
   input <- s_object@assays$RNA@data
-  cluster_info <- as.data.frame(use_seurat_meta(s_object, dr = dr, seurat3 = T))
+  cluster_info <- as.data.frame(use_seurat_meta(s_object, dr = dr, seurat3 = TRUE))
 
   res <- clustify_lists(input,
     per_cell = per_cell,
@@ -570,10 +570,10 @@ clustify_lists.Seurat <- function(input,
     ...
   )
 
-  if (seurat_out == F) {
+  if (seurat_out == FALSE) {
     res
   } else {
-    if (per_cell == F) {
+    if (per_cell == FALSE) {
       df_temp <- cor_to_call(res, cluster_info, col = cluster_col, threshold = threshold)
       df_temp_full <- dplyr::left_join(tibble::rownames_to_column(cluster_info, "rn"), df_temp, by = cluster_col)
       df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")

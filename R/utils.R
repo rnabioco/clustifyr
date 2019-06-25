@@ -14,12 +14,12 @@
 #'
 #' @export
 average_clusters <- function(mat, cluster_info,
-                             log_scale = T,
+                             log_scale = TRUE,
                              cluster_col = "cluster",
                              cell_col = NULL,
                              low_threshold = 0,
                              method = "mean",
-                             output_log = T) {
+                             output_log = TRUE) {
   if (!(is.null(cell_col))) {
     if (!(all(colnames(mat) == cluster_info[[cell_col]]))) {
       mat <- mat[, cluster_info[[cell_col]]]
@@ -49,7 +49,7 @@ average_clusters <- function(mat, cluster_info,
         } else {
           mat_data <- mat[, cell_ids, drop = FALSE]
         }
-        res <- Matrix::rowMeans(mat_data, na.rm = T)
+        res <- Matrix::rowMeans(mat_data, na.rm = TRUE)
         if (output_log) {
           res <- log1p(res)
         }
@@ -96,7 +96,7 @@ percent_clusters <- function(mat, cluster_info,
   mat[mat <= cut_num] <- 0
 
   average_clusters(mat, cluster_info,
-    log_scale = F,
+    log_scale = FALSE,
     cluster_col = cluster_col
   )
 }
@@ -198,7 +198,7 @@ clustify_intra <- function(expr_mat,
   meta_tar <- metadata[!row_ref, ]
 
   avg_clusters_ref <- average_clusters(expr_mat_ref, meta_ref,
-    log_scale = F,
+    log_scale = FALSE,
     cluster_col = cluster_col
   )
 
@@ -229,7 +229,7 @@ clustify_intra <- function(expr_mat,
 #'
 #' @export
 average_clusters_filter <- function(mat, cluster_info,
-                                    log_scale = T,
+                                    log_scale = TRUE,
                                     filter_on = "nGene",
                                     group_by = NULL,
                                     filter_method = "<=",
@@ -273,10 +273,10 @@ remove_background <- function(mat, background, n = 0) {
   }
 
   if (!is.vector(background)) {
-    background <- background[order(background[, 1], decreasing = T), , drop = F]
+    background <- background[order(background[, 1], decreasing = TRUE), , drop = FALSE]
     background <- rownames(t3)[1:n]
   } else if (!is.null(names(background))) {
-    background <- names(sort(background, decreasing = T)[1:n])
+    background <- names(sort(background, decreasing = TRUE)[1:n])
   }
 
   mat[!(rownames(mat) %in% background), ]
@@ -295,8 +295,8 @@ remove_background <- function(mat, background, n = 0) {
 calculate_pathway_gsea <- function(mat,
                                    pathway_list,
                                    n_perm = 1000,
-                                   scale = T,
-                                   no_warnings = T) {
+                                   scale = TRUE,
+                                   no_warnings = TRUE) {
   # pathway_list can be user defined or `my_pathways <- fgsea::reactomePathways(rownames(pbmc4k_matrix))`
   out <- lapply(
     names(pathway_list),
@@ -308,10 +308,10 @@ calculate_pathway_gsea <- function(mat,
       temp <- run_gsea(mat, v1,
         n_perm = n_perm,
         scale = scale,
-        per_cell = T,
+        per_cell = TRUE,
         no_warnings = no_warnings
       )
-      temp <- temp[, 3, drop = F]
+      temp <- temp[, 3, drop = FALSE]
     }
   )
   res <- do.call(cbind, out)
@@ -344,7 +344,7 @@ cor_to_call <- function(correlation_matrix,
     clash <- dplyr::filter(clash, n > 1)
     clash <- dplyr::pull(clash, 1)
     df_temp[lapply(df_temp[, 1], FUN = function(x) x %in% clash)[[1]], 2] <- paste0(df_temp[["type"]][lapply(df_temp[, 1], FUN = function(x) x %in% clash)[[1]]], "-CLASH!")
-    df_temp <- dplyr::distinct(df_temp, exclude = "type", .keep_all = T)
+    df_temp <- dplyr::distinct(df_temp, exclude = "type", .keep_all = TRUE)
     df_temp_full <- dplyr::select(df_temp, -exclude)
   } else {
     df_temp_full <- df_temp
@@ -442,11 +442,11 @@ cor_to_call_topn <- function(correlation_matrix,
     df_temp_full2 <- dplyr::right_join(df_temp_full2, select(df_temp_full, -c(type, r)), by = stats::setNames(collapse_to_cluster, "type2"))
     df_temp_full <- dplyr::mutate(df_temp_full2, type = tidyr::replace_na(type, paste0("r<", threshold, ", unassigned")))
     df_temp_full <- dplyr::group_by_(df_temp_full, .dots = col)
-    df_temp_full <- dplyr::distinct(df_temp_full, type, type2, .keep_all = T)
-    dplyr::arrange(df_temp_full, desc(n), desc(sum), .by_group = T)
+    df_temp_full <- dplyr::distinct(df_temp_full, type, type2, .keep_all = TRUE)
+    dplyr::arrange(df_temp_full, desc(n), desc(sum), .by_group = TRUE)
   } else {
     df_temp_full <- dplyr::group_by_(df_temp_full, .dots = col)
-    dplyr::arrange(df_temp_full, desc(r), .by_group = T)
+    dplyr::arrange(df_temp_full, desc(r), .by_group = TRUE)
   }
 }
 
@@ -470,21 +470,21 @@ gene_pct <- function(matrix,
   if (returning == "mean") {
     sapply(unique_clusters, function(x) {
       celllist <- clusters == x
-      tmp <- matrix[genelist, celllist, drop = F]
+      tmp <- matrix[genelist, celllist, drop = FALSE]
       tmp[tmp > 0] <- 1
       mean(Matrix::rowSums(tmp) / ncol(tmp))
     })
   } else if (returning == "min") {
       sapply(unique_clusters, function(x) {
         celllist <- clusters == x
-        tmp <- matrix[genelist, celllist, drop = F]
+        tmp <- matrix[genelist, celllist, drop = FALSE]
         tmp[tmp > 0] <- 1
         min(Matrix::rowSums(tmp) / ncol(tmp))
     })
   } else if (returning == "max") {
     sapply(unique_clusters, function(x) {
       celllist <- clusters == x
-      tmp <- matrix[genelist, celllist, drop = F]
+      tmp <- matrix[genelist, celllist, drop = FALSE]
       tmp[tmp > 0] <- 1
       max(Matrix::rowSums(tmp) / ncol(tmp))
     })
@@ -582,14 +582,14 @@ clustify_nudge.seurat <- function(input,
                                   query_genes = NULL,
                                   compute_method = "spearman",
                                   weight = 1,
-                                  seurat_out = T,
+                                  seurat_out = TRUE,
                                   threshold = -Inf,
                                   dr = "tsne",
                                   norm = "diff",
-                                  marker_inmatrix = T,
+                                  marker_inmatrix = TRUE,
                                   mode = "rank",
                                   ...) {
-  if (marker_inmatrix != T) {
+  if (marker_inmatrix != TRUE) {
     marker <- matrixize_markers(
       marker,
       ...
@@ -600,8 +600,8 @@ clustify_nudge.seurat <- function(input,
     ref_mat = ref_mat,
     cluster_col = cluster_col,
     query_genes = query_genes,
-    seurat_out = F,
-    per_cell = F
+    seurat_out = FALSE,
+    per_cell = FALSE
   )
 
   if (mode == "pct") {
@@ -627,10 +627,10 @@ clustify_nudge.seurat <- function(input,
   )
   colnames(df_temp) <- c(cluster_col, "type", "score")
 
-  if (seurat_out == F) {
+  if (seurat_out == FALSE) {
     df_temp
   } else {
-    cluster_info <- as.data.frame(use_seurat_meta(input, dr = dr, seurat3 = F))
+    cluster_info <- as.data.frame(use_seurat_meta(input, dr = dr, seurat3 = FALSE))
     df_temp_full <- dplyr::left_join(tibble::rownames_to_column(cluster_info, "rn"), df_temp, by = cluster_col)
     df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
     if ("Seurat" %in% loadedNamespaces()) {
@@ -669,15 +669,15 @@ clustify_nudge.default <- function(input,
                                    query_genes = NULL,
                                    compute_method = "spearman",
                                    weight = 1,
-                                   seurat_out = T,
+                                   seurat_out = TRUE,
                                    threshold = -Inf,
                                    dr = "tsne",
                                    norm = "diff",
-                                   call = T,
-                                   marker_inmatrix = T,
+                                   call = TRUE,
+                                   marker_inmatrix = TRUE,
                                    mode = "rank",
                                    ...) {
-  if (marker_inmatrix != T) {
+  if (marker_inmatrix != TRUE) {
     marker <- matrixize_markers(
       marker,
       ...
@@ -709,8 +709,8 @@ clustify_nudge.default <- function(input,
     metadata = metadata,
     cluster_col = cluster_col,
     query_genes = query_genes,
-    seurat_out = F,
-    per_cell = F
+    seurat_out = FALSE,
+    per_cell = FALSE
   )
 
   if (mode == "pct") {
@@ -730,7 +730,7 @@ clustify_nudge.default <- function(input,
       resb <- cbind(resb, empty_mat)
     }
 
-  if (call == T) {
+  if (call == TRUE) {
     df_temp <- cor_to_call(resa[order(rownames(resa)), order(colnames(resa))] +
       resb[order(rownames(resb)), order(colnames(resb))] * weight,
     threshold = threshold
@@ -845,7 +845,7 @@ overcluster_test <- function(expr,
                              n = 5,
                              ngenes = NULL,
                              query_genes = NULL,
-                             do.label = T,
+                             do.label = TRUE,
                              seed = 42,
                              newclustering = NULL) {
   if (!(is.null(seed))) {
@@ -875,28 +875,28 @@ overcluster_test <- function(expr,
     metadata,
     query_genes = genes,
     cluster_col = cluster_col,
-    seurat_out = F
+    seurat_out = FALSE
   )
   res2 <- clustify(expr,
     ref_mat,
     metadata,
     query_genes = genes,
     cluster_col = "new_clusters",
-    seurat_out = F
+    seurat_out = FALSE
   )
   o1 <- plot_tsne(metadata,
     feature = cluster_col,
     x = x_col,
     y = y_col,
-    do.label = F,
-    do.legend = F
+    do.label = FALSE,
+    do.legend = FALSE
   )
   o2 <- plot_tsne(metadata,
     feature = "new_clusters",
     x = x_col,
     y = y_col,
-    do.label = F,
-    do.legend = F
+    do.label = FALSE,
+    do.legend = FALSE
   )
   p1 <- plot_best_call(res1,
     metadata,
@@ -932,8 +932,8 @@ overcluster_test <- function(expr,
 ref_feature_select <- function(mat,
                                n = 3000,
                                mode = "var",
-                               rm.lowvar = T) {
-  if (rm.lowvar == T) {
+                               rm.lowvar = TRUE) {
+  if (rm.lowvar == TRUE) {
     v <- RowVar(mat)
     v2 <- v[order(-v)][1:(length(v) / 2)]
     mat <- mat[names(v2)[!is.na(names(v2))], ]
@@ -943,7 +943,7 @@ ref_feature_select <- function(mat,
     cor_mat <- cor(t(as.matrix(mat)), method = "spearman")
     diag(cor_mat) <- rep(0, times = nrow(cor_mat))
     cor_mat <- abs(cor_mat)
-    score <- apply(cor_mat, 1, max, na.rm = T)
+    score <- apply(cor_mat, 1, max, na.rm = TRUE)
     score <- score[order(-score)]
     cor_genes <- names(score[1:n])
   } else if (mode == "var") {
@@ -977,8 +977,8 @@ feature_select_PCA <- function(mat = NULL,
                                pcs = NULL,
                                n_pcs = 10,
                                percentile = 0.99,
-                               log_scale = T) {
-  if (log_scale == F) {
+                               log_scale = TRUE) {
+  if (log_scale == FALSE) {
     mat <- log(mat + 1)
   }
 
@@ -1010,7 +1010,7 @@ gmt_to_list <- function(path,
                         cutoff = 0,
                         sep = "\thttp://www.broadinstitute.org/gsea/msigdb/cards/.*?\t") {
   df <- readr::read_csv(path,
-                        col_names = F)
+                        col_names = FALSE)
   df <- tidyr::separate(df,
                         X1,
                         sep = sep,
@@ -1032,7 +1032,7 @@ gmt_to_list <- function(path,
 #' @param mat expression matrix
 #' @param pathway_list a list of vectors, each named for a specific pathway, or dataframe
 #' @param n_perm Number of permutation for fgsea function. Defaults to 1000.
-#' @param scale convert expr_mat into zscores prior to running GSEA?, default = T
+#' @param scale convert expr_mat into zscores prior to running GSEA?, default = TRUE
 #' @param topn number of top pathways to plot
 #' @param returning to return "both" list and plot, or either one
 
@@ -1040,7 +1040,7 @@ gmt_to_list <- function(path,
 plot_pathway_gsea <- function(mat,
                               pathway_list,
                               n_perm = 1000,
-                              scale = T,
+                              scale = TRUE,
                               topn = 5,
                               returning = "both") {
   res <- calculate_pathway_gsea(mat,
@@ -1067,7 +1067,7 @@ plot_pathway_gsea <- function(mat,
 #' @param na.rm logical. Should missing values (including NaN) be omitted from the calculations?
 
 #' @export
-RowVar <- function(x, na.rm = T) {
+RowVar <- function(x, na.rm = TRUE) {
   rowSums((x - rowMeans(x, na.rm = na.rm))^2, na.rm = na.rm) / (dim(x)[2] - 1)
 }
 
@@ -1085,11 +1085,11 @@ RowVar <- function(x, na.rm = T) {
 #' @export
 downsample_matrix <- function(mat,
                               n = 1,
-                              keep_cluster_proportions = T,
+                              keep_cluster_proportions = TRUE,
                               cluster_info = NULL,
                               cluster_col = "cluster",
                               set_seed = NULL) {
-  if (keep_cluster_proportions == F) {
+  if (keep_cluster_proportions == FALSE) {
     cluster_ids <- colnames(mat)
     if (n < 1) {
       n <- as.integer(ncol(mat)*n)
@@ -1113,7 +1113,7 @@ downsample_matrix <- function(mat,
       n <- n2
     }
     set.seed(set_seed)
-    cluster_ids_new <- mapply(sample, cluster_ids, n, SIMPLIFY = F)
+    cluster_ids_new <- mapply(sample, cluster_ids, n, SIMPLIFY = FALSE)
   }
   return(mat[,unlist(cluster_ids_new)])
 }
@@ -1125,15 +1125,15 @@ downsample_matrix <- function(mat,
 #' @param sep separator for name combinations
 #'
 #' @export
-make_comb_ref <- function(ref_mat, log_scale = T, sep = "_and_") {
-  if (log_scale == T) {
+make_comb_ref <- function(ref_mat, log_scale = TRUE, sep = "_and_") {
+  if (log_scale == TRUE) {
     ref_mat <- expm1(ref_mat)
   }
-  combs <- utils::combn(x = colnames(ref_mat), m = 2, simplify = F)
+  combs <- utils::combn(x = colnames(ref_mat), m = 2, simplify = FALSE)
   comb_mat <- sapply(combs, FUN = function(x) Matrix::rowMeans(ref_mat[, unlist(x)]))
   colnames(comb_mat) <- sapply(combs, FUN = function(x) stringr::str_c(unlist(x), collapse = sep))
   new_mat <- cbind(ref_mat, comb_mat)
-  if (log_scale == T) {
+  if (log_scale == TRUE) {
     new_mat <- log1p(new_mat)
   }
   new_mat
@@ -1147,7 +1147,7 @@ make_comb_ref <- function(ref_mat, log_scale = T, sep = "_and_") {
 #' @param compto compare max expression to the value of next 1 or more
 #'
 #' @export
-ref_marker_select <- function(mat, cut = 0.5, arrange = T, compto = 1) {
+ref_marker_select <- function(mat, cut = 0.5, arrange = TRUE, compto = 1) {
   mat <- mat[!is.na(rownames(mat)),]
   mat <- mat[Matrix::rowSums(mat) != 0,]
   ref_cols <- colnames(mat)
@@ -1155,13 +1155,13 @@ ref_marker_select <- function(mat, cut = 0.5, arrange = T, compto = 1) {
   if (class(res) == "list") {
     res <- res[!sapply(res, is.null)]
   }
-  resdf <- t(as.data.frame(res, stringsAsFactors = F))
-  resdf<- tibble::rownames_to_column(as.data.frame(resdf, stringsAsFactors = F), "gene")
+  resdf <- t(as.data.frame(res, stringsAsFactors = FALSE))
+  resdf<- tibble::rownames_to_column(as.data.frame(resdf, stringsAsFactors = FALSE), "gene")
   colnames(resdf) <- c("gene", "cluster", "ratio")
   resdf <- dplyr::mutate(resdf, ratio = as.numeric(ratio))
-  if (arrange == T) {
+  if (arrange == TRUE) {
     resdf <- dplyr::group_by(resdf, cluster)
-    resdf <- dplyr::arrange(resdf, ratio, .by_group = T)
+    resdf <- dplyr::arrange(resdf, ratio, .by_group = TRUE)
     resdf <- dplyr::ungroup(resdf)
   }
   resdf
@@ -1205,13 +1205,13 @@ pos_neg_select <- function(input,
                   ref_mat,
                   metadata,
                   cluster_col = cluster_col,
-                  per_cell = T, verbose = T))
+                  per_cell = TRUE, verbose = TRUE))
   res[is.na(res)] <- 0
   suppressWarnings(res2 <- average_clusters(t(res),
                    metadata,
                    cluster_col = cluster_col,
-                   log_scale = F,
-                   output_log = F))
+                   log_scale = FALSE,
+                   output_log = FALSE))
   res2 <- t(res2)
 
   if (!(is.null(cutoff_score))) {

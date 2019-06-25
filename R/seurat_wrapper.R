@@ -102,11 +102,11 @@ use_seurat3_comp <- function(seurat_object,
 #' @export
 use_seurat_meta <- function(seurat_object,
                             dr = "tsne",
-                            seurat3 = F) {
+                            seurat3 = FALSE) {
   if (class(seurat_object) == "Seurat") {
-    seurat3 = T
+    seurat3 = TRUE
   }
-  if (seurat3 == F) {
+  if (seurat3 == FALSE) {
     temp_dr <- as.data.frame(seurat_object@dr[[dr]]@cell.embeddings)
   } else {
     temp_dr <- as.data.frame(seurat_object@reductions[[dr]]@cell.embeddings)

@@ -42,7 +42,7 @@ matrixize_markers <- function(marker_df,
                               background_weight = 0,
                               unique = FALSE,
                               labels = NULL,
-                              remove_rp = F) {
+                              remove_rp = FALSE) {
   # takes marker in dataframe form
   # equal number of marker genes per known cluster
   marker_df <- dplyr::as_tibble(marker_df)
@@ -53,7 +53,7 @@ matrixize_markers <- function(marker_df,
     marker_df <- tidyr::gather(marker_df, factor_key = TRUE, key = "cluster", value = "gene")
   }
 
-  if (remove_rp == T) {
+  if (remove_rp == TRUE) {
     marker_df <- dplyr::filter(marker_df, !(stringr::str_detect(gene, "^RP[0-9,L,S]")))
   }
 
@@ -139,7 +139,7 @@ compare_lists <- function(bin_mat,
                           marker_m,
                           n = 30000,
                           metric = "hyper",
-                          output_high = T) {
+                          output_high = TRUE) {
   # check if matrix is binarized
   if ((length(unique(bin_mat[, 1])) > 2) & (metric != "gsea")) {
     warning("non-binarized data, running spearman instead")
@@ -229,12 +229,12 @@ compare_lists <- function(bin_mat,
         marker_list[[1]] <- marker_m[, y]
         names(marker_list) <- y
         v1 <- marker_list
-        run_gsea(bin_mat, v1, n_perm = 1000, per_cell = T, )
+        run_gsea(bin_mat, v1, n_perm = 1000, per_cell = TRUE)
       }
     )
     res <- do.call(cbind, out)
     n <- ncol(res)
-    res2 <- res[, 3 * c(1:(ncol(res) / 3)), drop = F]
+    res2 <- res[, 3 * c(1:(ncol(res) / 3)), drop = FALSE]
     rownames(res2) <- rownames(res)
     colnames(res2) <- colnames(marker_m)
     res <- res2

@@ -7,7 +7,7 @@ test_that("output is correctly formatted", {
     ref_mat = pbmc_bulk_matrix,
     query_genes = pbmc4k_vargenes,
     cluster_col = "cluster",
-    verbose = T
+    verbose = TRUE
   )
   n_clusters <- length(unique(pbmc4k_meta$cluster))
   n_ref_samples <- ncol(pbmc_bulk_matrix)
@@ -23,7 +23,7 @@ test_that("clustify takes accidental dataframe as well", {
     ref_mat = pbmc_bulk_matrix,
     query_genes = pbmc4k_vargenes,
     cluster_col = "cluster",
-    verbose = T
+    verbose = TRUE
   )
   n_clusters <- length(unique(pbmc4k_meta$cluster))
   n_ref_samples <- ncol(pbmc_bulk_matrix)
@@ -70,7 +70,7 @@ test_that("test per cell", {
     ref_mat = pbmc_bulk_matrix,
     query_genes = pbmc4k_vargenes,
     cell_col = "rn",
-    per_cell = T
+    per_cell = TRUE
   )
 
   expect_equal(nrow(res), ncol(pbmc4k_matrix))
@@ -91,7 +91,7 @@ test_that("test permutation", {
     ref_mat = pbmc_bulk_matrix,
     query_genes = pbmc4k_vargenes,
     cluster_col = "cluster",
-    num_perm = 2, return_full = T
+    num_perm = 2, return_full = TRUE
   )
 
   expect_equal(res1, res_full$score)
@@ -107,18 +107,18 @@ test_that("seurat object clustifying", {
   res <- clustify(s_small,
     pbmc_bulk_matrix,
     cluster_col = "res.1",
-    seurat_out = F,
-    per_cell = T
+    seurat_out = FALSE,
+    per_cell = TRUE
   )
   res <- clustify(s_small,
     pbmc_bulk_matrix,
     cluster_col = "res.1",
-    seurat_out = F
+    seurat_out = FALSE
   )
   g <- plot_best_call(res,
     use_seurat_meta(s_small),
     col = "res.1",
-    plot_r = T
+    plot_r = TRUE
   )
   expect_true(ggplot2::is.ggplot(g[[1]]))
 })
@@ -127,13 +127,13 @@ test_that("clustify reinserts seurat metadata correctly", {
   res <- clustify(s_small,
                   pbmc_bulk_matrix,
                   cluster_col = "res.1",
-                  seurat_out = T,
-                  per_cell = T
+                  seurat_out = TRUE,
+                  per_cell = TRUE
   )
   res2 <- clustify(s_small,
                   pbmc_bulk_matrix,
                   cluster_col = "res.1",
-                  seurat_out = T
+                  seurat_out = TRUE
   )
   expect_true(class(res) %in% c("matrix", "seurat"))
 })
@@ -146,18 +146,18 @@ test_that("seurat3 object clustifying", {
   res <- clustify(s_small3,
                   pbmc_bulk_matrix,
                   cluster_col = "RNA_snn_res.1",
-                  seurat_out = F,
-                  per_cell = T
+                  seurat_out = FALSE,
+                  per_cell = TRUE
   )
   res <- clustify(s_small3,
                   pbmc_bulk_matrix,
                   cluster_col = "RNA_snn_res.1",
-                  seurat_out = F
+                  seurat_out = FALSE
   )
   g <- plot_best_call(res,
                       use_seurat_meta(s_small3),
                       col = "RNA_snn_res.1",
-                      plot_r = T
+                      plot_r = TRUE
   )
   expect_true(ggplot2::is.ggplot(g[[1]]))
 })
@@ -166,13 +166,13 @@ test_that("clustify reinserts seurat3 metadata correctly", {
   res <- clustify(s_small3,
                   pbmc_bulk_matrix,
                   cluster_col = "RNA_snn_res.1",
-                  seurat_out = T,
-                  per_cell = T
+                  seurat_out = TRUE,
+                  per_cell = TRUE
   )
   res2 <- clustify(s_small3,
                    pbmc_bulk_matrix,
                    cluster_col = "RNA_snn_res.1",
-                   seurat_out = T
+                   seurat_out = TRUE
   )
   expect_true(class(res) %in% c("matrix", "Seurat"))
 })
@@ -201,8 +201,8 @@ test_that("get_similarity can exclude 0s as missing data", {
     ref_mat = pbmc_bulk_matrix,
     query_genes = pbmc4k_vargenes,
     cluster_col = "cluster",
-    per_cell = T,
-    rm0 = T
+    per_cell = TRUE,
+    rm0 = TRUE
   )
 
   expect_equal(ncol(pbmc4k_matrix), nrow(res))
@@ -214,7 +214,7 @@ test_that("permute_similarity runs per cell", {
     cbmc_ref[c("RBM28","CCDC136","TNPO3"),1:3],
     colnames(pbmc4k_matrix[c("RBM28","CCDC136","TNPO3"),c(7,11)]),
     num_perm = 2,
-    per_cell = T,
+    per_cell = TRUE,
     compute_method = "spearman"
   )
   expect_equal(length(res), 2)
@@ -226,7 +226,7 @@ test_that("error for unsupported method", {
     cbmc_ref[c("RBM28","CCDC136","TNPO3"),1:3],
     pbmc4k_meta$rn[c(7,11)],
     num_perm = 2,
-    per_cell = T,
+    per_cell = TRUE,
     compute_method = "a"
   ))
 })

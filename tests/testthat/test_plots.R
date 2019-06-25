@@ -14,7 +14,7 @@ res2 <- clustify(
   ref_mat = pbmc_bulk_matrix,
   query_genes = pbmc4k_vargenes,
   cluster_col = "cluster",
-  per_cell = T
+  per_cell = TRUE
 )
 
 test_that("plots can be generated", {
@@ -62,7 +62,7 @@ test_that("plot_cor works with scale_legends option", {
   plts <- plot_cor(res,
                    pbmc4k_meta,
                    cluster_col = "cluster",
-                   scale_legends = T
+                   scale_legends = TRUE
   )
 
   plts2 <- plot_cor(res,
@@ -111,7 +111,7 @@ test_that("plot_best_call threshold works as intended, on per cell and collapsin
     ref_mat = pbmc_bulk_matrix,
     query_genes = pbmc4k_vargenes,
     cluster_col = "cluster",
-    per_cell = T
+    per_cell = TRUE
   )
   call1 <- plot_best_call(res,
     metadata = pbmc4k_meta,
@@ -128,8 +128,8 @@ test_that("plot_gene checks for presence of gene name", {
     pbmc4k_meta,
     c("CD24", "ZFP36L3"),
     cell_col = "rn",
-    do.label = T,
-    do.legend = F
+    do.label = TRUE,
+    do.legend = FALSE
   )
   expect_error(plot_gene(pbmc4k_matrix,
     pbmc4k_meta,
@@ -158,7 +158,7 @@ test_that("plot_cor_heatmap returns a ggplot object", {
     ref_mat = pbmc_bulk_matrix,
     query_genes = pbmc4k_vargenes,
     cluster_col = "cluster",
-    per_cell = F
+    per_cell = FALSE
   )
   g <- plot_cor_heatmap(res)
   expect_true(class(g) == "Heatmap")

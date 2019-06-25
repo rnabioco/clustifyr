@@ -315,7 +315,7 @@ plot_best_call <- function(correlation_matrix,
     clash <- dplyr::filter(clash, n > 1)
     clash <- dplyr::pull(clash, 1)
     df_temp[lapply(df_temp[, 1], FUN = function(x) x %in% clash)[[1]], 2] <- paste0(df_temp[["type"]][lapply(df_temp[, 1], FUN = function(x) x %in% clash)[[1]]], "-CLASH!")
-    df_temp <- dplyr::distinct(df_temp, exclude = "type", .keep_all = T)
+    df_temp <- dplyr::distinct(df_temp, exclude = "type", .keep_all = TRUE)
   }
   df_temp_full <- dplyr::left_join(metadata, df_temp, by = col)
 
@@ -337,7 +337,7 @@ plot_best_call <- function(correlation_matrix,
     ...
   )
 
-  if (plot_r == T) {
+  if (plot_r == TRUE) {
     l <- list()
     l[[1]] <- g
     l[[2]] <- plot_tsne(df_temp_full,
@@ -370,11 +370,11 @@ plot_cols <- function(metadata,
                       cluster_col_ref,
                       plot_col_ref) {
   temp1 <- dplyr::group_by_at(metadata, vars(cluster_col, cluster_col_called))
-  temp1 <- dplyr::summarise(temp1, med = median(!!sym(plot_col), na.rm = T))
+  temp1 <- dplyr::summarise(temp1, med = median(!!sym(plot_col), na.rm = TRUE))
   colnames(temp1) <- c("original_cluster", "type", paste(plot_col, "query", sep = "_"))
 
   temp2 <- dplyr::group_by_at(metadata_ref, cluster_col_ref)
-  temp2 <- dplyr::summarise(temp2, med = median(!!sym(plot_col_ref), na.rm = T))
+  temp2 <- dplyr::summarise(temp2, med = median(!!sym(plot_col_ref), na.rm = TRUE))
   colnames(temp2) <- c("type", paste(plot_col, "ref", sep = "_"))
 
   temp <- dplyr::left_join(temp1,
