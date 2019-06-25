@@ -15,9 +15,9 @@ test_that("output is correctly formatted", {
 test_that("run_gsea checks for matching number of clusters", {
   data("pbmc4k_vargenes")
   expect_error(res <- run_gsea(pbmc4k_matrix,
-                  query_genes = pbmc4k_vargenes[1:100],
-                  n_perm = 10,
-                  cluster_ids = pbmc4k_meta$cluster[1:3]
+    query_genes = pbmc4k_vargenes[1:100],
+    n_perm = 10,
+    cluster_ids = pbmc4k_meta$cluster[1:3]
   ))
 })
 
