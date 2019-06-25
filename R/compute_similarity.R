@@ -15,17 +15,16 @@ get_similarity <- function(expr_mat,
                            cluster_ids,
                            compute_method,
                            per_cell = FALSE,
-                           rm0 = F,
+                           rm0 = FALSE,
                            ...) {
   ref_clust <- colnames(ref_mat)
   if (sum(is.na(cluster_ids)) > 0) {
-    print("reassigning NAs to unknown")
+    message("reassigning NAs to unknown")
     cluster_ids <- factor(cluster_ids)
     cluster_ids <- factor(cluster_ids, levels = c(levels(cluster_ids), NA), labels = c(levels(cluster_ids), "unknown"), exclude = NULL)
   }
   if (!per_cell) {
     sc_clust <- sort(unique(cluster_ids))
-    # print(sc_clust)
     clust_avg <- compute_mean_expr(
       expr_mat,
       cluster_ids,
@@ -69,9 +68,9 @@ permute_similarity <- function(expr_mat,
                                ref_mat,
                                cluster_ids,
                                num_perm,
-                               per_cell = F,
+                               per_cell = FALSE,
                                compute_method,
-                               rm0 = F,
+                               rm0 =FALSE,
                                ...) {
   ref_clust <- colnames(ref_mat)
 
@@ -158,11 +157,11 @@ compute_mean_expr <- function(expr_mat,
 calc_similarity <- function(sc_avg,
                             ref_mat,
                             compute_method,
-                            rm0 = F,
+                            rm0 = FALSE,
                             ...) {
   # remove 0s ?
-  if (rm0 == T) {
-    print("considering 0 as missing data")
+  if(rm0 == TRUE) {
+    message("considering 0 as missing data")
     sc_avg[sc_avg == 0] <- NA
     similarity_score <- cor(as.matrix(sc_avg),
       ref_mat,
