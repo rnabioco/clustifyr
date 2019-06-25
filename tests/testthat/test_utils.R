@@ -42,16 +42,16 @@ test_that("average_clusters works as intended", {
 test_that("average_clusters works with disordered data", {
   pbmc4k_meta2 <- rbind(pbmc4k_meta[151:300, ], pbmc4k_meta[1:150, ])
   pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
-                                  pbmc4k_meta,
-                                  log_scale = TRUE,
-                                  cell_col = "rn",
-                                  cluster_col = "classified"
+    pbmc4k_meta,
+    log_scale = TRUE,
+    cell_col = "rn",
+    cluster_col = "classified"
   )
   pbmc4k_avg3 <- average_clusters(pbmc4k_matrix,
-                                  pbmc4k_meta2,
-                                  log_scale = TRUE,
-                                  cell_col = "rn",
-                                  cluster_col = "classified"
+    pbmc4k_meta2,
+    log_scale = TRUE,
+    cell_col = "rn",
+    cluster_col = "classified"
   )
   expect_equal(pbmc4k_avg2, pbmc4k_avg3)
 })
@@ -59,8 +59,8 @@ test_that("average_clusters works with disordered data", {
 
 test_that("average_clusters detects wrong cluster ident", {
   expect_error(pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
-                                               matrix(5,5),
-                                               log_scale = FALSE
+    matrix(5, 5),
+    log_scale = FALSE
   ))
 })
 
@@ -393,29 +393,33 @@ test_that("feature_select_PCA can handle precalculated PCA", {
 
 test_that("downsample_matrix sets seed correctly", {
   mat1 <- downsample_matrix(pbmc4k_matrix,
-                            cluster_info = pbmc4k_meta$cluster,
-                            n = 0.5,
-                            keep_cluster_proportions = TRUE,
-                            set_seed = 41)
+    cluster_info = pbmc4k_meta$cluster,
+    n = 0.5,
+    keep_cluster_proportions = TRUE,
+    set_seed = 41
+  )
   mat2 <- downsample_matrix(pbmc4k_matrix,
-                            cluster_info = pbmc4k_meta$cluster,
-                            n = 0.5,
-                            keep_cluster_proportions = TRUE,
-                            set_seed = 41)
+    cluster_info = pbmc4k_meta$cluster,
+    n = 0.5,
+    keep_cluster_proportions = TRUE,
+    set_seed = 41
+  )
   expect_true(all.equal(colnames(mat1), colnames(mat2)))
 })
 
 test_that("downsample_matrix can select same number of cells per cluster", {
   mat1 <- downsample_matrix(pbmc4k_matrix,
-                            cluster_info = pbmc4k_meta$cluster,
-                            n = 30,
-                            keep_cluster_proportions = TRUE,
-                            set_seed = 41)
+    cluster_info = pbmc4k_meta$cluster,
+    n = 30,
+    keep_cluster_proportions = TRUE,
+    set_seed = 41
+  )
   mat2 <- downsample_matrix(pbmc4k_matrix,
-                            cluster_info = pbmc4k_meta$cluster,
-                            n = 30,
-                            keep_cluster_proportions = FALSE,
-                            set_seed = 41)
+    cluster_info = pbmc4k_meta$cluster,
+    n = 30,
+    keep_cluster_proportions = FALSE,
+    set_seed = 41
+  )
   expect_true(all.equal(ncol(mat1), 30 * length(unique(pbmc4k_meta$cluster))))
 })
 
@@ -444,8 +448,9 @@ test_that("get_best_str finds correct values", {
 
 test_that("use_seurat_comp gets correct averages", {
   avg <- use_seurat_comp(s_small,
-                         cluster_col = "res.1",
-                         var.genes_only = TRUE)
+    cluster_col = "res.1",
+    var.genes_only = TRUE
+  )
   avg2 <- use_seurat_comp(s_small,
     cluster_col = "res.1",
     var.genes_only = "PCA"
@@ -456,38 +461,44 @@ test_that("use_seurat_comp gets correct averages", {
 test_that("use_object_comp gets correct averages", {
   s3 <- s_small3
   class(s3) <- "ser3"
-  object_loc_lookup2 <- data.frame(ser3 = c(expr = "input@assays$RNA@data",
-                                            meta = "input@meta.data",
-                                            var = "input@assays$RNA@var.features",
-                                            col = "RNA_snn_res.1"), stringsAsFactors = FALSE)
+  object_loc_lookup2 <- data.frame(ser3 = c(
+    expr = "input@assays$RNA@data",
+    meta = "input@meta.data",
+    var = "input@assays$RNA@var.features",
+    col = "RNA_snn_res.1"
+  ), stringsAsFactors = FALSE)
   avg <- use_object_comp(s3,
-                         lookuptable = object_loc_lookup2,
-                         var.genes_only = TRUE)
+    lookuptable = object_loc_lookup2,
+    var.genes_only = TRUE
+  )
   expect_true(ncol(avg) == 3)
 })
 
 test_that("use_seurat_comp gets other assay slots", {
   avg <- use_seurat_comp(s_small,
-                         cluster_col = "res.1",
-                         assay_name = "ADT",
-                         var.genes_only = TRUE)
+    cluster_col = "res.1",
+    assay_name = "ADT",
+    var.genes_only = TRUE
+  )
   avg2 <- use_seurat_comp(s_small,
-                         cluster_col = "res.1",
-                         assay_name = c("ADT","ADT2"),
-                         var.genes_only = TRUE)
+    cluster_col = "res.1",
+    assay_name = c("ADT", "ADT2"),
+    var.genes_only = TRUE
+  )
   expect_true(nrow(avg2) - nrow(avg) == 2)
 })
 
 test_that("use_seurat_comp gets correct averages with seurat3 object", {
   avg <- use_seurat_comp(s_small3,
-
-                         cluster_col = "RNA_snn_res.1",
-                         assay_name = c("ADT","ADT2"),
-                         var.genes_only = TRUE)
+    cluster_col = "RNA_snn_res.1",
+    assay_name = c("ADT", "ADT2"),
+    var.genes_only = TRUE
+  )
   avg <- use_seurat3_comp(s_small3,
-                         cluster_col = "RNA_snn_res.1",
-                         assay_name = c("ADT"),
-                         var.genes_only = TRUE)
+    cluster_col = "RNA_snn_res.1",
+    assay_name = c("ADT"),
+    var.genes_only = TRUE
+  )
   avg2 <- use_seurat_comp(s_small3,
     cluster_col = "RNA_snn_res.1",
     assay_name = c("ADT", "ADT2"),
@@ -513,10 +524,12 @@ test_that("clustify_intra works on test data", {
 test_that("object parsing works for custom object", {
   s3 <- s_small3
   class(s3) <- "ser3"
-  object_loc_lookup2 <- data.frame(ser3 = c(expr = "input@assays$RNA@data",
-                                            meta = "input@meta.data",
-                                            var = "input@assays$RNA@var.features",
-                                            col = "RNA_snn_res.1"), stringsAsFactors = FALSE)
+  object_loc_lookup2 <- data.frame(ser3 = c(
+    expr = "input@assays$RNA@data",
+    meta = "input@meta.data",
+    var = "input@assays$RNA@var.features",
+    col = "RNA_snn_res.1"
+  ), stringsAsFactors = FALSE)
   res2 <- clustify(
     s3,
     cbmc_ref,
@@ -590,7 +603,7 @@ test_that("renaming with suffix input works as intended with clusify wrapper", {
 })
 
 test_that("ref_marker_select works with cutoffs", {
-  res1 <-ref_marker_select(cbmc_ref, cut = 0)
+  res1 <- ref_marker_select(cbmc_ref, cut = 0)
   mm <- matrixize_markers(res1, n = 5, unique = TRUE, remove_rp = TRUE)
   res2 <- ref_marker_select(cbmc_ref, cut = 2)
   expect_true(nrow(res1) != nrow(res2))
@@ -622,8 +635,10 @@ test_that("pos_neg_select normalizes res", {
 })
 
 test_that("clustify_nudge works with pos_neg_select", {
-  pn_ref2 <- data.frame("CD8 T" = c(0,0,1),
-                        row.names = c("CD4", "clustifyr0", "CD8B"), check.names = FALSE)
+  pn_ref2 <- data.frame(
+    "CD8 T" = c(0, 0, 1),
+    row.names = c("CD4", "clustifyr0", "CD8B"), check.names = FALSE
+  )
   res <- clustify_nudge(pbmc4k_matrix, cbmc_ref, pn_ref2, metadata = pbmc4k_meta, cluster_col = "classified", norm = 0.5)
   expect_true(all(dim(res) == c(10, 3)))
 })
