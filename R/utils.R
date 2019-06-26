@@ -786,7 +786,7 @@ parse_loc_object <- function(input,
   #                 "leiden_cluster")
   # }
   if (is.null(lookuptable)) {
-    object_loc_lookup1 <- clustifyR::object_loc_lookup
+    object_loc_lookup1 <- clustifyr::object_loc_lookup
   } else {
     object_loc_lookup1 <- lookuptable
   }

@@ -1,12 +1,12 @@
 ---
-title: 'Introduction to clustifyR'
+title: 'Introduction to clustifyr'
 date: '`r Sys.Date()`'
 output:
   rmarkdown::html_vignette:
     toc: true
     toc_depth: 3
     vignette: >
-      %\VignetteIndexEntry{clustifyR-overview}
+      %\VignetteIndexEntry{clustifyr-overview}
       %\VignetteEngine{knitr::rmarkdown}
       %\VignetteEncoding{UTF-8}
 ---
@@ -19,18 +19,18 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Why use `clustifyR`?
+## Why use `clustifyr`?
 
 Single cell transcriptomes are difficult to annotate without extensive knowledge of the underlying biology of the system in question. Even with this knowledge, accurate identification can be challenging due to the lack of detectable expression of common marker genes defined by bulk RNA-seq, flow cytometry, other single cell RNA-seq platforms, etc.
 
-`clustifyR` solves this problem by providing functions to automatically annotate single cells or clusters using bulk RNA-seq data or marker gene lists (ranked or unranked). Additional functions allow for exploratory analysis of calculated similarities between single cell RNA-seq datasets and reference data.
+`clustifyr` solves this problem by providing functions to automatically annotate single cells or clusters using bulk RNA-seq data or marker gene lists (ranked or unranked). Additional functions allow for exploratory analysis of calculated similarities between single cell RNA-seq datasets and reference data.
 
 ## A simple example: 10x Genomics PBMCs
 
 In this example, we take an example 10x Genomics 3' scRNA-seq dataset comprised of peripheral blood mononuclear cells from a healthy human donor and annotate the cell clusters (identified using `Seurat`) using bulk RNA-seq data derived from isolated PBMC cell populations. 
 
 ```{r fig.height=8, fig.width=12, warning = F, message = F}
-library(clustifyR)
+library(clustifyr)
 
 full_pbmc4k_matrix <- clustifyrdata::pbmc4k_matrix
 full_pbmc4k_meta <- clustifyrdata::pbmc4k_meta
@@ -39,7 +39,7 @@ full_pbmc4k_meta <- clustifyrdata::pbmc4k_meta
 plot_tsne(full_pbmc4k_meta, feature = "classified")
 ```
 
-`clustifyR` provides the `clustify()` function, which takes as input a matrix of single cell RNA-seq expression values, a metadata table with cluster assignments, and a matrix with bulk RNA seq datasets. 
+`clustifyr` provides the `clustify()` function, which takes as input a matrix of single cell RNA-seq expression values, a metadata table with cluster assignments, and a matrix with bulk RNA seq datasets. 
 
 As the heatmap below shows, most cell types are accurately classified using the default correlation method (pearson) and a list of highly variable genes in the single cell dataset identified using `Seurat`'s VMR method.
 
@@ -60,7 +60,7 @@ plot_cor_heatmap(res)
 
 ### Plot cluster identities and correlation coefficients
 
-`clustifyR` provides functions to plot single cells using pre-calculated tSNE embeddings (or those from any other dimensionality reduction method), and to plot correlation coefficients on those projections. The plots below show that the highest correlations between these bulk RNA-seq data and the test scRNA-seq dataset are restricted to the correct cell clusters.
+`clustifyr` provides functions to plot single cells using pre-calculated tSNE embeddings (or those from any other dimensionality reduction method), and to plot correlation coefficients on those projections. The plots below show that the highest correlations between these bulk RNA-seq data and the test scRNA-seq dataset are restricted to the correct cell clusters.
 
 ```{r plot, fig.height=8, fig.width=12, warning = F, message = F}
 # plot called identities

@@ -6,7 +6,7 @@
 #' @param feature feature to color by
 #' @param legend_name legend name to display, defaults to no name
 #' @param c_cols character vector of colors to built color gradient
-#' for continuous values. defaults to [`clustifyR::pretty_palette`]
+#' for continuous values. defaults to [`clustifyr::pretty_palette`]
 #' @param d_cols character vector of colors for discrete values.
 #' defaults to RColorBrewer paired palette
 #' @param pt_size point size
@@ -205,7 +205,7 @@ plot_cor <- function(cor_matrix,
 #' @param genes gene(s) to color tSNE
 #' @param cell_col column name in metadata containing cell ids, defaults
 #' to rownames if not supplied
-#' @param ... additional arguments passed to `[clustifyR::plot_tsne()]`
+#' @param ... additional arguments passed to `[clustifyr::plot_tsne()]`
 #' @export
 plot_gene <- function(expr_mat,
                       metadata,
@@ -355,7 +355,7 @@ plot_best_call <- function(cor_matrix,
 #'
 #' @param metadata clustify-ed metadata
 #' @param cluster_col metadata column for original clustering
-#' @param cluster_col_called metadata column for clustifyR assignments
+#' @param cluster_col_called metadata column for clustifyr assignments
 #' @param plot_col metadata column to plot
 #' @param metadata_ref reference single cell RNA seq metadata
 #' @param cluster_col_ref metadata column for cluster for reference

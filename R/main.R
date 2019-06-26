@@ -334,7 +334,7 @@ clustify.Seurat <- function(input,
     s_object
   }
 }
-#' Correlation functions available in clustifyR
+#' Correlation functions available in clustifyr
 #' @export
 clustifyr_methods <- c(
   "pearson",

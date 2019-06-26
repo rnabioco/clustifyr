@@ -1,14 +1,14 @@
 
-# clustifyR <img src="man/figures/logo.png" align="right">
+# clustifyr <img src="man/figures/logo.png" align="right">
 
 [![Build
-Status](https://travis-ci.org/rnabioco/clustifyR.svg?branch=master)](https://travis-ci.org/rnabioco/clustifyR)
+Status](https://travis-ci.org/rnabioco/clustifyr.svg?branch=master)](https://travis-ci.org/rnabioco/clustifyr)
 [![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/rnabioco/clustifyR?branch=master&svg=true)](https://ci.appveyor.com/project/rnabioco/clustifyR)
+status](https://ci.appveyor.com/api/projects/status/github/rnabioco/clustifyr?branch=master&svg=true)](https://ci.appveyor.com/project/rnabioco/clustifyr)
 [![Coverage
-status](https://codecov.io/gh/rnabioco/clustifyR/branch/master/graph/badge.svg)](https://codecov.io/github/rnabioco/clustifyR?branch=master)
+status](https://codecov.io/gh/rnabioco/clustifyr/branch/master/graph/badge.svg)](https://codecov.io/github/rnabioco/clustifyr?branch=master)
 
-clustifyR classifies cells and clusters in single-cell RNA sequencing
+clustifyr classifies cells and clusters in single-cell RNA sequencing
 experiments using reference bulk RNA-seq data sets, sorted microarray
 expression data, single-cell gene signatures, or marker genes.
 
@@ -25,7 +25,7 @@ between single cell RNA-seq datasets and reference data.
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("rnabioco/clustifyR")
+devtools::install_github("rnabioco/clustifyr")
 ```
 
 ## Example usage
@@ -41,7 +41,7 @@ We then calculate correlation coefficients and plot them on a
 pre-calculated tSNE projection (stored in `pbmc4k_meta`).
 
 ``` r
-library(clustifyR)
+library(clustifyr)
 full_pbmc4k_matrix <- clustifyrdata::pbmc4k_matrix
 full_pbmc4k_meta <- clustifyrdata::pbmc4k_meta
 

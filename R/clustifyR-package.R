@@ -1,9 +1,9 @@
-#' clustifyR
+#' clustifyr
 #'
 #' @docType package
-#' @name clustifyR
+#' @name clustifyr
 #'
-#' @seealso Report bugs at \url{https://github.com/rnabioco/clustifyR/issues}
+#' @seealso Report bugs at \url{https://github.com/rnabioco/clustifyr/issues}
 #'
 #' @importFrom stats prcomp dhyper cor p.adjust quantile heatmap median
 #' @import scales

@@ -6,7 +6,7 @@ output:
     toc: true
     toc_depth: 3
     vignette: >
-      %\VignetteIndexEntry{clustifyR-formats}
+      %\VignetteIndexEntry{clustifyr-formats}
       %\VignetteEngine{knitr::rmarkdown}
       %\VignetteEncoding{UTF-8}
 ---
@@ -19,12 +19,12 @@ knitr::opts_chunk$set(
 )
 ```
 
-`clustifyR` is aimed for general use and flexibility in various analysis pipelines. While its core code functions with matrices and dataframes, and hence has minimal package dependencies, wrapper functions are provided for further convenience of the user.
+`clustifyr` is aimed for general use and flexibility in various analysis pipelines. While its core code functions with matrices and dataframes, and hence has minimal package dependencies, wrapper functions are provided for further convenience of the user.
 
 ## Direct handling of `seurat` objects, v2 and v3, extracting the required data, and inserting called cell types directly into the objects
 
 ```{r, eval = F, warning = F, message = F}
-library(clustifyR)
+library(clustifyr)
 # can even returning a new object with `type` added to metadata.
 res <- clustify(
   input = s_small,
@@ -57,7 +57,7 @@ res3 <- clustify_nudge(
 
 ```{r lookup, warning = F, message = F}
 # location of data in object in this format
-library(clustifyR)
+library(clustifyr)
 object_loc_lookup
 
 # adding seurat3 locations

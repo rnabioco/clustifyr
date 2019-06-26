@@ -1,12 +1,12 @@
 ---
-title: 'Visualization of clustifyR results'
+title: 'Visualization of clustifyr results'
 date: '`r Sys.Date()`'
 output:
   rmarkdown::html_vignette:
     toc: true
     toc_depth: 3
     vignette: >
-      %\VignetteIndexEntry{clustifyR-viz}
+      %\VignetteIndexEntry{clustifyr-viz}
       %\VignetteEngine{knitr::rmarkdown}
       %\VignetteEncoding{UTF-8}
 ---
@@ -24,7 +24,7 @@ The direct output of `clustify` is a matrix of correlation coefficients. And for
 ## TSNE/UMAP
 
 ```{r, warning = F, message = F}
-library(clustifyR)
+library(clustifyr)
 library(here)
 full_pbmc4k_matrix <- clustifyrdata::pbmc4k_matrix
 full_pbmc4k_meta <- clustifyrdata::pbmc4k_meta
