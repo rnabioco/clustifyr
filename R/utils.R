@@ -4,7 +4,7 @@
 #' @param cluster_info data.frame or vector containing cluster assignments per cell.
 #' Order must match column order in supplied matrix. If a data.frame
 #' provide the cluster_col parameters.
-#' @param log_scale input data is natural log,
+#' @param if_log input data is natural log,
 #' averaging will be done on unlogged data
 #' @param cluster_col column in cluster_info with cluster number
 #' @param cell_col if provided, will reorder matrix first
@@ -14,7 +14,7 @@
 #'
 #' @export
 average_clusters <- function(mat, cluster_info,
-                             log_scale = TRUE,
+                             if_log = TRUE,
                              cluster_col = "cluster",
                              cell_col = NULL,
                              low_threshold = 0,
@@ -44,7 +44,7 @@ average_clusters <- function(mat, cluster_info,
         if (!all(cell_ids %in% colnames(mat))) {
           stop("cell ids not found in input matrix")
         }
-        if (log_scale) {
+        if (if_log) {
           mat_data <- expm1(mat[, cell_ids, drop = FALSE])
         } else {
           mat_data <- mat[, cell_ids, drop = FALSE]
@@ -96,7 +96,7 @@ percent_clusters <- function(mat, cluster_info,
   mat[mat <= cut_num] <- 0
 
   average_clusters(mat, cluster_info,
-    log_scale = FALSE,
+    if_log = FALSE,
     cluster_col = cluster_col
   )
 }
@@ -198,7 +198,7 @@ clustify_intra <- function(expr_mat,
   meta_tar <- metadata[!row_ref, ]
 
   avg_clusters_ref <- average_clusters(expr_mat_ref, meta_ref,
-    log_scale = FALSE,
+    if_log = FALSE,
     cluster_col = cluster_col
   )
 
@@ -220,7 +220,7 @@ clustify_intra <- function(expr_mat,
 #' @param cluster_info data.frame or vector containing cluster assignments per cell, and attribute to filter on.
 #' Order must match column order in supplied matrix. If a data.frame
 #' provide the cluster_col parameters.
-#' @param log_scale input data is natural log,
+#' @param if_log input data is natural log,
 #' averaging will be done on unlogged data
 #' @param filter_on column in cluster_info to filter on
 #' @param group_by column name to use for cluster identity
@@ -229,7 +229,7 @@ clustify_intra <- function(expr_mat,
 #'
 #' @export
 average_clusters_filter <- function(mat, cluster_info,
-                                    log_scale = TRUE,
+                                    if_log = TRUE,
                                     filter_on = "nGene",
                                     group_by = NULL,
                                     filter_method = "<=",
@@ -242,17 +242,17 @@ average_clusters_filter <- function(mat, cluster_info,
 
   if (!is.null(group_by)) {
     res <- average_clusters(mat, cluster_info,
-      log_scale = log_scale,
+      if_log = if_log,
       cluster_col = group_by
     )
   } else {
-    if (log_scale) {
+    if (if_log) {
       mat_data <- expm1(mat[, cell_ids, drop = FALSE])
     } else {
       mat_data <- mat[, cell_ids, drop = FALSE]
     }
     res <- Matrix::rowMeans(mat_data)
-    if (log_scale) {
+    if (if_log) {
       res <- log1p(res)
     }
     res
@@ -331,12 +331,12 @@ calculate_pathway_gsea <- function(mat,
 #' @export
 cor_to_call <- function(correlation_matrix,
                         metadata = NULL,
-                        col = "cluster",
+                        cluster_col = "cluster",
                         collapse_to_cluster = FALSE,
                         threshold = 0,
                         rename_suff = NULL) {
-  df_temp <- tibble::as_tibble(correlation_matrix, rownames = col)
-  df_temp <- tidyr::gather(df_temp, key = type, value = r, -!!col)
+  df_temp <- tibble::as_tibble(correlation_matrix, rownames = cluster_col)
+  df_temp <- tidyr::gather(df_temp, key = type, value = r, -!!cluster_col)
   df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold, ", unassigned")
   df_temp <- dplyr::top_n(dplyr::group_by_at(df_temp, 1), 1, r)
   if (nrow(df_temp) != nrow(correlation_matrix)) {
@@ -351,10 +351,10 @@ cor_to_call <- function(correlation_matrix,
   }
 
   if (collapse_to_cluster != FALSE) {
-    if (!(col %in% colnames(metadata))) {
-      metadata <- tibble::as_tibble(metadata, rownames = col)
+    if (!(cluster_col %in% colnames(metadata))) {
+      metadata <- tibble::as_tibble(metadata, rownames = cluster_col)
     }
-    df_temp_full <- dplyr::left_join(df_temp_full, metadata, by = col)
+    df_temp_full <- dplyr::left_join(df_temp_full, metadata, by = cluster_col)
     df_temp_full[, "type2"] <- df_temp_full[[collapse_to_cluster]]
     df_temp_full2 <- dplyr::group_by(df_temp_full, type, type2)
     df_temp_full2 <- dplyr::summarize(df_temp_full2, sum = sum(r), n = n())
@@ -362,7 +362,7 @@ cor_to_call <- function(correlation_matrix,
     df_temp_full2 <- dplyr::arrange(df_temp_full2, desc(n), desc(sum))
     df_temp_full2 <- dplyr::filter(df_temp_full2, type != paste0("r<", threshold, ", unassigned"))
     df_temp_full2 <- dplyr::slice(df_temp_full2, 1)
-    df_temp_full2 <- dplyr::right_join(df_temp_full2, select(df_temp_full, -type), by = stats::setNames(collapse_to_cluster, "type2"))
+    df_temp_full2 <- dplyr::right_join(df_temp_full2, dplyr::select(df_temp_full, -type), by = stats::setNames(collapse_to_cluster, "type2"))
     df_temp_full <- dplyr::mutate(df_temp_full2, type = tidyr::replace_na(type, paste0("r<", threshold, ", unassigned")))
     eval(parse(text = paste0("df_temp_full <- dplyr::rename(df_temp_full,", collapse_to_cluster, " = type2.y)")))
     df_temp_full <- dplyr::select(dplyr::ungroup(df_temp_full), -type2)
@@ -439,7 +439,7 @@ cor_to_call_topn <- function(correlation_matrix,
     df_temp_full2 <- dplyr::arrange(df_temp_full2, desc(n), desc(sum))
     df_temp_full2 <- dplyr::filter(df_temp_full2, type != paste0("r<", threshold, ", unassigned"))
     df_temp_full2 <- dplyr::slice(df_temp_full2, 1:topn)
-    df_temp_full2 <- dplyr::right_join(df_temp_full2, select(df_temp_full, -c(type, r)), by = stats::setNames(collapse_to_cluster, "type2"))
+    df_temp_full2 <- dplyr::right_join(df_temp_full2, dplyr::select(df_temp_full, -c(type, r)), by = stats::setNames(collapse_to_cluster, "type2"))
     df_temp_full <- dplyr::mutate(df_temp_full2, type = tidyr::replace_na(type, paste0("r<", threshold, ", unassigned")))
     df_temp_full <- dplyr::group_by_(df_temp_full, .dots = col)
     df_temp_full <- dplyr::distinct(df_temp_full, type, type2, .keep_all = TRUE)
@@ -834,7 +834,7 @@ parse_loc_object <- function(input,
 #' @param n expand n-fold for over/under clustering
 #' @param ngenes number of genes to use for feature selection, use all genes if NULL
 #' @param query_genes vector, otherwise genes with be recalculated
-#' @param do.label whether to label each cluster at median center
+#' @param do_label whether to label each cluster at median center
 #' @param seed set seed for kmeans
 #' @param newclustering use kmeans if NULL on dr or col name for second column of clustering
 
@@ -848,7 +848,7 @@ overcluster_test <- function(expr,
                              n = 5,
                              ngenes = NULL,
                              query_genes = NULL,
-                             do.label = TRUE,
+                             do_label = TRUE,
                              seed = 42,
                              newclustering = NULL) {
   if (!(is.null(seed))) {
@@ -891,27 +891,27 @@ overcluster_test <- function(expr,
     feature = cluster_col,
     x = x_col,
     y = y_col,
-    do.label = FALSE,
-    do.legend = FALSE
+    do_label = FALSE,
+    do_legend = FALSE
   )
   o2 <- plot_tsne(metadata,
     feature = "new_clusters",
     x = x_col,
     y = y_col,
-    do.label = FALSE,
-    do.legend = FALSE
+    do_label = FALSE,
+    do_legend = FALSE
   )
   p1 <- plot_best_call(res1,
     metadata,
     cluster_col,
-    do.label = do.label,
+    do_label = do_label,
     x = x_col,
     y = y_col
   )
   p2 <- plot_best_call(res2,
     metadata,
     "new_clusters",
-    do.label = do.label,
+    do_label = do_label,
     x = x_col,
     y = y_col
   )
@@ -972,7 +972,7 @@ ref_feature_select <- function(mat,
 #' @param percentile Select the percentile of absolute values of
 #' PCA loadings to select genes from. E.g. 0.999 would select the
 #' top point 1 percent of genes with the largest loadings.
-#' @param log_scale whether the data is already log transformed
+#' @param if_log whether the data is already log transformed
 #' @return The list of genes to use as features.
 #'
 #' @export
@@ -980,8 +980,8 @@ feature_select_PCA <- function(mat = NULL,
                                pcs = NULL,
                                n_pcs = 10,
                                percentile = 0.99,
-                               log_scale = TRUE) {
-  if (log_scale == FALSE) {
+                               if_log = TRUE) {
+  if (if_log == FALSE) {
     mat <- log(mat + 1)
   }
 
@@ -1130,19 +1130,19 @@ downsample_matrix <- function(mat,
 #' make combination ref matrix to assess intermixing
 #'
 #' @param ref_mat reference expression matrix
-#' @param log_scale whether input data is natural
+#' @param if_log whether input data is natural
 #' @param sep separator for name combinations
 #'
 #' @export
-make_comb_ref <- function(ref_mat, log_scale = TRUE, sep = "_and_") {
-  if (log_scale == TRUE) {
+make_comb_ref <- function(ref_mat, if_log = TRUE, sep = "_and_") {
+  if (if_log == TRUE) {
     ref_mat <- expm1(ref_mat)
   }
   combs <- utils::combn(x = colnames(ref_mat), m = 2, simplify = FALSE)
   comb_mat <- sapply(combs, FUN = function(x) Matrix::rowMeans(ref_mat[, unlist(x)]))
   colnames(comb_mat) <- sapply(combs, FUN = function(x) stringr::str_c(unlist(x), collapse = sep))
   new_mat <- cbind(ref_mat, comb_mat)
-  if (log_scale == TRUE) {
+  if (if_log == TRUE) {
     new_mat <- log1p(new_mat)
   }
   new_mat
@@ -1219,7 +1219,7 @@ pos_neg_select <- function(input,
   suppressWarnings(res2 <- average_clusters(t(res),
     metadata,
     cluster_col = cluster_col,
-    log_scale = FALSE,
+    if_log = FALSE,
     output_log = FALSE
   ))
   res2 <- t(res2)

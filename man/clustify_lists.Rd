@@ -9,49 +9,47 @@
 \usage{
 clustify_lists(input, ...)
 
-\method{clustify_lists}{default}(input, per_cell = F,
-  cluster_info = NULL, log_scale = T, cluster_col = NULL,
-  topn = 3000, cut = 0, marker, marker_inmatrix = T,
-  genomen = 30000, metric = "hyper", output_high = TRUE,
-  lookuptable = NULL, ...)
+\method{clustify_lists}{default}(input, marker, marker_inmatrix = TRUE,
+  cluster_info = NULL, cluster_col = NULL, if_log = TRUE,
+  per_cell = FALSE, topn = 3000, cut = 0, genome_n = 30000,
+  metric = "hyper", output_high = TRUE, lookuptable = NULL, ...)
 
-\method{clustify_lists}{seurat}(input, per_cell = F,
-  cluster_info = NULL, log_scale = T, cluster_col = NULL,
-  topn = 3000, cut = 0, marker, marker_inmatrix = T,
-  genomen = 30000, metric = "hyper", output_high = TRUE,
-  dr = "tsne", seurat_out = TRUE, threshold = 0, ...)
+\method{clustify_lists}{seurat}(input, cluster_info = NULL,
+  cluster_col = NULL, if_log = TRUE, per_cell = FALSE, topn = 3000,
+  cut = 0, marker, marker_inmatrix = TRUE, genome_n = 30000,
+  metric = "hyper", output_high = TRUE, dr = "tsne",
+  seurat_out = TRUE, threshold = 0, ...)
 
-\method{clustify_lists}{Seurat}(input, per_cell = F,
-  cluster_info = NULL, log_scale = T, cluster_col = NULL,
-  topn = 3000, cut = 0, marker, marker_inmatrix = T,
-  genomen = 30000, metric = "hyper", output_high = TRUE,
-  dr = "tsne", seurat_out = TRUE, threshold = 0, ...)
+\method{clustify_lists}{Seurat}(input, cluster_info = NULL,
+  cluster_col = NULL, if_log = TRUE, per_cell = FALSE, topn = 3000,
+  cut = 0, marker, marker_inmatrix = TRUE, genome_n = 30000,
+  metric = "hyper", output_high = TRUE, dr = "tsne",
+  seurat_out = TRUE, threshold = 0, ...)
 }
 \arguments{
 \item{input}{single-cell expression matrix or Seurat object}
 
 \item{...}{passed to matrixize_markers}
 
-\item{per_cell}{compare per cell or per cluster}
+\item{marker}{matrix or dataframe of candidate genes for each cluster}
+
+\item{marker_inmatrix}{whether markers genes are already in preprocessed matrix form}
 
 \item{cluster_info}{data.frame or vector containing cluster assignments per cell.
 Order must match column order in supplied matrix. If a data.frame
 provide the cluster_col parameters.}
 
-\item{log_scale}{input data is natural log,
-averaging will be done on unlogged data}
-
 \item{cluster_col}{column in cluster_info with cluster number}
+
+\item{if_log}{input data is natural log, averaging will be done on unlogged data}
+
+\item{per_cell}{compare per cell or per cluster}
 
 \item{topn}{number of top expressing genes to keep from input matrix}
 
 \item{cut}{expression cut off from input matrix}
 
-\item{marker}{matrix or dataframe of candidate genes for each cluster}
-
-\item{marker_inmatrix}{whether markers genes are already in preprocessed matrix form}
-
-\item{genomen}{number of genes in the genome}
+\item{genome_n}{number of genes in the genome}
 
 \item{metric}{adjusted p-value for hypergeometric test, or jaccard index}
 
@@ -68,16 +66,16 @@ averaging will be done on unlogged data}
 
 \item{input}{seurat object}
 
-\item{per_cell}{compare per cell or per cluster}
-
 \item{cluster_info}{data.frame or vector containing cluster assignments per cell.
 Order must match column order in supplied matrix. If a data.frame
 provide the cluster_col parameters.}
 
-\item{log_scale}{input data is natural log,
+\item{cluster_col}{column in cluster_info with cluster number}
+
+\item{if_log}{input data is natural log,
 averaging will be done on unlogged data}
 
-\item{cluster_col}{column in cluster_info with cluster number}
+\item{per_cell}{compare per cell or per cluster}
 
 \item{topn}{number of top expressing genes to keep from input matrix}
 
@@ -87,7 +85,7 @@ averaging will be done on unlogged data}
 
 \item{marker_inmatrix}{whether markers genes are already in preprocessed matrix form}
 
-\item{genomen}{number of genes in the genome}
+\item{genome_n}{number of genes in the genome}
 
 \item{metric}{adjusted p-value for hypergeometric test, or jaccard index}
 
@@ -98,16 +96,16 @@ averaging will be done on unlogged data}
 
 \item{input}{seurat object}
 
-\item{per_cell}{compare per cell or per cluster}
-
 \item{cluster_info}{data.frame or vector containing cluster assignments per cell.
 Order must match column order in supplied matrix. If a data.frame
 provide the cluster_col parameters.}
 
-\item{log_scale}{input data is natural log,
+\item{cluster_col}{column in cluster_info with cluster number}
+
+\item{if_log}{input data is natural log,
 averaging will be done on unlogged data}
 
-\item{cluster_col}{column in cluster_info with cluster number}
+\item{per_cell}{compare per cell or per cluster}
 
 \item{topn}{number of top expressing genes to keep from input matrix}
 
@@ -117,7 +115,7 @@ averaging will be done on unlogged data}
 
 \item{marker_inmatrix}{whether markers genes are already in preprocessed matrix form}
 
-\item{genomen}{number of genes in the genome}
+\item{genome_n}{number of genes in the genome}
 
 \item{metric}{adjusted p-value for hypergeometric test, or jaccard index}
 

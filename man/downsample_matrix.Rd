@@ -4,7 +4,7 @@
 \alias{downsample_matrix}
 \title{downsample matrix by cluster or completely random}
 \usage{
-downsample_matrix(mat, n = 1, keep_cluster_proportions = T,
+downsample_matrix(mat, n = 1, keep_cluster_proportions = TRUE,
   cluster_info = NULL, cluster_col = "cluster", set_seed = NULL)
 }
 \arguments{

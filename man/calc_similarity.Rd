@@ -4,10 +4,10 @@
 \alias{calc_similarity}
 \title{compute similarity}
 \usage{
-calc_similarity(sc_avg, ref_mat, compute_method, rm0 = F, ...)
+calc_similarity(query_mat, ref_mat, compute_method, rm0 = FALSE, ...)
 }
 \arguments{
-\item{sc_avg}{query data matrix}
+\item{query_mat}{query data matrix}
 
 \item{ref_mat}{reference data matrix}
 

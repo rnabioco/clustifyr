@@ -10,20 +10,20 @@
 clustify(input, ...)
 
 \method{clustify}{default}(input, ref_mat, metadata = NULL,
-  query_genes = NULL, cluster_col = NULL, per_cell = FALSE,
-  num_perm = 0, compute_method = "spearman", verbose = F,
-  lookuptable = NULL, rm0 = F, ...)
+  cluster_col = NULL, query_genes = NULL, per_cell = FALSE,
+  n_perm = 0, compute_method = "spearman", verbose = FALSE,
+  lookuptable = NULL, rm0 = FALSE, ...)
 
-\method{clustify}{seurat}(input, ref_mat, query_genes = NULL,
-  per_cell = FALSE, num_perm = 0, cluster_col = NULL,
+\method{clustify}{seurat}(input, ref_mat, cluster_col = NULL,
+  query_genes = NULL, per_cell = FALSE, n_perm = 0,
   compute_method = "spearman", use_var_genes = TRUE, dr = "tsne",
-  seurat_out = TRUE, threshold = 0, verbose = F, rm0 = F,
+  seurat_out = TRUE, threshold = 0, verbose = FALSE, rm0 = FALSE,
   rename_suff = NULL, ...)
 
-\method{clustify}{Seurat}(input, ref_mat, query_genes = NULL,
-  per_cell = FALSE, num_perm = 0, cluster_col = NULL,
+\method{clustify}{Seurat}(input, ref_mat, cluster_col = NULL,
+  query_genes = NULL, per_cell = FALSE, n_perm = 0,
   compute_method = "spearman", use_var_genes = TRUE, dr = "tsne",
-  seurat_out = TRUE, threshold = 0, verbose = F, rm0 = F,
+  seurat_out = TRUE, threshold = 0, verbose = FALSE, rm0 = FALSE,
   rename_suff = NULL, ...)
 }
 \arguments{
@@ -36,15 +36,15 @@ clustify(input, ...)
 \item{metadata}{cell cluster assignments, supplied as a vector or data.frame. If
 data.frame is supplied then \code{cluster_col} needs to be set. Not required if running correlation per cell.}
 
-\item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
-the expr_mat and ref_mat will be used for comparision.}
-
 \item{cluster_col}{column in metadata that contains cluster ids per cell. Will default to first
 column of metadata if not supplied. Not required if running correlation per cell.}
 
+\item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
+the expr_mat and ref_mat will be used for comparision.}
+
 \item{per_cell}{if true run per cell, otherwise per cluster.}
 
-\item{num_perm}{number of permutations, set to 0 by default}
+\item{n_perm}{number of permutations, set to 0 by default}
 
 \item{compute_method}{method(s) for computing similarity scores}
 
@@ -67,15 +67,15 @@ column of metadata if not supplied. Not required if running correlation per cell
 
 \item{ref_mat}{reference expression matrix}
 
-\item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
-the expr_mat and ref_mat will be used for comparision.}
-
 \item{cluster_col}{column in metadata that contains cluster ids per cell. Will default to first
 column of metadata if not supplied. Not required if running correlation per cell.}
 
+\item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
+the expr_mat and ref_mat will be used for comparision.}
+
 \item{per_cell}{if true run per cell, otherwise per cluster.}
 
-\item{num_perm}{number of permutations, set to 0 by default}
+\item{n_perm}{number of permutations, set to 0 by default}
 
 \item{compute_method}{method(s) for computing similarity scores}
 
@@ -94,15 +94,15 @@ column of metadata if not supplied. Not required if running correlation per cell
 
 \item{ref_mat}{reference expression matrix}
 
-\item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
-the expr_mat and ref_mat will be used for comparision.}
-
 \item{cluster_col}{column in metadata that contains cluster ids per cell. Will default to first
 column of metadata if not supplied. Not required if running correlation per cell.}
 
+\item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
+the expr_mat and ref_mat will be used for comparision.}
+
 \item{per_cell}{if true run per cell, otherwise per cluster.}
 
-\item{num_perm}{number of permutations, set to 0 by default}
+\item{n_perm}{number of permutations, set to 0 by default}
 
 \item{compute_method}{method(s) for computing similarity scores}
 

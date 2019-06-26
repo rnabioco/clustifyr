@@ -31,12 +31,12 @@ test_that("plot_best_call warns about colnames", {
 
 test_that("call plots can be generated", {
   plts <- plot_cor(res, pbmc4k_meta,
-    ref_data_to_plot = colnames(res)[1:2],
+    data_to_plot = colnames(res)[1:2],
     cluster_col = "cluster"
   )
 
   expect_error(plts <- plot_cor(res, pbmc4k_meta,
-    ref_data_to_plot = "nonsense",
+    data_to_plot = "nonsense",
     cluster_col = "cluster"
   ))
 
@@ -115,7 +115,7 @@ test_that("plot_best_call threshold works as intended, on per cell and collapsin
   )
   call1 <- plot_best_call(res,
     metadata = pbmc4k_meta,
-    col = "rn",
+    cluster_col = "rn",
     collapse_to_cluster = "cluster",
     threshold = 0.3
   )
@@ -128,8 +128,8 @@ test_that("plot_gene checks for presence of gene name", {
     pbmc4k_meta,
     c("CD24", "ZFP36L3"),
     cell_col = "rn",
-    do.label = TRUE,
-    do.legend = FALSE
+    do_label = TRUE,
+    do_legend = FALSE
   )
   expect_error(plot_gene(pbmc4k_matrix,
     pbmc4k_meta,

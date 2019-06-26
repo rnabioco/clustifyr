@@ -91,7 +91,7 @@ test_that("test permutation", {
     ref_mat = pbmc_bulk_matrix,
     query_genes = pbmc4k_vargenes,
     cluster_col = "cluster",
-    num_perm = 2, return_full = TRUE
+    n_perm = 2, return_full = TRUE
   )
 
   expect_equal(res1, res_full$score)
@@ -117,7 +117,7 @@ test_that("seurat object clustifying", {
   )
   g <- plot_best_call(res,
     use_seurat_meta(s_small),
-    col = "res.1",
+    cluster_col = "res.1",
     plot_r = TRUE
   )
   expect_true(ggplot2::is.ggplot(g[[1]]))
@@ -156,7 +156,7 @@ test_that("seurat3 object clustifying", {
   )
   g <- plot_best_call(res,
     use_seurat_meta(s_small3),
-    col = "RNA_snn_res.1",
+    cluster_col = "RNA_snn_res.1",
     plot_r = TRUE
   )
   expect_true(ggplot2::is.ggplot(g[[1]]))
@@ -213,7 +213,7 @@ test_that("permute_similarity runs per cell", {
     pbmc4k_matrix[c("RBM28", "CCDC136", "TNPO3"), c(7, 11)],
     cbmc_ref[c("RBM28", "CCDC136", "TNPO3"), 1:3],
     colnames(pbmc4k_matrix[c("RBM28", "CCDC136", "TNPO3"), c(7, 11)]),
-    num_perm = 2,
+    n_perm = 2,
     per_cell = TRUE,
     compute_method = "spearman"
   )
@@ -225,7 +225,7 @@ test_that("error for unsupported method", {
     pbmc4k_matrix[c("RBM28", "CCDC136", "TNPO3"), c(7, 11)],
     cbmc_ref[c("RBM28", "CCDC136", "TNPO3"), 1:3],
     pbmc4k_meta$rn[c(7, 11)],
-    num_perm = 2,
+    n_perm = 2,
     per_cell = TRUE,
     compute_method = "a"
   ))

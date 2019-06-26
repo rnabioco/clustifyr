@@ -101,7 +101,7 @@ test_that("seurat object clustify_lists-ing", {
   )
   g <- plot_best_call(res,
     use_seurat_meta(s_small),
-    col = "res.1",
+    cluster_col = "res.1",
     plot_r = TRUE
   )
   expect_true(ggplot2::is.ggplot(g[[1]]))
@@ -146,7 +146,7 @@ test_that("seurat3 object clustify_lists-ing", {
   )
   g <- plot_best_call(res,
     use_seurat_meta(s_small3),
-    col = "RNA_snn_res.1",
+    cluster_col = "RNA_snn_res.1",
     plot_r = TRUE
   )
   expect_true(ggplot2::is.ggplot(g[[1]]))

@@ -12,8 +12,8 @@
 #' @param pt_size point size
 #' @param scale_limits defaults to min = 0, max = max(data$x),
 #' otherwise a two-element numeric vector indicating min and max to plot
-#' @param do.label whether to label each cluster at median center
-#' @param do.legend whether to draw legend
+#' @param do_label whether to label each cluster at median center
+#' @param do_legend whether to draw legend
 #' @export
 plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
                       feature,
@@ -22,8 +22,8 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
                       d_cols = NULL,
                       pt_size = 0.25,
                       scale_limits = NULL,
-                      do.label = FALSE,
-                      do.legend = TRUE) {
+                      do_label = FALSE,
+                      do_legend = TRUE) {
   if ((length(unique(data[[feature]])) > 12) & identical(c_cols, pretty_palette2) & (typeof(data[[feature]]) %in% c(
     "character",
     "logical",
@@ -34,9 +34,9 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
     d_cols <- pretty_palette_ramp_d(length(unique(data[[feature]])))
   }
   # sort data to avoid plotting null values over colors
-  data <- dplyr::arrange(data, !!sym(feature))
+  data <- dplyr::arrange(data, !!dplyr::sym(feature))
 
-  p <- ggplot(data, aes_string(x, y)) +
+  p <- ggplot2::ggplot(data, aes_string(x, y)) +
     geom_point(aes_string(color = paste0("`", feature, "`")), # backticks protect special character gene names
       size = pt_size
     )
@@ -75,9 +75,9 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
     )
   }
 
-  if (do.label) {
+  if (do_label) {
     centers <- dplyr::group_by_(data, .dots = feature)
-    centers <- dplyr::summarize(centers, t1 = mean(!!sym(x)), t2 = mean(!!sym(y)))
+    centers <- dplyr::summarize(centers, t1 = mean(!!dplyr::sym(x)), t2 = mean(!!dplyr::sym(y)))
     p <- p +
       geom_point(data = centers, mapping = aes(x = t1, y = t2), size = 0, alpha = 0) +
       geom_text(data = centers, mapping = aes(x = t1, y = t2, label = centers[[feature]]))
@@ -85,7 +85,7 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
 
   p <- p + cowplot::theme_cowplot()
 
-  if (do.legend == FALSE) {
+  if (do_legend == FALSE) {
     p <- p + theme(legend.position = "none")
   }
 
@@ -111,9 +111,9 @@ pretty_palette_ramp_d <- grDevices::colorRampPalette(scales::brewer_pal(palette 
 
 #' Plot similarity measures on a tSNE
 #'
-#' @param correlation_matrix input similarity matrix
+#' @param cor_matrix input similarity matrix
 #' @param metadata input metadata with per cell tsne coordinates and cluster ids
-#' @param ref_data_to_plot colname of data to plot, defaults to all
+#' @param data_to_plot colname of data to plot, defaults to all
 #' @param cluster_col colname of clustering data in metadata, defaults to rownames of the
 #' metadata if not supplied.
 #' @param x metadata column name with 1st axis dimension.
@@ -126,15 +126,15 @@ pretty_palette_ramp_d <- grDevices::colorRampPalette(scales::brewer_pal(palette 
 #' @param ... passed to plot_tsne
 #'
 #' @export
-plot_cor <- function(correlation_matrix,
+plot_cor <- function(cor_matrix,
                      metadata,
-                     ref_data_to_plot = colnames(correlation_matrix),
+                     data_to_plot = colnames(cor_matrix),
                      cluster_col = NULL,
                      x = "tSNE_1",
                      y = "tSNE_2",
                      scale_legends = FALSE,
                      ...) {
-  if (!any(ref_data_to_plot %in% colnames(correlation_matrix))) {
+  if (!any(data_to_plot %in% colnames(cor_matrix))) {
     stop("cluster ids not shared between metadata and correlation matrix")
   }
 
@@ -143,7 +143,7 @@ plot_cor <- function(correlation_matrix,
     metadata <- tibble::rownames_to_column(metadata, cluster_col)
   }
 
-  cor_df <- as.data.frame(correlation_matrix)
+  cor_df <- as.data.frame(cor_matrix)
   cor_df <- tibble::rownames_to_column(cor_df, cluster_col)
   cor_df_long <- tidyr::gather(
     cor_df,
@@ -180,17 +180,17 @@ plot_cor <- function(correlation_matrix,
     scale_limits <- scale_legends
   }
 
-  plts <- vector("list", length(ref_data_to_plot))
-  for (i in seq_along(ref_data_to_plot)) {
+  plts <- vector("list", length(data_to_plot))
+  for (i in seq_along(data_to_plot)) {
     tmp_data <- dplyr::filter(
       plt_data,
-      ref_cluster == ref_data_to_plot[i]
+      ref_cluster == data_to_plot[i]
     )
     plts[[i]] <- plot_tsne(tmp_data,
       x = x,
       y = y,
       feature = "expr",
-      legend_name = ref_data_to_plot[i],
+      legend_name = data_to_plot[i],
       scale_limits = scale_limits,
       ...
     )
@@ -199,7 +199,6 @@ plot_cor <- function(correlation_matrix,
 }
 
 #' Plot gene expression on to tSNE
-#'
 #'
 #' @param expr_mat input single cell matrix
 #' @param metadata data.frame with tSNE coordinates
@@ -258,32 +257,32 @@ plot_gene <- function(expr_mat,
 
 #' Plot called clusters on a tSNE, for each reference cluster given
 #'
-#' @param correlation_matrix input similarity matrix
+#' @param cor_matrix input similarity matrix
 #' @param metadata input metadata with tsne coordinates and cluster ids
-#' @param ref_data_to_plot colname of data to plot, defaults to all
+#' @param data_to_plot colname of data to plot, defaults to all
 #' @param ... passed to plot_tsne
 #'
 #' @export
-plot_call <- function(correlation_matrix,
+plot_call <- function(cor_matrix,
                       metadata,
-                      ref_data_to_plot = colnames(correlation_matrix),
+                      data_to_plot = colnames(cor_matrix),
                       ...) {
-  df_temp <- as.data.frame(t(apply(correlation_matrix, 1, function(x) x - max(x))))
+  df_temp <- as.data.frame(t(apply(cor_matrix, 1, function(x) x - max(x))))
   df_temp[df_temp == 0] <- "1"
   df_temp[df_temp != "1"] <- "0"
   plot_cor(
     df_temp,
     metadata,
-    ref_data_to_plot,
+    data_to_plot,
     ...
   )
 }
 
 #' Plot best calls for each cluster on a tSNE
 #'
-#' @param correlation_matrix input similarity matrix
+#' @param cor_matrix input similarity matrix
 #' @param metadata input metadata with tsne coordinates and cluster ids
-#' @param col metadata column, can be cluster or cellid
+#' @param cluster_col metadata column, can be cluster or cellid
 #' @param collapse_to_cluster if a column name is provided, takes the most frequent call of entire cluster to color in plot
 #' @param threshold minimum correlation coefficent cutoff for calling clusters
 #' @param x x variable
@@ -292,9 +291,9 @@ plot_call <- function(correlation_matrix,
 #' @param ... passed to plot_tsne
 #'
 #' @export
-plot_best_call <- function(correlation_matrix,
+plot_best_call <- function(cor_matrix,
                            metadata,
-                           col = "cluster",
+                           cluster_col = "cluster",
                            collapse_to_cluster = FALSE,
                            threshold = 0,
                            x = "tSNE_1", y = "tSNE_2",
@@ -305,11 +304,11 @@ plot_best_call <- function(correlation_matrix,
     warning('metadata column name clash of "type"/"type2"')
     return()
   }
-  df_temp <- tibble::as_tibble(correlation_matrix, rownames = col)
-  df_temp <- tidyr::gather(df_temp, key = type, value = r, -!!col)
+  df_temp <- tibble::as_tibble(cor_matrix, rownames = cluster_col)
+  df_temp <- tidyr::gather(df_temp, key = type, value = r, -!!cluster_col)
   df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold, ", unassigned")
   df_temp <- dplyr::top_n(dplyr::group_by_at(df_temp, 1), 1, r)
-  if (nrow(df_temp) != nrow(correlation_matrix)) {
+  if (nrow(df_temp) != nrow(cor_matrix)) {
     clash <- dplyr::group_by_at(df_temp, 1)
     clash <- dplyr::summarize(clash, n = n())
     clash <- dplyr::filter(clash, n > 1)
@@ -317,7 +316,7 @@ plot_best_call <- function(correlation_matrix,
     df_temp[lapply(df_temp[, 1], FUN = function(x) x %in% clash)[[1]], 2] <- paste0(df_temp[["type"]][lapply(df_temp[, 1], FUN = function(x) x %in% clash)[[1]]], "-CLASH!")
     df_temp <- dplyr::distinct(df_temp, exclude = "type", .keep_all = TRUE)
   }
-  df_temp_full <- dplyr::left_join(metadata, df_temp, by = col)
+  df_temp_full <- dplyr::left_join(metadata, df_temp, by = cluster_col)
 
   if (collapse_to_cluster != FALSE) {
     df_temp_full2 <- dplyr::mutate(df_temp_full, type2 = metadata[[collapse_to_cluster]])
@@ -370,11 +369,11 @@ plot_cols <- function(metadata,
                       cluster_col_ref,
                       plot_col_ref) {
   temp1 <- dplyr::group_by_at(metadata, vars(cluster_col, cluster_col_called))
-  temp1 <- dplyr::summarise(temp1, med = median(!!sym(plot_col), na.rm = TRUE))
+  temp1 <- dplyr::summarise(temp1, med = median(!!dplyr::sym(plot_col), na.rm = TRUE))
   colnames(temp1) <- c("original_cluster", "type", paste(plot_col, "query", sep = "_"))
 
   temp2 <- dplyr::group_by_at(metadata_ref, cluster_col_ref)
-  temp2 <- dplyr::summarise(temp2, med = median(!!sym(plot_col_ref), na.rm = TRUE))
+  temp2 <- dplyr::summarise(temp2, med = median(!!dplyr::sym(plot_col_ref), na.rm = TRUE))
   colnames(temp2) <- c("type", paste(plot_col, "ref", sep = "_"))
 
   temp <- dplyr::left_join(temp1,
@@ -386,7 +385,7 @@ plot_cols <- function(metadata,
   xmax <- max(temp[, 4])
   ymax <- max(temp[, 3])
 
-  ggplot(
+  ggplot2::ggplot(
     temp,
     aes_string(
       x = colnames(temp)[4],
@@ -414,7 +413,7 @@ plot_cols <- function(metadata,
 
 #' Plot similarity measures on heatmap
 #'
-#' @param correlation_matrix input similarity matrix
+#' @param cor_matrix input similarity matrix
 #' @param metadata input metadata with per cell tsne coordinates and cluster ids
 #' @param cluster_col colname of clustering data in metadata, defaults to rownames of the
 #' metadata if not supplied.
@@ -423,13 +422,13 @@ plot_cols <- function(metadata,
 #' @param ... passed to Heatmap
 #'
 #' @export
-plot_cor_heatmap <- function(correlation_matrix,
+plot_cor_heatmap <- function(cor_matrix,
                              metadata = NULL,
                              cluster_col = NULL,
                              col = not_pretty_palette,
                              legend_title = NULL,
                              ...) {
-  ComplexHeatmap::Heatmap(correlation_matrix,
+  ComplexHeatmap::Heatmap(cor_matrix,
     col = col,
     heatmap_legend_param = list(title = legend_title),
     ...
