@@ -21,7 +21,7 @@ plot_tsne(data, x = "tSNE_1", y = "tSNE_2", feature,
 \item{legend_name}{legend name to display, defaults to no name}
 
 \item{c_cols}{character vector of colors to built color gradient
-for continuous values. defaults to \code{\link[clustifyR:pretty_palette]{clustifyR::pretty_palette}}}
+for continuous values. defaults to \code{\link[clustifyr:pretty_palette]{clustifyr::pretty_palette}}}
 
 \item{d_cols}{character vector of colors for discrete values.
 defaults to RColorBrewer paired palette}

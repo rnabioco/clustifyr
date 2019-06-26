@@ -1,4 +1,4 @@
 library(testthat)
-library(clustifyR)
+library(clustifyr)
 
-test_check("clustifyR")
+test_check("clustifyr")

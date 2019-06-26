@@ -16,7 +16,7 @@ plot_gene(expr_mat, metadata, genes, cell_col = NULL, ...)
 \item{cell_col}{column name in metadata containing cell ids, defaults
 to rownames if not supplied}
 
-\item{...}{additional arguments passed to \code{[clustifyR::plot_tsne()]}}
+\item{...}{additional arguments passed to \code{[clustifyr::plot_tsne()]}}
 }
 \description{
 Plot gene expression on to tSNE
