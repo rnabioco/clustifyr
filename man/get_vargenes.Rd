@@ -2,12 +2,12 @@
 % Please edit documentation in R/compare_genelist.R
 \name{get_vargenes}
 \alias{get_vargenes}
-\title{generate variable gene list from marker matrix}
+\title{Generate variable gene list from marker matrix}
 \usage{
-get_vargenes(marker_m)
+get_vargenes(marker_mat)
 }
 \arguments{
-\item{marker_m}{matrix or dataframe of candidate genes for each cluster}
+\item{marker_mat}{matrix or dataframe of candidate genes for each cluster}
 }
 \description{
 Variable gene list is required for \code{clustify} main function. This

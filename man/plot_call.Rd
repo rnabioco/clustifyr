@@ -4,15 +4,14 @@
 \alias{plot_call}
 \title{Plot called clusters on a tSNE, for each reference cluster given}
 \usage{
-plot_call(correlation_matrix, metadata,
-  ref_data_to_plot = colnames(correlation_matrix), ...)
+plot_call(cor_matrix, metadata, data_to_plot = colnames(cor_matrix), ...)
 }
 \arguments{
-\item{correlation_matrix}{input similarity matrix}
+\item{cor_matrix}{input similarity matrix}
 
 \item{metadata}{input metadata with tsne coordinates and cluster ids}
 
-\item{ref_data_to_plot}{colname of data to plot, defaults to all}
+\item{data_to_plot}{colname of data to plot, defaults to all}
 
 \item{...}{passed to plot_tsne}
 }

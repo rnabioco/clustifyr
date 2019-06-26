@@ -2,16 +2,16 @@
 % Please edit documentation in R/compare_genelist.R
 \name{compare_lists}
 \alias{compare_lists}
-\title{calculate adjusted p-values for hypergeometric test of gene lists
+\title{Calculate adjusted p-values for hypergeometric test of gene lists
 or jaccard index}
 \usage{
-compare_lists(bin_mat, marker_m, n = 30000, metric = "hyper",
-  output_high = T)
+compare_lists(bin_mat, marker_mat, n = 30000, metric = "hyper",
+  output_high = TRUE)
 }
 \arguments{
 \item{bin_mat}{binarized single-cell expression matrix, feed in by_cluster mat, if desired}
 
-\item{marker_m}{matrix or dataframe of candidate genes for each cluster}
+\item{marker_mat}{matrix or dataframe of candidate genes for each cluster}
 
 \item{n}{number of genes in the genome}
 
@@ -21,6 +21,6 @@ compare_lists(bin_mat, marker_m, n = 30000, metric = "hyper",
 -log10 transform p-value}
 }
 \description{
-calculate adjusted p-values for hypergeometric test of gene lists
+Calculate adjusted p-values for hypergeometric test of gene lists
 or jaccard index
 }

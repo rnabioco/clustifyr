@@ -5,7 +5,7 @@
 \title{Compute the p-value for similarity using permutation}
 \usage{
 get_similarity(expr_mat, ref_mat, cluster_ids, compute_method,
-  per_cell = FALSE, rm0 = F, ...)
+  per_cell = FALSE, rm0 = FALSE, ...)
 }
 \arguments{
 \item{expr_mat}{single-cell expression matrix}
