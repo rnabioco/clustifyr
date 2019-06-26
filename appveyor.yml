@@ -13,6 +13,9 @@ install:
 cache:
   - C:\RLibrary
 
+environment:
+  CRAN: https://cran.rstudio.com/
+
 # Adapt as necessary starting from here
 
 build_script:
