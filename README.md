@@ -61,14 +61,14 @@ plot_cor(
 #> [[1]]
 ```
 
-<img src="man/figures/README-example-1.png" width="100%" />
+![](man/figures/example-1.png)<!-- -->
 
 ``` r
 
 plot_best_call(res, full_pbmc4k_meta)
 ```
 
-<img src="man/figures/README-example-2.png" width="100%" />
+![](man/figures/example-2.png)<!-- -->
 
 Alternatively, `clustify` can take a clustered `seurat` object (both v2
 and v3) and assign identities. New reference matrix can be made directly
