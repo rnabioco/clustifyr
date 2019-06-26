@@ -18,3 +18,19 @@ get_best_str(name, best_mat, cor_mat, carry_cor = TRUE)
 \description{
 Function to make call and attach score
 }
+\examples{
+
+cor_mat <- res <- clustify(input = pbmc4k_matrix,
+                           metadata = pbmc4k_meta$cluster,
+                           ref_mat = pbmc_bulk_matrix,
+                           query_genes = pbmc4k_vargenes
+                          )
+
+best_mat <- get_best_match_matrix(cor_mat)
+
+get_best_str(name = 1,
+             best_mat = best_mat,
+             cor_mat = cor_mat
+            )
+
+}

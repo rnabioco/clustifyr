@@ -31,3 +31,18 @@ averaging will be done on unlogged data}
 \description{
 Average expression values per cluster
 }
+\examples{
+# Average expression values per default cluster ("cluster")
+pbmc4k_avg <- average_clusters(pbmc4k_matrix,
+                               pbmc4k_meta,
+                               if_log = FALSE
+                              )
+
+# Average expression values per specified cluster ("classified")
+pbmc4k_avg <- average_clusters(pbmc4k_matrix,
+                               pbmc4k_meta,
+                               cluster_col = "classified",
+                               if_log = FALSE
+                              )
+
+}

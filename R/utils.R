@@ -11,7 +11,19 @@
 #' @param low_threshold option to remove clusters with too few cells
 #' @param method whether to take mean (default) or median
 #' @param output_log whether to report log results
+#' @examples
+#' # Average expression values per default cluster ("cluster")
+#' pbmc4k_avg <- average_clusters(pbmc4k_matrix,
+#'                                pbmc4k_meta,
+#'                                if_log = FALSE
+#'                               )
 #'
+#' # Average expression values per specified cluster ("classified")
+#' pbmc4k_avg <- average_clusters(pbmc4k_matrix,
+#'                                pbmc4k_meta,
+#'                                cluster_col = "classified",
+#'                                if_log = FALSE
+#'                               )
 #' @export
 average_clusters <- function(mat, cluster_info,
                              if_log = TRUE,
@@ -87,7 +99,10 @@ average_clusters <- function(mat, cluster_info,
 #' @param cluster_info data.frame with cells
 #' @param cluster_col column in cluster_info with cluster number
 #' @param cut_num binary cutoff for detection
-#'
+#' @examples
+#' pbmc4k_percentage <- percent_clusters(pbmc4k_matrix,
+#'                                       pbmc4k_meta,
+#'                                      )
 #' @export
 percent_clusters <- function(mat, cluster_info,
                              cluster_col = "cluster",
@@ -104,7 +119,14 @@ percent_clusters <- function(mat, cluster_info,
 #' Function to make best call from correlation matrix
 #'
 #' @param cor_mat correlation matrix
+#' @examples
+#' cor_mat <- res <- clustify(input = pbmc4k_matrix,
+#'                            metadata = pbmc4k_meta$cluster,
+#'                            ref_mat = pbmc_bulk_matrix,
+#'                            query_genes = pbmc4k_vargenes
+#'                           )
 #'
+#' best_mat <- get_best_match_matrix(cor_mat)
 #' @export
 get_best_match_matrix <- function(cor_mat) {
   best_mat <- as.data.frame(t(apply(cor_mat, 1, function(x) x - max(x))))
@@ -120,7 +142,19 @@ get_best_match_matrix <- function(cor_mat) {
 #' @param best_mat binarized call matrix
 #' @param cor_mat correlation matrix
 #' @param carry_cor whether the correlation score gets reported
+#' @examples
+#' cor_mat <- res <- clustify(input = pbmc4k_matrix,
+#'                            metadata = pbmc4k_meta$cluster,
+#'                            ref_mat = pbmc_bulk_matrix,
+#'                            query_genes = pbmc4k_vargenes
+#'                           )
 #'
+#' best_mat <- get_best_match_matrix(cor_mat)
+#'
+#' get_best_str(name = 1,
+#'              best_mat = best_mat,
+#'              cor_mat = cor_mat
+#'             )
 #' @export
 get_best_str <- function(name,
                          best_mat,
