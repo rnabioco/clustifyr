@@ -13,8 +13,6 @@ install:
 cache:
   - C:\RLibrary
 
-environment:
-  CRAN: https://cran.rstudio.com/
 
 # Adapt as necessary starting from here
 
@@ -52,3 +50,4 @@ environment:
     #either seems to be the temp fix
     #USE_RTOOLS: true
     PKGTYPE: win.binary
+  CRAN: https://cran.rstudio.com/
