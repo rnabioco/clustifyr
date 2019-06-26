@@ -13,6 +13,7 @@ install:
 cache:
   - C:\RLibrary
 
+
 # Adapt as necessary starting from here
 
 build_script:
@@ -49,3 +50,4 @@ environment:
     #either seems to be the temp fix
     #USE_RTOOLS: true
     PKGTYPE: win.binary
+  CRAN: https://cran.rstudio.com/
