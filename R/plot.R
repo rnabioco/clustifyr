@@ -17,27 +17,28 @@
 #' @export
 plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
                       feature,
-                      legend_name = "",
+                      legend_name = NULL,
                       c_cols = pretty_palette2,
                       d_cols = NULL,
                       pt_size = 0.25,
                       scale_limits = NULL,
                       do_label = FALSE,
                       do_legend = TRUE) {
+
   if ((length(unique(data[[feature]])) > 12) & identical(c_cols, pretty_palette2) & (typeof(data[[feature]]) %in% c(
     "character",
     "logical",
     "factor"
   ))) {
-    # print("too many required, using ramp colors instead")
+    # print("too many colors required, using ramp colors instead")
     c_cols <- pretty_palette_ramp_d(length(unique(data[[feature]])))
     d_cols <- pretty_palette_ramp_d(length(unique(data[[feature]])))
   }
   # sort data to avoid plotting null values over colors
   data <- dplyr::arrange(data, !!dplyr::sym(feature))
 
-  p <- ggplot2::ggplot(data, aes_string(x, y)) +
-    geom_point(aes_string(color = paste0("`", feature, "`")), # backticks protect special character gene names
+  p <- ggplot2::ggplot(data, aes_string(paste0("`", x, "`"), paste0("`", y, "`"))) +  # backticks protect special character names
+    geom_point(aes_string(color = paste0("`", feature, "`")),
       size = pt_size
     )
 
@@ -134,6 +135,7 @@ plot_cor <- function(cor_matrix,
                      y = "tSNE_2",
                      scale_legends = FALSE,
                      ...) {
+
   if (!any(data_to_plot %in% colnames(cor_matrix))) {
     stop("cluster ids not shared between metadata and correlation matrix")
   }
@@ -154,12 +156,14 @@ plot_cor <- function(cor_matrix,
 
   # checks matrix rownames, 2 branches for cluster number (avg) or cell bar code (each cell)
   if (cor_df[[cluster_col]][1] %in% metadata[[cluster_col]]) {
-    plt_data <- dplyr::left_join(cor_df_long,
+    plt_data <- dplyr::left_join(
+      cor_df_long,
       metadata,
       by = cluster_col
     )
   } else {
-    plt_data <- dplyr::left_join(cor_df_long,
+    plt_data <- dplyr::left_join(
+      cor_df_long,
       metadata,
       by = structure(names = cluster_col, "rn")
     )
@@ -168,7 +172,8 @@ plot_cor <- function(cor_matrix,
   # determine scaling method, either same for all plots, or per plot (default)
   if (typeof(scale_legends) == "logical" && scale_legends) {
     scale_limits <- c(
-      ifelse(min(plt_data$expr) < 0,
+      ifelse(
+        min(plt_data$expr) < 0,
         min(plt_data$expr),
         0
       ),
@@ -181,21 +186,45 @@ plot_cor <- function(cor_matrix,
   }
 
   plts <- vector("list", length(data_to_plot))
+
   for (i in seq_along(data_to_plot)) {
     tmp_data <- dplyr::filter(
       plt_data,
       ref_cluster == data_to_plot[i]
     )
-    plts[[i]] <- plot_tsne(tmp_data,
+    plts[[i]] <- plot_tsne(
+      data = tmp_data,
       x = x,
       y = y,
       feature = "expr",
-      legend_name = data_to_plot[i],
       scale_limits = scale_limits,
       ...
-    )
+    ) +
+      ggtitle(data_to_plot[i])
   }
+
+  plts <- cowplot::plot_grid(plotlist = plts)
+
   plts
+
+
+
+  # USING facet_wrap()
+  # plt_data <- dplyr::filter(plt_data, ref_cluster %in% data_to_plot)
+  #
+  # plts <- plot_tsne(
+  #   data = plt_data,
+  #   feature = "expr",
+  #   scale_limits = scale_limits,
+  #   ...
+  # ) +
+  #   ggplot2::theme(
+  #     strip.background = element_blank(),
+  #     strip.text = element_text(size = 14, face = "bold")
+  #   ) +
+  #   ggplot2::facet_wrap(~ref_cluster, scales = "free")
+  #
+  # plts
 }
 
 #' Plot gene expression on to tSNE
@@ -212,6 +241,7 @@ plot_gene <- function(expr_mat,
                       genes,
                       cell_col = NULL,
                       ...) {
+
   genes_to_plot <- genes[genes %in% rownames(expr_mat)]
   genes_missing <- setdiff(genes, genes_to_plot)
 
@@ -246,7 +276,8 @@ plot_gene <- function(expr_mat,
   lapply(
     genes_to_plot,
     function(gene) {
-      plot_tsne(plt_dat,
+      plot_tsne(
+        data = plt_dat,
         feature = gene,
         legend_name = gene,
         ...
@@ -267,6 +298,7 @@ plot_call <- function(cor_matrix,
                       metadata,
                       data_to_plot = colnames(cor_matrix),
                       ...) {
+
   df_temp <- as.data.frame(t(apply(cor_matrix, 1, function(x) x - max(x))))
   df_temp[df_temp == 0] <- "1"
   df_temp[df_temp != "1"] <- "0"
@@ -299,6 +331,7 @@ plot_best_call <- function(cor_matrix,
                            x = "tSNE_1", y = "tSNE_2",
                            plot_r = FALSE,
                            ...) {
+
   col_meta <- colnames(metadata)
   if ("type" %in% col_meta | "type2" %in% col_meta) {
     warning('metadata column name clash of "type"/"type2"')
@@ -368,6 +401,7 @@ plot_cols <- function(metadata,
                       metadata_ref,
                       cluster_col_ref,
                       plot_col_ref) {
+
   temp1 <- dplyr::group_by_at(metadata, vars(cluster_col, cluster_col_called))
   temp1 <- dplyr::summarise(temp1, med = median(!!dplyr::sym(plot_col), na.rm = TRUE))
   colnames(temp1) <- c("original_cluster", "type", paste(plot_col, "query", sep = "_"))
@@ -425,10 +459,12 @@ plot_cols <- function(metadata,
 plot_cor_heatmap <- function(cor_matrix,
                              metadata = NULL,
                              cluster_col = NULL,
-                             col = not_pretty_palette,
+                             col = pretty_palette,
                              legend_title = NULL,
                              ...) {
-  ComplexHeatmap::Heatmap(cor_matrix,
+
+  ComplexHeatmap::Heatmap(
+    matrix = cor_matrix,
     col = col,
     heatmap_legend_param = list(title = legend_title),
     ...
