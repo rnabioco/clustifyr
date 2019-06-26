@@ -82,27 +82,27 @@
 #' @source  `[pbmc_small]` processed by `[Seurat]`
 "s_small3"
 
-#' reference matrix from seurat citeseq CBMC
+#' reference matrix from seurat citeseq CBMC tutorial
 #'
-#' @format XXX
+#' @format expression matrix
 #' \describe{
 #' }
 #'
-#' @source  `[seurat]` tutorial, averaged per cluster
+#' @source (https://satijalab.org/seurat/v3.0/multimodal_vignette.html#identify-differentially-expressed-proteins-between-clusters)
 "cbmc_ref"
 
-#' reference marker matrix from seurat citeseq CBMC
+#' reference marker matrix from seurat citeseq CBMC tutorial
 #'
-#' @format XXX
+#' @format matrix of markers
 #' \describe{
 #' }
 #'
-#' @source  `[seurat]` tutorial, matrixized top markers
+#' @source (https://satijalab.org/seurat/v3.0/multimodal_vignette.html#identify-differentially-expressed-proteins-between-clusters)
 "cbmc_m"
 
 #' lookup table for single cell object structures
 #'
-#' @format XXX
+#' @format dataframe
 #' \describe{
 #' }
 #'
