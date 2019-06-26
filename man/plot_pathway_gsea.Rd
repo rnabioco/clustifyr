@@ -4,7 +4,7 @@
 \alias{plot_pathway_gsea}
 \title{plot GSEA pathway scores as heatmap, returns a list containing results and plot.}
 \usage{
-plot_pathway_gsea(mat, pathway_list, n_perm = 1000, scale = T,
+plot_pathway_gsea(mat, pathway_list, n_perm = 1000, scale = TRUE,
   topn = 5, returning = "both")
 }
 \arguments{
@@ -14,7 +14,7 @@ plot_pathway_gsea(mat, pathway_list, n_perm = 1000, scale = T,
 
 \item{n_perm}{Number of permutation for fgsea function. Defaults to 1000.}
 
-\item{scale}{convert expr_mat into zscores prior to running GSEA?, default = T}
+\item{scale}{convert expr_mat into zscores prior to running GSEA?, default = TRUE}
 
 \item{topn}{number of top pathways to plot}
 

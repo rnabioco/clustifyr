@@ -4,12 +4,12 @@
 \alias{make_comb_ref}
 \title{make combination ref matrix to assess intermixing}
 \usage{
-make_comb_ref(ref_mat, log_scale = T, sep = "_and_")
+make_comb_ref(ref_mat, if_log = TRUE, sep = "_and_")
 }
 \arguments{
 \item{ref_mat}{reference expression matrix}
 
-\item{log_scale}{whether input data is natural}
+\item{if_log}{whether input data is natural}
 
 \item{sep}{separator for name combinations}
 }

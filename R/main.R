@@ -10,12 +10,12 @@ clustify <- function(input, ...) {
 #' @param metadata cell cluster assignments, supplied as a vector or data.frame. If
 #' data.frame is supplied then `cluster_col` needs to be set. Not required if running correlation per cell.
 #' @param ref_mat reference expression matrix
-#' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
-#' the expr_mat and ref_mat will be used for comparision.
 #' @param cluster_col column in metadata that contains cluster ids per cell. Will default to first
 #' column of metadata if not supplied. Not required if running correlation per cell.
+#' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
+#' the expr_mat and ref_mat will be used for comparision.
 #' @param per_cell if true run per cell, otherwise per cluster.
-#' @param num_perm number of permutations, set to 0 by default
+#' @param n_perm number of permutations, set to 0 by default
 #' @param compute_method method(s) for computing similarity scores
 #' @param use_var_genes if providing a seurat object, use the variable genes
 #'  (stored in seurat_object@var.genes) as the query_genes.
@@ -29,10 +29,10 @@ clustify <- function(input, ...) {
 clustify.default <- function(input,
                              ref_mat,
                              metadata = NULL,
-                             query_genes = NULL,
                              cluster_col = NULL,
+                             query_genes = NULL,
                              per_cell = FALSE,
-                             num_perm = 0,
+                             n_perm = 0,
                              compute_method = "spearman",
                              verbose = FALSE,
                              lookuptable = NULL,
@@ -100,7 +100,7 @@ clustify.default <- function(input,
     cluster_ids <- colnames(expr_mat)
   }
 
-  if (num_perm == 0) {
+  if (n_perm == 0) {
     res <- get_similarity(
       expr_mat,
       ref_mat,
@@ -116,7 +116,7 @@ clustify.default <- function(input,
       expr_mat,
       ref_mat,
       cluster_ids = cluster_ids,
-      num_perm = num_perm,
+      n_perm = n_perm,
       per_cell = per_cell,
       compute_method = compute_method,
       rm0 = rm0,
@@ -129,12 +129,12 @@ clustify.default <- function(input,
 
 #' @rdname clustify
 #' @param ref_mat reference expression matrix
-#' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
-#' the expr_mat and ref_mat will be used for comparision.
 #' @param cluster_col column in metadata that contains cluster ids per cell. Will default to first
 #' column of metadata if not supplied. Not required if running correlation per cell.
+#' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
+#' the expr_mat and ref_mat will be used for comparision.
 #' @param per_cell if true run per cell, otherwise per cluster.
-#' @param num_perm number of permutations, set to 0 by default
+#' @param n_perm number of permutations, set to 0 by default
 #' @param compute_method method(s) for computing similarity scores
 #' @param use_var_genes if providing a seurat object, use the variable genes
 #'  (stored in seurat_object@var.genes) as the query_genes.
@@ -149,10 +149,10 @@ clustify.default <- function(input,
 #' @export
 clustify.seurat <- function(input,
                             ref_mat,
+                            cluster_col = NULL,
                             query_genes = NULL,
                             per_cell = FALSE,
-                            num_perm = 0,
-                            cluster_col = NULL,
+                            n_perm = 0,
                             compute_method = "spearman",
                             use_var_genes = TRUE,
                             dr = "tsne",
@@ -176,7 +176,7 @@ clustify.seurat <- function(input,
     metadata,
     query_genes,
     per_cell = per_cell,
-    num_perm = num_perm,
+    n_perm = n_perm,
     cluster_col = cluster_col,
     compute_method = compute_method,
     verbose = verbose,
@@ -192,7 +192,7 @@ clustify.seurat <- function(input,
       warning('metadata column name clash of "type"/"type2"')
       return()
     }
-    if (num_perm != 0) {
+    if (n_perm != 0) {
       res <- -log(res$p_val + .01, 10)
     }
     df_temp <- tibble::as_tibble(res, rownames = "rn")
@@ -233,12 +233,12 @@ clustify.seurat <- function(input,
 
 #' @rdname clustify
 #' @param ref_mat reference expression matrix
-#' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
-#' the expr_mat and ref_mat will be used for comparision.
 #' @param cluster_col column in metadata that contains cluster ids per cell. Will default to first
 #' column of metadata if not supplied. Not required if running correlation per cell.
+#' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
+#' the expr_mat and ref_mat will be used for comparision.
 #' @param per_cell if true run per cell, otherwise per cluster.
-#' @param num_perm number of permutations, set to 0 by default
+#' @param n_perm number of permutations, set to 0 by default
 #' @param compute_method method(s) for computing similarity scores
 #' @param use_var_genes if providing a seurat object, use the variable genes
 #'  (stored in seurat_object@var.genes) as the query_genes.
@@ -253,10 +253,10 @@ clustify.seurat <- function(input,
 #' @export
 clustify.Seurat <- function(input,
                             ref_mat,
+                            cluster_col = NULL,
                             query_genes = NULL,
                             per_cell = FALSE,
-                            num_perm = 0,
-                            cluster_col = NULL,
+                            n_perm = 0,
                             compute_method = "spearman",
                             use_var_genes = TRUE,
                             dr = "tsne",
@@ -280,7 +280,7 @@ clustify.Seurat <- function(input,
     metadata,
     query_genes,
     per_cell = per_cell,
-    num_perm = num_perm,
+    n_perm = n_perm,
     cluster_col = cluster_col,
     compute_method = compute_method,
     verbose = verbose,
@@ -296,7 +296,7 @@ clustify.Seurat <- function(input,
       warning('metadata column name clash of "type"/"type2", consider renaming or using rename_suff option')
       return()
     }
-    if (num_perm != 0) {
+    if (n_perm != 0) {
       res <- -log(res$p_val + .01, 10)
     }
     df_temp <- tibble::as_tibble(res, rownames = "rn")
@@ -352,18 +352,17 @@ clustify_lists <- function(input, ...) {
 
 #' @rdname clustify_lists
 #' @param input single-cell expression matrix or Seurat object
-#' @param per_cell compare per cell or per cluster
+#' @param marker matrix or dataframe of candidate genes for each cluster
+#' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
 #' @param cluster_info data.frame or vector containing cluster assignments per cell.
 #' Order must match column order in supplied matrix. If a data.frame
 #' provide the cluster_col parameters.
-#' @param log_scale input data is natural log,
-#' averaging will be done on unlogged data
 #' @param cluster_col column in cluster_info with cluster number
+#' @param if_log input data is natural log, averaging will be done on unlogged data
+#' @param per_cell compare per cell or per cluster
 #' @param topn number of top expressing genes to keep from input matrix
 #' @param cut expression cut off from input matrix
-#' @param marker matrix or dataframe of candidate genes for each cluster
-#' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
-#' @param genomen number of genes in the genome
+#' @param genome_n number of genes in the genome
 #' @param metric adjusted p-value for hypergeometric test, or jaccard index
 #' @param output_high if true (by default to fit with rest of package),
 #' -log10 transform p-value
@@ -374,15 +373,15 @@ clustify_lists <- function(input, ...) {
 #' @export
 
 clustify_lists.default <- function(input,
-                                   per_cell = FALSE,
-                                   cluster_info = NULL,
-                                   log_scale = TRUE,
-                                   cluster_col = NULL,
-                                   topn = 3000,
-                                   cut = 0,
                                    marker,
                                    marker_inmatrix = TRUE,
-                                   genomen = 30000,
+                                   cluster_info = NULL,
+                                   cluster_col = NULL,
+                                   if_log = TRUE,
+                                   per_cell = FALSE,
+                                   topn = 3000,
+                                   cut = 0,
+                                   genome_n = 30000,
                                    metric = "hyper",
                                    output_high = TRUE,
                                    lookuptable = NULL,
@@ -408,7 +407,7 @@ clustify_lists.default <- function(input,
   if (per_cell == FALSE) {
     input <- average_clusters(input,
       cluster_info,
-      log_scale = log_scale,
+      if_log = if_log,
       cluster_col = cluster_col
     )
   }
@@ -424,7 +423,7 @@ clustify_lists.default <- function(input,
 
   compare_lists(bin_input,
     marker_m = marker,
-    n = genomen,
+    n = genome_n,
     metric = metric,
     output_high = output_high
   )
@@ -432,18 +431,18 @@ clustify_lists.default <- function(input,
 
 #' @rdname clustify_lists
 #' @param input seurat object
-#' @param per_cell compare per cell or per cluster
 #' @param cluster_info data.frame or vector containing cluster assignments per cell.
 #' Order must match column order in supplied matrix. If a data.frame
 #' provide the cluster_col parameters.
-#' @param log_scale input data is natural log,
-#' averaging will be done on unlogged data
 #' @param cluster_col column in cluster_info with cluster number
+#' @param if_log input data is natural log,
+#' averaging will be done on unlogged data
+#' @param per_cell compare per cell or per cluster
 #' @param topn number of top expressing genes to keep from input matrix
 #' @param cut expression cut off from input matrix
 #' @param marker matrix or dataframe of candidate genes for each cluster
 #' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
-#' @param genomen number of genes in the genome
+#' @param genome_n number of genes in the genome
 #' @param metric adjusted p-value for hypergeometric test, or jaccard index
 #' @param output_high if true (by default to fit with rest of package),
 #' -log10 transform p-value
@@ -455,15 +454,15 @@ clustify_lists.default <- function(input,
 #'
 #' @export
 clustify_lists.seurat <- function(input,
-                                  per_cell = FALSE,
                                   cluster_info = NULL,
-                                  log_scale = TRUE,
                                   cluster_col = NULL,
+                                  if_log = TRUE,
+                                  per_cell = FALSE,
                                   topn = 3000,
                                   cut = 0,
                                   marker,
                                   marker_inmatrix = TRUE,
-                                  genomen = 30000,
+                                  genome_n = 30000,
                                   metric = "hyper",
                                   output_high = TRUE,
                                   dr = "tsne",
@@ -478,13 +477,13 @@ clustify_lists.seurat <- function(input,
   res <- clustify_lists(input,
     per_cell = per_cell,
     cluster_info = cluster_info,
-    log_scale = log_scale,
+    if_log = if_log,
     cluster_col = cluster_col,
     topn = topn,
     cut = cut,
     marker,
     marker_inmatrix = marker_inmatrix,
-    genomen = genomen,
+    genome_n = genome_n,
     metric = metric,
     output_high = output_high,
     ...
@@ -494,11 +493,11 @@ clustify_lists.seurat <- function(input,
     res
   } else {
     if (per_cell == FALSE) {
-      df_temp <- cor_to_call(res, cluster_info, col = cluster_col, threshold = threshold)
+      df_temp <- cor_to_call(res, cluster_info, cluster_col = cluster_col, threshold = threshold)
       df_temp_full <- dplyr::left_join(tibble::rownames_to_column(cluster_info, "rn"), df_temp, by = cluster_col)
       df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
     } else {
-      df_temp <- cor_to_call(res, cluster_info, col = "rn", threshold = threshold)
+      df_temp <- cor_to_call(res, cluster_info, cluster_col = "rn", threshold = threshold)
       df_temp_full <- dplyr::left_join(tibble::rownames_to_column(cluster_info, "rn"), df_temp, by = "rn")
       df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
     }
@@ -514,18 +513,18 @@ clustify_lists.seurat <- function(input,
 
 #' @rdname clustify_lists
 #' @param input seurat object
-#' @param per_cell compare per cell or per cluster
 #' @param cluster_info data.frame or vector containing cluster assignments per cell.
 #' Order must match column order in supplied matrix. If a data.frame
 #' provide the cluster_col parameters.
-#' @param log_scale input data is natural log,
-#' averaging will be done on unlogged data
 #' @param cluster_col column in cluster_info with cluster number
+#' @param if_log input data is natural log,
+#' averaging will be done on unlogged data
+#' @param per_cell compare per cell or per cluster
 #' @param topn number of top expressing genes to keep from input matrix
 #' @param cut expression cut off from input matrix
 #' @param marker matrix or dataframe of candidate genes for each cluster
 #' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
-#' @param genomen number of genes in the genome
+#' @param genome_n number of genes in the genome
 #' @param metric adjusted p-value for hypergeometric test, or jaccard index
 #' @param output_high if true (by default to fit with rest of package),
 #' -log10 transform p-value
@@ -535,15 +534,15 @@ clustify_lists.seurat <- function(input,
 
 #' @param ... passed to matrixize_markers
 clustify_lists.Seurat <- function(input,
-                                  per_cell = FALSE,
                                   cluster_info = NULL,
-                                  log_scale = TRUE,
                                   cluster_col = NULL,
+                                  if_log = TRUE,
+                                  per_cell = FALSE,
                                   topn = 3000,
                                   cut = 0,
                                   marker,
                                   marker_inmatrix = TRUE,
-                                  genomen = 30000,
+                                  genome_n = 30000,
                                   metric = "hyper",
                                   output_high = TRUE,
                                   dr = "tsne",
@@ -558,13 +557,13 @@ clustify_lists.Seurat <- function(input,
   res <- clustify_lists(input,
     per_cell = per_cell,
     cluster_info = cluster_info,
-    log_scale = log_scale,
+    if_log = if_log,
     cluster_col = cluster_col,
     topn = topn,
     cut = cut,
     marker,
     marker_inmatrix = marker_inmatrix,
-    genomen = genomen,
+    genome_n = genome_n,
     metric = metric,
     output_high = output_high,
     ...
@@ -574,11 +573,11 @@ clustify_lists.Seurat <- function(input,
     res
   } else {
     if (per_cell == FALSE) {
-      df_temp <- cor_to_call(res, cluster_info, col = cluster_col, threshold = threshold)
+      df_temp <- cor_to_call(res, cluster_info, cluster_col = cluster_col, threshold = threshold)
       df_temp_full <- dplyr::left_join(tibble::rownames_to_column(cluster_info, "rn"), df_temp, by = cluster_col)
       df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
     } else {
-      df_temp <- cor_to_call(res, cluster_info, col = "rn", threshold = threshold)
+      df_temp <- cor_to_call(res, cluster_info, cluster_col = "rn", threshold = threshold)
       df_temp_full <- dplyr::left_join(tibble::rownames_to_column(cluster_info, "rn"), df_temp, by = "rn")
       df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
     }

@@ -4,7 +4,7 @@
 \alias{use_seurat_meta}
 \title{Function to convert labelled seurat object to fully prepared metadata}
 \usage{
-use_seurat_meta(seurat_object, dr = "tsne", seurat3 = F)
+use_seurat_meta(seurat_object, dr = "tsne", seurat3 = FALSE)
 }
 \arguments{
 \item{seurat_object}{seurat_object after tsne projections and clustering}

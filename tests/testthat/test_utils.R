@@ -25,8 +25,8 @@ test_that("matrixize_markers to turn matrix into ranked list", {
 })
 
 test_that("matrixize_markers uses supplied labels", {
-  pbmc4k_mm <- matrixize_markers(pbmc4k_markers, n = 50, labels = pbmc4k_meta)
-  pbmc4k_mm2 <- matrixize_markers(pbmc4k_mm, labels = unique(pbmc4k_meta$classified), ranked = TRUE)
+  pbmc4k_mm <- matrixize_markers(pbmc4k_markers, n = 50, metadata = pbmc4k_meta)
+  pbmc4k_mm2 <- matrixize_markers(pbmc4k_mm, metadata = unique(pbmc4k_meta$classified), ranked = TRUE)
 
   expect_true(nrow(pbmc4k_mm) < nrow(pbmc4k_mm2))
 })
@@ -34,7 +34,7 @@ test_that("matrixize_markers uses supplied labels", {
 test_that("average_clusters works as intended", {
   pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
     pbmc4k_meta,
-    log_scale = FALSE
+    if_log = FALSE
   )
   expect_equal(nrow(pbmc4k_avg2), 2663)
 })
@@ -43,13 +43,13 @@ test_that("average_clusters works with disordered data", {
   pbmc4k_meta2 <- rbind(pbmc4k_meta[151:300, ], pbmc4k_meta[1:150, ])
   pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
     pbmc4k_meta,
-    log_scale = TRUE,
+    if_log = TRUE,
     cell_col = "rn",
     cluster_col = "classified"
   )
   pbmc4k_avg3 <- average_clusters(pbmc4k_matrix,
     pbmc4k_meta2,
-    log_scale = TRUE,
+    if_log = TRUE,
     cell_col = "rn",
     cluster_col = "classified"
   )
@@ -60,7 +60,7 @@ test_that("average_clusters works with disordered data", {
 test_that("average_clusters detects wrong cluster ident", {
   expect_error(pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
     matrix(5, 5),
-    log_scale = FALSE
+    if_log = FALSE
   ))
 })
 
@@ -68,7 +68,7 @@ test_that("average_clusters able to coerce factors", {
   col <- factor(pbmc4k_meta$cluster)
   pbmc4k_avg2 <- average_clusters(pbmc4k_matrix,
     col,
-    log_scale = FALSE
+    if_log = FALSE
   )
   expect_equal(nrow(pbmc4k_avg2), 2663)
 })
@@ -131,7 +131,7 @@ test_that("cor_to_call threshold works as intended", {
   )
   call1 <- cor_to_call(res,
     metadata = pbmc4k_meta,
-    col = "cluster",
+    cluster_col = "cluster",
     collapse_to_cluster = FALSE,
     threshold = 0.5
   )
@@ -150,7 +150,7 @@ test_that("cor_to_call threshold works as intended, on per cell and collapsing",
   )
   call1 <- cor_to_call(res,
     metadata = pbmc4k_meta,
-    col = "rn",
+    cluster_col = "rn",
     collapse_to_cluster = "cluster",
     threshold = 0.1
   )
@@ -361,7 +361,7 @@ test_that("overcluster_test works with defined other cluster column", {
     cbmc_ref,
     cluster_col = "cluster",
     newclustering = "classified",
-    do.label = FALSE
+    do_label = FALSE
   )
   expect_true(ggplot2::is.ggplot(g))
 })
@@ -379,15 +379,15 @@ test_that("ref_feature_select chooses the correct number of features with option
 })
 
 test_that("feature_select_PCA will log transform", {
-  res <- feature_select_PCA(pbmc_bulk_matrix, log_scale = FALSE)
-  res2 <- feature_select_PCA(pbmc_bulk_matrix, log_scale = TRUE)
+  res <- feature_select_PCA(pbmc_bulk_matrix, if_log = FALSE)
+  res2 <- feature_select_PCA(pbmc_bulk_matrix, if_log = TRUE)
   expect_true(length(res) > 0)
 })
 
 test_that("feature_select_PCA can handle precalculated PCA", {
   pcs <- prcomp(t(as.matrix(pbmc_bulk_matrix)))$rotation
-  res <- feature_select_PCA(pbmc_bulk_matrix, log_scale = TRUE)
-  res2 <- feature_select_PCA(pcs = pcs, log_scale = TRUE)
+  res <- feature_select_PCA(pbmc_bulk_matrix, if_log = TRUE)
+  res2 <- feature_select_PCA(pcs = pcs, if_log = TRUE)
   expect_true(all.equal(rownames(res), rownames(res2)))
 })
 
@@ -449,11 +449,11 @@ test_that("get_best_str finds correct values", {
 test_that("use_seurat_comp gets correct averages", {
   avg <- use_seurat_comp(s_small,
     cluster_col = "res.1",
-    var.genes_only = TRUE
+    var_genes_only = TRUE
   )
   avg2 <- use_seurat_comp(s_small,
     cluster_col = "res.1",
-    var.genes_only = "PCA"
+    var_genes_only = "PCA"
   )
   expect_true(ncol(avg) == 4)
 })
@@ -469,7 +469,7 @@ test_that("use_object_comp gets correct averages", {
   ), stringsAsFactors = FALSE)
   avg <- use_object_comp(s3,
     lookuptable = object_loc_lookup2,
-    var.genes_only = TRUE
+    var_genes_only = TRUE
   )
   expect_true(ncol(avg) == 3)
 })
@@ -478,12 +478,12 @@ test_that("use_seurat_comp gets other assay slots", {
   avg <- use_seurat_comp(s_small,
     cluster_col = "res.1",
     assay_name = "ADT",
-    var.genes_only = TRUE
+    var_genes_only = TRUE
   )
   avg2 <- use_seurat_comp(s_small,
     cluster_col = "res.1",
     assay_name = c("ADT", "ADT2"),
-    var.genes_only = TRUE
+    var_genes_only = TRUE
   )
   expect_true(nrow(avg2) - nrow(avg) == 2)
 })
@@ -492,17 +492,17 @@ test_that("use_seurat_comp gets correct averages with seurat3 object", {
   avg <- use_seurat_comp(s_small3,
     cluster_col = "RNA_snn_res.1",
     assay_name = c("ADT", "ADT2"),
-    var.genes_only = TRUE
+    var_genes_only = TRUE
   )
   avg <- use_seurat3_comp(s_small3,
     cluster_col = "RNA_snn_res.1",
     assay_name = c("ADT"),
-    var.genes_only = TRUE
+    var_genes_only = TRUE
   )
   avg2 <- use_seurat_comp(s_small3,
     cluster_col = "RNA_snn_res.1",
     assay_name = c("ADT", "ADT2"),
-    var.genes_only = "PCA"
+    var_genes_only = "PCA"
   )
   expect_true(nrow(avg2) - nrow(avg) == 2)
 })
@@ -563,7 +563,7 @@ test_that("cor_to_call renaming with suffix input works as intended, per_cell or
   )
   call1 <- cor_to_call(res,
     metadata = pbmc4k_meta,
-    col = "cluster",
+    cluster_col = "cluster",
     collapse_to_cluster = FALSE,
     threshold = 0.5,
     rename_suff = "a"
@@ -578,7 +578,7 @@ test_that("cor_to_call renaming with suffix input works as intended, per_cell or
   )
   call2 <- cor_to_call(res2,
     metadata = pbmc4k_meta,
-    col = "rn",
+    cluster_col = "rn",
     collapse_to_cluster = "cluster",
     threshold = 0,
     rename_suff = "a"

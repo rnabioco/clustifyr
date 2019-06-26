@@ -2,11 +2,11 @@
 % Please edit documentation in R/compare_genelist.R
 \name{matrixize_markers}
 \alias{matrixize_markers}
-\title{convert candidate genes list into matrix}
+\title{Convert candidate genes list into matrix}
 \usage{
 matrixize_markers(marker_df, ranked = FALSE, n = NULL,
   step_weight = 1, background_weight = 0, unique = FALSE,
-  labels = NULL, remove_rp = F)
+  metadata = NULL, cluster_col = "classified", remove_rp = FALSE)
 }
 \arguments{
 \item{marker_df}{dataframe of candidate genes, must contain "gene" and "cluster" columns, or a matrix of gene names to convert to ranked}
@@ -23,10 +23,12 @@ added weight}
 
 \item{unique}{whether to use only unique markers to 1 cluster}
 
-\item{labels}{vector or dataframe of cluster names}
+\item{metadata}{vector or dataframe of cluster names}
+
+\item{cluster_col}{column for cluster names to replace original cluster, if metadata is dataframe}
 
 \item{remove_rp}{do not include rps, rpl, rp1-9 in markers}
 }
 \description{
-convert candidate genes list into matrix
+Convert candidate genes list into matrix
 }

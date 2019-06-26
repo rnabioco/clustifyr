@@ -6,8 +6,8 @@
 \usage{
 plot_tsne(data, x = "tSNE_1", y = "tSNE_2", feature,
   legend_name = "", c_cols = pretty_palette2, d_cols = NULL,
-  pt_size = 0.25, scale_limits = NULL, do.label = FALSE,
-  do.legend = TRUE)
+  pt_size = 0.25, scale_limits = NULL, do_label = FALSE,
+  do_legend = TRUE)
 }
 \arguments{
 \item{data}{input data}
@@ -31,9 +31,9 @@ defaults to RColorBrewer paired palette}
 \item{scale_limits}{defaults to min = 0, max = max(data$x),
 otherwise a two-element numeric vector indicating min and max to plot}
 
-\item{do.label}{whether to label each cluster at median center}
+\item{do_label}{whether to label each cluster at median center}
 
-\item{do.legend}{whether to draw legend}
+\item{do_legend}{whether to draw legend}
 }
 \description{
 Plot a tSNE colored by feature.

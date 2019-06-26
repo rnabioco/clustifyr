@@ -4,16 +4,16 @@
 \alias{plot_best_call}
 \title{Plot best calls for each cluster on a tSNE}
 \usage{
-plot_best_call(correlation_matrix, metadata, col = "cluster",
+plot_best_call(cor_matrix, metadata, cluster_col = "cluster",
   collapse_to_cluster = FALSE, threshold = 0, x = "tSNE_1",
   y = "tSNE_2", plot_r = FALSE, ...)
 }
 \arguments{
-\item{correlation_matrix}{input similarity matrix}
+\item{cor_matrix}{input similarity matrix}
 
 \item{metadata}{input metadata with tsne coordinates and cluster ids}
 
-\item{col}{metadata column, can be cluster or cellid}
+\item{cluster_col}{metadata column, can be cluster or cellid}
 
 \item{collapse_to_cluster}{if a column name is provided, takes the most frequent call of entire cluster to color in plot}
 

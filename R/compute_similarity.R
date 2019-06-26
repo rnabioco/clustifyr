@@ -58,7 +58,7 @@ get_similarity <- function(expr_mat,
 #' @param cluster_ids clustering info of single-cell data assume that
 #'  genes have ALREADY BEEN filtered
 #' @param ref_mat reference expression matrix
-#' @param num_perm number of permutations
+#' @param n_perm number of permutations
 #' @param per_cell run per cell?
 #' @param compute_method method(s) for computing similarity scores
 #' @param rm0 consider 0 as missing data, recommended for per_cell
@@ -67,7 +67,7 @@ get_similarity <- function(expr_mat,
 permute_similarity <- function(expr_mat,
                                ref_mat,
                                cluster_ids,
-                               num_perm,
+                               n_perm,
                                per_cell = FALSE,
                                compute_method,
                                rm0 = FALSE,
@@ -97,7 +97,7 @@ permute_similarity <- function(expr_mat,
   # perform permutation
   sig_counts <- matrix(0L, nrow = length(sc_clust), ncol = length(ref_clust))
 
-  for (i in 1:num_perm) {
+  for (i in 1:n_perm) {
     resampled <- sample(cluster_ids,
       length(cluster_ids),
       replace = FALSE
@@ -131,7 +131,7 @@ permute_similarity <- function(expr_mat,
 
   return(list(
     score = assigned_score,
-    p_val = sig_counts / num_perm
+    p_val = sig_counts / n_perm
   ))
 }
 
@@ -148,13 +148,13 @@ compute_mean_expr <- function(expr_mat,
 }
 
 #' compute similarity
-#' @param sc_avg query data matrix
+#' @param query_mat query data matrix
 #' @param ref_mat reference data matrix
 #' @param compute_method method(s) for computing similarity scores
 #' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param ...  additional parameters
 #' @export
-calc_similarity <- function(sc_avg,
+calc_similarity <- function(query_mat,
                             ref_mat,
                             compute_method,
                             rm0 = FALSE,
@@ -162,15 +162,15 @@ calc_similarity <- function(sc_avg,
   # remove 0s ?
   if (rm0 == TRUE) {
     message("considering 0 as missing data")
-    sc_avg[sc_avg == 0] <- NA
-    similarity_score <- cor(as.matrix(sc_avg),
+    query_mat[query_mat == 0] <- NA
+    similarity_score <- cor(as.matrix(query_mat),
       ref_mat,
       method = compute_method, use = "pairwise.complete.obs"
     )
     return(similarity_score)
   } else {
     if (any(compute_method %in% c("pearson", "spearman"))) {
-      similarity_score <- cor(as.matrix(sc_avg),
+      similarity_score <- cor(as.matrix(query_mat),
         ref_mat,
         method = compute_method
       )
@@ -178,10 +178,10 @@ calc_similarity <- function(sc_avg,
     }
   }
 
-  sc_clust <- colnames(sc_avg)
+  sc_clust <- colnames(query_mat)
   ref_clust <- colnames(ref_mat)
-  features <- intersect(rownames(sc_avg), rownames(ref_mat))
-  sc_avg <- sc_avg[features, ]
+  features <- intersect(rownames(query_mat), rownames(ref_mat))
+  query_mat <- query_mat[features, ]
   ref_mat <- ref_mat[features, ]
   similarity_score <- matrix(NA,
     nrow = length(sc_clust),
@@ -190,7 +190,7 @@ calc_similarity <- function(sc_avg,
   for (i in seq_along(sc_clust)) {
     for (j in seq_along(ref_clust)) {
       similarity_score[i, j] <- vector_similarity(
-        sc_avg[, sc_clust[i]],
+        query_mat[, sc_clust[i]],
         ref_mat[, ref_clust[j]],
         compute_method, ...
       )
@@ -254,14 +254,14 @@ cosine <- function(vec1, vec2) {
 #'
 #' @param vec1 Test vector
 #' @param vec2 Reference vector
-#' @param if_logcounts Whether the vectors are log-transformed. If so, the
+#' @param if_log Whether the vectors are log-transformed. If so, the
 #' raw count should be computed before computing KL-divergence.
 #' @param total_reads Pseudo-library size
 #' @param max_KL Maximal allowed value of KL-divergence.
 #' @export
-kl_divergence <- function(vec1, vec2, if_logcounts = FALSE,
+kl_divergence <- function(vec1, vec2, if_log = FALSE,
                           total_reads = 1000, max_KL = 1) {
-  if (if_logcounts) {
+  if (if_log) {
     vec1 <- expm1(vec1)
     vec2 <- expm1(vec2)
   }

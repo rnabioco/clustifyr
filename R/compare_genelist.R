@@ -1,13 +1,14 @@
-#' Binarize scRNA seq data
+#' Binarize scRNAseq data
 #'
-#' @param expr_mat single-cell expression matrix
+#' @param mat single-cell expression matrix
 #' @param n number of top expressing genes to keep
 #' @param cut cut off to set to 0
 #'
 #' @export
-binarize_expr <- function(expr_mat,
+binarize_expr <- function(mat,
                           n = 1000,
                           cut = 0) {
+  expr_mat <- mat
   if (n < nrow(expr_mat)) {
     expr_df <- as.data.frame(as.matrix(expr_mat))
     df_temp <- apply(expr_df, 2, function(x) x - x[order(x, decreasing = TRUE)[n + 1]])
@@ -21,7 +22,7 @@ binarize_expr <- function(expr_mat,
   }
 }
 
-#' convert candidate genes list into matrix
+#' Convert candidate genes list into matrix
 #'
 #' @param marker_df dataframe of candidate genes, must contain "gene" and "cluster" columns, or a matrix of gene names to convert to ranked
 #' @param ranked unranked gene list feeds into hyperp, the ranked
@@ -31,7 +32,8 @@ binarize_expr <- function(expr_mat,
 #' @param background_weight ranked genes are tranformed into pseudo expression with
 #' added weight
 #' @param unique whether to use only unique markers to 1 cluster
-#' @param labels vector or dataframe of cluster names
+#' @param metadata vector or dataframe of cluster names
+#' @param cluster_col column for cluster names to replace original cluster, if metadata is dataframe
 #' @param remove_rp do not include rps, rpl, rp1-9 in markers
 #'
 #' @export
@@ -41,7 +43,8 @@ matrixize_markers <- function(marker_df,
                               step_weight = 1,
                               background_weight = 0,
                               unique = FALSE,
-                              labels = NULL,
+                              metadata = NULL,
+                              cluster_col = "classified",
                               remove_rp = FALSE) {
   # takes marker in dataframe form
   # equal number of marker genes per known cluster
@@ -54,12 +57,12 @@ matrixize_markers <- function(marker_df,
   }
 
   if (remove_rp == TRUE) {
-    marker_df <- dplyr::filter(marker_df, !(stringr::str_detect(gene, "^RP[0-9,L,S]")))
+    marker_df <- dplyr::filter(marker_df, !(stringr::str_detect(gene, "^RP[0-9,L,S]|^Rp[0-9,l,s]")))
   }
 
   if (unique == TRUE) {
     nonunique <- dplyr::group_by(marker_df, gene)
-    nonunique <- dplyr::summarize(nonunique, n = n())
+    nonunique <- dplyr::summarize(nonunique, n = dplyr::n())
     nonunique <- dplyr::filter(nonunique, n > 1)
     marker_df <- dplyr::anti_join(marker_df, nonunique, by = "gene")
   }
@@ -89,46 +92,45 @@ matrixize_markers <- function(marker_df,
     marker_temp2 <- as.data.frame(dplyr::select(marker_temp2, -n))
   }
 
-  # if labels is vector, adopt names in vector; if labels is a metadata dataframe, pulls names from "classified" column
-  if (!is.null(labels)) {
-    if (typeof(labels) != "character") {
-      label_df <- labels
-      labels <- left_join(data_frame(cluster = colnames(marker_temp2)),
-        unique(data_frame(
-          cluster = labels$cluster,
-          classified = labels$classified
+  # if metadata is vector, adopt names in vector; if metadata is a metadata dataframe, pulls names from cluster_col column
+  if (!is.null(metadata)) {
+    if (typeof(metadata) != "character") {
+      metadata <- dplyr::left_join(tibble::tibble(cluster = colnames(marker_temp2)),
+        unique(tibble::tibble(
+          cluster = metadata$cluster,
+          classified = metadata[[cluster_col]]
         )),
         by = "cluster"
       )
-      labels <- dplyr::pull(labels, classified)
+      metadata <- metadata[[cluster_col]]
     }
-    colnames(marker_temp2) <- labels
+    colnames(marker_temp2) <- metadata
   }
 
   marker_temp2
 }
 
-#' generate variable gene list from marker matrix
+#' Generate variable gene list from marker matrix
 #'
 #' @description Variable gene list is required for `clustify` main function. This
 #' function parses variables genes from a matrix input.
 #'
-#' @param marker_m matrix or dataframe of candidate genes for each cluster
+#' @param marker_mat matrix or dataframe of candidate genes for each cluster
 #'
 #' @export
-get_vargenes <- function(marker_m) {
-  if (rownames(marker_m)[1] != "1") {
-    unique(rownames(marker_m))
+get_vargenes <- function(marker_mat) {
+  if (rownames(marker_mat)[1] != "1") {
+    unique(rownames(marker_mat))
   } else {
-    unique(unlist(marker_m, use.names = FALSE))
+    unique(unlist(marker_mat, use.names = FALSE))
   }
 }
 
-#' calculate adjusted p-values for hypergeometric test of gene lists
+#' Calculate adjusted p-values for hypergeometric test of gene lists
 #' or jaccard index
 #'
 #' @param bin_mat binarized single-cell expression matrix, feed in by_cluster mat, if desired
-#' @param marker_m matrix or dataframe of candidate genes for each cluster
+#' @param marker_mat matrix or dataframe of candidate genes for each cluster
 #' @param n number of genes in the genome
 #' @param metric adjusted p-value for hypergeometric test, or jaccard index
 #' @param output_high if true (by default to fit with rest of package),
@@ -136,7 +138,7 @@ get_vargenes <- function(marker_m) {
 #'
 #' @export
 compare_lists <- function(bin_mat,
-                          marker_m,
+                          marker_mat,
                           n = 30000,
                           metric = "hyper",
                           output_high = TRUE) {
@@ -152,9 +154,9 @@ compare_lists <- function(bin_mat,
       colnames(bin_mat),
       function(x) {
         per_col <- lapply(
-          colnames(marker_m),
+          colnames(marker_mat),
           function(y) {
-            marker_list <- unlist(marker_m[, y], use.names = FALSE)
+            marker_list <- unlist(marker_mat[, y], use.names = FALSE)
             bin_temp <- bin_mat[, x][bin_mat[, x] == 1]
             list_top <- names(bin_temp)
 
@@ -177,9 +179,9 @@ compare_lists <- function(bin_mat,
       colnames(bin_mat),
       function(x) {
         per_col <- lapply(
-          colnames(marker_m),
+          colnames(marker_mat),
           function(y) {
-            marker_list <- unlist(marker_m[, y], use.names = FALSE)
+            marker_list <- unlist(marker_mat[, y], use.names = FALSE)
             bin_temp <- bin_mat[, x][bin_mat[, x] == 1]
             list_top <- names(bin_temp)
 
@@ -197,9 +199,9 @@ compare_lists <- function(bin_mat,
       colnames(bin_mat),
       function(x) {
         per_col <- lapply(
-          colnames(marker_m),
+          colnames(marker_mat),
           function(y) {
-            marker_list <- unlist(marker_m[, y], use.names = FALSE)
+            marker_list <- unlist(marker_mat[, y], use.names = FALSE)
             v1 <- marker_list[marker_list %in% names(as.matrix(bin_mat)[, x])]
             bin_temp <- as.matrix(bin_mat)[, x]
             bin_temp <- bin_temp[order(bin_temp, decreasing = TRUE)]
@@ -218,15 +220,15 @@ compare_lists <- function(bin_mat,
   if (metric != "gsea") {
     res <- do.call(rbind, out)
     rownames(res) <- colnames(bin_mat)
-    colnames(res) <- colnames(marker_m)
+    colnames(res) <- colnames(marker_mat)
   }
 
   if (metric == "gsea") {
     out <- lapply(
-      colnames(marker_m),
+      colnames(marker_mat),
       function(y) {
         marker_list <- list()
-        marker_list[[1]] <- marker_m[, y]
+        marker_list[[1]] <- marker_mat[, y]
         names(marker_list) <- y
         v1 <- marker_list
         run_gsea(bin_mat, v1, n_perm = 1000, per_cell = TRUE)
@@ -236,7 +238,7 @@ compare_lists <- function(bin_mat,
     n <- ncol(res)
     res2 <- res[, 3 * c(1:(ncol(res) / 3)), drop = FALSE]
     rownames(res2) <- rownames(res)
-    colnames(res2) <- colnames(marker_m)
+    colnames(res2) <- colnames(marker_mat)
     res <- res2
   }
 

@@ -4,7 +4,7 @@
 \alias{kl_divergence}
 \title{KL divergence}
 \usage{
-kl_divergence(vec1, vec2, if_logcounts = FALSE, total_reads = 1000,
+kl_divergence(vec1, vec2, if_log = FALSE, total_reads = 1000,
   max_KL = 1)
 }
 \arguments{
@@ -12,7 +12,7 @@ kl_divergence(vec1, vec2, if_logcounts = FALSE, total_reads = 1000,
 
 \item{vec2}{Reference vector}
 
-\item{if_logcounts}{Whether the vectors are log-transformed. If so, the
+\item{if_log}{Whether the vectors are log-transformed. If so, the
 raw count should be computed before computing KL-divergence.}
 
 \item{total_reads}{Pseudo-library size}

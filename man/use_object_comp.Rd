@@ -4,7 +4,7 @@
 \alias{use_object_comp}
 \title{Function to convert labelled object to avg expression matrix}
 \usage{
-use_object_comp(input, cluster_col = NULL, var.genes_only = FALSE,
+use_object_comp(input, cluster_col = NULL, var_genes_only = FALSE,
   assay_name = NULL, method = "mean", lookuptable = NULL)
 }
 \arguments{
@@ -12,7 +12,7 @@ use_object_comp(input, cluster_col = NULL, var.genes_only = FALSE,
 
 \item{cluster_col}{column name where classified cluster names are stored in seurat meta data, cannot be "rn"}
 
-\item{var.genes_only}{whether to keep only var.genes in the final matrix output, could also look up genes used for PCA}
+\item{var_genes_only}{whether to keep only var.genes in the final matrix output, could also look up genes used for PCA}
 
 \item{assay_name}{any additional assay data, such as ADT, to include. If more than 1, pass a vector of names}
 

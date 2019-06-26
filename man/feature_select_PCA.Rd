@@ -5,7 +5,7 @@
 \title{Returns a list of variable genes based on PCA}
 \usage{
 feature_select_PCA(mat = NULL, pcs = NULL, n_pcs = 10,
-  percentile = 0.99, log_scale = T)
+  percentile = 0.99, if_log = TRUE)
 }
 \arguments{
 \item{mat}{Expression matrix. Rownames are genes,
@@ -21,7 +21,7 @@ See the explore_PCA_corr.Rmd vignette for details.}
 PCA loadings to select genes from. E.g. 0.999 would select the
 top point 1 percent of genes with the largest loadings.}
 
-\item{log_scale}{whether the data is already log transformed}
+\item{if_log}{whether the data is already log transformed}
 }
 \value{
 The list of genes to use as features.

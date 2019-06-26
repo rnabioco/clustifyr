@@ -4,7 +4,7 @@
 \alias{ref_feature_select}
 \title{feature select from reference matrix}
 \usage{
-ref_feature_select(mat, n = 3000, mode = "var", rm.lowvar = T)
+ref_feature_select(mat, n = 3000, mode = "var", rm.lowvar = TRUE)
 }
 \arguments{
 \item{mat}{reference matrix}
