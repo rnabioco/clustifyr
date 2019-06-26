@@ -550,7 +550,7 @@ test_that("make_comb_ref uses correct sep", {
   ref2 <- make_comb_ref(cbmc_ref,
     sep = "AAA"
   )
-  expect_true((ncol(ref2) > ncol(cbmc_ref)) & grepl("AAA", colnames(ref2)[12]))
+  expect_true((ncol(ref2) > ncol(cbmc_ref)) & grepl("AAA", colnames(ref2)[22]))
 })
 
 test_that("cor_to_call renaming with suffix input works as intended, per_cell or otherwise", {
