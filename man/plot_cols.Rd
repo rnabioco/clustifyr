@@ -12,7 +12,7 @@ plot_cols(metadata, cluster_col, cluster_col_called, plot_col,
 
 \item{cluster_col}{metadata column for original clustering}
 
-\item{cluster_col_called}{metadata column for clustifyR assignments}
+\item{cluster_col_called}{metadata column for clustifyr assignments}
 
 \item{plot_col}{metadata column to plot}
 

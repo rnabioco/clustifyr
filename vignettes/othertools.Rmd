@@ -1,5 +1,5 @@
 ---
-title: 'Other considerations w/ clustifyR'
+title: 'Other considerations w/ clustifyr'
 date: '`r Sys.Date()`'
 output:
   rmarkdown::html_vignette:
@@ -7,7 +7,7 @@ output:
     toc_depth: 3
     df_print: paged
     vignette: >
-      %\VignetteIndexEntry{clustifyR-othertools}
+      %\VignetteIndexEntry{clustifyr-othertools}
       %\VignetteEngine{knitr::rmarkdown}
       %\VignetteEncoding{UTF-8}
 ---
@@ -20,16 +20,16 @@ knitr::opts_chunk$set(
 )
 ```
 
-Some comments on using `clustifyR` with other scRNA-seq analysis-augmenting packages
+Some comments on using `clustifyr` with other scRNA-seq analysis-augmenting packages
 
 ## Feature selection
 Using all genes works moderately well, but performance is improved in various testing scenarios by some form of feature selection, such as var.genes in `seurat`, or `M3Drop`, or simply highly variable genes.
 
 ## Imputation
-Imputation methods such as `ALRA`, in attempt to fill in drop-out signal, are not necessary for cluster-level identity assignment. Per-cell assignment is somewhat improved with imputation. Alternatively, `clustifyR` offers the `rm0` option to treat genes with 0 count as missing instead of low expression, and ignore them.
+Imputation methods such as `ALRA`, in attempt to fill in drop-out signal, are not necessary for cluster-level identity assignment. Per-cell assignment is somewhat improved with imputation. Alternatively, `clustifyr` offers the `rm0` option to treat genes with 0 count as missing instead of low expression, and ignore them.
 
 ## Variance stabilizing transformation
-`clustifyR` operates on raw counts and log transformed data. VST, such as implemented by `sctransform` is acceptable, but does not appear to give additional benefits. If used, ideally the query and reference matrices should both be transformed.
+`clustifyr` operates on raw counts and log transformed data. VST, such as implemented by `sctransform` is acceptable, but does not appear to give additional benefits. If used, ideally the query and reference matrices should both be transformed.
 
 ## Background signal removal
 Massive cell death can potentially lead to RNA contamination of all cells sequenced. Assessment of background contamination, and mitigation actions if needed, is important. Building a background reference by averaging all filtered out cell ids would be one simple way.
