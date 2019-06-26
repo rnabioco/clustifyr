@@ -2,24 +2,16 @@
 
 dist: xenial
 language: R
-sudo: required
+sudo: false
 cache: packages
+cran: https://cran.rstudio.com/
 warnings_are_errors: false
 r_build_args: '--no-build-vignettes'
 r_check_args: '--as-cran --ignore-vignettes --no-manual'
-
-before_install:
-  - sudo apt-get install libhdf5-dev
 
 matrix:
   include:
   - r: bioc-release
     after_success:
     - Rscript -e 'covr::codecov()'
-    #before_deploy:
-    #- Rscript -e 'remotes::install_cran("pkgdown")'
-    #deploy:
-    #  provider: script
-    #  script: Rscript -e 'pkgdown::deploy_site_github(verbose = TRUE)'
-    #  skip_cleanup: true
   - r: bioc-devel
