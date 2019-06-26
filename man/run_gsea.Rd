@@ -5,7 +5,7 @@
 \title{Run GSEA to compare a gene list(s) to per cell or per cluster expression data}
 \usage{
 run_gsea(expr_mat, query_genes, cluster_ids = NULL, n_perm = 1000,
-  per_cell = FALSE, scale = FALSE, no_warnings = T)
+  per_cell = FALSE, scale = FALSE, no_warnings = TRUE)
 }
 \arguments{
 \item{expr_mat}{single-cell expression matrix or Seurat object}

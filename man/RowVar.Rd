@@ -4,7 +4,7 @@
 \alias{RowVar}
 \title{get var per row for matrix}
 \usage{
-RowVar(x, na.rm = T)
+RowVar(x, na.rm = TRUE)
 }
 \arguments{
 \item{x}{expression matrix}

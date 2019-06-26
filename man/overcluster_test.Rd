@@ -6,7 +6,7 @@
 \usage{
 overcluster_test(expr, metadata, ref_mat, cluster_col, x_col = "tSNE_1",
   y_col = "tSNE_2", n = 5, ngenes = NULL, query_genes = NULL,
-  do.label = T, seed = 42, newclustering = NULL)
+  do_label = TRUE, seed = 42, newclustering = NULL)
 }
 \arguments{
 \item{expr}{expression matrix}
@@ -27,7 +27,7 @@ overcluster_test(expr, metadata, ref_mat, cluster_col, x_col = "tSNE_1",
 
 \item{query_genes}{vector, otherwise genes with be recalculated}
 
-\item{do.label}{whether to label each cluster at median center}
+\item{do_label}{whether to label each cluster at median center}
 
 \item{seed}{set seed for kmeans}
 

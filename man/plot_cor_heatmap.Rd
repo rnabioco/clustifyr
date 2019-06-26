@@ -4,12 +4,11 @@
 \alias{plot_cor_heatmap}
 \title{Plot similarity measures on heatmap}
 \usage{
-plot_cor_heatmap(correlation_matrix, metadata = NULL,
-  cluster_col = NULL, col = not_pretty_palette, legend_title = NULL,
-  ...)
+plot_cor_heatmap(cor_matrix, metadata = NULL, cluster_col = NULL,
+  col = not_pretty_palette, legend_title = NULL, ...)
 }
 \arguments{
-\item{correlation_matrix}{input similarity matrix}
+\item{cor_matrix}{input similarity matrix}
 
 \item{metadata}{input metadata with per cell tsne coordinates and cluster ids}
 

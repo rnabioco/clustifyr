@@ -4,7 +4,7 @@
 \alias{average_clusters_filter}
 \title{Average expression values per cluster, filtered by set parameter, defaults to calculating background}
 \usage{
-average_clusters_filter(mat, cluster_info, log_scale = T,
+average_clusters_filter(mat, cluster_info, if_log = TRUE,
   filter_on = "nGene", group_by = NULL, filter_method = "<=",
   filter_value = 300)
 }
@@ -15,7 +15,7 @@ average_clusters_filter(mat, cluster_info, log_scale = T,
 Order must match column order in supplied matrix. If a data.frame
 provide the cluster_col parameters.}
 
-\item{log_scale}{input data is natural log,
+\item{if_log}{input data is natural log,
 averaging will be done on unlogged data}
 
 \item{filter_on}{column in cluster_info to filter on}

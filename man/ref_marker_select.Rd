@@ -4,7 +4,7 @@
 \alias{ref_marker_select}
 \title{marker selection from reference matrix}
 \usage{
-ref_marker_select(mat, cut = 0.5, arrange = T, compto = 1)
+ref_marker_select(mat, cut = 0.5, arrange = TRUE, compto = 1)
 }
 \arguments{
 \item{mat}{reference matrix}
