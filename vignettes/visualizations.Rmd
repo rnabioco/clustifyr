@@ -55,7 +55,7 @@ g[[1]]
 plot_best_call(
   res,
   full_pbmc4k_meta,
-  do.label = T
+  do_label = T
 )
 
 # intentionally overcluster and clustify to assess idents
@@ -81,7 +81,7 @@ res2 <- clustify(
 plot_best_call(
   res2,
   full_pbmc4k_meta,
-  do.label = T
+  do_label = T
 )
 ```
 

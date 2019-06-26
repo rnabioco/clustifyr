@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>calculate adjusted p-values for hypergeometric test of gene lists
+<title>Calculate adjusted p-values for hypergeometric test of gene lists
 or jaccard index — compare_lists • clustifyR</title>
 
 <!-- jquery -->
@@ -31,10 +31,10 @@ or jaccard index — compare_lists • clustifyR</title>
 
 
 
-<meta property="og:title" content="calculate adjusted p-values for hypergeometric test of gene lists
+<meta property="og:title" content="Calculate adjusted p-values for hypergeometric test of gene lists
 or jaccard index — compare_lists" />
 
-<meta property="og:description" content="calculate adjusted p-values for hypergeometric test of gene lists
+<meta property="og:description" content="Calculate adjusted p-values for hypergeometric test of gene lists
 or jaccard index" />
 
 <meta property="og:image" content="http://rnabioco.github.io/clustifyR/logo.png" />
@@ -134,7 +134,7 @@ or jaccard index" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>calculate adjusted p-values for hypergeometric test of gene lists
+    <h1>Calculate adjusted p-values for hypergeometric test of gene lists
 or jaccard index</h1>
     <small class="dont-index">Source: <a href='https://github.com/rnabioco/clustifyR/blob/master/R/compare_genelist.R'><code>R/compare_genelist.R</code></a></small>
     <div class="hidden name"><code>compare_lists.Rd</code></div>
@@ -142,13 +142,13 @@ or jaccard index</h1>
 
     <div class="ref-description">
     
-    <p>calculate adjusted p-values for hypergeometric test of gene lists
+    <p>Calculate adjusted p-values for hypergeometric test of gene lists
 or jaccard index</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>compare_lists</span>(<span class='no'>bin_mat</span>, <span class='no'>marker_m</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>30000</span>, <span class='kw'>metric</span> <span class='kw'>=</span> <span class='st'>"hyper"</span>,
-  <span class='kw'>output_high</span> <span class='kw'>=</span> <span class='no'>T</span>)</pre>
+    <pre class="usage"><span class='fu'>compare_lists</span>(<span class='no'>bin_mat</span>, <span class='no'>marker_mat</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>30000</span>, <span class='kw'>metric</span> <span class='kw'>=</span> <span class='st'>"hyper"</span>,
+  <span class='kw'>output_high</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -158,7 +158,7 @@ or jaccard index</p>
       <td><p>binarized single-cell expression matrix, feed in by_cluster mat, if desired</p></td>
     </tr>
     <tr>
-      <th>marker_m</th>
+      <th>marker_mat</th>
       <td><p>matrix or dataframe of candidate genes for each cluster</p></td>
     </tr>
     <tr>

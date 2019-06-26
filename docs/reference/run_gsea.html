@@ -145,7 +145,7 @@ set ovelap</p>
     </div>
 
     <pre class="usage"><span class='fu'>run_gsea</span>(<span class='no'>expr_mat</span>, <span class='no'>query_genes</span>, <span class='kw'>cluster_ids</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>no_warnings</span> <span class='kw'>=</span> <span class='no'>T</span>)</pre>
+  <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>no_warnings</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -175,6 +175,10 @@ matches columns in <code>expr_mat</code>. Not required if running per cell.</p><
     <tr>
       <th>scale</th>
       <td><p>convert expr_mat into zscores prior to running GSEA?, default = FALSE</p></td>
+    </tr>
+    <tr>
+      <th>no_warnings</th>
+      <td><p>suppress warnings from gsea ties</p></td>
     </tr>
     </table>
     

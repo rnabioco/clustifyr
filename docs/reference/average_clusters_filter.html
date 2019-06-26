@@ -142,7 +142,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>average_clusters_filter</span>(<span class='no'>mat</span>, <span class='no'>cluster_info</span>, <span class='kw'>log_scale</span> <span class='kw'>=</span> <span class='no'>T</span>,
+    <pre class="usage"><span class='fu'>average_clusters_filter</span>(<span class='no'>mat</span>, <span class='no'>cluster_info</span>, <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>filter_on</span> <span class='kw'>=</span> <span class='st'>"nGene"</span>, <span class='kw'>group_by</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>filter_method</span> <span class='kw'>=</span> <span class='st'>"&lt;="</span>,
   <span class='kw'>filter_value</span> <span class='kw'>=</span> <span class='fl'>300</span>)</pre>
     
@@ -160,7 +160,7 @@ Order must match column order in supplied matrix. If a data.frame
 provide the cluster_col parameters.</p></td>
     </tr>
     <tr>
-      <th>log_scale</th>
+      <th>if_log</th>
       <td><p>input data is natural log,
 averaging will be done on unlogged data</p></td>
     </tr>
@@ -169,12 +169,16 @@ averaging will be done on unlogged data</p></td>
       <td><p>column in cluster_info to filter on</p></td>
     </tr>
     <tr>
+      <th>group_by</th>
+      <td><p>column name to use for cluster identity</p></td>
+    </tr>
+    <tr>
       <th>filter_method</th>
       <td><p>"&lt;", "==", "&gt;" compared to filter_value</p></td>
     </tr>
     <tr>
       <th>filter_value</th>
-      <td></td>
+      <td><p>baseline minimum as background cutoff</p></td>
     </tr>
     </table>
     

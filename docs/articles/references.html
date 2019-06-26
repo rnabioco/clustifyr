@@ -98,7 +98,7 @@
     <div class="page-header toc-ignore">
       <h1>Reference building for clustifyR</h1>
             
-            <h4 class="date">2019-05-29</h4>
+            <h4 class="date">2019-06-25</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyR/blob/master/vignettes/references.Rmd"><code>vignettes/references.Rmd</code></a></small>
       <div class="hidden name"><code>references.Rmd</code></div>
@@ -115,7 +115,7 @@
 <a class="sourceLine" id="cb1-2" title="2">new_ref_matrix &lt;-<span class="st"> </span><span class="kw"><a href="../reference/average_clusters.html">average_clusters</a></span>(</a>
 <a class="sourceLine" id="cb1-3" title="3">  pbmc4k_matrix, </a>
 <a class="sourceLine" id="cb1-4" title="4">  <span class="dt">cluster_info =</span> pbmc4k_meta<span class="op">$</span>cluster,</a>
-<a class="sourceLine" id="cb1-5" title="5">  <span class="dt">log_scale =</span> T</a>
+<a class="sourceLine" id="cb1-5" title="5">  <span class="dt">if_log =</span> T</a>
 <a class="sourceLine" id="cb1-6" title="6">)</a>
 <a class="sourceLine" id="cb1-7" title="7"></a>
 <a class="sourceLine" id="cb1-8" title="8"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(new_ref_matrix)</a>
@@ -348,7 +348,17 @@
 <a class="sourceLine" id="cb7-41" title="41"><span class="co">#&gt; 3  TUBB1</span></a>
 <a class="sourceLine" id="cb7-42" title="42"><span class="co">#&gt; 4  ACRBP</span></a>
 <a class="sourceLine" id="cb7-43" title="43"><span class="co">#&gt; 5    GP9</span></a>
-<a class="sourceLine" id="cb7-44" title="44"><span class="co">#&gt; 6 TMEM40</span></a></code></pre></div>
+<a class="sourceLine" id="cb7-44" title="44"><span class="co">#&gt; 6 TMEM40</span></a>
+<a class="sourceLine" id="cb7-45" title="45"></a>
+<a class="sourceLine" id="cb7-46" title="46"><span class="co"># get markers from ref_matrix, and then matrixize_markers</span></a>
+<a class="sourceLine" id="cb7-47" title="47">cbmc_m &lt;-<span class="st"> </span><span class="kw"><a href="../reference/matrixize_markers.html">matrixize_markers</a></span>(</a>
+<a class="sourceLine" id="cb7-48" title="48">  <span class="kw"><a href="../reference/ref_marker_select.html">ref_marker_select</a></span>(cbmc_ref),</a>
+<a class="sourceLine" id="cb7-49" title="49">  <span class="dt">remove_rp =</span> T,</a>
+<a class="sourceLine" id="cb7-50" title="50">  <span class="dt">unique =</span> T,</a>
+<a class="sourceLine" id="cb7-51" title="51">  <span class="dt">n =</span> <span class="dv">3</span></a>
+<a class="sourceLine" id="cb7-52" title="52">)</a>
+<a class="sourceLine" id="cb7-53" title="53"></a>
+<a class="sourceLine" id="cb7-54" title="54"><span class="co"># parse `garnett` marker files, see function `file_marker_parse`</span></a></code></pre></div>
 </div>
 <div id="prebuilt-references-in-clustifyr" class="section level2">
 <h2 class="hasAnchor">

@@ -142,8 +142,8 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>calculate_pathway_gsea</span>(<span class='no'>mat</span>, <span class='no'>pathway_list</span>, <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='no'>T</span>,
-  <span class='kw'>no_warnings</span> <span class='kw'>=</span> <span class='no'>T</span>)</pre>
+    <pre class="usage"><span class='fu'>calculate_pathway_gsea</span>(<span class='no'>mat</span>, <span class='no'>pathway_list</span>, <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>no_warnings</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -163,6 +163,10 @@
     <tr>
       <th>scale</th>
       <td><p>convert expr_mat into zscores prior to running GSEA?, default = FALSE</p></td>
+    </tr>
+    <tr>
+      <th>no_warnings</th>
+      <td><p>suppress warnings from gsea ties</p></td>
     </tr>
     </table>
     

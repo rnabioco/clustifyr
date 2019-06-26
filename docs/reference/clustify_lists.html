@@ -145,25 +145,24 @@
     <pre class="usage"><span class='fu'>clustify_lists</span>(<span class='no'>input</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>clustify_lists</span>(<span class='no'>input</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='no'>F</span>,
-  <span class='kw'>cluster_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>log_scale</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>topn</span> <span class='kw'>=</span> <span class='fl'>3000</span>, <span class='kw'>cut</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>marker</span>, <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='no'>T</span>,
-  <span class='kw'>genomen</span> <span class='kw'>=</span> <span class='fl'>30000</span>, <span class='kw'>metric</span> <span class='kw'>=</span> <span class='st'>"hyper"</span>, <span class='kw'>output_high</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>lookuptable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>clustify_lists</span>(<span class='no'>input</span>, <span class='no'>marker</span>, <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>cluster_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>topn</span> <span class='kw'>=</span> <span class='fl'>3000</span>, <span class='kw'>cut</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>genome_n</span> <span class='kw'>=</span> <span class='fl'>30000</span>,
+  <span class='kw'>metric</span> <span class='kw'>=</span> <span class='st'>"hyper"</span>, <span class='kw'>output_high</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>lookuptable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for seurat</span>
-<span class='fu'>clustify_lists</span>(<span class='no'>input</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='no'>F</span>,
-  <span class='kw'>cluster_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>log_scale</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>topn</span> <span class='kw'>=</span> <span class='fl'>3000</span>, <span class='kw'>cut</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>marker</span>, <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='no'>T</span>,
-  <span class='kw'>genomen</span> <span class='kw'>=</span> <span class='fl'>30000</span>, <span class='kw'>metric</span> <span class='kw'>=</span> <span class='st'>"hyper"</span>, <span class='kw'>output_high</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>, <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>...</span>)
+<span class='fu'>clustify_lists</span>(<span class='no'>input</span>, <span class='kw'>cluster_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>topn</span> <span class='kw'>=</span> <span class='fl'>3000</span>,
+  <span class='kw'>cut</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>marker</span>, <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>genome_n</span> <span class='kw'>=</span> <span class='fl'>30000</span>,
+  <span class='kw'>metric</span> <span class='kw'>=</span> <span class='st'>"hyper"</span>, <span class='kw'>output_high</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>,
+  <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for Seurat</span>
-<span class='fu'>clustify_lists</span>(<span class='no'>input</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='no'>F</span>,
-  <span class='kw'>cluster_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>log_scale</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>topn</span> <span class='kw'>=</span> <span class='fl'>3000</span>, <span class='kw'>cut</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>marker</span>, <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='no'>T</span>,
-  <span class='kw'>genomen</span> <span class='kw'>=</span> <span class='fl'>30000</span>, <span class='kw'>metric</span> <span class='kw'>=</span> <span class='st'>"hyper"</span>, <span class='kw'>output_high</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>, <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>clustify_lists</span>(<span class='no'>input</span>, <span class='kw'>cluster_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>topn</span> <span class='kw'>=</span> <span class='fl'>3000</span>,
+  <span class='kw'>cut</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>marker</span>, <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>genome_n</span> <span class='kw'>=</span> <span class='fl'>30000</span>,
+  <span class='kw'>metric</span> <span class='kw'>=</span> <span class='st'>"hyper"</span>, <span class='kw'>output_high</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>,
+  <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -177,8 +176,12 @@
       <td><p>passed to matrixize_markers</p></td>
     </tr>
     <tr>
-      <th>per_cell</th>
-      <td><p>compare per cell or per cluster</p></td>
+      <th>marker</th>
+      <td><p>matrix or dataframe of candidate genes for each cluster</p></td>
+    </tr>
+    <tr>
+      <th>marker_inmatrix</th>
+      <td><p>whether markers genes are already in preprocessed matrix form</p></td>
     </tr>
     <tr>
       <th>cluster_info</th>
@@ -187,13 +190,16 @@ Order must match column order in supplied matrix. If a data.frame
 provide the cluster_col parameters.</p></td>
     </tr>
     <tr>
-      <th>log_scale</th>
-      <td><p>input data is natural log,
-averaging will be done on unlogged data</p></td>
-    </tr>
-    <tr>
       <th>cluster_col</th>
       <td><p>column in cluster_info with cluster number</p></td>
+    </tr>
+    <tr>
+      <th>if_log</th>
+      <td><p>input data is natural log, averaging will be done on unlogged data</p></td>
+    </tr>
+    <tr>
+      <th>per_cell</th>
+      <td><p>compare per cell or per cluster</p></td>
     </tr>
     <tr>
       <th>topn</th>
@@ -204,15 +210,7 @@ averaging will be done on unlogged data</p></td>
       <td><p>expression cut off from input matrix</p></td>
     </tr>
     <tr>
-      <th>marker</th>
-      <td><p>matrix or dataframe of candidate genes for each cluster</p></td>
-    </tr>
-    <tr>
-      <th>marker_inmatrix</th>
-      <td><p>whether markers genes are already in preprocessed matrix form</p></td>
-    </tr>
-    <tr>
-      <th>genomen</th>
+      <th>genome_n</th>
       <td><p>number of genes in the genome</p></td>
     </tr>
     <tr>
@@ -237,12 +235,12 @@ averaging will be done on unlogged data</p></td>
       <td><p>output cor matrix or called seurat object</p></td>
     </tr>
     <tr>
-      <th>input</th>
-      <td><p>seurat object</p></td>
+      <th>threshold</th>
+      <td><p>identity calling minimum score threshold</p></td>
     </tr>
     <tr>
-      <th>per_cell</th>
-      <td><p>compare per cell or per cluster</p></td>
+      <th>input</th>
+      <td><p>seurat object</p></td>
     </tr>
     <tr>
       <th>cluster_info</th>
@@ -251,13 +249,17 @@ Order must match column order in supplied matrix. If a data.frame
 provide the cluster_col parameters.</p></td>
     </tr>
     <tr>
-      <th>log_scale</th>
+      <th>cluster_col</th>
+      <td><p>column in cluster_info with cluster number</p></td>
+    </tr>
+    <tr>
+      <th>if_log</th>
       <td><p>input data is natural log,
 averaging will be done on unlogged data</p></td>
     </tr>
     <tr>
-      <th>cluster_col</th>
-      <td><p>column in cluster_info with cluster number</p></td>
+      <th>per_cell</th>
+      <td><p>compare per cell or per cluster</p></td>
     </tr>
     <tr>
       <th>topn</th>
@@ -276,7 +278,7 @@ averaging will be done on unlogged data</p></td>
       <td><p>whether markers genes are already in preprocessed matrix form</p></td>
     </tr>
     <tr>
-      <th>genomen</th>
+      <th>genome_n</th>
       <td><p>number of genes in the genome</p></td>
     </tr>
     <tr>
@@ -297,23 +299,23 @@ averaging will be done on unlogged data</p></td>
       <td><p>seurat object</p></td>
     </tr>
     <tr>
-      <th>per_cell</th>
-      <td><p>compare per cell or per cluster</p></td>
-    </tr>
-    <tr>
       <th>cluster_info</th>
       <td><p>data.frame or vector containing cluster assignments per cell.
 Order must match column order in supplied matrix. If a data.frame
 provide the cluster_col parameters.</p></td>
     </tr>
     <tr>
-      <th>log_scale</th>
+      <th>cluster_col</th>
+      <td><p>column in cluster_info with cluster number</p></td>
+    </tr>
+    <tr>
+      <th>if_log</th>
       <td><p>input data is natural log,
 averaging will be done on unlogged data</p></td>
     </tr>
     <tr>
-      <th>cluster_col</th>
-      <td><p>column in cluster_info with cluster number</p></td>
+      <th>per_cell</th>
+      <td><p>compare per cell or per cluster</p></td>
     </tr>
     <tr>
       <th>topn</th>
@@ -332,7 +334,7 @@ averaging will be done on unlogged data</p></td>
       <td><p>whether markers genes are already in preprocessed matrix form</p></td>
     </tr>
     <tr>
-      <th>genomen</th>
+      <th>genome_n</th>
       <td><p>number of genes in the genome</p></td>
     </tr>
     <tr>
@@ -351,6 +353,10 @@ averaging will be done on unlogged data</p></td>
     <tr>
       <th>seurat_out</th>
       <td><p>output cor matrix or called seurat object</p></td>
+    </tr>
+    <tr>
+      <th>threshold</th>
+      <td><p>identity calling minimum score threshold</p></td>
     </tr>
     <tr>
       <th>...</th>

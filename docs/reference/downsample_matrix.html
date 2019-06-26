@@ -142,7 +142,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>downsample_matrix</span>(<span class='no'>mat</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>keep_cluster_proportions</span> <span class='kw'>=</span> <span class='no'>T</span>,
+    <pre class="usage"><span class='fu'>downsample_matrix</span>(<span class='no'>mat</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>keep_cluster_proportions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>cluster_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>, <span class='kw'>set_seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -159,6 +159,16 @@
     <tr>
       <th>keep_cluster_proportions</th>
       <td><p>whether to subsample</p></td>
+    </tr>
+    <tr>
+      <th>cluster_info</th>
+      <td><p>data.frame or vector containing cluster assignments per cell.
+Order must match column order in supplied matrix. If a data.frame
+provide the cluster_col parameters.</p></td>
+    </tr>
+    <tr>
+      <th>cluster_col</th>
+      <td><p>column in cluster_info with cluster number</p></td>
     </tr>
     <tr>
       <th>set_seed</th>

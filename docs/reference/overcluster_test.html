@@ -143,8 +143,8 @@
     </div>
 
     <pre class="usage"><span class='fu'>overcluster_test</span>(<span class='no'>expr</span>, <span class='no'>metadata</span>, <span class='no'>ref_mat</span>, <span class='no'>cluster_col</span>, <span class='kw'>x_col</span> <span class='kw'>=</span> <span class='st'>"tSNE_1"</span>,
-  <span class='kw'>y_col</span> <span class='kw'>=</span> <span class='st'>"tSNE_2"</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>ngenes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>do.label</span> <span class='kw'>=</span> <span class='no'>T</span>,
-  <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>42</span>, <span class='kw'>newclustering</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>y_col</span> <span class='kw'>=</span> <span class='st'>"tSNE_2"</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>ngenes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>do_label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>42</span>, <span class='kw'>newclustering</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -182,7 +182,11 @@
       <td><p>number of genes to use for feature selection, use all genes if NULL</p></td>
     </tr>
     <tr>
-      <th>do.label</th>
+      <th>query_genes</th>
+      <td><p>vector, otherwise genes with be recalculated</p></td>
+    </tr>
+    <tr>
+      <th>do_label</th>
       <td><p>whether to label each cluster at median center</p></td>
     </tr>
     <tr>

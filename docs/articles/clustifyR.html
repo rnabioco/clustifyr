@@ -98,7 +98,7 @@
     <div class="page-header toc-ignore">
       <h1>Introduction to clustifyR</h1>
             
-            <h4 class="date">2019-05-29</h4>
+            <h4 class="date">2019-06-25</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyR/blob/master/vignettes/clustifyR.Rmd"><code>vignettes/clustifyR.Rmd</code></a></small>
       <div class="hidden name"><code>clustifyR.Rmd</code></div>
@@ -209,10 +209,10 @@
 <a class="sourceLine" id="cb8-8" title="8">               <span class="dt">metric =</span> <span class="st">"hyper"</span>)</a>
 <a class="sourceLine" id="cb8-9" title="9"></a>
 <a class="sourceLine" id="cb8-10" title="10"><span class="co"># view as heatmap, or plot_best_call</span></a>
-<a class="sourceLine" id="cb8-11" title="11">ComplexHeatmap<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/ComplexHeatmap/topics/Heatmap">Heatmap</a></span>(res2, </a>
-<a class="sourceLine" id="cb8-12" title="12">        <span class="dt">cluster_rows =</span> <span class="ot">FALSE</span>, </a>
-<a class="sourceLine" id="cb8-13" title="13">        <span class="dt">cluster_columns =</span> <span class="ot">FALSE</span>, </a>
-<a class="sourceLine" id="cb8-14" title="14">        <span class="dt">heatmap_legend_param =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">title =</span> <span class="st">"-log10(adjP)"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb8-11" title="11"><span class="kw"><a href="../reference/plot_cor_heatmap.html">plot_cor_heatmap</a></span>(res2,</a>
+<a class="sourceLine" id="cb8-12" title="12">                 <span class="dt">cluster_rows =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb8-13" title="13">                 <span class="dt">cluster_columns =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb8-14" title="14">                 <span class="dt">legend_title =</span> <span class="st">"-log10(adjP)"</span>)</a></code></pre></div>
 <p><img src="clustifyR_files/figure-html/unnamed-chunk-4-1.png" width="1152" style="display: block; margin: auto;"></p>
 </div>
 <div id="direct-handling-of-seurat-objects-v2-and-v3" class="section level2">

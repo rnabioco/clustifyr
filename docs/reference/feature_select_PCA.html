@@ -147,7 +147,7 @@ formed from the bulk expression data set</p>
     </div>
 
     <pre class="usage"><span class='fu'>feature_select_PCA</span>(<span class='kw'>mat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pcs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>n_pcs</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>percentile</span> <span class='kw'>=</span> <span class='fl'>0.99</span>, <span class='kw'>log_scale</span> <span class='kw'>=</span> <span class='no'>T</span>)</pre>
+  <span class='kw'>percentile</span> <span class='kw'>=</span> <span class='fl'>0.99</span>, <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -174,7 +174,7 @@ PCA loadings to select genes from. E.g. 0.999 would select the
 top point 1 percent of genes with the largest loadings.</p></td>
     </tr>
     <tr>
-      <th>log_scale</th>
+      <th>if_log</th>
       <td><p>whether the data is already log transformed</p></td>
     </tr>
     </table>

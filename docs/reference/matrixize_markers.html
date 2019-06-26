@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>convert candidate genes list into matrix — matrixize_markers • clustifyR</title>
+<title>Convert candidate genes list into matrix — matrixize_markers • clustifyR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="convert candidate genes list into matrix — matrixize_markers" />
+<meta property="og:title" content="Convert candidate genes list into matrix — matrixize_markers" />
 
-<meta property="og:description" content="convert candidate genes list into matrix" />
+<meta property="og:description" content="Convert candidate genes list into matrix" />
 
 <meta property="og:image" content="http://rnabioco.github.io/clustifyR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -131,20 +131,20 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>convert candidate genes list into matrix</h1>
+    <h1>Convert candidate genes list into matrix</h1>
     <small class="dont-index">Source: <a href='https://github.com/rnabioco/clustifyR/blob/master/R/compare_genelist.R'><code>R/compare_genelist.R</code></a></small>
     <div class="hidden name"><code>matrixize_markers.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>convert candidate genes list into matrix</p>
+    <p>Convert candidate genes list into matrix</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>matrixize_markers</span>(<span class='no'>marker_df</span>, <span class='kw'>ranked</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>step_weight</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>background_weight</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>unique</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>remove_rp</span> <span class='kw'>=</span> <span class='no'>F</span>)</pre>
+  <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>, <span class='kw'>remove_rp</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -176,8 +176,12 @@ added weight</p></td>
       <td><p>whether to use only unique markers to 1 cluster</p></td>
     </tr>
     <tr>
-      <th>labels</th>
+      <th>metadata</th>
       <td><p>vector or dataframe of cluster names</p></td>
+    </tr>
+    <tr>
+      <th>cluster_col</th>
+      <td><p>column for cluster names to replace original cluster, if metadata is dataframe</p></td>
     </tr>
     <tr>
       <th>remove_rp</th>

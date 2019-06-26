@@ -142,14 +142,14 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>plot_cor_heatmap</span>(<span class='no'>correlation_matrix</span>, <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='no'>not_pretty_palette</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>plot_cor_heatmap</span>(<span class='no'>cor_matrix</span>, <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>col</span> <span class='kw'>=</span> <span class='no'>not_pretty_palette</span>, <span class='kw'>legend_title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>correlation_matrix</th>
+      <th>cor_matrix</th>
       <td><p>input similarity matrix</p></td>
     </tr>
     <tr>
@@ -164,6 +164,10 @@ metadata if not supplied.</p></td>
     <tr>
       <th>col</th>
       <td><p>color ramp to use</p></td>
+    </tr>
+    <tr>
+      <th>legend_title</th>
+      <td><p>legend title to pass to Heatmap</p></td>
     </tr>
     <tr>
       <th>...</th>

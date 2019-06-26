@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generate variable gene list from marker matrix — get_vargenes • clustifyR</title>
+<title>decide for one gene whether it is a marker for a certain cell type — marker_select • clustifyR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,10 +30,9 @@
 
 
 
-<meta property="og:title" content="Generate variable gene list from marker matrix — get_vargenes" />
+<meta property="og:title" content="decide for one gene whether it is a marker for a certain cell type — marker_select" />
 
-<meta property="og:description" content="Variable gene list is required for clustify main function. This
-function parses variables genes from a matrix input." />
+<meta property="og:description" content="decide for one gene whether it is a marker for a certain cell type" />
 
 <meta property="og:image" content="http://rnabioco.github.io/clustifyR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -132,26 +131,37 @@ function parses variables genes from a matrix input." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Generate variable gene list from marker matrix</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rnabioco/clustifyR/blob/master/R/compare_genelist.R'><code>R/compare_genelist.R</code></a></small>
-    <div class="hidden name"><code>get_vargenes.Rd</code></div>
+    <h1>decide for one gene whether it is a marker for a certain cell type</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rnabioco/clustifyR/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
+    <div class="hidden name"><code>marker_select.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Variable gene list is required for <code>clustify</code> main function. This
-function parses variables genes from a matrix input.</p>
+    <p>decide for one gene whether it is a marker for a certain cell type</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>get_vargenes</span>(<span class='no'>marker_mat</span>)</pre>
+    <pre class="usage"><span class='fu'>marker_select</span>(<span class='no'>row1</span>, <span class='no'>cols</span>, <span class='kw'>cut</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>compto</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>marker_mat</th>
-      <td><p>matrix or dataframe of candidate genes for each cluster</p></td>
+      <th>row1</th>
+      <td><p>a numeric vector of expression values (row)</p></td>
+    </tr>
+    <tr>
+      <th>cols</th>
+      <td><p>a vector of cell types (column)</p></td>
+    </tr>
+    <tr>
+      <th>cut</th>
+      <td><p>an expression minimum cutoff</p></td>
+    </tr>
+    <tr>
+      <th>compto</th>
+      <td><p>compare max expression to the value of next 1 or more</p></td>
     </tr>
     </table>
     

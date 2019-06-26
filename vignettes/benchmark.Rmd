@@ -77,7 +77,7 @@ res <- clustify(l_mat,
 
 res_allgenes <- cor_to_call(res, 
                             l_meta, 
-                            col = "Annotation")
+                            cluster_col = "Annotation")
 end <- proc.time()
 names(res_allgenes) <- c("MCA annotation", "clustifyR call", "r")
 
@@ -391,7 +391,7 @@ for (n in 1:length(tissue_both)) {
     ids <- s_d@meta.data[["free_annotation"]]
     avg <- use_seurat_comp(s_f, cluster_col = "free_annotation")
     res <- clustify(s_d, avg, seurat_out = F, cluster_col = "free_annotation", per_cell = T)
-    res2 <- cor_to_call(res, metadata = s_d@meta.data %>% rownames_to_column("id"), col = "id", collapse_to_cluster = "free_annotation") %>% distinct(type, type2)
+    res2 <- cor_to_call(res, metadata = s_d@meta.data %>% rownames_to_column("id"), cluster_col = "id", collapse_to_cluster = "free_annotation") %>% distinct(type, type2)
   } else {
     print("use cell_ontology_class")
     if (length(unique(s_f@meta.data$cell_ontology_class)) < length(unique(s_d@meta.data$cell_ontology_class))) {
@@ -403,7 +403,7 @@ for (n in 1:length(tissue_both)) {
     ids <- s_d@meta.data[["cell_ontology_class"]]
     avg <- use_seurat_comp(s_f, cluster_col = "cell_ontology_class")
     res <- clustify(s_d, avg, seurat_out = F, cluster_col = "cell_ontology_class", per_cell = T)
-    res2 <- cor_to_call(res, metadata = s_d@meta.data %>% rownames_to_column("id"), col = "id", collapse_to_cluster = "cell_ontology_class") %>% distinct(type, type2)
+    res2 <- cor_to_call(res, metadata = s_d@meta.data %>% rownames_to_column("id"), cluster_col = "id", collapse_to_cluster = "cell_ontology_class") %>% distinct(type, type2)
   }
   colnames(res2) <- c("cluster", "type")
   res2 <- res2 %>% group_by_all() %>% tally() %>% mutate(call = ifelse(cluster == type, 1, 0))
@@ -454,7 +454,7 @@ for (n in 1:length(tissue_both)) {
     ids <- s_d@meta.data[["free_annotation"]]
     avg <- use_seurat_comp(s_f, cluster_col = "free_annotation")
     res <- clustify(s_d, avg, seurat_out = F, cluster_col = "free_annotation", per_cell = T, rm0 = T)
-    res2 <- cor_to_call(res, metadata = s_d@meta.data %>% rownames_to_column("id"), col = "id", collapse_to_cluster = "free_annotation") %>% distinct(type, type2)
+    res2 <- cor_to_call(res, metadata = s_d@meta.data %>% rownames_to_column("id"), cluster_col = "id", collapse_to_cluster = "free_annotation") %>% distinct(type, type2)
   } else {
     print("use cell_ontology_class")
     if (length(unique(s_f@meta.data$cell_ontology_class)) < length(unique(s_d@meta.data$cell_ontology_class))) {
@@ -466,7 +466,7 @@ for (n in 1:length(tissue_both)) {
     ids <- s_d@meta.data[["cell_ontology_class"]]
     avg <- use_seurat_comp(s_f, cluster_col = "cell_ontology_class")
     res <- clustify(s_d, avg, seurat_out = F, cluster_col = "cell_ontology_class", per_cell = T, rm0 = T)
-    res2 <- cor_to_call(res, metadata = s_d@meta.data %>% rownames_to_column("id"), col = "id", collapse_to_cluster = "cell_ontology_class") %>% distinct(type, type2)
+    res2 <- cor_to_call(res, metadata = s_d@meta.data %>% rownames_to_column("id"), cluster_col = "id", collapse_to_cluster = "cell_ontology_class") %>% distinct(type, type2)
   }
   colnames(res2) <- c("cluster", "type")
   res2 <- res2 %>% group_by_all() %>% tally() %>% mutate(call = ifelse(cluster == type, 1, 0))
@@ -523,7 +523,7 @@ for (n in 1:length(tissue_both)) {
     avg <- use_seurat_comp(s_f, cluster_col = "free_annotation")
     s_d <- alraSeurat2(s_d)
     res <- clustify(s_d, avg, seurat_out = F, cluster_col = "free_annotation", per_cell = T)
-    res2 <- cor_to_call(res, metadata = s_d@meta.data %>% rownames_to_column("id"), col = "id", collapse_to_cluster = "free_annotation") %>% distinct(type, type2)
+    res2 <- cor_to_call(res, metadata = s_d@meta.data %>% rownames_to_column("id"), cluster_col = "id", collapse_to_cluster = "free_annotation") %>% distinct(type, type2)
   } else {
     print("use cell_ontology_class")
     if (length(unique(s_f@meta.data$cell_ontology_class)) < length(unique(s_d@meta.data$cell_ontology_class))) {
@@ -536,7 +536,7 @@ for (n in 1:length(tissue_both)) {
     avg <- use_seurat_comp(s_f, cluster_col = "cell_ontology_class")
     s_d <- alraSeurat2(s_d)
     res <- clustify(s_d, avg, seurat_out = F, cluster_col = "cell_ontology_class", per_cell = T)
-    res2 <- cor_to_call(res, metadata = s_d@meta.data %>% rownames_to_column("id"), col = "id", collapse_to_cluster = "cell_ontology_class") %>% distinct(type, type2)
+    res2 <- cor_to_call(res, metadata = s_d@meta.data %>% rownames_to_column("id"), cluster_col = "id", collapse_to_cluster = "cell_ontology_class") %>% distinct(type, type2)
   }
   colnames(res2) <- c("cluster", "type")
   res2 <- res2 %>% group_by_all() %>% tally() %>% mutate(call = ifelse(cluster == type, 1, 0))
@@ -631,7 +631,7 @@ res <- clustify(l_mat,
 
 res_allgenes <- cor_to_call(res, 
                             l_meta, 
-                            col = "Annotation")
+                            cluster_col = "Annotation")
 end <- proc.time()
 names(res_allgenes) <- c("MCA annotation", "clustifyR call", "r")
 
