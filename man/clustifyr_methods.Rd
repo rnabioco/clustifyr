@@ -3,12 +3,12 @@
 \docType{data}
 \name{clustifyr_methods}
 \alias{clustifyr_methods}
-\title{Correlation functions available in clustifyR}
+\title{Correlation functions available in clustifyr}
 \format{An object of class \code{character} of length 4.}
 \usage{
 clustifyr_methods
 }
 \description{
-Correlation functions available in clustifyR
+Correlation functions available in clustifyr
 }
 \keyword{datasets}

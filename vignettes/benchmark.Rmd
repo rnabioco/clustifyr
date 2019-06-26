@@ -1,5 +1,5 @@
 ---
-title: 'Benchmarking clustifyR'
+title: 'Benchmarking clustifyr'
 date: '`r Sys.Date()`'
 output:
   rmarkdown::html_vignette:
@@ -7,7 +7,7 @@ output:
     toc_depth: 3
     df_print: paged
     vignette: >
-      %\VignetteIndexEntry{clustifyR-benchmark}
+      %\VignetteIndexEntry{clustifyr-benchmark}
       %\VignetteEngine{knitr::rmarkdown}
       %\VignetteEncoding{UTF-8}
 ---
@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 
 ```{r library, include = F, eval = F}
 library(Seurat)
-library(clustifyR)
+library(clustifyr)
 library(tidyverse)
 
 l1 <- read_delim("/Users/rf/Downloads/rmbatch_dge/Lung1_rm.batch_dge.txt.gz", delim = " ")
@@ -60,7 +60,7 @@ saveRDS(l, "MCA_lung_mat")
 
 ```{r load, message=FALSE, warning=FALSE}
 library(here)
-library(clustifyR)
+library(clustifyr)
 library(tidyverse)
 
 l_mat <- readRDS(here("MCA_lung_mat"))
@@ -79,7 +79,7 @@ res_allgenes <- cor_to_call(res,
                             l_meta, 
                             cluster_col = "Annotation")
 end <- proc.time()
-names(res_allgenes) <- c("MCA annotation", "clustifyR call", "r")
+names(res_allgenes) <- c("MCA annotation", "clustifyr call", "r")
 
 print(end - start)
 
@@ -102,7 +102,7 @@ res <- clustify(full_pbmc4k_matrix,
 
 res2 <- cor_to_call(res)
 end <- proc.time()
-names(res2) <- c("manual annotation", "clustifyR call", "r")
+names(res2) <- c("manual annotation", "clustifyr call", "r")
 
 print(end - start)
 
@@ -138,7 +138,7 @@ default `clustify_list`
 <img src="../reference/figures/test.png" align="center"/>
 
 ```{r tab, include = F, eval=F}
-library(clustifyR)
+library(clustifyr)
 library(tidyverse)
 files_facs <- list.files(path = "/Users/rf/", pattern = "facs.*\\.Robj$")
 files_drop <- list.files(path = "/Users/rf/", pattern = "droplet.*\\.Robj$")
@@ -571,7 +571,7 @@ saveRDS(times, "clustify_cell_times_alra")
 
 ```{r test_all, include = F, eval=F}
 # ref <- readRDS("tabula_muris_ref_drop_042119.rds")
-ref_facs <- readRDS("/Users/rf/cluster/devel/3rd/clustifyR/tabula_muris_ref_facs.rds")
+ref_facs <- readRDS("/Users/rf/cluster/devel/3rd/clustifyr/tabula_muris_ref_facs.rds")
 times <- list()
 for (n in 1:length(tissue_both)) {
   print(tissue_both[n])
@@ -601,14 +601,14 @@ rescomp <- resall %>% filter(cluster!="unknown") %>% select(cluster, type) %>% u
 
 ```{r load2, message=FALSE, warning=FALSE, include = F, eval=F}
 library(here)
-library(clustifyR)
+library(clustifyr)
 library(tidyverse)
 
 l_mat <- readRDS(here("MCA_lung_mat"))
 l_meta <- readRDS(here("MCA_lung_meta"))
 load(here("data","ref_tabula_muris_facs.rda"))
 tml_ref <- ref_tabula_muris_facs[,colnames(ref_tabula_muris_facs)[str_detect(colnames(ref_tabula_muris_facs),"-Lung")][-c(4,8)]] # find lung references, remove generic terms
-ref_facs <- readRDS("/Users/rf/cluster/devel/3rd/clustifyR/tabula_muris_ref_facs.rds")
+ref_facs <- readRDS("/Users/rf/cluster/devel/3rd/clustifyr/tabula_muris_ref_facs.rds")
 
 
 library("M3Drop")
@@ -633,7 +633,7 @@ res_allgenes <- cor_to_call(res,
                             l_meta, 
                             cluster_col = "Annotation")
 end <- proc.time()
-names(res_allgenes) <- c("MCA annotation", "clustifyR call", "r")
+names(res_allgenes) <- c("MCA annotation", "clustifyr call", "r")
 
 print(end - start)
 
@@ -687,7 +687,7 @@ for (n in 1:length(tissue_both)) {
   }
 }
 
-resall2negcor_all <- readRDS("/Users/rf/cluster/devel/3rd/clustifyR/resall2negcor_all")
+resall2negcor_all <- readRDS("/Users/rf/cluster/devel/3rd/clustifyr/resall2negcor_all")
 resall2 <- resall %>% filter(!is.na(old)) %>% mutate(call = ifelse(old == type, 1, 0)) %>% mutate(finalcall = ifelse(call == 1, 1, ifelse(str_c(old, type) %in% str_c(resall2negcor_all$cluster, resall2negcor_all$type), 1, 0)))
 mean(resall2$finalcall) # 91.41 %
 #resall2neg <- resall2 %>% filter(call == 0)
@@ -751,7 +751,7 @@ for (n in 1:length(tissue_both)) {
   }
 }
 
-resall2negcor_all <- readRDS("/Users/rf/cluster/devel/3rd/clustifyR/resall2negcor_all")
+resall2negcor_all <- readRDS("/Users/rf/cluster/devel/3rd/clustifyr/resall2negcor_all")
 resall2 <- resall %>% filter(!is.na(old)) %>% mutate(call = ifelse(old == type, 1, 0)) %>% mutate(finalcall = ifelse(call == 1, 1, ifelse(str_c(old, type) %in% str_c(resall2negcor_all$cluster, resall2negcor_all$type), 1, 0)))
 mean(resall2$finalcall) # 91.41 %
 #resall2neg <- resall2 %>% filter(call == 0)
@@ -820,7 +820,7 @@ for (n in 7:length(tissue_both)) {# n = 6 and 12 fails
 
 saveRDS(resall, "sctransform_resall")
 resall2 <- resall %>% filter(cluster != "unknown")
-resall2negcor_all <- readRDS("/Users/rf/cluster/devel/3rd/clustifyR/resall2negcor_all")
+resall2negcor_all <- readRDS("/Users/rf/cluster/devel/3rd/clustifyr/resall2negcor_all")
 resall2 <- resall2 %>% filter(!is.na(cluster)) %>% mutate(call = ifelse(cluster == type, 1, 0)) %>% mutate(finalcall = ifelse(call == 1, 1, ifelse(str_c(cluster, type) %in% str_c(resall2negcor_all$cluster, resall2negcor_all$type), 1, 0)))
 mean(resall2$finalcall) 
 #resall2neg <- resall2 %>% filter(call == 0)
