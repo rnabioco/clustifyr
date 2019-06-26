@@ -142,8 +142,9 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>average_clusters</span>(<span class='no'>mat</span>, <span class='no'>cluster_info</span>, <span class='kw'>log_scale</span> <span class='kw'>=</span> <span class='no'>T</span>,
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>, <span class='kw'>low_threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mean"</span>)</pre>
+    <pre class="usage"><span class='fu'>average_clusters</span>(<span class='no'>mat</span>, <span class='no'>cluster_info</span>, <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>, <span class='kw'>cell_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>low_threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mean"</span>, <span class='kw'>output_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -159,7 +160,7 @@ Order must match column order in supplied matrix. If a data.frame
 provide the cluster_col parameters.</p></td>
     </tr>
     <tr>
-      <th>log_scale</th>
+      <th>if_log</th>
       <td><p>input data is natural log,
 averaging will be done on unlogged data</p></td>
     </tr>
@@ -168,12 +169,20 @@ averaging will be done on unlogged data</p></td>
       <td><p>column in cluster_info with cluster number</p></td>
     </tr>
     <tr>
+      <th>cell_col</th>
+      <td><p>if provided, will reorder matrix first</p></td>
+    </tr>
+    <tr>
       <th>low_threshold</th>
       <td><p>option to remove clusters with too few cells</p></td>
     </tr>
     <tr>
       <th>method</th>
       <td><p>whether to take mean (default) or median</p></td>
+    </tr>
+    <tr>
+      <th>output_log</th>
+      <td><p>whether to report log results</p></td>
     </tr>
     </table>
     

@@ -142,15 +142,15 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>plot_cor</span>(<span class='no'>correlation_matrix</span>, <span class='no'>metadata</span>,
-  <span class='kw'>ref_data_to_plot</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/colnames'>colnames</a></span>(<span class='no'>correlation_matrix</span>), <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"tSNE_1"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"tSNE_2"</span>, <span class='kw'>scale_legends</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>plot_cor</span>(<span class='no'>cor_matrix</span>, <span class='no'>metadata</span>, <span class='kw'>data_to_plot</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/colnames'>colnames</a></span>(<span class='no'>cor_matrix</span>),
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"tSNE_1"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"tSNE_2"</span>,
+  <span class='kw'>scale_legends</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>correlation_matrix</th>
+      <th>cor_matrix</th>
       <td><p>input similarity matrix</p></td>
     </tr>
     <tr>
@@ -158,7 +158,7 @@
       <td><p>input metadata with per cell tsne coordinates and cluster ids</p></td>
     </tr>
     <tr>
-      <th>ref_data_to_plot</th>
+      <th>data_to_plot</th>
       <td><p>colname of data to plot, defaults to all</p></td>
     </tr>
     <tr>

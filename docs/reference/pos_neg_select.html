@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generate variable gene list from marker matrix — get_vargenes • clustifyR</title>
+<title>adapt clustify to tweak score for pos and neg markers — pos_neg_select • clustifyR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,10 +30,9 @@
 
 
 
-<meta property="og:title" content="Generate variable gene list from marker matrix — get_vargenes" />
+<meta property="og:title" content="adapt clustify to tweak score for pos and neg markers — pos_neg_select" />
 
-<meta property="og:description" content="Variable gene list is required for clustify main function. This
-function parses variables genes from a matrix input." />
+<meta property="og:description" content="adapt clustify to tweak score for pos and neg markers" />
 
 <meta property="og:image" content="http://rnabioco.github.io/clustifyR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -132,26 +131,52 @@ function parses variables genes from a matrix input." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Generate variable gene list from marker matrix</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rnabioco/clustifyR/blob/master/R/compare_genelist.R'><code>R/compare_genelist.R</code></a></small>
-    <div class="hidden name"><code>get_vargenes.Rd</code></div>
+    <h1>adapt clustify to tweak score for pos and neg markers</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rnabioco/clustifyR/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
+    <div class="hidden name"><code>pos_neg_select.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Variable gene list is required for <code>clustify</code> main function. This
-function parses variables genes from a matrix input.</p>
+    <p>adapt clustify to tweak score for pos and neg markers</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>get_vargenes</span>(<span class='no'>marker_mat</span>)</pre>
+    <pre class="usage"><span class='fu'>pos_neg_select</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>, <span class='no'>metadata</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>,
+  <span class='kw'>cutoff_n</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>cutoff_score</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>marker_mat</th>
-      <td><p>matrix or dataframe of candidate genes for each cluster</p></td>
+      <th>input</th>
+      <td><p>single-cell expression matrix</p></td>
+    </tr>
+    <tr>
+      <th>ref_mat</th>
+      <td><p>reference expression matrix with positive and negative markers(set expression at 0)</p></td>
+    </tr>
+    <tr>
+      <th>metadata</th>
+      <td><p>cell cluster assignments, supplied as a vector or data.frame. If
+data.frame is supplied then <code>cluster_col</code> needs to be set. Not required if running correlation per cell.</p></td>
+    </tr>
+    <tr>
+      <th>cluster_col</th>
+      <td><p>column in metadata that contains cluster ids per cell. Will default to first
+column of metadata if not supplied. Not required if running correlation per cell.</p></td>
+    </tr>
+    <tr>
+      <th>cutoff_n</th>
+      <td><p>expression cutoff where genes ranked below n are considered non-expressing</p></td>
+    </tr>
+    <tr>
+      <th>cutoff_score</th>
+      <td><p>positive score lower than this cutoff will be considered as 0 to not influence scores</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>additional arguments to pass to compute_method function</p></td>
     </tr>
     </table>
     

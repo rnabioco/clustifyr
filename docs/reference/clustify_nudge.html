@@ -147,16 +147,16 @@
 <span class='co'># S3 method for seurat</span>
 <span class='fu'>clustify_nudge</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>, <span class='no'>marker</span>,
   <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>weight</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='no'>T</span>,
+  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>weight</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>threshold</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>, <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>, <span class='kw'>norm</span> <span class='kw'>=</span> <span class='st'>"diff"</span>,
-  <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='no'>...</span>)
+  <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"rank"</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>clustify_nudge</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>, <span class='no'>marker</span>, <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>weight</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='no'>T</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>, <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>, <span class='kw'>norm</span> <span class='kw'>=</span> <span class='st'>"diff"</span>, <span class='kw'>call</span> <span class='kw'>=</span> <span class='no'>T</span>,
-  <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>weight</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>threshold</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>, <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>, <span class='kw'>norm</span> <span class='kw'>=</span> <span class='st'>"diff"</span>, <span class='kw'>call</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"rank"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -192,8 +192,16 @@ the expr_mat and ref_mat will be used for comparision.</p></td>
       <td><p>method(s) for computing similarity scores</p></td>
     </tr>
     <tr>
+      <th>weight</th>
+      <td><p>relative weight for the gene list scores, when added to correlation score</p></td>
+    </tr>
+    <tr>
       <th>seurat_out</th>
       <td><p>output cor matrix or called seurat object</p></td>
+    </tr>
+    <tr>
+      <th>threshold</th>
+      <td><p>identity calling minimum score threshold</p></td>
     </tr>
     <tr>
       <th>dr</th>
@@ -206,6 +214,10 @@ the expr_mat and ref_mat will be used for comparision.</p></td>
     <tr>
       <th>marker_inmatrix</th>
       <td><p>whether markers genes are already in preprocessed matrix form</p></td>
+    </tr>
+    <tr>
+      <th>mode</th>
+      <td><p>use marker expression pct or ranked cor score for nudging</p></td>
     </tr>
     <tr>
       <th>metadata</th>
@@ -253,6 +265,10 @@ column of metadata if not supplied. Not required if running correlation per cell
     <tr>
       <th>marker_inmatrix</th>
       <td><p>whether markers genes are already in preprocessed matrix form</p></td>
+    </tr>
+    <tr>
+      <th>mode</th>
+      <td><p>use marker expression pct or ranked cor score for nudging</p></td>
     </tr>
     </table>
     

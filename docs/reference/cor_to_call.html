@@ -142,8 +142,9 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>cor_to_call</span>(<span class='no'>correlation_matrix</span>, <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>,
-  <span class='kw'>collapse_to_cluster</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
+    <pre class="usage"><span class='fu'>cor_to_call</span>(<span class='no'>correlation_matrix</span>, <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>, <span class='kw'>collapse_to_cluster</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>rename_suff</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -157,16 +158,20 @@
       <td><p>input metadata with tsne coordinates and cluster ids</p></td>
     </tr>
     <tr>
-      <th>col</th>
-      <td><p>metadata column, can be cluster or cellid</p></td>
-    </tr>
-    <tr>
       <th>collapse_to_cluster</th>
       <td><p>if a column name is provided, takes the most frequent call of entire cluster to color in plot</p></td>
     </tr>
     <tr>
       <th>threshold</th>
       <td><p>minimum correlation coefficent cutoff for calling clusters</p></td>
+    </tr>
+    <tr>
+      <th>rename_suff</th>
+      <td><p>suffix to add to type and r column names</p></td>
+    </tr>
+    <tr>
+      <th>col</th>
+      <td><p>metadata column, can be cluster or cellid</p></td>
     </tr>
     </table>
     

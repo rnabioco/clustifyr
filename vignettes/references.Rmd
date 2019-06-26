@@ -28,7 +28,7 @@ library(clustifyR)
 new_ref_matrix <- average_clusters(
   pbmc4k_matrix, 
   cluster_info = pbmc4k_meta$cluster,
-  log_scale = T
+  if_log = T
 )
 
 head(new_ref_matrix)
@@ -218,6 +218,8 @@ cbmc_m <- matrixize_markers(
   unique = T,
   n = 3
 )
+
+# parse `garnett` marker files, see function `file_marker_parse`
 ```
 
 ## Prebuilt references, in clustifyR

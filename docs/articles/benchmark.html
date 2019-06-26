@@ -98,7 +98,7 @@
     <div class="page-header toc-ignore">
       <h1>Benchmarking clustifyR</h1>
             
-            <h4 class="date">2019-05-29</h4>
+            <h4 class="date">2019-06-25</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyR/blob/master/vignettes/benchmark.Rmd"><code>vignettes/benchmark.Rmd</code></a></small>
       <div class="hidden name"><code>benchmark.Rmd</code></div>
@@ -128,13 +128,13 @@
 <a class="sourceLine" id="cb1-16" title="16"></a>
 <a class="sourceLine" id="cb1-17" title="17">res_allgenes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cor_to_call.html">cor_to_call</a></span>(res, </a>
 <a class="sourceLine" id="cb1-18" title="18">                            l_meta, </a>
-<a class="sourceLine" id="cb1-19" title="19">                            <span class="dt">col =</span> <span class="st">"Annotation"</span>)</a>
+<a class="sourceLine" id="cb1-19" title="19">                            <span class="dt">cluster_col =</span> <span class="st">"Annotation"</span>)</a>
 <a class="sourceLine" id="cb1-20" title="20">end &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/proc.time">proc.time</a></span>()</a>
 <a class="sourceLine" id="cb1-21" title="21"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(res_allgenes) &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"MCA annotation"</span>, <span class="st">"clustifyR call"</span>, <span class="st">"r"</span>)</a>
 <a class="sourceLine" id="cb1-22" title="22"></a>
 <a class="sourceLine" id="cb1-23" title="23"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(end <span class="op">-</span><span class="st"> </span>start)</a>
 <a class="sourceLine" id="cb1-24" title="24"><span class="co">#&gt;    user  system elapsed </span></a>
-<a class="sourceLine" id="cb1-25" title="25"><span class="co">#&gt;   2.320   4.438  10.780</span></a>
+<a class="sourceLine" id="cb1-25" title="25"><span class="co">#&gt;   1.113   0.337   1.450</span></a>
 <a class="sourceLine" id="cb1-26" title="26"></a>
 <a class="sourceLine" id="cb1-27" title="27"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(res_allgenes, <span class="dt">n =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(res_allgenes))</a>
 <a class="sourceLine" id="cb1-28" title="28"><span class="co">#&gt; # A tibble: 32 x 3</span></a>
@@ -194,7 +194,7 @@
 <a class="sourceLine" id="cb2-15" title="15"></a>
 <a class="sourceLine" id="cb2-16" title="16"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(end <span class="op">-</span><span class="st"> </span>start)</a>
 <a class="sourceLine" id="cb2-17" title="17"><span class="co">#&gt;    user  system elapsed </span></a>
-<a class="sourceLine" id="cb2-18" title="18"><span class="co">#&gt;   0.122   0.020   0.154</span></a>
+<a class="sourceLine" id="cb2-18" title="18"><span class="co">#&gt;   0.077   0.007   0.083</span></a>
 <a class="sourceLine" id="cb2-19" title="19"></a>
 <a class="sourceLine" id="cb2-20" title="20"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(res2, <span class="dt">n =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(res2))</a>
 <a class="sourceLine" id="cb2-21" title="21"><span class="co">#&gt; # A tibble: 10 x 3</span></a>

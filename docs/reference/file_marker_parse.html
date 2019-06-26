@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generate variable gene list from marker matrix — get_vargenes • clustifyR</title>
+<title>takes files with positive and negative markers, as described in garnett, and returns list of markers — file_marker_parse • clustifyR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,10 +30,9 @@
 
 
 
-<meta property="og:title" content="Generate variable gene list from marker matrix — get_vargenes" />
+<meta property="og:title" content="takes files with positive and negative markers, as described in garnett, and returns list of markers — file_marker_parse" />
 
-<meta property="og:description" content="Variable gene list is required for clustify main function. This
-function parses variables genes from a matrix input." />
+<meta property="og:description" content="takes files with positive and negative markers, as described in garnett, and returns list of markers" />
 
 <meta property="og:image" content="http://rnabioco.github.io/clustifyR/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -132,26 +131,25 @@ function parses variables genes from a matrix input." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Generate variable gene list from marker matrix</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rnabioco/clustifyR/blob/master/R/compare_genelist.R'><code>R/compare_genelist.R</code></a></small>
-    <div class="hidden name"><code>get_vargenes.Rd</code></div>
+    <h1>takes files with positive and negative markers, as described in garnett, and returns list of markers</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rnabioco/clustifyR/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
+    <div class="hidden name"><code>file_marker_parse.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Variable gene list is required for <code>clustify</code> main function. This
-function parses variables genes from a matrix input.</p>
+    <p>takes files with positive and negative markers, as described in garnett, and returns list of markers</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>get_vargenes</span>(<span class='no'>marker_mat</span>)</pre>
+    <pre class="usage"><span class='fu'>file_marker_parse</span>(<span class='no'>filename</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>marker_mat</th>
-      <td><p>matrix or dataframe of candidate genes for each cluster</p></td>
+      <th>filename</th>
+      <td><p>txt file to load</p></td>
     </tr>
     </table>
     

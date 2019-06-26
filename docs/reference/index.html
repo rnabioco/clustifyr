@@ -176,7 +176,7 @@
         <td>
           <p><code><a href="binarize_expr.html">binarize_expr()</a></code> </p>
         </td>
-        <td><p>Binarize scRNA seq data</p></td>
+        <td><p>Binarize scRNAseq data</p></td>
       </tr><tr>
         
         <td>
@@ -242,7 +242,7 @@
         <td>
           <p><code><a href="compare_lists.html">compare_lists()</a></code> </p>
         </td>
-        <td><p>calculate adjusted p-values for hypergeometric test of gene lists
+        <td><p>Calculate adjusted p-values for hypergeometric test of gene lists
 or jaccard index</p></td>
       </tr><tr>
         
@@ -280,6 +280,12 @@ or jaccard index</p></td>
           <p><code><a href="feature_select_PCA.html">feature_select_PCA()</a></code> </p>
         </td>
         <td><p>Returns a list of variable genes based on PCA</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="file_marker_parse.html">file_marker_parse()</a></code> </p>
+        </td>
+        <td><p>takes files with positive and negative markers, as described in garnett, and returns list of markers</p></td>
       </tr><tr>
         
         <td>
@@ -321,7 +327,7 @@ or jaccard index</p></td>
         <td>
           <p><code><a href="get_vargenes.html">get_vargenes()</a></code> </p>
         </td>
-        <td><p>generate variable gene list from marker matrix</p></td>
+        <td><p>Generate variable gene list from marker matrix</p></td>
       </tr><tr>
         
         <td>
@@ -343,9 +349,15 @@ or jaccard index</p></td>
       </tr><tr>
         
         <td>
+          <p><code><a href="marker_select.html">marker_select()</a></code> </p>
+        </td>
+        <td><p>decide for one gene whether it is a marker for a certain cell type</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="matrixize_markers.html">matrixize_markers()</a></code> </p>
         </td>
-        <td><p>convert candidate genes list into matrix</p></td>
+        <td><p>Convert candidate genes list into matrix</p></td>
       </tr><tr>
         
         <td>
@@ -475,6 +487,12 @@ or jaccard index</p></td>
       </tr><tr>
         
         <td>
+          <p><code><a href="pos_neg_select.html">pos_neg_select()</a></code> </p>
+        </td>
+        <td><p>adapt clustify to tweak score for pos and neg markers</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="pretty_palette.html">pretty_palette</a></code> </p>
         </td>
         <td><p>Color palette for plotting continous variables</p></td>
@@ -499,9 +517,21 @@ or jaccard index</p></td>
       </tr><tr>
         
         <td>
+          <p><code><a href="ref_marker_select.html">ref_marker_select()</a></code> </p>
+        </td>
+        <td><p>marker selection from reference matrix</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="remove_background.html">remove_background()</a></code> </p>
         </td>
         <td><p>Remove high background expression genes from matrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="reverse_marker_matrix.html">reverse_marker_matrix()</a></code> </p>
+        </td>
+        <td><p>generate negative markers from a list of exclusive positive markers</p></td>
       </tr><tr>
         
         <td>

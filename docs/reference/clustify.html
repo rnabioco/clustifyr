@@ -146,21 +146,23 @@
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>clustify</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>, <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>num_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='no'>F</span>,
-  <span class='kw'>lookuptable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rm0</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='no'>...</span>)
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>lookuptable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rm0</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for seurat</span>
-<span class='fu'>clustify</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+<span class='fu'>clustify</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>use_var_genes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>,
-  <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='kw'>rm0</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='no'>...</span>)
+  <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>rm0</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>rename_suff</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for Seurat</span>
-<span class='fu'>clustify</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>num_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+<span class='fu'>clustify</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>use_var_genes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>,
-  <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='kw'>rm0</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>rm0</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>rename_suff</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -183,21 +185,21 @@
 data.frame is supplied then <code>cluster_col</code> needs to be set. Not required if running correlation per cell.</p></td>
     </tr>
     <tr>
-      <th>query_genes</th>
-      <td><p>A vector of genes of interest to compare. If NULL, then common genes between
-the expr_mat and ref_mat will be used for comparision.</p></td>
-    </tr>
-    <tr>
       <th>cluster_col</th>
       <td><p>column in metadata that contains cluster ids per cell. Will default to first
 column of metadata if not supplied. Not required if running correlation per cell.</p></td>
+    </tr>
+    <tr>
+      <th>query_genes</th>
+      <td><p>A vector of genes of interest to compare. If NULL, then common genes between
+the expr_mat and ref_mat will be used for comparision.</p></td>
     </tr>
     <tr>
       <th>per_cell</th>
       <td><p>if true run per cell, otherwise per cluster.</p></td>
     </tr>
     <tr>
-      <th>num_perm</th>
+      <th>n_perm</th>
       <td><p>number of permutations, set to 0 by default</p></td>
     </tr>
     <tr>
@@ -230,13 +232,16 @@ column of metadata if not supplied. Not required if running correlation per cell
       <td><p>output cor matrix or called seurat object</p></td>
     </tr>
     <tr>
-      <th>ref_mat</th>
-      <td><p>reference expression matrix</p></td>
+      <th>threshold</th>
+      <td><p>identity calling minimum correlation score threshold</p></td>
     </tr>
     <tr>
-      <th>query_genes</th>
-      <td><p>A vector of genes of interest to compare. If NULL, then common genes between
-the expr_mat and ref_mat will be used for comparision.</p></td>
+      <th>rename_suff</th>
+      <td><p>suffix to add to type and r column names</p></td>
+    </tr>
+    <tr>
+      <th>ref_mat</th>
+      <td><p>reference expression matrix</p></td>
     </tr>
     <tr>
       <th>cluster_col</th>
@@ -244,11 +249,16 @@ the expr_mat and ref_mat will be used for comparision.</p></td>
 column of metadata if not supplied. Not required if running correlation per cell.</p></td>
     </tr>
     <tr>
+      <th>query_genes</th>
+      <td><p>A vector of genes of interest to compare. If NULL, then common genes between
+the expr_mat and ref_mat will be used for comparision.</p></td>
+    </tr>
+    <tr>
       <th>per_cell</th>
       <td><p>if true run per cell, otherwise per cluster.</p></td>
     </tr>
     <tr>
-      <th>num_perm</th>
+      <th>n_perm</th>
       <td><p>number of permutations, set to 0 by default</p></td>
     </tr>
     <tr>
@@ -285,21 +295,21 @@ column of metadata if not supplied. Not required if running correlation per cell
       <td><p>reference expression matrix</p></td>
     </tr>
     <tr>
-      <th>query_genes</th>
-      <td><p>A vector of genes of interest to compare. If NULL, then common genes between
-the expr_mat and ref_mat will be used for comparision.</p></td>
-    </tr>
-    <tr>
       <th>cluster_col</th>
       <td><p>column in metadata that contains cluster ids per cell. Will default to first
 column of metadata if not supplied. Not required if running correlation per cell.</p></td>
+    </tr>
+    <tr>
+      <th>query_genes</th>
+      <td><p>A vector of genes of interest to compare. If NULL, then common genes between
+the expr_mat and ref_mat will be used for comparision.</p></td>
     </tr>
     <tr>
       <th>per_cell</th>
       <td><p>if true run per cell, otherwise per cluster.</p></td>
     </tr>
     <tr>
-      <th>num_perm</th>
+      <th>n_perm</th>
       <td><p>number of permutations, set to 0 by default</p></td>
     </tr>
     <tr>
@@ -320,12 +330,20 @@ column of metadata if not supplied. Not required if running correlation per cell
       <td><p>output cor matrix or called seurat object</p></td>
     </tr>
     <tr>
+      <th>threshold</th>
+      <td><p>identity calling minimum correlation score threshold</p></td>
+    </tr>
+    <tr>
       <th>verbose</th>
       <td><p>whether to report certain variables chosen</p></td>
     </tr>
     <tr>
       <th>rm0</th>
       <td><p>consider 0 as missing data, recommended for per_cell</p></td>
+    </tr>
+    <tr>
+      <th>rename_suff</th>
+      <td><p>suffix to add to type and r column names</p></td>
     </tr>
     <tr>
       <th>...</th>
