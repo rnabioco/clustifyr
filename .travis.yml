@@ -1,12 +1,16 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 language: r
+dist: xenial
 sudo: false
 cache: packages
 warnings_are_errors: false
 
 r_build_args: '--no-build-vignettes'
 r_check_args: '--as-cran --ignore-vignettes --no-manual'
+
+script:
+  - R -e 'install.packages("BiocManager")'
 
 bioc_check: true
 
