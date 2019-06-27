@@ -109,8 +109,8 @@ percent_clusters <- function(mat, cluster_info,
   mat[mat <= cut_num] <- 0
 
   average_clusters(mat, cluster_info,
-    if_log = FALSE,
-    cluster_col = cluster_col
+                   if_log = FALSE,
+                   cluster_col = cluster_col
   )
 }
 
@@ -259,17 +259,17 @@ clustify_intra <- function(expr_mat,
   meta_tar <- metadata[!row_ref, ]
 
   avg_clusters_ref <- average_clusters(expr_mat_ref, meta_ref,
-    if_log = FALSE,
-    cluster_col = cluster_col
+                                       if_log = FALSE,
+                                       cluster_col = cluster_col
   )
 
   r2 <- clustify(expr_mat_tar, avg_clusters_ref, meta_tar,
-    query_genes = query_genes,
-    cluster_col = cluster_col,
-    per_cell = per_cell,
-    num_perm = 0,
-    compute_method = compute_method,
-    use_var_genes = FALSE
+                 query_genes = query_genes,
+                 cluster_col = cluster_col,
+                 per_cell = per_cell,
+                 num_perm = 0,
+                 compute_method = compute_method,
+                 use_var_genes = FALSE
   )
 
   r2
@@ -392,10 +392,10 @@ calculate_pathway_gsea <- function(mat,
       names(marker_list) <- y
       v1 <- marker_list
       temp <- run_gsea(mat, v1,
-        n_perm = n_perm,
-        scale = scale,
-        per_cell = TRUE,
-        no_warnings = no_warnings
+                       n_perm = n_perm,
+                       scale = scale,
+                       per_cell = TRUE,
+                       no_warnings = no_warnings
       )
       temp <- temp[, 3, drop = FALSE]
     }
@@ -769,17 +769,17 @@ clustify_nudge.seurat <- function(input,
 
   if (mode == "pct") {
     resb <- gene_pct_markerm(input@data,
-      marker,
-      input@meta.data,
-      cluster_col = cluster_col,
-      norm = norm
+                             marker,
+                             input@meta.data,
+                             cluster_col = cluster_col,
+                             norm = norm
     )
   } else if (mode == "rank") {
     resb <- pos_neg_select(input@data,
-      marker,
-      metadata = input@meta.data,
-      cluster_col = cluster_col,
-      cutoff_score = norm
+                           marker,
+                           metadata = input@meta.data,
+                           cluster_col = cluster_col,
+                           cutoff_score = norm
     )
     empty_vec <- setdiff(colnames(resa), colnames(resb))
     empty_mat <- matrix(0, nrow = nrow(resb), ncol = length(empty_vec), dimnames = list(rownames(resb), empty_vec))
@@ -787,8 +787,8 @@ clustify_nudge.seurat <- function(input,
   }
 
   df_temp <- cor_to_call(resa[order(rownames(resa)), order(colnames(resa))] +
-    resb[order(rownames(resb)), order(colnames(resb))] * weight,
-  threshold = threshold
+                           resb[order(rownames(resb)), order(colnames(resb))] * weight,
+                         threshold = threshold
   )
   colnames(df_temp) <- c(cluster_col, "type", "score")
 
@@ -852,11 +852,11 @@ clustify_nudge.default <- function(input,
   if (!(stringr::str_detect(class(input), "atrix"))) {
     input_original <- input
     temp <- parse_loc_object(input,
-      type = class(input),
-      expr_loc = NULL,
-      meta_loc = NULL,
-      var_loc = NULL,
-      cluster_col = cluster_col
+                             type = class(input),
+                             expr_loc = NULL,
+                             meta_loc = NULL,
+                             var_loc = NULL,
+                             cluster_col = cluster_col
     )
     input <- temp[["expr"]]
     metadata <- temp[["meta"]]
@@ -880,17 +880,17 @@ clustify_nudge.default <- function(input,
 
   if (mode == "pct") {
     resb <- gene_pct_markerm(input,
-      marker,
-      metadata,
-      cluster_col = cluster_col,
-      norm = norm
+                             marker,
+                             metadata,
+                             cluster_col = cluster_col,
+                             norm = norm
     )
   } else if (mode == "rank") {
     resb <- pos_neg_select(input,
-      marker,
-      metadata,
-      cluster_col = cluster_col,
-      cutoff_score = norm
+                           marker,
+                           metadata,
+                           cluster_col = cluster_col,
+                           cutoff_score = norm
     )
     empty_vec <- setdiff(colnames(resa), colnames(resb))
     empty_mat <- matrix(0, nrow = nrow(resb), ncol = length(empty_vec), dimnames = list(rownames(resb), empty_vec))
@@ -899,8 +899,8 @@ clustify_nudge.default <- function(input,
 
   if (call == TRUE) {
     df_temp <- cor_to_call(resa[order(rownames(resa)), order(colnames(resa))] +
-      resb[order(rownames(resb)), order(colnames(resb))] * weight,
-    threshold = threshold
+                             resb[order(rownames(resb)), order(colnames(resb))] * weight,
+                           threshold = threshold
     )
     colnames(df_temp) <- c(cluster_col, "type", "score")
     df_temp
@@ -1020,7 +1020,7 @@ overcluster_test <- function(expr,
 
   if (is.null(newclustering)) {
     metadata$new_clusters <- as.character(stats::kmeans(metadata[, c(x_col, y_col)],
-      centers = n * length(unique(metadata[[cluster_col]]))
+                                                        centers = n * length(unique(metadata[[cluster_col]]))
     )$clust)
   } else {
     metadata$new_clusters <- metadata[[newclustering]]
@@ -1037,52 +1037,52 @@ overcluster_test <- function(expr,
     genes <- query_genes
   }
   res1 <- clustify(expr,
-    ref_mat,
-    metadata,
-    query_genes = genes,
-    cluster_col = cluster_col,
-    seurat_out = FALSE
+                   ref_mat,
+                   metadata,
+                   query_genes = genes,
+                   cluster_col = cluster_col,
+                   seurat_out = FALSE
   )
   res2 <- clustify(expr,
-    ref_mat,
-    metadata,
-    query_genes = genes,
-    cluster_col = "new_clusters",
-    seurat_out = FALSE
+                   ref_mat,
+                   metadata,
+                   query_genes = genes,
+                   cluster_col = "new_clusters",
+                   seurat_out = FALSE
   )
   o1 <- plot_tsne(metadata,
-    feature = cluster_col,
-    x = x_col,
-    y = y_col,
-    do_label = FALSE,
-    do_legend = FALSE
+                  feature = cluster_col,
+                  x = x_col,
+                  y = y_col,
+                  do_label = FALSE,
+                  do_legend = FALSE
   )
   o2 <- plot_tsne(metadata,
-    feature = "new_clusters",
-    x = x_col,
-    y = y_col,
-    do_label = FALSE,
-    do_legend = FALSE
+                  feature = "new_clusters",
+                  x = x_col,
+                  y = y_col,
+                  do_label = FALSE,
+                  do_legend = FALSE
   )
   p1 <- plot_best_call(res1,
-    metadata,
-    cluster_col,
-    do_label = do_label,
-    x = x_col,
-    y = y_col
+                       metadata,
+                       cluster_col,
+                       do_label = do_label,
+                       x = x_col,
+                       y = y_col
   )
   p2 <- plot_best_call(res2,
-    metadata,
-    "new_clusters",
-    do_label = do_label,
-    x = x_col,
-    y = y_col
+                       metadata,
+                       "new_clusters",
+                       do_label = do_label,
+                       x = x_col,
+                       y = y_col
   )
   g <- cowplot::plot_grid(o1, o2, p1, p2,
-    labels = c(
-      length(unique(metadata[[cluster_col]])),
-      n * length(unique(metadata[[cluster_col]]))
-    )
+                          labels = c(
+                            length(unique(metadata[[cluster_col]])),
+                            n * length(unique(metadata[[cluster_col]]))
+                          )
   )
   return(g)
 }
@@ -1175,12 +1175,12 @@ gmt_to_list <- function(path,
                         cutoff = 0,
                         sep = "\thttp://www.broadinstitute.org/gsea/msigdb/cards/.*?\t") {
   df <- readr::read_csv(path,
-    col_names = FALSE
+                        col_names = FALSE
   )
   df <- tidyr::separate(df,
-    X1,
-    sep = sep,
-    into = c("path", "genes")
+                        X1,
+                        sep = sep,
+                        into = c("path", "genes")
   )
   pathways <- stringr::str_split(
     df$genes,
@@ -1215,9 +1215,9 @@ plot_pathway_gsea <- function(mat,
                               topn = 5,
                               returning = "both") {
   res <- calculate_pathway_gsea(mat,
-    pathway_list,
-    n_perm,
-    scale = scale
+                                pathway_list,
+                                n_perm,
+                                scale = scale
   )
   coltopn <- unique(cor_to_call_topn(res, topn = topn, threshold = -Inf)$type)
   res[is.na(res)] <- 0
@@ -1373,17 +1373,17 @@ pos_neg_select <- function(input,
                            cutoff_n = 0,
                            cutoff_score = 0.5) {
   suppressWarnings(res <- clustify(rbind(input, "clustifyr0" = 0.01),
-    ref_mat,
-    metadata,
-    cluster_col = cluster_col,
-    per_cell = TRUE, verbose = TRUE
+                                   ref_mat,
+                                   metadata,
+                                   cluster_col = cluster_col,
+                                   per_cell = TRUE, verbose = TRUE
   ))
   res[is.na(res)] <- 0
   suppressWarnings(res2 <- average_clusters(t(res),
-    metadata,
-    cluster_col = cluster_col,
-    if_log = FALSE,
-    output_log = FALSE
+                                            metadata,
+                                            cluster_col = cluster_col,
+                                            if_log = FALSE,
+                                            output_log = FALSE
   ))
   res2 <- t(res2)
 
