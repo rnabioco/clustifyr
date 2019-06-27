@@ -2,14 +2,14 @@ context("clustify")
 
 test_that("output is correctly formatted", {
   res <- clustify(
-    input = pbmc4k_matrix,
-    metadata = pbmc4k_meta,
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
     ref_mat = pbmc_bulk_matrix,
-    query_genes = pbmc4k_vargenes,
-    cluster_col = "cluster",
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified",
     verbose = TRUE
   )
-  n_clusters <- length(unique(pbmc4k_meta$cluster))
+  n_clusters <- length(unique(pbmc_meta$classified))
   n_ref_samples <- ncol(pbmc_bulk_matrix)
 
   expect_equal(ncol(res), n_ref_samples)
@@ -18,14 +18,14 @@ test_that("output is correctly formatted", {
 
 test_that("clustify takes accidental dataframe as well", {
   res <- clustify(
-    input = as.data.frame(as.matrix(pbmc4k_matrix)),
-    metadata = pbmc4k_meta,
+    input = as.data.frame(as.matrix(pbmc_matrix_small)),
+    metadata = pbmc_meta,
     ref_mat = pbmc_bulk_matrix,
-    query_genes = pbmc4k_vargenes,
-    cluster_col = "cluster",
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified",
     verbose = TRUE
   )
-  n_clusters <- length(unique(pbmc4k_meta$cluster))
+  n_clusters <- length(unique(pbmc_meta$classified))
   n_ref_samples <- ncol(pbmc_bulk_matrix)
 
   expect_equal(ncol(res), n_ref_samples)
@@ -37,11 +37,11 @@ test_that("run all correlation functions", {
     clustifyr_methods,
     function(x) {
       clustify(
-        input = pbmc4k_matrix,
-        metadata = pbmc4k_meta,
+        input = pbmc_matrix_small,
+        metadata = pbmc_meta,
         ref_mat = pbmc_bulk_matrix,
-        query_genes = pbmc4k_vargenes,
-        cluster_col = "cluster",
+        query_genes = pbmc_vargenes,
+        cluster_col = "classified",
         compute_method = x
       )
     }
@@ -55,42 +55,42 @@ test_that("run all correlation functions", {
 
 test_that("test bad inputs", {
   expect_error(clustify(
-    input = pbmc4k_matrix,
-    metadata = pbmc4k_meta,
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
     ref_mat = pbmc_bulk_matrix,
-    query_genes = pbmc4k_vargenes,
+    query_genes = pbmc_vargenes,
     compute_method = "foo"
   ))
 })
 
 test_that("test per cell", {
   res <- clustify(
-    input = pbmc4k_matrix,
-    metadata = pbmc4k_meta,
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
     ref_mat = pbmc_bulk_matrix,
-    query_genes = pbmc4k_vargenes,
+    query_genes = pbmc_vargenes,
     cell_col = "rn",
     per_cell = TRUE
   )
 
-  expect_equal(nrow(res), ncol(pbmc4k_matrix))
+  expect_equal(nrow(res), ncol(pbmc_matrix_small))
 })
 
 test_that("test permutation", {
   res1 <- clustify(
-    input = pbmc4k_matrix,
-    metadata = pbmc4k_meta,
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
     ref_mat = pbmc_bulk_matrix,
-    query_genes = pbmc4k_vargenes,
-    cluster_col = "cluster"
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified"
   )
 
   res_full <- clustify(
-    input = pbmc4k_matrix,
-    metadata = pbmc4k_meta,
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
     ref_mat = pbmc_bulk_matrix,
-    query_genes = pbmc4k_vargenes,
-    cluster_col = "cluster",
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified",
     n_perm = 2, return_full = TRUE
   )
 
@@ -178,16 +178,16 @@ test_that("clustify reinserts seurat3 metadata correctly", {
 })
 
 test_that("get_similarity handles NA entries", {
-  pbmc4k_meta2 <- pbmc4k_meta
-  pbmc4k_meta2[1, "cluster"] <- NA
+  pbmc_meta2 <- pbmc_meta
+  pbmc_meta2[1, "classified"] <- NA
   res <- clustify(
-    input = pbmc4k_matrix,
-    metadata = pbmc4k_meta2,
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta2,
     ref_mat = pbmc_bulk_matrix,
-    query_genes = pbmc4k_vargenes,
-    cluster_col = "cluster"
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified"
   )
-  n_clusters <- length(unique(pbmc4k_meta$cluster))
+  n_clusters <- length(unique(pbmc_meta$classified))
   n_ref_samples <- ncol(pbmc_bulk_matrix)
 
   expect_equal(ncol(res), n_ref_samples)
@@ -196,23 +196,23 @@ test_that("get_similarity handles NA entries", {
 
 test_that("get_similarity can exclude 0s as missing data", {
   res <- clustify(
-    input = pbmc4k_matrix,
-    metadata = pbmc4k_meta,
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
     ref_mat = pbmc_bulk_matrix,
-    query_genes = pbmc4k_vargenes,
-    cluster_col = "cluster",
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified",
     per_cell = TRUE,
     rm0 = TRUE
   )
 
-  expect_equal(ncol(pbmc4k_matrix), nrow(res))
+  expect_equal(ncol(pbmc_matrix_small), nrow(res))
 })
 
 test_that("permute_similarity runs per cell", {
   res <- permute_similarity(
-    pbmc4k_matrix[c("RBM28", "CCDC136", "TNPO3"), c(7, 11)],
-    cbmc_ref[c("RBM28", "CCDC136", "TNPO3"), 1:3],
-    colnames(pbmc4k_matrix[c("RBM28", "CCDC136", "TNPO3"), c(7, 11)]),
+    pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)],
+    cbmc_ref[c("PPBP", "LYZ", "S100A9"), 1:3],
+    colnames(pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)]),
     n_perm = 2,
     per_cell = TRUE,
     compute_method = "spearman"
@@ -222,9 +222,9 @@ test_that("permute_similarity runs per cell", {
 
 test_that("error for unsupported method", {
   expect_error(res <- permute_similarity(
-    pbmc4k_matrix[c("RBM28", "CCDC136", "TNPO3"), c(7, 11)],
+    pbmc_matrix_small[c("RBM28", "CCDC136", "TNPO3"), c(7, 11)],
     cbmc_ref[c("RBM28", "CCDC136", "TNPO3"), 1:3],
-    pbmc4k_meta$rn[c(7, 11)],
+    pbmc_meta$rn[c(7, 11)],
     n_perm = 2,
     per_cell = TRUE,
     compute_method = "a"

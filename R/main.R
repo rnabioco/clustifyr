@@ -93,6 +93,9 @@ clustify.default <- function(input,
       stop("metadata not formatted correctly,
            supply either a character vector or a dataframe")
     }
+    if (class(cluster_ids) == "factor") {
+      cluster_ids <- as.character(cluster_ids)
+    }
     cluster_ids[is.na(cluster_ids)] <- "orig.NA"
   }
 

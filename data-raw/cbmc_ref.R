@@ -3,10 +3,10 @@ library(tidyverse)
 library(clustifyr)
 
 # following seurat tutorial from https://satijalab.org/seurat/v3.0/multimodal_vignette.html#identify-differentially-expressed-proteins-between-clusters
-cbmc.rna <- as.sparse(read.csv(file = "/Users/rf/Downloads/GSE100866_CBMC_8K_13AB_10X-RNA_umi.csv.gz", sep = ",", 
+cbmc.rna <- as.sparse(read.csv(file = "GSE100866_CBMC_8K_13AB_10X-RNA_umi.csv.gz", sep = ",", 
                                header = TRUE, row.names = 1))
 cbmc.rna <- CollapseSpeciesExpressionMatrix(cbmc.rna)
-cbmc.adt <- as.sparse(read.csv(file = "/Users/rf/Downloads/GSE100866_CBMC_8K_13AB_10X-ADT_umi.csv.gz", sep = ",", 
+cbmc.adt <- as.sparse(read.csv(file = "GSE100866_CBMC_8K_13AB_10X-ADT_umi.csv.gz", sep = ",", 
                                header = TRUE, row.names = 1))
 cbmc.adt <- cbmc.adt[setdiff(rownames(x = cbmc.adt), c("CCR5", "CCR7", "CD10")), ]
 cbmc <- CreateSeuratObject(counts = cbmc.rna)
@@ -45,7 +45,7 @@ m <- cbmc@meta.data %>%
   rownames_to_column("rn") %>%
   mutate(ID = ifelse(citeID != "CD8 T" & citeID != "CD4 T", as.character(rnaClusterID), as.character(citeID))) %>%
   mutate(ID = ifelse((rnaClusterID == "CD4 T" & citeID != "CD4 T") | (rnaClusterID == "CD8 T" & citeID != "CD8 T"), "Unknown", as.character(ID))) %>%
-  column_to_rownames("rn")cbmc_cite@meta.data <- m
+  column_to_rownames("rn")
 cbmc@meta.data <- m
 
 cbmc_refm <- use_seurat_comp(
