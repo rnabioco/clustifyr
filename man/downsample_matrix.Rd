@@ -28,3 +28,12 @@ new smaller mat with less cell_id columns
 \description{
 downsample matrix by cluster or completely random
 }
+\examples{
+mat1 <- downsample_matrix(
+  pbmc_matrix_small,
+  cluster_info = pbmc_meta$classified,
+  n = 10,
+  keep_cluster_proportions = TRUE,
+  set_seed = 41
+)
+}
