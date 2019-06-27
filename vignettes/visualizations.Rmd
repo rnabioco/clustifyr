@@ -1,5 +1,5 @@
 ---
-title: 'Visualization of clustifyR results'
+title: 'Visualization of clustifyr results'
 date: '`r Sys.Date()`'
 output:
   rmarkdown::html_vignette:
@@ -11,7 +11,7 @@ output:
       %\VignetteEncoding{UTF-8}
 ---
 
-```{r knitr_opts, echo = FALSE}
+```{r knitr_opts, echo = FALSE, message = FALSE, warning = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -19,44 +19,49 @@ knitr::opts_chunk$set(
 )
 ```
 
-The direct output of `clustify` is a matrix of correlation coefficients. And for `clustify_lists` and `clustify_nudge`, positive scores. Built-in functions are available to visualize this results.
+The `clustifyr()` function outputs a matrix of correlation coefficients and `clustify_lists()` and `clustify_nudge()` output positive scores. `clustifyr` provides built-in functions to help visualize these results.
 
-## TSNE/UMAP
+## Plotting correlation coefficients
 
-```{r, warning = F, message = F}
+```{r "Run clustifyr", fig.height = 8, fig.width = 10}
 library(clustifyR)
-library(here)
+
+# Matrix of normalized single-cell RNA-seq counts
 full_pbmc4k_matrix <- clustifyrdata::pbmc4k_matrix
+
+# meta.data table containing cluster assignments for each cell 
 full_pbmc4k_meta <- clustifyrdata::pbmc4k_meta
 
-# clustify
+# Run clustifyr()
 res <- clustify(
-  input = full_pbmc4k_matrix,
-  metadata = full_pbmc4k_meta,
-  cluster_col = "cluster",
-  ref_mat = cbmc_ref,
-  query_genes = pbmc4k_vargenes
+  input = full_pbmc4k_matrix,     # matrix of normalized single-cell RNA-seq counts
+  metadata = full_pbmc4k_meta,    # meta.data table containing cluster assignments for each cell
+  ref_mat = cbmc_ref,             # reference matrix containing buld RNA-seq data for each cell type
+  query_genes = pbmc4k_vargenes,  # list of highly varible genes identified with Seurat
+  cluster_col = "cluster"         # name of column in meta.data containing cell clusters
 )
 
-# plot_cor generates a plot per reference cluster
-g <- plot_cor(
-  res,
-  full_pbmc4k_meta,
-  cluster_col = "cluster",
-  x = "tSNE_1", 
-  y = "tSNE_2"
+```
+
+```{r "Overlay corr coefficients on UMAP"}
+
+# plot_cor generates a plot for each reference cluster
+plot_cor(
+  cor_matrix = res,             # matrix of correlation coefficients from clustifyr()
+  metadata = full_pbmc4k_meta,  # meta.data table containing cluster assignments for each cell
+  cluster_col = "cluster"       # name of column in meta.data containing cell clusters
 )
-
-length(g) == ncol(cbmc_ref)
-
-g[[1]]
 
 # plot_best_call to view called identities in one plot
 plot_best_call(
-  res,
-  full_pbmc4k_meta,
-  do_label = T
+  cor_matrix = res,             # matrix of correlation coefficients from clustifyr()
+  metadata = full_pbmc4k_meta,  # meta.data table containing UMAP or tSNE data
+  do_label = TRUE,              # should the feature label be shown on each cluster?
+  do_legend = FALSE             # should the legend be shown?
 )
+
+
+
 
 # intentionally overcluster and clustify to assess idents
 # in this case, overclustered local averages agree with cluster clustify results
@@ -66,7 +71,9 @@ overcluster_test(
   cbmc_ref,
   cluster_col = "cluster",
   n = 5
-  )
+)
+
+
 
 # `clustify` against reference combinations also informs clustering
 # in this case, several clusters seems to be a mixture with neighboring idents
@@ -86,7 +93,7 @@ plot_best_call(
 ```
 
 ## Heatmap
-```{r, warning = F, message = F}
+```{r}
 res <- clustify(
   input = full_pbmc4k_matrix,
   metadata = full_pbmc4k_meta,
@@ -109,7 +116,7 @@ plot_cor_heatmap(res2)
 
 ## GSEA top hits per cluster
 Using the gsea method implemented, we can also convert reactome/GO/pathway gene lists into forms that can be scored and plotted.
-```{r, warning = F, message = F}
+```{r}
 # gene lists can be converted from gmt files (Broad)
 list_reactome <- gmt_to_list(here("c2.cp.reactome.v6.2.symbols.gmt"))
 
