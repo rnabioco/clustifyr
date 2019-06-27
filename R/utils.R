@@ -635,7 +635,7 @@ clustify_nudge.seurat <- function(input,
   if (seurat_out == FALSE) {
     df_temp
   } else {
-    cluster_info <- as.data.frame(use_seurat_meta(input, dr = dr, seurat3 = FALSE))
+    cluster_info <- as.data.frame(seurat_meta(input, dr = dr))
     df_temp_full <- dplyr::left_join(tibble::rownames_to_column(cluster_info, "rn"), df_temp, by = cluster_col)
     df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
     if ("Seurat" %in% loadedNamespaces()) {
