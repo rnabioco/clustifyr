@@ -1,6 +1,6 @@
 #' Function to convert labelled seurat object to avg expression matrix
 #'
-#' @param seurat_object seurat_object after tsne projections and clustering
+#' @param seurat_object seurat_object after tsne or umap projections and clustering
 #' @param cluster_col column name where classified cluster names are stored in seurat meta data, cannot be "rn"
 #' @param var_genes_only whether to keep only var_genes in the final matrix output, could also look up genes used for PCA
 #' @param assay_name any additional assay data, such as ADT, to include. If more than 1, pass a vector of names
@@ -53,7 +53,7 @@ use_seurat_comp <- function(seurat_object,
 
 #' Function to convert labelled seurat3 object to avg expression matrix
 #'
-#' @param seurat_object seurat_object after tsne projections and clustering
+#' @param seurat_object seurat_object after tsne or umap projections and clustering
 #' @param cluster_col column name where classified cluster names are stored in seurat meta data, cannot be "rn"
 #' @param var_genes_only whether to keep only var_genes in the final matrix output, could also look up genes used for PCA
 #' @param assay_name any additional assay data, such as ADT, to include. If more than 1, pass a vector of names
@@ -97,20 +97,21 @@ use_seurat3_comp <- function(seurat_object,
 
 #' Function to convert labelled seurat object to fully prepared metadata
 #'
-#' @param seurat_object seurat_object after tsne projections and clustering
+#' @param seurat_object seurat_object after tsne or umap projections and clustering
 #' @param dr dimension reduction method
 #' @param seurat3 if using newest version
 #' @export
 use_seurat_meta <- function(seurat_object,
-                            dr = "tsne",
+                            dr = "umap",
                             seurat3 = FALSE) {
+  dr2 <- dr
   if (class(seurat_object) == "Seurat") {
     seurat3 <- TRUE
   }
   if (seurat3 == FALSE) {
-    temp_dr <- as.data.frame(seurat_object@dr[[dr]]@cell.embeddings)
+    temp_dr <- as.data.frame(seurat_object@dr[[dr2]]@cell.embeddings)
   } else {
-    temp_dr <- as.data.frame(seurat_object@reductions[[dr]]@cell.embeddings)
+    temp_dr <- as.data.frame(seurat_object@reductions[[dr2]]@cell.embeddings)
   }
   temp_dr <- tibble::rownames_to_column(temp_dr, "rn")
   temp_meta <- tibble::rownames_to_column(seurat_object@meta.data, "rn")
@@ -120,7 +121,7 @@ use_seurat_meta <- function(seurat_object,
 
 #' Function to convert labelled object to avg expression matrix
 #'
-#' @param input object after tsne projections and clustering
+#' @param input object after tsne or umap projections and clustering
 #' @param cluster_col column name where classified cluster names are stored in seurat meta data, cannot be "rn"
 #' @param var_genes_only whether to keep only var.genes in the final matrix output, could also look up genes used for PCA
 #' @param assay_name any additional assay data, such as ADT, to include. If more than 1, pass a vector of names

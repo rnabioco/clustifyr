@@ -324,7 +324,7 @@ calculate_pathway_gsea <- function(mat,
 #' get best calls for each cluster
 #'
 #' @param correlation_matrix input similarity matrix
-#' @param metadata input metadata with tsne coordinates and cluster ids
+#' @param metadata input metadata with tsne or umap coordinates and cluster ids
 #' @param cluster_col metadata column, can be cluster or cellid
 #' @param collapse_to_cluster if a column name is provided, takes the most frequent call of entire cluster to color in plot
 #' @param threshold minimum correlation coefficent cutoff for calling clusters
@@ -410,7 +410,7 @@ assign_ident <- function(metadata,
 #' get top calls for each cluster
 #'
 #' @param correlation_matrix input similarity matrix
-#' @param metadata input metadata with tsne coordinates and cluster ids
+#' @param metadata input metadata with tsne or umap coordinates and cluster ids
 #' @param col metadata column, can be cluster or cellid
 #' @param collapse_to_cluster if a column name is provided, takes the most frequent call of entire cluster to color in plot
 #' @param threshold minimum correlation coefficent cutoff for calling clusters
@@ -586,7 +586,7 @@ clustify_nudge.seurat <- function(input,
                                   weight = 1,
                                   seurat_out = TRUE,
                                   threshold = -Inf,
-                                  dr = "tsne",
+                                  dr = "umap",
                                   norm = "diff",
                                   marker_inmatrix = TRUE,
                                   mode = "rank",
@@ -603,7 +603,8 @@ clustify_nudge.seurat <- function(input,
     cluster_col = cluster_col,
     query_genes = query_genes,
     seurat_out = FALSE,
-    per_cell = FALSE
+    per_cell = FALSE,
+    dr = dr
   )
 
   if (mode == "pct") {
@@ -675,7 +676,7 @@ clustify_nudge.default <- function(input,
                                    weight = 1,
                                    seurat_out = TRUE,
                                    threshold = -Inf,
-                                   dr = "tsne",
+                                   dr = "umap",
                                    norm = "diff",
                                    call = TRUE,
                                    marker_inmatrix = TRUE,
@@ -845,8 +846,8 @@ overcluster_test <- function(expr,
                              metadata,
                              ref_mat,
                              cluster_col,
-                             x_col = "tSNE_1",
-                             y_col = "tSNE_2",
+                             x_col = "UMAP_1",
+                             y_col = "UMAP_2",
                              n = 5,
                              ngenes = NULL,
                              query_genes = NULL,

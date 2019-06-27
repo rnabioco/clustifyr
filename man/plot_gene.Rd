@@ -2,16 +2,16 @@
 % Please edit documentation in R/plot.R
 \name{plot_gene}
 \alias{plot_gene}
-\title{Plot gene expression on to tSNE}
+\title{Plot gene expression on to tSNE or umap}
 \usage{
 plot_gene(expr_mat, metadata, genes, cell_col = NULL, ...)
 }
 \arguments{
 \item{expr_mat}{input single cell matrix}
 
-\item{metadata}{data.frame with tSNE coordinates}
+\item{metadata}{data.frame with tSNE or umap coordinates}
 
-\item{genes}{gene(s) to color tSNE}
+\item{genes}{gene(s) to color tSNE or umap}
 
 \item{cell_col}{column name in metadata containing cell ids, defaults
 to rownames if not supplied}
@@ -19,5 +19,5 @@ to rownames if not supplied}
 \item{...}{additional arguments passed to \code{[clustifyr::plot_tsne()]}}
 }
 \description{
-Plot gene expression on to tSNE
+Plot gene expression on to tSNE or umap
 }

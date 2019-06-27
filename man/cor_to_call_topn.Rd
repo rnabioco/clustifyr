@@ -10,7 +10,7 @@ cor_to_call_topn(correlation_matrix, metadata = NULL, col = "cluster",
 \arguments{
 \item{correlation_matrix}{input similarity matrix}
 
-\item{metadata}{input metadata with tsne coordinates and cluster ids}
+\item{metadata}{input metadata with tsne or umap coordinates and cluster ids}
 
 \item{col}{metadata column, can be cluster or cellid}
 
