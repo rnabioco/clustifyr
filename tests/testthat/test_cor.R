@@ -102,21 +102,25 @@ test_that("test permutation", {
 test_that("seurat object clustifying", {
   res <- clustify(s_small,
     pbmc_bulk_matrix,
-    cluster_col = "res.1"
+    cluster_col = "res.1",
+    dr = "tsne"
   )
   res <- clustify(s_small,
     pbmc_bulk_matrix,
     cluster_col = "res.1",
     seurat_out = FALSE,
-    per_cell = TRUE
+    per_cell = TRUE,
+    dr = "tsne"
   )
   res <- clustify(s_small,
     pbmc_bulk_matrix,
     cluster_col = "res.1",
-    seurat_out = FALSE
+    seurat_out = FALSE,
+    dr = "tsne"
   )
   g <- plot_best_call(res,
-    use_seurat_meta(s_small),
+    use_seurat_meta(s_small,
+                    dr = "tsne"),
     cluster_col = "res.1",
     plot_r = TRUE
   )
@@ -128,12 +132,14 @@ test_that("clustify reinserts seurat metadata correctly", {
     pbmc_bulk_matrix,
     cluster_col = "res.1",
     seurat_out = TRUE,
-    per_cell = TRUE
+    per_cell = TRUE,
+    dr = "tsne"
   )
   res2 <- clustify(s_small,
     pbmc_bulk_matrix,
     cluster_col = "res.1",
-    seurat_out = TRUE
+    seurat_out = TRUE,
+    dr = "tsne"
   )
   expect_true(class(res) %in% c("matrix", "seurat"))
 })
@@ -141,21 +147,25 @@ test_that("clustify reinserts seurat metadata correctly", {
 test_that("seurat3 object clustifying", {
   res <- clustify(s_small3,
     pbmc_bulk_matrix,
-    cluster_col = "RNA_snn_res.1"
+    cluster_col = "RNA_snn_res.1",
+    dr = "tsne"
   )
   res <- clustify(s_small3,
     pbmc_bulk_matrix,
     cluster_col = "RNA_snn_res.1",
     seurat_out = FALSE,
-    per_cell = TRUE
+    per_cell = TRUE,
+    dr = "tsne"
   )
   res <- clustify(s_small3,
     pbmc_bulk_matrix,
     cluster_col = "RNA_snn_res.1",
-    seurat_out = FALSE
+    seurat_out = FALSE,
+    dr = "tsne"
   )
   g <- plot_best_call(res,
-    use_seurat_meta(s_small3),
+    use_seurat_meta(s_small3,
+                    dr = "tsne"),
     cluster_col = "RNA_snn_res.1",
     plot_r = TRUE
   )
@@ -167,12 +177,14 @@ test_that("clustify reinserts seurat3 metadata correctly", {
     pbmc_bulk_matrix,
     cluster_col = "RNA_snn_res.1",
     seurat_out = TRUE,
-    per_cell = TRUE
+    per_cell = TRUE,
+    dr = "tsne"
   )
   res2 <- clustify(s_small3,
     pbmc_bulk_matrix,
     cluster_col = "RNA_snn_res.1",
-    seurat_out = TRUE
+    seurat_out = TRUE,
+    dr = "tsne"
   )
   expect_true(class(res) %in% c("matrix", "Seurat"))
 })

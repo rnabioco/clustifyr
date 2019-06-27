@@ -98,7 +98,8 @@ test_that("seurat object clustify_lists-ing", {
     marker_inmatrix = FALSE,
     metric = "jaccard",
     cluster_col = "res.1",
-    seurat_out = FALSE
+    seurat_out = FALSE,
+    dr = "tsne"
   )
   res <- clustify_lists(s_small,
     per_cell = FALSE,
@@ -106,12 +107,16 @@ test_that("seurat object clustify_lists-ing", {
     marker_inmatrix = FALSE,
     metric = "jaccard",
     cluster_col = "res.1",
-    seurat_out = FALSE
+    seurat_out = FALSE,
+    dr = "tsne"
   )
   g <- plot_best_call(res,
-    use_seurat_meta(s_small),
+    use_seurat_meta(s_small,
+                    dr = "tsne"),
     cluster_col = "res.1",
-    plot_r = TRUE
+    plot_r = TRUE,
+    x = "tSNE_1",
+    y = "tSNE_2"
   )
   expect_true(ggplot2::is.ggplot(g[[1]]))
 })
@@ -123,7 +128,8 @@ test_that("clustify_lists inserts seurat metadata correctly", {
     marker_inmatrix = FALSE,
     metric = "jaccard",
     cluster_col = "res.1",
-    seurat_out = TRUE
+    seurat_out = TRUE,
+    dr = "tsne"
   )
   res2 <- clustify_lists(s_small,
     per_cell = TRUE,
@@ -131,7 +137,8 @@ test_that("clustify_lists inserts seurat metadata correctly", {
     marker_inmatrix = FALSE,
     metric = "jaccard",
     cluster_col = "res.1",
-    seurat_out = TRUE
+    seurat_out = TRUE,
+    dr = "tsne"
   )
   expect_true(class(res) %in% c("matrix", "seurat"))
 })
@@ -143,7 +150,8 @@ test_that("seurat3 object clustify_lists-ing", {
     marker_inmatrix = FALSE,
     metric = "jaccard",
     cluster_col = "RNA_snn_res.1",
-    seurat_out = TRUE
+    seurat_out = TRUE,
+    dr = "tsne"
   )
   res <- clustify_lists(s_small3,
     per_cell = FALSE,
@@ -151,12 +159,16 @@ test_that("seurat3 object clustify_lists-ing", {
     marker_inmatrix = FALSE,
     metric = "jaccard",
     cluster_col = "RNA_snn_res.1",
-    seurat_out = FALSE
+    seurat_out = FALSE,
+    dr = "tsne"
   )
   g <- plot_best_call(res,
-    use_seurat_meta(s_small3),
+    use_seurat_meta(s_small3,
+                    dr = "tsne"),
     cluster_col = "RNA_snn_res.1",
-    plot_r = TRUE
+    plot_r = TRUE,
+    x = "tSNE_1",
+    y = "tSNE_2"
   )
   expect_true(ggplot2::is.ggplot(g[[1]]))
 })
@@ -168,7 +180,8 @@ test_that("clustify_lists inserts seurat3 metadata correctly", {
     marker_inmatrix = FALSE,
     metric = "jaccard",
     cluster_col = "RNA_snn_res.1",
-    seurat_out = TRUE
+    seurat_out = TRUE,
+    dr = "tsne"
   )
   res2 <- clustify_lists(s_small3,
     per_cell = TRUE,
@@ -176,7 +189,8 @@ test_that("clustify_lists inserts seurat3 metadata correctly", {
     marker_inmatrix = FALSE,
     metric = "jaccard",
     cluster_col = "RNA_snn_res.1",
-    seurat_out = TRUE
+    seurat_out = TRUE,
+    dr = "tsne"
   )
   expect_true(class(res) %in% c("matrix", "Seurat"))
 })

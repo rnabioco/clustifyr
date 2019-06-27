@@ -1,4 +1,4 @@
-#' Plot a tSNE colored by feature.
+#' Plot a tSNE or umap colored by feature.
 #'
 #' @param data input data
 #' @param x x variable
@@ -15,7 +15,7 @@
 #' @param do_label whether to label each cluster at median center
 #' @param do_legend whether to draw legend
 #' @export
-plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
+plot_tsne <- function(data, x = "UMAP_1", y = "UMAP_2",
                       feature,
                       legend_name = "",
                       c_cols = pretty_palette2,
@@ -36,8 +36,8 @@ plot_tsne <- function(data, x = "tSNE_1", y = "tSNE_2",
   # sort data to avoid plotting null values over colors
   data <- dplyr::arrange(data, !!dplyr::sym(feature))
 
-  p <- ggplot2::ggplot(data, aes_string(x, y)) +
-    geom_point(aes_string(color = paste0("`", feature, "`")), # backticks protect special character gene names
+  p <- ggplot2::ggplot(data, ggplot2::aes_string(x, y)) +
+    geom_point(ggplot2::aes_string(color = paste0("`", feature, "`")), # backticks protect special character gene names
       size = pt_size
     )
 
@@ -109,17 +109,17 @@ not_pretty_palette <- scales::brewer_pal(palette = "Greys")(9)
 #' @export
 pretty_palette_ramp_d <- grDevices::colorRampPalette(scales::brewer_pal(palette = "Paired")(12))
 
-#' Plot similarity measures on a tSNE
+#' Plot similarity measures on a tSNE or umap
 #'
 #' @param cor_matrix input similarity matrix
-#' @param metadata input metadata with per cell tsne coordinates and cluster ids
+#' @param metadata input metadata with per cell tsne or umap coordinates and cluster ids
 #' @param data_to_plot colname of data to plot, defaults to all
 #' @param cluster_col colname of clustering data in metadata, defaults to rownames of the
 #' metadata if not supplied.
 #' @param x metadata column name with 1st axis dimension.
-#' defaults to "tSNE_1".
+#' defaults to "UMAP_1".
 #' @param y metadata column name with 2nd axis dimension.
-#' defaults to "tSNE_2".
+#' defaults to "UMAP_2".
 #' @param scale_legends if TRUE scale all legends to maximum values in entire
 #' correlation matrix. if FALSE scale legends to maximum for each plot. A
 #' two-element numeric vector can also be passed to supply custom values i.e. c(0, 1)
@@ -130,8 +130,8 @@ plot_cor <- function(cor_matrix,
                      metadata,
                      data_to_plot = colnames(cor_matrix),
                      cluster_col = NULL,
-                     x = "tSNE_1",
-                     y = "tSNE_2",
+                     x = "UMAP_1",
+                     y = "UMAP_2",
                      scale_legends = FALSE,
                      ...) {
   if (!any(data_to_plot %in% colnames(cor_matrix))) {
@@ -198,11 +198,11 @@ plot_cor <- function(cor_matrix,
   plts
 }
 
-#' Plot gene expression on to tSNE
+#' Plot gene expression on to tSNE or umap
 #'
 #' @param expr_mat input single cell matrix
-#' @param metadata data.frame with tSNE coordinates
-#' @param genes gene(s) to color tSNE
+#' @param metadata data.frame with tSNE or umap coordinates
+#' @param genes gene(s) to color tSNE or umap
 #' @param cell_col column name in metadata containing cell ids, defaults
 #' to rownames if not supplied
 #' @param ... additional arguments passed to `[clustifyr::plot_tsne()]`
@@ -255,10 +255,10 @@ plot_gene <- function(expr_mat,
   )
 }
 
-#' Plot called clusters on a tSNE, for each reference cluster given
+#' Plot called clusters on a tSNE or umap, for each reference cluster given
 #'
 #' @param cor_matrix input similarity matrix
-#' @param metadata input metadata with tsne coordinates and cluster ids
+#' @param metadata input metadata with tsne or umap coordinates and cluster ids
 #' @param data_to_plot colname of data to plot, defaults to all
 #' @param ... passed to plot_tsne
 #'
@@ -278,10 +278,10 @@ plot_call <- function(cor_matrix,
   )
 }
 
-#' Plot best calls for each cluster on a tSNE
+#' Plot best calls for each cluster on a tSNE or umap
 #'
 #' @param cor_matrix input similarity matrix
-#' @param metadata input metadata with tsne coordinates and cluster ids
+#' @param metadata input metadata with tsne or umap coordinates and cluster ids
 #' @param cluster_col metadata column, can be cluster or cellid
 #' @param collapse_to_cluster if a column name is provided, takes the most frequent call of entire cluster to color in plot
 #' @param threshold minimum correlation coefficent cutoff for calling clusters
@@ -296,7 +296,7 @@ plot_best_call <- function(cor_matrix,
                            cluster_col = "cluster",
                            collapse_to_cluster = FALSE,
                            threshold = 0,
-                           x = "tSNE_1", y = "tSNE_2",
+                           x = "UMAP_1", y = "UMAP_2",
                            plot_r = FALSE,
                            ...) {
   col_meta <- colnames(metadata)
@@ -387,7 +387,7 @@ plot_cols <- function(metadata,
 
   ggplot2::ggplot(
     temp,
-    aes_string(
+    ggplot2::aes_string(
       x = colnames(temp)[4],
       y = colnames(temp)[3],
       label = "full"
@@ -414,7 +414,7 @@ plot_cols <- function(metadata,
 #' Plot similarity measures on heatmap
 #'
 #' @param cor_matrix input similarity matrix
-#' @param metadata input metadata with per cell tsne coordinates and cluster ids
+#' @param metadata input metadata with per cell tsne or umap cooordinates and cluster ids
 #' @param cluster_col colname of clustering data in metadata, defaults to rownames of the
 #' metadata if not supplied.
 #' @param col color ramp to use

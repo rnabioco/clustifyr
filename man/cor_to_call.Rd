@@ -11,7 +11,7 @@ cor_to_call(correlation_matrix, metadata = NULL,
 \arguments{
 \item{correlation_matrix}{input similarity matrix}
 
-\item{metadata}{input metadata with tsne coordinates and cluster ids}
+\item{metadata}{input metadata with tsne or umap coordinates and cluster ids}
 
 \item{cluster_col}{metadata column, can be cluster or cellid}
 

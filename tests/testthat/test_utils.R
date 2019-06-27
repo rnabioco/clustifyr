@@ -308,7 +308,8 @@ test_that("clustify_nudge works with options and seruat2", {
     cluster_col = "res.1",
     threshold = 0.8,
     seurat_out = FALSE,
-    mode = "pct"
+    mode = "pct",
+    dr = "tsne"
   )
   expect_true(nrow(res) == 4)
 })
@@ -320,7 +321,8 @@ test_that("clustify_nudge works with options and seruat3", {
     marker = cbmc_m,
     threshold = 0.8,
     seurat_out = FALSE,
-    mode = "pct"
+    mode = "pct",
+    dr = "tsne"
   )
   expect_true(nrow(res) == 3)
 })
@@ -334,7 +336,8 @@ test_that("clustify_nudge works with seurat_out option", {
     threshold = 0.8,
     seurat_out = FALSE,
     marker_inmatrix = FALSE,
-    mode = "pct"
+    mode = "pct",
+    dr = "tsne"
   )
   expect_true(nrow(res) == 4)
 })
@@ -645,13 +648,15 @@ test_that("renaming with suffix input works as intended with clusify wrapper", {
     input = s_small,
     ref_mat = pbmc_bulk_matrix,
     cluster_col = "res.1",
-    rename_suff = "a"
+    rename_suff = "a",
+    dr = "tsne"
   )
   res2 <- clustify(
     input = s_small3,
     ref_mat = pbmc_bulk_matrix,
     cluster_col = "RNA_snn_res.1",
-    rename_suff = "a"
+    rename_suff = "a",
+    dr = "tsne"
   )
   expect_true(!is.null(res))
 })
