@@ -4,7 +4,7 @@
 \name{object_loc_lookup}
 \alias{object_loc_lookup}
 \title{lookup table for single cell object structures}
-\format{XXX
+\format{dataframe
 \describe{
 }}
 \source{

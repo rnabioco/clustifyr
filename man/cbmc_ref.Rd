@@ -3,17 +3,17 @@
 \docType{data}
 \name{cbmc_ref}
 \alias{cbmc_ref}
-\title{reference matrix from seurat citeseq CBMC}
-\format{XXX
+\title{reference matrix from seurat citeseq CBMC tutorial}
+\format{expression matrix
 \describe{
 }}
 \source{
-\code{[seurat]} tutorial, averaged per cluster
+(https://satijalab.org/seurat/v3.0/multimodal_vignette.html#identify-differentially-expressed-proteins-between-clusters)
 }
 \usage{
 cbmc_ref
 }
 \description{
-reference matrix from seurat citeseq CBMC
+reference matrix from seurat citeseq CBMC tutorial
 }
 \keyword{datasets}

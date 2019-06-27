@@ -241,7 +241,9 @@ average_clusters_filter <- function(mat, cluster_info,
   }
 
   if (!is.null(group_by)) {
-    res <- average_clusters(mat, cluster_info,
+    res <- average_clusters(
+      mat, 
+      cluster_info,
       if_log = if_log,
       cluster_col = group_by
     )
@@ -274,7 +276,7 @@ remove_background <- function(mat, background, n = 0) {
 
   if (!is.vector(background)) {
     background <- background[order(background[, 1], decreasing = TRUE), , drop = FALSE]
-    background <- rownames(t3)[1:n]
+    background <- rownames(background)[1:n]
   } else if (!is.null(names(background))) {
     background <- names(sort(background, decreasing = TRUE)[1:n])
   }
