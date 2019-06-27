@@ -46,6 +46,7 @@ Imports:
     ggplot2,
     Matrix,
     readr,
+    rlang,
     scales,
     stringr,
     tibble,
