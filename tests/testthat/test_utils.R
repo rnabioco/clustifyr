@@ -501,13 +501,13 @@ test_that("get_best_str finds correct values", {
   expect_equal(stringr::str_sub(a, 1, 3), stringr::str_sub(a2, 1, 3))
 })
 
-test_that("use_seurat_comp gets correct averages", {
-  avg <- use_seurat_comp(
+test_that("seurat_ref gets correct averages", {
+  avg <- seurat_ref(
     s_small,
     cluster_col = "res.1",
     var_genes_only = TRUE
   )
-  avg2 <- use_seurat_comp(
+  avg2 <- seurat_ref(
     s_small,
     cluster_col = "res.1",
     var_genes_only = "PCA"
@@ -515,7 +515,15 @@ test_that("use_seurat_comp gets correct averages", {
   expect_true(ncol(avg) == 4)
 })
 
-test_that("use_object_comp gets correct averages", {
+test_that("object_ref with seurat3", {
+  s3 <- s_small3
+  avg <- object_ref(s3,
+                         var_genes_only = TRUE
+  )
+  expect_true(ncol(avg) == 3)
+})
+
+test_that("object_ref gets correct averages", {
   s3 <- s_small3
   class(s3) <- "ser3"
   object_loc_lookup2 <- data.frame(ser3 = c(
@@ -524,20 +532,20 @@ test_that("use_object_comp gets correct averages", {
     var = "input@assays$RNA@var.features",
     col = "RNA_snn_res.1"
   ), stringsAsFactors = FALSE)
-  avg <- use_object_comp(s3,
+  avg <- object_ref(s3,
     lookuptable = object_loc_lookup2,
     var_genes_only = TRUE
   )
   expect_true(ncol(avg) == 3)
 })
 
-test_that("use_seurat_comp gets other assay slots", {
-  avg <- use_seurat_comp(s_small,
+test_that("seurat_ref gets other assay slots", {
+  avg <- seurat_ref(s_small,
     cluster_col = "res.1",
     assay_name = "ADT",
     var_genes_only = TRUE
   )
-  avg2 <- use_seurat_comp(s_small,
+  avg2 <- seurat_ref(s_small,
     cluster_col = "res.1",
     assay_name = c("ADT", "ADT2"),
     var_genes_only = TRUE
@@ -545,18 +553,18 @@ test_that("use_seurat_comp gets other assay slots", {
   expect_true(nrow(avg2) - nrow(avg) == 2)
 })
 
-test_that("use_seurat_comp gets correct averages with seurat3 object", {
-  avg <- use_seurat_comp(s_small3,
+test_that("seurat_ref gets correct averages with seurat3 object", {
+  avg <- seurat_ref(s_small3,
     cluster_col = "RNA_snn_res.1",
     assay_name = c("ADT", "ADT2"),
     var_genes_only = TRUE
   )
-  avg <- use_seurat3_comp(s_small3,
+  avg <- seurat_ref(s_small3,
     cluster_col = "RNA_snn_res.1",
     assay_name = c("ADT"),
     var_genes_only = TRUE
   )
-  avg2 <- use_seurat_comp(s_small3,
+  avg2 <- seurat_ref(s_small3,
     cluster_col = "RNA_snn_res.1",
     assay_name = c("ADT", "ADT2"),
     var_genes_only = "PCA"
