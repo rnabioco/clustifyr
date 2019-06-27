@@ -29,3 +29,6 @@ list of expression, metadata, vargenes, cluster_col info from object
 \description{
 more flexible parsing of single cell objects
 }
+\examples{
+clustifyr_obj <- parse_loc_object(s_small3)
+}

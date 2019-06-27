@@ -19,3 +19,9 @@ expression matrix
 \description{
 make combination ref matrix to assess intermixing
 }
+\examples{
+ref2 <- make_comb_ref(
+  cbmc_ref,
+  sep = "_+_"
+)
+}

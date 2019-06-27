@@ -31,3 +31,6 @@ Extract genes, i.e. "features", based on the top
 loadings of principal components
 formed from the bulk expression data set
 }
+\examples{
+res <- feature_select_PCA(pbmc_bulk_matrix, if_log = FALSE)
+}
