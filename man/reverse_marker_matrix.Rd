@@ -9,6 +9,9 @@ reverse_marker_matrix(mat)
 \arguments{
 \item{mat}{matrix or dataframe of markers}
 }
+\value{
+matrix of gene names
+}
 \description{
 generate negative markers from a list of exclusive positive markers
 }

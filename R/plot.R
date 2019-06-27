@@ -14,6 +14,7 @@
 #' otherwise a two-element numeric vector indicating min and max to plot
 #' @param do_label whether to label each cluster at median center
 #' @param do_legend whether to draw legend
+#' @return ggplot object, cells projected by dr, colored by feature
 #' @export
 plot_tsne <- function(data, x = "UMAP_1", y = "UMAP_2",
                       feature,
@@ -93,19 +94,23 @@ plot_tsne <- function(data, x = "UMAP_1", y = "UMAP_2",
 }
 
 #' Color palette for plotting continous variables
+#' @return vector of colors
 #' @export
 pretty_palette <- rev(scales::brewer_pal(palette = "RdGy")(6))
 
 #' Color palette for plotting continous variables, starting at gray
+#' @return vector of colors
 #' @export
 pretty_palette2 <- scales::brewer_pal(palette = "Reds")(9)
 
 #' black and white palette for plotting continous variables
+#' @return vector of colors
 #' @export
 not_pretty_palette <- scales::brewer_pal(palette = "Greys")(9)
 
 #' Expanded color palette ramp for plotting discrete variables
 #' @param n number of colors to use
+#' @return color ramp
 #' @export
 pretty_palette_ramp_d <- grDevices::colorRampPalette(scales::brewer_pal(palette = "Paired")(12))
 
@@ -124,7 +129,7 @@ pretty_palette_ramp_d <- grDevices::colorRampPalette(scales::brewer_pal(palette 
 #' correlation matrix. if FALSE scale legends to maximum for each plot. A
 #' two-element numeric vector can also be passed to supply custom values i.e. c(0, 1)
 #' @param ... passed to plot_tsne
-#'
+#' @return list of ggplot objects, cells projected by dr, colored by cor values
 #' @export
 plot_cor <- function(cor_matrix,
                      metadata,
@@ -206,6 +211,7 @@ plot_cor <- function(cor_matrix,
 #' @param cell_col column name in metadata containing cell ids, defaults
 #' to rownames if not supplied
 #' @param ... additional arguments passed to `[clustifyr::plot_tsne()]`
+#' @return list of ggplot object, cells projected by dr, colored by gene expression
 #' @export
 plot_gene <- function(expr_mat,
                       metadata,
@@ -261,7 +267,7 @@ plot_gene <- function(expr_mat,
 #' @param metadata input metadata with tsne or umap coordinates and cluster ids
 #' @param data_to_plot colname of data to plot, defaults to all
 #' @param ... passed to plot_tsne
-#'
+#' @return list of ggplot object, cells projected by dr, colored by cell type classification
 #' @export
 plot_call <- function(cor_matrix,
                       metadata,
@@ -289,7 +295,7 @@ plot_call <- function(cor_matrix,
 #' @param y y variable
 #' @param plot_r whether to include second plot of cor eff for best call
 #' @param ... passed to plot_tsne
-#'
+#' @return ggplot object, cells projected by dr, colored by cell type classification
 #' @export
 plot_best_call <- function(cor_matrix,
                            metadata,
@@ -360,6 +366,7 @@ plot_best_call <- function(cor_matrix,
 #' @param metadata_ref reference single cell RNA seq metadata
 #' @param cluster_col_ref metadata column for cluster for reference
 #' @param plot_col_ref metadata column to plot for reference
+#' @return ggplot scatterplot
 #' @export
 plot_cols <- function(metadata,
                       cluster_col,
@@ -420,7 +427,7 @@ plot_cols <- function(metadata,
 #' @param col color ramp to use
 #' @param legend_title legend title to pass to Heatmap
 #' @param ... passed to Heatmap
-#'
+#' @return complexheatmap object
 #' @export
 plot_cor_heatmap <- function(cor_matrix,
                              metadata = NULL,

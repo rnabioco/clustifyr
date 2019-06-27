@@ -3,7 +3,7 @@
 #' @param mat single-cell expression matrix
 #' @param n number of top expressing genes to keep
 #' @param cut cut off to set to 0
-#'
+#' @return matrix of 1s and 0s
 #' @export
 binarize_expr <- function(mat,
                           n = 1000,
@@ -35,7 +35,7 @@ binarize_expr <- function(mat,
 #' @param metadata vector or dataframe of cluster names, should have column named cluster
 #' @param cluster_col column for cluster names to replace original cluster, if metadata is dataframe
 #' @param remove_rp do not include rps, rpl, rp1-9 in markers
-#'
+#' @return matrix of unranked gene marker names, or matrix of ranked expression
 #' @export
 matrixize_markers <- function(marker_df,
                               ranked = FALSE,
@@ -116,7 +116,7 @@ matrixize_markers <- function(marker_df,
 #' function parses variables genes from a matrix input.
 #'
 #' @param marker_mat matrix or dataframe of candidate genes for each cluster
-#'
+#' @return vector of marker gene names
 #' @export
 get_vargenes <- function(marker_mat) {
   if (rownames(marker_mat)[1] != "1") {
@@ -135,7 +135,7 @@ get_vargenes <- function(marker_mat) {
 #' @param metric adjusted p-value for hypergeometric test, or jaccard index
 #' @param output_high if true (by default to fit with rest of package),
 #' -log10 transform p-value
-#'
+#' @return matrix of numeric values, clusters from expr_mat as row names, cell types from marker_mat as column names
 #' @export
 compare_lists <- function(bin_mat,
                           marker_mat,

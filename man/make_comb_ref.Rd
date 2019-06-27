@@ -13,6 +13,9 @@ make_comb_ref(ref_mat, if_log = TRUE, sep = "_and_")
 
 \item{sep}{separator for name combinations}
 }
+\value{
+expression matrix
+}
 \description{
 make combination ref matrix to assess intermixing
 }

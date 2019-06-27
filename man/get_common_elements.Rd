@@ -9,6 +9,9 @@ get_common_elements(...)
 \arguments{
 \item{...}{vectors}
 }
+\value{
+vector of shared elements
+}
 \description{
 return entries found in all supplied vectors. If the vector supplied
 is NULL or NA, then it will be excluded from the comparision.

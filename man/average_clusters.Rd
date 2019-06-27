@@ -28,6 +28,9 @@ averaging will be done on unlogged data}
 
 \item{output_log}{whether to report log results}
 }
+\value{
+average expression matrix, with genes for row names, and clusters for column names
+}
 \description{
 #' Average expression values per cluster
 }

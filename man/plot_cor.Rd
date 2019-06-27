@@ -30,6 +30,9 @@ two-element numeric vector can also be passed to supply custom values i.e. c(0, 
 
 \item{...}{passed to plot_tsne}
 }
+\value{
+list of ggplot objects, cells projected by dr, colored by cor values
+}
 \description{
 Plot similarity measures on a tSNE or umap
 }

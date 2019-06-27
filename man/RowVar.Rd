@@ -11,6 +11,9 @@ RowVar(x, na.rm = TRUE)
 
 \item{na.rm}{logical. Should missing values (including NaN) be omitted from the calculations?}
 }
+\value{
+vector of numeric values
+}
 \description{
 get var per row for matrix
 }

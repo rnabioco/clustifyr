@@ -25,6 +25,7 @@ clustify <- function(input, ...) {
 #' @param lookuptable if not supplied, will look in built-in table for object parsing
 #' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param ... additional arguments to pass to compute_method function
+#' @return matrix of correlation values, clusters from input as row names, cell types from ref_mat as column names
 #' @export
 clustify.default <- function(input,
                              ref_mat,
@@ -148,7 +149,7 @@ clustify.default <- function(input,
 #' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param rename_suff suffix to add to type and r column names
 #' @param ... additional arguments to pass to compute_method function
-
+#' @return seurat2 object with type assigned in metadata, or matrix of correlation values, clusters from input as row names, cell types from ref_mat as column names
 #' @export
 clustify.seurat <- function(input,
                             ref_mat,
@@ -252,7 +253,7 @@ clustify.seurat <- function(input,
 #' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param rename_suff suffix to add to type and r column names
 #' @param ... additional arguments to pass to compute_method function
-
+#' @return seurat3 object with type assigned in metadata, or matrix of correlation values, clusters from input as row names, cell types from ref_mat as column names
 #' @export
 clustify.Seurat <- function(input,
                             ref_mat,
@@ -370,9 +371,8 @@ clustify_lists <- function(input, ...) {
 #' @param output_high if true (by default to fit with rest of package),
 #' -log10 transform p-value
 #' @param lookuptable if not supplied, will look in built-in table for object parsing
-
 #' @param ... passed to matrixize_markers
-#'
+#' @return matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
 #' @export
 
 clustify_lists.default <- function(input,
@@ -452,9 +452,8 @@ clustify_lists.default <- function(input,
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
 #' @param threshold identity calling minimum score threshold
-
 #' @param ... passed to matrixize_markers
-#'
+#' @return seurat2 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
 #' @export
 clustify_lists.seurat <- function(input,
                                   cluster_info = NULL,
@@ -534,7 +533,7 @@ clustify_lists.seurat <- function(input,
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
 #' @param threshold identity calling minimum score threshold
-
+#' @return seurat3 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
 #' @param ... passed to matrixize_markers
 clustify_lists.Seurat <- function(input,
                                   cluster_info = NULL,

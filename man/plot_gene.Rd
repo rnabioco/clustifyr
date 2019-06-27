@@ -18,6 +18,9 @@ to rownames if not supplied}
 
 \item{...}{additional arguments passed to \code{[clustifyr::plot_tsne()]}}
 }
+\value{
+list of ggplot object, cells projected by dr, colored by gene expression
+}
 \description{
 Plot gene expression on to tSNE or umap
 }

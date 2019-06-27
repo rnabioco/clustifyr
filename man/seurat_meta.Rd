@@ -21,6 +21,9 @@ seurat_meta(seurat_object, ...)
 
 \item{dr}{dimension reduction method}
 }
+\value{
+dataframe of metadata, including dimension reduction plotting info
+}
 \description{
 Function to convert labelled seurat object to fully prepared metadata
 }

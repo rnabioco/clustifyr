@@ -15,6 +15,9 @@ ref_marker_select(mat, cut = 0.5, arrange = TRUE, compto = 1)
 
 \item{compto}{compare max expression to the value of next 1 or more}
 }
+\value{
+dataframe, with gene, cluster, ratio columns
+}
 \description{
 marker selection from reference matrix
 }

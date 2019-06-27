@@ -24,7 +24,7 @@ top point 1 percent of genes with the largest loadings.}
 \item{if_log}{whether the data is already log transformed}
 }
 \value{
-The list of genes to use as features.
+vector of genes
 }
 \description{
 Extract genes, i.e. "features", based on the top
