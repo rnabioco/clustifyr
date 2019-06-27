@@ -325,7 +325,7 @@ calculate_pathway_gsea <- function(mat,
 #'
 #' @param correlation_matrix input similarity matrix
 #' @param metadata input metadata with tsne coordinates and cluster ids
-#' @param col metadata column, can be cluster or cellid
+#' @param cluster_col metadata column, can be cluster or cellid
 #' @param collapse_to_cluster if a column name is provided, takes the most frequent call of entire cluster to color in plot
 #' @param threshold minimum correlation coefficent cutoff for calling clusters
 #' @param rename_suff suffix to add to type and r column names
