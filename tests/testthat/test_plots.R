@@ -125,7 +125,7 @@ test_that("plot_best_call threshold works as intended, on per cell and collapsin
     per_cell = TRUE
   )
   call1 <- plot_best_call(res,
-    metadata = pbmc_meta %>% tibble::rownames_to_column("rn"),
+    metadata = pbmc_meta,
     cluster_col = "rn",
     collapse_to_cluster = "classified",
     threshold = 0.3

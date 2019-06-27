@@ -310,30 +310,24 @@ plot_best_call <- function(cor_matrix,
     warning('metadata column name clash of "type"/"type2"')
     return()
   }
-  df_temp <- tibble::as_tibble(cor_matrix, rownames = cluster_col)
-  df_temp <- tidyr::gather(df_temp, key = type, value = r, -!!cluster_col)
-  df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold, ", unassigned")
-  df_temp <- dplyr::top_n(dplyr::group_by_at(df_temp, 1), 1, r)
-  if (nrow(df_temp) != nrow(cor_matrix)) {
-    clash <- dplyr::group_by_at(df_temp, 1)
-    clash <- dplyr::summarize(clash, n = n())
-    clash <- dplyr::filter(clash, n > 1)
-    clash <- dplyr::pull(clash, 1)
-    df_temp[lapply(df_temp[, 1], FUN = function(x) x %in% clash)[[1]], 2] <- paste0(df_temp[["type"]][lapply(df_temp[, 1], FUN = function(x) x %in% clash)[[1]]], "-CLASH!")
-    df_temp <- dplyr::distinct(df_temp, exclude = "type", .keep_all = TRUE)
-  }
-  df_temp_full <- dplyr::left_join(metadata, df_temp, by = cluster_col)
+  df_temp <- cor_to_call(
+    cor_matrix,
+    metadata = metadata,
+    cluster_col = cluster_col,
+    threshold = threshold
+  )
+  
+  df_temp_full <- call_to_metadata(
+    df_temp,
+    metadata = metadata,
+    cluster_col = cluster_col
+  )
 
   if (collapse_to_cluster != FALSE) {
-    df_temp_full2 <- dplyr::mutate(df_temp_full, type2 = metadata[[collapse_to_cluster]])
-    df_temp_full2 <- dplyr::group_by(df_temp_full2, type, type2)
-    df_temp_full2 <- dplyr::summarize(df_temp_full2, sum = sum(r), n = n())
-    df_temp_full2 <- dplyr::group_by(df_temp_full2, type2)
-    df_temp_full2 <- dplyr::arrange(df_temp_full2, desc(n), desc(sum))
-    df_temp_full2 <- dplyr::filter(df_temp_full2, type != paste0("r<", threshold, ", unassigned"))
-    df_temp_full2 <- dplyr::slice(df_temp_full2, 1)
-    df_temp_full2 <- dplyr::right_join(df_temp_full2, select(df_temp_full, -type), by = stats::setNames(collapse_to_cluster, "type2"))
-    df_temp_full <- dplyr::mutate(df_temp_full2, type = tidyr::replace_na(type, paste0("r<", threshold, ", unassigned")))
+    df_temp_full <- collapse_to_cluster(df_temp_full,
+                        metadata,
+                        collapse_to_cluster,
+                        threshold = threshold)
   }
 
   g <- plot_tsne(df_temp_full,
