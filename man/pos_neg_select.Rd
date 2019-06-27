@@ -24,6 +24,9 @@ column of metadata if not supplied. Not required if running correlation per cell
 
 \item{...}{additional arguments to pass to compute_method function}
 }
+\value{
+matrix of numeric values, clusters from input as row names, cell types from ref_mat as column names
+}
 \description{
 adapt clustify to tweak score for pos and neg markers
 }

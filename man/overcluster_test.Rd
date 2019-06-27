@@ -33,6 +33,9 @@ overcluster_test(expr, metadata, ref_mat, cluster_col, x_col = "UMAP_1",
 
 \item{newclustering}{use kmeans if NULL on dr or col name for second column of clustering}
 }
+\value{
+faceted ggplot object
+}
 \description{
 compare clustering parameters and classification outcomes
 }

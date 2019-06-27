@@ -35,6 +35,9 @@ otherwise a two-element numeric vector indicating min and max to plot}
 
 \item{do_legend}{whether to draw legend}
 }
+\value{
+ggplot object, cells projected by dr, colored by feature
+}
 \description{
 Plot a tSNE or umap colored by feature.
 }

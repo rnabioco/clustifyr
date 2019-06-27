@@ -26,6 +26,9 @@ averaging will be done on unlogged data}
 
 \item{filter_value}{baseline minimum as background cutoff}
 }
+\value{
+average expression matrix, with genes for row names, and clusters for column names
+}
 \description{
 Average expression values per cluster, filtered by set parameter, defaults to calculating background
 }
