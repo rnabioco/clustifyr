@@ -11,15 +11,15 @@ cor_to_call(correlation_matrix, metadata = NULL,
 \arguments{
 \item{correlation_matrix}{input similarity matrix}
 
-\item{metadata}{input metadata with tsne coordinates and cluster ids}
+\item{metadata}{input metadata with tsne or umap coordinates and cluster ids}
+
+\item{cluster_col}{metadata column, can be cluster or cellid}
 
 \item{collapse_to_cluster}{if a column name is provided, takes the most frequent call of entire cluster to color in plot}
 
 \item{threshold}{minimum correlation coefficent cutoff for calling clusters}
 
 \item{rename_suff}{suffix to add to type and r column names}
-
-\item{col}{metadata column, can be cluster or cellid}
 }
 \description{
 get best calls for each cluster

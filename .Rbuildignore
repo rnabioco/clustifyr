@@ -7,3 +7,4 @@
 ^\.travis\.yml$
 ^travis_setup\.sh$
 ^README\.Rmd$
+^data-raw$

@@ -93,6 +93,9 @@ clustify.default <- function(input,
       stop("metadata not formatted correctly,
            supply either a character vector or a dataframe")
     }
+    if (class(cluster_ids) == "factor") {
+      cluster_ids <- as.character(cluster_ids)
+    }
     cluster_ids[is.na(cluster_ids)] <- "orig.NA"
   }
 
@@ -155,7 +158,7 @@ clustify.seurat <- function(input,
                             n_perm = 0,
                             compute_method = "spearman",
                             use_var_genes = TRUE,
-                            dr = "tsne",
+                            dr = "umap",
                             seurat_out = TRUE,
                             threshold = 0,
                             verbose = FALSE,
@@ -165,7 +168,7 @@ clustify.seurat <- function(input,
   s_object <- input
   # for seurat < 3.0
   expr_mat <- s_object@data
-  metadata <- use_seurat_meta(s_object, dr = dr, seurat3 = FALSE)
+  metadata <- seurat_meta(s_object, dr = dr)
 
   if (use_var_genes & is.null(query_genes)) {
     query_genes <- s_object@var.genes
@@ -205,7 +208,7 @@ clustify.seurat <- function(input,
       clash <- dplyr::filter(clash, n > 1)
       clash <- dplyr::pull(clash, rn)
       df_temp <- dplyr::mutate(df_temp, type = ifelse(rn %in% clash, paste0(type, "-CLASH!"), type))
-      df_temp <- dplyr::distinct(df_temp, rn, r, .keep_all = TRUE)
+      df_temp <- dplyr::distinct(df_temp, !!sym("rn"), r, .keep_all = TRUE)
     }
     if (per_cell == FALSE) {
       df_temp <- dplyr::rename(df_temp, !!cluster_col := rn)
@@ -259,7 +262,7 @@ clustify.Seurat <- function(input,
                             n_perm = 0,
                             compute_method = "spearman",
                             use_var_genes = TRUE,
-                            dr = "tsne",
+                            dr = "umap",
                             seurat_out = TRUE,
                             threshold = 0,
                             verbose = FALSE,
@@ -269,7 +272,7 @@ clustify.Seurat <- function(input,
   s_object <- input
   # for seurat 3.0 +
   expr_mat <- s_object@assays$RNA@data
-  metadata <- use_seurat_meta(s_object, dr = dr, seurat3 = TRUE)
+  metadata <- seurat_meta(s_object, dr = dr)
 
   if (use_var_genes & is.null(query_genes)) {
     query_genes <- s_object@assays$RNA@var.features
@@ -465,14 +468,14 @@ clustify_lists.seurat <- function(input,
                                   genome_n = 30000,
                                   metric = "hyper",
                                   output_high = TRUE,
-                                  dr = "tsne",
+                                  dr = "umap",
                                   seurat_out = TRUE,
                                   threshold = 0,
                                   ...) {
   s_object <- input
   # for seurat < 3.0
   input <- s_object@data
-  cluster_info <- as.data.frame(use_seurat_meta(s_object, dr = dr, seurat3 = FALSE))
+  cluster_info <- as.data.frame(seurat_meta(s_object, dr = dr))
 
   res <- clustify_lists(input,
     per_cell = per_cell,
@@ -545,14 +548,14 @@ clustify_lists.Seurat <- function(input,
                                   genome_n = 30000,
                                   metric = "hyper",
                                   output_high = TRUE,
-                                  dr = "tsne",
+                                  dr = "umap",
                                   seurat_out = TRUE,
                                   threshold = 0,
                                   ...) {
   s_object <- input
   # for seurat 3.0 +
   input <- s_object@assays$RNA@data
-  cluster_info <- as.data.frame(use_seurat_meta(s_object, dr = dr, seurat3 = TRUE))
+  cluster_info <- as.data.frame(seurat_meta(s_object, dr = dr))
 
   res <- clustify_lists(input,
     per_cell = per_cell,

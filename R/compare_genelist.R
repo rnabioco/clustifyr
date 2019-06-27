@@ -32,7 +32,7 @@ binarize_expr <- function(mat,
 #' @param background_weight ranked genes are tranformed into pseudo expression with
 #' added weight
 #' @param unique whether to use only unique markers to 1 cluster
-#' @param metadata vector or dataframe of cluster names
+#' @param metadata vector or dataframe of cluster names, should have column named cluster
 #' @param cluster_col column for cluster names to replace original cluster, if metadata is dataframe
 #' @param remove_rp do not include rps, rpl, rp1-9 in markers
 #'

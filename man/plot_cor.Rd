@@ -2,16 +2,16 @@
 % Please edit documentation in R/plot.R
 \name{plot_cor}
 \alias{plot_cor}
-\title{Plot similarity measures on a tSNE}
+\title{Plot similarity measures on a tSNE or umap}
 \usage{
 plot_cor(cor_matrix, metadata, data_to_plot = colnames(cor_matrix),
-  cluster_col = NULL, x = "tSNE_1", y = "tSNE_2",
+  cluster_col = NULL, x = "UMAP_1", y = "UMAP_2",
   scale_legends = FALSE, ...)
 }
 \arguments{
 \item{cor_matrix}{input similarity matrix}
 
-\item{metadata}{input metadata with per cell tsne coordinates and cluster ids}
+\item{metadata}{input metadata with per cell tsne or umap coordinates and cluster ids}
 
 \item{data_to_plot}{colname of data to plot, defaults to all}
 
@@ -19,10 +19,10 @@ plot_cor(cor_matrix, metadata, data_to_plot = colnames(cor_matrix),
 metadata if not supplied.}
 
 \item{x}{metadata column name with 1st axis dimension.
-defaults to "tSNE_1".}
+defaults to "UMAP_1".}
 
 \item{y}{metadata column name with 2nd axis dimension.
-defaults to "tSNE_2".}
+defaults to "UMAP_2".}
 
 \item{scale_legends}{if TRUE scale all legends to maximum values in entire
 correlation matrix. if FALSE scale legends to maximum for each plot. A
@@ -31,5 +31,5 @@ two-element numeric vector can also be passed to supply custom values i.e. c(0, 
 \item{...}{passed to plot_tsne}
 }
 \description{
-Plot similarity measures on a tSNE
+Plot similarity measures on a tSNE or umap
 }

@@ -275,7 +275,9 @@ average_clusters_filter <- function(mat, cluster_info,
   }
 
   if (!is.null(group_by)) {
-    res <- average_clusters(mat, cluster_info,
+    res <- average_clusters(
+      mat, 
+      cluster_info,
       if_log = if_log,
       cluster_col = group_by
     )
@@ -308,7 +310,7 @@ remove_background <- function(mat, background, n = 0) {
 
   if (!is.vector(background)) {
     background <- background[order(background[, 1], decreasing = TRUE), , drop = FALSE]
-    background <- rownames(t3)[1:n]
+    background <- rownames(background)[1:n]
   } else if (!is.null(names(background))) {
     background <- names(sort(background, decreasing = TRUE)[1:n])
   }
@@ -356,8 +358,8 @@ calculate_pathway_gsea <- function(mat,
 #' get best calls for each cluster
 #'
 #' @param correlation_matrix input similarity matrix
-#' @param metadata input metadata with tsne coordinates and cluster ids
-#' @param col metadata column, can be cluster or cellid
+#' @param metadata input metadata with tsne or umap coordinates and cluster ids
+#' @param cluster_col metadata column, can be cluster or cellid
 #' @param collapse_to_cluster if a column name is provided, takes the most frequent call of entire cluster to color in plot
 #' @param threshold minimum correlation coefficent cutoff for calling clusters
 #' @param rename_suff suffix to add to type and r column names
@@ -442,7 +444,7 @@ assign_ident <- function(metadata,
 #' get top calls for each cluster
 #'
 #' @param correlation_matrix input similarity matrix
-#' @param metadata input metadata with tsne coordinates and cluster ids
+#' @param metadata input metadata with tsne or umap coordinates and cluster ids
 #' @param col metadata column, can be cluster or cellid
 #' @param collapse_to_cluster if a column name is provided, takes the most frequent call of entire cluster to color in plot
 #' @param threshold minimum correlation coefficent cutoff for calling clusters
@@ -618,7 +620,7 @@ clustify_nudge.seurat <- function(input,
                                   weight = 1,
                                   seurat_out = TRUE,
                                   threshold = -Inf,
-                                  dr = "tsne",
+                                  dr = "umap",
                                   norm = "diff",
                                   marker_inmatrix = TRUE,
                                   mode = "rank",
@@ -635,7 +637,8 @@ clustify_nudge.seurat <- function(input,
     cluster_col = cluster_col,
     query_genes = query_genes,
     seurat_out = FALSE,
-    per_cell = FALSE
+    per_cell = FALSE,
+    dr = dr
   )
 
   if (mode == "pct") {
@@ -666,7 +669,7 @@ clustify_nudge.seurat <- function(input,
   if (seurat_out == FALSE) {
     df_temp
   } else {
-    cluster_info <- as.data.frame(use_seurat_meta(input, dr = dr, seurat3 = FALSE))
+    cluster_info <- as.data.frame(seurat_meta(input, dr = dr))
     df_temp_full <- dplyr::left_join(tibble::rownames_to_column(cluster_info, "rn"), df_temp, by = cluster_col)
     df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
     if ("Seurat" %in% loadedNamespaces()) {
@@ -707,7 +710,7 @@ clustify_nudge.default <- function(input,
                                    weight = 1,
                                    seurat_out = TRUE,
                                    threshold = -Inf,
-                                   dr = "tsne",
+                                   dr = "umap",
                                    norm = "diff",
                                    call = TRUE,
                                    marker_inmatrix = TRUE,
@@ -877,8 +880,8 @@ overcluster_test <- function(expr,
                              metadata,
                              ref_mat,
                              cluster_col,
-                             x_col = "tSNE_1",
-                             y_col = "tSNE_2",
+                             x_col = "UMAP_1",
+                             y_col = "UMAP_2",
                              n = 5,
                              ngenes = NULL,
                              query_genes = NULL,

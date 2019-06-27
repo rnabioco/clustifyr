@@ -2,9 +2,9 @@
 % Please edit documentation in R/plot.R
 \name{plot_tsne}
 \alias{plot_tsne}
-\title{Plot a tSNE colored by feature.}
+\title{Plot a tSNE or umap colored by feature.}
 \usage{
-plot_tsne(data, x = "tSNE_1", y = "tSNE_2", feature,
+plot_tsne(data, x = "UMAP_1", y = "UMAP_2", feature,
   legend_name = "", c_cols = pretty_palette2, d_cols = NULL,
   pt_size = 0.25, scale_limits = NULL, do_label = FALSE,
   do_legend = TRUE)
@@ -36,5 +36,5 @@ otherwise a two-element numeric vector indicating min and max to plot}
 \item{do_legend}{whether to draw legend}
 }
 \description{
-Plot a tSNE colored by feature.
+Plot a tSNE or umap colored by feature.
 }
