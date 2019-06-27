@@ -34,6 +34,7 @@ res <- clustify(
   query_genes = pbmc_vargenes,
   cluster_col = "classified"
 )
+
 call1 <- cor_to_call_topn(
   res,
   metadata = pbmc_meta,

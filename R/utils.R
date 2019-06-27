@@ -417,15 +417,16 @@ calculate_pathway_gsea <- function(mat,
 #' @param idents new idents to assign, must be length of 1 or same as clusters
 #' @return new dataframe of metadata
 #' @examples
-#' pbmc_meta2 <- assign_ident(
-#'   pbmc_meta,
-#'   cluster_col = "seurat_clusters",
-#'   ident_col = "type",
-#'   clusters = c(1,2,5),
-#'   idents = c("primary human T cells",
-#'              "primary human monocytes",
-#'              "primary human myeloid DC")
-#' )
+#'  pbmc_meta2 <- assign_ident(
+#'    pbmc_meta,
+#'    cluster_col = "seurat_clusters",
+#'    ident_col = "type",
+#'    clusters = c(1,2,5),
+#'    idents = c("primary human T cells",
+#'               "primary human monocytes",
+#'               "primary human myeloid DC"
+#'               )
+#'  )
 #' @export
 assign_ident <- function(metadata,
                          cluster_col = "cluster",
@@ -466,6 +467,7 @@ assign_ident <- function(metadata,
 #'   query_genes = pbmc_vargenes,
 #'   cluster_col = "classified"
 #' )
+#'
 #' call1 <- cor_to_call_topn(
 #'   res,
 #'   metadata = pbmc_meta,
@@ -567,10 +569,11 @@ gene_pct <- function(matrix,
 #' @param norm whether and how the results are normalized
 #' @return matrix of numeric values, clusters from mat as row names, cell types from marker_m as column names
 #' @examples
-#' res <- gene_pct_markerm(pbmc_matrix_small,
-#'                          cbmc_m,
-#'                          pbmc_meta,
-#'                          cluster_col = "classified"
+#' res <- gene_pct_markerm(
+#'   pbmc_matrix_small,
+#'   cbmc_m,
+#'   pbmc_meta,
+#'   cluster_col = "classified"
 #' )
 #' @export
 gene_pct_markerm <- function(matrix,
@@ -1218,7 +1221,10 @@ ref_feature_select <- function(mat,
 #' @param if_log whether the data is already log transformed
 #' @return vector of genes
 #' @examples
-#' res <- feature_select_PCA(pbmc_bulk_matrix, if_log = FALSE)
+#' res <- feature_select_PCA(
+#'   pbmc_bulk_matrix,
+#'   if_log = FALSE
+#' )
 #' @export
 feature_select_PCA <- function(mat = NULL,
                                pcs = NULL,
@@ -1300,7 +1306,11 @@ gmt_to_list <- function(path,
 #'   pbmc_meta,
 #'   cluster_col = "classified")
 #'
-#' g <- plot_pathway_gsea(pbmc_avg, gl, 5)}
+#' g <- plot_pathway_gsea(
+#'   pbmc_avg,
+#'   gl,
+#'   5
+#' )}
 #' @export
 plot_pathway_gsea <- function(mat,
                               pathway_list,
@@ -1427,7 +1437,10 @@ make_comb_ref <- function(ref_mat, if_log = TRUE, sep = "_and_") {
 #' @param compto compare max expression to the value of next 1 or more
 #' @return dataframe, with gene, cluster, ratio columns
 #' @examples
-#' res1 <- ref_marker_select(cbmc_ref, cut = 2)
+#' res1 <- ref_marker_select(
+#'   cbmc_ref,
+#'   cut = 2
+#' )
 #' @export
 ref_marker_select <- function(mat, cut = 0.5, arrange = TRUE, compto = 1) {
   mat <- mat[!is.na(rownames(mat)), ]
@@ -1493,6 +1506,7 @@ marker_select <- function(row1, cols, cut = 1, compto = 1) {
 #'     "Myeloid" = c(1, 0.01, 0),
 #'     row.names = c("CD74", "clustifyr0", "CD79A")
 #'   )
+#'
 #'   res <- pos_neg_select(
 #'     pbmc_matrix_small,
 #'     pn_ref,

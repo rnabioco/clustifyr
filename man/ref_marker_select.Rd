@@ -22,5 +22,8 @@ dataframe, with gene, cluster, ratio columns
 marker selection from reference matrix
 }
 \examples{
-res1 <- ref_marker_select(cbmc_ref, cut = 2)
+res1 <- ref_marker_select(
+  cbmc_ref,
+  cut = 2
+)
 }

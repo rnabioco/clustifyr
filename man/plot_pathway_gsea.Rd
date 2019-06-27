@@ -37,5 +37,9 @@ pbmc_avg <- average_clusters(
   pbmc_meta,
   cluster_col = "classified")
 
-g <- plot_pathway_gsea(pbmc_avg, gl, 5)}
+g <- plot_pathway_gsea(
+  pbmc_avg,
+  gl,
+  5
+)}
 }

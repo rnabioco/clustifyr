@@ -35,6 +35,7 @@ adapt clustify to tweak score for pos and neg markers
     "Myeloid" = c(1, 0.01, 0),
     row.names = c("CD74", "clustifyr0", "CD79A")
   )
+
   res <- pos_neg_select(
     pbmc_matrix_small,
     pn_ref,
