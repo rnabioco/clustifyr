@@ -321,6 +321,7 @@ test_that("clustify_nudge works with options and seruat3", {
     marker = cbmc_m,
     threshold = 0.8,
     seurat_out = FALSE,
+    cluster_col = "RNA_snn_res.1",
     mode = "pct",
     dr = "tsne"
   )
@@ -340,6 +341,33 @@ test_that("clustify_nudge works with seurat_out option", {
     dr = "tsne"
   )
   expect_true(nrow(res) == 4)
+})
+
+test_that("clustify_nudge.Seurat works with seurat_out option", {
+  res <- clustify_nudge(
+    input = s_small3,
+    ref_mat = cbmc_ref,
+    marker = cbmc_m,
+    cluster_col = "RNA_snn_res.1",
+    threshold = 0.8,
+    seurat_out = T,
+    marker_inmatrix = FALSE,
+    mode = "pct",
+    dr = "tsne"
+  )
+  
+  res <- clustify_nudge(
+    input = s_small3,
+    ref_mat = cbmc_ref,
+    marker = cbmc_m,
+    cluster_col = "RNA_snn_res.1",
+    threshold = 0.8,
+    seurat_out = FALSE,
+    marker_inmatrix = FALSE,
+    mode = "pct",
+    dr = "tsne"
+  )
+  expect_true(nrow(res) == 3)
 })
 
 test_that("clustify_nudge works with list of markers", {

@@ -322,61 +322,6 @@ calculate_pathway_gsea <- function(mat,
   res
 }
 
-#' get best calls for each cluster
-#'
-#' @param correlation_matrix input similarity matrix
-#' @param metadata input metadata with tsne or umap coordinates and cluster ids
-#' @param cluster_col metadata column, can be cluster or cellid
-#' @param collapse_to_cluster if a column name is provided, takes the most frequent call of entire cluster to color in plot
-#' @param threshold minimum correlation coefficent cutoff for calling clusters
-#' @param rename_suff suffix to add to type and r column names
-#' @return dataframe of cluster, new ident, and r info
-#' @export
-cor_to_call <- function(correlation_matrix,
-                        metadata = NULL,
-                        cluster_col = "cluster",
-                        collapse_to_cluster = FALSE,
-                        threshold = 0,
-                        rename_suff = NULL) {
-  df_temp <- tibble::as_tibble(correlation_matrix, rownames = cluster_col)
-  df_temp <- tidyr::gather(df_temp, key = type, value = r, -!!cluster_col)
-  df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold, ", unassigned")
-  df_temp <- dplyr::top_n(dplyr::group_by_at(df_temp, 1), 1, r)
-  if (nrow(df_temp) != nrow(correlation_matrix)) {
-    clash <- dplyr::summarize(dplyr::group_by_at(df_temp, 1), n = n())
-    clash <- dplyr::filter(clash, n > 1)
-    clash <- dplyr::pull(clash, 1)
-    df_temp[lapply(df_temp[, 1], FUN = function(x) x %in% clash)[[1]], 2] <- paste0(df_temp[["type"]][lapply(df_temp[, 1], FUN = function(x) x %in% clash)[[1]]], "-CLASH!")
-    df_temp <- dplyr::distinct(df_temp, exclude = "type", .keep_all = TRUE)
-    df_temp_full <- dplyr::select(df_temp, -exclude)
-  } else {
-    df_temp_full <- df_temp
-  }
-
-  if (collapse_to_cluster != FALSE) {
-    if (!(cluster_col %in% colnames(metadata))) {
-      metadata <- tibble::as_tibble(metadata, rownames = cluster_col)
-    }
-    df_temp_full <- dplyr::left_join(df_temp_full, metadata, by = cluster_col)
-    df_temp_full[, "type2"] <- df_temp_full[[collapse_to_cluster]]
-    df_temp_full2 <- dplyr::group_by(df_temp_full, type, type2)
-    df_temp_full2 <- dplyr::summarize(df_temp_full2, sum = sum(r), n = n())
-    df_temp_full2 <- dplyr::group_by(df_temp_full2, type2)
-    df_temp_full2 <- dplyr::arrange(df_temp_full2, desc(n), desc(sum))
-    df_temp_full2 <- dplyr::filter(df_temp_full2, type != paste0("r<", threshold, ", unassigned"))
-    df_temp_full2 <- dplyr::slice(df_temp_full2, 1)
-    df_temp_full2 <- dplyr::right_join(df_temp_full2, dplyr::select(df_temp_full, -type), by = stats::setNames(collapse_to_cluster, "type2"))
-    df_temp_full <- dplyr::mutate(df_temp_full2, type = tidyr::replace_na(type, paste0("r<", threshold, ", unassigned")))
-    eval(parse(text = paste0("df_temp_full <- dplyr::rename(df_temp_full,", collapse_to_cluster, " = type2.y)")))
-    df_temp_full <- dplyr::select(dplyr::ungroup(df_temp_full), -type2)
-  }
-
-  if (!is.null(rename_suff)) {
-    eval(parse(text = paste0("df_temp_full <- dplyr::rename(df_temp_full, ", paste0(rename_suff, "_type"), " = type, ", paste0(rename_suff, "_r"), " = r)")))
-  }
-  df_temp_full
-}
-
 #' manually change idents as needed
 #'
 #' @param metadata column of ident
@@ -575,6 +520,7 @@ clustify_nudge <- function(input, ...) {
 #' @param norm whether and how the results are normalized
 #' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
 #' @param mode use marker expression pct or ranked cor score for nudging
+#' @param rename_suff suffix to add to type and r column names
 #' @param ... passed to matrixize_markers
 #' @return seurat2 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
 #' @export
@@ -591,6 +537,7 @@ clustify_nudge.seurat <- function(input,
                                   norm = "diff",
                                   marker_inmatrix = TRUE,
                                   mode = "rank",
+                                  rename_suff = NULL,
                                   ...) {
   if (marker_inmatrix != TRUE) {
     marker <- matrixize_markers(
@@ -627,25 +574,137 @@ clustify_nudge.seurat <- function(input,
     resb <- cbind(resb, empty_mat)
   }
 
-  df_temp <- cor_to_call(resa[order(rownames(resa)), order(colnames(resa))] +
-    resb[order(rownames(resb)), order(colnames(resb))] * weight,
-  threshold = threshold
-  )
-  colnames(df_temp) <- c(cluster_col, "type", "score")
+  res <- resa[order(rownames(resa)), order(colnames(resa))] +
+    resb[order(rownames(resb)), order(colnames(resb))] * weight
 
   if (seurat_out == FALSE) {
-    df_temp
+    res
   } else {
-    cluster_info <- as.data.frame(seurat_meta(input, dr = dr))
-    df_temp_full <- dplyr::left_join(tibble::rownames_to_column(cluster_info, "rn"), df_temp, by = cluster_col)
-    df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
+    df_temp <- cor_to_call(
+      res,
+      metadata = input@meta.data,
+      cluster_col = cluster_col,
+      threshold = threshold
+    )
+    
+    df_temp_full <- call_to_metadata(
+      df_temp,
+      metadata = input@meta.data,
+      cluster_col = cluster_col,
+      per_cell = FALSE,
+      rename_suff = rename_suff
+    )
+    
     if ("Seurat" %in% loadedNamespaces()) {
       input@meta.data <- df_temp_full
       return(input)
     } else {
       message("seurat not loaded, returning cor_mat instead")
-      return(df_temp)
+      return(res)
     }
+    input
+  }
+}
+
+#' @rdname clustify_nudge
+#' @param input seurat 3 object
+#' @param ref_mat reference expression matrix
+#' @param marker matrix of markers
+#' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
+#' the expr_mat and ref_mat will be used for comparision.
+#' @param cluster_col column in metadata that contains cluster ids per cell. Will default to first
+#' column of metadata if not supplied. Not required if running correlation per cell.
+#' @param compute_method method(s) for computing similarity scores
+#' @param weight relative weight for the gene list scores, when added to correlation score
+#' @param dr stored dimension reduction
+#' @param seurat_out output cor matrix or called seurat object
+#' @param threshold identity calling minimum score threshold
+#' @param norm whether and how the results are normalized
+#' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
+#' @param mode use marker expression pct or ranked cor score for nudging
+#' @param rename_suff suffix to add to type and r column names
+#' @param ... passed to matrixize_markers
+#' @return seurat3 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
+#' @export
+clustify_nudge.Seurat <- function(input,
+                                  ref_mat,
+                                  marker,
+                                  cluster_col = NULL,
+                                  query_genes = NULL,
+                                  compute_method = "spearman",
+                                  weight = 1,
+                                  seurat_out = TRUE,
+                                  threshold = -Inf,
+                                  dr = "umap",
+                                  norm = "diff",
+                                  marker_inmatrix = TRUE,
+                                  mode = "rank",
+                                  rename_suff = NULL,
+                                  ...) {
+  if (marker_inmatrix != TRUE) {
+    marker <- matrixize_markers(
+      marker,
+      ...
+    )
+  }
+  resa <- clustify(
+    input = input,
+    ref_mat = ref_mat,
+    cluster_col = cluster_col,
+    query_genes = query_genes,
+    seurat_out = FALSE,
+    per_cell = FALSE,
+    dr = dr
+  )
+  
+  if (mode == "pct") {
+    resb <- gene_pct_markerm(input@assays$RNA@data,
+                             marker,
+                             input@meta.data,
+                             cluster_col = cluster_col,
+                             norm = norm
+    )
+  } else if (mode == "rank") {
+    resb <- pos_neg_select(input@assays$RNA@data,
+                           marker,
+                           metadata = input@meta.data,
+                           cluster_col = cluster_col,
+                           cutoff_score = norm
+    )
+    empty_vec <- setdiff(colnames(resa), colnames(resb))
+    empty_mat <- matrix(0, nrow = nrow(resb), ncol = length(empty_vec), dimnames = list(rownames(resb), empty_vec))
+    resb <- cbind(resb, empty_mat)
+  }
+  
+  res <- resa[order(rownames(resa)), order(colnames(resa))] +
+    resb[order(rownames(resb)), order(colnames(resb))] * weight
+  
+  if (seurat_out == FALSE) {
+    res
+  } else {
+    df_temp <- cor_to_call(
+      res,
+      metadata = input@meta.data,
+      cluster_col = cluster_col,
+      threshold = threshold
+    )
+    
+    df_temp_full <- call_to_metadata(
+      df_temp,
+      metadata = input@meta.data,
+      cluster_col = cluster_col,
+      per_cell = FALSE,
+      rename_suff = rename_suff
+    )
+    
+    if ("Seurat" %in% loadedNamespaces()) {
+      input@meta.data <- df_temp_full
+      return(input)
+    } else {
+      message("seurat not loaded, returning cor_mat instead")
+      return(res)
+    }
+    input
   }
 }
 
