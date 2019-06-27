@@ -18,3 +18,10 @@ gene_pct(matrix, genelist, clusters, returning = "mean")
 \description{
 pct of cells in each cluster that express genelist
 }
+\examples{
+res <- gene_pct(
+  pbmc_matrix_small,
+  cbmc_m$B,
+  pbmc_meta$classified
+)
+}

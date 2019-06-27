@@ -81,3 +81,27 @@ column of metadata if not supplied. Not required if running correlation per cell
 \description{
 Combined function to compare scRNA-seq data to bulk RNA-seq data and marker list
 }
+\examples{
+# Seurat2
+res <- clustify_nudge(
+  input = s_small,
+  ref_mat = cbmc_ref,
+  marker = cbmc_m,
+  cluster_col = "res.1",
+  threshold = 0.8,
+  seurat_out = FALSE,
+  mode = "pct",
+  dr = "tsne"
+)
+
+# Seurat3
+res <- clustify_nudge(
+  input = s_small3,
+  ref_mat = cbmc_ref,
+  marker = cbmc_m,
+  threshold = 0.8,
+  seurat_out = FALSE,
+  mode = "pct",
+  dr = "tsne"
+)
+}

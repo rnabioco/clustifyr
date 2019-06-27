@@ -23,3 +23,19 @@ cor_to_call_topn(correlation_matrix, metadata = NULL, col = "cluster",
 \description{
 get top calls for each cluster
 }
+\examples{
+res <- clustify(
+  input = pbmc_matrix_small,
+  metadata = pbmc_meta,
+  ref_mat = pbmc_bulk_matrix,
+  query_genes = pbmc_vargenes,
+  cluster_col = "classified"
+)
+call1 <- cor_to_call_topn(
+  res,
+  metadata = pbmc_meta,
+  col = "classified",
+  collapse_to_cluster = FALSE,
+  threshold = 0.5
+)
+}

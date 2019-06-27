@@ -13,12 +13,13 @@ get_best_match_matrix(cor_mat)
 Function to make best call from correlation matrix
 }
 \examples{
-cor_mat <- res <- clustify(input = pbmc4k_matrix,
-                           metadata = pbmc4k_meta$cluster,
-                           ref_mat = pbmc_bulk_matrix,
-                           query_genes = pbmc4k_vargenes
-                          )
+cor_mat <- res <- clustify(
+  input = pbmc_matrix_small,
+  metadata = pbmc_meta,
+  cluster_col = "classified",
+  ref_mat = pbmc_bulk_matrix,
+  query_genes = pbmc_vargenes
+)
 
 best_mat <- get_best_match_matrix(cor_mat)
-
 }

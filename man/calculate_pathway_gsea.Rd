@@ -21,3 +21,11 @@ calculate_pathway_gsea(mat, pathway_list, n_perm = 1000, scale = TRUE,
 \description{
 Convert expression matrix to GSEA pathway scores (would take a similar place in workflow before average_clusters/binarize)
 }
+\examples{
+\donttest{my_pathways <- fgsea::reactomePathways(rownames(pbmc_matrix_small))
+
+calculate_pathway_gsea(
+  pbmc_matrix_small,
+  my_pathways
+)}
+}

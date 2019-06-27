@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{average_clusters}
 \alias{average_clusters}
-\title{Average expression values per cluster}
+\title{#' Average expression values per cluster}
 \usage{
 average_clusters(mat, cluster_info, if_log = TRUE,
   cluster_col = "cluster", cell_col = NULL, low_threshold = 0,
@@ -29,20 +29,13 @@ averaging will be done on unlogged data}
 \item{output_log}{whether to report log results}
 }
 \description{
-Average expression values per cluster
+#' Average expression values per cluster
 }
 \examples{
-# Average expression values per default cluster ("cluster")
-pbmc4k_avg <- average_clusters(pbmc4k_matrix,
-                               pbmc4k_meta,
-                               if_log = FALSE
-                              )
-
-# Average expression values per specified cluster ("classified")
-pbmc4k_avg <- average_clusters(pbmc4k_matrix,
-                               pbmc4k_meta,
-                               cluster_col = "classified",
-                               if_log = FALSE
-                              )
-
+pbmc_avg <- average_clusters(
+  pbmc_matrix_small,
+  pbmc_meta,
+  cluster_col = "classified",
+  if_log = FALSE
+)
 }
