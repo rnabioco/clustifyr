@@ -11,6 +11,9 @@ cosine(vec1, vec2)
 
 \item{vec2}{reference vector}
 }
+\value{
+numeric value of cosine distance between the vectors
+}
 \description{
 Cosine distance
 }

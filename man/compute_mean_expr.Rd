@@ -13,6 +13,9 @@ compute_mean_expr(expr_mat, sc_assign, sc_clust)
 
 \item{sc_clust}{unique vector of cluster assignments}
 }
+\value{
+matrix of average expression per cluster
+}
 \description{
 compute mean of clusters
 }

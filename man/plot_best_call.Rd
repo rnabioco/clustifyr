@@ -27,6 +27,9 @@ plot_best_call(cor_matrix, metadata, cluster_col = "cluster",
 
 \item{...}{passed to plot_tsne}
 }
+\value{
+ggplot object, cells projected by dr, colored by cell type classification
+}
 \description{
 Plot best calls for each cluster on a tSNE or umap
 }

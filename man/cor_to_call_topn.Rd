@@ -20,6 +20,9 @@ cor_to_call_topn(correlation_matrix, metadata = NULL, col = "cluster",
 
 \item{topn}{number of calls for each cluster}
 }
+\value{
+dataframe of cluster, new potential ident, and r info
+}
 \description{
 get top calls for each cluster
 }

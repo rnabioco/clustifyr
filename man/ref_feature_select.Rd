@@ -15,6 +15,9 @@ ref_feature_select(mat, n = 3000, mode = "var", rm.lowvar = TRUE)
 
 \item{rm.lowvar}{whether to remove lower variation genes first}
 }
+\value{
+vector of genes
+}
 \description{
 feature select from reference matrix
 }

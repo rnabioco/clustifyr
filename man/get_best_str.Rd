@@ -14,6 +14,8 @@ get_best_str(name, best_mat, cor_mat, carry_cor = TRUE)
 \item{cor_mat}{correlation matrix}
 
 \item{carry_cor}{whether the correlation score gets reported}
+
+\item{string}{with ident call and possibly cor value}
 }
 \description{
 Function to make call and attach score

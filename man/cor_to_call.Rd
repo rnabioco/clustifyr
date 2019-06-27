@@ -21,6 +21,9 @@ cor_to_call(correlation_matrix, metadata = NULL,
 
 \item{rename_suff}{suffix to add to type and r column names}
 }
+\value{
+dataframe of cluster, new ident, and r info
+}
 \description{
 get best calls for each cluster
 }

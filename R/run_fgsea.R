@@ -10,7 +10,7 @@
 #' @param per_cell if true run per cell, otherwise per cluster.
 #' @param scale convert expr_mat into zscores prior to running GSEA?, default = FALSE
 #' @param no_warnings suppress warnings from gsea ties
-#'
+#' @return dataframe of gsea scores (pval, NES), with clusters as rownames
 #' @export
 run_gsea <- function(expr_mat,
                      query_genes,

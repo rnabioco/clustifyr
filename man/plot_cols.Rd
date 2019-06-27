@@ -22,6 +22,9 @@ plot_cols(metadata, cluster_col, cluster_col_called, plot_col,
 
 \item{plot_col_ref}{metadata column to plot for reference}
 }
+\value{
+ggplot scatterplot
+}
 \description{
 Plot variable median per cluster from reference metadata vs new assigned metadata, for visually evaluating classification
 }

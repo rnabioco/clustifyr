@@ -56,7 +56,7 @@ data.frame is supplied then \code{cluster_col} needs to be set.}
 
 \item{call}{make call or just return score matrix}
 
-\item{input}{seurat 2 object}
+\item{input}{express matrix}
 
 \item{ref_mat}{reference expression matrix}
 
@@ -77,6 +77,11 @@ column of metadata if not supplied. Not required if running correlation per cell
 \item{marker_inmatrix}{whether markers genes are already in preprocessed matrix form}
 
 \item{mode}{use marker expression pct or ranked cor score for nudging}
+}
+\value{
+seurat2 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
+
+matrix of numeric values, clusters from input as row names, cell types from ref_mat as column names
 }
 \description{
 Combined function to compare scRNA-seq data to bulk RNA-seq data and marker list

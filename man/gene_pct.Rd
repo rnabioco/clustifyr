@@ -15,6 +15,9 @@ gene_pct(matrix, genelist, clusters, returning = "mean")
 
 \item{returning}{whether to return mean, min, or max of the gene pct in the gene list}
 }
+\value{
+vector of numeric values
+}
 \description{
 pct of cells in each cluster that express genelist
 }

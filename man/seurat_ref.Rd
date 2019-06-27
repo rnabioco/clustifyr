@@ -35,6 +35,9 @@ seurat_ref(seurat_object, ...)
 
 \item{method}{whether to take mean (default) or median}
 }
+\value{
+reference expression matrix, with genes as row names, and cell types as column names
+}
 \description{
 Function to convert labelled seurat object to avg expression matrix
 }

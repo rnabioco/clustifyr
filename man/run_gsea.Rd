@@ -24,6 +24,9 @@ matches columns in \code{expr_mat}. Not required if running per cell.}
 
 \item{no_warnings}{suppress warnings from gsea ties}
 }
+\value{
+dataframe of gsea scores (pval, NES), with clusters as rownames
+}
 \description{
 Use fgsea algorithm to compute normalized enrichment scores and pvalues for gene
 set ovelap
