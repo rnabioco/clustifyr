@@ -16,13 +16,13 @@ clustify(input, ...)
 
 \method{clustify}{seurat}(input, ref_mat, cluster_col = NULL,
   query_genes = NULL, per_cell = FALSE, n_perm = 0,
-  compute_method = "spearman", use_var_genes = TRUE, dr = "tsne",
+  compute_method = "spearman", use_var_genes = TRUE, dr = "umap",
   seurat_out = TRUE, threshold = 0, verbose = FALSE, rm0 = FALSE,
   rename_suff = NULL, ...)
 
 \method{clustify}{Seurat}(input, ref_mat, cluster_col = NULL,
   query_genes = NULL, per_cell = FALSE, n_perm = 0,
-  compute_method = "spearman", use_var_genes = TRUE, dr = "tsne",
+  compute_method = "spearman", use_var_genes = TRUE, dr = "umap",
   seurat_out = TRUE, threshold = 0, verbose = FALSE, rm0 = FALSE,
   rename_suff = NULL, ...)
 }

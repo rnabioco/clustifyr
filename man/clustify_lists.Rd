@@ -17,13 +17,13 @@ clustify_lists(input, ...)
 \method{clustify_lists}{seurat}(input, cluster_info = NULL,
   cluster_col = NULL, if_log = TRUE, per_cell = FALSE, topn = 3000,
   cut = 0, marker, marker_inmatrix = TRUE, genome_n = 30000,
-  metric = "hyper", output_high = TRUE, dr = "tsne",
+  metric = "hyper", output_high = TRUE, dr = "umap",
   seurat_out = TRUE, threshold = 0, ...)
 
 \method{clustify_lists}{Seurat}(input, cluster_info = NULL,
   cluster_col = NULL, if_log = TRUE, per_cell = FALSE, topn = 3000,
   cut = 0, marker, marker_inmatrix = TRUE, genome_n = 30000,
-  metric = "hyper", output_high = TRUE, dr = "tsne",
+  metric = "hyper", output_high = TRUE, dr = "umap",
   seurat_out = TRUE, threshold = 0, ...)
 }
 \arguments{
