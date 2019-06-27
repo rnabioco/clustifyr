@@ -11,7 +11,15 @@
 #' @param low_threshold option to remove clusters with too few cells
 #' @param method whether to take mean (default) or median
 #' @param output_log whether to report log results
+<<<<<<< HEAD
 #' @return average expression matrix, with genes for row names, and clusters for column names
+=======
+<<<<<<< HEAD
+#' @return average expression matrix, with genes for row names, and clusters for column names
+=======
+<<<<<<< HEAD
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @examples
 #' pbmc_avg <- average_clusters(
 #'   pbmc_matrix_small,
@@ -19,6 +27,15 @@
 #'   cluster_col = "classified",
 #'   if_log = FALSE
 #' )
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+#' @return average expression matrix, with genes for row names, and clusters for column names
+>>>>>>> master
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @export
 average_clusters <- function(mat, cluster_info,
                              if_log = TRUE,
@@ -94,13 +111,30 @@ average_clusters <- function(mat, cluster_info,
 #' @param cluster_info data.frame with cells
 #' @param cluster_col column in cluster_info with cluster number
 #' @param cut_num binary cutoff for detection
+<<<<<<< HEAD
 #' @return matrix of numeric values, with genes for row names, and clusters for column names
+=======
+<<<<<<< HEAD
+#' @return matrix of numeric values, with genes for row names, and clusters for column names
+=======
+<<<<<<< HEAD
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @examples
 #' pbmc_percentage <- percent_clusters(
 #'   pbmc_matrix_small,
 #'   pbmc_meta,
 #'   cluster_col = "classified"
 #' )
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+#' @return matrix of numeric values, with genes for row names, and clusters for column names
+>>>>>>> master
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @export
 percent_clusters <- function(mat, cluster_info,
                              cluster_col = "cluster",
@@ -117,7 +151,15 @@ percent_clusters <- function(mat, cluster_info,
 #' Function to make best call from correlation matrix
 #'
 #' @param cor_mat correlation matrix
+<<<<<<< HEAD
 #' @return matrix of 1s and 0s
+=======
+<<<<<<< HEAD
+#' @return matrix of 1s and 0s
+=======
+<<<<<<< HEAD
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @examples
 #' cor_mat <- res <- clustify(
 #'   input = pbmc_matrix_small,
@@ -128,6 +170,15 @@ percent_clusters <- function(mat, cluster_info,
 #' )
 #'
 #' best_mat <- get_best_match_matrix(cor_mat)
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+#' @return matrix of 1s and 0s
+>>>>>>> master
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @export
 get_best_match_matrix <- function(cor_mat) {
   best_mat <- as.data.frame(t(apply(cor_mat, 1, function(x) x - max(x))))
@@ -143,7 +194,15 @@ get_best_match_matrix <- function(cor_mat) {
 #' @param best_mat binarized call matrix
 #' @param cor_mat correlation matrix
 #' @param carry_cor whether the correlation score gets reported
+<<<<<<< HEAD
 #' @param string with ident call and possibly cor value
+=======
+<<<<<<< HEAD
+#' @param string with ident call and possibly cor value
+=======
+<<<<<<< HEAD
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @examples
 #' cor_mat <- res <- clustify(
 #'   input = pbmc_matrix_small,
@@ -160,6 +219,15 @@ get_best_match_matrix <- function(cor_mat) {
 #'   best_mat = best_mat,
 #'   cor_mat = cor_mat
 #' )
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+#' @param string with ident call and possibly cor value
+>>>>>>> master
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @export
 get_best_str <- function(name,
                          best_mat,
@@ -220,7 +288,15 @@ get_common_elements <- function(...) {
 #' @param per_cell if true run per cell, otherwise per cluster.
 #' @param compute_method method(s) for computing similarity scores
 #' @param ... additional arguments to pass to compute_method function
+<<<<<<< HEAD
 #' @return matrix of correlation values, clusters as row names and column names
+=======
+<<<<<<< HEAD
+#' @return matrix of correlation values, clusters as row names and column names
+=======
+<<<<<<< HEAD
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @examples
 #' pbmc_meta2 <- pbmc_meta
 #'
@@ -242,6 +318,15 @@ get_common_elements <- function(...) {
 #'   sample_col = "sample",
 #'   sample_id = "A"
 #' )
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+#' @return matrix of correlation values, clusters as row names and column names
+>>>>>>> master
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @export
 clustify_intra <- function(expr_mat,
                            metadata,
@@ -287,7 +372,15 @@ clustify_intra <- function(expr_mat,
 #' @param group_by column name to use for cluster identity
 #' @param filter_method "<", "==", ">" compared to filter_value
 #' @param filter_value baseline minimum as background cutoff
+<<<<<<< HEAD
 #' @return average expression matrix, with genes for row names, and clusters for column names
+=======
+<<<<<<< HEAD
+#' @return average expression matrix, with genes for row names, and clusters for column names
+=======
+<<<<<<< HEAD
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @examples
 #' avg1 <- average_clusters_filter(
 #'   pbmc_matrix_small,
@@ -297,6 +390,15 @@ clustify_intra <- function(expr_mat,
 #'   filter_method = "==",
 #'   filter_value = "1"
 #' )
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+#' @return average expression matrix, with genes for row names, and clusters for column names
+>>>>>>> master
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @export
 average_clusters_filter <- function(mat, cluster_info,
                                     if_log = TRUE,
@@ -336,7 +438,15 @@ average_clusters_filter <- function(mat, cluster_info,
 #' @param mat expression matrix
 #' @param background vector or dataframe or matrix of high expression genes in background
 #' @param n the number of top genes to exclude, 0 defaults to all
+<<<<<<< HEAD
 #' @param expression matrix with rows removed
+=======
+<<<<<<< HEAD
+#' @param expression matrix with rows removed
+=======
+<<<<<<< HEAD
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @examples
 #' avg1 <- average_clusters_filter(
 #'   pbmc_matrix_small,
@@ -345,6 +455,15 @@ average_clusters_filter <- function(mat, cluster_info,
 #' )
 #'
 #' pbmc_matrix_filtered <- remove_background(pbmc_matrix_small, avg1, 1)
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+#' @param expression matrix with rows removed
+>>>>>>> master
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @export
 
 remove_background <- function(mat, background, n = 0) {
@@ -369,7 +488,15 @@ remove_background <- function(mat, background, n = 0) {
 #' @param n_perm Number of permutation for fgsea function. Defaults to 1000.
 #' @param scale convert expr_mat into zscores prior to running GSEA?, default = FALSE
 #' @param no_warnings suppress warnings from gsea ties
+<<<<<<< HEAD
 #' @return matrix of GSEA NES values, cell types as row names, pathways as column names
+=======
+<<<<<<< HEAD
+#' @return matrix of GSEA NES values, cell types as row names, pathways as column names
+=======
+<<<<<<< HEAD
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @examples
 #' \donttest{my_pathways <- fgsea::reactomePathways(rownames(pbmc_matrix_small))
 #'
@@ -377,6 +504,15 @@ remove_background <- function(mat, background, n = 0) {
 #'   pbmc_matrix_small,
 #'   my_pathways
 #' )}
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+#' @return matrix of GSEA NES values, cell types as row names, pathways as column names
+>>>>>>> master
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @export
 calculate_pathway_gsea <- function(mat,
                                    pathway_list,
@@ -413,7 +549,15 @@ calculate_pathway_gsea <- function(mat,
 #' @param collapse_to_cluster if a column name is provided, takes the most frequent call of entire cluster to color in plot
 #' @param threshold minimum correlation coefficent cutoff for calling clusters
 #' @param rename_suff suffix to add to type and r column names
+<<<<<<< HEAD
 #' @return dataframe of cluster, new ident, and r info
+=======
+<<<<<<< HEAD
+#' @return dataframe of cluster, new ident, and r info
+=======
+<<<<<<< HEAD
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @examples
 #' res <- clustify(
 #'   input = pbmc_matrix_small,
@@ -430,6 +574,15 @@ calculate_pathway_gsea <- function(mat,
 #'   collapse_to_cluster = FALSE,
 #'   threshold = 0.5
 #' )
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+#' @return dataframe of cluster, new ident, and r info
+>>>>>>> master
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @export
 cor_to_call <- function(correlation_matrix,
                         metadata = NULL,
@@ -483,7 +636,15 @@ cor_to_call <- function(correlation_matrix,
 #' @param ident_col column in metadata containing identity assignment
 #' @param clusters names of clusters to change, string or vector of strings
 #' @param idents new idents to assign, must be length of 1 or same as clusters
+<<<<<<< HEAD
 #' @return new dataframe of metadata
+=======
+<<<<<<< HEAD
+#' @return new dataframe of metadata
+=======
+<<<<<<< HEAD
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @examples
 #' pbmc_meta2 <- assign_ident(
 #'   pbmc_meta,
@@ -494,6 +655,15 @@ cor_to_call <- function(correlation_matrix,
 #'              "primary human monocytes",
 #'              "primary human myeloid DC")
 #' )
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+#' @return new dataframe of metadata
+>>>>>>> master
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @export
 assign_ident <- function(metadata,
                          cluster_col = "cluster",
@@ -525,7 +695,15 @@ assign_ident <- function(metadata,
 #' @param collapse_to_cluster if a column name is provided, takes the most frequent call of entire cluster to color in plot
 #' @param threshold minimum correlation coefficent cutoff for calling clusters
 #' @param topn number of calls for each cluster
+<<<<<<< HEAD
 #' @return dataframe of cluster, new potential ident, and r info
+=======
+<<<<<<< HEAD
+#' @return dataframe of cluster, new potential ident, and r info
+=======
+<<<<<<< HEAD
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @examples
 #' res <- clustify(
 #'   input = pbmc_matrix_small,
@@ -541,6 +719,15 @@ assign_ident <- function(metadata,
 #'   collapse_to_cluster = FALSE,
 #'   threshold = 0.5
 #' )
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+#' @return dataframe of cluster, new potential ident, and r info
+>>>>>>> master
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @export
 cor_to_call_topn <- function(correlation_matrix,
                              metadata = NULL,
@@ -583,13 +770,30 @@ cor_to_call_topn <- function(correlation_matrix,
 #' @param genelist vector of marker genes for one identity
 #' @param clusters vector of cluster identities
 #' @param returning whether to return mean, min, or max of the gene pct in the gene list
+<<<<<<< HEAD
 #' @return vector of numeric values
+=======
+<<<<<<< HEAD
+#' @return vector of numeric values
+=======
+<<<<<<< HEAD
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @examples
 #' res <- gene_pct(
 #'   pbmc_matrix_small,
 #'   cbmc_m$B,
 #'   pbmc_meta$classified
 #' )
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+#' @return vector of numeric values
+>>>>>>> master
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @export
 gene_pct <- function(matrix,
                      genelist,
@@ -633,13 +837,30 @@ gene_pct <- function(matrix,
 #' provide the cluster_col parameters.
 #' @param cluster_col column in cluster_info with cluster number
 #' @param norm whether and how the results are normalized
+<<<<<<< HEAD
 #' @return matrix of numeric values, clusters from mat as row names, cell types from marker_m as column names
+=======
+<<<<<<< HEAD
+#' @return matrix of numeric values, clusters from mat as row names, cell types from marker_m as column names
+=======
+<<<<<<< HEAD
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @examples
 #' res <- gene_pct_markerm(pbmc_matrix_small,
 #'                          cbmc_m,
 #'                          pbmc_meta,
 #'                          cluster_col = "classified"
 #' )
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+#' @return matrix of numeric values, clusters from mat as row names, cell types from marker_m as column names
+>>>>>>> master
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @export
 gene_pct_markerm <- function(matrix,
                              marker_m,
@@ -712,7 +933,15 @@ clustify_nudge <- function(input, ...) {
 #' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
 #' @param mode use marker expression pct or ranked cor score for nudging
 #' @param ... passed to matrixize_markers
+<<<<<<< HEAD
 #' @return seurat2 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
+=======
+<<<<<<< HEAD
+#' @return seurat2 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
+=======
+<<<<<<< HEAD
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @examples
 #' # Seurat2
 #' res <- clustify_nudge(
@@ -736,6 +965,15 @@ clustify_nudge <- function(input, ...) {
 #'   mode = "pct",
 #'   dr = "tsne"
 #' )
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+#' @return seurat2 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
+>>>>>>> master
+>>>>>>> 325dd268610cec2a4a25bcf6c77fb1951a0338a2
+>>>>>>> 5ef1935182135b650d2518bed137314313f86600
 #' @export
 clustify_nudge.seurat <- function(input,
                                   ref_mat,
