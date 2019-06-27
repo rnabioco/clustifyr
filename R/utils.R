@@ -11,6 +11,7 @@
 #' @param low_threshold option to remove clusters with too few cells
 #' @param method whether to take mean (default) or median
 #' @param output_log whether to report log results
+#' @return average expression matrix, with genes for row names, and clusters for column names
 #' @examples
 #' pbmc_avg <- average_clusters(
 #'   pbmc_matrix_small,
@@ -93,6 +94,7 @@ average_clusters <- function(mat, cluster_info,
 #' @param cluster_info data.frame with cells
 #' @param cluster_col column in cluster_info with cluster number
 #' @param cut_num binary cutoff for detection
+#' @return matrix of numeric values, with genes for row names, and clusters for column names
 #' @examples
 #' pbmc_percentage <- percent_clusters(
 #'   pbmc_matrix_small,
@@ -115,6 +117,7 @@ percent_clusters <- function(mat, cluster_info,
 #' Function to make best call from correlation matrix
 #'
 #' @param cor_mat correlation matrix
+#' @return matrix of 1s and 0s
 #' @examples
 #' cor_mat <- res <- clustify(
 #'   input = pbmc_matrix_small,
@@ -140,6 +143,7 @@ get_best_match_matrix <- function(cor_mat) {
 #' @param best_mat binarized call matrix
 #' @param cor_mat correlation matrix
 #' @param carry_cor whether the correlation score gets reported
+#' @param string with ident call and possibly cor value
 #' @examples
 #' cor_mat <- res <- clustify(
 #'   input = pbmc_matrix_small,
@@ -185,6 +189,7 @@ get_best_str <- function(name,
 #' @description return entries found in all supplied vectors. If the vector supplied
 #' is NULL or NA, then it will be excluded from the comparision.
 #' @param ... vectors
+#' @return vector of shared elements
 #' @examples
 #' a <- rep(1:5)
 #' b <- rep(4:10)
@@ -215,6 +220,7 @@ get_common_elements <- function(...) {
 #' @param per_cell if true run per cell, otherwise per cluster.
 #' @param compute_method method(s) for computing similarity scores
 #' @param ... additional arguments to pass to compute_method function
+#' @return matrix of correlation values, clusters as row names and column names
 #' @examples
 #' pbmc_meta2 <- pbmc_meta
 #'
@@ -281,6 +287,7 @@ clustify_intra <- function(expr_mat,
 #' @param group_by column name to use for cluster identity
 #' @param filter_method "<", "==", ">" compared to filter_value
 #' @param filter_value baseline minimum as background cutoff
+#' @return average expression matrix, with genes for row names, and clusters for column names
 #' @examples
 #' avg1 <- average_clusters_filter(
 #'   pbmc_matrix_small,
@@ -329,6 +336,7 @@ average_clusters_filter <- function(mat, cluster_info,
 #' @param mat expression matrix
 #' @param background vector or dataframe or matrix of high expression genes in background
 #' @param n the number of top genes to exclude, 0 defaults to all
+#' @param expression matrix with rows removed
 #' @examples
 #' avg1 <- average_clusters_filter(
 #'   pbmc_matrix_small,
@@ -361,6 +369,7 @@ remove_background <- function(mat, background, n = 0) {
 #' @param n_perm Number of permutation for fgsea function. Defaults to 1000.
 #' @param scale convert expr_mat into zscores prior to running GSEA?, default = FALSE
 #' @param no_warnings suppress warnings from gsea ties
+#' @return matrix of GSEA NES values, cell types as row names, pathways as column names
 #' @examples
 #' \donttest{my_pathways <- fgsea::reactomePathways(rownames(pbmc_matrix_small))
 #'
@@ -404,6 +413,7 @@ calculate_pathway_gsea <- function(mat,
 #' @param collapse_to_cluster if a column name is provided, takes the most frequent call of entire cluster to color in plot
 #' @param threshold minimum correlation coefficent cutoff for calling clusters
 #' @param rename_suff suffix to add to type and r column names
+#' @return dataframe of cluster, new ident, and r info
 #' @examples
 #' res <- clustify(
 #'   input = pbmc_matrix_small,
@@ -473,6 +483,7 @@ cor_to_call <- function(correlation_matrix,
 #' @param ident_col column in metadata containing identity assignment
 #' @param clusters names of clusters to change, string or vector of strings
 #' @param idents new idents to assign, must be length of 1 or same as clusters
+#' @return new dataframe of metadata
 #' @examples
 #' pbmc_meta2 <- assign_ident(
 #'   pbmc_meta,
@@ -514,6 +525,7 @@ assign_ident <- function(metadata,
 #' @param collapse_to_cluster if a column name is provided, takes the most frequent call of entire cluster to color in plot
 #' @param threshold minimum correlation coefficent cutoff for calling clusters
 #' @param topn number of calls for each cluster
+#' @return dataframe of cluster, new potential ident, and r info
 #' @examples
 #' res <- clustify(
 #'   input = pbmc_matrix_small,
@@ -571,6 +583,7 @@ cor_to_call_topn <- function(correlation_matrix,
 #' @param genelist vector of marker genes for one identity
 #' @param clusters vector of cluster identities
 #' @param returning whether to return mean, min, or max of the gene pct in the gene list
+#' @return vector of numeric values
 #' @examples
 #' res <- gene_pct(
 #'   pbmc_matrix_small,
@@ -620,6 +633,7 @@ gene_pct <- function(matrix,
 #' provide the cluster_col parameters.
 #' @param cluster_col column in cluster_info with cluster number
 #' @param norm whether and how the results are normalized
+#' @return matrix of numeric values, clusters from mat as row names, cell types from marker_m as column names
 #' @examples
 #' res <- gene_pct_markerm(pbmc_matrix_small,
 #'                          cbmc_m,
@@ -698,6 +712,7 @@ clustify_nudge <- function(input, ...) {
 #' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
 #' @param mode use marker expression pct or ranked cor score for nudging
 #' @param ... passed to matrixize_markers
+#' @return seurat2 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
 #' @examples
 #' # Seurat2
 #' res <- clustify_nudge(
@@ -794,7 +809,7 @@ clustify_nudge.seurat <- function(input,
 }
 
 #' @rdname clustify_nudge
-#' @param input seurat 2 object
+#' @param input express matrix
 #' @param ref_mat reference expression matrix
 #' @param metadata cell cluster assignments, supplied as a vector or data.frame. If
 #' data.frame is supplied then `cluster_col` needs to be set.
@@ -809,7 +824,7 @@ clustify_nudge.seurat <- function(input,
 #' @param call make call or just return score matrix
 #' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
 #' @param mode use marker expression pct or ranked cor score for nudging
-
+#' @return matrix of numeric values, clusters from input as row names, cell types from ref_mat as column names
 #' @export
 clustify_nudge.default <- function(input,
                                    ref_mat,
@@ -904,7 +919,7 @@ clustify_nudge.default <- function(input,
 #' @param var_loc variable genes location
 #' @param cluster_col column of clustering from metadata
 #' @param lookuptable if not supplied, will look in built-in table for object parsing
-
+#' @return list of expression, metadata, vargenes, cluster_col info from object
 #' @export
 parse_loc_object <- function(input,
                              type = class(input),
@@ -985,7 +1000,7 @@ parse_loc_object <- function(input,
 #' @param do_label whether to label each cluster at median center
 #' @param seed set seed for kmeans
 #' @param newclustering use kmeans if NULL on dr or col name for second column of clustering
-
+#' @return faceted ggplot object
 #' @export
 overcluster_test <- function(expr,
                              metadata,
@@ -1078,7 +1093,7 @@ overcluster_test <- function(expr,
 #' @param n number of genes to return
 #' @param mode the method of selecting features
 #' @param rm.lowvar whether to remove lower variation genes first
-#'
+#' @return vector of genes
 #' @export
 ref_feature_select <- function(mat,
                                n = 3000,
@@ -1121,8 +1136,7 @@ ref_feature_select <- function(mat,
 #' PCA loadings to select genes from. E.g. 0.999 would select the
 #' top point 1 percent of genes with the largest loadings.
 #' @param if_log whether the data is already log transformed
-#' @return The list of genes to use as features.
-#'
+#' @return vector of genes
 #' @export
 feature_select_PCA <- function(mat = NULL,
                                pcs = NULL,
@@ -1155,7 +1169,7 @@ feature_select_PCA <- function(mat = NULL,
 #' @param path gmt file path
 #' @param cutoff remove pathways with less genes than this cutoff
 #' @param sep sep used in file to split path and genes
-
+#' @return list of genes in each pathway
 #' @export
 gmt_to_list <- function(path,
                         cutoff = 0,
@@ -1192,7 +1206,7 @@ gmt_to_list <- function(path,
 #' @param scale convert expr_mat into zscores prior to running GSEA?, default = TRUE
 #' @param topn number of top pathways to plot
 #' @param returning to return "both" list and plot, or either one
-
+#' @return list of matrix and plot, or just plot, matrix of GSEA NES values, cell types as row names, pathways as column names
 #' @export
 plot_pathway_gsea <- function(mat,
                               pathway_list,
@@ -1222,7 +1236,7 @@ plot_pathway_gsea <- function(mat,
 #'
 #' @param x expression matrix
 #' @param na.rm logical. Should missing values (including NaN) be omitted from the calculations?
-
+#' @return vector of numeric values
 #' @export
 RowVar <- function(x, na.rm = TRUE) {
   rowSums((x - rowMeans(x, na.rm = na.rm))^2, na.rm = na.rm) / (dim(x)[2] - 1)
@@ -1238,7 +1252,7 @@ RowVar <- function(x, na.rm = TRUE) {
 #' provide the cluster_col parameters.
 #' @param cluster_col column in cluster_info with cluster number
 #' @param set_seed random seed
-
+#' @return new smaller mat with less cell_id columns
 #' @export
 downsample_matrix <- function(mat,
                               n = 1,
@@ -1280,7 +1294,7 @@ downsample_matrix <- function(mat,
 #' @param ref_mat reference expression matrix
 #' @param if_log whether input data is natural
 #' @param sep separator for name combinations
-#'
+#' @return expression matrix
 #' @export
 make_comb_ref <- function(ref_mat, if_log = TRUE, sep = "_and_") {
   if (if_log == TRUE) {
@@ -1302,7 +1316,7 @@ make_comb_ref <- function(ref_mat, if_log = TRUE, sep = "_and_") {
 #' @param cut an expression minimum cutoff
 #' @param arrange whether to arrange (lower means better)
 #' @param compto compare max expression to the value of next 1 or more
-#'
+#' @return dataframe, with gene, cluster, ratio columns
 #' @export
 ref_marker_select <- function(mat, cut = 0.5, arrange = TRUE, compto = 1) {
   mat <- mat[!is.na(rownames(mat)), ]
@@ -1329,7 +1343,7 @@ ref_marker_select <- function(mat, cut = 0.5, arrange = TRUE, compto = 1) {
 #' @param cols a vector of cell types (column)
 #' @param cut an expression minimum cutoff
 #' @param compto compare max expression to the value of next 1 or more
-#'
+#' @return vector of cluster name and ratio value
 #' @export
 marker_select <- function(row1, cols, cut = 1, compto = 1) {
   row_sorted <- sort(row1, decreasing = TRUE)
@@ -1350,6 +1364,7 @@ marker_select <- function(row1, cols, cut = 1, compto = 1) {
 #' @param cutoff_n expression cutoff where genes ranked below n are considered non-expressing
 #' @param cutoff_score positive score lower than this cutoff will be considered as 0 to not influence scores
 #' @param ... additional arguments to pass to compute_method function
+#' @return matrix of numeric values, clusters from input as row names, cell types from ref_mat as column names
 #' @export
 pos_neg_select <- function(input,
                            ref_mat,
@@ -1387,6 +1402,7 @@ pos_neg_select <- function(input,
 
 #' generate negative markers from a list of exclusive positive markers
 #' @param mat matrix or dataframe of markers
+#' @return matrix of gene names
 #' @export
 reverse_marker_matrix <- function(mat) {
   full_vec <- as.vector(t(mat))
@@ -1398,6 +1414,7 @@ reverse_marker_matrix <- function(mat) {
 
 #' takes files with positive and negative markers, as described in garnett, and returns list of markers
 #' @param filename txt file to load
+#' @return list of positive and negative gene markers
 #' @export
 file_marker_parse <- function(filename) {
   lines <- readLines(filename)

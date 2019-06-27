@@ -20,6 +20,9 @@ compare_lists(bin_mat, marker_mat, n = 30000, metric = "hyper",
 \item{output_high}{if true (by default to fit with rest of package),
 -log10 transform p-value}
 }
+\value{
+matrix of numeric values, clusters from expr_mat as row names, cell types from marker_mat as column names
+}
 \description{
 Calculate adjusted p-values for hypergeometric test of gene lists
 or jaccard index

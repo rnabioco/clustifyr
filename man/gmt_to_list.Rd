@@ -14,6 +14,9 @@ gmt_to_list(path, cutoff = 0,
 
 \item{sep}{sep used in file to split path and genes}
 }
+\value{
+list of genes in each pathway
+}
 \description{
 convert gmt format of pathways to list of vectors
 }

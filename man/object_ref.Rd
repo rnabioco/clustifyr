@@ -20,6 +20,9 @@ object_ref(input, cluster_col = NULL, var_genes_only = FALSE,
 
 \item{lookuptable}{if not supplied, will look in built-in table for object parsing}
 }
+\value{
+reference expression matrix, with genes as row names, and cell types as column names
+}
 \description{
 Function to convert labelled object to avg expression matrix
 }

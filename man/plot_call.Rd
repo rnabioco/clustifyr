@@ -15,6 +15,9 @@ plot_call(cor_matrix, metadata, data_to_plot = colnames(cor_matrix), ...)
 
 \item{...}{passed to plot_tsne}
 }
+\value{
+list of ggplot object, cells projected by dr, colored by cell type classification
+}
 \description{
 Plot called clusters on a tSNE or umap, for each reference cluster given
 }

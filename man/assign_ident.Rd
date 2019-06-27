@@ -18,6 +18,9 @@ assign_ident(metadata, cluster_col = "cluster", ident_col = "type",
 
 \item{idents}{new idents to assign, must be length of 1 or same as clusters}
 }
+\value{
+new dataframe of metadata
+}
 \description{
 manually change idents as needed
 }

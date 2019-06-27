@@ -23,6 +23,9 @@ parse_loc_object(input, type = class(input), expr_loc = NULL,
 
 \item{lookuptable}{if not supplied, will look in built-in table for object parsing}
 }
+\value{
+list of expression, metadata, vargenes, cluster_col info from object
+}
 \description{
 more flexible parsing of single cell objects
 }

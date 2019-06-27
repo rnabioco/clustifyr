@@ -29,6 +29,9 @@ column of metadata if not supplied. Not required if running correlation per cell
 
 \item{...}{additional arguments to pass to compute_method function}
 }
+\value{
+matrix of correlation values, clusters as row names and column names
+}
 \description{
 Intra-experiment cluster projection for one sample/set to the rest
 }

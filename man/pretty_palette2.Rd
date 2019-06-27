@@ -8,6 +8,9 @@
 \usage{
 pretty_palette2
 }
+\value{
+vector of colors
+}
 \description{
 Color palette for plotting continous variables, starting at gray
 }

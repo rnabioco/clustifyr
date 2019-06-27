@@ -9,6 +9,9 @@ file_marker_parse(filename)
 \arguments{
 \item{filename}{txt file to load}
 }
+\value{
+list of positive and negative gene markers
+}
 \description{
 takes files with positive and negative markers, as described in garnett, and returns list of markers
 }

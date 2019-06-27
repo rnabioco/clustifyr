@@ -1,5 +1,5 @@
 #' Function to convert labelled seurat object to avg expression matrix
-#'
+#' @return reference expression matrix, with genes as row names, and cell types as column names
 #' @export
 seurat_ref <- function(seurat_object, ...) {
   UseMethod("seurat_ref", seurat_object)
@@ -95,7 +95,7 @@ seurat_ref.Seurat <- function(seurat_object,
 }
 
 #' Function to convert labelled seurat object to fully prepared metadata
-#'
+#' @return dataframe of metadata, including dimension reduction plotting info
 #' @export
 seurat_meta <- function(seurat_object, ...) {
   UseMethod("seurat_meta", seurat_object)
@@ -139,8 +139,8 @@ seurat_meta.Seurat <- function(seurat_object,
 #' @param assay_name any additional assay data, such as ADT, to include. If more than 1, pass a vector of names
 #' @param method whether to take mean (default) or median
 #' @param lookuptable if not supplied, will look in built-in table for object parsing
+#' @return reference expression matrix, with genes as row names, and cell types as column names
 
-#'
 #' @export
 object_ref <- function(input,
                             cluster_col = NULL,

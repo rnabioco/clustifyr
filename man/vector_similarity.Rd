@@ -15,6 +15,9 @@ vector_similarity(vec1, vec2, compute_method, ...)
 
 \item{...}{arguments to pass to compute_method function}
 }
+\value{
+numeric value of desired correlation or distance measurement
+}
 \description{
 Compute the similarity score between two vectors using a
 customized scoring function

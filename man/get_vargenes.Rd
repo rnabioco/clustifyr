@@ -9,6 +9,9 @@ get_vargenes(marker_mat)
 \arguments{
 \item{marker_mat}{matrix or dataframe of candidate genes for each cluster}
 }
+\value{
+vector of marker gene names
+}
 \description{
 Variable gene list is required for \code{clustify} main function. This
 function parses variables genes from a matrix input.

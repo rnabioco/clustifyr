@@ -29,6 +29,9 @@ added weight}
 
 \item{remove_rp}{do not include rps, rpl, rp1-9 in markers}
 }
+\value{
+matrix of unranked gene marker names, or matrix of ranked expression
+}
 \description{
 Convert candidate genes list into matrix
 }
