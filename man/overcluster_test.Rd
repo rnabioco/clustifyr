@@ -4,8 +4,8 @@
 \alias{overcluster_test}
 \title{compare clustering parameters and classification outcomes}
 \usage{
-overcluster_test(expr, metadata, ref_mat, cluster_col, x_col = "tSNE_1",
-  y_col = "tSNE_2", n = 5, ngenes = NULL, query_genes = NULL,
+overcluster_test(expr, metadata, ref_mat, cluster_col, x_col = "UMAP_1",
+  y_col = "UMAP_2", n = 5, ngenes = NULL, query_genes = NULL,
   do_label = TRUE, seed = 42, newclustering = NULL)
 }
 \arguments{

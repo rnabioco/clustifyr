@@ -8,7 +8,7 @@ use_seurat_comp(seurat_object, cluster_col = "classified",
   var_genes_only = FALSE, assay_name = NULL, method = "mean")
 }
 \arguments{
-\item{seurat_object}{seurat_object after tsne projections and clustering}
+\item{seurat_object}{seurat_object after tsne or umap projections and clustering}
 
 \item{cluster_col}{column name where classified cluster names are stored in seurat meta data, cannot be "rn"}
 
