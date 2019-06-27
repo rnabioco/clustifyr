@@ -10,7 +10,7 @@ plot_cor_heatmap(cor_matrix, metadata = NULL, cluster_col = NULL,
 \arguments{
 \item{cor_matrix}{input similarity matrix}
 
-\item{metadata}{input metadata with per cell tsne coordinates and cluster ids}
+\item{metadata}{input metadata with per cell tsne or umap cooordinates and cluster ids}
 
 \item{cluster_col}{colname of clustering data in metadata, defaults to rownames of the
 metadata if not supplied.}
