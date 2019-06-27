@@ -22,6 +22,9 @@ provide the cluster_col parameters.}
 
 \item{set_seed}{random seed}
 }
+\value{
+new smaller mat with less cell_id columns
+}
 \description{
 downsample matrix by cluster or completely random
 }

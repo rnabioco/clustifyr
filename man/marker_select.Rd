@@ -15,6 +15,9 @@ marker_select(row1, cols, cut = 1, compto = 1)
 
 \item{compto}{compare max expression to the value of next 1 or more}
 }
+\value{
+vector of cluster name and ratio value
+}
 \description{
 decide for one gene whether it is a marker for a certain cell type
 }

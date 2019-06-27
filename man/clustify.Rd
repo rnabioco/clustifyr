@@ -123,6 +123,13 @@ the expr_mat and ref_mat will be used for comparision.}
 
 \item{...}{additional arguments to pass to compute_method function}
 }
+\value{
+matrix of correlation values, clusters from input as row names, cell types from ref_mat as column names
+
+seurat2 object with type assigned in metadata, or matrix of correlation values, clusters from input as row names, cell types from ref_mat as column names
+
+seurat3 object with type assigned in metadata, or matrix of correlation values, clusters from input as row names, cell types from ref_mat as column names
+}
 \description{
 Main function to compare scRNA-seq data to bulk RNA-seq data.
 }

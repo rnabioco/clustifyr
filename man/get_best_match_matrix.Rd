@@ -9,6 +9,9 @@ get_best_match_matrix(cor_mat)
 \arguments{
 \item{cor_mat}{correlation matrix}
 }
+\value{
+matrix of 1s and 0s
+}
 \description{
 Function to make best call from correlation matrix
 }

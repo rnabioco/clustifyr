@@ -130,6 +130,13 @@ averaging will be done on unlogged data}
 
 \item{...}{passed to matrixize_markers}
 }
+\value{
+matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
+
+seurat2 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
+
+seurat3 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
+}
 \description{
 Main function to compare scRNA-seq data to gene lists.
 }

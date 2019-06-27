@@ -21,6 +21,9 @@ metadata if not supplied.}
 
 \item{...}{passed to Heatmap}
 }
+\value{
+complexheatmap object
+}
 \description{
 Plot similarity measures on heatmap
 }

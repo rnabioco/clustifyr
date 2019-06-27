@@ -9,6 +9,9 @@ pretty_palette_ramp_d(n)
 \arguments{
 \item{n}{number of colors to use}
 }
+\value{
+color ramp
+}
 \description{
 Expanded color palette ramp for plotting discrete variables
 }
