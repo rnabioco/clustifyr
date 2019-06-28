@@ -376,8 +376,13 @@ remove_background <- function(mat, background, n = 0) {
 #'   "a" = c("IGLL5", "GNLY", "FTL")
 #' )
 #'
-#' calculate_pathway_gsea(
+#' pbmc_avg <- average_clusters(
 #'   mat = pbmc_matrix_small,
+#'   cluster_info = pbmc_meta,
+#'   cluster_col = "classified")
+#'
+#' calculate_pathway_gsea(
+#'   mat = pbmc_avg,
 #'   pathway_list = gl
 #' )
 #' @export
