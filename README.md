@@ -32,13 +32,14 @@ devtools::install_github("rnabioco/clustifyr")
 
 In this example we use the following built-in input data:
 
-  - an expression matrix of single cell RNA-seq data (`pbmc4k_matrix`)
-  - a metadata data.frame (`pbmc4k_meta`)
-  - a vector of variable genes (`pbmc4k_vargenes`)-
+  - an expression matrix of single cell RNA-seq data
+    (`pbmc_matrix_small`)
+  - a metadata data.frame (`pbmc_meta`)
+  - a vector of variable genes (`pbmc_vargenes`)-
   - a matrix of bulk RNA-seq read counts (`pbmc_bulk_matrix`):
 
 We then calculate correlation coefficients and plot them on a
-pre-calculated tSNE projection (stored in `pbmc4k_meta`).
+pre-calculated tSNE projection (stored in `pbmc_meta`).
 
 ``` r
 library(clustifyr)
@@ -73,7 +74,8 @@ plot_best_call(
 
 Alternatively, `clustify` can take a clustered `seurat` object (both v2
 and v3) and assign identities. New reference matrix can be made directly
-from `seurat` object as well.
+from `seurat` object as well. Other scRNAseq experiment object types are
+supported as well.
 
 ``` r
 res <- clustify(
@@ -83,7 +85,6 @@ res <- clustify(
   seurat_out = T,
   dr = "tsne"
 )
-#> seurat not loaded, returning cor_mat instead
 
 res2 <- clustify(
   input = s_small3,
