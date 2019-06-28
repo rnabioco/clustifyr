@@ -373,7 +373,7 @@ plot_cols <- function(metadata,
   temp1 <- dplyr::group_by_at(metadata, vars(cluster_col, cluster_col_called))
   temp1 <- dplyr::summarise(temp1, med = median(!!dplyr::sym(plot_col), na.rm = TRUE))
   colnames(temp1) <- c("original_cluster", "type", paste(plot_col, "query", sep = "_"))
-  
+
   temp2 <- dplyr::group_by_at(metadata_ref, cluster_col_ref)
   temp2 <- dplyr::summarise(temp2, med = median(!!dplyr::sym(plot_col_ref), na.rm = TRUE))
   colnames(temp2) <- c("type", paste(plot_col, "ref", sep = "_"))

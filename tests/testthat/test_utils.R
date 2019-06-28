@@ -151,7 +151,7 @@ test_that("average_clusters_filter works on strings", {
 
 test_that("average_clusters_filter works with nonlog data", {
   avg1 <- average_clusters_filter(
-    pbmc_matrix_small, 
+    pbmc_matrix_small,
     pbmc_meta,
     group_by = "classified",
     filter_on = "seurat_clusters",
@@ -338,7 +338,7 @@ test_that("clustify_nudge works with seurat_out", {
     mode = "pct",
     dr = "tsne"
   )
-  
+
   res <- clustify_nudge(
     input = s_small3,
     ref_mat = cbmc_ref,
