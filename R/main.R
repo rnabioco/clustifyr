@@ -26,6 +26,46 @@ clustify <- function(input, ...) {
 #' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param ... additional arguments to pass to compute_method function
 #' @return matrix of correlation values, clusters from input as row names, cell types from ref_mat as column names
+#' @examples
+#' # Annotate a matrix and metadata
+#' res <- clustify(
+#'   input = pbmc_matrix_small,
+#'   metadata = pbmc_meta,
+#'   ref_mat = pbmc_bulk_matrix,
+#'   query_genes = pbmc_vargenes,
+#'   cluster_col = "classified",
+#'   verbose = TRUE
+#' )
+#'
+#' # Annotate using a different method
+#' res <- clustify(
+#'   input = pbmc_matrix_small,
+#'   metadata = pbmc_meta,
+#'   ref_mat = pbmc_bulk_matrix,
+#'   query_genes = pbmc_vargenes,
+#'   cluster_col = "classified",
+#'   compute_method = "cosine"
+#' )
+#'
+#' # Annotate (and return) a Seurat object
+#' res <- clustify(
+#'   s_small,
+#'   pbmc_bulk_matrix,
+#'   cluster_col = "res.1",
+#'   seurat_out = TRUE,
+#'   per_cell = FALSE,
+#'   dr = "tsne"
+#' )
+#'
+#' # Annotate (and return) a Seurat object per-cell
+#' res <- clustify(
+#'   s_small,
+#'   pbmc_bulk_matrix,
+#'   cluster_col = "res.1",
+#'   seurat_out = TRUE,
+#'   per_cell = TRUE,
+#'   dr = "tsne"
+#' )
 #' @export
 clustify.default <- function(input,
                              ref_mat,
