@@ -12,8 +12,10 @@ output:
       %\VignetteEncoding{UTF-8}
 ---
 
-```{r knitr_opts, echo = FALSE}
+```{r knitr_opts, echo = FALSE, message = FALSE, warning = FALSE}
 knitr::opts_chunk$set(
+  message = FALSE,
+  warning = FALSE,
   collapse = TRUE,
   comment = "#>",
   fig.align = "center"
@@ -22,7 +24,7 @@ knitr::opts_chunk$set(
 
 ## Benchmark 1. MCA lung dataset annotation using `ref_tabula_muris_drop` reference
 
-```{r library, include = F, eval = F}
+```{r library, include = FALSE, eval = FALSE}
 library(Seurat)
 library(clustifyr)
 library(tidyverse)
@@ -62,45 +64,62 @@ saveRDS(l, "MCA_lung_mat")
 library(here)
 library(clustifyr)
 library(tidyverse)
+library(clustifyrdata)
 
 l_mat <- readRDS(here("MCA_lung_mat"))
 l_meta <- readRDS(here("MCA_lung_meta"))
 load(here("data","ref_tabula_muris_drop.rda"))
-tml_ref <- ref_tabula_muris_drop[,colnames(ref_tabula_muris_drop)[str_detect(colnames(ref_tabula_muris_drop),"-Lung")][-c(8,13)]] # find lung references, remove generic terms
+
+# find lung references, remove generic terms
+lung_cols <- colnames(ref_tabula_muris_drop) %>%
+  grep("-Lung", ., value = T)
+
+tml_ref <- ref_tabula_muris_drop[, lung_cols]
+tml_ref <- tml_ref[, c(8,13)]
+
 
 # default with all genes
 start <- proc.time()
-res <- clustify(l_mat, 
-                tml_ref, 
-                l_meta, 
-                cluster_col = "Annotation")
 
-res_allgenes <- cor_to_call(res, 
-                            l_meta, 
-                            cluster_col = "Annotation")
+res <- clustify(
+  input = l_mat, 
+  ref_mat = tml_ref, 
+  metadata = l_meta, 
+  cluster_col = "Annotation"
+)
+
+res_allgenes <- cor_to_call(
+  correlation_matrix = res, 
+  metadata = l_meta, 
+  cluster_col = "Annotation"
+)
+
 end <- proc.time()
 names(res_allgenes) <- c("MCA annotation", "clustifyr call", "r")
 
 print(end - start)
-
 print(res_allgenes, n = nrow(res_allgenes))
 ```
 
 ## benchmark 2. Using sorted microarray data to classify 10x PBMC example data, available in `clustifyrdata` package
 
-```{r micro, message=FALSE, warning=FALSE}
+```{r micro}
 full_pbmc4k_matrix <- clustifyrdata::pbmc4k_matrix
 full_pbmc4k_meta <- clustifyrdata::pbmc4k_meta
 microarray_ref <- clustifyrdata::hema_microarray_matrix
 
 start <- proc.time()
-res <- clustify(full_pbmc4k_matrix, 
-                microarray_ref, 
-                full_pbmc4k_meta, 
-                query_genes = pbmc4k_vargenes,
-                cluster_col = "classified")
+
+res <- clustify(
+  input = full_pbmc4k_matrix, 
+  ref_mat = microarray_ref, 
+  metadata = full_pbmc4k_meta, 
+  query_genes = pbmc4k_vargenes,
+  cluster_col = "classified"
+)
 
 res2 <- cor_to_call(res)
+
 end <- proc.time()
 names(res2) <- c("manual annotation", "clustifyr call", "r")
 
@@ -140,6 +159,7 @@ default `clustify_list`
 ```{r tab, include = F, eval=F}
 library(clustifyr)
 library(tidyverse)
+
 files_facs <- list.files(path = "/Users/rf/", pattern = "facs.*\\.Robj$")
 files_drop <- list.files(path = "/Users/rf/", pattern = "droplet.*\\.Robj$")
 
@@ -156,7 +176,7 @@ load_obj <- function(f) {
   }
 ```
 
-```{r ref, include = F, eval=F}
+```{r ref, include = FALSE, eval = FALSE}
 for (n in 1:length(files_drop_fil)) {
   print(files_drop_fil[n])
   s <- load_obj(paste0("/Users/rf/", files_drop_fil[n]))
@@ -197,7 +217,7 @@ for (n in 1:length(files_facs_fil)) {
 saveRDS(ref, "tabula_muris_ref_facs_042119.rds")
 ```
 
-```{r test, include = F, eval=F}
+```{r test, include = FALSE, eval = FALSE}
 # ref <- readRDS("tabula_muris_ref_drop_042119.rds")
 times <- list()
 for (n in 1:length(tissue_both)) {
@@ -249,7 +269,7 @@ resall2 <- resall %>% filter(cluster != "unknown")
 # saveRDS(resall2, "clustify_resall2")
 ```
 
-```{r m3drop, include = F, eval=F}
+```{r m3drop, include = FALSE, eval = FALSE}
 # ref <- readRDS("tabula_muris_ref_drop_042119.rds")
 library(M3Drop)
 times3 <- list()
@@ -323,7 +343,7 @@ mean(resall2$finalcall) # 92.54% with mt_threshold 0.01 or 0.001, no difference
 # saveRDS(resall2negcor_all, "resall2negcor_all") # no early-pro B in reference
 ```
 
-```{r allgenes, include = F, eval=F}
+```{r allgenes, include = FALSE, eval = FALSE}
 # ref <- readRDS("tabula_muris_ref_drop_042119.rds")
 
 for (n in 1:length(tissue_both)) {
@@ -372,7 +392,7 @@ resall2 <- resall2 %>% mutate(finalcall = ifelse(call == 1, 1, ifelse(str_c(clus
 mean(resall2$finalcall) # 91.04 %
 ```
 
-```{r test_single, include = F, eval=F}
+```{r test_single, include = FALSE, eval = FALSE}
 times <- list()
 for (n in 1:length(tissue_both)) {
   print(tissue_both[n])
@@ -435,7 +455,7 @@ resall2 <- readRDS("clustify_cell_resall2")
 saveRDS(times, "clustify_cell_times")
 ```
 
-```{r test_single_rm0, include = F, eval=F}
+```{r test_single_rm0, include = FALSE, eval = FALSE}
 times <- list()
 for (n in 1:length(tissue_both)) {
   print(tissue_both[n])
@@ -500,7 +520,7 @@ a <- readRDS("clustify_cell_resall2")
 saveRDS(times, "clustify_cell_time_rm0s")
 ```
 
-```{r test_single_alra, include = F, eval=F}
+```{r test_single_alra, include = FALSE, eval = FALSE}
 source("/Users/rf/git_libs/ALRA/alra.R")
 source("/Users/rf/git_libs/ALRA/alraSeurat2.R")
 library(Matrix)
@@ -569,7 +589,7 @@ a <- readRDS("clustify_cell_resall2")
 saveRDS(times, "clustify_cell_times_alra")
 ```
 
-```{r test_all, include = F, eval=F}
+```{r test_all, include = FALSE, eval = FALSE}
 # ref <- readRDS("tabula_muris_ref_drop_042119.rds")
 ref_facs <- readRDS("/Users/rf/cluster/devel/3rd/clustifyr/tabula_muris_ref_facs.rds")
 times <- list()
@@ -599,7 +619,7 @@ for (n in 1:length(tissue_both)) {
 rescomp <- resall %>% filter(cluster!="unknown") %>% select(cluster, type) %>% ungroup() %>%  cbind(resall2)
 ```
 
-```{r load2, message=FALSE, warning=FALSE, include = F, eval=F}
+```{r load2, include = FALSE, eval = FALSE}
 library(here)
 library(clustifyr)
 library(tidyverse)
@@ -640,7 +660,7 @@ print(end - start)
 print(res_allgenes, n = nrow(res_allgenes))
 ```
 
-```{r test_cluster, include = F, eval=F}
+```{r test_cluster, include = FALSE, eval = FALSE}
 # ref <- readRDS("tabula_muris_ref_drop_042119.rds")
 times <- list()
 for (n in 1:length(tissue_both)) {
@@ -700,7 +720,7 @@ mean(resall2$finalcall) # 91.41 %
 # saveRDS(resall2, "clustify_resall2")
 ```
 
-```{r test_cluster_singlerREF, include = F, eval=F}
+```{r test_cluster_singlerREF, include = FALSE, eval = FALSE}
 # ref <- readRDS("tabula_muris_ref_drop_042119.rds")
 average_clusters(SingleR::mouse.rnaseq$data, SingleR::mouse.rnaseq$types, log_scale = F) -> mouse_ref
 average_clusters(scmap::yan, scmap::ann$cell_type1, log_scale = F) -> yan_ref
@@ -764,7 +784,7 @@ mean(resall2$finalcall) # 91.41 %
 # saveRDS(resall2, "clustify_resall2")
 ```
 
-```{r test_sctransform, include = F, eval=F, warning=F}
+```{r test_sctransform, include = FALSE, eval = FALSE}
 sctransform_s2 <- function(s) {
   mat <- sctransform::vst(as(as.matrix(s@raw.data), "dgCMatrix"))$y
   l1 <- colnames(mat)

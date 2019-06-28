@@ -11,8 +11,10 @@ output:
       %\VignetteEncoding{UTF-8}
 ---
 
-```{r knitr_opts, echo = FALSE}
+```{r "knitr options", echo = FALSE, message = FALSE, warning = FALSE}
 knitr::opts_chunk$set(
+  message = FALSE,
+  warning = FALSE,
   collapse = TRUE,
   comment = "#>",
   fig.align = "center"
@@ -23,8 +25,9 @@ knitr::opts_chunk$set(
 
 ## Direct handling of `seurat` objects, v2 and v3, extracting the required data, and inserting called cell types directly into the objects
 
-```{r, eval = F, warning = F, message = F}
+```{r eval = F}
 library(clustifyr)
+
 # can even returning a new object with `type` added to metadata.
 res <- clustify(
   input = s_small,
@@ -55,22 +58,24 @@ res3 <- clustify_nudge(
 
 ## Other scRNA-seq object formats are easily supported, by adding defaults to a lookup file `object_loc_lookup`, currently including `SCE`, `URD`, `CDS`, `FSCE`.
 
-```{r lookup, warning = F, message = F}
+```{r}
 # location of data in object in this format
 library(clustifyr)
+
 object_loc_lookup
 
 # adding seurat3 locations
-object_loc_lookup$Seurat <- c(expr = "input@assays$RNA@data", 
-                              meta = "input@meta.data", 
-                              var = "input@assays$RNA@var.features",
-                              col = "RNA_snn_res.1"
-                              )
+object_loc_lookup$Seurat <- c(
+  expr = "input@assays$RNA@data", 
+  meta = "input@meta.data", 
+  var = "input@assays$RNA@var.features",
+  col = "RNA_snn_res.1"
+)
 ```
 
 For example, sample code for `scrunchy` is as easy as:
 
-```{r scrunchy, warning = F, message = F, eval = F}
+```{r eval = F}
 res <- clustify_nudge(
   fsce_small,
   cbmc_ref,
@@ -83,7 +88,7 @@ res <- clustify_nudge(
 ## Making new references from objects
 Making scRNA-seq objects into references is assisted by wrappers as well.
 
-```{r ref, warning = F, message = F, eval = F}
+```{r eval = F}
 # for both v2 and v3
 seurat_ref <- use_seurat_comp(
   s_small3,
