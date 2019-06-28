@@ -436,7 +436,7 @@ clustify_lists.default <- function(input,
   }
 
   compare_lists(bin_input,
-    marker_m = marker,
+    marker_mat = marker,
     n = genome_n,
     metric = metric,
     output_high = output_high

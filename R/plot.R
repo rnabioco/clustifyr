@@ -80,8 +80,8 @@ plot_tsne <- function(data, x = "UMAP_1", y = "UMAP_2",
     centers <- dplyr::group_by_(data, .dots = feature)
     centers <- dplyr::summarize(centers, t1 = mean(!!dplyr::sym(x)), t2 = mean(!!dplyr::sym(y)))
     p <- p +
-      geom_point(data = centers, mapping = aes(x = t1, y = t2), size = 0, alpha = 0) +
-      geom_text(data = centers, mapping = aes(x = t1, y = t2, label = centers[[feature]]))
+      geom_point(data = centers, mapping = aes(x = !!dplyr::sym("t1"), y = !!dplyr::sym("t2")), size = 0, alpha = 0) +
+      geom_text(data = centers, mapping = aes(x = !!dplyr::sym("t1"), y = !!dplyr::sym("t2"), label = centers[[feature]]))
   }
 
   p <- p + cowplot::theme_cowplot()
@@ -189,7 +189,7 @@ plot_cor <- function(cor_matrix,
   for (i in seq_along(data_to_plot)) {
     tmp_data <- dplyr::filter(
       plt_data,
-      ref_cluster == data_to_plot[i]
+      !!dplyr::sym("ref_cluster") == data_to_plot[i]
     )
     plts[[i]] <- plot_tsne(tmp_data,
       x = x,
@@ -373,7 +373,7 @@ plot_cols <- function(metadata,
   temp1 <- dplyr::group_by_at(metadata, vars(cluster_col, cluster_col_called))
   temp1 <- dplyr::summarise(temp1, med = median(!!dplyr::sym(plot_col), na.rm = TRUE))
   colnames(temp1) <- c("original_cluster", "type", paste(plot_col, "query", sep = "_"))
-
+  
   temp2 <- dplyr::group_by_at(metadata_ref, cluster_col_ref)
   temp2 <- dplyr::summarise(temp2, med = median(!!dplyr::sym(plot_col_ref), na.rm = TRUE))
   colnames(temp2) <- c("type", paste(plot_col, "ref", sep = "_"))
@@ -398,7 +398,7 @@ plot_cols <- function(metadata,
     geom_point(alpha = 0.23) +
     geom_label(
       alpha = 0.23,
-      aes(color = type),
+      aes(color = !!dplyr::sym("type")),
       vjust = "inward",
       hjust = "inward"
     ) +

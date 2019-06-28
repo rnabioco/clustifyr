@@ -149,6 +149,19 @@ test_that("average_clusters_filter works on strings", {
   expect_equal(class(avg1), "matrix")
 })
 
+test_that("average_clusters_filter works with nonlog data", {
+  avg1 <- average_clusters_filter(
+    pbmc_matrix_small, 
+    pbmc_meta,
+    group_by = "classified",
+    filter_on = "seurat_clusters",
+    filter_method = "==",
+    filter_value = "1",
+    if_log = F
+  )
+  expect_equal(class(avg1), "matrix")
+})
+
 test_that("cor_to_call threshold works as intended", {
   res <- clustify(
     input = pbmc_matrix_small,
@@ -313,6 +326,32 @@ test_that("clustify_nudge works with options and seruat2", {
   )
   expect_true(nrow(res) == 4)
 })
+
+test_that("clustify_nudge works with seurat_out", {
+  res <- clustify_nudge(
+    input = s_small,
+    ref_mat = cbmc_ref,
+    marker = cbmc_m,
+    cluster_col = "res.1",
+    threshold = 0.8,
+    seurat_out = TRUE,
+    mode = "pct",
+    dr = "tsne"
+  )
+  
+  res <- clustify_nudge(
+    input = s_small3,
+    ref_mat = cbmc_ref,
+    marker = cbmc_m,
+    threshold = 0.8,
+    seurat_out = TRUE,
+    cluster_col = "RNA_snn_res.1",
+    mode = "pct",
+    dr = "tsne"
+  )
+  expect_true(3 == 3)
+})
+
 
 test_that("clustify_nudge works with options and seruat3", {
   res <- clustify_nudge(
