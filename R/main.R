@@ -1,34 +1,34 @@
-#' Main function to compare scRNA-seq data to bulk RNA-seq data.
+#' Compare scRNA-seq data to bulk RNA-seq data.
 #'
-#' @export
-clustify <- function(input, ...) {
-  UseMethod("clustify", input)
-}
-
-#' @rdname clustify
 #' @param input single-cell expression matrix or Seurat object
-#' @param metadata cell cluster assignments, supplied as a vector or data.frame. If
-#' data.frame is supplied then `cluster_col` needs to be set. Not required if running correlation per cell.
+#' @param metadata cell cluster assignments, supplied as a vector or data.frame.
+#'   If data.frame is supplied then `cluster_col` needs to be set. Not required
+#'   if running correlation per cell.
 #' @param ref_mat reference expression matrix
-#' @param cluster_col column in metadata that contains cluster ids per cell. Will default to first
-#' column of metadata if not supplied. Not required if running correlation per cell.
-#' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
-#' the expr_mat and ref_mat will be used for comparision.
+#' @param cluster_col column in metadata that contains cluster ids per cell.
+#'   Will default to first column of metadata if not supplied. Not required if
+#'   running correlation per cell.
+#' @param query_genes A vector of genes of interest to compare. If NULL, then
+#'   common genes between the expr_mat and ref_mat will be used for comparision.
 #' @param per_cell if true run per cell, otherwise per cluster.
 #' @param n_perm number of permutations, set to 0 by default
 #' @param compute_method method(s) for computing similarity scores
 #' @param use_var_genes if providing a seurat object, use the variable genes
-#'  (stored in seurat_object@var.genes) as the query_genes.
+#'   (stored in seurat_object@var.genes) as the query_genes.
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
 #' @param verbose whether to report certain variables chosen
-#' @param lookuptable if not supplied, will look in built-in table for object parsing
+#' @param lookuptable if not supplied, will look in built-in table for object
+#'   parsing
 #' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param ... additional arguments to pass to compute_method function
-#' @return matrix of correlation values, clusters from input as row names, cell types from ref_mat as column names
+#'
+#' @return matrix of correlation values, clusters from input as row names, cell
+#'   types from ref_mat as column names
+#'
 #' @examples
 #' # Annotate a matrix and metadata
-#' res <- clustify(
+#' clustify(
 #'   input = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
 #'   ref_mat = pbmc_bulk_matrix,
@@ -38,7 +38,7 @@ clustify <- function(input, ...) {
 #' )
 #'
 #' # Annotate using a different method
-#' res <- clustify(
+#' clustify(
 #'   input = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
 #'   ref_mat = pbmc_bulk_matrix,
@@ -47,8 +47,8 @@ clustify <- function(input, ...) {
 #'   compute_method = "cosine"
 #' )
 #'
-#' # Annotate (and return) a Seurat object
-#' res <- clustify(
+#' # Annotate a Seurat object
+#' clustify(
 #'   s_small,
 #'   pbmc_bulk_matrix,
 #'   cluster_col = "res.1",
@@ -57,8 +57,8 @@ clustify <- function(input, ...) {
 #'   dr = "tsne"
 #' )
 #'
-#' # Annotate (and return) a Seurat object per-cell
-#' res <- clustify(
+#' # Annotate a Seurat object, per-cell
+#' clustify(
 #'   s_small,
 #'   pbmc_bulk_matrix,
 #'   cluster_col = "res.1",
@@ -66,6 +66,13 @@ clustify <- function(input, ...) {
 #'   per_cell = TRUE,
 #'   dr = "tsne"
 #' )
+#'
+#' @export
+clustify <- function(input, ...) {
+  UseMethod("clustify", input)
+}
+
+#' @rdname clustify
 #' @export
 clustify.default <- function(input,
                              ref_mat,
@@ -79,7 +86,16 @@ clustify.default <- function(input,
                              lookuptable = NULL,
                              rm0 = FALSE,
                              ...) {
-  if (!(stringr::str_detect(class(input), "atrix|data\\.frame"))) {
+
+  if (!compute_method %in% clustifyr_methods) {
+    stop(paste(compute_method, "correlation method not implemented"), call. = FALSE)
+  }
+
+  if (is.null(metadata) && !per_cell) {
+    stop("`metadata` needed for per cluster analysis", call. = FALSE)
+  }
+
+  if (!inherits(input, c("matrix", "Matrix", "data.frame"))) {
     input_original <- input
     temp <- parse_loc_object(input,
       type = class(input),
@@ -103,9 +119,6 @@ clustify.default <- function(input,
   }
 
   expr_mat <- input
-  if (!compute_method %in% clustifyr_methods) {
-    stop(paste(compute_method, "correlation method not implemented"))
-  }
 
   # select gene subsets
   gene_constraints <- get_common_elements(
@@ -114,16 +127,12 @@ clustify.default <- function(input,
     query_genes
   )
 
-  if (verbose == TRUE) {
+  if (verbose) {
     message(paste0("using # of genes: ", length(gene_constraints)))
   }
 
   expr_mat <- expr_mat[gene_constraints, , drop = FALSE]
   ref_mat <- ref_mat[gene_constraints, , drop = FALSE]
-
-  if (is.null(metadata) & !per_cell) {
-    stop("metadata needed for per cluster analysis")
-  }
 
   if (!per_cell) {
     if (is.vector(metadata)) {
@@ -132,7 +141,7 @@ clustify.default <- function(input,
       cluster_ids <- metadata[[cluster_col]]
     } else {
       stop("metadata not formatted correctly,
-           supply either a character vector or a dataframe")
+           supply either a character vector or a dataframe", call. = FALSE)
     }
     if (class(cluster_ids) == "factor") {
       cluster_ids <- as.character(cluster_ids)
@@ -145,7 +154,7 @@ clustify.default <- function(input,
   }
 
   if (n_perm == 0) {
-    res <- get_similarity(
+    get_similarity(
       expr_mat,
       ref_mat,
       cluster_ids = cluster_ids,
@@ -156,7 +165,7 @@ clustify.default <- function(input,
     )
   } else {
     # run permutation
-    res <- permute_similarity(
+    permute_similarity(
       expr_mat,
       ref_mat,
       cluster_ids = cluster_ids,
@@ -167,29 +176,18 @@ clustify.default <- function(input,
       ...
     )
   }
-
-  return(res)
 }
 
 #' @rdname clustify
-#' @param ref_mat reference expression matrix
-#' @param cluster_col column in metadata that contains cluster ids per cell. Will default to first
-#' column of metadata if not supplied. Not required if running correlation per cell.
-#' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
-#' the expr_mat and ref_mat will be used for comparision.
-#' @param per_cell if true run per cell, otherwise per cluster.
-#' @param n_perm number of permutations, set to 0 by default
-#' @param compute_method method(s) for computing similarity scores
-#' @param use_var_genes if providing a seurat object, use the variable genes
-#'  (stored in seurat_object@var.genes) as the query_genes.
-#' @param dr stored dimension reduction
-#' @param seurat_out output cor matrix or called seurat object
 #' @param threshold identity calling minimum correlation score threshold
 #' @param verbose whether to report certain variables chosen
-#' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param rename_suff suffix to add to type and r column names
 #' @param ... additional arguments to pass to compute_method function
-#' @return seurat2 object with type assigned in metadata, or matrix of correlation values, clusters from input as row names, cell types from ref_mat as column names
+#'
+#' @return seurat2 object with type assigned in metadata, or matrix of
+#'   correlation values, clusters from input as row names, cell types from
+#'   ref_mat as column names
+#'
 #' @export
 clustify.seurat <- function(input,
                             ref_mat,
@@ -211,11 +209,12 @@ clustify.seurat <- function(input,
   expr_mat <- s_object@data
   metadata <- seurat_meta(s_object, dr = dr)
 
-  if (use_var_genes & is.null(query_genes)) {
+  if (use_var_genes && is.null(query_genes)) {
     query_genes <- s_object@var.genes
   }
 
-  res <- clustify(expr_mat,
+  res <- clustify(
+    expr_mat,
     ref_mat,
     metadata,
     query_genes,
@@ -232,54 +231,27 @@ clustify.seurat <- function(input,
     res <- -log(res$p_val + .01, 10)
   }
 
-  if (seurat_out == FALSE) {
-    res
-  } else {
-    df_temp <- cor_to_call(
-      res,
-      metadata = metadata,
-      cluster_col = cluster_col,
-      threshold = threshold
+  if (seurat_out && seurat_loaded()) {
+
+    meta <- build_seurat_meta(
+      res, metadata,
+      cluster_col, threshold,
+      per_cell, rename_suff
     )
 
-    df_temp_full <- call_to_metadata(
-      df_temp,
-      metadata = metadata,
-      cluster_col = cluster_col,
-      per_cell = per_cell,
-      rename_suff = rename_suff
-    )
-
-    if ("Seurat" %in% loadedNamespaces()) {
-      s_object@meta.data <- df_temp_full
-      return(s_object)
-    } else {
-      message("seurat not loaded, returning cor_mat instead")
-      return(res)
-    }
-    s_object
+    s_object@meta.data <- meta
+    return(s_object)
   }
+
+  res
 }
 
 #' @rdname clustify
-#' @param ref_mat reference expression matrix
-#' @param cluster_col column in metadata that contains cluster ids per cell. Will default to first
-#' column of metadata if not supplied. Not required if running correlation per cell.
-#' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
-#' the expr_mat and ref_mat will be used for comparision.
-#' @param per_cell if true run per cell, otherwise per cluster.
-#' @param n_perm number of permutations, set to 0 by default
-#' @param compute_method method(s) for computing similarity scores
-#' @param use_var_genes if providing a seurat object, use the variable genes
-#'  (stored in seurat_object@var.genes) as the query_genes.
-#' @param dr stored dimension reduction
-#' @param seurat_out output cor matrix or called seurat object
-#' @param threshold identity calling minimum correlation score threshold
-#' @param verbose whether to report certain variables chosen
-#' @param rm0 consider 0 as missing data, recommended for per_cell
-#' @param rename_suff suffix to add to type and r column names
-#' @param ... additional arguments to pass to compute_method function
-#' @return seurat3 object with type assigned in metadata, or matrix of correlation values, clusters from input as row names, cell types from ref_mat as column names
+#'
+#' @return seurat3 object with type assigned in metadata, or matrix of
+#'   correlation values, clusters from input as row names, cell types from
+#'   ref_mat as column names
+#'
 #' @export
 clustify.Seurat <- function(input,
                             ref_mat,
@@ -301,11 +273,12 @@ clustify.Seurat <- function(input,
   expr_mat <- s_object@assays$RNA@data
   metadata <- seurat_meta(s_object, dr = dr)
 
-  if (use_var_genes & is.null(query_genes)) {
+  if (use_var_genes && is.null(query_genes)) {
     query_genes <- s_object@assays$RNA@var.features
   }
 
-  res <- clustify(expr_mat,
+  res <- clustify(
+    expr_mat,
     ref_mat,
     metadata,
     query_genes,
@@ -317,40 +290,53 @@ clustify.Seurat <- function(input,
     rm0 = rm0,
     ...
   )
+
   if (n_perm != 0) {
     res <- -log(res$p_val + .01, 10)
   }
 
-  if (seurat_out == FALSE) {
-    res
-  } else {
-    df_temp <- cor_to_call(
-      res,
-      metadata = metadata,
-      cluster_col = cluster_col,
-      threshold = threshold
+  if (seurat_out && seurat_loaded()) {
+
+    meta <- build_seurat_meta(
+      res, metadata,
+      cluster_col, threshold,
+      per_cell, rename_suff
     )
 
-    df_temp_full <- call_to_metadata(
-      df_temp,
-      metadata = metadata,
-      cluster_col = cluster_col,
-      per_cell = per_cell,
-      rename_suff = rename_suff
-    )
-
-    if ("Seurat" %in% loadedNamespaces()) {
-      s_object@meta.data <- df_temp_full
-      return(s_object)
-    } else {
-      message("seurat not loaded, returning cor_mat instead")
-      return(res)
-    }
-    s_object
+    s_object@meta.data <- meta
+    return(s_object)
   }
+
+  res
 }
-#' Correlation functions available in clustifyr
-#' @export
+
+seurat_loaded <- function() {
+  "Seurat" %in% loadedNamespaces()
+}
+
+#' Build meta-data for Seurat object
+build_seurat_meta <- function(x,
+                              metadata,
+                              cluster_col,
+                              threshold,
+                              per_cell,
+                              rename_suff) {
+  res <- cor_to_call(
+    x,
+    metadata = metadata,
+    cluster_col = cluster_col,
+    threshold = threshold
+  )
+
+  call_to_metadata(
+    res,
+    metadata = metadata,
+    cluster_col = cluster_col,
+    per_cell = per_cell,
+    rename_suff = rename_suff
+  )
+}
+
 clustifyr_methods <- c(
   "pearson",
   "spearman",
@@ -383,9 +369,10 @@ clustify_lists <- function(input, ...) {
 #' -log10 transform p-value
 #' @param lookuptable if not supplied, will look in built-in table for object parsing
 #' @param ... passed to matrixize_markers
+#'
 #' @return matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
+#'
 #' @export
-
 clustify_lists.default <- function(input,
                                    marker,
                                    marker_inmatrix = TRUE,
@@ -400,6 +387,7 @@ clustify_lists.default <- function(input,
                                    output_high = TRUE,
                                    lookuptable = NULL,
                                    ...) {
+
   if (!(stringr::str_detect(class(input), "atrix"))) {
     input_original <- input
     temp <- parse_loc_object(input,
@@ -506,33 +494,19 @@ clustify_lists.seurat <- function(input,
     ...
   )
 
-  if (seurat_out == FALSE) {
-    res
-  } else {
-    df_temp <- cor_to_call(
-      res,
-      metadata = metadata,
-      cluster_col = cluster_col,
-      threshold = threshold
+  if (seurat_out && seurat_loaded()) {
+
+    meta <- build_seurat_meta(
+      res, metadata,
+      cluster_col, threshold,
+      per_cell, rename_suff
     )
 
-    df_temp_full <- call_to_metadata(
-      df_temp,
-      metadata = metadata,
-      cluster_col = cluster_col,
-      per_cell = per_cell,
-      rename_suff = rename_suff
-    )
-
-    if ("Seurat" %in% loadedNamespaces()) {
-      s_object@meta.data <- df_temp_full
-      return(s_object)
-    } else {
-      message("seurat not loaded, returning cor_mat instead")
-      return(res)
-    }
-    s_object
+    s_object@meta.data <- meta
+    return(s_object)
   }
+
+  res
 }
 
 #' @rdname clustify_lists
@@ -597,31 +571,17 @@ clustify_lists.Seurat <- function(input,
     ...
   )
 
-  if (seurat_out == FALSE) {
-    res
-  } else {
-    df_temp <- cor_to_call(
-      res,
-      metadata = metadata,
-      cluster_col = cluster_col,
-      threshold = threshold
+  if (seurat_out && seurat_loaded()) {
+
+    meta <- build_seurat_meta(
+      res, metadata,
+      cluster_col, threshold,
+      per_cell, rename_suff
     )
 
-    df_temp_full <- call_to_metadata(
-      df_temp,
-      metadata = metadata,
-      cluster_col = cluster_col,
-      per_cell = per_cell,
-      rename_suff = rename_suff
-    )
-
-    if ("Seurat" %in% loadedNamespaces()) {
-      s_object@meta.data <- df_temp_full
-      return(s_object)
-    } else {
-      message("seurat not loaded, returning cor_mat instead")
-      return(res)
-    }
-    s_object
+    s_object@meta.data <- meta
+    return(s_object)
   }
+
+  res
 }

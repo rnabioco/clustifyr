@@ -14,6 +14,8 @@ call_to_metadata(res, metadata, cluster_col, per_cell = FALSE,
 
 \item{cluster_col}{metadata column, can be cluster or cellid}
 
+\item{per_cell}{whether the res dataframe is listed per cell}
+
 \item{rename_suff}{suffix to add to type and r column names}
 }
 \value{

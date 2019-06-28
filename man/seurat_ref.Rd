@@ -9,10 +9,10 @@
 seurat_ref(seurat_object, ...)
 
 \method{seurat_ref}{seurat}(seurat_object, cluster_col = "classified",
-  var_genes_only = FALSE, assay_name = NULL, method = "mean")
+  var_genes_only = FALSE, assay_name = NULL, method = "mean", ...)
 
 \method{seurat_ref}{Seurat}(seurat_object, cluster_col = "classified",
-  var_genes_only = FALSE, assay_name = NULL, method = "mean")
+  var_genes_only = FALSE, assay_name = NULL, method = "mean", ...)
 }
 \arguments{
 \item{seurat_object}{seurat_object after tsne or umap projections and clustering}

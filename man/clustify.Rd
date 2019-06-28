@@ -5,7 +5,7 @@
 \alias{clustify.default}
 \alias{clustify.seurat}
 \alias{clustify.Seurat}
-\title{Main function to compare scRNA-seq data to bulk RNA-seq data.}
+\title{Compare scRNA-seq data to bulk RNA-seq data.}
 \usage{
 clustify(input, ...)
 
@@ -33,14 +33,16 @@ clustify(input, ...)
 
 \item{ref_mat}{reference expression matrix}
 
-\item{metadata}{cell cluster assignments, supplied as a vector or data.frame. If
-data.frame is supplied then \code{cluster_col} needs to be set. Not required if running correlation per cell.}
+\item{metadata}{cell cluster assignments, supplied as a vector or data.frame.
+If data.frame is supplied then \code{cluster_col} needs to be set. Not required
+if running correlation per cell.}
 
-\item{cluster_col}{column in metadata that contains cluster ids per cell. Will default to first
-column of metadata if not supplied. Not required if running correlation per cell.}
+\item{cluster_col}{column in metadata that contains cluster ids per cell.
+Will default to first column of metadata if not supplied. Not required if
+running correlation per cell.}
 
-\item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
-the expr_mat and ref_mat will be used for comparision.}
+\item{query_genes}{A vector of genes of interest to compare. If NULL, then
+common genes between the expr_mat and ref_mat will be used for comparision.}
 
 \item{per_cell}{if true run per cell, otherwise per cluster.}
 
@@ -50,7 +52,8 @@ the expr_mat and ref_mat will be used for comparision.}
 
 \item{verbose}{whether to report certain variables chosen}
 
-\item{lookuptable}{if not supplied, will look in built-in table for object parsing}
+\item{lookuptable}{if not supplied, will look in built-in table for object
+parsing}
 
 \item{rm0}{consider 0 as missing data, recommended for per_cell}
 
@@ -65,77 +68,28 @@ the expr_mat and ref_mat will be used for comparision.}
 
 \item{rename_suff}{suffix to add to type and r column names}
 
-\item{ref_mat}{reference expression matrix}
-
-\item{cluster_col}{column in metadata that contains cluster ids per cell. Will default to first
-column of metadata if not supplied. Not required if running correlation per cell.}
-
-\item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
-the expr_mat and ref_mat will be used for comparision.}
-
-\item{per_cell}{if true run per cell, otherwise per cluster.}
-
-\item{n_perm}{number of permutations, set to 0 by default}
-
-\item{compute_method}{method(s) for computing similarity scores}
-
-\item{use_var_genes}{if providing a seurat object, use the variable genes
-(stored in seurat_object@var.genes) as the query_genes.}
-
-\item{dr}{stored dimension reduction}
-
-\item{seurat_out}{output cor matrix or called seurat object}
-
 \item{verbose}{whether to report certain variables chosen}
-
-\item{rm0}{consider 0 as missing data, recommended for per_cell}
-
-\item{...}{additional arguments to pass to compute_method function}
-
-\item{ref_mat}{reference expression matrix}
-
-\item{cluster_col}{column in metadata that contains cluster ids per cell. Will default to first
-column of metadata if not supplied. Not required if running correlation per cell.}
-
-\item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
-the expr_mat and ref_mat will be used for comparision.}
-
-\item{per_cell}{if true run per cell, otherwise per cluster.}
-
-\item{n_perm}{number of permutations, set to 0 by default}
-
-\item{compute_method}{method(s) for computing similarity scores}
-
-\item{use_var_genes}{if providing a seurat object, use the variable genes
-(stored in seurat_object@var.genes) as the query_genes.}
-
-\item{dr}{stored dimension reduction}
-
-\item{seurat_out}{output cor matrix or called seurat object}
-
-\item{threshold}{identity calling minimum correlation score threshold}
-
-\item{verbose}{whether to report certain variables chosen}
-
-\item{rm0}{consider 0 as missing data, recommended for per_cell}
-
-\item{rename_suff}{suffix to add to type and r column names}
 
 \item{...}{additional arguments to pass to compute_method function}
 }
 \value{
-matrix of correlation values, clusters from input as row names, cell types from ref_mat as column names
+matrix of correlation values, clusters from input as row names, cell
+types from ref_mat as column names
 
-seurat2 object with type assigned in metadata, or matrix of correlation values, clusters from input as row names, cell types from ref_mat as column names
+seurat2 object with type assigned in metadata, or matrix of
+correlation values, clusters from input as row names, cell types from
+ref_mat as column names
 
-seurat3 object with type assigned in metadata, or matrix of correlation values, clusters from input as row names, cell types from ref_mat as column names
+seurat3 object with type assigned in metadata, or matrix of
+correlation values, clusters from input as row names, cell types from
+ref_mat as column names
 }
 \description{
-Main function to compare scRNA-seq data to bulk RNA-seq data.
+Compare scRNA-seq data to bulk RNA-seq data.
 }
 \examples{
 # Annotate a matrix and metadata
-res <- clustify(
+clustify(
   input = pbmc_matrix_small,
   metadata = pbmc_meta,
   ref_mat = pbmc_bulk_matrix,
@@ -145,7 +99,7 @@ res <- clustify(
 )
 
 # Annotate using a different method
-res <- clustify(
+clustify(
   input = pbmc_matrix_small,
   metadata = pbmc_meta,
   ref_mat = pbmc_bulk_matrix,
@@ -154,8 +108,8 @@ res <- clustify(
   compute_method = "cosine"
 )
 
-# Annotate (and return) a Seurat object
-res <- clustify(
+# Annotate a Seurat object
+clustify(
   s_small,
   pbmc_bulk_matrix,
   cluster_col = "res.1",
@@ -164,8 +118,8 @@ res <- clustify(
   dr = "tsne"
 )
 
-# Annotate (and return) a Seurat object per-cell
-res <- clustify(
+# Annotate a Seurat object, per-cell
+clustify(
   s_small,
   pbmc_bulk_matrix,
   cluster_col = "res.1",
@@ -173,4 +127,5 @@ res <- clustify(
   per_cell = TRUE,
   dr = "tsne"
 )
+
 }

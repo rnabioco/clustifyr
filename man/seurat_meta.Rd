@@ -8,9 +8,9 @@
 \usage{
 seurat_meta(seurat_object, ...)
 
-\method{seurat_meta}{seurat}(seurat_object, dr = "umap")
+\method{seurat_meta}{seurat}(seurat_object, dr = "umap", ...)
 
-\method{seurat_meta}{Seurat}(seurat_object, dr = "umap")
+\method{seurat_meta}{Seurat}(seurat_object, dr = "umap", ...)
 }
 \arguments{
 \item{seurat_object}{seurat_object after tsne or umap projections and clustering}
