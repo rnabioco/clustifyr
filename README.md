@@ -45,7 +45,7 @@ pre-calculated tSNE projection (stored in `pbmc_meta`).
 library(clustifyr)
 res <- clustify(
   input = pbmc_matrix_small,
-  metadata = as.character(pbmc_meta$classified),
+  metadata = pbmc_meta$classified,
   ref_mat = pbmc_bulk_matrix,
   query_genes = pbmc_vargenes
 )
