@@ -32,6 +32,22 @@ test_that("clustify takes accidental dataframe as well", {
   expect_equal(n_clusters, nrow(res))
 })
 
+test_that("clustify takes factor for metadata", {
+  res <- clustify(
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta$classified,
+    ref_mat = pbmc_bulk_matrix,
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified",
+    verbose = TRUE
+  )
+  n_clusters <- length(unique(pbmc_meta$classified))
+  n_ref_samples <- ncol(pbmc_bulk_matrix)
+  
+  expect_equal(ncol(res), n_ref_samples)
+  expect_equal(n_clusters, nrow(res))
+})
+
 test_that("run all correlation functions", {
   results <- lapply(
     clustifyr_methods,

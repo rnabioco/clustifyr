@@ -128,6 +128,8 @@ clustify.default <- function(input,
   if (!per_cell) {
     if (is.vector(metadata)) {
       cluster_ids <- metadata
+    } else if (is.factor(metadata)) {
+      cluster_ids <- as.character(metadata)
     } else if (is.data.frame(metadata) & !is.null(cluster_col)) {
       cluster_ids <- metadata[[cluster_col]]
     } else {
