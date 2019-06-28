@@ -1591,7 +1591,12 @@ file_marker_parse <- function(filename) {
       ident_neg[count] <- strsplit(substr(line, 16, nchar(line)), split = ", ")
     }
   }
-  names(ident_neg) <- ident_names
-  names(ident_pos) <- ident_names
+  
+  if (!(is.null(ident_neg))) {
+    names(ident_neg) <- ident_names
+  }
+  if (!(is.null(ident_pos))) {
+    names(ident_pos) <- ident_names
+  }
   list("pos" = ident_pos, "neg" = ident_neg)
 }
