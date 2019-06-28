@@ -371,7 +371,7 @@ remove_background <- function(mat, background, n = 0) {
 #' @param no_warnings suppress warnings from gsea ties
 #' @return matrix of GSEA NES values, cell types as row names, pathways as column names
 #' @examples
-#' \donttest{gl <- list(
+#' gl <- list(
 #'   "n" = c("PPBP", "LYZ", "S100A9"),
 #'   "a" = c("IGLL5", "GNLY", "FTL")
 #' )
@@ -379,7 +379,7 @@ remove_background <- function(mat, background, n = 0) {
 #' calculate_pathway_gsea(
 #'   mat = pbmc_matrix_small,
 #'   pathway_list = gl
-#' )}
+#' )
 #' @export
 calculate_pathway_gsea <- function(mat,
                                    pathway_list,
@@ -1307,7 +1307,7 @@ gmt_to_list <- function(path,
 #' @param returning to return "both" list and plot, or either one
 #' @return list of matrix and plot, or just plot, matrix of GSEA NES values, cell types as row names, pathways as column names
 #' @examples
-#' \donttest{gl <- list(
+#' gl <- list(
 #'   "n" = c("PPBP", "LYZ", "S100A9"),
 #'   "a" = c("IGLL5", "GNLY", "FTL")
 #' )
@@ -1321,7 +1321,7 @@ gmt_to_list <- function(path,
 #'   pbmc_avg,
 #'   gl,
 #'   5
-#' )}
+#' )
 #' @export
 plot_pathway_gsea <- function(mat,
                               pathway_list,
@@ -1605,7 +1605,7 @@ file_marker_parse <- function(filename) {
       ident_neg[count] <- strsplit(substr(line, 16, nchar(line)), split = ", ")
     }
   }
-  
+
   if (!(is.null(ident_neg))) {
     names(ident_neg) <- ident_names
   }
