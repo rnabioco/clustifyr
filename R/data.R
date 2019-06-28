@@ -18,7 +18,7 @@
 #' \describe{
 #' }
 #'
-#' @source `[pbmc_matrix]` processed by `[Seurat]`
+#' @source `[pbmc_matrix]` processed by Seurat
 "pbmc_meta"
 
 #' Marker genes identified by Seurat from single-cell RNA-seq PBMCs.
@@ -29,7 +29,7 @@
 #' \describe{
 #' }
 #'
-#' @source `[pbmc_matrix]` processed by `[Seurat]`
+#' @source `[pbmc_matrix]` processed by Seurat
 "pbmc_markers"
 
 #' Marker genes identified by M3Drop from single-cell RNA-seq PBMCs.
@@ -51,7 +51,7 @@
 #' \describe{
 #' }
 #'
-#' @source `[pbmc_matrix]` processed by `[Seurat]`
+#' @source `[pbmc_matrix]` processed by Seurat
 "pbmc_vargenes"
 
 #' Bulk RNA-Seq data from sorted populations isolated from PBMCs.
@@ -70,7 +70,7 @@
 #' \describe{
 #' }
 #'
-#' @source  `[pbmc_small]` processed by `[seurat]`
+#' @source  `[pbmc_small]` processed by seurat
 "s_small"
 
 #' Small clustered Seurat3 object
@@ -79,7 +79,7 @@
 #' \describe{
 #' }
 #'
-#' @source  `[pbmc_small]` processed by `[Seurat]`
+#' @source  `[pbmc_small]` processed by Seurat
 "s_small3"
 
 #' reference matrix from seurat citeseq CBMC tutorial
