@@ -3,9 +3,10 @@ context("compare_list")
 test_that("warning if matrix is not binarized", {
   pbmc_mm <- matrixize_markers(pbmc_markers)
   pbmc_avg <- average_clusters(
-    pbmc_matrix_small, 
+    pbmc_matrix_small,
     pbmc_meta,
-    cluster_col = "classified")
+    cluster_col = "classified"
+  )
   pbmc_avgb <- binarize_expr(pbmc_avg)
   gene_list_methods <- c("hyper")
   results <- lapply(
@@ -25,9 +26,10 @@ test_that("warning if matrix is not binarized", {
 test_that("run all gene list functions", {
   pbmc_mm <- matrixize_markers(pbmc_markers)
   pbmc_avg <- average_clusters(
-    pbmc_matrix_small, 
+    pbmc_matrix_small,
     pbmc_meta,
-    cluster_col = "classified")
+    cluster_col = "classified"
+  )
   pbmc_avgb <- binarize_expr(pbmc_avg)
   gene_list_methods <- c("spearman", "hyper", "jaccard", "gsea")
   results <- lapply(
@@ -46,9 +48,10 @@ test_that("run all gene list functions", {
 test_that("gene list function options", {
   pbmc_mm <- matrixize_markers(pbmc_markers)
   pbmc_avg <- average_clusters(
-    pbmc_matrix_small, 
+    pbmc_matrix_small,
     pbmc_meta,
-    cluster_col = "classified")
+    cluster_col = "classified"
+  )
   pbmc_avgb <- binarize_expr(pbmc_avg)
   expect_error(suppressWarnings(res <- compare_lists(pbmc_avgb,
     pbmc_mm,
@@ -112,7 +115,8 @@ test_that("seurat object clustify_lists-ing", {
   )
   g <- plot_best_call(res,
     seurat_meta(s_small,
-                    dr = "tsne"),
+      dr = "tsne"
+    ),
     cluster_col = "res.1",
     plot_r = TRUE,
     x = "tSNE_1",
@@ -164,7 +168,8 @@ test_that("seurat3 object clustify_lists-ing", {
   )
   g <- plot_best_call(res,
     seurat_meta(s_small3,
-                    dr = "tsne"),
+      dr = "tsne"
+    ),
     cluster_col = "RNA_snn_res.1",
     plot_r = TRUE,
     x = "tSNE_1",

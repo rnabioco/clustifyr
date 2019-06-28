@@ -26,13 +26,13 @@ test_that("matrixize_markers to turn matrix into ranked list", {
 
 test_that("matrixize_markers uses supplied labels", {
   pbmc_mm <- matrixize_markers(
-    pbmc_markers, 
-    n = 50, 
+    pbmc_markers,
+    n = 50,
     metadata = pbmc_meta %>% mutate(cluster = seurat_clusters),
     cluster_col = "classified"
   )
   pbmc_mm2 <- matrixize_markers(
-    pbmc_mm, 
+    pbmc_mm,
     metadata = unique(as.character(pbmc_meta$classified)),
     cluster_col = "classified",
     ranked = TRUE
@@ -138,7 +138,7 @@ test_that("average_clusters works when cluster info contains NA", {
 
 test_that("average_clusters_filter works on strings", {
   avg1 <- average_clusters_filter(
-    pbmc_matrix_small, 
+    pbmc_matrix_small,
     pbmc_meta,
     group_by = "classified",
     filter_on = "seurat_clusters",
@@ -355,7 +355,7 @@ test_that("clustify_nudge.Seurat works with seurat_out option", {
     mode = "pct",
     dr = "tsne"
   )
-  
+
   res <- clustify_nudge(
     input = s_small3,
     ref_mat = cbmc_ref,
@@ -374,9 +374,10 @@ test_that("clustify_nudge works with list of markers", {
   res <- clustify_nudge(
     input = pbmc_matrix_small,
     ref_mat = average_clusters(
-      pbmc_matrix_small, 
+      pbmc_matrix_small,
       pbmc_meta,
-      cluster_col = "classified"),
+      cluster_col = "classified"
+    ),
     metadata = pbmc_meta,
     marker = pbmc_markers,
     query_genes = pbmc_vargenes,
@@ -442,18 +443,20 @@ test_that("overcluster_test works with defined other cluster column", {
 
 test_that("ref_feature_select chooses the correct number of features", {
   pbmc_avg <- average_clusters(
-    pbmc_matrix_small, 
+    pbmc_matrix_small,
     pbmc_meta,
-    cluster_col = "classified")
+    cluster_col = "classified"
+  )
   res <- ref_feature_select(pbmc_avg[1:100, ], 5)
   expect_true(length(res) == 5)
 })
 
 test_that("ref_feature_select chooses the correct number of features with options", {
   pbmc_avg <- average_clusters(
-    pbmc_matrix_small, 
+    pbmc_matrix_small,
     pbmc_meta,
-    cluster_col = "classified")
+    cluster_col = "classified"
+  )
   res <- ref_feature_select(pbmc_avg[1:100, ], 5, mode = "cor")
   expect_true(length(res) == 5)
 })
@@ -546,7 +549,7 @@ test_that("seurat_ref gets correct averages", {
 test_that("object_ref with seurat3", {
   s3 <- s_small3
   avg <- object_ref(s3,
-                         var_genes_only = TRUE
+    var_genes_only = TRUE
   )
   expect_true(ncol(avg) == 3)
 })
@@ -715,15 +718,15 @@ test_that("pos_neg_select takes dataframe of 1 col or more", {
     row.names = c("CD4", "clustifyr0", "CD8B")
   )
   res <- pos_neg_select(
-    pbmc_matrix_small, 
-    pn_ref, 
-    pbmc_meta, 
+    pbmc_matrix_small,
+    pn_ref,
+    pbmc_meta,
     "classified"
   )
   res2 <- pos_neg_select(
-    pbmc_matrix_small, 
-    pn_ref2, 
-    pbmc_meta, 
+    pbmc_matrix_small,
+    pn_ref2,
+    pbmc_meta,
     "classified"
   )
   expect_identical(res[, 2], res2[, 1])
@@ -735,17 +738,17 @@ test_that("pos_neg_select normalizes res", {
     row.names = c("CD74", "clustifyr0", "CD79A")
   )
   res <- pos_neg_select(
-    pbmc_matrix_small, 
-    pn_ref2, 
-    pbmc_meta, 
-    "classified", 
+    pbmc_matrix_small,
+    pn_ref2,
+    pbmc_meta,
+    "classified",
     cutoff_score = 0.8
   )
   res2 <- pos_neg_select(
-    pbmc_matrix_small, 
-    pn_ref2, 
-    pbmc_meta, 
-    "classified", 
+    pbmc_matrix_small,
+    pn_ref2,
+    pbmc_meta,
+    "classified",
     cutoff_score = NULL
   )
   expect_true(res[1] != res2[1])
@@ -757,11 +760,11 @@ test_that("clustify_nudge works with pos_neg_select", {
     row.names = c("CD4", "clustifyr0", "CD8B"), check.names = FALSE
   )
   res <- clustify_nudge(
-    pbmc_matrix_small, 
-    cbmc_ref, 
-    pn_ref2, 
-    metadata = pbmc_meta, 
-    cluster_col = "classified", 
+    pbmc_matrix_small,
+    cbmc_ref,
+    pn_ref2,
+    metadata = pbmc_meta,
+    cluster_col = "classified",
     norm = 0.5
   )
   expect_true(all(dim(res) == c(9, 3)))

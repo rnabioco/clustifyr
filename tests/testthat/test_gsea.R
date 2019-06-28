@@ -54,9 +54,10 @@ test_that("calculate_pathway_gsea gives appropriate output", {
     "a" = c("IGLL5", "GNLY", "FTL")
   )
   pbmc_avg <- average_clusters(
-    pbmc_matrix_small, 
-    pbmc_meta, 
-    cluster_col = "classified")
+    pbmc_matrix_small,
+    pbmc_meta,
+    cluster_col = "classified"
+  )
   res <- calculate_pathway_gsea(pbmc_avg, gl, scale = TRUE)
 
   expect_equal(nrow(res), length(unique(pbmc_meta$classified)))
@@ -68,9 +69,10 @@ test_that("plot_pathway_gsea gives appropriate output", {
     "a" = c("IGLL5", "GNLY", "FTL")
   )
   pbmc_avg <- average_clusters(
-    pbmc_matrix_small, 
-    pbmc_meta, 
-    cluster_col = "classified")
+    pbmc_matrix_small,
+    pbmc_meta,
+    cluster_col = "classified"
+  )
   g <- plot_pathway_gsea(pbmc_avg, gl, 5)
   expect_equal(length(g), 2)
 })
@@ -81,9 +83,10 @@ test_that("plot_pathway_gsea gives output depending on returning option", {
     "a" = c("IGLL5", "GNLY", "FTL")
   )
   pbmc_avg <- average_clusters(
-    pbmc_matrix_small, 
-    pbmc_meta, 
-    cluster_col = "classified")
+    pbmc_matrix_small,
+    pbmc_meta,
+    cluster_col = "classified"
+  )
   g <- plot_pathway_gsea(pbmc_avg, gl, 5, returning = "plot")
   g2 <- plot_pathway_gsea(pbmc_avg, gl, 5, returning = "res")
   expect_true(class(g) == "Heatmap" & class(g2) == "data.frame")

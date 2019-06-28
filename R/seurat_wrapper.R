@@ -14,29 +14,29 @@ seurat_ref <- function(seurat_object, ...) {
 #'
 #' @export
 seurat_ref.seurat <- function(seurat_object,
-                            cluster_col = "classified",
-                            var_genes_only = FALSE,
-                            assay_name = NULL,
-                            method = "mean") {
+                              cluster_col = "classified",
+                              var_genes_only = FALSE,
+                              assay_name = NULL,
+                              method = "mean") {
   temp_mat <- seurat_object@data
-    if (var_genes_only == TRUE) {
-      temp_mat <- temp_mat[seurat_object@var.genes, ]
-    } else if (var_genes_only == "PCA") {
-      temp_mat <- temp_mat[rownames(seurat_object@dr$pca@gene.loadings), ]
-    }
-  
-    if (!is.null(assay_name)) {
-      if (!is.vector(assay_name)) {
-        temp_mat2 <- seurat_object@assay[[assay_name]]@raw.data
+  if (var_genes_only == TRUE) {
+    temp_mat <- temp_mat[seurat_object@var.genes, ]
+  } else if (var_genes_only == "PCA") {
+    temp_mat <- temp_mat[rownames(seurat_object@dr$pca@gene.loadings), ]
+  }
+
+  if (!is.null(assay_name)) {
+    if (!is.vector(assay_name)) {
+      temp_mat2 <- seurat_object@assay[[assay_name]]@raw.data
+      temp_mat <- rbind(temp_mat, as.matrix(temp_mat2))
+    } else {
+      for (element in assay_name) {
+        temp_mat2 <- seurat_object@assay[[element]]@raw.data
         temp_mat <- rbind(temp_mat, as.matrix(temp_mat2))
-      } else {
-        for (element in assay_name) {
-          temp_mat2 <- seurat_object@assay[[element]]@raw.data
-          temp_mat <- rbind(temp_mat, as.matrix(temp_mat2))
-        }
       }
     }
-  
+  }
+
   temp_res <- average_clusters(temp_mat,
     seurat_object@meta.data,
     if_log = TRUE,
@@ -62,13 +62,13 @@ seurat_ref.Seurat <- function(seurat_object,
                               method = "mean") {
   if (class(seurat_object) == "Seurat") {
     temp_mat <- seurat_object@assays$RNA@data
-    
+
     if (var_genes_only == TRUE) {
       temp_mat <- temp_mat[seurat_object@assays$RNA@var.features, ]
     } else if (var_genes_only == "PCA") {
       temp_mat <- temp_mat[rownames(seurat_object@reductions$pca@feature.loadings), ]
     }
-    
+
     if (!is.null(assay_name)) {
       if (!is.vector(assay_name)) {
         temp_mat2 <- seurat_object@assays[[assay_name]]@counts
@@ -83,14 +83,14 @@ seurat_ref.Seurat <- function(seurat_object,
   } else {
     stop("warning, not seurat3 object")
   }
-  
+
   temp_res <- average_clusters(temp_mat,
-                               seurat_object@meta.data,
-                               if_log = TRUE,
-                               cluster_col = cluster_col,
-                               method = method
+    seurat_object@meta.data,
+    if_log = TRUE,
+    cluster_col = cluster_col,
+    method = method
   )
-  
+
   temp_res
 }
 
@@ -106,10 +106,10 @@ seurat_meta <- function(seurat_object, ...) {
 #' @param dr dimension reduction method
 #' @export
 seurat_meta.seurat <- function(seurat_object,
-                            dr = "umap") {
+                               dr = "umap") {
   dr2 <- dr
   temp_dr <- as.data.frame(seurat_object@dr[[dr2]]@cell.embeddings)
-  
+
   temp_dr <- tibble::rownames_to_column(temp_dr, "rn")
   temp_meta <- tibble::rownames_to_column(seurat_object@meta.data, "rn")
   temp <- dplyr::left_join(temp_meta, temp_dr, by = "rn")
@@ -124,7 +124,7 @@ seurat_meta.Seurat <- function(seurat_object,
                                dr = "umap") {
   dr2 <- dr
   temp_dr <- as.data.frame(seurat_object@reductions[[dr2]]@cell.embeddings)
-  
+
   temp_dr <- tibble::rownames_to_column(temp_dr, "rn")
   temp_meta <- tibble::rownames_to_column(seurat_object@meta.data, "rn")
   temp <- dplyr::left_join(temp_meta, temp_dr, by = "rn")
@@ -143,11 +143,11 @@ seurat_meta.Seurat <- function(seurat_object,
 
 #' @export
 object_ref <- function(input,
-                            cluster_col = NULL,
-                            var_genes_only = FALSE,
-                            assay_name = NULL,
-                            method = "mean",
-                            lookuptable = NULL) {
+                       cluster_col = NULL,
+                       var_genes_only = FALSE,
+                       assay_name = NULL,
+                       method = "mean",
+                       lookuptable = NULL) {
   if (!(stringr::str_detect(class(input), "seurat"))) {
     input_original <- input
     temp <- parse_loc_object(input,
@@ -168,7 +168,7 @@ object_ref <- function(input,
       cluster_col <- temp[["col"]]
     }
   }
-  
+
   temp_mat <- input
   if (var_genes_only == TRUE) {
     temp_mat <- temp_mat[query_genes, ]

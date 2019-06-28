@@ -231,7 +231,7 @@ clustify.seurat <- function(input,
   if (n_perm != 0) {
     res <- -log(res$p_val + .01, 10)
   }
-  
+
   if (seurat_out == FALSE) {
     res
   } else {
@@ -249,7 +249,7 @@ clustify.seurat <- function(input,
       per_cell = per_cell,
       rename_suff = rename_suff
     )
-    
+
     if ("Seurat" %in% loadedNamespaces()) {
       s_object@meta.data <- df_temp_full
       return(s_object)
@@ -320,7 +320,7 @@ clustify.Seurat <- function(input,
   if (n_perm != 0) {
     res <- -log(res$p_val + .01, 10)
   }
-  
+
   if (seurat_out == FALSE) {
     res
   } else {
@@ -330,7 +330,7 @@ clustify.Seurat <- function(input,
       cluster_col = cluster_col,
       threshold = threshold
     )
-    
+
     df_temp_full <- call_to_metadata(
       df_temp,
       metadata = metadata,
@@ -338,7 +338,7 @@ clustify.Seurat <- function(input,
       per_cell = per_cell,
       rename_suff = rename_suff
     )
-    
+
     if ("Seurat" %in% loadedNamespaces()) {
       s_object@meta.data <- df_temp_full
       return(s_object)
@@ -490,7 +490,7 @@ clustify_lists.seurat <- function(input,
   input <- s_object@data
   cluster_info <- as.data.frame(seurat_meta(s_object, dr = dr))
   metadata <- cluster_info
-  
+
   res <- clustify_lists(input,
     per_cell = per_cell,
     cluster_info = cluster_info,
@@ -515,7 +515,7 @@ clustify_lists.seurat <- function(input,
       cluster_col = cluster_col,
       threshold = threshold
     )
-    
+
     df_temp_full <- call_to_metadata(
       df_temp,
       metadata = metadata,
@@ -523,7 +523,7 @@ clustify_lists.seurat <- function(input,
       per_cell = per_cell,
       rename_suff = rename_suff
     )
-    
+
     if ("Seurat" %in% loadedNamespaces()) {
       s_object@meta.data <- df_temp_full
       return(s_object)
@@ -606,7 +606,7 @@ clustify_lists.Seurat <- function(input,
       cluster_col = cluster_col,
       threshold = threshold
     )
-    
+
     df_temp_full <- call_to_metadata(
       df_temp,
       metadata = metadata,
@@ -614,7 +614,7 @@ clustify_lists.Seurat <- function(input,
       per_cell = per_cell,
       rename_suff = rename_suff
     )
-    
+
     if ("Seurat" %in% loadedNamespaces()) {
       s_object@meta.data <- df_temp_full
       return(s_object)

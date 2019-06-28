@@ -120,7 +120,8 @@ test_that("seurat object clustifying", {
   )
   g <- plot_best_call(res,
     seurat_meta(s_small,
-                    dr = "tsne"),
+      dr = "tsne"
+    ),
     cluster_col = "res.1",
     plot_r = TRUE
   )
@@ -165,7 +166,8 @@ test_that("seurat3 object clustifying", {
   )
   g <- plot_best_call(res,
     seurat_meta(s_small3,
-                    dr = "tsne"),
+      dr = "tsne"
+    ),
     cluster_col = "RNA_snn_res.1",
     plot_r = TRUE
   )
