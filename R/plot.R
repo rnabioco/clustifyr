@@ -316,7 +316,7 @@ plot_best_call <- function(cor_matrix,
     cluster_col = cluster_col,
     threshold = threshold
   )
-  
+
   df_temp_full <- call_to_metadata(
     df_temp,
     metadata = metadata,
@@ -325,9 +325,10 @@ plot_best_call <- function(cor_matrix,
 
   if (collapse_to_cluster != FALSE) {
     df_temp_full <- collapse_to_cluster(df_temp_full,
-                        metadata,
-                        collapse_to_cluster,
-                        threshold = threshold)
+      metadata,
+      collapse_to_cluster,
+      threshold = threshold
+    )
   }
 
   g <- plot_tsne(df_temp_full,

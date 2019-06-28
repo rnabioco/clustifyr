@@ -22,8 +22,8 @@ object_loc_lookup$FunctionalSingleCellExperiment <- c(
 )
 
 object_loc_lookup$Seurat <- c(
-  expr = "input@assays$RNA@data", 
-  meta = "input@meta.data", 
+  expr = "input@assays$RNA@data",
+  meta = "input@meta.data",
   var = "input@assays$RNA@var.features",
   col = "RNA_snn_res.1"
 )

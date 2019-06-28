@@ -19,9 +19,10 @@ res2 <- clustify(
 
 test_that("plots can be generated", {
   plts <- plot_best_call(
-    res, 
+    res,
     pbmc_meta,
-    cluster_col = "classified")
+    cluster_col = "classified"
+  )
   expect_true(ggplot2::is.ggplot(plts))
 })
 
@@ -86,9 +87,9 @@ test_that("plot_gene can handle strange and normal genenames", {
     "ARF4"
   )
   plts <- plot_gene(
-    pbmc_matrix_small, 
+    pbmc_matrix_small,
     pbmc_meta %>% tibble::rownames_to_column("rn"),
-    genes = genes, 
+    genes = genes,
     cell_col = "rn"
   )
 

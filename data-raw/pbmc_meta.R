@@ -16,8 +16,10 @@ pbmc <- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
 pbmc <- FindNeighbors(pbmc, dims = 1:10)
 pbmc <- FindClusters(pbmc, resolution = 0.5)
 pbmc <- RunUMAP(pbmc, dims = 1:10)
-new.cluster.ids <- c("Naive CD4 T", "Memory CD4 T", "CD14+ Mono", "B", "CD8 T", "FCGR3A+ Mono", 
-                     "NK", "DC", "Platelet")
+new.cluster.ids <- c(
+  "Naive CD4 T", "Memory CD4 T", "CD14+ Mono", "B", "CD8 T", "FCGR3A+ Mono",
+  "NK", "DC", "Platelet"
+)
 names(new.cluster.ids) <- levels(pbmc)
 pbmc <- RenameIdents(pbmc, new.cluster.ids)
 pbmc <- StashIdent(pbmc, "classified")
