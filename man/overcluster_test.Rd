@@ -41,9 +41,9 @@ compare clustering parameters and classification outcomes
 }
 \examples{
 g <- overcluster_test(
-  pbmc_matrix_small,
-  pbmc_meta,
-  cbmc_ref,
+  expr = pbmc_matrix_small,
+  metadata = pbmc_meta,
+  ref_mat = cbmc_ref,
   cluster_col = "classified",
   x_col = "UMAP_1",
   y_col = "UMAP_2"

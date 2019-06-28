@@ -1261,6 +1261,14 @@ feature_select_PCA <- function(mat = NULL,
 #' @param cutoff remove pathways with less genes than this cutoff
 #' @param sep sep used in file to split path and genes
 #' @return list of genes in each pathway
+#' @examples
+#' gmt_file <- system.file(
+#'   "extdata",
+#'   "c2.cp.reactome.v6.2.symbols.gmt",
+#'   package = "clustifyr"
+#' )
+#'
+#' gmt_list <- gmt_to_list(path = gmt_file)
 #' @export
 gmt_to_list <- function(path,
                         cutoff = 0,
@@ -1569,6 +1577,16 @@ reverse_marker_matrix <- function(mat) {
 #' takes files with positive and negative markers, as described in garnett, and returns list of markers
 #' @param filename txt file to load
 #' @return list of positive and negative gene markers
+#' @examples
+#' \donttest{
+#' marker_file <- system.file(
+#'   "extdata",
+#'   "hsPBMC_markers.txt",
+#'   package = "clustifyr"
+#' )
+#'
+#' markers<- file_marker_parse(marker_file)
+#' }
 #' @export
 file_marker_parse <- function(filename) {
   lines <- readLines(filename)
