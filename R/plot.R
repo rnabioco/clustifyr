@@ -86,7 +86,7 @@ plot_tsne <- function(data, x = "UMAP_1", y = "UMAP_2",
 
   p <- p + cowplot::theme_cowplot()
 
-  if (do_legend == FALSE) {
+  if (!do_legend) {
     p <- p + theme(legend.position = "none")
   }
 
@@ -198,12 +198,8 @@ plot_cor <- function(cor_matrix,
       legend_name = data_to_plot[i],
       scale_limits = scale_limits,
       ...
-    ) +
-      ggtitle(data_to_plot[i])
+    )
   }
-
-  plts <- cowplot::plot_grid(plotlist = plts)
-
   plts
 }
 
@@ -341,7 +337,7 @@ plot_best_call <- function(cor_matrix,
     ...
   )
 
-  if (plot_r == TRUE) {
+  if (plot_r) {
     l <- list()
     l[[1]] <- g
     l[[2]] <- plot_tsne(df_temp_full,
