@@ -38,54 +38,68 @@ In this example we use the following built-in input data:
 
 We then calculate correlation coefficients and plot them on a pre-calculated tSNE projection (stored in `pbmc4k_meta`).
 
-```{r readme_example}
+```{r readme_example, warning=F}
 library(clustifyr)
-full_pbmc4k_matrix <- clustifyrdata::pbmc4k_matrix
-full_pbmc4k_meta <- clustifyrdata::pbmc4k_meta
-
 res <- clustify(
-  input = full_pbmc4k_matrix,
-  metadata = full_pbmc4k_meta$cluster,
+  input = pbmc_matrix_small,
+  metadata = as.character(pbmc_meta$classified),
   ref_mat = pbmc_bulk_matrix,
-  query_genes = pbmc4k_vargenes
+  query_genes = pbmc_vargenes
 )
 
 plot_cor(
   res,
-  full_pbmc4k_meta,
+  pbmc_meta,
   colnames(res)[1],
-  cluster_col = "cluster"
+  cluster_col = "classified"
 )
 
-plot_best_call(res, full_pbmc4k_meta)
+plot_best_call(
+  res, 
+  pbmc_meta, 
+  "classified"
+)
 ```
 
 Alternatively, `clustify` can take a clustered `seurat` object (both v2 and v3) and assign identities. New reference matrix can be made directly from `seurat` object as well.
 
-```{r example_seurat, eval = F}
+```{r example_seurat, warning=F}
 res <- clustify(
   input = s_small,
   cluster_col = "res.1",
   ref_mat = pbmc_bulk_matrix,
-  seurat_out = T
+  seurat_out = T,
+  dr = "tsne"
 )
 
-new_ref_matrix <- use_seurat_comp(
+res2 <- clustify(
+  input = s_small3,
+  cluster_col = "RNA_snn_res.1",
+  ref_mat = pbmc_bulk_matrix,
+  seurat_out = T,
+  dr = "tsne"
+)
+
+res2
+
+new_ref_matrix <- seurat_ref(
   s_small,
   cluster_col = "res.1",
   var.genes_only = FALSE
 )
+
+head(new_ref_matrix)
 ```
 
 Similarly, `clustify_lists` can also handle identity assignment of matrix or `seurat` object based on marker gene lists.
 
-```{r example_seurat2, eval = F}
+```{r example_seurat2, warning=F}
 res <- clustify_lists(
-  pbmc4k_matrix,
+  pbmc_matrix_small,
   per_cell = FALSE,
-  cluster_info = pbmc4k_meta,
-  cluster_col = "cluster",
-  marker = pbmc4k_markers,
+  cluster_info = pbmc_meta,
+  cluster_col = "classified",
+  marker = pbmc_markers,
   marker_inmatrix = FALSE,
   metric = "hyper"
 )
@@ -93,10 +107,11 @@ res <- clustify_lists(
 res <- clustify_lists(
   s_small,
   per_cell = FALSE,
-  marker = pbmc4k_markers,
+  marker = pbmc_markers,
   marker_inmatrix = FALSE,
   cluster_col = "res.1",
-  seurat_out = TRUE
+  seurat_out = TRUE,
+  dr = "tsne"
 )
 ```
 
