@@ -21,3 +21,11 @@ vector of genes
 \description{
 feature select from reference matrix
 }
+\examples{
+pbmc_avg <- average_clusters(
+  pbmc_matrix_small,
+  pbmc_meta,
+  cluster_col = "classified")
+
+res <- ref_feature_select(pbmc_avg[1:100, ], 5)
+}
