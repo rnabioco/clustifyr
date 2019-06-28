@@ -498,16 +498,16 @@ cor_to_call_topn <- function(correlation_matrix,
     df_temp_full2 <- dplyr::summarize(df_temp_full2, sum = sum(!!dplyr::sym("r")), n = n())
     df_temp_full2 <- dplyr::group_by(df_temp_full2, !!dplyr::sym("type2"))
     df_temp_full2 <- dplyr::arrange(df_temp_full2, desc(n), desc(sum))
-    df_temp_full2 <- dplyr::filter(df_temp_full2, type != paste0("r<", threshold, ", unassigned"))
+    df_temp_full2 <- dplyr::filter(df_temp_full2, !!dplyr::sym("type") != paste0("r<", threshold, ", unassigned"))
     df_temp_full2 <- dplyr::slice(df_temp_full2, 1:topn)
     df_temp_full2 <- dplyr::right_join(df_temp_full2, dplyr::select(df_temp_full, -c(!!dplyr::sym("type"), !!dplyr::sym("r"))), by = stats::setNames(collapse_to_cluster, "type2"))
     df_temp_full <- dplyr::mutate(df_temp_full2, type = tidyr::replace_na(!!dplyr::sym("type"), paste0("r<", threshold, ", unassigned")))
     df_temp_full <- dplyr::group_by_(df_temp_full, .dots = col)
-    df_temp_full <- dplyr::distinct(df_temp_full, type, !!dplyr::sym("type2"), .keep_all = TRUE)
+    df_temp_full <- dplyr::distinct(df_temp_full, !!dplyr::sym("type"), !!dplyr::sym("type2"), .keep_all = TRUE)
     dplyr::arrange(df_temp_full, desc(n), desc(sum), .by_group = TRUE)
   } else {
     df_temp_full <- dplyr::group_by_(df_temp_full, .dots = col)
-    dplyr::arrange(df_temp_full, desc(r), .by_group = TRUE)
+    dplyr::arrange(df_temp_full, desc(!!dplyr::sym("r")), .by_group = TRUE)
   }
 }
 
