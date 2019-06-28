@@ -397,7 +397,7 @@ plot_cols <- function(metadata,
     geom_point(alpha = 0.23) +
     geom_label(
       alpha = 0.23,
-      aes(color = type),
+      aes(color = !!dplyr::sym("type")),
       vjust = "inward",
       hjust = "inward"
     ) +

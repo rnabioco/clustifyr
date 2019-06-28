@@ -15,9 +15,9 @@ cor_to_call <- function(correlation_matrix,
                         threshold = 0,
                         rename_suff = NULL) {
   df_temp <- tibble::as_tibble(correlation_matrix, rownames = cluster_col)
-  df_temp <- tidyr::gather(df_temp, key = type, value = r, -!!cluster_col)
+  df_temp <- tidyr::gather(df_temp, key = !!dplyr::sym("type"), value = !!dplyr::sym("r"), -!!cluster_col)
   df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold, ", unassigned")
-  df_temp <- dplyr::top_n(dplyr::group_by_at(df_temp, 1), 1, r)
+  df_temp <- dplyr::top_n(dplyr::group_by_at(df_temp, 1), 1, !!dplyr::sym("r"))
   if (nrow(df_temp) != nrow(correlation_matrix)) {
     clash <- dplyr::summarize(dplyr::group_by_at(df_temp, 1), n = n())
     clash <- dplyr::filter(clash, n > 1)
@@ -35,14 +35,14 @@ cor_to_call <- function(correlation_matrix,
     }
     df_temp_full <- dplyr::left_join(df_temp_full, metadata, by = cluster_col)
     df_temp_full[, "type2"] <- df_temp_full[[collapse_to_cluster]]
-    df_temp_full2 <- dplyr::group_by(df_temp_full, type, !!dplyr::sym("type2"))
-    df_temp_full2 <- dplyr::summarize(df_temp_full2, sum = sum(r), n = n())
+    df_temp_full2 <- dplyr::group_by(df_temp_full, !!dplyr::sym("type"), !!dplyr::sym("type2"))
+    df_temp_full2 <- dplyr::summarize(df_temp_full2, sum = sum(!!dplyr::sym("r")), n = n())
     df_temp_full2 <- dplyr::group_by(df_temp_full2, !!dplyr::sym("type2"))
     df_temp_full2 <- dplyr::arrange(df_temp_full2, desc(n), desc(sum))
     df_temp_full2 <- dplyr::filter(df_temp_full2, type != paste0("r<", threshold, ", unassigned"))
     df_temp_full2 <- dplyr::slice(df_temp_full2, 1)
-    df_temp_full2 <- dplyr::right_join(df_temp_full2, dplyr::select(df_temp_full, -type), by = stats::setNames(collapse_to_cluster, "type2"))
-    df_temp_full <- dplyr::mutate(df_temp_full2, type = tidyr::replace_na(type, paste0("r<", threshold, ", unassigned")))
+    df_temp_full2 <- dplyr::right_join(df_temp_full2, dplyr::select(df_temp_full, -!!dplyr::sym("type")), by = stats::setNames(collapse_to_cluster, "type2"))
+    df_temp_full <- dplyr::mutate(df_temp_full2, type = tidyr::replace_na(!!dplyr::sym("type"), paste0("r<", threshold, ", unassigned")))
     eval(parse(text = paste0("df_temp_full <- dplyr::rename(df_temp_full,", collapse_to_cluster, " = type2.y)")))
     df_temp_full <- dplyr::select(dplyr::ungroup(df_temp_full), -!!dplyr::sym("type2"))
   }
@@ -102,6 +102,6 @@ collapse_to_cluster <- function(res,
   df_temp_full2 <- dplyr::arrange(df_temp_full2, desc(n), desc(sum))
   df_temp_full2 <- dplyr::filter(df_temp_full2, type != paste0("r<", threshold, ", unassigned"))
   df_temp_full2 <- dplyr::slice(df_temp_full2, 1)
-  df_temp_full2 <- dplyr::right_join(df_temp_full2, select(df_temp_full, -type), by = stats::setNames(cluster_col, "type2"))
-  df_temp_full <- dplyr::mutate(df_temp_full2, type = tidyr::replace_na(type, paste0("r<", threshold, ", unassigned")))
+  df_temp_full2 <- dplyr::right_join(df_temp_full2, select(df_temp_full, -!!dplyr::sym("type")), by = stats::setNames(cluster_col, "type2"))
+  df_temp_full <- dplyr::mutate(df_temp_full2, type = tidyr::replace_na(!!dplyr::sym("type"), paste0("r<", threshold, ", unassigned")))
 }
