@@ -11,11 +11,13 @@ output:
       %\VignetteEncoding{UTF-8}
 ---
 
-```{r knitr_opts, echo = FALSE}
+```{r "knitr options", echo = FALSE, message = FALSE, warning = FALSE}
 knitr::opts_chunk$set(
+  message = FALSE,
+  warning = FALSE,
   collapse = TRUE,
-  comment = "#>",
-  fig.align = "center"
+  fig.align = "center",
+  comment = "#>"
 )
 ```
 
@@ -27,90 +29,164 @@ Single cell transcriptomes are difficult to annotate without extensive knowledge
 
 ## A simple example: 10x Genomics PBMCs
 
-In this example, we take an example 10x Genomics 3' scRNA-seq dataset comprised of peripheral blood mononuclear cells from a healthy human donor and annotate the cell clusters (identified using `Seurat`) using bulk RNA-seq data derived from isolated PBMC cell populations. 
+In this example, we take a 10x Genomics 3' scRNA-seq dataset from peripheral blood mononuclear cells (PBMCs) and annotate the cell clusters (identified using `Seurat`) using bulk RNA-seq data from isolated PBMC cell populations. The cell types in this dataset have been previously annotated, so this is a good dataset to use for testing the accuracy of `clustifyr`.
 
-```{r fig.height=8, fig.width=12, warning = F, message = F}
+To identify cell types, the `clustifyr()` function requires several inputs:
+
+* A matrix of normalized single-cell RNA-seq counts
+* A meta.data table containing the cluster assignments for each cell
+* A matrix containing bulk RNA-seq data for each cell type of interest
+* A list of genes to use for comparison (optional)
+
+Using the `plot_tsne()` function, we can plot the known identities of each cluster, which were stored in the "classified" column of the meta.data table.
+
+```{r "Load data", fig.height = 8, fig.width = 10}
 library(clustifyr)
+library(ggplot2)
+library(cowplot)
 
+# Matrix of normalized single-cell RNA-seq counts
 full_pbmc4k_matrix <- clustifyrdata::pbmc4k_matrix
+
+# meta.data table containing cluster assignments for each cell 
+# The table that we are using also contains the known cell identities in the "classified" column
 full_pbmc4k_meta <- clustifyrdata::pbmc4k_meta
 
-# plot tSNE using known identities
-plot_tsne(full_pbmc4k_meta, feature = "classified")
+# Create tSNE showing known cell identities for each cluster
+plot_tsne(
+  data = full_pbmc4k_meta,  # meta.data table containing UMAP or tSNE data
+  feature = "classified",   # name of column in meta.data to color cells by
+  do_label = TRUE,          # should the feature label be shown on each cluster?
+  do_legend = FALSE         # should the legend be shown?
+)
 ```
+
+## Calculate correlation coefficients
 
 `clustifyr` provides the `clustify()` function, which takes as input a matrix of single cell RNA-seq expression values, a metadata table with cluster assignments, and a matrix with bulk RNA seq datasets. 
 
-As the heatmap below shows, most cell types are accurately classified using the default correlation method (pearson) and a list of highly variable genes in the single cell dataset identified using `Seurat`'s VMR method.
+```{r "Run clustifyr()"}
+# Calculate correlation coefficients for each cluster (pearson by default)
+res <- clustify(
+  input = full_pbmc4k_matrix,     # matrix of normalized single-cell RNA-seq counts
+  metadata = full_pbmc4k_meta,    # meta.data table containing cell clusters
+  ref_mat = pbmc_bulk_matrix,     # matrix containing bulk RNA-seq data for each cell type
+  query_genes = pbmc4k_vargenes,  # list of highly varible genes identified with Seurat
+  cluster_col = "cluster"         # name of column in meta.data containing cell clusters
+)
 
-```{r fig.height=8, fig.width=12, warning = F, message = F}
-# run correlation (pearson by default)
-res <- clustify(input = full_pbmc4k_matrix,
-               ref_mat = pbmc_bulk_matrix,
-               metadata = full_pbmc4k_meta,
-               query_genes = pbmc4k_vargenes,
-               cluster_col = "cluster")
+# Tidy up column names
+colnames(res) <- gsub("primary human ", "", colnames(res))
 
-# peek at correlation matrix
+# Peek at correlation matrix
 res[1:5, 1:5]
-
-# view heatmap of correlation coefficients
-plot_cor_heatmap(res)
 ```
 
-### Plot cluster identities and correlation coefficients
+To visualize the `clustifyr()` results we can use the `plot_cor_heatmap()` function to plot the correlation coefficients for each cluster and each cell type.
+
+```{r "Create correlation heatmap", fig.height = 6, fig.width = 8}
+# Create heatmap of correlation coefficients
+plot_cor_heatmap(
+  cor_matrix = res  # matrix of correlation coefficients from clustifyr()
+)
+```
+
+## Plot cluster identities and correlation coefficients
 
 `clustifyr` provides functions to plot single cells using pre-calculated tSNE embeddings (or those from any other dimensionality reduction method), and to plot correlation coefficients on those projections. The plots below show that the highest correlations between these bulk RNA-seq data and the test scRNA-seq dataset are restricted to the correct cell clusters.
 
-```{r plot, fig.height=8, fig.width=12, warning = F, message = F}
-# plot called identities
-plot_best_call(res, full_pbmc4k_meta)
-
-# plot correlation coefficients on tSNE for first 2 identity classes
-plot_cor(res,
-         full_pbmc4k_meta,
-         colnames(res)[1:2],
-         cluster_col = "cluster")
+```{r "Overlay corr coefficients on UMAP", fig.height = 5, fig.width = 12}
+# Overlay correlation coefficients on UMAPs for the first two cell types
+plot_cor(
+  cor_matrix = res,                   # matrix of correlation coefficients from clustifyr()
+  metadata = full_pbmc4k_meta,        # meta.data table containing UMAP or tSNE data
+  data_to_plot = colnames(res)[1:2],  # name of cell type(s) to plot correlation coefficients
+  cluster_col = "cluster"             # name of column in meta.data containing cell clusters
+)
 ```
 
-### Correlation per cell
+The `plot_best_call()` function can be used to label each cluster with the cell type that gives the highest corelation coefficient. The plots below show that the highest correlations between the bulk RNA-seq data and the 10x Genomics scRNA-seq dataset are restricted to the correct cell clusters.
 
-```{r fig.height=8, fig.width=12, warning = F, message = F}
-# run correlation (pearson by default)
-res <- clustify(input = full_pbmc4k_matrix,
-               ref_mat = pbmc_bulk_matrix,
-               query_genes = pbmc4k_vargenes,
-               per_cell = T)
+```{r "Label clusters", fig.height = 5.5, fig.width = 12}
+# Label clusters with clustifyr cell identities
+clustifyr_types <- plot_best_call(
+  cor_matrix = res,             # matrix of correlation coefficients from clustifyr()
+  metadata = full_pbmc4k_meta,  # meta.data table containing UMAP or tSNE data
+  do_label = TRUE,              # should the feature label be shown on each cluster?
+  do_legend = FALSE             # should the legend be shown?
+) +
+  ggtitle("clustifyr cell types")
 
-plot_cor(res,
-         full_pbmc4k_meta,
-         colnames(res)[c(1, 5)])
+# Compare clustifyr results with known cell identities
+known_types <- plot_tsne(
+  data = full_pbmc4k_meta,  # meta.data table containing UMAP or tSNE data
+  feature = "classified",   # name of column in meta.data to color clusters by
+  do_label = TRUE,          # should the feature label be shown on each cluster?
+  do_legend = FALSE         # should the legend be shown?
+) +
+  ggtitle("Known cell types")
+
+plot_grid(known_types, clustifyr_types)
 ```
 
-## Using gene lists to classify cells (ranked or unranked)
+## Calculate correlation coefficients on a per cell basis
 
-```{r fig.height=8, fig.width=12, warning = F, message = F}
-# available metrics are "hyper", "jaccard", "spearman", "gsea"
-res2 <- clustify_lists(full_pbmc4k_matrix,
-               per_cell = F,
-               cluster_info = full_pbmc4k_meta,
-               cluster_col = "cluster",
-               marker = cbmc_m,
-               marker_inmatrix = T,
-               metric = "hyper")
+Correlation coefficients can also be calculated on a per cell basis by setting `per_cell = TRUE`.
+
+```{r "Per cell clustifyr", fig.height = 5, fig.width = 12}
+# Calculate correlation coefficients for each cell
+cell_res <- clustify(
+  input = full_pbmc4k_matrix,     # matrix of normalized single-cell RNA-seq counts
+  ref_mat = pbmc_bulk_matrix,     # matrix containing bulk RNA-seq data for each cell type
+  query_genes = pbmc4k_vargenes,  # list of highly varible genes identified with Seurat
+  per_cell = TRUE
+)
+
+# Overlay correlation coefficients on UMAPs
+plot_cor(
+  cor_matrix = cell_res,                      # matrix of correlation coefficients from clustifyr()
+  metadata = full_pbmc4k_meta,                # meta.data table containing UMAP or tSNE data
+  data_to_plot = colnames(cell_res)[c(1, 5)]  # name of cell type(s) to plot correlation coefficient
+)
+```
+
+## Classify cells using known marker genes
+
+The `clustify_lists()` function allows cell types to be assigned based on known marker genes. This function requires a table containing markers for each cell type of interest. Cell types can be assigned using several different statistical tests including, hypergeometric, Jaccard, Spearman, and GSEA.
+
+```{r "clustifyr with gene lists", fig.height = 4, fig.width = 6}
+
+# Take a peek at marker gene table
+cbmc_m
+
+# Available metrics include: "hyper", "jaccard", "spearman", "gsea"
+list_res <- clustify_lists(
+  input = full_pbmc4k_matrix,       # matrix of normalized single-cell RNA-seq counts
+  cluster_info = full_pbmc4k_meta,  # meta.data table containing cell clusters
+  cluster_col = "cluster",          # name of column in meta.data containing cell clusters
+  marker = cbmc_m,                  # list of known marker genes
+  metric = "hyper"                  # test to use for assigning cell types
+)
 
 # view as heatmap, or plot_best_call
-plot_cor_heatmap(res2,
-                 cluster_rows = FALSE,
-                 cluster_columns = FALSE,
-                 legend_title = "-log10(adjP)")
+plot_cor_heatmap(
+  cor_matrix = list_res,         # matrix of correlation coefficients from clustify_lists()
+  col = not_pretty_palette,      # colors to use for heatmap
+  cluster_rows = FALSE,          # cluster by row?
+  cluster_columns = FALSE,       # cluster by column?
+  legend_title = "-log10(padj)"  # title of heatmap legend
+)
+
 ```
 
+---
 
-## Direct handling of `seurat` objects, v2 and v3
+## Direct handling of `seurat` v2 and v3 objects
 
-```{r, eval = F, warning = F, message = F}
-# can even returning a new object with `type` added to metadata.
+`clustifyr()` can also use a `Seurat` object as input and return a new `Seurat` object with the cell types added as a column in the meta.data. 
+
+```{r include = F}
+# clustifyr can even returning a new object with "type" added to the meta.data.
 res <- clustify(
   input = s_small,
   cluster_col = "res.1",
@@ -119,19 +195,22 @@ res <- clustify(
 )
 
 # or return a correlation matrix
-res <- clustify_lists(s_small,
-               per_cell = F,
-               marker = pbmc4k_markers,
-               marker_inmatrix = F,
-               cluster_col = "res.1",
-               seurat_out = F
+res <- clustify_lists(
+  input = s_small,
+  per_cell = F,
+  marker = pbmc4k_markers,
+  marker_inmatrix = F,
+  cluster_col = "res.1",
+  seurat_out = F
 )
 
-# and combined ref matrix and marker info
-res <- clustify_nudge(input = s_small,
-                      ref_mat = cbmc_ref,
-                      marker = cbmc_m,
-                      cluster_col = "res.1",
-                      threshold = 0.8,
-                      seurat_out = F)
+# or return a combined ref matrix with marker info
+res <- clustify_nudge(
+  input = s_small,
+  ref_mat = cbmc_ref,
+  marker = cbmc_m,
+  cluster_col = "res.1",
+  threshold = 0.8,
+  seurat_out = F
+)
 ```

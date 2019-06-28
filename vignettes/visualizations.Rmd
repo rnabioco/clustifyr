@@ -11,7 +11,7 @@ output:
       %\VignetteEncoding{UTF-8}
 ---
 
-```{r knitr_opts, echo = FALSE}
+```{r knitr_opts, echo = FALSE, message = FALSE, warning = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -19,97 +19,160 @@ knitr::opts_chunk$set(
 )
 ```
 
-The direct output of `clustify` is a matrix of correlation coefficients. And for `clustify_lists` and `clustify_nudge`, positive scores. Built-in functions are available to visualize this results.
+## Plotting tSNE and UMAP results
 
-## TSNE/UMAP
+`clustifyr` provides several functions to plot tSNE or UMAP results. The `plot_tsne()` function will plot tSNE or UMAP data using a meta.data table and can color the cells based on cluster identity.
 
-```{r, warning = F, message = F}
+```{r "Create tSNE", fig.height = 8, fig.width = 10}
 library(clustifyr)
-library(here)
-full_pbmc4k_matrix <- clustifyrdata::pbmc4k_matrix
-full_pbmc4k_meta <- clustifyrdata::pbmc4k_meta
 
-# clustify
+# Matrix of normalized single-cell RNA-seq counts
+pbmc4k_matrix
+
+# meta.data table containing cluster assignments for each cell 
+pbmc4k_meta[1:5, ]
+
+# Create tSNE and color cells based on cluster ID
+plot_tsne(
+  x = "tSNE_1",             # name of column in the meta.data containing the data to plot on x-axis
+  y = "tSNE_2",             # name of column in the meta.data containing the data to plot on y-axis
+  data = pbmc4k_meta,       # meta.data table containing cluster assignments for each cell
+  feature = "cluster"       # name of column in meta.data to color cells by
+)
+```
+
+Cells can also be colored based on the expression level of a gene or list of genes using the `plot_gene()` function.   
+
+```{r "Overlay gene expression"}
+# Create tSNE and color cells based on gene expression
+plot_gene(
+  x = "tSNE_1",                # name of column in the meta.data containing the data to plot on x-axis
+  y = "tSNE_2",                # name of column in the meta.data containing the data to plot on y-axis
+  expr_mat = pbmc4k_matrix,    # matrix of normalized single-cell RNA-seq counts
+  metadata = pbmc4k_meta,      # meta.data table containing cluster assignments for each cell
+  genes = c("CD79B", "CD8A"),  # vector of gene names to color cells
+  cell_col = "rn"              # name of column in meta.data containing the cell IDs
+)
+```
+
+## Visualizing `clustifyr()` results
+
+The `clustifyr()` function outputs a matrix of correlation coefficients and `clustify_lists()` and `clustify_nudge()` output positive scores. `clustifyr` provides built-in functions to help visualize these results.
+
+Cell type assignments can be assessed by plotting the `clustifyr()` correlation matrix as a heatmap using the `plot_cor_heatmap()` function.
+
+```{r "Correlation heatmap"}
+# Run clustifyr()
 res <- clustify(
-  input = full_pbmc4k_matrix,
-  metadata = full_pbmc4k_meta,
-  cluster_col = "cluster",
-  ref_mat = cbmc_ref,
-  query_genes = pbmc4k_vargenes
+  input = pbmc4k_matrix,          # matrix of normalized single-cell RNA-seq counts
+  metadata = pbmc4k_meta,         # meta.data table containing cluster assignments for each cell
+  ref_mat = cbmc_ref,             # reference matrix containing bulk RNA-seq data for each cell type
+  query_genes = pbmc4k_vargenes,  # list of highly varible genes identified with Seurat
+  cluster_col = "cluster"         # name of column in meta.data containing cell clusters
 )
 
-# plot_cor generates a plot per reference cluster
-g <- plot_cor(
-  res,
-  full_pbmc4k_meta,
-  cluster_col = "cluster",
-  x = "tSNE_1", 
-  y = "tSNE_2"
+# Create heatmap using the clustifyr correlation matrix
+plot_cor_heatmap(
+  cor_matrix = res  # matrix of correlation coefficients from clustifyr()
 )
+```
 
-length(g) == ncol(cbmc_ref)
+The `plot_cor()` function can also be used to create a tSNE for each cell type of interest and color the cells based on the correlation coefficients.
 
-g[[1]]
+```{r "Overlay corr coefficients", fig.height = 5.5, fig.width = 12}
+# Create a tSNE for each cell type of interest and color cells based on correlation coefficients
+plot_cor(
+  x = "tSNE_1",                       # name of column in the meta.data containing the data to plot on x-axis
+  y = "tSNE_2",                       # name of column in the meta.data containing the data to plot on y-axis
+  cor_matrix = res,                   # matrix of correlation coefficients from clustifyr()
+  metadata = pbmc4k_meta,             # meta.data table containing cluster assignments for each cell
+  data_to_plot = colnames(res)[1:2],  # name of cell type(s) to plot correlation coefficients
+  cluster_col = "cluster"             # name of column in meta.data containing cell clusters
+)
+```
 
-# plot_best_call to view called identities in one plot
+Cell clusters can also be labeled using the `plot_best_call()` function, which takes the correlation matrix and labels cell clusters with the cell type that has the highest correlation coefficient.
+
+```{r "Label clusters with cell types", fig.height = 8, fig.width = 10}
+# Create tSNE and label clusters with the cell type that has the highest correlation coefficient
 plot_best_call(
-  res,
-  full_pbmc4k_meta,
-  do_label = T
+  cor_matrix = res,        # matrix of correlation coefficients from clustifyr()
+  metadata = pbmc4k_meta,  # meta.data table containing UMAP or tSNE data
+  do_label = TRUE,         # should the feature label be shown on each cluster?
+  do_legend = FALSE        # should the legend be shown?
 )
+```
 
-# intentionally overcluster and clustify to assess idents
-# in this case, overclustered local averages agree with cluster clustify results
+## Assessing `clustifyr()` accuracy
+
+The `clustifyr()` results can also be evaluated by over-clustering the data and comparing the cell type assignments before and after over-clustering. This is accomplished using the `overcluster_test()` function. The cell type assignments should be similar with and without over-clustering.
+
+```{r "Overclustering test", fig.height = 8, fig.width = 10}
+# Overcluster cells and compare cell type assignments with and without over-clustering
 overcluster_test(
-  full_pbmc4k_matrix,
-  full_pbmc4k_meta,
-  cbmc_ref,
-  cluster_col = "cluster",
-  n = 5
-  )
-
-# `clustify` against reference combinations also informs clustering
-# in this case, several clusters seems to be a mixture with neighboring idents
-comb_ref <- make_comb_ref(cbmc_ref)
-res2 <- clustify(
-  input = full_pbmc4k_matrix,
-  metadata = full_pbmc4k_meta,
-  cluster_col = "cluster",
-  ref_mat = comb_ref,
-  query_genes = pbmc4k_vargenes
+  expr = pbmc4k_matrix,     # matrix of normalized single-cell RNA-seq counts
+  metadata = pbmc4k_meta,   # meta.data table containing UMAP or tSNE data
+  ref_mat = cbmc_ref,       # reference matrix containing bulk RNA-seq data for each cell type      
+  cluster_col = "cluster",  # name of column in meta.data containing cell clusters
+  n = 5                     # expand cluster number n-fold for overclustering
 )
+```
+
+The cell types from the bulk RNA-seq reference matrix can also be mixed together using the `make_comb_ref()` function to assess the specificity of the cell type assignments. If a cluster shows a higher correlation when using the mixed reference matrix, this suggests that the cluster contains multiple cell types.
+
+```{r "Create combined reference", fig.height = 8, fig.width = 10}
+# Create reference containing different combinations of the bulk RNA-seq data
+comb_ref <- make_comb_ref(
+  ref_mat = cbmc_ref  # reference matrix containing bulk RNA-seq data for each cell type      
+)
+
+# Peek at the new combined reference
+comb_ref[1:5, 1:5]
+
+# Run clustifyr() using the combined reference
+comb_res <- clustify(
+  input = pbmc4k_matrix,          # matrix of normalized single-cell RNA-seq counts
+  metadata = pbmc4k_meta,         # meta.data table containing cluster assignments for each cell
+  ref_mat = comb_ref,             # reference matrix containing bulk RNA-seq data for each cell type
+  query_genes = pbmc4k_vargenes,  # list of highly varible genes identified with Seurat
+  cluster_col = "cluster"         # name of column in meta.data containing cell clusters
+)
+
+# Create tSNE and label clusters with the assigned cell types from the combined reference
 plot_best_call(
-  res2,
-  full_pbmc4k_meta,
-  do_label = T
+  cor_matrix = comb_res,   # matrix of correlation coefficients from clustifyr()
+  metadata = pbmc4k_meta,  # meta.data table containing UMAP or tSNE data
+  do_label = TRUE,         # should the feature label be shown on each cluster?
+  do_legend = FALSE        # should the legend be shown?
 )
 ```
 
-## Heatmap
-```{r, warning = F, message = F}
-res <- clustify(
-  input = full_pbmc4k_matrix,
-  metadata = full_pbmc4k_meta,
-  cluster_col = "cluster",
-  ref_mat = cbmc_ref
-)
+## Plotting other attributes from the meta.data table 
 
-plot_cor_heatmap(res)
+Visualization of other attributes shared in the metadata between ref and query by `plot_cols`, such as nGene, nUMI, mt_percentage, as another way of identity confirmation after `clustify`. Certain cell types have distinct patterns, more genes detected, for example.
 
-res2 <- clustify_lists(
-  input = full_pbmc4k_matrix,
-  cluster_info = full_pbmc4k_meta,
-  cluster_col = "cluster",
-  marker = pbmc4k_markers,
-  marker_inmatrix = F
-)
-
-plot_cor_heatmap(res2)
+```{r "Plot other attributes", fig.height = 8, fig.width = 10}
+# plot_cols(
+#   metadata = pbmc_meta,
+#   cluster_col = "seurat_clusters",
+#   cluster_col_called = "classified",
+#   metadata_ref = "...",
+#   cluster_col_ref = "...",
+#   plot_col_ref = "..."
+# )
 ```
 
-## GSEA top hits per cluster
-Using the gsea method implemented, we can also convert reactome/GO/pathway gene lists into forms that can be scored and plotted.
-```{r, warning = F, message = F}
+
+
+
+
+
+
+
+
+```{r "GSEA top hits", eval = F, include = F}
+# ARE WE KEEPING THIS??
+
 # gene lists can be converted from gmt files (Broad)
 list_reactome <- gmt_to_list(here("c2.cp.reactome.v6.2.symbols.gmt"))
 
@@ -122,7 +185,8 @@ full_pbmc4k_avg <- average_clusters(
 res <- plot_pathway_gsea(
   full_pbmc4k_avg[,1:2], 
   list_reactome, 
-  topn = 3)
+  topn = 3
+)
 
 # returns dataframe of gsea analysis
 res[[1]][1:2,1:2]
@@ -130,5 +194,25 @@ res[[1]][1:2,1:2]
 res[[2]]
 ```
 
-## other attributes in the metadata
-Visualization of other attributes shared in the metadata between ref and query by `plot_cols`, such as nGene, nUMI, mt_percentage, as another way of identity confirmation after `clustify`. Certain cell types have distinct patterns, more genes detected, for example.
+```{r, eval = F, include = F}
+# plot_call(
+#   cor_matrix = res, 
+#   metadata = full_pbmc4k_meta,
+#   data_to_plot = colnames(res)[1:2],
+#   x = "tSNE_1",
+#   y = "tSNE_2"
+#   
+# )
+
+plot_cols(
+  metadata = full_pbmc4k_meta,
+  cluster_col = "cluster",
+  cluster_col_called = ""
+)
+```
+
+
+
+
+
+

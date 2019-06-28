@@ -11,8 +11,10 @@ output:
       %\VignetteEncoding{UTF-8}
 ---
 
-```{r knitr_opts, echo = FALSE}
+```{r "knitr options", echo = FALSE, message = FALSE, warning = FALSE}
 knitr::opts_chunk$set(
+  message = FALSE,
+  warning = FALSE,
   collapse = TRUE,
   comment = "#>",
   fig.align = "center"
@@ -23,7 +25,7 @@ knitr::opts_chunk$set(
 
 In its simplest form, a reference matrix is built by averaging expression (also includes an option to take the median) of a single cell RNA-seq expression matrix by cluster. Both log transformed or raw count matrices are supported.
 
-```{r average, warning = F, message = F}
+```{r average}
 library(clustifyr)
 new_ref_matrix <- average_clusters(
   pbmc4k_matrix, 
@@ -38,14 +40,14 @@ head(new_ref_matrix)
 
 For further convenience, a shortcut function for generating reference matrix from  `seurat` object is used here.
 
-```{r seruat, warning=F, message=F}
+```{r seruat}
 new_ref_matrix_v2 <- use_seurat_comp(
-  s_small,
+  seurat_object = s_small,
   cluster_col = "res.1"
 )
 
 new_ref_matrix_v3 <- use_seurat_comp(
-  s_small3,
+  seurat_object = s_small3,
   cluster_col = "RNA_snn_res.1"
 )
 
@@ -54,15 +56,15 @@ tail(new_ref_matrix_v3)
 
 If given additional `assay_name`, output ref will include features from the designated slots (such as for CITE-seq data).
 
-```{r seruat2, warning=F, message=F}
+```{r seruat2}
 new_ref_matrix_v2 <- use_seurat_comp(
-  s_small,
+  seurat_object = s_small,
   cluster_col = "res.1",
   assay_name = c("ADT","ADT2")
 )
 
 new_ref_matrix_v3 <- use_seurat_comp(
-  s_small3,
+  seurat_object = s_small3,
   cluster_col = "RNA_snn_res.1",
   assay_name = c("ADT","ADT2")
 )
@@ -74,65 +76,77 @@ tail(new_ref_matrix_v3)
 
 Bulk RNA-Seq data can be obtained from any input source; in this example we will obtain a dataset from the [recount2](https://jhubiostatistics.shinyapps.io/recount/) database. This database provides > 2000 human RNA-Seq experiments that have been processed using a consistent pipeline. We have written a wrapper function to download a count matrix from `recount2`, given an SRA ID. 
 
-```{r recount, warning=F, message=F, eval = F}
+```{r recount, eval = F}
 library(dplyr)
 library(purrr)
 library(tidyr)
 library(stringr)
 library(recount)
 
-dl_recount <- function(sra_id){
+dl_recount <- function(sra_id) {
+  
   if (!file.exists(file.path(sra_id, "rse_gene.Rdata"))) {
     download_study(sra_id)
   }
+  
   load(file.path(sra_id, "rse_gene.Rdata"))
+  
   # no longer need to downloaded data
   unlink(sra_id, recursive = TRUE)
   rse <- scale_counts(rse_gene)
   read_counts <- assay(rse, "counts")
   gene_ids <- rownames(read_counts)
+  
   # get gene symbols, which are stored in rowData
-  id2symbol <- data_frame(ids = rowData(rse_gene)$gene_id,
-             symbols = rowData(rse_gene)$symbol@listData) %>%
+  id2symbol <- data_frame(
+    ids = rowData(rse_gene)$gene_id,
+    symbols = rowData(rse_gene)$symbol@listData
+  ) %>%
     mutate(symbols = map_chr(symbols, ~.x[1]))
-
+  
   # clean up metadata into a dataframe
   print("cleaning up meta")
   mdata <- colData(rse)
-  mdata_cols <- lapply(mdata$characteristics,
-      function(x){str_match(x, "^([^:]+):")[, 2]}) %>%
-        unique() %>%
-        unlist()
-
-  mdata <- data_frame(run =  mdata$run,
-                      all_data = as.list(mdata$characteristics)) %>%
-    mutate(out = purrr::map_chr(all_data,
-                                ~str_c(.x, collapse = "::"))) %>%
-  tidyr::separate(out,
-                  sep = "::",
-                  into = mdata_cols) %>%
+  mdata_cols <- lapply(
+    mdata$characteristics,
+    function(x){str_match(x, "^([^:]+):")[, 2]}
+  ) %>%
+    unique() %>%
+    unlist()
+  
+  mdata <- data_frame(
+    run =  mdata$run,
+    all_data = as.list(mdata$characteristics)
+  ) %>%
+    mutate(out = purrr::map_chr(all_data, ~str_c(.x, collapse = "::"))) %>%
+    tidyr::separate(
+      out,
+      sep = "::",
+      into = mdata_cols
+    ) %>%
     select(-all_data) %>%
-    mutate_at(.vars = vars(-matches("run")),
-              .funs = function(x) str_match(x, ": (.+)")[, 2])
-
+    mutate_at(
+      .vars = vars(-matches("run")),
+      .funs = function(x) str_match(x, ": (.+)")[, 2]
+    )
+  
   # convert ids to symbols
-  row_ids_to_symbols <- left_join(data_frame(ids = gene_ids),
-            id2symbol, by = "ids")
-
+  row_ids_to_symbols <- left_join(data_frame(ids = gene_ids), id2symbol, by = "ids")
+  
   if(length(gene_ids) != nrow(row_ids_to_symbols)) {
     warning("gene id mapping to symbols produce more or less ids")
   }
-
+  
   row_ids_to_symbols <- filter(row_ids_to_symbols, !is.na(symbols))
+  
   out_df <- read_counts %>%
     as.data.frame() %>%
     tibble::rownames_to_column("gene_id") %>%
-    left_join(., row_ids_to_symbols,
-              by = c("gene_id" = "ids")) %>%
+    left_join(., row_ids_to_symbols, by = c("gene_id" = "ids")) %>%
     dplyr::select(-gene_id) %>%
     dplyr::select(symbols, everything()) %>%
     filter(!is.na(symbols))
-
+  
   out_matrix <- tidyr::gather(out_df, library, expr, -symbols) %>%
     group_by(symbols, library) %>%
     summarize(expr = sum(expr)) %>%
@@ -140,9 +154,11 @@ dl_recount <- function(sra_id){
     as.data.frame() %>%
     tibble::column_to_rownames("symbols") %>%
     as.matrix()
-
-  list(read_counts = out_matrix,
-       meta_data = mdata)
+  
+  list(
+    read_counts = out_matrix,
+    meta_data = mdata
+  )
 }
 
 gtex_data <- dl_recount("SRP012682")
@@ -155,7 +171,7 @@ gtex_data$meta_data[1:5, ]
 
 `clustifyr` works with microarray data-derived gene expression matrix as well (see Benchmark page). An example of generating a matrix for sorted immune cell type can be found below. The matrix can be found at `clustifyrdata::hema_microarray_matrix`
 
-```{r microarray, warning=F, message=F, eval = F}
+```{r microarray, eval = F}
 library(tidyverse)
 # read series matrix for column names
 GSE24759 <- read_tsv("GSE24759/GSE24759_series_matrix.txt", skip = 25, n_max = 1)
@@ -183,7 +199,7 @@ row.names(GSE24759_mat) <- GSE24759$gene_symbol
 hema_microarray_matrix <- GSE24759_mat %>% t() %>% as.data.frame() %>% rownames_to_column("sample") %>% mutate(sample = str_remove(sample, ", .*")) %>% group_by(sample) %>% summarise_all(.funs = list(~log2(mean(2^.)))) %>% column_to_rownames("sample") %>% t()
 ```
 
-Essentially, any data in matrix form is accepted by `clustifyr`.
+Essentially, any data in matrix form is accepted by `clustifyR`.
 ```{r microarray2, warning=F, message=F}
 clustifyrdata::hema_microarray_matrix[1:5,1:5]
 ```
@@ -192,7 +208,7 @@ clustifyrdata::hema_microarray_matrix[1:5,1:5]
 
 `clustify_lists` and `clustify_nudge` uses dataframe or matrix of candidate genes for classification. Example formatting are shown below.
 
-```{r genelist, warning = F, message = F}
+```{r genelist}
 # directly from seurat function
 head(pbmc4k_markers)
 
