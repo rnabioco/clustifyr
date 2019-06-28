@@ -28,7 +28,7 @@ cor_to_call <- function(correlation_matrix,
   } else {
     df_temp_full <- df_temp
   }
-  
+
   if (collapse_to_cluster != FALSE) {
     if (!(cluster_col %in% colnames(metadata))) {
       metadata <- tibble::as_tibble(metadata, rownames = cluster_col)
@@ -46,7 +46,7 @@ cor_to_call <- function(correlation_matrix,
     eval(parse(text = paste0("df_temp_full <- dplyr::rename(df_temp_full,", collapse_to_cluster, " = type2.y)")))
     df_temp_full <- dplyr::select(dplyr::ungroup(df_temp_full), -!!dplyr::sym("type2"))
   }
-  
+
   if (!is.null(rename_suff)) {
     eval(parse(text = paste0("df_temp_full <- dplyr::rename(df_temp_full, ", paste0(rename_suff, "_type"), " = type, ", paste0(rename_suff, "_r"), " = r)")))
   }
