@@ -122,7 +122,9 @@ test_that("seurat object clustifying", {
     seurat_meta(s_small,
                     dr = "tsne"),
     cluster_col = "res.1",
-    plot_r = TRUE
+    plot_r = TRUE,
+    x = "tSNE_1",
+    y = "tSNE_2"
   )
   expect_true(ggplot2::is.ggplot(g[[1]]))
 })

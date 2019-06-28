@@ -120,7 +120,7 @@ get_best_match_matrix <- function(cor_mat) {
 #' @param best_mat binarized call matrix
 #' @param cor_mat correlation matrix
 #' @param carry_cor whether the correlation score gets reported
-#' @param string with ident call and possibly cor value
+#' @return string with ident call and possibly cor value
 #' @export
 get_best_str <- function(name,
                          best_mat,
@@ -267,7 +267,7 @@ average_clusters_filter <- function(mat, cluster_info,
 #' @param mat expression matrix
 #' @param background vector or dataframe or matrix of high expression genes in background
 #' @param n the number of top genes to exclude, 0 defaults to all
-#' @param expression matrix with rows removed
+#' @return expression matrix with rows removed
 #' @export
 
 remove_background <- function(mat, background, n = 0) {
@@ -370,9 +370,9 @@ cor_to_call_topn <- function(correlation_matrix,
                              threshold = 0,
                              topn = 2) {
   df_temp <- tibble::as_tibble(correlation_matrix, rownames = col)
-  df_temp <- tidyr::gather(df_temp, key = type, value = r, -!!col)
+  df_temp <- tidyr::gather(df_temp, key = !!dplyr::sym("type"), value = !!dplyr::sym("r"), -!!col)
   df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold, ", unassigned")
-  df_temp <- dplyr::top_n(dplyr::group_by_at(df_temp, 1), topn, r)
+  df_temp <- dplyr::top_n(dplyr::group_by_at(df_temp, 1), topn, !!dplyr::sym("r"))
   df_temp_full <- df_temp
 
   if (collapse_to_cluster != FALSE) {
@@ -381,16 +381,16 @@ cor_to_call_topn <- function(correlation_matrix,
     }
     df_temp_full <- dplyr::left_join(df_temp_full, metadata, by = col)
     df_temp_full[, "type2"] <- df_temp_full[[collapse_to_cluster]]
-    df_temp_full2 <- dplyr::group_by(df_temp_full, type, type2)
-    df_temp_full2 <- dplyr::summarize(df_temp_full2, sum = sum(r), n = n())
-    df_temp_full2 <- dplyr::group_by(df_temp_full2, type2)
+    df_temp_full2 <- dplyr::group_by(df_temp_full, !!dplyr::sym("type"), !!dplyr::sym("type2"))
+    df_temp_full2 <- dplyr::summarize(df_temp_full2, sum = sum(!!dplyr::sym("r")), n = n())
+    df_temp_full2 <- dplyr::group_by(df_temp_full2, !!dplyr::sym("type2"))
     df_temp_full2 <- dplyr::arrange(df_temp_full2, desc(n), desc(sum))
     df_temp_full2 <- dplyr::filter(df_temp_full2, type != paste0("r<", threshold, ", unassigned"))
     df_temp_full2 <- dplyr::slice(df_temp_full2, 1:topn)
     df_temp_full2 <- dplyr::right_join(df_temp_full2, dplyr::select(df_temp_full, -c(type, r)), by = stats::setNames(collapse_to_cluster, "type2"))
     df_temp_full <- dplyr::mutate(df_temp_full2, type = tidyr::replace_na(type, paste0("r<", threshold, ", unassigned")))
     df_temp_full <- dplyr::group_by_(df_temp_full, .dots = col)
-    df_temp_full <- dplyr::distinct(df_temp_full, type, type2, .keep_all = TRUE)
+    df_temp_full <- dplyr::distinct(df_temp_full, type, !!dplyr::sym("type2"), .keep_all = TRUE)
     dplyr::arrange(df_temp_full, desc(n), desc(sum), .by_group = TRUE)
   } else {
     df_temp_full <- dplyr::group_by_(df_temp_full, .dots = col)
@@ -1078,7 +1078,7 @@ gmt_to_list <- function(path,
     col_names = FALSE
   )
   df <- tidyr::separate(df,
-    X1,
+    !!dplyr::sym("X1"),
     sep = sep,
     into = c("path", "genes")
   )
@@ -1229,10 +1229,10 @@ ref_marker_select <- function(mat, cut = 0.5, arrange = TRUE, compto = 1) {
   resdf <- t(as.data.frame(res, stringsAsFactors = FALSE))
   resdf <- tibble::rownames_to_column(as.data.frame(resdf, stringsAsFactors = FALSE), "gene")
   colnames(resdf) <- c("gene", "cluster", "ratio")
-  resdf <- dplyr::mutate(resdf, ratio = as.numeric(ratio))
+  resdf <- dplyr::mutate(resdf, ratio = as.numeric(!!dplyr::sym("ratio")))
   if (arrange == TRUE) {
     resdf <- dplyr::group_by(resdf, cluster)
-    resdf <- dplyr::arrange(resdf, ratio, .by_group = TRUE)
+    resdf <- dplyr::arrange(resdf, !!dplyr::sym("ratio"), .by_group = TRUE)
     resdf <- dplyr::ungroup(resdf)
   }
   resdf

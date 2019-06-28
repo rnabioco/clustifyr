@@ -37,16 +37,14 @@ test_that("run_gsea warns slow runs", {
 
 test_that("run_gsea warning suppression", {
   data("pbmc_vargenes")
-  res <- run_gsea(pbmc_matrix_small[, 1:3],
+  expect_warning(res <- run_gsea(pbmc_matrix_small[, 1:3],
     query_genes = pbmc_vargenes[1:2],
     n_perm = 1,
     per_cell = TRUE,
     cluster_ids = pbmc_meta$classified,
-    no_warnings = TRUE
-  )
-  expect_equal(length(res), 3)
+    no_warnings = FALSE
+  ))
 })
-
 
 test_that("calculate_pathway_gsea gives appropriate output", {
   gl <- list(

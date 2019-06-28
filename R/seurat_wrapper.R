@@ -17,7 +17,8 @@ seurat_ref.seurat <- function(seurat_object,
                             cluster_col = "classified",
                             var_genes_only = FALSE,
                             assay_name = NULL,
-                            method = "mean") {
+                            method = "mean",
+                            ...) {
   temp_mat <- seurat_object@data
     if (var_genes_only == TRUE) {
       temp_mat <- temp_mat[seurat_object@var.genes, ]
@@ -59,7 +60,8 @@ seurat_ref.Seurat <- function(seurat_object,
                               cluster_col = "classified",
                               var_genes_only = FALSE,
                               assay_name = NULL,
-                              method = "mean") {
+                              method = "mean",
+                              ...) {
   if (class(seurat_object) == "Seurat") {
     temp_mat <- seurat_object@assays$RNA@data
     
@@ -106,7 +108,8 @@ seurat_meta <- function(seurat_object, ...) {
 #' @param dr dimension reduction method
 #' @export
 seurat_meta.seurat <- function(seurat_object,
-                            dr = "umap") {
+                            dr = "umap",
+                            ...) {
   dr2 <- dr
   temp_dr <- as.data.frame(seurat_object@dr[[dr2]]@cell.embeddings)
   
@@ -121,7 +124,8 @@ seurat_meta.seurat <- function(seurat_object,
 #' @param dr dimension reduction method
 #' @export
 seurat_meta.Seurat <- function(seurat_object,
-                               dr = "umap") {
+                               dr = "umap",
+                               ...) {
   dr2 <- dr
   temp_dr <- as.data.frame(seurat_object@reductions[[dr2]]@cell.embeddings)
   
