@@ -8,7 +8,7 @@
 \describe{
 }}
 \source{
-\code{[pbmc_matrix]} processed by \code{[Seurat]}
+\code{[pbmc_matrix]} processed by Seurat
 }
 \usage{
 pbmc_vargenes
