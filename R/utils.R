@@ -1067,7 +1067,7 @@ parse_loc_object <- function(input,
 #' @param newclustering use kmeans if NULL on dr or col name for second column of clustering
 #' @return faceted ggplot object
 #' @examples
-#' g <- overcluster_test(
+#' plt <- overcluster_test(
 #'   expr = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
 #'   ref_mat = cbmc_ref,
@@ -1076,7 +1076,7 @@ parse_loc_object <- function(input,
 #'   y_col = "UMAP_2"
 #' )
 #'
-#' g
+#' plt
 #' @export
 overcluster_test <- function(expr,
                              metadata,

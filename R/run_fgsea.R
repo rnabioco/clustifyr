@@ -11,6 +11,14 @@
 #' @param scale convert expr_mat into zscores prior to running GSEA?, default = FALSE
 #' @param no_warnings suppress warnings from gsea ties
 #' @return dataframe of gsea scores (pval, NES), with clusters as rownames
+#' @examples
+#' res <- run_gsea(
+#'   expr_mat = pbmc_matrix_small,
+#'   query_genes = pbmc_vargenes[1:100],
+#'   n_perm = 10,
+#'   cluster_ids = pbmc_meta$classified,
+#'   no_warnings = TRUE
+#' )
 #' @export
 run_gsea <- function(expr_mat,
                      query_genes,

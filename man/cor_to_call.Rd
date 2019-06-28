@@ -27,3 +27,14 @@ dataframe of cluster, new ident, and r info
 \description{
 get best calls for each cluster
 }
+\examples{
+res <- clustify(
+  input = pbmc_matrix_small,
+  metadata = pbmc_meta,
+  cluster_info = pbmc_meta,
+  cluster_col = "classified",
+  ref_mat = pbmc_bulk_matrix
+)
+
+res2 <- cor_to_call(res)
+}

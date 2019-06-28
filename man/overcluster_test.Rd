@@ -40,7 +40,7 @@ faceted ggplot object
 compare clustering parameters and classification outcomes
 }
 \examples{
-g <- overcluster_test(
+plt <- overcluster_test(
   expr = pbmc_matrix_small,
   metadata = pbmc_meta,
   ref_mat = cbmc_ref,
@@ -49,5 +49,5 @@ g <- overcluster_test(
   y_col = "UMAP_2"
 )
 
-g
+plt
 }

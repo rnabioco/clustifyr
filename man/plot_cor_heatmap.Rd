@@ -27,3 +27,17 @@ complexheatmap object
 \description{
 Plot similarity measures on heatmap
 }
+\examples{
+res <- clustify(
+  input = pbmc_matrix_small,
+  metadata = pbmc_meta,
+  ref_mat = pbmc_bulk_matrix,
+  query_genes = pbmc_vargenes,
+  cluster_col = "classified",
+  per_cell = FALSE
+)
+
+plt <- plot_cor_heatmap(res)
+
+plt
+}
