@@ -27,10 +27,10 @@ The `clustifyr()` function outputs a matrix of correlation coefficients and `clu
 library(clustifyR)
 
 # Matrix of normalized single-cell RNA-seq counts
-full_pbmc4k_matrix <- clustifyrdata::pbmc4k_matrix
+full_pbmc4k_matrix <- pbmc4k_matrix
 
 # meta.data table containing cluster assignments for each cell 
-full_pbmc4k_meta <- clustifyrdata::pbmc4k_meta
+full_pbmc4k_meta <- pbmc4k_meta
 
 # Run clustifyr()
 res <- clustify(
@@ -43,15 +43,17 @@ res <- clustify(
 
 ```
 
-```{r "Overlay corr coefficients on UMAP"}
-
+```{r "Overlay corr coefficients on UMAP", fig.height = 5.5, fig.width = 12}
 # plot_cor generates a plot for each reference cluster
 plot_cor(
-  cor_matrix = res,             # matrix of correlation coefficients from clustifyr()
-  metadata = full_pbmc4k_meta,  # meta.data table containing cluster assignments for each cell
-  cluster_col = "cluster"       # name of column in meta.data containing cell clusters
+  cor_matrix = res,                   # matrix of correlation coefficients from clustifyr()
+  metadata = full_pbmc4k_meta,        # meta.data table containing cluster assignments for each cell
+  data_to_plot = colnames(res)[1:2],  # name of cell type(s) to plot correlation coefficients
+  cluster_col = "cluster"             # name of column in meta.data containing cell clusters
 )
+```
 
+```{r "Label clusters with cell types", fig.height = 8, fig.width = 10}
 # plot_best_call to view called identities in one plot
 plot_best_call(
   cor_matrix = res,             # matrix of correlation coefficients from clustifyr()
@@ -59,41 +61,29 @@ plot_best_call(
   do_label = TRUE,              # should the feature label be shown on each cluster?
   do_legend = FALSE             # should the legend be shown?
 )
-
-
-
-
-# intentionally overcluster and clustify to assess idents
-# in this case, overclustered local averages agree with cluster clustify results
-overcluster_test(
-  full_pbmc4k_matrix,
-  full_pbmc4k_meta,
-  cbmc_ref,
-  cluster_col = "cluster",
-  n = 5
-)
-
-
-
-# `clustify` against reference combinations also informs clustering
-# in this case, several clusters seems to be a mixture with neighboring idents
-comb_ref <- make_comb_ref(cbmc_ref)
-res2 <- clustify(
-  input = full_pbmc4k_matrix,
-  metadata = full_pbmc4k_meta,
-  cluster_col = "cluster",
-  ref_mat = comb_ref,
-  query_genes = pbmc4k_vargenes
-)
-plot_best_call(
-  res2,
-  full_pbmc4k_meta,
-  do_label = T
-)
 ```
 
-## Heatmap
 ```{r}
+
+plot_tsne(
+  cor_matrix = res,                   # matrix of correlation coefficients from clustifyr()
+  metadata = full_pbmc4k_meta,        # meta.data table containing cluster assignments for each cell
+  data_to_plot = colnames(res)[1:2],  # name of cell type(s) to plot correlation coefficients
+  cluster_col = "cluster"             # name of column in meta.data containing cell clusters
+)
+
+
+plot_tsne
+plot_gene
+plot_call
+plot_cols
+
+```
+
+
+
+## Heatmap
+```{r "Correlation heatmap"}
 res <- clustify(
   input = full_pbmc4k_matrix,
   metadata = full_pbmc4k_meta,
@@ -116,7 +106,7 @@ plot_cor_heatmap(res2)
 
 ## GSEA top hits per cluster
 Using the gsea method implemented, we can also convert reactome/GO/pathway gene lists into forms that can be scored and plotted.
-```{r}
+```{r "GSEA top hits"}
 # gene lists can be converted from gmt files (Broad)
 list_reactome <- gmt_to_list(here("c2.cp.reactome.v6.2.symbols.gmt"))
 
@@ -139,3 +129,38 @@ res[[2]]
 
 ## other attributes in the metadata
 Visualization of other attributes shared in the metadata between ref and query by `plot_cols`, such as nGene, nUMI, mt_percentage, as another way of identity confirmation after `clustify`. Certain cell types have distinct patterns, more genes detected, for example.
+
+
+
+```{r "Overclustering test", eval = F, include = F}
+# intentionally overcluster and clustify to assess idents
+# in this case, overclustered local averages agree with cluster clustify results
+overcluster_test(
+  expr = full_pbmc4k_matrix,
+  metadata = full_pbmc4k_meta, 
+  ref_mat = cbmc_ref,
+  cluster_col = "cluster",
+  n = 5
+)
+```
+
+```{r eval = F, include = F}
+# `clustify` against reference combinations also informs clustering
+# in this case, several clusters seems to be a mixture with neighboring idents
+comb_ref <- make_comb_ref(cbmc_ref)
+res2 <- clustify(
+  input = full_pbmc4k_matrix,
+  metadata = full_pbmc4k_meta,
+  cluster_col = "cluster",
+  ref_mat = comb_ref,
+  query_genes = pbmc4k_vargenes
+)
+plot_best_call(
+  res2,
+  full_pbmc4k_meta,
+  do_label = T
+)
+```
+
+
+
