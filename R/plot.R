@@ -15,6 +15,10 @@
 #' @param do_label whether to label each cluster at median center
 #' @param do_legend whether to draw legend
 #' @return ggplot object, cells projected by dr, colored by feature
+#' @examples
+plot_tsne(
+  data = s_small3,
+  feature = "classified")
 #' @export
 plot_tsne <- function(data, x = "UMAP_1", y = "UMAP_2",
                       feature,
@@ -80,13 +84,13 @@ plot_tsne <- function(data, x = "UMAP_1", y = "UMAP_2",
     centers <- dplyr::group_by_(data, .dots = feature)
     centers <- dplyr::summarize(centers, t1 = mean(!!dplyr::sym(x)), t2 = mean(!!dplyr::sym(y)))
     p <- p +
-      geom_point(data = centers, mapping = aes(x = !!dplyr::sym("t1"), y = !!dplyr::sym("t2")), size = 0, alpha = 0) +
-      geom_text(data = centers, mapping = aes(x = !!dplyr::sym("t1"), y = !!dplyr::sym("t2"), label = centers[[feature]]))
+      geom_point(data = centers, mapping = aes(x = t1, y = t2), size = 0, alpha = 0) +
+      geom_text(data = centers, mapping = aes(x = t1, y = t2, label = centers[[feature]]))
   }
 
   p <- p + cowplot::theme_cowplot()
 
-  if (!do_legend) {
+  if (do_legend == FALSE) {
     p <- p + theme(legend.position = "none")
   }
 
@@ -189,7 +193,7 @@ plot_cor <- function(cor_matrix,
   for (i in seq_along(data_to_plot)) {
     tmp_data <- dplyr::filter(
       plt_data,
-      !!dplyr::sym("ref_cluster") == data_to_plot[i]
+      ref_cluster == data_to_plot[i]
     )
     plts[[i]] <- plot_tsne(tmp_data,
       x = x,
@@ -325,10 +329,9 @@ plot_best_call <- function(cor_matrix,
 
   if (collapse_to_cluster != FALSE) {
     df_temp_full <- collapse_to_cluster(df_temp_full,
-      metadata,
-      collapse_to_cluster,
-      threshold = threshold
-    )
+                        metadata,
+                        collapse_to_cluster,
+                        threshold = threshold)
   }
 
   g <- plot_tsne(df_temp_full,
@@ -337,7 +340,7 @@ plot_best_call <- function(cor_matrix,
     ...
   )
 
-  if (plot_r) {
+  if (plot_r == TRUE) {
     l <- list()
     l[[1]] <- g
     l[[2]] <- plot_tsne(df_temp_full,
@@ -398,7 +401,7 @@ plot_cols <- function(metadata,
     geom_point(alpha = 0.23) +
     geom_label(
       alpha = 0.23,
-      aes(color = !!dplyr::sym("type")),
+      aes(color = type),
       vjust = "inward",
       hjust = "inward"
     ) +

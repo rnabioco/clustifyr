@@ -49,8 +49,8 @@ clustify <- function(input, ...) {
 #'
 #' # Annotate (and return) a Seurat object
 #' res <- clustify(
-#'   s_small,
-#'   pbmc_bulk_matrix,
+#'   input = s_small,
+#'   ref_mat = pbmc_bulk_matrix,
 #'   cluster_col = "res.1",
 #'   seurat_out = TRUE,
 #'   per_cell = FALSE,
@@ -59,8 +59,8 @@ clustify <- function(input, ...) {
 #'
 #' # Annotate (and return) a Seurat object per-cell
 #' res <- clustify(
-#'   s_small,
-#'   pbmc_bulk_matrix,
+#'   input = s_small,
+#'   ref_mat = pbmc_bulk_matrix,
 #'   cluster_col = "res.1",
 #'   seurat_out = TRUE,
 #'   per_cell = TRUE,
@@ -114,7 +114,7 @@ clustify.default <- function(input,
     query_genes
   )
 
-  if (verbose) {
+  if (verbose == TRUE) {
     message(paste0("using # of genes: ", length(gene_constraints)))
   }
 
@@ -128,8 +128,6 @@ clustify.default <- function(input,
   if (!per_cell) {
     if (is.vector(metadata)) {
       cluster_ids <- metadata
-    } else if (is.factor(metadata)) {
-      cluster_ids <- as.character(metadata)
     } else if (is.data.frame(metadata) & !is.null(cluster_col)) {
       cluster_ids <- metadata[[cluster_col]]
     } else {
@@ -234,7 +232,7 @@ clustify.seurat <- function(input,
     res <- -log(res$p_val + .01, 10)
   }
 
-  if (!seurat_out) {
+  if (seurat_out == FALSE) {
     res
   } else {
     df_temp <- cor_to_call(
@@ -323,7 +321,7 @@ clustify.Seurat <- function(input,
     res <- -log(res$p_val + .01, 10)
   }
 
-  if (!seurat_out) {
+  if (seurat_out == FALSE) {
     res
   } else {
     df_temp <- cor_to_call(
@@ -420,7 +418,7 @@ clustify_lists.default <- function(input,
     }
   }
 
-  if (!(per_cell)) {
+  if (per_cell == FALSE) {
     input <- average_clusters(input,
       cluster_info,
       if_log = if_log,
@@ -438,7 +436,7 @@ clustify_lists.default <- function(input,
   }
 
   compare_lists(bin_input,
-    marker_mat = marker,
+    marker_m = marker,
     n = genome_n,
     metric = metric,
     output_high = output_high
@@ -508,7 +506,7 @@ clustify_lists.seurat <- function(input,
     ...
   )
 
-  if (!seurat_out) {
+  if (seurat_out == FALSE) {
     res
   } else {
     df_temp <- cor_to_call(
@@ -599,7 +597,7 @@ clustify_lists.Seurat <- function(input,
     ...
   )
 
-  if (!seurat_out) {
+  if (seurat_out == FALSE) {
     res
   } else {
     df_temp <- cor_to_call(
