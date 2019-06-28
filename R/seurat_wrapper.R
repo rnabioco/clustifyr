@@ -20,7 +20,7 @@ seurat_ref.seurat <- function(seurat_object,
                               method = "mean",
                               ...) {
   temp_mat <- seurat_object@data
-  if (var_genes_only == TRUE) {
+  if (class(var_genes_only) == "logical" && var_genes_only) {
     temp_mat <- temp_mat[seurat_object@var.genes, ]
   } else if (var_genes_only == "PCA") {
     temp_mat <- temp_mat[rownames(seurat_object@dr$pca@gene.loadings), ]
@@ -65,7 +65,7 @@ seurat_ref.Seurat <- function(seurat_object,
   if (class(seurat_object) == "Seurat") {
     temp_mat <- seurat_object@assays$RNA@data
 
-    if (var_genes_only == TRUE) {
+    if (class(var_genes_only) == "logical" && var_genes_only) {
       temp_mat <- temp_mat[seurat_object@assays$RNA@var.features, ]
     } else if (var_genes_only == "PCA") {
       temp_mat <- temp_mat[rownames(seurat_object@reductions$pca@feature.loadings), ]
@@ -174,7 +174,7 @@ object_ref <- function(input,
   }
 
   temp_mat <- input
-  if (var_genes_only == TRUE) {
+  if (class(var_genes_only) == "logical" && var_genes_only) {
     temp_mat <- temp_mat[query_genes, ]
   }
 
