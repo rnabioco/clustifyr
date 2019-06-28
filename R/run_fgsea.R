@@ -45,7 +45,7 @@ run_gsea <- function(expr_mat,
 
   res <- list()
   for (i in seq_along(colnames(avg_mat))) {
-    if (no_warnings == FALSE) {
+    if (!(no_warnings)) {
       gsea_res <- fgsea::fgsea(geneset_list,
         avg_mat[, i],
         minSize = 1,

@@ -136,6 +136,18 @@ test_that("average_clusters works when cluster info contains NA", {
   expect_equal(ncol(pbmc_avg2), 9)
 })
 
+test_that("average_clusters works when cluster info in factor form", {
+  pbmc_meta2 <- pbmc_meta
+  pbmc_meta2$classified <- as.factor(pbmc_meta2$classified)
+  pbmc_avg2 <- average_clusters(
+    pbmc_matrix_small,
+    pbmc_meta2,
+    low_threshold = 2,
+    cluster_col = "classified"
+  )
+  expect_equal(ncol(pbmc_avg2), 9)
+})
+
 test_that("average_clusters_filter works on strings", {
   avg1 <- average_clusters_filter(
     pbmc_matrix_small,

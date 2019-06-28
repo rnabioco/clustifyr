@@ -161,7 +161,7 @@ calc_similarity <- function(query_mat,
                             rm0 = FALSE,
                             ...) {
   # remove 0s ?
-  if (rm0 == TRUE) {
+  if (rm0) {
     message("considering 0 as missing data")
     query_mat[query_mat == 0] <- NA
     similarity_score <- cor(as.matrix(query_mat),

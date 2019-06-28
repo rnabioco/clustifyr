@@ -56,11 +56,11 @@ matrixize_markers <- function(marker_df,
     marker_df <- tidyr::gather(marker_df, factor_key = TRUE, key = "cluster", value = "gene")
   }
 
-  if (remove_rp == TRUE) {
+  if (remove_rp) {
     marker_df <- dplyr::filter(marker_df, !(stringr::str_detect(gene, "^RP[0-9,L,S]|^Rp[0-9,l,s]")))
   }
 
-  if (unique == TRUE) {
+  if (unique) {
     nonunique <- dplyr::group_by(marker_df, gene)
     nonunique <- dplyr::summarize(nonunique, n = dplyr::n())
     nonunique <- dplyr::filter(nonunique, n > 1)
@@ -80,7 +80,7 @@ matrixize_markers <- function(marker_df,
   marker_temp <- dplyr::select(marker_df, gene, cluster)
   marker_temp <- dplyr::group_by(marker_temp, cluster)
   marker_temp <- dplyr::slice(marker_temp, 1:cut_num)
-  if (ranked == TRUE) {
+  if (ranked) {
     marker_temp <- dplyr::mutate(marker_temp, n = seq(step_weight * cut_num, by = -step_weight, length.out = cut_num) + background_weight)
     marker_temp2 <- tidyr::spread(marker_temp, key = "cluster", value = n)
     marker_temp2 <- as.data.frame(replace(marker_temp2, is.na(marker_temp2), 0))
@@ -242,7 +242,7 @@ compare_lists <- function(bin_mat,
     res <- res2
   }
 
-  if (output_high == TRUE) {
+  if (output_high) {
     if (metric == "hyper") {
       res <- -log10(res)
     } else if (metric == "spearman") {

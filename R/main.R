@@ -114,7 +114,7 @@ clustify.default <- function(input,
     query_genes
   )
 
-  if (verbose == TRUE) {
+  if (verbose) {
     message(paste0("using # of genes: ", length(gene_constraints)))
   }
 
@@ -128,6 +128,8 @@ clustify.default <- function(input,
   if (!per_cell) {
     if (is.vector(metadata)) {
       cluster_ids <- metadata
+    } else if (is.factor(metadata)) {
+      cluster_ids <- as.character(metadata)
     } else if (is.data.frame(metadata) & !is.null(cluster_col)) {
       cluster_ids <- metadata[[cluster_col]]
     } else {
@@ -232,7 +234,7 @@ clustify.seurat <- function(input,
     res <- -log(res$p_val + .01, 10)
   }
 
-  if (seurat_out == FALSE) {
+  if (!seurat_out) {
     res
   } else {
     df_temp <- cor_to_call(
@@ -321,7 +323,7 @@ clustify.Seurat <- function(input,
     res <- -log(res$p_val + .01, 10)
   }
 
-  if (seurat_out == FALSE) {
+  if (!seurat_out) {
     res
   } else {
     df_temp <- cor_to_call(
@@ -418,7 +420,7 @@ clustify_lists.default <- function(input,
     }
   }
 
-  if (per_cell == FALSE) {
+  if (!(per_cell)) {
     input <- average_clusters(input,
       cluster_info,
       if_log = if_log,
@@ -506,7 +508,7 @@ clustify_lists.seurat <- function(input,
     ...
   )
 
-  if (seurat_out == FALSE) {
+  if (!seurat_out) {
     res
   } else {
     df_temp <- cor_to_call(
@@ -597,7 +599,7 @@ clustify_lists.Seurat <- function(input,
     ...
   )
 
-  if (seurat_out == FALSE) {
+  if (!seurat_out) {
     res
   } else {
     df_temp <- cor_to_call(
