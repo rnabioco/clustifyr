@@ -12,7 +12,7 @@ plot_cols(metadata, cluster_col, cluster_col_called, plot_col,
 
 \item{cluster_col}{metadata column for original clustering}
 
-\item{cluster_col_called}{metadata column for clustifyR assignments}
+\item{cluster_col_called}{metadata column for clustifyr assignments}
 
 \item{plot_col}{metadata column to plot}
 
@@ -21,6 +21,9 @@ plot_cols(metadata, cluster_col, cluster_col_called, plot_col,
 \item{cluster_col_ref}{metadata column for cluster for reference}
 
 \item{plot_col_ref}{metadata column to plot for reference}
+}
+\value{
+ggplot scatterplot
 }
 \description{
 Plot variable median per cluster from reference metadata vs new assigned metadata, for visually evaluating classification

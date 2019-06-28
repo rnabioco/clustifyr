@@ -10,7 +10,7 @@
 #' @param per_cell if true run per cell, otherwise per cluster.
 #' @param scale convert expr_mat into zscores prior to running GSEA?, default = FALSE
 #' @param no_warnings suppress warnings from gsea ties
-#'
+#' @return dataframe of gsea scores (pval, NES), with clusters as rownames
 #' @export
 run_gsea <- function(expr_mat,
                      query_genes,
@@ -45,7 +45,7 @@ run_gsea <- function(expr_mat,
 
   res <- list()
   for (i in seq_along(colnames(avg_mat))) {
-    if (no_warnings == FALSE) {
+    if (!(no_warnings)) {
       gsea_res <- fgsea::fgsea(geneset_list,
         avg_mat[, i],
         minSize = 1,

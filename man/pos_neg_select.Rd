@@ -24,6 +24,23 @@ column of metadata if not supplied. Not required if running correlation per cell
 
 \item{...}{additional arguments to pass to compute_method function}
 }
+\value{
+matrix of numeric values, clusters from input as row names, cell types from ref_mat as column names
+}
 \description{
 adapt clustify to tweak score for pos and neg markers
+}
+\examples{
+pn_ref <- data.frame(
+  "Myeloid" = c(1, 0.01, 0),
+  row.names = c("CD74", "clustifyr0", "CD79A")
+)
+
+res <- pos_neg_select(
+  pbmc_matrix_small,
+  pn_ref,
+  pbmc_meta,
+  "classified",
+  cutoff_score = 0.8
+)
 }

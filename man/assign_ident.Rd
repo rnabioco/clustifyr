@@ -18,6 +18,22 @@ assign_ident(metadata, cluster_col = "cluster", ident_col = "type",
 
 \item{idents}{new idents to assign, must be length of 1 or same as clusters}
 }
+\value{
+new dataframe of metadata
+}
 \description{
 manually change idents as needed
+}
+\examples{
+pbmc_meta2 <- assign_ident(
+  pbmc_meta,
+  cluster_col = "seurat_clusters",
+  ident_col = "type",
+  clusters = c(1, 2, 5),
+  idents = c(
+    "primary human T cells",
+    "primary human monocytes",
+    "primary human myeloid DC"
+  )
+)
 }

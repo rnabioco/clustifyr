@@ -1,14 +1,14 @@
 
-# clustifyR <img src="man/figures/logo.png" align="right">
+# clustifyr <img src="man/figures/logo.png" align="right">
 
 [![Build
-Status](https://travis-ci.org/rnabioco/clustifyR.svg?branch=master)](https://travis-ci.org/rnabioco/clustifyR)
+Status](https://travis-ci.org/rnabioco/clustifyr.svg?branch=master)](https://travis-ci.org/rnabioco/clustifyr)
 [![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/rnabioco/clustifyR?branch=master&svg=true)](https://ci.appveyor.com/project/rnabioco/clustifyR)
+status](https://ci.appveyor.com/api/projects/status/github/rnabioco/clustifyr?branch=master&svg=true)](https://ci.appveyor.com/project/rnabioco/clustifyr)
 [![Coverage
-status](https://codecov.io/gh/rnabioco/clustifyR/branch/master/graph/badge.svg)](https://codecov.io/github/rnabioco/clustifyR?branch=master)
+status](https://codecov.io/gh/rnabioco/clustifyr/branch/master/graph/badge.svg)](https://codecov.io/github/rnabioco/clustifyr?branch=master)
 
-clustifyR classifies cells and clusters in single-cell RNA sequencing
+clustifyr classifies cells and clusters in single-cell RNA sequencing
 experiments using reference bulk RNA-seq data sets, sorted microarray
 expression data, single-cell gene signatures, or marker genes.
 
@@ -25,68 +25,95 @@ between single cell RNA-seq datasets and reference data.
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("rnabioco/clustifyR")
+devtools::install_github("rnabioco/clustifyr")
 ```
 
 ## Example usage
 
 In this example we use the following built-in input data:
 
-  - an expression matrix of single cell RNA-seq data (`pbmc4k_matrix`)
-  - a metadata data.frame (`pbmc4k_meta`)
-  - a vector of variable genes (`pbmc4k_vargenes`)-
+  - an expression matrix of single cell RNA-seq data
+    (`pbmc_matrix_small`)
+  - a metadata data.frame (`pbmc_meta`)
+  - a vector of variable genes (`pbmc_vargenes`)-
   - a matrix of bulk RNA-seq read counts (`pbmc_bulk_matrix`):
 
 We then calculate correlation coefficients and plot them on a
-pre-calculated tSNE projection (stored in `pbmc4k_meta`).
+pre-calculated tSNE projection (stored in `pbmc_meta`).
 
 ``` r
-library(clustifyR)
-full_pbmc4k_matrix <- clustifyrdata::pbmc4k_matrix
-full_pbmc4k_meta <- clustifyrdata::pbmc4k_meta
-
+library(clustifyr)
 res <- clustify(
-  input = full_pbmc4k_matrix,
-  metadata = full_pbmc4k_meta$cluster,
+  input = pbmc_matrix_small,
+  metadata = pbmc_meta$classified,
   ref_mat = pbmc_bulk_matrix,
-  query_genes = pbmc4k_vargenes
+  query_genes = pbmc_vargenes
 )
 
 plot_cor(
   res,
-  full_pbmc4k_meta,
+  pbmc_meta,
   colnames(res)[1],
-  cluster_col = "cluster"
+  cluster_col = "classified"
 )
 #> [[1]]
 ```
 
-<img src="man/figures/README-example-1.png" width="100%" />
+![](man/figures/readme_example-1.png)<!-- -->
 
 ``` r
 
-plot_best_call(res, full_pbmc4k_meta)
+plot_best_call(
+  res, 
+  pbmc_meta, 
+  "classified"
+)
 ```
 
-<img src="man/figures/README-example-2.png" width="100%" />
+![](man/figures/readme_example-2.png)<!-- -->
 
 Alternatively, `clustify` can take a clustered `seurat` object (both v2
 and v3) and assign identities. New reference matrix can be made directly
-from `seurat` object as well.
+from `seurat` object as well. Other scRNAseq experiment object types are
+supported as well.
 
 ``` r
 res <- clustify(
   input = s_small,
   cluster_col = "res.1",
   ref_mat = pbmc_bulk_matrix,
-  seurat_out = T
+  seurat_out = T,
+  dr = "tsne"
 )
 
-new_ref_matrix <- use_seurat_comp(
+res2 <- clustify(
+  input = s_small3,
+  cluster_col = "RNA_snn_res.1",
+  ref_mat = pbmc_bulk_matrix,
+  seurat_out = T,
+  dr = "tsne"
+)
+
+res2
+#> An object of class Seurat 
+#> 230 features across 80 samples within 1 assay 
+#> Active assay: RNA (230 features)
+#>  2 dimensional reductions calculated: pca, tsne
+
+new_ref_matrix <- seurat_ref(
   s_small,
   cluster_col = "res.1",
   var.genes_only = FALSE
 )
+
+head(new_ref_matrix)
+#>                 0        1        2        3
+#> MS4A1    4.517255 3.204766 0.000000 0.000000
+#> CD79B    4.504191 3.549095 2.580662 0.000000
+#> CD79A    4.457349 4.199849 0.000000 0.000000
+#> HLA-DRA  6.211779 6.430463 3.659590 4.169965
+#> TCL1A    4.394310 2.837922 0.000000 0.000000
+#> HLA-DQB1 4.380289 4.325293 0.000000 1.666167
 ```
 
 Similarly, `clustify_lists` can also handle identity assignment of
@@ -94,11 +121,11 @@ matrix or `seurat` object based on marker gene lists.
 
 ``` r
 res <- clustify_lists(
-  pbmc4k_matrix,
+  pbmc_matrix_small,
   per_cell = FALSE,
-  cluster_info = pbmc4k_meta,
-  cluster_col = "cluster",
-  marker = pbmc4k_markers,
+  cluster_info = pbmc_meta,
+  cluster_col = "classified",
+  marker = pbmc_markers,
   marker_inmatrix = FALSE,
   metric = "hyper"
 )
@@ -106,10 +133,11 @@ res <- clustify_lists(
 res <- clustify_lists(
   s_small,
   per_cell = FALSE,
-  marker = pbmc4k_markers,
+  marker = pbmc_markers,
   marker_inmatrix = FALSE,
   cluster_col = "res.1",
-  seurat_out = TRUE
+  seurat_out = TRUE,
+  dr = "tsne"
 )
 ```
 

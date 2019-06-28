@@ -2,19 +2,22 @@
 % Please edit documentation in R/plot.R
 \name{plot_call}
 \alias{plot_call}
-\title{Plot called clusters on a tSNE, for each reference cluster given}
+\title{Plot called clusters on a tSNE or umap, for each reference cluster given}
 \usage{
 plot_call(cor_matrix, metadata, data_to_plot = colnames(cor_matrix), ...)
 }
 \arguments{
 \item{cor_matrix}{input similarity matrix}
 
-\item{metadata}{input metadata with tsne coordinates and cluster ids}
+\item{metadata}{input metadata with tsne or umap coordinates and cluster ids}
 
 \item{data_to_plot}{colname of data to plot, defaults to all}
 
 \item{...}{passed to plot_tsne}
 }
+\value{
+list of ggplot object, cells projected by dr, colored by cell type classification
+}
 \description{
-Plot called clusters on a tSNE, for each reference cluster given
+Plot called clusters on a tSNE or umap, for each reference cluster given
 }

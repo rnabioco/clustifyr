@@ -16,13 +16,13 @@ clustify(input, ...)
 
 \method{clustify}{seurat}(input, ref_mat, cluster_col = NULL,
   query_genes = NULL, per_cell = FALSE, n_perm = 0,
-  compute_method = "spearman", use_var_genes = TRUE, dr = "tsne",
+  compute_method = "spearman", use_var_genes = TRUE, dr = "umap",
   seurat_out = TRUE, threshold = 0, verbose = FALSE, rm0 = FALSE,
   rename_suff = NULL, ...)
 
 \method{clustify}{Seurat}(input, ref_mat, cluster_col = NULL,
   query_genes = NULL, per_cell = FALSE, n_perm = 0,
-  compute_method = "spearman", use_var_genes = TRUE, dr = "tsne",
+  compute_method = "spearman", use_var_genes = TRUE, dr = "umap",
   seurat_out = TRUE, threshold = 0, verbose = FALSE, rm0 = FALSE,
   rename_suff = NULL, ...)
 }
@@ -123,6 +123,54 @@ the expr_mat and ref_mat will be used for comparision.}
 
 \item{...}{additional arguments to pass to compute_method function}
 }
+\value{
+matrix of correlation values, clusters from input as row names, cell types from ref_mat as column names
+
+seurat2 object with type assigned in metadata, or matrix of correlation values, clusters from input as row names, cell types from ref_mat as column names
+
+seurat3 object with type assigned in metadata, or matrix of correlation values, clusters from input as row names, cell types from ref_mat as column names
+}
 \description{
 Main function to compare scRNA-seq data to bulk RNA-seq data.
+}
+\examples{
+# Annotate a matrix and metadata
+res <- clustify(
+  input = pbmc_matrix_small,
+  metadata = pbmc_meta,
+  ref_mat = pbmc_bulk_matrix,
+  query_genes = pbmc_vargenes,
+  cluster_col = "classified",
+  verbose = TRUE
+)
+
+# Annotate using a different method
+res <- clustify(
+  input = pbmc_matrix_small,
+  metadata = pbmc_meta,
+  ref_mat = pbmc_bulk_matrix,
+  query_genes = pbmc_vargenes,
+  cluster_col = "classified",
+  compute_method = "cosine"
+)
+
+# Annotate (and return) a Seurat object
+res <- clustify(
+  s_small,
+  pbmc_bulk_matrix,
+  cluster_col = "res.1",
+  seurat_out = TRUE,
+  per_cell = FALSE,
+  dr = "tsne"
+)
+
+# Annotate (and return) a Seurat object per-cell
+res <- clustify(
+  s_small,
+  pbmc_bulk_matrix,
+  cluster_col = "res.1",
+  seurat_out = TRUE,
+  per_cell = TRUE,
+  dr = "tsne"
+)
 }

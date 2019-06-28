@@ -2,16 +2,16 @@
 % Please edit documentation in R/plot.R
 \name{plot_best_call}
 \alias{plot_best_call}
-\title{Plot best calls for each cluster on a tSNE}
+\title{Plot best calls for each cluster on a tSNE or umap}
 \usage{
 plot_best_call(cor_matrix, metadata, cluster_col = "cluster",
-  collapse_to_cluster = FALSE, threshold = 0, x = "tSNE_1",
-  y = "tSNE_2", plot_r = FALSE, ...)
+  collapse_to_cluster = FALSE, threshold = 0, x = "UMAP_1",
+  y = "UMAP_2", plot_r = FALSE, ...)
 }
 \arguments{
 \item{cor_matrix}{input similarity matrix}
 
-\item{metadata}{input metadata with tsne coordinates and cluster ids}
+\item{metadata}{input metadata with tsne or umap coordinates and cluster ids}
 
 \item{cluster_col}{metadata column, can be cluster or cellid}
 
@@ -27,6 +27,9 @@ plot_best_call(cor_matrix, metadata, cluster_col = "cluster",
 
 \item{...}{passed to plot_tsne}
 }
+\value{
+ggplot object, cells projected by dr, colored by cell type classification
+}
 \description{
-Plot best calls for each cluster on a tSNE
+Plot best calls for each cluster on a tSNE or umap
 }

@@ -1,12 +1,12 @@
 ---
-title: 'Reference building for clustifyR'
+title: 'Reference building for clustifyr'
 date: '`r Sys.Date()`'
 output:
   rmarkdown::html_vignette:
     toc: true
     toc_depth: 3
     vignette: >
-      %\VignetteIndexEntry{clustifyR-reference}
+      %\VignetteIndexEntry{clustifyr-reference}
       %\VignetteEngine{knitr::rmarkdown}
       %\VignetteEncoding{UTF-8}
 ---
@@ -26,7 +26,7 @@ knitr::opts_chunk$set(
 In its simplest form, a reference matrix is built by averaging expression (also includes an option to take the median) of a single cell RNA-seq expression matrix by cluster. Both log transformed or raw count matrices are supported.
 
 ```{r average}
-library(clustifyR)
+library(clustifyr)
 new_ref_matrix <- average_clusters(
   pbmc4k_matrix, 
   cluster_info = pbmc4k_meta$cluster,
@@ -169,7 +169,7 @@ gtex_data$meta_data[1:5, ]
 
 ## Building reference matrix from microarray data
 
-`clustifyR` works with microarray data-derived gene expression matrix as well (see Benchmark page). An example of generating a matrix for sorted immune cell type can be found below. The matrix can be found at `clustifyrdata::hema_microarray_matrix`
+`clustifyr` works with microarray data-derived gene expression matrix as well (see Benchmark page). An example of generating a matrix for sorted immune cell type can be found below. The matrix can be found at `clustifyrdata::hema_microarray_matrix`
 
 ```{r microarray, eval = F}
 library(tidyverse)
@@ -200,7 +200,7 @@ hema_microarray_matrix <- GSE24759_mat %>% t() %>% as.data.frame() %>% rownames_
 ```
 
 Essentially, any data in matrix form is accepted by `clustifyR`.
-```{r microarray2}
+```{r microarray2, warning=F, message=F}
 clustifyrdata::hema_microarray_matrix[1:5,1:5]
 ```
 
@@ -238,9 +238,9 @@ cbmc_m <- matrixize_markers(
 # parse `garnett` marker files, see function `file_marker_parse`
 ```
 
-## Prebuilt references, in clustifyR
+## Prebuilt references, in clustifyr
 
-A few reference datasets are built into clustifyR for vignettes and testing:
+A few reference datasets are built into clustifyr for vignettes and testing:
 `pbmc_bulk_matrix`,
 `cbmc_ref`,
 `pbmc4k_markers`,

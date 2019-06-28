@@ -6,7 +6,7 @@ output:
     toc: true
     toc_depth: 3
     vignette: >
-      %\VignetteIndexEntry{clustifyR-viz}
+      %\VignetteIndexEntry{clustifyr-viz}
       %\VignetteEngine{knitr::rmarkdown}
       %\VignetteEncoding{UTF-8}
 ---
@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 `clustifyr` provides several functions to plot tSNE or UMAP results. The `plot_tsne()` function will plot tSNE or UMAP data using a meta.data table and can color the cells based on cluster identity.
 
 ```{r "Create tSNE", fig.height = 8, fig.width = 10}
-library(clustifyR)
+library(clustifyr)
 
 # Matrix of normalized single-cell RNA-seq counts
 pbmc4k_matrix

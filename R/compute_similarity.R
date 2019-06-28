@@ -1,6 +1,4 @@
-#' Compute the p-value for similarity using permutation
-#'
-#' @description Permute cluster labels to calculate empirical p-value
+#' Compute similarity of matrices
 #'
 #' @param expr_mat single-cell expression matrix
 #' @param ref_mat reference expression matrix
@@ -9,6 +7,7 @@
 #' @param per_cell run per cell?
 #' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param ... additional parameters not used yet
+#' @return matrix of numeric values, clusters from expr_mat as row names, cell types from ref_mat as column names
 #' @export
 get_similarity <- function(expr_mat,
                            ref_mat,
@@ -63,6 +62,7 @@ get_similarity <- function(expr_mat,
 #' @param compute_method method(s) for computing similarity scores
 #' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param ... additional parameters
+#' @return matrix of numeric values
 #' @export
 permute_similarity <- function(expr_mat,
                                ref_mat,
@@ -139,7 +139,7 @@ permute_similarity <- function(expr_mat,
 #' @param expr_mat matrix of gene expression
 #' @param sc_assign vector of cluster assignments
 #' @param sc_clust unique vector of cluster assignments
-#'
+#' @return matrix of average expression per cluster
 #' @export
 compute_mean_expr <- function(expr_mat,
                               sc_assign,
@@ -153,6 +153,7 @@ compute_mean_expr <- function(expr_mat,
 #' @param compute_method method(s) for computing similarity scores
 #' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param ...  additional parameters
+#' @return matrix of numeric values
 #' @export
 calc_similarity <- function(query_mat,
                             ref_mat,
@@ -160,7 +161,7 @@ calc_similarity <- function(query_mat,
                             rm0 = FALSE,
                             ...) {
   # remove 0s ?
-  if (rm0 == TRUE) {
+  if (rm0) {
     message("considering 0 as missing data")
     query_mat[query_mat == 0] <- NA
     similarity_score <- cor(as.matrix(query_mat),
@@ -213,6 +214,7 @@ calc_similarity <- function(query_mat,
 #' @param vec2 reference vector
 #' @param compute_method method to run i.e. corr_coef
 #' @param ... arguments to pass to compute_method function
+#' @return numeric value of desired correlation or distance measurement
 #' @export
 vector_similarity <- function(vec1, vec2, compute_method, ...) {
   # examine whether two vectors are of the same size
@@ -236,6 +238,7 @@ vector_similarity <- function(vec1, vec2, compute_method, ...) {
 #' Cosine distance
 #' @param vec1 test vector
 #' @param vec2 reference vector
+#' @return numeric value of cosine distance between the vectors
 #' @export
 cosine <- function(vec1, vec2) {
   sum(vec1 * vec2) / sqrt(sum(vec1^2) * sum(vec2^2))
@@ -258,6 +261,7 @@ cosine <- function(vec1, vec2) {
 #' raw count should be computed before computing KL-divergence.
 #' @param total_reads Pseudo-library size
 #' @param max_KL Maximal allowed value of KL-divergence.
+#' @return numeric value, with additional attributes, of kl divergence between the vectors
 #' @export
 kl_divergence <- function(vec1, vec2, if_log = FALSE,
                           total_reads = 1000, max_KL = 1) {

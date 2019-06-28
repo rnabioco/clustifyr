@@ -29,6 +29,31 @@ column of metadata if not supplied. Not required if running correlation per cell
 
 \item{...}{additional arguments to pass to compute_method function}
 }
+\value{
+matrix of correlation values, clusters as row names and column names
+}
 \description{
 Intra-experiment cluster projection for one sample/set to the rest
+}
+\examples{
+pbmc_meta2 <- pbmc_meta
+
+pbmc_meta2$sample <- c(
+  rep("A", 1319),
+  rep("B", 1319)
+)
+
+pbmc_meta2$classified <- c(
+  pbmc_meta2$classified[1:1319],
+  pbmc_meta2$classified[1320:2638]
+)
+
+res <- clustify_intra(
+  pbmc_matrix_small,
+  pbmc_meta2,
+  query_genes = pbmc_vargenes,
+  cluster_col = "classified",
+  sample_col = "sample",
+  sample_id = "A"
+)
 }

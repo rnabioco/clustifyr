@@ -25,6 +25,9 @@ genes have ALREADY BEEN filtered}
 
 \item{...}{additional parameters}
 }
+\value{
+matrix of numeric values
+}
 \description{
 Permute cluster labels to calculate empirical p-value
 }

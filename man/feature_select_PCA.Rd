@@ -24,10 +24,16 @@ top point 1 percent of genes with the largest loadings.}
 \item{if_log}{whether the data is already log transformed}
 }
 \value{
-The list of genes to use as features.
+vector of genes
 }
 \description{
 Extract genes, i.e. "features", based on the top
 loadings of principal components
 formed from the bulk expression data set
+}
+\examples{
+res <- feature_select_PCA(
+  pbmc_bulk_matrix,
+  if_log = FALSE
+)
 }

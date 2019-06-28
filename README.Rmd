@@ -6,18 +6,17 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
+  fig.path = "man/figures/"
 )
 ```
 
-# clustifyR <img src="man/figures/logo.png" align="right">
+# clustifyr <img src="man/figures/logo.png" align="right">
 
-[![Build Status](https://travis-ci.org/rnabioco/clustifyR.svg?branch=master)](https://travis-ci.org/rnabioco/clustifyR)
-[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/rnabioco/clustifyR?branch=master&svg=true)](https://ci.appveyor.com/project/rnabioco/clustifyR)
-[![Coverage status](https://codecov.io/gh/rnabioco/clustifyR/branch/master/graph/badge.svg)](https://codecov.io/github/rnabioco/clustifyR?branch=master)
+[![Build Status](https://travis-ci.org/rnabioco/clustifyr.svg?branch=master)](https://travis-ci.org/rnabioco/clustifyr)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/rnabioco/clustifyr?branch=master&svg=true)](https://ci.appveyor.com/project/rnabioco/clustifyr)
+[![Coverage status](https://codecov.io/gh/rnabioco/clustifyr/branch/master/graph/badge.svg)](https://codecov.io/github/rnabioco/clustifyr?branch=master)
 
-clustifyR classifies cells and clusters in single-cell RNA sequencing experiments using reference bulk RNA-seq data sets, sorted microarray expression data, single-cell gene signatures, or marker genes. 
+clustifyr classifies cells and clusters in single-cell RNA sequencing experiments using reference bulk RNA-seq data sets, sorted microarray expression data, single-cell gene signatures, or marker genes. 
 
 Single cell transcriptomes are difficult to annotate without extensive knowledge of the underlying biology of the system in question. Even with this knowledge, accurate identification can be challenging due to the lack of detectable expression of common marker genes. ClustifyR solves this problem by automatically annotating single cells or clusters using scRNA-seq, bulk RNA-seq data, microarray or marker gene lists. Additional functions allow for exploratory analysis of similarities between single cell RNA-seq datasets and reference data.
 
@@ -25,68 +24,82 @@ Single cell transcriptomes are difficult to annotate without extensive knowledge
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("rnabioco/clustifyR")
+devtools::install_github("rnabioco/clustifyr")
 ```
 
 ## Example usage
 
 In this example we use the following built-in input data:
 
-- an expression matrix of single cell RNA-seq data (`pbmc4k_matrix`)
-- a metadata data.frame (`pbmc4k_meta`)
-- a vector of variable genes (`pbmc4k_vargenes`)-
+- an expression matrix of single cell RNA-seq data (`pbmc_matrix_small`)
+- a metadata data.frame (`pbmc_meta`)
+- a vector of variable genes (`pbmc_vargenes`)-
 - a matrix of bulk RNA-seq read counts (`pbmc_bulk_matrix`):
 
-We then calculate correlation coefficients and plot them on a pre-calculated tSNE projection (stored in `pbmc4k_meta`).
+We then calculate correlation coefficients and plot them on a pre-calculated tSNE projection (stored in `pbmc_meta`).
 
-```{r example}
-library(clustifyR)
-full_pbmc4k_matrix <- clustifyrdata::pbmc4k_matrix
-full_pbmc4k_meta <- clustifyrdata::pbmc4k_meta
-
+```{r readme_example, warning=F}
+library(clustifyr)
 res <- clustify(
-  input = full_pbmc4k_matrix,
-  metadata = full_pbmc4k_meta$cluster,
+  input = pbmc_matrix_small,
+  metadata = pbmc_meta$classified,
   ref_mat = pbmc_bulk_matrix,
-  query_genes = pbmc4k_vargenes
+  query_genes = pbmc_vargenes
 )
 
 plot_cor(
   res,
-  full_pbmc4k_meta,
+  pbmc_meta,
   colnames(res)[1],
-  cluster_col = "cluster"
+  cluster_col = "classified"
 )
 
-plot_best_call(res, full_pbmc4k_meta)
+plot_best_call(
+  res, 
+  pbmc_meta, 
+  "classified"
+)
 ```
 
-Alternatively, `clustify` can take a clustered `seurat` object (both v2 and v3) and assign identities. New reference matrix can be made directly from `seurat` object as well.
+Alternatively, `clustify` can take a clustered `seurat` object (both v2 and v3) and assign identities. New reference matrix can be made directly from `seurat` object as well. Other scRNAseq experiment object types are supported as well.
 
-```{r example_seurat, eval = F}
+```{r example_seurat, warning=F, message=F}
 res <- clustify(
   input = s_small,
   cluster_col = "res.1",
   ref_mat = pbmc_bulk_matrix,
-  seurat_out = T
+  seurat_out = T,
+  dr = "tsne"
 )
 
-new_ref_matrix <- use_seurat_comp(
+res2 <- clustify(
+  input = s_small3,
+  cluster_col = "RNA_snn_res.1",
+  ref_mat = pbmc_bulk_matrix,
+  seurat_out = T,
+  dr = "tsne"
+)
+
+res2
+
+new_ref_matrix <- seurat_ref(
   s_small,
   cluster_col = "res.1",
   var.genes_only = FALSE
 )
+
+head(new_ref_matrix)
 ```
 
 Similarly, `clustify_lists` can also handle identity assignment of matrix or `seurat` object based on marker gene lists.
 
-```{r example_seurat2, eval = F}
+```{r example_seurat2, warning=F}
 res <- clustify_lists(
-  pbmc4k_matrix,
+  pbmc_matrix_small,
   per_cell = FALSE,
-  cluster_info = pbmc4k_meta,
-  cluster_col = "cluster",
-  marker = pbmc4k_markers,
+  cluster_info = pbmc_meta,
+  cluster_col = "classified",
+  marker = pbmc_markers,
   marker_inmatrix = FALSE,
   metric = "hyper"
 )
@@ -94,10 +107,11 @@ res <- clustify_lists(
 res <- clustify_lists(
   s_small,
   per_cell = FALSE,
-  marker = pbmc4k_markers,
+  marker = pbmc_markers,
   marker_inmatrix = FALSE,
   cluster_col = "res.1",
-  seurat_out = TRUE
+  seurat_out = TRUE,
+  dr = "tsne"
 )
 ```
 

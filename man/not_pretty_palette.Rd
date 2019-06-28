@@ -8,6 +8,9 @@
 \usage{
 not_pretty_palette
 }
+\value{
+vector of colors
+}
 \description{
 black and white palette for plotting continous variables
 }

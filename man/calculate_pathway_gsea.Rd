@@ -18,6 +18,22 @@ calculate_pathway_gsea(mat, pathway_list, n_perm = 1000, scale = TRUE,
 
 \item{no_warnings}{suppress warnings from gsea ties}
 }
+\value{
+matrix of GSEA NES values, cell types as row names, pathways as column names
+}
 \description{
 Convert expression matrix to GSEA pathway scores (would take a similar place in workflow before average_clusters/binarize)
+}
+\examples{
+\donttest{
+gl <- list(
+  "n" = c("PPBP", "LYZ", "S100A9"),
+  "a" = c("IGLL5", "GNLY", "FTL")
+)
+
+calculate_pathway_gsea(
+  pbmc_matrix_small,
+  gl
+)
+}
 }

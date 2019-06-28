@@ -1,4 +1,4 @@
-#' Average expression values per cluster
+#' #' Average expression values per cluster
 #'
 #' @param mat expression matrix
 #' @param cluster_info data.frame or vector containing cluster assignments per cell.
@@ -11,7 +11,14 @@
 #' @param low_threshold option to remove clusters with too few cells
 #' @param method whether to take mean (default) or median
 #' @param output_log whether to report log results
-#'
+#' @return average expression matrix, with genes for row names, and clusters for column names
+#' @examples
+#' pbmc_avg <- average_clusters(
+#'   pbmc_matrix_small,
+#'   pbmc_meta,
+#'   cluster_col = "classified",
+#'   if_log = FALSE
+#' )
 #' @export
 average_clusters <- function(mat, cluster_info,
                              if_log = TRUE,
@@ -87,7 +94,13 @@ average_clusters <- function(mat, cluster_info,
 #' @param cluster_info data.frame with cells
 #' @param cluster_col column in cluster_info with cluster number
 #' @param cut_num binary cutoff for detection
-#'
+#' @return matrix of numeric values, with genes for row names, and clusters for column names
+#' @examples
+#' pbmc_percentage <- percent_clusters(
+#'   pbmc_matrix_small,
+#'   pbmc_meta,
+#'   cluster_col = "classified"
+#' )
 #' @export
 percent_clusters <- function(mat, cluster_info,
                              cluster_col = "cluster",
@@ -104,7 +117,17 @@ percent_clusters <- function(mat, cluster_info,
 #' Function to make best call from correlation matrix
 #'
 #' @param cor_mat correlation matrix
+#' @return matrix of 1s and 0s
+#' @examples
+#' cor_mat <- res <- clustify(
+#'   input = pbmc_matrix_small,
+#'   metadata = pbmc_meta,
+#'   cluster_col = "classified",
+#'   ref_mat = pbmc_bulk_matrix,
+#'   query_genes = pbmc_vargenes
+#' )
 #'
+#' best_mat <- get_best_match_matrix(cor_mat)
 #' @export
 get_best_match_matrix <- function(cor_mat) {
   best_mat <- as.data.frame(t(apply(cor_mat, 1, function(x) x - max(x))))
@@ -120,7 +143,23 @@ get_best_match_matrix <- function(cor_mat) {
 #' @param best_mat binarized call matrix
 #' @param cor_mat correlation matrix
 #' @param carry_cor whether the correlation score gets reported
+#' @param string with ident call and possibly cor value
+#' @examples
+#' cor_mat <- res <- clustify(
+#'   input = pbmc_matrix_small,
+#'   metadata = pbmc_meta,
+#'   cluster_col = "classified",
+#'   ref_mat = pbmc_bulk_matrix,
+#'   query_genes = pbmc_vargenes
+#' )
 #'
+#' best_mat <- get_best_match_matrix(cor_mat)
+#'
+#' get_best_str(
+#'   name = 1,
+#'   best_mat = best_mat,
+#'   cor_mat = cor_mat
+#' )
 #' @export
 get_best_str <- function(name,
                          best_mat,
@@ -150,6 +189,7 @@ get_best_str <- function(name,
 #' @description return entries found in all supplied vectors. If the vector supplied
 #' is NULL or NA, then it will be excluded from the comparision.
 #' @param ... vectors
+#' @return vector of shared elements
 #' @examples
 #' a <- rep(1:5)
 #' b <- rep(4:10)
@@ -180,7 +220,28 @@ get_common_elements <- function(...) {
 #' @param per_cell if true run per cell, otherwise per cluster.
 #' @param compute_method method(s) for computing similarity scores
 #' @param ... additional arguments to pass to compute_method function
+#' @return matrix of correlation values, clusters as row names and column names
+#' @examples
+#' pbmc_meta2 <- pbmc_meta
 #'
+#' pbmc_meta2$sample <- c(
+#'   rep("A", 1319),
+#'   rep("B", 1319)
+#' )
+#'
+#' pbmc_meta2$classified <- c(
+#'   pbmc_meta2$classified[1:1319],
+#'   pbmc_meta2$classified[1320:2638]
+#' )
+#'
+#' res <- clustify_intra(
+#'   pbmc_matrix_small,
+#'   pbmc_meta2,
+#'   query_genes = pbmc_vargenes,
+#'   cluster_col = "classified",
+#'   sample_col = "sample",
+#'   sample_id = "A"
+#' )
 #' @export
 clustify_intra <- function(expr_mat,
                            metadata,
@@ -226,7 +287,16 @@ clustify_intra <- function(expr_mat,
 #' @param group_by column name to use for cluster identity
 #' @param filter_method "<", "==", ">" compared to filter_value
 #' @param filter_value baseline minimum as background cutoff
-#'
+#' @return average expression matrix, with genes for row names, and clusters for column names
+#' @examples
+#' avg1 <- average_clusters_filter(
+#'   pbmc_matrix_small,
+#'   pbmc_meta,
+#'   group_by = "classified",
+#'   filter_on = "seurat_clusters",
+#'   filter_method = "==",
+#'   filter_value = "1"
+#' )
 #' @export
 average_clusters_filter <- function(mat, cluster_info,
                                     if_log = TRUE,
@@ -241,7 +311,9 @@ average_clusters_filter <- function(mat, cluster_info,
   }
 
   if (!is.null(group_by)) {
-    res <- average_clusters(mat, cluster_info,
+    res <- average_clusters(
+      mat,
+      cluster_info,
       if_log = if_log,
       cluster_col = group_by
     )
@@ -264,7 +336,15 @@ average_clusters_filter <- function(mat, cluster_info,
 #' @param mat expression matrix
 #' @param background vector or dataframe or matrix of high expression genes in background
 #' @param n the number of top genes to exclude, 0 defaults to all
+#' @param expression matrix with rows removed
+#' @examples
+#' avg1 <- average_clusters_filter(
+#'   pbmc_matrix_small,
+#'   pbmc_meta,
+#'   filter_on = "nFeature_RNA"
+#' )
 #'
+#' pbmc_matrix_filtered <- remove_background(pbmc_matrix_small, avg1, 1)
 #' @export
 
 remove_background <- function(mat, background, n = 0) {
@@ -274,7 +354,7 @@ remove_background <- function(mat, background, n = 0) {
 
   if (!is.vector(background)) {
     background <- background[order(background[, 1], decreasing = TRUE), , drop = FALSE]
-    background <- rownames(t3)[1:n]
+    background <- rownames(background)[1:n]
   } else if (!is.null(names(background))) {
     background <- names(sort(background, decreasing = TRUE)[1:n])
   }
@@ -289,9 +369,20 @@ remove_background <- function(mat, background, n = 0) {
 #' @param n_perm Number of permutation for fgsea function. Defaults to 1000.
 #' @param scale convert expr_mat into zscores prior to running GSEA?, default = FALSE
 #' @param no_warnings suppress warnings from gsea ties
-
+#' @return matrix of GSEA NES values, cell types as row names, pathways as column names
+#' @examples
+#' \donttest{
+#' gl <- list(
+#'   "n" = c("PPBP", "LYZ", "S100A9"),
+#'   "a" = c("IGLL5", "GNLY", "FTL")
+#' )
+#'
+#' calculate_pathway_gsea(
+#'   pbmc_matrix_small,
+#'   gl
+#' )
+#' }
 #' @export
-
 calculate_pathway_gsea <- function(mat,
                                    pathway_list,
                                    n_perm = 1000,
@@ -319,61 +410,6 @@ calculate_pathway_gsea <- function(mat,
   res
 }
 
-#' get best calls for each cluster
-#'
-#' @param correlation_matrix input similarity matrix
-#' @param metadata input metadata with tsne coordinates and cluster ids
-#' @param col metadata column, can be cluster or cellid
-#' @param collapse_to_cluster if a column name is provided, takes the most frequent call of entire cluster to color in plot
-#' @param threshold minimum correlation coefficent cutoff for calling clusters
-#' @param rename_suff suffix to add to type and r column names
-#'
-#' @export
-cor_to_call <- function(correlation_matrix,
-                        metadata = NULL,
-                        cluster_col = "cluster",
-                        collapse_to_cluster = FALSE,
-                        threshold = 0,
-                        rename_suff = NULL) {
-  df_temp <- tibble::as_tibble(correlation_matrix, rownames = cluster_col)
-  df_temp <- tidyr::gather(df_temp, key = type, value = r, -!!cluster_col)
-  df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold, ", unassigned")
-  df_temp <- dplyr::top_n(dplyr::group_by_at(df_temp, 1), 1, r)
-  if (nrow(df_temp) != nrow(correlation_matrix)) {
-    clash <- dplyr::summarize(dplyr::group_by_at(df_temp, 1), n = n())
-    clash <- dplyr::filter(clash, n > 1)
-    clash <- dplyr::pull(clash, 1)
-    df_temp[lapply(df_temp[, 1], FUN = function(x) x %in% clash)[[1]], 2] <- paste0(df_temp[["type"]][lapply(df_temp[, 1], FUN = function(x) x %in% clash)[[1]]], "-CLASH!")
-    df_temp <- dplyr::distinct(df_temp, exclude = "type", .keep_all = TRUE)
-    df_temp_full <- dplyr::select(df_temp, -exclude)
-  } else {
-    df_temp_full <- df_temp
-  }
-
-  if (collapse_to_cluster != FALSE) {
-    if (!(cluster_col %in% colnames(metadata))) {
-      metadata <- tibble::as_tibble(metadata, rownames = cluster_col)
-    }
-    df_temp_full <- dplyr::left_join(df_temp_full, metadata, by = cluster_col)
-    df_temp_full[, "type2"] <- df_temp_full[[collapse_to_cluster]]
-    df_temp_full2 <- dplyr::group_by(df_temp_full, type, type2)
-    df_temp_full2 <- dplyr::summarize(df_temp_full2, sum = sum(r), n = n())
-    df_temp_full2 <- dplyr::group_by(df_temp_full2, type2)
-    df_temp_full2 <- dplyr::arrange(df_temp_full2, desc(n), desc(sum))
-    df_temp_full2 <- dplyr::filter(df_temp_full2, type != paste0("r<", threshold, ", unassigned"))
-    df_temp_full2 <- dplyr::slice(df_temp_full2, 1)
-    df_temp_full2 <- dplyr::right_join(df_temp_full2, dplyr::select(df_temp_full, -type), by = stats::setNames(collapse_to_cluster, "type2"))
-    df_temp_full <- dplyr::mutate(df_temp_full2, type = tidyr::replace_na(type, paste0("r<", threshold, ", unassigned")))
-    eval(parse(text = paste0("df_temp_full <- dplyr::rename(df_temp_full,", collapse_to_cluster, " = type2.y)")))
-    df_temp_full <- dplyr::select(dplyr::ungroup(df_temp_full), -type2)
-  }
-
-  if (!is.null(rename_suff)) {
-    eval(parse(text = paste0("df_temp_full <- dplyr::rename(df_temp_full, ", paste0(rename_suff, "_type"), " = type, ", paste0(rename_suff, "_r"), " = r)")))
-  }
-  df_temp_full
-}
-
 #' manually change idents as needed
 #'
 #' @param metadata column of ident
@@ -381,7 +417,19 @@ cor_to_call <- function(correlation_matrix,
 #' @param ident_col column in metadata containing identity assignment
 #' @param clusters names of clusters to change, string or vector of strings
 #' @param idents new idents to assign, must be length of 1 or same as clusters
-
+#' @return new dataframe of metadata
+#' @examples
+#' pbmc_meta2 <- assign_ident(
+#'   pbmc_meta,
+#'   cluster_col = "seurat_clusters",
+#'   ident_col = "type",
+#'   clusters = c(1, 2, 5),
+#'   idents = c(
+#'     "primary human T cells",
+#'     "primary human monocytes",
+#'     "primary human myeloid DC"
+#'   )
+#' )
 #' @export
 assign_ident <- function(metadata,
                          cluster_col = "cluster",
@@ -408,12 +456,28 @@ assign_ident <- function(metadata,
 #' get top calls for each cluster
 #'
 #' @param correlation_matrix input similarity matrix
-#' @param metadata input metadata with tsne coordinates and cluster ids
+#' @param metadata input metadata with tsne or umap coordinates and cluster ids
 #' @param col metadata column, can be cluster or cellid
 #' @param collapse_to_cluster if a column name is provided, takes the most frequent call of entire cluster to color in plot
 #' @param threshold minimum correlation coefficent cutoff for calling clusters
 #' @param topn number of calls for each cluster
+#' @return dataframe of cluster, new potential ident, and r info
+#' @examples
+#' res <- clustify(
+#'   input = pbmc_matrix_small,
+#'   metadata = pbmc_meta,
+#'   ref_mat = pbmc_bulk_matrix,
+#'   query_genes = pbmc_vargenes,
+#'   cluster_col = "classified"
+#' )
 #'
+#' call1 <- cor_to_call_topn(
+#'   res,
+#'   metadata = pbmc_meta,
+#'   col = "classified",
+#'   collapse_to_cluster = FALSE,
+#'   threshold = 0.5
+#' )
 #' @export
 cor_to_call_topn <- function(correlation_matrix,
                              metadata = NULL,
@@ -422,9 +486,9 @@ cor_to_call_topn <- function(correlation_matrix,
                              threshold = 0,
                              topn = 2) {
   df_temp <- tibble::as_tibble(correlation_matrix, rownames = col)
-  df_temp <- tidyr::gather(df_temp, key = type, value = r, -!!col)
+  df_temp <- tidyr::gather(df_temp, key = !!dplyr::sym("type"), value = !!dplyr::sym("r"), -!!col)
   df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold, ", unassigned")
-  df_temp <- dplyr::top_n(dplyr::group_by_at(df_temp, 1), topn, r)
+  df_temp <- dplyr::top_n(dplyr::group_by_at(df_temp, 1), topn, !!dplyr::sym("r"))
   df_temp_full <- df_temp
 
   if (collapse_to_cluster != FALSE) {
@@ -433,20 +497,20 @@ cor_to_call_topn <- function(correlation_matrix,
     }
     df_temp_full <- dplyr::left_join(df_temp_full, metadata, by = col)
     df_temp_full[, "type2"] <- df_temp_full[[collapse_to_cluster]]
-    df_temp_full2 <- dplyr::group_by(df_temp_full, type, type2)
-    df_temp_full2 <- dplyr::summarize(df_temp_full2, sum = sum(r), n = n())
-    df_temp_full2 <- dplyr::group_by(df_temp_full2, type2)
+    df_temp_full2 <- dplyr::group_by(df_temp_full, !!dplyr::sym("type"), !!dplyr::sym("type2"))
+    df_temp_full2 <- dplyr::summarize(df_temp_full2, sum = sum(!!dplyr::sym("r")), n = n())
+    df_temp_full2 <- dplyr::group_by(df_temp_full2, !!dplyr::sym("type2"))
     df_temp_full2 <- dplyr::arrange(df_temp_full2, desc(n), desc(sum))
-    df_temp_full2 <- dplyr::filter(df_temp_full2, type != paste0("r<", threshold, ", unassigned"))
+    df_temp_full2 <- dplyr::filter(df_temp_full2, !!dplyr::sym("type") != paste0("r<", threshold, ", unassigned"))
     df_temp_full2 <- dplyr::slice(df_temp_full2, 1:topn)
-    df_temp_full2 <- dplyr::right_join(df_temp_full2, dplyr::select(df_temp_full, -c(type, r)), by = stats::setNames(collapse_to_cluster, "type2"))
-    df_temp_full <- dplyr::mutate(df_temp_full2, type = tidyr::replace_na(type, paste0("r<", threshold, ", unassigned")))
+    df_temp_full2 <- dplyr::right_join(df_temp_full2, dplyr::select(df_temp_full, -c(!!dplyr::sym("type"), !!dplyr::sym("r"))), by = stats::setNames(collapse_to_cluster, "type2"))
+    df_temp_full <- dplyr::mutate(df_temp_full2, type = tidyr::replace_na(!!dplyr::sym("type"), paste0("r<", threshold, ", unassigned")))
     df_temp_full <- dplyr::group_by_(df_temp_full, .dots = col)
-    df_temp_full <- dplyr::distinct(df_temp_full, type, type2, .keep_all = TRUE)
+    df_temp_full <- dplyr::distinct(df_temp_full, !!dplyr::sym("type"), !!dplyr::sym("type2"), .keep_all = TRUE)
     dplyr::arrange(df_temp_full, desc(n), desc(sum), .by_group = TRUE)
   } else {
     df_temp_full <- dplyr::group_by_(df_temp_full, .dots = col)
-    dplyr::arrange(df_temp_full, desc(r), .by_group = TRUE)
+    dplyr::arrange(df_temp_full, desc(!!dplyr::sym("r")), .by_group = TRUE)
   }
 }
 
@@ -456,7 +520,13 @@ cor_to_call_topn <- function(correlation_matrix,
 #' @param genelist vector of marker genes for one identity
 #' @param clusters vector of cluster identities
 #' @param returning whether to return mean, min, or max of the gene pct in the gene list
-#'
+#' @return vector of numeric values
+#' @examples
+#' res <- gene_pct(
+#'   pbmc_matrix_small,
+#'   cbmc_m$B,
+#'   pbmc_meta$classified
+#' )
 #' @export
 gene_pct <- function(matrix,
                      genelist,
@@ -500,7 +570,14 @@ gene_pct <- function(matrix,
 #' provide the cluster_col parameters.
 #' @param cluster_col column in cluster_info with cluster number
 #' @param norm whether and how the results are normalized
-#'
+#' @return matrix of numeric values, clusters from mat as row names, cell types from marker_m as column names
+#' @examples
+#' res <- gene_pct_markerm(
+#'   pbmc_matrix_small,
+#'   cbmc_m,
+#'   pbmc_meta,
+#'   cluster_col = "classified"
+#' )
 #' @export
 gene_pct_markerm <- function(matrix,
                              marker_m,
@@ -551,6 +628,43 @@ gene_pct_markerm <- function(matrix,
 
 #' Combined function to compare scRNA-seq data to bulk RNA-seq data and marker list
 #'
+#' #' @examples
+#' # Seurat2
+#' res <- clustify_nudge(
+#'   input = s_small,
+#'   ref_mat = cbmc_ref,
+#'   marker = cbmc_m,
+#'   cluster_col = "res.1",
+#'   threshold = 0.8,
+#'   seurat_out = FALSE,
+#'   mode = "pct",
+#'   dr = "tsne"
+#' )
+#'
+#' # Seurat3
+#' res <- clustify_nudge(
+#'   input = s_small3,
+#'   ref_mat = cbmc_ref,
+#'   marker = cbmc_m,
+#'   threshold = 0.8,
+#'   seurat_out = FALSE,
+#'   mode = "pct",
+#'   dr = "tsne"
+#' )
+#'
+#' # Matrix
+#' res <- clustify_nudge(
+#'   input = pbmc_matrix_small,
+#'   ref_mat = cbmc_ref,
+#'   metadata = pbmc_meta,
+#'   marker = as.matrix(cbmc_m),
+#'   query_genes = pbmc_vargenes,
+#'   cluster_col = "classified",
+#'   threshold = 0.8,
+#'   call = FALSE,
+#'   marker_inmatrix = FALSE,
+#'   mode = "pct"
+#' )
 #' @export
 clustify_nudge <- function(input, ...) {
   UseMethod("clustify_nudge", input)
@@ -572,8 +686,9 @@ clustify_nudge <- function(input, ...) {
 #' @param norm whether and how the results are normalized
 #' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
 #' @param mode use marker expression pct or ranked cor score for nudging
+#' @param rename_suff suffix to add to type and r column names
 #' @param ... passed to matrixize_markers
-
+#' @return seurat2 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
 #' @export
 clustify_nudge.seurat <- function(input,
                                   ref_mat,
@@ -584,10 +699,11 @@ clustify_nudge.seurat <- function(input,
                                   weight = 1,
                                   seurat_out = TRUE,
                                   threshold = -Inf,
-                                  dr = "tsne",
+                                  dr = "umap",
                                   norm = "diff",
                                   marker_inmatrix = TRUE,
                                   mode = "rank",
+                                  rename_suff = NULL,
                                   ...) {
   if (marker_inmatrix != TRUE) {
     marker <- matrixize_markers(
@@ -601,7 +717,8 @@ clustify_nudge.seurat <- function(input,
     cluster_col = cluster_col,
     query_genes = query_genes,
     seurat_out = FALSE,
-    per_cell = FALSE
+    per_cell = FALSE,
+    dr = dr
   )
 
   if (mode == "pct") {
@@ -623,30 +740,142 @@ clustify_nudge.seurat <- function(input,
     resb <- cbind(resb, empty_mat)
   }
 
-  df_temp <- cor_to_call(resa[order(rownames(resa)), order(colnames(resa))] +
-    resb[order(rownames(resb)), order(colnames(resb))] * weight,
-  threshold = threshold
-  )
-  colnames(df_temp) <- c(cluster_col, "type", "score")
+  res <- resa[order(rownames(resa)), order(colnames(resa))] +
+    resb[order(rownames(resb)), order(colnames(resb))] * weight
 
   if (seurat_out == FALSE) {
-    df_temp
+    res
   } else {
-    cluster_info <- as.data.frame(use_seurat_meta(input, dr = dr, seurat3 = FALSE))
-    df_temp_full <- dplyr::left_join(tibble::rownames_to_column(cluster_info, "rn"), df_temp, by = cluster_col)
-    df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
+    df_temp <- cor_to_call(
+      res,
+      metadata = input@meta.data,
+      cluster_col = cluster_col,
+      threshold = threshold
+    )
+
+    df_temp_full <- call_to_metadata(
+      df_temp,
+      metadata = input@meta.data,
+      cluster_col = cluster_col,
+      per_cell = FALSE,
+      rename_suff = rename_suff
+    )
+
     if ("Seurat" %in% loadedNamespaces()) {
       input@meta.data <- df_temp_full
       return(input)
     } else {
       message("seurat not loaded, returning cor_mat instead")
-      return(df_temp)
+      return(res)
     }
+    input
   }
 }
 
 #' @rdname clustify_nudge
-#' @param input seurat 2 object
+#' @param input seurat 3 object
+#' @param ref_mat reference expression matrix
+#' @param marker matrix of markers
+#' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
+#' the expr_mat and ref_mat will be used for comparision.
+#' @param cluster_col column in metadata that contains cluster ids per cell. Will default to first
+#' column of metadata if not supplied. Not required if running correlation per cell.
+#' @param compute_method method(s) for computing similarity scores
+#' @param weight relative weight for the gene list scores, when added to correlation score
+#' @param dr stored dimension reduction
+#' @param seurat_out output cor matrix or called seurat object
+#' @param threshold identity calling minimum score threshold
+#' @param norm whether and how the results are normalized
+#' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
+#' @param mode use marker expression pct or ranked cor score for nudging
+#' @param rename_suff suffix to add to type and r column names
+#' @param ... passed to matrixize_markers
+#' @return seurat3 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
+#' @export
+clustify_nudge.Seurat <- function(input,
+                                  ref_mat,
+                                  marker,
+                                  cluster_col = NULL,
+                                  query_genes = NULL,
+                                  compute_method = "spearman",
+                                  weight = 1,
+                                  seurat_out = TRUE,
+                                  threshold = -Inf,
+                                  dr = "umap",
+                                  norm = "diff",
+                                  marker_inmatrix = TRUE,
+                                  mode = "rank",
+                                  rename_suff = NULL,
+                                  ...) {
+  if (marker_inmatrix != TRUE) {
+    marker <- matrixize_markers(
+      marker,
+      ...
+    )
+  }
+  resa <- clustify(
+    input = input,
+    ref_mat = ref_mat,
+    cluster_col = cluster_col,
+    query_genes = query_genes,
+    seurat_out = FALSE,
+    per_cell = FALSE,
+    dr = dr
+  )
+
+  if (mode == "pct") {
+    resb <- gene_pct_markerm(input@assays$RNA@data,
+      marker,
+      input@meta.data,
+      cluster_col = cluster_col,
+      norm = norm
+    )
+  } else if (mode == "rank") {
+    resb <- pos_neg_select(input@assays$RNA@data,
+      marker,
+      metadata = input@meta.data,
+      cluster_col = cluster_col,
+      cutoff_score = norm
+    )
+    empty_vec <- setdiff(colnames(resa), colnames(resb))
+    empty_mat <- matrix(0, nrow = nrow(resb), ncol = length(empty_vec), dimnames = list(rownames(resb), empty_vec))
+    resb <- cbind(resb, empty_mat)
+  }
+
+  res <- resa[order(rownames(resa)), order(colnames(resa))] +
+    resb[order(rownames(resb)), order(colnames(resb))] * weight
+
+  if (seurat_out == FALSE) {
+    res
+  } else {
+    df_temp <- cor_to_call(
+      res,
+      metadata = input@meta.data,
+      cluster_col = cluster_col,
+      threshold = threshold
+    )
+
+    df_temp_full <- call_to_metadata(
+      df_temp,
+      metadata = input@meta.data,
+      cluster_col = cluster_col,
+      per_cell = FALSE,
+      rename_suff = rename_suff
+    )
+
+    if ("Seurat" %in% loadedNamespaces()) {
+      input@meta.data <- df_temp_full
+      return(input)
+    } else {
+      message("seurat not loaded, returning cor_mat instead")
+      return(res)
+    }
+    input
+  }
+}
+
+#' @rdname clustify_nudge
+#' @param input express matrix
 #' @param ref_mat reference expression matrix
 #' @param metadata cell cluster assignments, supplied as a vector or data.frame. If
 #' data.frame is supplied then `cluster_col` needs to be set.
@@ -661,7 +890,7 @@ clustify_nudge.seurat <- function(input,
 #' @param call make call or just return score matrix
 #' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
 #' @param mode use marker expression pct or ranked cor score for nudging
-
+#' @return matrix of numeric values, clusters from input as row names, cell types from ref_mat as column names
 #' @export
 clustify_nudge.default <- function(input,
                                    ref_mat,
@@ -673,7 +902,7 @@ clustify_nudge.default <- function(input,
                                    weight = 1,
                                    seurat_out = TRUE,
                                    threshold = -Inf,
-                                   dr = "tsne",
+                                   dr = "umap",
                                    norm = "diff",
                                    call = TRUE,
                                    marker_inmatrix = TRUE,
@@ -756,7 +985,9 @@ clustify_nudge.default <- function(input,
 #' @param var_loc variable genes location
 #' @param cluster_col column of clustering from metadata
 #' @param lookuptable if not supplied, will look in built-in table for object parsing
-
+#' @return list of expression, metadata, vargenes, cluster_col info from object
+#' @examples
+#' clustifyr_obj <- parse_loc_object(s_small3)
 #' @export
 parse_loc_object <- function(input,
                              type = class(input),
@@ -786,7 +1017,7 @@ parse_loc_object <- function(input,
   #                 "leiden_cluster")
   # }
   if (is.null(lookuptable)) {
-    object_loc_lookup1 <- clustifyR::object_loc_lookup
+    object_loc_lookup1 <- clustifyr::object_loc_lookup
   } else {
     object_loc_lookup1 <- lookuptable
   }
@@ -837,14 +1068,25 @@ parse_loc_object <- function(input,
 #' @param do_label whether to label each cluster at median center
 #' @param seed set seed for kmeans
 #' @param newclustering use kmeans if NULL on dr or col name for second column of clustering
-
+#' @return faceted ggplot object
+#' @examples
+#' g <- overcluster_test(
+#'   pbmc_matrix_small,
+#'   pbmc_meta,
+#'   cbmc_ref,
+#'   cluster_col = "classified",
+#'   x_col = "UMAP_1",
+#'   y_col = "UMAP_2"
+#' )
+#'
+#' g
 #' @export
 overcluster_test <- function(expr,
                              metadata,
                              ref_mat,
                              cluster_col,
-                             x_col = "tSNE_1",
-                             y_col = "tSNE_2",
+                             x_col = "UMAP_1",
+                             y_col = "UMAP_2",
                              n = 5,
                              ngenes = NULL,
                              query_genes = NULL,
@@ -930,7 +1172,15 @@ overcluster_test <- function(expr,
 #' @param n number of genes to return
 #' @param mode the method of selecting features
 #' @param rm.lowvar whether to remove lower variation genes first
+#' @return vector of genes
+#' @examples
+#' pbmc_avg <- average_clusters(
+#'   pbmc_matrix_small,
+#'   pbmc_meta,
+#'   cluster_col = "classified"
+#' )
 #'
+#' res <- ref_feature_select(pbmc_avg[1:100, ], 5)
 #' @export
 ref_feature_select <- function(mat,
                                n = 3000,
@@ -973,8 +1223,12 @@ ref_feature_select <- function(mat,
 #' PCA loadings to select genes from. E.g. 0.999 would select the
 #' top point 1 percent of genes with the largest loadings.
 #' @param if_log whether the data is already log transformed
-#' @return The list of genes to use as features.
-#'
+#' @return vector of genes
+#' @examples
+#' res <- feature_select_PCA(
+#'   pbmc_bulk_matrix,
+#'   if_log = FALSE
+#' )
 #' @export
 feature_select_PCA <- function(mat = NULL,
                                pcs = NULL,
@@ -1007,7 +1261,7 @@ feature_select_PCA <- function(mat = NULL,
 #' @param path gmt file path
 #' @param cutoff remove pathways with less genes than this cutoff
 #' @param sep sep used in file to split path and genes
-
+#' @return list of genes in each pathway
 #' @export
 gmt_to_list <- function(path,
                         cutoff = 0,
@@ -1016,7 +1270,7 @@ gmt_to_list <- function(path,
     col_names = FALSE
   )
   df <- tidyr::separate(df,
-    X1,
+    !!dplyr::sym("X1"),
     sep = sep,
     into = c("path", "genes")
   )
@@ -1044,7 +1298,26 @@ gmt_to_list <- function(path,
 #' @param scale convert expr_mat into zscores prior to running GSEA?, default = TRUE
 #' @param topn number of top pathways to plot
 #' @param returning to return "both" list and plot, or either one
-
+#' @return list of matrix and plot, or just plot, matrix of GSEA NES values, cell types as row names, pathways as column names
+#' @examples
+#' \donttest{
+#' gl <- list(
+#'   "n" = c("PPBP", "LYZ", "S100A9"),
+#'   "a" = c("IGLL5", "GNLY", "FTL")
+#' )
+#'
+#' pbmc_avg <- average_clusters(
+#'   pbmc_matrix_small,
+#'   pbmc_meta,
+#'   cluster_col = "classified"
+#' )
+#'
+#' g <- plot_pathway_gsea(
+#'   pbmc_avg,
+#'   gl,
+#'   5
+#' )
+#' }
 #' @export
 plot_pathway_gsea <- function(mat,
                               pathway_list,
@@ -1074,7 +1347,9 @@ plot_pathway_gsea <- function(mat,
 #'
 #' @param x expression matrix
 #' @param na.rm logical. Should missing values (including NaN) be omitted from the calculations?
-
+#' @return vector of numeric values
+#' @examples
+#' pbmc_small_rowvar <- RowVar(as.matrix(pbmc_matrix_small))
 #' @export
 RowVar <- function(x, na.rm = TRUE) {
   rowSums((x - rowMeans(x, na.rm = na.rm))^2, na.rm = na.rm) / (dim(x)[2] - 1)
@@ -1090,7 +1365,15 @@ RowVar <- function(x, na.rm = TRUE) {
 #' provide the cluster_col parameters.
 #' @param cluster_col column in cluster_info with cluster number
 #' @param set_seed random seed
-
+#' @return new smaller mat with less cell_id columns
+#' @examples
+#' mat1 <- downsample_matrix(
+#'   pbmc_matrix_small,
+#'   cluster_info = pbmc_meta$classified,
+#'   n = 10,
+#'   keep_cluster_proportions = TRUE,
+#'   set_seed = 41
+#' )
 #' @export
 downsample_matrix <- function(mat,
                               n = 1,
@@ -1132,7 +1415,12 @@ downsample_matrix <- function(mat,
 #' @param ref_mat reference expression matrix
 #' @param if_log whether input data is natural
 #' @param sep separator for name combinations
-#'
+#' @return expression matrix
+#' @examples
+#' ref2 <- make_comb_ref(
+#'   cbmc_ref,
+#'   sep = "_+_"
+#' )
 #' @export
 make_comb_ref <- function(ref_mat, if_log = TRUE, sep = "_and_") {
   if (if_log == TRUE) {
@@ -1154,7 +1442,12 @@ make_comb_ref <- function(ref_mat, if_log = TRUE, sep = "_and_") {
 #' @param cut an expression minimum cutoff
 #' @param arrange whether to arrange (lower means better)
 #' @param compto compare max expression to the value of next 1 or more
-#'
+#' @return dataframe, with gene, cluster, ratio columns
+#' @examples
+#' res1 <- ref_marker_select(
+#'   cbmc_ref,
+#'   cut = 2
+#' )
 #' @export
 ref_marker_select <- function(mat, cut = 0.5, arrange = TRUE, compto = 1) {
   mat <- mat[!is.na(rownames(mat)), ]
@@ -1167,10 +1460,10 @@ ref_marker_select <- function(mat, cut = 0.5, arrange = TRUE, compto = 1) {
   resdf <- t(as.data.frame(res, stringsAsFactors = FALSE))
   resdf <- tibble::rownames_to_column(as.data.frame(resdf, stringsAsFactors = FALSE), "gene")
   colnames(resdf) <- c("gene", "cluster", "ratio")
-  resdf <- dplyr::mutate(resdf, ratio = as.numeric(ratio))
+  resdf <- dplyr::mutate(resdf, ratio = as.numeric(!!dplyr::sym("ratio")))
   if (arrange == TRUE) {
     resdf <- dplyr::group_by(resdf, cluster)
-    resdf <- dplyr::arrange(resdf, ratio, .by_group = TRUE)
+    resdf <- dplyr::arrange(resdf, !!dplyr::sym("ratio"), .by_group = TRUE)
     resdf <- dplyr::ungroup(resdf)
   }
   resdf
@@ -1181,7 +1474,19 @@ ref_marker_select <- function(mat, cut = 0.5, arrange = TRUE, compto = 1) {
 #' @param cols a vector of cell types (column)
 #' @param cut an expression minimum cutoff
 #' @param compto compare max expression to the value of next 1 or more
+#' @return vector of cluster name and ratio value
+#' @examples
+#' pbmc_avg <- average_clusters(
+#'   pbmc_matrix_small,
+#'   pbmc_meta,
+#'   cluster_col = "classified",
+#'   if_log = FALSE
+#' )
 #'
+#' marker_selected <- marker_select(
+#'   row1 = pbmc_avg["PPBP", ],
+#'   cols = names(pbmc_avg["PPBP", ])
+#' )
 #' @export
 marker_select <- function(row1, cols, cut = 1, compto = 1) {
   row_sorted <- sort(row1, decreasing = TRUE)
@@ -1202,6 +1507,20 @@ marker_select <- function(row1, cols, cut = 1, compto = 1) {
 #' @param cutoff_n expression cutoff where genes ranked below n are considered non-expressing
 #' @param cutoff_score positive score lower than this cutoff will be considered as 0 to not influence scores
 #' @param ... additional arguments to pass to compute_method function
+#' @return matrix of numeric values, clusters from input as row names, cell types from ref_mat as column names
+#' @examples
+#' pn_ref <- data.frame(
+#'   "Myeloid" = c(1, 0.01, 0),
+#'   row.names = c("CD74", "clustifyr0", "CD79A")
+#' )
+#'
+#' res <- pos_neg_select(
+#'   pbmc_matrix_small,
+#'   pn_ref,
+#'   pbmc_meta,
+#'   "classified",
+#'   cutoff_score = 0.8
+#' )
 #' @export
 pos_neg_select <- function(input,
                            ref_mat,
@@ -1239,6 +1558,9 @@ pos_neg_select <- function(input,
 
 #' generate negative markers from a list of exclusive positive markers
 #' @param mat matrix or dataframe of markers
+#' @return matrix of gene names
+#' @examples
+#' m1 <- reverse_marker_matrix(cbmc_m)
 #' @export
 reverse_marker_matrix <- function(mat) {
   full_vec <- as.vector(t(mat))
@@ -1250,6 +1572,7 @@ reverse_marker_matrix <- function(mat) {
 
 #' takes files with positive and negative markers, as described in garnett, and returns list of markers
 #' @param filename txt file to load
+#' @return list of positive and negative gene markers
 #' @export
 file_marker_parse <- function(filename) {
   lines <- readLines(filename)
@@ -1268,7 +1591,12 @@ file_marker_parse <- function(filename) {
       ident_neg[count] <- strsplit(substr(line, 16, nchar(line)), split = ", ")
     }
   }
-  names(ident_neg) <- ident_names
-  names(ident_pos) <- ident_names
+  
+  if (!(is.null(ident_neg))) {
+    names(ident_neg) <- ident_names
+  }
+  if (!(is.null(ident_pos))) {
+    names(ident_pos) <- ident_names
+  }
   list("pos" = ident_pos, "neg" = ident_neg)
 }

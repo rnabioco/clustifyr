@@ -13,6 +13,9 @@ binarize_expr(mat, n = 1000, cut = 0)
 
 \item{cut}{cut off to set to 0}
 }
+\value{
+matrix of 1s and 0s
+}
 \description{
 Binarize scRNAseq data
 }

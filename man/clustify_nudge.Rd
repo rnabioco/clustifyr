@@ -3,6 +3,7 @@
 \name{clustify_nudge}
 \alias{clustify_nudge}
 \alias{clustify_nudge.seurat}
+\alias{clustify_nudge.Seurat}
 \alias{clustify_nudge.default}
 \title{Combined function to compare scRNA-seq data to bulk RNA-seq data and marker list}
 \usage{
@@ -11,13 +12,19 @@ clustify_nudge(input, ...)
 \method{clustify_nudge}{seurat}(input, ref_mat, marker,
   cluster_col = NULL, query_genes = NULL,
   compute_method = "spearman", weight = 1, seurat_out = TRUE,
-  threshold = -Inf, dr = "tsne", norm = "diff",
-  marker_inmatrix = TRUE, mode = "rank", ...)
+  threshold = -Inf, dr = "umap", norm = "diff",
+  marker_inmatrix = TRUE, mode = "rank", rename_suff = NULL, ...)
+
+\method{clustify_nudge}{Seurat}(input, ref_mat, marker,
+  cluster_col = NULL, query_genes = NULL,
+  compute_method = "spearman", weight = 1, seurat_out = TRUE,
+  threshold = -Inf, dr = "umap", norm = "diff",
+  marker_inmatrix = TRUE, mode = "rank", rename_suff = NULL, ...)
 
 \method{clustify_nudge}{default}(input, ref_mat, marker, metadata = NULL,
   cluster_col = NULL, query_genes = NULL,
   compute_method = "spearman", weight = 1, seurat_out = TRUE,
-  threshold = -Inf, dr = "tsne", norm = "diff", call = TRUE,
+  threshold = -Inf, dr = "umap", norm = "diff", call = TRUE,
   marker_inmatrix = TRUE, mode = "rank", ...)
 }
 \arguments{
@@ -51,12 +58,46 @@ the expr_mat and ref_mat will be used for comparision.}
 
 \item{mode}{use marker expression pct or ranked cor score for nudging}
 
+\item{rename_suff}{suffix to add to type and r column names}
+
 \item{metadata}{cell cluster assignments, supplied as a vector or data.frame. If
 data.frame is supplied then \code{cluster_col} needs to be set.}
 
 \item{call}{make call or just return score matrix}
 
-\item{input}{seurat 2 object}
+\item{input}{seurat 3 object}
+
+\item{ref_mat}{reference expression matrix}
+
+\item{marker}{matrix of markers}
+
+\item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
+the expr_mat and ref_mat will be used for comparision.}
+
+\item{cluster_col}{column in metadata that contains cluster ids per cell. Will default to first
+column of metadata if not supplied. Not required if running correlation per cell.}
+
+\item{compute_method}{method(s) for computing similarity scores}
+
+\item{weight}{relative weight for the gene list scores, when added to correlation score}
+
+\item{dr}{stored dimension reduction}
+
+\item{seurat_out}{output cor matrix or called seurat object}
+
+\item{threshold}{identity calling minimum score threshold}
+
+\item{norm}{whether and how the results are normalized}
+
+\item{marker_inmatrix}{whether markers genes are already in preprocessed matrix form}
+
+\item{mode}{use marker expression pct or ranked cor score for nudging}
+
+\item{rename_suff}{suffix to add to type and r column names}
+
+\item{...}{passed to matrixize_markers}
+
+\item{input}{express matrix}
 
 \item{ref_mat}{reference expression matrix}
 
@@ -78,6 +119,50 @@ column of metadata if not supplied. Not required if running correlation per cell
 
 \item{mode}{use marker expression pct or ranked cor score for nudging}
 }
+\value{
+seurat2 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
+
+seurat3 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
+
+matrix of numeric values, clusters from input as row names, cell types from ref_mat as column names
+}
 \description{
-Combined function to compare scRNA-seq data to bulk RNA-seq data and marker list
+#' @examplesSeurat2
+
+res <- clustify_nudge(
+input = s_small,
+ref_mat = cbmc_ref,
+marker = cbmc_m,
+cluster_col = "res.1",
+threshold = 0.8,
+seurat_out = FALSE,
+mode = "pct",
+dr = "tsne"
+)
+}
+\details{
+Seurat3
+
+res <- clustify_nudge(
+input = s_small3,
+ref_mat = cbmc_ref,
+marker = cbmc_m,
+threshold = 0.8,
+seurat_out = FALSE,
+mode = "pct",
+dr = "tsne"
+)Matrix
+
+res <- clustify_nudge(
+input = pbmc_matrix_small,
+ref_mat = cbmc_ref,
+metadata = pbmc_meta,
+marker = as.matrix(cbmc_m),
+query_genes = pbmc_vargenes,
+cluster_col = "classified",
+threshold = 0.8,
+call = FALSE,
+marker_inmatrix = FALSE,
+mode = "pct"
+)
 }

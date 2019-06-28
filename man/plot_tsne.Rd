@@ -2,9 +2,9 @@
 % Please edit documentation in R/plot.R
 \name{plot_tsne}
 \alias{plot_tsne}
-\title{Plot a tSNE colored by feature.}
+\title{Plot a tSNE or umap colored by feature.}
 \usage{
-plot_tsne(data, x = "tSNE_1", y = "tSNE_2", feature,
+plot_tsne(data, x = "UMAP_1", y = "UMAP_2", feature,
   legend_name = "", c_cols = pretty_palette2, d_cols = NULL,
   pt_size = 0.25, scale_limits = NULL, do_label = FALSE,
   do_legend = TRUE)
@@ -21,7 +21,7 @@ plot_tsne(data, x = "tSNE_1", y = "tSNE_2", feature,
 \item{legend_name}{legend name to display, defaults to no name}
 
 \item{c_cols}{character vector of colors to built color gradient
-for continuous values. defaults to \code{\link[clustifyR:pretty_palette]{clustifyR::pretty_palette}}}
+for continuous values. defaults to \code{\link[clustifyr:pretty_palette]{clustifyr::pretty_palette}}}
 
 \item{d_cols}{character vector of colors for discrete values.
 defaults to RColorBrewer paired palette}
@@ -35,6 +35,9 @@ otherwise a two-element numeric vector indicating min and max to plot}
 
 \item{do_legend}{whether to draw legend}
 }
+\value{
+ggplot object, cells projected by dr, colored by feature
+}
 \description{
-Plot a tSNE colored by feature.
+Plot a tSNE or umap colored by feature.
 }

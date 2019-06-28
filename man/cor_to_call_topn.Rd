@@ -10,7 +10,7 @@ cor_to_call_topn(correlation_matrix, metadata = NULL, col = "cluster",
 \arguments{
 \item{correlation_matrix}{input similarity matrix}
 
-\item{metadata}{input metadata with tsne coordinates and cluster ids}
+\item{metadata}{input metadata with tsne or umap coordinates and cluster ids}
 
 \item{col}{metadata column, can be cluster or cellid}
 
@@ -20,6 +20,26 @@ cor_to_call_topn(correlation_matrix, metadata = NULL, col = "cluster",
 
 \item{topn}{number of calls for each cluster}
 }
+\value{
+dataframe of cluster, new potential ident, and r info
+}
 \description{
 get top calls for each cluster
+}
+\examples{
+res <- clustify(
+  input = pbmc_matrix_small,
+  metadata = pbmc_meta,
+  ref_mat = pbmc_bulk_matrix,
+  query_genes = pbmc_vargenes,
+  cluster_col = "classified"
+)
+
+call1 <- cor_to_call_topn(
+  res,
+  metadata = pbmc_meta,
+  col = "classified",
+  collapse_to_cluster = FALSE,
+  threshold = 0.5
+)
 }

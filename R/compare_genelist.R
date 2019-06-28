@@ -3,7 +3,7 @@
 #' @param mat single-cell expression matrix
 #' @param n number of top expressing genes to keep
 #' @param cut cut off to set to 0
-#'
+#' @return matrix of 1s and 0s
 #' @export
 binarize_expr <- function(mat,
                           n = 1000,
@@ -32,10 +32,10 @@ binarize_expr <- function(mat,
 #' @param background_weight ranked genes are tranformed into pseudo expression with
 #' added weight
 #' @param unique whether to use only unique markers to 1 cluster
-#' @param metadata vector or dataframe of cluster names
+#' @param metadata vector or dataframe of cluster names, should have column named cluster
 #' @param cluster_col column for cluster names to replace original cluster, if metadata is dataframe
 #' @param remove_rp do not include rps, rpl, rp1-9 in markers
-#'
+#' @return matrix of unranked gene marker names, or matrix of ranked expression
 #' @export
 matrixize_markers <- function(marker_df,
                               ranked = FALSE,
@@ -56,11 +56,11 @@ matrixize_markers <- function(marker_df,
     marker_df <- tidyr::gather(marker_df, factor_key = TRUE, key = "cluster", value = "gene")
   }
 
-  if (remove_rp == TRUE) {
+  if (remove_rp) {
     marker_df <- dplyr::filter(marker_df, !(stringr::str_detect(gene, "^RP[0-9,L,S]|^Rp[0-9,l,s]")))
   }
 
-  if (unique == TRUE) {
+  if (unique) {
     nonunique <- dplyr::group_by(marker_df, gene)
     nonunique <- dplyr::summarize(nonunique, n = dplyr::n())
     nonunique <- dplyr::filter(nonunique, n > 1)
@@ -80,7 +80,7 @@ matrixize_markers <- function(marker_df,
   marker_temp <- dplyr::select(marker_df, gene, cluster)
   marker_temp <- dplyr::group_by(marker_temp, cluster)
   marker_temp <- dplyr::slice(marker_temp, 1:cut_num)
-  if (ranked == TRUE) {
+  if (ranked) {
     marker_temp <- dplyr::mutate(marker_temp, n = seq(step_weight * cut_num, by = -step_weight, length.out = cut_num) + background_weight)
     marker_temp2 <- tidyr::spread(marker_temp, key = "cluster", value = n)
     marker_temp2 <- as.data.frame(replace(marker_temp2, is.na(marker_temp2), 0))
@@ -116,7 +116,7 @@ matrixize_markers <- function(marker_df,
 #' function parses variables genes from a matrix input.
 #'
 #' @param marker_mat matrix or dataframe of candidate genes for each cluster
-#'
+#' @return vector of marker gene names
 #' @export
 get_vargenes <- function(marker_mat) {
   if (rownames(marker_mat)[1] != "1") {
@@ -135,7 +135,7 @@ get_vargenes <- function(marker_mat) {
 #' @param metric adjusted p-value for hypergeometric test, or jaccard index
 #' @param output_high if true (by default to fit with rest of package),
 #' -log10 transform p-value
-#'
+#' @return matrix of numeric values, clusters from expr_mat as row names, cell types from marker_mat as column names
 #' @export
 compare_lists <- function(bin_mat,
                           marker_mat,
@@ -242,7 +242,7 @@ compare_lists <- function(bin_mat,
     res <- res2
   }
 
-  if (output_high == TRUE) {
+  if (output_high) {
     if (metric == "hyper") {
       res <- -log10(res)
     } else if (metric == "spearman") {

@@ -4,8 +4,8 @@
 \alias{overcluster_test}
 \title{compare clustering parameters and classification outcomes}
 \usage{
-overcluster_test(expr, metadata, ref_mat, cluster_col, x_col = "tSNE_1",
-  y_col = "tSNE_2", n = 5, ngenes = NULL, query_genes = NULL,
+overcluster_test(expr, metadata, ref_mat, cluster_col, x_col = "UMAP_1",
+  y_col = "UMAP_2", n = 5, ngenes = NULL, query_genes = NULL,
   do_label = TRUE, seed = 42, newclustering = NULL)
 }
 \arguments{
@@ -33,6 +33,21 @@ overcluster_test(expr, metadata, ref_mat, cluster_col, x_col = "tSNE_1",
 
 \item{newclustering}{use kmeans if NULL on dr or col name for second column of clustering}
 }
+\value{
+faceted ggplot object
+}
 \description{
 compare clustering parameters and classification outcomes
+}
+\examples{
+g <- overcluster_test(
+  pbmc_matrix_small,
+  pbmc_meta,
+  cbmc_ref,
+  cluster_col = "classified",
+  x_col = "UMAP_1",
+  y_col = "UMAP_2"
+)
+
+g
 }

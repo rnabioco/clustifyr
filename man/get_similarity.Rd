@@ -2,7 +2,7 @@
 % Please edit documentation in R/compute_similarity.R
 \name{get_similarity}
 \alias{get_similarity}
-\title{Compute the p-value for similarity using permutation}
+\title{Compute similarity of matrices}
 \usage{
 get_similarity(expr_mat, ref_mat, cluster_ids, compute_method,
   per_cell = FALSE, rm0 = FALSE, ...)
@@ -22,6 +22,9 @@ get_similarity(expr_mat, ref_mat, cluster_ids, compute_method,
 
 \item{...}{additional parameters not used yet}
 }
+\value{
+matrix of numeric values, clusters from expr_mat as row names, cell types from ref_mat as column names
+}
 \description{
-Permute cluster labels to calculate empirical p-value
+Compute similarity of matrices
 }

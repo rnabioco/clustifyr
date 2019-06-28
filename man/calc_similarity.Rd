@@ -17,6 +17,9 @@ calc_similarity(query_mat, ref_mat, compute_method, rm0 = FALSE, ...)
 
 \item{...}{additional parameters}
 }
+\value{
+matrix of numeric values
+}
 \description{
 compute similarity
 }

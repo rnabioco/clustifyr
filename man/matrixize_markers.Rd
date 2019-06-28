@@ -23,11 +23,14 @@ added weight}
 
 \item{unique}{whether to use only unique markers to 1 cluster}
 
-\item{metadata}{vector or dataframe of cluster names}
+\item{metadata}{vector or dataframe of cluster names, should have column named cluster}
 
 \item{cluster_col}{column for cluster names to replace original cluster, if metadata is dataframe}
 
 \item{remove_rp}{do not include rps, rpl, rp1-9 in markers}
+}
+\value{
+matrix of unranked gene marker names, or matrix of ranked expression
 }
 \description{
 Convert candidate genes list into matrix

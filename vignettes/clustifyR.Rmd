@@ -6,7 +6,7 @@ output:
     toc: true
     toc_depth: 3
     vignette: >
-      %\VignetteIndexEntry{clustifyR-overview}
+      %\VignetteIndexEntry{clustifyr-overview}
       %\VignetteEngine{knitr::rmarkdown}
       %\VignetteEncoding{UTF-8}
 ---
@@ -27,8 +27,6 @@ Single cell transcriptomes are difficult to annotate without extensive knowledge
 
 `clustifyr` solves this problem by providing functions to automatically annotate single cells or clusters using bulk RNA-seq data or marker gene lists (ranked or unranked). Additional functions allow for exploratory analysis of calculated similarities between single cell RNA-seq datasets and reference data.
 
----
-
 ## A simple example: 10x Genomics PBMCs
 
 In this example, we take a 10x Genomics 3' scRNA-seq dataset from peripheral blood mononuclear cells (PBMCs) and annotate the cell clusters (identified using `Seurat`) using bulk RNA-seq data from isolated PBMC cell populations. The cell types in this dataset have been previously annotated, so this is a good dataset to use for testing the accuracy of `clustifyr`.
@@ -43,7 +41,7 @@ To identify cell types, the `clustifyr()` function requires several inputs:
 Using the `plot_tsne()` function, we can plot the known identities of each cluster, which were stored in the "classified" column of the meta.data table.
 
 ```{r "Load data", fig.height = 8, fig.width = 10}
-library(clustifyR)
+library(clustifyr)
 library(ggplot2)
 library(cowplot)
 
@@ -65,7 +63,7 @@ plot_tsne(
 
 ## Calculate correlation coefficients
 
-The `clustifyr()` function returns a matrix of correlation coefficients for each cell type and cluster, with the rownames corresponding to the cluster number.
+`clustifyr` provides the `clustify()` function, which takes as input a matrix of single cell RNA-seq expression values, a metadata table with cluster assignments, and a matrix with bulk RNA seq datasets. 
 
 ```{r "Run clustifyr()"}
 # Calculate correlation coefficients for each cluster (pearson by default)
@@ -95,7 +93,7 @@ plot_cor_heatmap(
 
 ## Plot cluster identities and correlation coefficients
 
-`clustifyr` also provides functions to overlay correlation coefficients on pre-calculated tSNE embeddings (or those from any other dimensionality reduction method). 
+`clustifyr` provides functions to plot single cells using pre-calculated tSNE embeddings (or those from any other dimensionality reduction method), and to plot correlation coefficients on those projections. The plots below show that the highest correlations between these bulk RNA-seq data and the test scRNA-seq dataset are restricted to the correct cell clusters.
 
 ```{r "Overlay corr coefficients on UMAP", fig.height = 5, fig.width = 12}
 # Overlay correlation coefficients on UMAPs for the first two cell types

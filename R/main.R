@@ -25,6 +25,47 @@ clustify <- function(input, ...) {
 #' @param lookuptable if not supplied, will look in built-in table for object parsing
 #' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param ... additional arguments to pass to compute_method function
+#' @return matrix of correlation values, clusters from input as row names, cell types from ref_mat as column names
+#' @examples
+#' # Annotate a matrix and metadata
+#' res <- clustify(
+#'   input = pbmc_matrix_small,
+#'   metadata = pbmc_meta,
+#'   ref_mat = pbmc_bulk_matrix,
+#'   query_genes = pbmc_vargenes,
+#'   cluster_col = "classified",
+#'   verbose = TRUE
+#' )
+#'
+#' # Annotate using a different method
+#' res <- clustify(
+#'   input = pbmc_matrix_small,
+#'   metadata = pbmc_meta,
+#'   ref_mat = pbmc_bulk_matrix,
+#'   query_genes = pbmc_vargenes,
+#'   cluster_col = "classified",
+#'   compute_method = "cosine"
+#' )
+#'
+#' # Annotate (and return) a Seurat object
+#' res <- clustify(
+#'   s_small,
+#'   pbmc_bulk_matrix,
+#'   cluster_col = "res.1",
+#'   seurat_out = TRUE,
+#'   per_cell = FALSE,
+#'   dr = "tsne"
+#' )
+#'
+#' # Annotate (and return) a Seurat object per-cell
+#' res <- clustify(
+#'   s_small,
+#'   pbmc_bulk_matrix,
+#'   cluster_col = "res.1",
+#'   seurat_out = TRUE,
+#'   per_cell = TRUE,
+#'   dr = "tsne"
+#' )
 #' @export
 clustify.default <- function(input,
                              ref_mat,
@@ -73,7 +114,7 @@ clustify.default <- function(input,
     query_genes
   )
 
-  if (verbose == TRUE) {
+  if (verbose) {
     message(paste0("using # of genes: ", length(gene_constraints)))
   }
 
@@ -87,11 +128,16 @@ clustify.default <- function(input,
   if (!per_cell) {
     if (is.vector(metadata)) {
       cluster_ids <- metadata
+    } else if (is.factor(metadata)) {
+      cluster_ids <- as.character(metadata)
     } else if (is.data.frame(metadata) & !is.null(cluster_col)) {
       cluster_ids <- metadata[[cluster_col]]
     } else {
       stop("metadata not formatted correctly,
            supply either a character vector or a dataframe")
+    }
+    if (class(cluster_ids) == "factor") {
+      cluster_ids <- as.character(cluster_ids)
     }
     cluster_ids[is.na(cluster_ids)] <- "orig.NA"
   }
@@ -145,7 +191,7 @@ clustify.default <- function(input,
 #' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param rename_suff suffix to add to type and r column names
 #' @param ... additional arguments to pass to compute_method function
-
+#' @return seurat2 object with type assigned in metadata, or matrix of correlation values, clusters from input as row names, cell types from ref_mat as column names
 #' @export
 clustify.seurat <- function(input,
                             ref_mat,
@@ -155,7 +201,7 @@ clustify.seurat <- function(input,
                             n_perm = 0,
                             compute_method = "spearman",
                             use_var_genes = TRUE,
-                            dr = "tsne",
+                            dr = "umap",
                             seurat_out = TRUE,
                             threshold = 0,
                             verbose = FALSE,
@@ -165,7 +211,7 @@ clustify.seurat <- function(input,
   s_object <- input
   # for seurat < 3.0
   expr_mat <- s_object@data
-  metadata <- use_seurat_meta(s_object, dr = dr, seurat3 = FALSE)
+  metadata <- seurat_meta(s_object, dr = dr)
 
   if (use_var_genes & is.null(query_genes)) {
     query_genes <- s_object@var.genes
@@ -184,41 +230,27 @@ clustify.seurat <- function(input,
     ...
   )
 
-  if (seurat_out == FALSE) {
+  if (n_perm != 0) {
+    res <- -log(res$p_val + .01, 10)
+  }
+
+  if (!seurat_out) {
     res
   } else {
-    col_meta <- colnames(metadata)
-    if ("type" %in% col_meta | "type2" %in% col_meta) {
-      warning('metadata column name clash of "type"/"type2"')
-      return()
-    }
-    if (n_perm != 0) {
-      res <- -log(res$p_val + .01, 10)
-    }
-    df_temp <- tibble::as_tibble(res, rownames = "rn")
-    df_temp <- tidyr::gather(df_temp, key = type, value = r, -rn)
-    df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold, ", unassigned")
-    df_temp <- dplyr::top_n(dplyr::group_by_at(df_temp, 1), 1, r)
-    if (nrow(df_temp) != nrow(res)) {
-      clash <- dplyr::group_by(df_temp, rn)
-      clash <- dplyr::summarize(clash, n = n())
-      clash <- dplyr::filter(clash, n > 1)
-      clash <- dplyr::pull(clash, rn)
-      df_temp <- dplyr::mutate(df_temp, type = ifelse(rn %in% clash, paste0(type, "-CLASH!"), type))
-      df_temp <- dplyr::distinct(df_temp, rn, r, .keep_all = TRUE)
-    }
-    if (per_cell == FALSE) {
-      df_temp <- dplyr::rename(df_temp, !!cluster_col := rn)
-      df_temp_full <- dplyr::left_join(tibble::rownames_to_column(metadata, "rn"), df_temp, by = cluster_col)
-      df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
-    } else {
-      df_temp_full <- dplyr::left_join(tibble::rownames_to_column(metadata, "rn"), df_temp, by = "rn")
-      df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
-    }
+    df_temp <- cor_to_call(
+      res,
+      metadata = metadata,
+      cluster_col = cluster_col,
+      threshold = threshold
+    )
 
-    if (!is.null(rename_suff)) {
-      eval(parse(text = paste0("df_temp_full <- dplyr::rename(df_temp_full, ", paste0(rename_suff, "_type"), " = type, ", paste0(rename_suff, "_r"), " = r)")))
-    }
+    df_temp_full <- call_to_metadata(
+      df_temp,
+      metadata = metadata,
+      cluster_col = cluster_col,
+      per_cell = per_cell,
+      rename_suff = rename_suff
+    )
 
     if ("Seurat" %in% loadedNamespaces()) {
       s_object@meta.data <- df_temp_full
@@ -249,7 +281,7 @@ clustify.seurat <- function(input,
 #' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param rename_suff suffix to add to type and r column names
 #' @param ... additional arguments to pass to compute_method function
-
+#' @return seurat3 object with type assigned in metadata, or matrix of correlation values, clusters from input as row names, cell types from ref_mat as column names
 #' @export
 clustify.Seurat <- function(input,
                             ref_mat,
@@ -259,7 +291,7 @@ clustify.Seurat <- function(input,
                             n_perm = 0,
                             compute_method = "spearman",
                             use_var_genes = TRUE,
-                            dr = "tsne",
+                            dr = "umap",
                             seurat_out = TRUE,
                             threshold = 0,
                             verbose = FALSE,
@@ -269,7 +301,7 @@ clustify.Seurat <- function(input,
   s_object <- input
   # for seurat 3.0 +
   expr_mat <- s_object@assays$RNA@data
-  metadata <- use_seurat_meta(s_object, dr = dr, seurat3 = TRUE)
+  metadata <- seurat_meta(s_object, dr = dr)
 
   if (use_var_genes & is.null(query_genes)) {
     query_genes <- s_object@assays$RNA@var.features
@@ -287,42 +319,27 @@ clustify.Seurat <- function(input,
     rm0 = rm0,
     ...
   )
+  if (n_perm != 0) {
+    res <- -log(res$p_val + .01, 10)
+  }
 
-  if (seurat_out == FALSE) {
+  if (!seurat_out) {
     res
   } else {
-    col_meta <- colnames(metadata)
-    if ("type" %in% col_meta | "type2" %in% col_meta & is.null(rename_suff)) {
-      warning('metadata column name clash of "type"/"type2", consider renaming or using rename_suff option')
-      return()
-    }
-    if (n_perm != 0) {
-      res <- -log(res$p_val + .01, 10)
-    }
-    df_temp <- tibble::as_tibble(res, rownames = "rn")
-    df_temp <- tidyr::gather(df_temp, key = type, value = r, -rn)
-    df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold, ", unassigned")
-    df_temp <- dplyr::top_n(dplyr::group_by_at(df_temp, 1), 1, r)
-    if (nrow(df_temp) != nrow(res)) {
-      clash <- dplyr::group_by(df_temp, rn)
-      clash <- dplyr::summarize(clash, n = n())
-      clash <- dplyr::filter(clash, n > 1)
-      clash <- dplyr::pull(clash, rn)
-      df_temp <- dplyr::mutate(df_temp, type = ifelse(rn %in% clash, paste0(type, "-CLASH!"), type))
-      df_temp <- dplyr::distinct(df_temp, rn, r, .keep_all = TRUE)
-    }
-    if (per_cell == FALSE) {
-      df_temp <- dplyr::rename(df_temp, !!cluster_col := rn)
-      df_temp_full <- dplyr::left_join(tibble::rownames_to_column(metadata, "rn"), df_temp, by = cluster_col)
-      df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
-    } else {
-      df_temp_full <- dplyr::left_join(tibble::rownames_to_column(metadata, "rn"), df_temp, by = "rn")
-      df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
-    }
+    df_temp <- cor_to_call(
+      res,
+      metadata = metadata,
+      cluster_col = cluster_col,
+      threshold = threshold
+    )
 
-    if (!is.null(rename_suff)) {
-      eval(parse(text = paste0("df_temp_full <- dplyr::rename(df_temp_full, ", paste0(rename_suff, "_type"), " = type, ", paste0(rename_suff, "_r"), " = r)")))
-    }
+    df_temp_full <- call_to_metadata(
+      df_temp,
+      metadata = metadata,
+      cluster_col = cluster_col,
+      per_cell = per_cell,
+      rename_suff = rename_suff
+    )
 
     if ("Seurat" %in% loadedNamespaces()) {
       s_object@meta.data <- df_temp_full
@@ -334,7 +351,7 @@ clustify.Seurat <- function(input,
     s_object
   }
 }
-#' Correlation functions available in clustifyR
+#' Correlation functions available in clustifyr
 #' @export
 clustifyr_methods <- c(
   "pearson",
@@ -367,9 +384,8 @@ clustify_lists <- function(input, ...) {
 #' @param output_high if true (by default to fit with rest of package),
 #' -log10 transform p-value
 #' @param lookuptable if not supplied, will look in built-in table for object parsing
-
 #' @param ... passed to matrixize_markers
-#'
+#' @return matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
 #' @export
 
 clustify_lists.default <- function(input,
@@ -404,7 +420,7 @@ clustify_lists.default <- function(input,
     }
   }
 
-  if (per_cell == FALSE) {
+  if (!(per_cell)) {
     input <- average_clusters(input,
       cluster_info,
       if_log = if_log,
@@ -422,7 +438,7 @@ clustify_lists.default <- function(input,
   }
 
   compare_lists(bin_input,
-    marker_m = marker,
+    marker_mat = marker,
     n = genome_n,
     metric = metric,
     output_high = output_high
@@ -449,9 +465,10 @@ clustify_lists.default <- function(input,
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
 #' @param threshold identity calling minimum score threshold
+#' @param rename_suff suffix to add to type and r column names
 
 #' @param ... passed to matrixize_markers
-#'
+#' @return seurat2 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
 #' @export
 clustify_lists.seurat <- function(input,
                                   cluster_info = NULL,
@@ -465,14 +482,16 @@ clustify_lists.seurat <- function(input,
                                   genome_n = 30000,
                                   metric = "hyper",
                                   output_high = TRUE,
-                                  dr = "tsne",
+                                  dr = "umap",
                                   seurat_out = TRUE,
                                   threshold = 0,
+                                  rename_suff = NULL,
                                   ...) {
   s_object <- input
   # for seurat < 3.0
   input <- s_object@data
-  cluster_info <- as.data.frame(use_seurat_meta(s_object, dr = dr, seurat3 = FALSE))
+  cluster_info <- as.data.frame(seurat_meta(s_object, dr = dr))
+  metadata <- cluster_info
 
   res <- clustify_lists(input,
     per_cell = per_cell,
@@ -489,18 +508,24 @@ clustify_lists.seurat <- function(input,
     ...
   )
 
-  if (seurat_out == FALSE) {
+  if (!seurat_out) {
     res
   } else {
-    if (per_cell == FALSE) {
-      df_temp <- cor_to_call(res, cluster_info, cluster_col = cluster_col, threshold = threshold)
-      df_temp_full <- dplyr::left_join(tibble::rownames_to_column(cluster_info, "rn"), df_temp, by = cluster_col)
-      df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
-    } else {
-      df_temp <- cor_to_call(res, cluster_info, cluster_col = "rn", threshold = threshold)
-      df_temp_full <- dplyr::left_join(tibble::rownames_to_column(cluster_info, "rn"), df_temp, by = "rn")
-      df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
-    }
+    df_temp <- cor_to_call(
+      res,
+      metadata = metadata,
+      cluster_col = cluster_col,
+      threshold = threshold
+    )
+
+    df_temp_full <- call_to_metadata(
+      df_temp,
+      metadata = metadata,
+      cluster_col = cluster_col,
+      per_cell = per_cell,
+      rename_suff = rename_suff
+    )
+
     if ("Seurat" %in% loadedNamespaces()) {
       s_object@meta.data <- df_temp_full
       return(s_object)
@@ -508,6 +533,7 @@ clustify_lists.seurat <- function(input,
       message("seurat not loaded, returning cor_mat instead")
       return(res)
     }
+    s_object
   }
 }
 
@@ -531,8 +557,10 @@ clustify_lists.seurat <- function(input,
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
 #' @param threshold identity calling minimum score threshold
-
+#' @param rename_suff suffix to add to type and r column names
 #' @param ... passed to matrixize_markers
+
+#' @return seurat3 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
 clustify_lists.Seurat <- function(input,
                                   cluster_info = NULL,
                                   cluster_col = NULL,
@@ -545,14 +573,16 @@ clustify_lists.Seurat <- function(input,
                                   genome_n = 30000,
                                   metric = "hyper",
                                   output_high = TRUE,
-                                  dr = "tsne",
+                                  dr = "umap",
                                   seurat_out = TRUE,
                                   threshold = 0,
+                                  rename_suff = NULL,
                                   ...) {
   s_object <- input
   # for seurat 3.0 +
   input <- s_object@assays$RNA@data
-  cluster_info <- as.data.frame(use_seurat_meta(s_object, dr = dr, seurat3 = TRUE))
+  cluster_info <- as.data.frame(seurat_meta(s_object, dr = dr))
+  metadata <- cluster_info
 
   res <- clustify_lists(input,
     per_cell = per_cell,
@@ -569,18 +599,24 @@ clustify_lists.Seurat <- function(input,
     ...
   )
 
-  if (seurat_out == FALSE) {
+  if (!seurat_out) {
     res
   } else {
-    if (per_cell == FALSE) {
-      df_temp <- cor_to_call(res, cluster_info, cluster_col = cluster_col, threshold = threshold)
-      df_temp_full <- dplyr::left_join(tibble::rownames_to_column(cluster_info, "rn"), df_temp, by = cluster_col)
-      df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
-    } else {
-      df_temp <- cor_to_call(res, cluster_info, cluster_col = "rn", threshold = threshold)
-      df_temp_full <- dplyr::left_join(tibble::rownames_to_column(cluster_info, "rn"), df_temp, by = "rn")
-      df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
-    }
+    df_temp <- cor_to_call(
+      res,
+      metadata = metadata,
+      cluster_col = cluster_col,
+      threshold = threshold
+    )
+
+    df_temp_full <- call_to_metadata(
+      df_temp,
+      metadata = metadata,
+      cluster_col = cluster_col,
+      per_cell = per_cell,
+      rename_suff = rename_suff
+    )
+
     if ("Seurat" %in% loadedNamespaces()) {
       s_object@meta.data <- df_temp_full
       return(s_object)
@@ -588,5 +624,6 @@ clustify_lists.Seurat <- function(input,
       message("seurat not loaded, returning cor_mat instead")
       return(res)
     }
+    s_object
   }
 }

@@ -26,6 +26,19 @@ averaging will be done on unlogged data}
 
 \item{filter_value}{baseline minimum as background cutoff}
 }
+\value{
+average expression matrix, with genes for row names, and clusters for column names
+}
 \description{
 Average expression values per cluster, filtered by set parameter, defaults to calculating background
+}
+\examples{
+avg1 <- average_clusters_filter(
+  pbmc_matrix_small,
+  pbmc_meta,
+  group_by = "classified",
+  filter_on = "seurat_clusters",
+  filter_method = "==",
+  filter_value = "1"
+)
 }

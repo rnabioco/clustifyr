@@ -20,6 +20,17 @@ provide the cluster_col parameters.}
 
 \item{norm}{whether and how the results are normalized}
 }
+\value{
+matrix of numeric values, clusters from mat as row names, cell types from marker_m as column names
+}
 \description{
 pct of cells in every cluster that express a series of genelists
+}
+\examples{
+res <- gene_pct_markerm(
+  pbmc_matrix_small,
+  cbmc_m,
+  pbmc_meta,
+  cluster_col = "classified"
+)
 }
