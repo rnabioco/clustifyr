@@ -23,8 +23,8 @@ pct of cells in each cluster that express genelist
 }
 \examples{
 res <- gene_pct(
-  pbmc_matrix_small,
-  cbmc_m$B,
-  pbmc_meta$classified
+  matrix = pbmc_matrix_small,
+  genelist = cbmc_m$B,
+  clusters = pbmc_meta$classified
 )
 }

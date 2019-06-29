@@ -49,8 +49,8 @@ pbmc_meta2$classified <- c(
 )
 
 res <- clustify_intra(
-  pbmc_matrix_small,
-  pbmc_meta2,
+  expr_mat = pbmc_matrix_small,
+  metadata = pbmc_meta2,
   query_genes = pbmc_vargenes,
   cluster_col = "classified",
   sample_col = "sample",

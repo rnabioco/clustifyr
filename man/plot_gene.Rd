@@ -24,3 +24,18 @@ list of ggplot object, cells projected by dr, colored by gene expression
 \description{
 Plot gene expression on to tSNE or umap
 }
+\examples{
+genes <- c(
+  "RP11-314N13.3",
+  "ARF4"
+)
+
+plts <- plot_gene(
+  expr_mat = pbmc_matrix_small,
+  metadata = pbmc_meta \%>\% tibble::rownames_to_column("rn"),
+  genes = genes,
+  cell_col = "rn"
+)
+
+plts
+}

@@ -23,6 +23,10 @@ seurat_meta(seurat_object, ...)
 }
 \value{
 dataframe of metadata, including dimension reduction plotting info
+#' @examples
+\donttest{
+meta_data <- seurat_meta(s_small)
+}
 }
 \description{
 Function to convert labelled seurat object to fully prepared metadata

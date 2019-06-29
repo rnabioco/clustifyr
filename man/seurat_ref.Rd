@@ -41,3 +41,10 @@ reference expression matrix, with genes as row names, and cell types as column n
 \description{
 Function to convert labelled seurat object to avg expression matrix
 }
+\examples{
+avg <- seurat_ref(
+  seurat_object = s_small,
+  cluster_col = "res.1",
+  var_genes_only = TRUE
+)
+}

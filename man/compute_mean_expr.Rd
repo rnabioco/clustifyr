@@ -19,3 +19,10 @@ matrix of average expression per cluster
 \description{
 compute mean of clusters
 }
+\examples{
+compute_mean_expr(
+  expr_mat = pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)],
+  sc_assign = colnames(pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)]),
+  sc_clust = colnames(pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)])
+)
+}
