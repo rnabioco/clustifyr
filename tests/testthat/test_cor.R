@@ -43,7 +43,7 @@ test_that("clustify takes factor for metadata", {
   )
   n_clusters <- length(unique(pbmc_meta$classified))
   n_ref_samples <- ncol(pbmc_bulk_matrix)
-  
+
   expect_equal(ncol(res), n_ref_samples)
   expect_equal(n_clusters, nrow(res))
 })

@@ -157,10 +157,12 @@ get_vargenes <- function(marker_mat) {
 #'
 #' pbmc_avgb <- binarize_expr(pbmc_avg)
 #'
-#' compare_lists(pbmc_avgb,
-#'               pbmc_mm,
-#'               metric = "spearman"
+#' compare_lists(
+#'   pbmc_avgb,
+#'   pbmc_mm,
+#'   metric = "spearman"
 #' )
+#'
 #' @export
 compare_lists <- function(bin_mat,
                           marker_mat,

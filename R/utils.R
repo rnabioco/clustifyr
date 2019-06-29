@@ -379,7 +379,8 @@ remove_background <- function(mat, background, n = 0) {
 #' pbmc_avg <- average_clusters(
 #'   mat = pbmc_matrix_small,
 #'   cluster_info = pbmc_meta,
-#'   cluster_col = "classified")
+#'   cluster_col = "classified"
+#' )
 #'
 #' calculate_pathway_gsea(
 #'   mat = pbmc_avg,
@@ -422,16 +423,17 @@ calculate_pathway_gsea <- function(mat,
 #' @param idents new idents to assign, must be length of 1 or same as clusters
 #' @return new dataframe of metadata
 #' @examples
-#'  pbmc_meta2 <- assign_ident(
-#'    metadata = pbmc_meta,
-#'    cluster_col = "seurat_clusters",
-#'    ident_col = "type",
-#'    clusters = c(1,2,5),
-#'    idents = c("primary human T cells",
-#'               "primary human monocytes",
-#'               "primary human myeloid DC"
-#'               )
-#'  )
+#' pbmc_meta2 <- assign_ident(
+#'   metadata = pbmc_meta,
+#'   cluster_col = "seurat_clusters",
+#'   ident_col = "type",
+#'   clusters = c(1, 2, 5),
+#'   idents = c(
+#'     "primary human T cells",
+#'     "primary human monocytes",
+#'     "primary human myeloid DC"
+#'   )
+#' )
 #' @export
 assign_ident <- function(metadata,
                          cluster_col = "cluster",
@@ -1180,7 +1182,8 @@ overcluster_test <- function(expr,
 #' pbmc_avg <- average_clusters(
 #'   mat = pbmc_matrix_small,
 #'   cluster_info = pbmc_meta,
-#'   cluster_col = "classified")
+#'   cluster_col = "classified"
+#' )
 #'
 #' res <- ref_feature_select(
 #'   mat = pbmc_avg[1:100, ],
@@ -1321,7 +1324,8 @@ gmt_to_list <- function(path,
 #' pbmc_avg <- average_clusters(
 #'   mat = pbmc_matrix_small,
 #'   cluster_info = pbmc_meta,
-#'   cluster_col = "classified")
+#'   cluster_col = "classified"
+#' )
 #'
 #' g <- plot_pathway_gsea(
 #'   pbmc_avg,
@@ -1494,8 +1498,8 @@ ref_marker_select <- function(mat, cut = 0.5, arrange = TRUE, compto = 1) {
 #' )
 #'
 #' marker_selected <- marker_select(
-#'   row1 = pbmc_avg["PPBP",],
-#'   cols = names(pbmc_avg["PPBP",])
+#'   row1 = pbmc_avg["PPBP", ],
+#'   cols = names(pbmc_avg["PPBP", ])
 #' )
 #' @export
 marker_select <- function(row1, cols, cut = 1, compto = 1) {
@@ -1519,18 +1523,18 @@ marker_select <- function(row1, cols, cut = 1, compto = 1) {
 #' @param ... additional arguments to pass to compute_method function
 #' @return matrix of numeric values, clusters from input as row names, cell types from ref_mat as column names
 #' @examples
-#'  pn_ref <- data.frame(
-#'     "Myeloid" = c(1, 0.01, 0),
-#'     row.names = c("CD74", "clustifyr0", "CD79A")
-#'   )
+#' pn_ref <- data.frame(
+#'   "Myeloid" = c(1, 0.01, 0),
+#'   row.names = c("CD74", "clustifyr0", "CD79A")
+#' )
 #'
-#'   res <- pos_neg_select(
-#'     input = pbmc_matrix_small,
-#'     ref_mat = pn_ref,
-#'     metadata = pbmc_meta,
-#'     cluster_col = "classified",
-#'     cutoff_score = 0.8
-#'   )
+#' res <- pos_neg_select(
+#'   input = pbmc_matrix_small,
+#'   ref_mat = pn_ref,
+#'   metadata = pbmc_meta,
+#'   cluster_col = "classified",
+#'   cutoff_score = 0.8
+#' )
 #' @export
 pos_neg_select <- function(input,
                            ref_mat,
@@ -1591,7 +1595,7 @@ reverse_marker_matrix <- function(mat) {
 #'   package = "clustifyr"
 #' )
 #'
-#' markers<- file_marker_parse(marker_file)
+#' markers <- file_marker_parse(marker_file)
 #' }
 #' @export
 file_marker_parse <- function(filename) {

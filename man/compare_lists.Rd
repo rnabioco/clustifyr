@@ -38,8 +38,10 @@ pbmc_avg <- average_clusters(
 
 pbmc_avgb <- binarize_expr(pbmc_avg)
 
-compare_lists(pbmc_avgb,
-              pbmc_mm,
-              metric = "spearman"
+compare_lists(
+  pbmc_avgb,
+  pbmc_mm,
+  metric = "spearman"
 )
+
 }
