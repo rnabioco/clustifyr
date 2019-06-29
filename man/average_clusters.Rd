@@ -36,8 +36,8 @@ average expression matrix, with genes for row names, and clusters for column nam
 }
 \examples{
 pbmc_avg <- average_clusters(
-  pbmc_matrix_small,
-  pbmc_meta,
+  mat = pbmc_matrix_small,
+  cluster_info = pbmc_meta,
   cluster_col = "classified",
   if_log = FALSE
 )

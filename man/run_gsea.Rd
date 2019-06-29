@@ -31,3 +31,12 @@ dataframe of gsea scores (pval, NES), with clusters as rownames
 Use fgsea algorithm to compute normalized enrichment scores and pvalues for gene
 set ovelap
 }
+\examples{
+res <- run_gsea(
+  expr_mat = pbmc_matrix_small,
+  query_genes = pbmc_vargenes[1:100],
+  n_perm = 10,
+  cluster_ids = pbmc_meta$classified,
+  no_warnings = TRUE
+)
+}

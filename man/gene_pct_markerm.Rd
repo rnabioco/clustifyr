@@ -28,9 +28,9 @@ pct of cells in every cluster that express a series of genelists
 }
 \examples{
 res <- gene_pct_markerm(
-  pbmc_matrix_small,
-  cbmc_m,
-  pbmc_meta,
+  matrix = pbmc_matrix_small,
+  marker_m = cbmc_m,
+  cluster_info = pbmc_meta,
   cluster_col = "classified"
 )
 }

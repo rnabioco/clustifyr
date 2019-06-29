@@ -36,3 +36,23 @@ list of ggplot objects, cells projected by dr, colored by cor values
 \description{
 Plot similarity measures on a tSNE or umap
 }
+\examples{
+res <- clustify(
+  input = pbmc_matrix_small,
+  metadata = pbmc_meta,
+  ref_mat = pbmc_bulk_matrix,
+  query_genes = pbmc_vargenes,
+  cluster_col = "classified"
+)
+
+plts <- plot_cor(
+  cor_matrix = res,
+  metadata = pbmc_meta,
+  data_to_plot = colnames(res)[1:2],
+  cluster_col = "classified",
+  x = "UMAP_1",
+  y = "UMAP_2"
+)
+
+plts
+}
