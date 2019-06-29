@@ -32,7 +32,7 @@ genes <- c(
 
 plts <- plot_gene(
   expr_mat = pbmc_matrix_small,
-  metadata = pbmc_meta \%>\% tibble::rownames_to_column("rn"),
+  metadata = tibble::rownames_to_column(pbmc_meta, "rn"),
   genes = genes,
   cell_col = "rn"
 )
