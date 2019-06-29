@@ -25,15 +25,18 @@ matrix of GSEA NES values, cell types as row names, pathways as column names
 Convert expression matrix to GSEA pathway scores (would take a similar place in workflow before average_clusters/binarize)
 }
 \examples{
-\donttest{
 gl <- list(
   "n" = c("PPBP", "LYZ", "S100A9"),
   "a" = c("IGLL5", "GNLY", "FTL")
 )
 
+pbmc_avg <- average_clusters(
+  mat = pbmc_matrix_small,
+  cluster_info = pbmc_meta,
+  cluster_col = "classified")
+
 calculate_pathway_gsea(
-  pbmc_matrix_small,
-  gl
+  mat = pbmc_avg,
+  pathway_list = gl
 )
-}
 }

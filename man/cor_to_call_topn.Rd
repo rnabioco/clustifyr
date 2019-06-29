@@ -36,7 +36,7 @@ res <- clustify(
 )
 
 call1 <- cor_to_call_topn(
-  res,
+  correlation_matrix = res,
   metadata = pbmc_meta,
   col = "classified",
   collapse_to_cluster = FALSE,

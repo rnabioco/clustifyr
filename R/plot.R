@@ -130,6 +130,25 @@ pretty_palette_ramp_d <- grDevices::colorRampPalette(scales::brewer_pal(palette 
 #' two-element numeric vector can also be passed to supply custom values i.e. c(0, 1)
 #' @param ... passed to plot_tsne
 #' @return list of ggplot objects, cells projected by dr, colored by cor values
+#' @examples
+#' res <- clustify(
+#'   input = pbmc_matrix_small,
+#'   metadata = pbmc_meta,
+#'   ref_mat = pbmc_bulk_matrix,
+#'   query_genes = pbmc_vargenes,
+#'   cluster_col = "classified"
+#' )
+#'
+#' plts <- plot_cor(
+#'   cor_matrix = res,
+#'   metadata = pbmc_meta,
+#'   data_to_plot = colnames(res)[1:2],
+#'   cluster_col = "classified",
+#'   x = "UMAP_1",
+#'   y = "UMAP_2"
+#' )
+#'
+#' plts
 #' @export
 plot_cor <- function(cor_matrix,
                      metadata,
@@ -212,6 +231,20 @@ plot_cor <- function(cor_matrix,
 #' to rownames if not supplied
 #' @param ... additional arguments passed to `[clustifyr::plot_tsne()]`
 #' @return list of ggplot object, cells projected by dr, colored by gene expression
+#' @examples
+#' genes <- c(
+#'   "RP11-314N13.3",
+#'   "ARF4"
+#' )
+#'
+#' plts <- plot_gene(
+#'   expr_mat = pbmc_matrix_small,
+#'   metadata = tibble::rownames_to_column(pbmc_meta, "rn"),
+#'   genes = genes,
+#'   cell_col = "rn"
+#' )
+#'
+#' plts
 #' @export
 plot_gene <- function(expr_mat,
                       metadata,
@@ -268,6 +301,23 @@ plot_gene <- function(expr_mat,
 #' @param data_to_plot colname of data to plot, defaults to all
 #' @param ... passed to plot_tsne
 #' @return list of ggplot object, cells projected by dr, colored by cell type classification
+#' @examples
+#' res <- clustify(
+#'   input = pbmc_matrix_small,
+#'   metadata = pbmc_meta,
+#'   ref_mat = pbmc_bulk_matrix,
+#'   query_genes = pbmc_vargenes,
+#'   cluster_col = "classified"
+#' )
+#'
+#' plts <- plot_call(
+#'   cor_matrix = res,
+#'   metadata = pbmc_meta,
+#'   data_to_plot = colnames(res)[1:2],
+#'   cluster_col = "classified"
+#' )
+#'
+#' plts
 #' @export
 plot_call <- function(cor_matrix,
                       metadata,
@@ -296,6 +346,22 @@ plot_call <- function(cor_matrix,
 #' @param plot_r whether to include second plot of cor eff for best call
 #' @param ... passed to plot_tsne
 #' @return ggplot object, cells projected by dr, colored by cell type classification
+#' @examples
+#' res <- clustify(
+#'   input = pbmc_matrix_small,
+#'   metadata = pbmc_meta,
+#'   ref_mat = pbmc_bulk_matrix,
+#'   query_genes = pbmc_vargenes,
+#'   cluster_col = "classified"
+#' )
+#'
+#' plts <- plot_best_call(
+#'   cor_matrix = res,
+#'   metadata = pbmc_meta,
+#'   cluster_col = "classified"
+#' )
+#'
+#' plts
 #' @export
 plot_best_call <- function(cor_matrix,
                            metadata,
@@ -362,6 +428,18 @@ plot_best_call <- function(cor_matrix,
 #' @param cluster_col_ref metadata column for cluster for reference
 #' @param plot_col_ref metadata column to plot for reference
 #' @return ggplot scatterplot
+#' @examples
+#' plt <- plot_cols(
+#'   metadata = pbmc_meta,
+#'   cluster_col = "seurat_clusters",
+#'   cluster_col_called = "classified",
+#'   plot_col = "UMAP_1",
+#'   metadata_ref = pbmc_meta,
+#'   cluster_col_ref = "classified",
+#'   plot_col_ref = "UMAP_1"
+#' )
+#'
+#' plt
 #' @export
 plot_cols <- function(metadata,
                       cluster_col,
@@ -423,6 +501,19 @@ plot_cols <- function(metadata,
 #' @param legend_title legend title to pass to Heatmap
 #' @param ... passed to Heatmap
 #' @return complexheatmap object
+#' @examples
+#' res <- clustify(
+#'   input = pbmc_matrix_small,
+#'   metadata = pbmc_meta,
+#'   ref_mat = pbmc_bulk_matrix,
+#'   query_genes = pbmc_vargenes,
+#'   cluster_col = "classified",
+#'   per_cell = FALSE
+#' )
+#'
+#' plt <- plot_cor_heatmap(res)
+#'
+#' plt
 #' @export
 plot_cor_heatmap <- function(cor_matrix,
                              metadata = NULL,

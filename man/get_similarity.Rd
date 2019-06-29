@@ -28,3 +28,11 @@ matrix of numeric values, clusters from expr_mat as row names, cell types from r
 \description{
 Compute similarity of matrices
 }
+\examples{
+get_similarity(
+  expr_mat = pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)],
+  ref_mat = cbmc_ref[c("PPBP", "LYZ", "S100A9"), 1:3],
+  cluster_ids = colnames(pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)]),
+  compute_method = "spearman"
+)
+}

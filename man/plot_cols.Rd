@@ -28,3 +28,16 @@ ggplot scatterplot
 \description{
 Plot variable median per cluster from reference metadata vs new assigned metadata, for visually evaluating classification
 }
+\examples{
+plt <- plot_cols(
+  metadata = pbmc_meta,
+  cluster_col = "seurat_clusters",
+  cluster_col_called = "classified",
+  plot_col = "UMAP_1",
+  metadata_ref = pbmc_meta,
+  cluster_col_ref = "classified",
+  plot_col_ref = "UMAP_1"
+)
+
+plt
+}
