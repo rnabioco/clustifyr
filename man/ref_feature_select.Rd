@@ -25,7 +25,8 @@ feature select from reference matrix
 pbmc_avg <- average_clusters(
   mat = pbmc_matrix_small,
   cluster_info = pbmc_meta,
-  cluster_col = "classified")
+  cluster_col = "classified"
+)
 
 res <- ref_feature_select(
   mat = pbmc_avg[1:100, ],
