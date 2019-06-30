@@ -1588,7 +1588,6 @@ reverse_marker_matrix <- function(mat) {
 #' @param filename txt file to load
 #' @return list of positive and negative gene markers
 #' @examples
-#' \donttest{
 #' marker_file <- system.file(
 #'   "extdata",
 #'   "hsPBMC_markers.txt",
@@ -1596,7 +1595,6 @@ reverse_marker_matrix <- function(mat) {
 #' )
 #'
 #' markers <- file_marker_parse(marker_file)
-#' }
 #' @export
 file_marker_parse <- function(filename) {
   lines <- readLines(filename)
