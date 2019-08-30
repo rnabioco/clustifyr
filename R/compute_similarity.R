@@ -16,7 +16,27 @@ get_similarity <- function(expr_mat,
                            per_cell = FALSE,
                            rm0 = FALSE,
                            ...) {
+  if (nrow(expr_mat) == 0) {
+    stop("after subsetting to shared genes, query expression matrix has 0 rows")
+  }
+  
+  if (ncol(expr_mat) == 0) {
+    stop("query expression matrix has 0 cols")
+  }
+  
+  if (nrow(ref_mat) == 0) {
+    stop("after subsetting to shared genes, reference expression matrix has 0 rows")
+  }
+  
+  if (ncol(ref_mat) == 0) {
+    stop("reference expression matrix has 0 cols")
+  }
+  
   ref_clust <- colnames(ref_mat)
+  if (ncol(expr_mat) != length(cluster_ids)) {
+    stop("number of cells in expression matrix not equal to metadata/cluster_col")
+  }
+  
   if (sum(is.na(cluster_ids)) > 0) {
     message("reassigning NAs to unknown")
     cluster_ids <- factor(cluster_ids)
@@ -160,7 +180,7 @@ calc_similarity <- function(query_mat,
                             compute_method,
                             rm0 = FALSE,
                             ...) {
-  # remove 0s ?
+    # remove 0s ?
   if (rm0) {
     message("considering 0 as missing data")
     query_mat[query_mat == 0] <- NA

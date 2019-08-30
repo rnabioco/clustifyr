@@ -262,3 +262,47 @@ test_that("error for unsupported method", {
     compute_method = "a"
   ))
 })
+
+test_that("cor throws readable error when mat has 0 rows", {
+  expect_error(res <- clustify(
+    input = pbmc_matrix_small[0,],
+    metadata = pbmc_meta,
+    ref_mat = pbmc_bulk_matrix,
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified",
+    verbose = TRUE
+  ))
+})
+
+test_that("cor throws readable error when mat has wrong number of cols", {
+  expect_error(res <- clustify(
+    input = pbmc_matrix_small[,1:2630],
+    metadata = pbmc_meta,
+    ref_mat = pbmc_bulk_matrix,
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified",
+    verbose = TRUE
+  ))
+})
+
+test_that("cor throws readable error when ref_mat has 0 rows", {
+  expect_error(res <- clustify(
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    ref_mat = pbmc_bulk_matrix[0,],
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified",
+    verbose = TRUE
+  ))
+})
+
+test_that("cor throws readable error when ref_mat has 0 cols", {
+  expect_error(res <- clustify(
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    ref_mat = pbmc_bulk_matrix[,0],
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified",
+    verbose = TRUE
+  ))
+})
