@@ -713,7 +713,7 @@ test_that("cor_to_call renaming with suffix input works as intended, per_cell or
     cluster_col = "classified",
     collapse_to_cluster = FALSE,
     threshold = 0.5,
-    rename_suff = "a"
+    rename_prefix = "a"
   )
   res2 <- clustify(
     input = pbmc_matrix_small,
@@ -728,7 +728,7 @@ test_that("cor_to_call renaming with suffix input works as intended, per_cell or
     cluster_col = "rn",
     collapse_to_cluster = "classified",
     threshold = 0,
-    rename_suff = "a"
+    rename_prefix = "a"
   )
   expect_true("a_type" %in% colnames(call1) & "a_type" %in% colnames(call2))
 })
@@ -825,4 +825,55 @@ test_that("reverse_marker_matrix takes matrix of markers input", {
   m1 <- reverse_marker_matrix(cbmc_m)
   m2 <- reverse_marker_matrix(as.matrix(cbmc_m))
   expect_identical(m1, m2)
+})
+
+test_that("more readable error message when cluster_col is not in metadata when joining", {
+  res <- clustify(
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    ref_mat = pbmc_bulk_matrix,
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified",
+    verbose = TRUE
+  )
+  
+  expect_error(plot_best_call(res,
+                              pbmc_meta,
+                              "a"
+  ))
+})
+
+test_that("more readable error message when cluster_col is not the previous col from metadata when joining", {
+  res <- clustify(
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    ref_mat = pbmc_bulk_matrix,
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified",
+    verbose = TRUE
+  )
+  
+  res2 <- cor_to_call(res, 
+                      pbmc_meta, 
+                      "classified")
+  expect_error(call_to_metadata(res2,
+                              pbmc_meta,
+                              "seurat_clusters"
+  ))
+})
+
+test_that("more readable error message when cluster_col exist but is wrong info", {
+  res <- clustify(
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    ref_mat = pbmc_bulk_matrix,
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified",
+    verbose = TRUE
+  )
+  
+  expect_error(plot_best_call(res,
+                              pbmc_meta,
+                              "seurat_clusters"
+  ))
 })

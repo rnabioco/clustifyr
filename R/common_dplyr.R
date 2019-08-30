@@ -5,7 +5,7 @@
 #' @param cluster_col metadata column, can be cluster or cellid
 #' @param collapse_to_cluster if a column name is provided, takes the most frequent call of entire cluster to color in plot
 #' @param threshold minimum correlation coefficent cutoff for calling clusters
-#' @param rename_suff suffix to add to type and r column names
+#' @param rename_prefix prefix to add to type and r column names
 #' @return dataframe of cluster, new ident, and r info
 #' @export
 cor_to_call <- function(correlation_matrix,
@@ -13,7 +13,7 @@ cor_to_call <- function(correlation_matrix,
                         cluster_col = "cluster",
                         collapse_to_cluster = FALSE,
                         threshold = 0,
-                        rename_suff = NULL) {
+                        rename_prefix = NULL) {
   df_temp <- tibble::as_tibble(correlation_matrix, rownames = cluster_col)
   df_temp <- tidyr::gather(df_temp, key = !!dplyr::sym("type"), value = !!dplyr::sym("r"), -!!cluster_col)
   df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold, ", unassigned")
@@ -47,8 +47,8 @@ cor_to_call <- function(correlation_matrix,
     df_temp_full <- dplyr::select(dplyr::ungroup(df_temp_full), -!!dplyr::sym("type2"))
   }
 
-  if (!is.null(rename_suff)) {
-    eval(parse(text = paste0("df_temp_full <- dplyr::rename(df_temp_full, ", paste0(rename_suff, "_type"), " = type, ", paste0(rename_suff, "_r"), " = r)")))
+  if (!is.null(rename_prefix)) {
+    eval(parse(text = paste0("df_temp_full <- dplyr::rename(df_temp_full, ", paste0(rename_prefix, "_type"), " = type, ", paste0(rename_prefix, "_r"), " = r)")))
   }
   df_temp_full
 }
@@ -59,25 +59,37 @@ cor_to_call <- function(correlation_matrix,
 #' @param metadata input metadata with tsne or umap coordinates and cluster ids
 #' @param cluster_col metadata column, can be cluster or cellid
 #' @param per_cell whether the res dataframe is listed per cell
-#' @param rename_suff suffix to add to type and r column names
+#' @param rename_prefix prefix to add to type and r column names
 #' @return new metadata with added columns
 #' @export
 call_to_metadata <- function(res,
                              metadata,
                              cluster_col,
                              per_cell = FALSE,
-                             rename_suff = NULL) {
+                             rename_prefix = NULL) {
   df_temp <- res
   if (per_cell == FALSE) {
-    df_temp_full <- dplyr::left_join(tibble::rownames_to_column(metadata, "rn"), df_temp, by = cluster_col)
+    if (!(cluster_col %in% colnames(metadata))) {
+      stop("cluster_col is not a column of metadata")
+    }
+    
+    if (!(cluster_col %in% colnames(res))) {
+      stop("cluster_col is not a column of called cell type dataframe")
+    }
+    
+    if (!(all(unique(df_temp[[cluster_col]]) %in% unique(metadata[[cluster_col]])))) {
+      stop("cluster_col from clustify step and joining to metadata step are not the same")
+    }
+    
+    df_temp_full <- suppressWarnings(dplyr::left_join(tibble::rownames_to_column(metadata, "rn"), df_temp, by = cluster_col))
     df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
   } else {
     df_temp <- dplyr::rename(df_temp, "rn" = 1)
-    df_temp_full <- dplyr::left_join(tibble::rownames_to_column(metadata, "rn"), df_temp, by = "rn")
+    df_temp_full <- suppressWarnings(dplyr::left_join(tibble::rownames_to_column(metadata, "rn"), df_temp, by = "rn"))
     df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
   }
-  if (!is.null(rename_suff)) {
-    eval(parse(text = paste0("df_temp_full <- dplyr::rename(df_temp_full, ", paste0(rename_suff, "_type"), " = type, ", paste0(rename_suff, "_r"), " = r)")))
+  if (!is.null(rename_prefix)) {
+    eval(parse(text = paste0("df_temp_full <- dplyr::rename(df_temp_full, ", paste0(rename_prefix, "_type"), " = type, ", paste0(rename_prefix, "_r"), " = r)")))
   }
   df_temp_full
 }

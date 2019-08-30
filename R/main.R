@@ -192,7 +192,7 @@ clustify.default <- function(input,
 #' @param threshold identity calling minimum correlation score threshold
 #' @param verbose whether to report certain variables chosen
 #' @param rm0 consider 0 as missing data, recommended for per_cell
-#' @param rename_suff suffix to add to type and r column names
+#' @param rename_prefix prefix to add to type and r column names
 #' @param ... additional arguments to pass to compute_method function
 #' @return seurat2 object with type assigned in metadata, or matrix of correlation values, clusters from input as row names, cell types from ref_mat as column names
 #' @export
@@ -209,7 +209,7 @@ clustify.seurat <- function(input,
                             threshold = 0,
                             verbose = FALSE,
                             rm0 = FALSE,
-                            rename_suff = NULL,
+                            rename_prefix = NULL,
                             ...) {
   s_object <- input
   # for seurat < 3.0
@@ -252,7 +252,7 @@ clustify.seurat <- function(input,
       metadata = metadata,
       cluster_col = cluster_col,
       per_cell = per_cell,
-      rename_suff = rename_suff
+      rename_prefix = rename_prefix
     )
 
     if ("Seurat" %in% loadedNamespaces()) {
@@ -282,7 +282,7 @@ clustify.seurat <- function(input,
 #' @param threshold identity calling minimum correlation score threshold
 #' @param verbose whether to report certain variables chosen
 #' @param rm0 consider 0 as missing data, recommended for per_cell
-#' @param rename_suff suffix to add to type and r column names
+#' @param rename_prefix prefix to add to type and r column names
 #' @param ... additional arguments to pass to compute_method function
 #' @return seurat3 object with type assigned in metadata, or matrix of correlation values, clusters from input as row names, cell types from ref_mat as column names
 #' @export
@@ -299,7 +299,7 @@ clustify.Seurat <- function(input,
                             threshold = 0,
                             verbose = FALSE,
                             rm0 = FALSE,
-                            rename_suff = NULL,
+                            rename_prefix = NULL,
                             ...) {
   s_object <- input
   # for seurat 3.0 +
@@ -341,7 +341,7 @@ clustify.Seurat <- function(input,
       metadata = metadata,
       cluster_col = cluster_col,
       per_cell = per_cell,
-      rename_suff = rename_suff
+      rename_prefix = rename_prefix
     )
 
     if ("Seurat" %in% loadedNamespaces()) {
@@ -468,7 +468,7 @@ clustify_lists.default <- function(input,
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
 #' @param threshold identity calling minimum score threshold
-#' @param rename_suff suffix to add to type and r column names
+#' @param rename_prefix prefix to add to type and r column names
 
 #' @param ... passed to matrixize_markers
 #' @return seurat2 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
@@ -488,7 +488,7 @@ clustify_lists.seurat <- function(input,
                                   dr = "umap",
                                   seurat_out = TRUE,
                                   threshold = 0,
-                                  rename_suff = NULL,
+                                  rename_prefix = NULL,
                                   ...) {
   s_object <- input
   # for seurat < 3.0
@@ -526,7 +526,7 @@ clustify_lists.seurat <- function(input,
       metadata = metadata,
       cluster_col = cluster_col,
       per_cell = per_cell,
-      rename_suff = rename_suff
+      rename_prefix = rename_prefix
     )
 
     if ("Seurat" %in% loadedNamespaces()) {
@@ -560,7 +560,7 @@ clustify_lists.seurat <- function(input,
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
 #' @param threshold identity calling minimum score threshold
-#' @param rename_suff suffix to add to type and r column names
+#' @param rename_prefix prefix to add to type and r column names
 #' @param ... passed to matrixize_markers
 
 #' @return seurat3 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
@@ -579,7 +579,7 @@ clustify_lists.Seurat <- function(input,
                                   dr = "umap",
                                   seurat_out = TRUE,
                                   threshold = 0,
-                                  rename_suff = NULL,
+                                  rename_prefix = NULL,
                                   ...) {
   s_object <- input
   # for seurat 3.0 +
@@ -617,7 +617,7 @@ clustify_lists.Seurat <- function(input,
       metadata = metadata,
       cluster_col = cluster_col,
       per_cell = per_cell,
-      rename_suff = rename_suff
+      rename_prefix = rename_prefix
     )
 
     if ("Seurat" %in% loadedNamespaces()) {

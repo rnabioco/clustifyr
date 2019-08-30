@@ -6,7 +6,7 @@
 \usage{
 plot_best_call(cor_matrix, metadata, cluster_col = "cluster",
   collapse_to_cluster = FALSE, threshold = 0, x = "UMAP_1",
-  y = "UMAP_2", plot_r = FALSE, ...)
+  y = "UMAP_2", plot_r = FALSE, per_cell = FALSE, ...)
 }
 \arguments{
 \item{cor_matrix}{input similarity matrix}
@@ -24,6 +24,8 @@ plot_best_call(cor_matrix, metadata, cluster_col = "cluster",
 \item{y}{y variable}
 
 \item{plot_r}{whether to include second plot of cor eff for best call}
+
+\item{per_cell}{whether the cor_matrix was generate per cell or per cluster}
 
 \item{...}{passed to plot_tsne}
 }
