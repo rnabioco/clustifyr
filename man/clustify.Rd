@@ -18,13 +18,13 @@ clustify(input, ...)
   query_genes = NULL, per_cell = FALSE, n_perm = 0,
   compute_method = "spearman", use_var_genes = TRUE, dr = "umap",
   seurat_out = TRUE, threshold = 0, verbose = FALSE, rm0 = FALSE,
-  rename_suff = NULL, ...)
+  rename_prefix = NULL, ...)
 
 \method{clustify}{Seurat}(input, ref_mat, cluster_col = NULL,
   query_genes = NULL, per_cell = FALSE, n_perm = 0,
   compute_method = "spearman", use_var_genes = TRUE, dr = "umap",
   seurat_out = TRUE, threshold = 0, verbose = FALSE, rm0 = FALSE,
-  rename_suff = NULL, ...)
+  rename_prefix = NULL, ...)
 }
 \arguments{
 \item{input}{single-cell expression matrix or Seurat object}
@@ -63,7 +63,7 @@ the expr_mat and ref_mat will be used for comparision.}
 
 \item{threshold}{identity calling minimum correlation score threshold}
 
-\item{rename_suff}{suffix to add to type and r column names}
+\item{rename_prefix}{prefix to add to type and r column names}
 
 \item{ref_mat}{reference expression matrix}
 
@@ -119,7 +119,7 @@ the expr_mat and ref_mat will be used for comparision.}
 
 \item{rm0}{consider 0 as missing data, recommended for per_cell}
 
-\item{rename_suff}{suffix to add to type and r column names}
+\item{rename_prefix}{prefix to add to type and r column names}
 
 \item{...}{additional arguments to pass to compute_method function}
 }

@@ -13,13 +13,13 @@ clustify_nudge(input, ...)
   cluster_col = NULL, query_genes = NULL,
   compute_method = "spearman", weight = 1, seurat_out = TRUE,
   threshold = -Inf, dr = "umap", norm = "diff",
-  marker_inmatrix = TRUE, mode = "rank", rename_suff = NULL, ...)
+  marker_inmatrix = TRUE, mode = "rank", rename_prefix = NULL, ...)
 
 \method{clustify_nudge}{Seurat}(input, ref_mat, marker,
   cluster_col = NULL, query_genes = NULL,
   compute_method = "spearman", weight = 1, seurat_out = TRUE,
   threshold = -Inf, dr = "umap", norm = "diff",
-  marker_inmatrix = TRUE, mode = "rank", rename_suff = NULL, ...)
+  marker_inmatrix = TRUE, mode = "rank", rename_prefix = NULL, ...)
 
 \method{clustify_nudge}{default}(input, ref_mat, marker, metadata = NULL,
   cluster_col = NULL, query_genes = NULL,
@@ -58,7 +58,7 @@ the expr_mat and ref_mat will be used for comparision.}
 
 \item{mode}{use marker expression pct or ranked cor score for nudging}
 
-\item{rename_suff}{suffix to add to type and r column names}
+\item{rename_prefix}{prefix to add to type and r column names}
 
 \item{metadata}{cell cluster assignments, supplied as a vector or data.frame. If
 data.frame is supplied then \code{cluster_col} needs to be set.}
@@ -93,7 +93,7 @@ column of metadata if not supplied. Not required if running correlation per cell
 
 \item{mode}{use marker expression pct or ranked cor score for nudging}
 
-\item{rename_suff}{suffix to add to type and r column names}
+\item{rename_prefix}{prefix to add to type and r column names}
 
 \item{...}{passed to matrixize_markers}
 

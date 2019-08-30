@@ -6,7 +6,7 @@
 \usage{
 cor_to_call(correlation_matrix, metadata = NULL,
   cluster_col = "cluster", collapse_to_cluster = FALSE,
-  threshold = 0, rename_suff = NULL)
+  threshold = 0, rename_prefix = NULL)
 }
 \arguments{
 \item{correlation_matrix}{input similarity matrix}
@@ -19,7 +19,7 @@ cor_to_call(correlation_matrix, metadata = NULL,
 
 \item{threshold}{minimum correlation coefficent cutoff for calling clusters}
 
-\item{rename_suff}{suffix to add to type and r column names}
+\item{rename_prefix}{prefix to add to type and r column names}
 }
 \value{
 dataframe of cluster, new ident, and r info

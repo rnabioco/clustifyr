@@ -344,6 +344,7 @@ plot_call <- function(cor_matrix,
 #' @param x x variable
 #' @param y y variable
 #' @param plot_r whether to include second plot of cor eff for best call
+#' @param per_cell whether the cor_matrix was generate per cell or per cluster
 #' @param ... passed to plot_tsne
 #' @return ggplot object, cells projected by dr, colored by cell type classification
 #' @examples
@@ -370,6 +371,7 @@ plot_best_call <- function(cor_matrix,
                            threshold = 0,
                            x = "UMAP_1", y = "UMAP_2",
                            plot_r = FALSE,
+                           per_cell = FALSE,
                            ...) {
   col_meta <- colnames(metadata)
   if ("type" %in% col_meta | "type2" %in% col_meta) {
@@ -383,10 +385,11 @@ plot_best_call <- function(cor_matrix,
     threshold = threshold
   )
 
-  df_temp_full <- call_to_metadata(
+  df_temp_full <<- call_to_metadata(
     df_temp,
     metadata = metadata,
-    cluster_col = cluster_col
+    cluster_col = cluster_col,
+    per_cell = per_cell
   )
 
   if (collapse_to_cluster != FALSE) {

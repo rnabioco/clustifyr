@@ -11,20 +11,20 @@ clustify_lists(input, ...)
 
 \method{clustify_lists}{default}(input, marker, marker_inmatrix = TRUE,
   cluster_info = NULL, cluster_col = NULL, if_log = TRUE,
-  per_cell = FALSE, topn = 3000, cut = 0, genome_n = 30000,
+  per_cell = FALSE, topn = 800, cut = 0, genome_n = 30000,
   metric = "hyper", output_high = TRUE, lookuptable = NULL, ...)
 
 \method{clustify_lists}{seurat}(input, cluster_info = NULL,
-  cluster_col = NULL, if_log = TRUE, per_cell = FALSE, topn = 3000,
+  cluster_col = NULL, if_log = TRUE, per_cell = FALSE, topn = 800,
   cut = 0, marker, marker_inmatrix = TRUE, genome_n = 30000,
   metric = "hyper", output_high = TRUE, dr = "umap",
-  seurat_out = TRUE, threshold = 0, rename_suff = NULL, ...)
+  seurat_out = TRUE, threshold = 0, rename_prefix = NULL, ...)
 
 \method{clustify_lists}{Seurat}(input, cluster_info = NULL,
-  cluster_col = NULL, if_log = TRUE, per_cell = FALSE, topn = 3000,
+  cluster_col = NULL, if_log = TRUE, per_cell = FALSE, topn = 800,
   cut = 0, marker, marker_inmatrix = TRUE, genome_n = 30000,
   metric = "hyper", output_high = TRUE, dr = "umap",
-  seurat_out = TRUE, threshold = 0, rename_suff = NULL, ...)
+  seurat_out = TRUE, threshold = 0, rename_prefix = NULL, ...)
 }
 \arguments{
 \item{input}{single-cell expression matrix or Seurat object}
@@ -64,7 +64,7 @@ provide the cluster_col parameters.}
 
 \item{threshold}{identity calling minimum score threshold}
 
-\item{rename_suff}{suffix to add to type and r column names}
+\item{rename_prefix}{prefix to add to type and r column names}
 
 \item{input}{seurat object}
 
@@ -130,7 +130,7 @@ averaging will be done on unlogged data}
 
 \item{threshold}{identity calling minimum score threshold}
 
-\item{rename_suff}{suffix to add to type and r column names}
+\item{rename_prefix}{prefix to add to type and r column names}
 
 \item{...}{passed to matrixize_markers}
 }

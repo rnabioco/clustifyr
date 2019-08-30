@@ -537,9 +537,11 @@ gene_pct <- function(matrix,
                      clusters,
                      returning = "mean") {
   genelist <- intersect(genelist, rownames(matrix))
+  if (is.factor(clusters)) {
+    clusters = factor(clusters, levels=c(levels(clusters), "orig.NA"))
+  }
   clusters[is.na(clusters)] <- "orig.NA"
   unique_clusters <- unique(clusters)
-
 
   if (returning == "mean") {
     sapply(unique_clusters, function(x) {
@@ -691,7 +693,7 @@ clustify_nudge <- function(input, ...) {
 #' @param norm whether and how the results are normalized
 #' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
 #' @param mode use marker expression pct or ranked cor score for nudging
-#' @param rename_suff suffix to add to type and r column names
+#' @param rename_prefix prefix to add to type and r column names
 #' @param ... passed to matrixize_markers
 #' @return seurat2 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
 #' @export
@@ -708,7 +710,7 @@ clustify_nudge.seurat <- function(input,
                                   norm = "diff",
                                   marker_inmatrix = TRUE,
                                   mode = "rank",
-                                  rename_suff = NULL,
+                                  rename_prefix = NULL,
                                   ...) {
   if (marker_inmatrix != TRUE) {
     marker <- matrixize_markers(
@@ -763,7 +765,7 @@ clustify_nudge.seurat <- function(input,
       metadata = input@meta.data,
       cluster_col = cluster_col,
       per_cell = FALSE,
-      rename_suff = rename_suff
+      rename_prefix = rename_prefix
     )
 
     if ("Seurat" %in% loadedNamespaces()) {
@@ -793,7 +795,7 @@ clustify_nudge.seurat <- function(input,
 #' @param norm whether and how the results are normalized
 #' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
 #' @param mode use marker expression pct or ranked cor score for nudging
-#' @param rename_suff suffix to add to type and r column names
+#' @param rename_prefix prefix to add to type and r column names
 #' @param ... passed to matrixize_markers
 #' @return seurat3 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
 #' @export
@@ -810,7 +812,7 @@ clustify_nudge.Seurat <- function(input,
                                   norm = "diff",
                                   marker_inmatrix = TRUE,
                                   mode = "rank",
-                                  rename_suff = NULL,
+                                  rename_prefix = NULL,
                                   ...) {
   if (marker_inmatrix != TRUE) {
     marker <- matrixize_markers(
@@ -865,7 +867,7 @@ clustify_nudge.Seurat <- function(input,
       metadata = input@meta.data,
       cluster_col = cluster_col,
       per_cell = FALSE,
-      rename_suff = rename_suff
+      rename_prefix = rename_prefix
     )
 
     if ("Seurat" %in% loadedNamespaces()) {
