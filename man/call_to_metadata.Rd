@@ -5,7 +5,7 @@
 \title{Insert called ident results into metadata}
 \usage{
 call_to_metadata(res, metadata, cluster_col, per_cell = FALSE,
-  rename_suff = NULL)
+  rename_prefix = NULL)
 }
 \arguments{
 \item{res}{dataframe of idents, such as output of cor_to_call}
@@ -16,7 +16,7 @@ call_to_metadata(res, metadata, cluster_col, per_cell = FALSE,
 
 \item{per_cell}{whether the res dataframe is listed per cell}
 
-\item{rename_suff}{suffix to add to type and r column names}
+\item{rename_prefix}{prefix to add to type and r column names}
 }
 \value{
 new metadata with added columns
