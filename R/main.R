@@ -116,6 +116,9 @@ clustify.default <- function(input,
 
   if (verbose) {
     message(paste0("using # of genes: ", length(gene_constraints)))
+    if (length(gene_constraints) >= 10000) {
+      message("using a high number genes to calculate correlation, please consider feature selection to improve performance")
+    }
   }
 
   expr_mat <- expr_mat[gene_constraints, , drop = FALSE]
