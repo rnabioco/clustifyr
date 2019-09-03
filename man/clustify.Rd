@@ -173,8 +173,8 @@ clustify(
 
 # Annotate (and return) a Seurat object per-cell
 res <- clustify(
-  s_small,
-  pbmc_bulk_matrix,
+  input = s_small,
+  ref_mat = pbmc_bulk_matrix,
   cluster_col = "res.1",
   seurat_out = TRUE,
   per_cell = TRUE,

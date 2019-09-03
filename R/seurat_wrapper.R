@@ -11,7 +11,12 @@ seurat_ref <- function(seurat_object, ...) {
 #' @param var_genes_only whether to keep only var_genes in the final matrix output, could also look up genes used for PCA
 #' @param assay_name any additional assay data, such as ADT, to include. If more than 1, pass a vector of names
 #' @param method whether to take mean (default) or median
-#'
+#' @examples
+#' avg <- seurat_ref(
+#'   seurat_object = s_small,
+#'   cluster_col = "res.1",
+#'   var_genes_only = TRUE
+#' )
 #' @export
 seurat_ref.seurat <- function(seurat_object,
                               cluster_col = "classified",
@@ -98,6 +103,10 @@ seurat_ref.Seurat <- function(seurat_object,
 
 #' Function to convert labelled seurat object to fully prepared metadata
 #' @return dataframe of metadata, including dimension reduction plotting info
+#' #' @examples
+#' \donttest{
+#' meta_data <- seurat_meta(s_small)
+#' }
 #' @export
 seurat_meta <- function(seurat_object, ...) {
   UseMethod("seurat_meta", seurat_object)

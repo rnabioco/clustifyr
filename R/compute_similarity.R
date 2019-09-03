@@ -8,6 +8,13 @@
 #' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param ... additional parameters not used yet
 #' @return matrix of numeric values, clusters from expr_mat as row names, cell types from ref_mat as column names
+#' @examples
+#' get_similarity(
+#'   expr_mat = pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)],
+#'   ref_mat = cbmc_ref[c("PPBP", "LYZ", "S100A9"), 1:3],
+#'   cluster_ids = colnames(pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)]),
+#'   compute_method = "spearman"
+#' )
 #' @export
 get_similarity <- function(expr_mat,
                            ref_mat,
@@ -83,6 +90,15 @@ get_similarity <- function(expr_mat,
 #' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param ... additional parameters
 #' @return matrix of numeric values
+#' @examples
+#' permute_similarity(
+#'   expr_mat = pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)],
+#'   ref_mat = cbmc_ref[c("PPBP", "LYZ", "S100A9"), 1:3],
+#'   cluster_ids = colnames(pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)]),
+#'   n_perm = 2,
+#'   per_cell = TRUE,
+#'   compute_method = "spearman"
+#' )
 #' @export
 permute_similarity <- function(expr_mat,
                                ref_mat,
@@ -160,6 +176,12 @@ permute_similarity <- function(expr_mat,
 #' @param sc_assign vector of cluster assignments
 #' @param sc_clust unique vector of cluster assignments
 #' @return matrix of average expression per cluster
+#' @examples
+#' compute_mean_expr(
+#'   expr_mat = pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)],
+#'   sc_assign = colnames(pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)]),
+#'   sc_clust = colnames(pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)])
+#' )
 #' @export
 compute_mean_expr <- function(expr_mat,
                               sc_assign,

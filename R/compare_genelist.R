@@ -4,6 +4,14 @@
 #' @param n number of top expressing genes to keep
 #' @param cut cut off to set to 0
 #' @return matrix of 1s and 0s
+#' @examples
+#' pbmc_avg <- average_clusters(
+#'   mat = pbmc_matrix_small,
+#'   cluster_info = pbmc_meta,
+#'   cluster_col = "classified"
+#' )
+#'
+#' pbmc_avgb <- binarize_expr(pbmc_avg)
 #' @export
 binarize_expr <- function(mat,
                           n = 1000,
@@ -36,6 +44,8 @@ binarize_expr <- function(mat,
 #' @param cluster_col column for cluster names to replace original cluster, if metadata is dataframe
 #' @param remove_rp do not include rps, rpl, rp1-9 in markers
 #' @return matrix of unranked gene marker names, or matrix of ranked expression
+#' @examples
+#' pbmc_mm <- matrixize_markers(pbmc_markers)
 #' @export
 matrixize_markers <- function(marker_df,
                               ranked = FALSE,
@@ -136,6 +146,23 @@ get_vargenes <- function(marker_mat) {
 #' @param output_high if true (by default to fit with rest of package),
 #' -log10 transform p-value
 #' @return matrix of numeric values, clusters from expr_mat as row names, cell types from marker_mat as column names
+#' @examples
+#' pbmc_mm <- matrixize_markers(pbmc_markers)
+#'
+#' pbmc_avg <- average_clusters(
+#'   pbmc_matrix_small,
+#'   pbmc_meta,
+#'   cluster_col = "classified"
+#' )
+#'
+#' pbmc_avgb <- binarize_expr(pbmc_avg)
+#'
+#' compare_lists(
+#'   pbmc_avgb,
+#'   pbmc_mm,
+#'   metric = "spearman"
+#' )
+#'
 #' @export
 compare_lists <- function(bin_mat,
                           marker_mat,

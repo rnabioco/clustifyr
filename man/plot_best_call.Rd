@@ -35,3 +35,20 @@ ggplot object, cells projected by dr, colored by cell type classification
 \description{
 Plot best calls for each cluster on a tSNE or umap
 }
+\examples{
+res <- clustify(
+  input = pbmc_matrix_small,
+  metadata = pbmc_meta,
+  ref_mat = pbmc_bulk_matrix,
+  query_genes = pbmc_vargenes,
+  cluster_col = "classified"
+)
+
+plts <- plot_best_call(
+  cor_matrix = res,
+  metadata = pbmc_meta,
+  cluster_col = "classified"
+)
+
+plts
+}

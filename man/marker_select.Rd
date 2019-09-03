@@ -23,8 +23,8 @@ decide for one gene whether it is a marker for a certain cell type
 }
 \examples{
 pbmc_avg <- average_clusters(
-  pbmc_matrix_small,
-  pbmc_meta,
+  mat = pbmc_matrix_small,
+  cluster_info = pbmc_meta,
   cluster_col = "classified",
   if_log = FALSE
 )

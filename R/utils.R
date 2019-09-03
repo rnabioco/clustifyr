@@ -14,8 +14,8 @@
 #' @return average expression matrix, with genes for row names, and clusters for column names
 #' @examples
 #' pbmc_avg <- average_clusters(
-#'   pbmc_matrix_small,
-#'   pbmc_meta,
+#'   mat = pbmc_matrix_small,
+#'   cluster_info = pbmc_meta,
 #'   cluster_col = "classified",
 #'   if_log = FALSE
 #' )
@@ -97,8 +97,8 @@ average_clusters <- function(mat, cluster_info,
 #' @return matrix of numeric values, with genes for row names, and clusters for column names
 #' @examples
 #' pbmc_percentage <- percent_clusters(
-#'   pbmc_matrix_small,
-#'   pbmc_meta,
+#'   mat = pbmc_matrix_small,
+#'   cluster_info = pbmc_meta,
 #'   cluster_col = "classified"
 #' )
 #' @export
@@ -235,8 +235,8 @@ get_common_elements <- function(...) {
 #' )
 #'
 #' res <- clustify_intra(
-#'   pbmc_matrix_small,
-#'   pbmc_meta2,
+#'   expr_mat = pbmc_matrix_small,
+#'   metadata = pbmc_meta2,
 #'   query_genes = pbmc_vargenes,
 #'   cluster_col = "classified",
 #'   sample_col = "sample",
@@ -290,8 +290,8 @@ clustify_intra <- function(expr_mat,
 #' @return average expression matrix, with genes for row names, and clusters for column names
 #' @examples
 #' avg1 <- average_clusters_filter(
-#'   pbmc_matrix_small,
-#'   pbmc_meta,
+#'   mat = pbmc_matrix_small,
+#'   cluster_info = pbmc_meta,
 #'   group_by = "classified",
 #'   filter_on = "seurat_clusters",
 #'   filter_method = "==",
@@ -339,8 +339,8 @@ average_clusters_filter <- function(mat, cluster_info,
 #' @param expression matrix with rows removed
 #' @examples
 #' avg1 <- average_clusters_filter(
-#'   pbmc_matrix_small,
-#'   pbmc_meta,
+#'   mat = pbmc_matrix_small,
+#'   cluster_info = pbmc_meta,
 #'   filter_on = "nFeature_RNA"
 #' )
 #'
@@ -371,17 +371,21 @@ remove_background <- function(mat, background, n = 0) {
 #' @param no_warnings suppress warnings from gsea ties
 #' @return matrix of GSEA NES values, cell types as row names, pathways as column names
 #' @examples
-#' \donttest{
 #' gl <- list(
 #'   "n" = c("PPBP", "LYZ", "S100A9"),
 #'   "a" = c("IGLL5", "GNLY", "FTL")
 #' )
 #'
-#' calculate_pathway_gsea(
-#'   pbmc_matrix_small,
-#'   gl
+#' pbmc_avg <- average_clusters(
+#'   mat = pbmc_matrix_small,
+#'   cluster_info = pbmc_meta,
+#'   cluster_col = "classified"
 #' )
-#' }
+#'
+#' calculate_pathway_gsea(
+#'   mat = pbmc_avg,
+#'   pathway_list = gl
+#' )
 #' @export
 calculate_pathway_gsea <- function(mat,
                                    pathway_list,
@@ -420,7 +424,7 @@ calculate_pathway_gsea <- function(mat,
 #' @return new dataframe of metadata
 #' @examples
 #' pbmc_meta2 <- assign_ident(
-#'   pbmc_meta,
+#'   metadata = pbmc_meta,
 #'   cluster_col = "seurat_clusters",
 #'   ident_col = "type",
 #'   clusters = c(1, 2, 5),
@@ -472,7 +476,7 @@ assign_ident <- function(metadata,
 #' )
 #'
 #' call1 <- cor_to_call_topn(
-#'   res,
+#'   correlation_matrix = res,
 #'   metadata = pbmc_meta,
 #'   col = "classified",
 #'   collapse_to_cluster = FALSE,
@@ -523,9 +527,9 @@ cor_to_call_topn <- function(correlation_matrix,
 #' @return vector of numeric values
 #' @examples
 #' res <- gene_pct(
-#'   pbmc_matrix_small,
-#'   cbmc_m$B,
-#'   pbmc_meta$classified
+#'   matrix = pbmc_matrix_small,
+#'   genelist = cbmc_m$B,
+#'   clusters = pbmc_meta$classified
 #' )
 #' @export
 gene_pct <- function(matrix,
@@ -575,9 +579,9 @@ gene_pct <- function(matrix,
 #' @return matrix of numeric values, clusters from mat as row names, cell types from marker_m as column names
 #' @examples
 #' res <- gene_pct_markerm(
-#'   pbmc_matrix_small,
-#'   cbmc_m,
-#'   pbmc_meta,
+#'   matrix = pbmc_matrix_small,
+#'   marker_m = cbmc_m,
+#'   cluster_info = pbmc_meta,
 #'   cluster_col = "classified"
 #' )
 #' @export
@@ -630,7 +634,7 @@ gene_pct_markerm <- function(matrix,
 
 #' Combined function to compare scRNA-seq data to bulk RNA-seq data and marker list
 #'
-#' #' @examples
+#' @examples
 #' # Seurat2
 #' res <- clustify_nudge(
 #'   input = s_small,
@@ -648,6 +652,7 @@ gene_pct_markerm <- function(matrix,
 #'   input = s_small3,
 #'   ref_mat = cbmc_ref,
 #'   marker = cbmc_m,
+#'   cluster_col = "RNA_snn_res.1",
 #'   threshold = 0.8,
 #'   seurat_out = FALSE,
 #'   mode = "pct",
@@ -1072,16 +1077,16 @@ parse_loc_object <- function(input,
 #' @param newclustering use kmeans if NULL on dr or col name for second column of clustering
 #' @return faceted ggplot object
 #' @examples
-#' g <- overcluster_test(
-#'   pbmc_matrix_small,
-#'   pbmc_meta,
-#'   cbmc_ref,
+#' plt <- overcluster_test(
+#'   expr = pbmc_matrix_small,
+#'   metadata = pbmc_meta,
+#'   ref_mat = cbmc_ref,
 #'   cluster_col = "classified",
 #'   x_col = "UMAP_1",
 #'   y_col = "UMAP_2"
 #' )
 #'
-#' g
+#' plt
 #' @export
 overcluster_test <- function(expr,
                              metadata,
@@ -1177,12 +1182,15 @@ overcluster_test <- function(expr,
 #' @return vector of genes
 #' @examples
 #' pbmc_avg <- average_clusters(
-#'   pbmc_matrix_small,
-#'   pbmc_meta,
+#'   mat = pbmc_matrix_small,
+#'   cluster_info = pbmc_meta,
 #'   cluster_col = "classified"
 #' )
 #'
-#' res <- ref_feature_select(pbmc_avg[1:100, ], 5)
+#' res <- ref_feature_select(
+#'   mat = pbmc_avg[1:100, ],
+#'   n = 5
+#' )
 #' @export
 ref_feature_select <- function(mat,
                                n = 3000,
@@ -1264,6 +1272,14 @@ feature_select_PCA <- function(mat = NULL,
 #' @param cutoff remove pathways with less genes than this cutoff
 #' @param sep sep used in file to split path and genes
 #' @return list of genes in each pathway
+#' @examples
+#' gmt_file <- system.file(
+#'   "extdata",
+#'   "c2.cp.reactome.v6.2.symbols.gmt",
+#'   package = "clustifyr"
+#' )
+#'
+#' gmt_list <- gmt_to_list(path = gmt_file)
 #' @export
 gmt_to_list <- function(path,
                         cutoff = 0,
@@ -1302,15 +1318,14 @@ gmt_to_list <- function(path,
 #' @param returning to return "both" list and plot, or either one
 #' @return list of matrix and plot, or just plot, matrix of GSEA NES values, cell types as row names, pathways as column names
 #' @examples
-#' \donttest{
 #' gl <- list(
 #'   "n" = c("PPBP", "LYZ", "S100A9"),
 #'   "a" = c("IGLL5", "GNLY", "FTL")
 #' )
 #'
 #' pbmc_avg <- average_clusters(
-#'   pbmc_matrix_small,
-#'   pbmc_meta,
+#'   mat = pbmc_matrix_small,
+#'   cluster_info = pbmc_meta,
 #'   cluster_col = "classified"
 #' )
 #'
@@ -1319,7 +1334,6 @@ gmt_to_list <- function(path,
 #'   gl,
 #'   5
 #' )
-#' }
 #' @export
 plot_pathway_gsea <- function(mat,
                               pathway_list,
@@ -1370,7 +1384,7 @@ RowVar <- function(x, na.rm = TRUE) {
 #' @return new smaller mat with less cell_id columns
 #' @examples
 #' mat1 <- downsample_matrix(
-#'   pbmc_matrix_small,
+#'   mat = pbmc_matrix_small,
 #'   cluster_info = pbmc_meta$classified,
 #'   n = 10,
 #'   keep_cluster_proportions = TRUE,
@@ -1479,8 +1493,8 @@ ref_marker_select <- function(mat, cut = 0.5, arrange = TRUE, compto = 1) {
 #' @return vector of cluster name and ratio value
 #' @examples
 #' pbmc_avg <- average_clusters(
-#'   pbmc_matrix_small,
-#'   pbmc_meta,
+#'   mat = pbmc_matrix_small,
+#'   cluster_info = pbmc_meta,
 #'   cluster_col = "classified",
 #'   if_log = FALSE
 #' )
@@ -1517,10 +1531,10 @@ marker_select <- function(row1, cols, cut = 1, compto = 1) {
 #' )
 #'
 #' res <- pos_neg_select(
-#'   pbmc_matrix_small,
-#'   pn_ref,
-#'   pbmc_meta,
-#'   "classified",
+#'   input = pbmc_matrix_small,
+#'   ref_mat = pn_ref,
+#'   metadata = pbmc_meta,
+#'   cluster_col = "classified",
 #'   cutoff_score = 0.8
 #' )
 #' @export
@@ -1575,6 +1589,14 @@ reverse_marker_matrix <- function(mat) {
 #' takes files with positive and negative markers, as described in garnett, and returns list of markers
 #' @param filename txt file to load
 #' @return list of positive and negative gene markers
+#' @examples
+#' marker_file <- system.file(
+#'   "extdata",
+#'   "hsPBMC_markers.txt",
+#'   package = "clustifyr"
+#' )
+#'
+#' markers <- file_marker_parse(marker_file)
 #' @export
 file_marker_parse <- function(filename) {
   lines <- readLines(filename)
@@ -1593,7 +1615,7 @@ file_marker_parse <- function(filename) {
       ident_neg[count] <- strsplit(substr(line, 16, nchar(line)), split = ", ")
     }
   }
-  
+
   if (!(is.null(ident_neg))) {
     names(ident_neg) <- ident_names
   }

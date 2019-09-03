@@ -63,7 +63,7 @@ plot_tsne(
 
 ## Calculate correlation coefficients
 
-`clustifyr` provides the `clustify()` function, which takes as input a matrix of single cell RNA-seq expression values, a metadata table with cluster assignments, and a matrix with bulk RNA seq datasets. 
+The `clustifyr()` function returns a matrix of correlation coefficients for each cell type and cluster, with the rownames corresponding to the cluster number.
 
 ```{r "Run clustifyr()"}
 # Calculate correlation coefficients for each cluster (pearson by default)
@@ -93,7 +93,7 @@ plot_cor_heatmap(
 
 ## Plot cluster identities and correlation coefficients
 
-`clustifyr` provides functions to plot single cells using pre-calculated tSNE embeddings (or those from any other dimensionality reduction method), and to plot correlation coefficients on those projections. The plots below show that the highest correlations between these bulk RNA-seq data and the test scRNA-seq dataset are restricted to the correct cell clusters.
+`clustifyr` also provides functions to overlay correlation coefficients on pre-calculated tSNE embeddings (or those from any other dimensionality reduction method). 
 
 ```{r "Overlay corr coefficients on UMAP", fig.height = 5, fig.width = 12}
 # Overlay correlation coefficients on UMAPs for the first two cell types

@@ -26,7 +26,7 @@ manually change idents as needed
 }
 \examples{
 pbmc_meta2 <- assign_ident(
-  pbmc_meta,
+  metadata = pbmc_meta,
   cluster_col = "seurat_clusters",
   ident_col = "type",
   clusters = c(1, 2, 5),

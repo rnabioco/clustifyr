@@ -27,15 +27,14 @@ list of matrix and plot, or just plot, matrix of GSEA NES values, cell types as 
 plot GSEA pathway scores as heatmap, returns a list containing results and plot.
 }
 \examples{
-\donttest{
 gl <- list(
   "n" = c("PPBP", "LYZ", "S100A9"),
   "a" = c("IGLL5", "GNLY", "FTL")
 )
 
 pbmc_avg <- average_clusters(
-  pbmc_matrix_small,
-  pbmc_meta,
+  mat = pbmc_matrix_small,
+  cluster_info = pbmc_meta,
   cluster_col = "classified"
 )
 
@@ -44,5 +43,4 @@ g <- plot_pathway_gsea(
   gl,
   5
 )
-}
 }

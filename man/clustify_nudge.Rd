@@ -127,42 +127,44 @@ seurat3 object with type assigned in metadata, or matrix of numeric values, clus
 matrix of numeric values, clusters from input as row names, cell types from ref_mat as column names
 }
 \description{
-#' @examplesSeurat2
-
-res <- clustify_nudge(
-input = s_small,
-ref_mat = cbmc_ref,
-marker = cbmc_m,
-cluster_col = "res.1",
-threshold = 0.8,
-seurat_out = FALSE,
-mode = "pct",
-dr = "tsne"
-)
+Combined function to compare scRNA-seq data to bulk RNA-seq data and marker list
 }
-\details{
-Seurat3
-
+\examples{
+# Seurat2
 res <- clustify_nudge(
-input = s_small3,
-ref_mat = cbmc_ref,
-marker = cbmc_m,
-threshold = 0.8,
-seurat_out = FALSE,
-mode = "pct",
-dr = "tsne"
-)Matrix
+  input = s_small,
+  ref_mat = cbmc_ref,
+  marker = cbmc_m,
+  cluster_col = "res.1",
+  threshold = 0.8,
+  seurat_out = FALSE,
+  mode = "pct",
+  dr = "tsne"
+)
 
+# Seurat3
 res <- clustify_nudge(
-input = pbmc_matrix_small,
-ref_mat = cbmc_ref,
-metadata = pbmc_meta,
-marker = as.matrix(cbmc_m),
-query_genes = pbmc_vargenes,
-cluster_col = "classified",
-threshold = 0.8,
-call = FALSE,
-marker_inmatrix = FALSE,
-mode = "pct"
+  input = s_small3,
+  ref_mat = cbmc_ref,
+  marker = cbmc_m,
+  cluster_col = "RNA_snn_res.1",
+  threshold = 0.8,
+  seurat_out = FALSE,
+  mode = "pct",
+  dr = "tsne"
+)
+
+# Matrix
+res <- clustify_nudge(
+  input = pbmc_matrix_small,
+  ref_mat = cbmc_ref,
+  metadata = pbmc_meta,
+  marker = as.matrix(cbmc_m),
+  query_genes = pbmc_vargenes,
+  cluster_col = "classified",
+  threshold = 0.8,
+  call = FALSE,
+  marker_inmatrix = FALSE,
+  mode = "pct"
 )
 }

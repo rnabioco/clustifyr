@@ -19,3 +19,12 @@ matrix of 1s and 0s
 \description{
 Binarize scRNAseq data
 }
+\examples{
+pbmc_avg <- average_clusters(
+  mat = pbmc_matrix_small,
+  cluster_info = pbmc_meta,
+  cluster_col = "classified"
+)
+
+pbmc_avgb <- binarize_expr(pbmc_avg)
+}

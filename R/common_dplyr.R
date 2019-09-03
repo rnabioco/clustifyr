@@ -7,6 +7,16 @@
 #' @param threshold minimum correlation coefficent cutoff for calling clusters
 #' @param rename_prefix prefix to add to type and r column names
 #' @return dataframe of cluster, new ident, and r info
+#' @examples
+#' res <- clustify(
+#'   input = pbmc_matrix_small,
+#'   metadata = pbmc_meta,
+#'   cluster_info = pbmc_meta,
+#'   cluster_col = "classified",
+#'   ref_mat = pbmc_bulk_matrix
+#' )
+#'
+#' res2 <- cor_to_call(res)
 #' @export
 cor_to_call <- function(correlation_matrix,
                         metadata = NULL,
@@ -61,6 +71,27 @@ cor_to_call <- function(correlation_matrix,
 #' @param per_cell whether the res dataframe is listed per cell
 #' @param rename_prefix prefix to add to type and r column names
 #' @return new metadata with added columns
+#' @examples
+#' \donttest{
+#' res <- clustify(
+#'   input = pbmc_matrix_small,
+#'   metadata = pbmc_meta,
+#'   cluster_info = pbmc_meta,
+#'   cluster_col = "classified",
+#'   ref_mat = pbmc_bulk_matrix
+#' )
+#'
+#' res2 <- cor_to_call(res)
+#'
+#' pbmc
+#'
+#' pbmc_meta2 <- call_to_metadata(
+#'   res = res2,
+#'   metadata = pbmc_meta,
+#'   cluster_col = "cluster",
+#'   rename_suff = "_assigned"
+#' )
+#' }
 #' @export
 call_to_metadata <- function(res,
                              metadata,

@@ -24,8 +24,8 @@ Percentage detected per cluster
 }
 \examples{
 pbmc_percentage <- percent_clusters(
-  pbmc_matrix_small,
-  pbmc_meta,
+  mat = pbmc_matrix_small,
+  cluster_info = pbmc_meta,
   cluster_col = "classified"
 )
 }
