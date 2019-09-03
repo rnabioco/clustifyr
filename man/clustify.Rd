@@ -5,7 +5,7 @@
 \alias{clustify.default}
 \alias{clustify.seurat}
 \alias{clustify.Seurat}
-\title{Main function to compare scRNA-seq data to bulk RNA-seq data.}
+\title{Compare scRNA-seq data to bulk RNA-seq data.}
 \usage{
 clustify(input, ...)
 
@@ -33,14 +33,16 @@ clustify(input, ...)
 
 \item{ref_mat}{reference expression matrix}
 
-\item{metadata}{cell cluster assignments, supplied as a vector or data.frame. If
-data.frame is supplied then \code{cluster_col} needs to be set. Not required if running correlation per cell.}
+\item{metadata}{cell cluster assignments, supplied as a vector or data.frame.
+If data.frame is supplied then \code{cluster_col} needs to be set. Not required
+if running correlation per cell.}
 
-\item{cluster_col}{column in metadata that contains cluster ids per cell. Will default to first
-column of metadata if not supplied. Not required if running correlation per cell.}
+\item{cluster_col}{column in metadata that contains cluster ids per cell.
+Will default to first column of metadata if not supplied. Not required if
+running correlation per cell.}
 
-\item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
-the expr_mat and ref_mat will be used for comparision.}
+\item{query_genes}{A vector of genes of interest to compare. If NULL, then
+common genes between the expr_mat and ref_mat will be used for comparision.}
 
 \item{per_cell}{if true run per cell, otherwise per cluster.}
 
@@ -124,18 +126,23 @@ the expr_mat and ref_mat will be used for comparision.}
 \item{...}{additional arguments to pass to compute_method function}
 }
 \value{
-matrix of correlation values, clusters from input as row names, cell types from ref_mat as column names
+matrix of correlation values, clusters from input as row names, cell
+types from ref_mat as column names
 
-seurat2 object with type assigned in metadata, or matrix of correlation values, clusters from input as row names, cell types from ref_mat as column names
+seurat2 object with type assigned in metadata, or matrix of
+correlation values, clusters from input as row names, cell types from
+ref_mat as column names
 
-seurat3 object with type assigned in metadata, or matrix of correlation values, clusters from input as row names, cell types from ref_mat as column names
+seurat3 object with type assigned in metadata, or matrix of
+correlation values, clusters from input as row names, cell types from
+ref_mat as column names
 }
 \description{
-Main function to compare scRNA-seq data to bulk RNA-seq data.
+Compare scRNA-seq data to bulk RNA-seq data.
 }
 \examples{
 # Annotate a matrix and metadata
-res <- clustify(
+clustify(
   input = pbmc_matrix_small,
   metadata = pbmc_meta,
   ref_mat = pbmc_bulk_matrix,
@@ -154,10 +161,10 @@ res <- clustify(
   compute_method = "cosine"
 )
 
-# Annotate (and return) a Seurat object
-res <- clustify(
-  input = s_small,
-  ref_mat = pbmc_bulk_matrix,
+# Annotate a Seurat object
+clustify(
+  s_small,
+  pbmc_bulk_matrix,
   cluster_col = "res.1",
   seurat_out = TRUE,
   per_cell = FALSE,

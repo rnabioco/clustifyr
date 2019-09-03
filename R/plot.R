@@ -159,7 +159,7 @@ plot_cor <- function(cor_matrix,
                      scale_legends = FALSE,
                      ...) {
   if (!any(data_to_plot %in% colnames(cor_matrix))) {
-    stop("cluster ids not shared between metadata and correlation matrix")
+    stop("cluster ids not shared between metadata and correlation matrix", call. = FALSE)
   }
 
   if (is.null(cluster_col)) {
@@ -262,7 +262,7 @@ plot_gene <- function(expr_mat,
   }
 
   if (length(genes_to_plot) == 0) {
-    stop("no genes present to plot")
+    stop("no genes present to plot", call. = FALSE)
   }
   expr_dat <- t(as.matrix(expr_mat[genes_to_plot, , drop = FALSE]))
   expr_dat <- tibble::rownames_to_column(as.data.frame(expr_dat), "cell")
@@ -275,7 +275,7 @@ plot_gene <- function(expr_mat,
   }
 
   if (!cell_col %in% colnames(mdata)) {
-    stop("please supply a cell_col that is present in metadata")
+    stop("please supply a cell_col that is present in metadata", call. = FALSE)
   }
 
   plt_dat <- dplyr::left_join(expr_dat, mdata,

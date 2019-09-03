@@ -38,7 +38,6 @@ test_that("clustify takes factor for metadata", {
     metadata = pbmc_meta$classified,
     ref_mat = pbmc_bulk_matrix,
     query_genes = pbmc_vargenes,
-    cluster_col = "classified",
     verbose = TRUE
   )
   n_clusters <- length(unique(pbmc_meta$classified))
@@ -303,6 +302,30 @@ test_that("cor throws readable error when ref_mat has 0 cols", {
     ref_mat = pbmc_bulk_matrix[,0],
     query_genes = pbmc_vargenes,
     cluster_col = "classified",
+    verbose = TRUE
+  ))
+})
+
+test_that("sparse matrix is accepted as input", {
+  res <- clustify(
+    input = s_small3@assays$RNA@counts,
+    metadata = s_small3@meta.data,
+    ref_mat = pbmc_bulk_matrix,
+    query_genes = pbmc_vargenes,
+    cluster_col = "letter.idents",
+    verbose = TRUE
+  )
+  
+  expect_equal(2, nrow(res))
+})
+
+test_that("correct error message is displayed for nonexistent cluster_col", {
+  expect_error(res <- clustify(
+    input = s_small3@assays$RNA@counts,
+    metadata = s_small3@meta.data,
+    ref_mat = pbmc_bulk_matrix,
+    query_genes = pbmc_vargenes,
+    cluster_col = "a",
     verbose = TRUE
   ))
 })
