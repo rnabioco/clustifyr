@@ -677,6 +677,7 @@ test_that("object parsing works for custom object", {
     var = "input@assays$RNA@var.features",
     col = "RNA_snn_res.1"
   ), stringsAsFactors = FALSE)
+  
   res2 <- clustify(
     s3,
     cbmc_ref,

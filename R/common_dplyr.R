@@ -70,15 +70,15 @@ call_to_metadata <- function(res,
   df_temp <- res
   if (per_cell == FALSE) {
     if (!(cluster_col %in% colnames(metadata))) {
-      stop("cluster_col is not a column of metadata")
+      stop("cluster_col is not a column of metadata", call. = FALSE)
     }
     
     if (!(cluster_col %in% colnames(res))) {
-      stop("cluster_col is not a column of called cell type dataframe")
+      stop("cluster_col is not a column of called cell type dataframe", call. = FALSE)
     }
     
     if (!(all(unique(df_temp[[cluster_col]]) %in% unique(metadata[[cluster_col]])))) {
-      stop("cluster_col from clustify step and joining to metadata step are not the same")
+      stop("cluster_col from clustify step and joining to metadata step are not the same", call. = FALSE)
     }
     
     df_temp_full <- suppressWarnings(dplyr::left_join(tibble::rownames_to_column(metadata, "rn"), df_temp, by = cluster_col))

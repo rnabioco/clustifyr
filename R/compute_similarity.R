@@ -17,24 +17,24 @@ get_similarity <- function(expr_mat,
                            rm0 = FALSE,
                            ...) {
   if (nrow(expr_mat) == 0) {
-    stop("after subsetting to shared genes, query expression matrix has 0 rows")
+    stop("after subsetting to shared genes, query expression matrix has 0 rows", call. = FALSE)
   }
   
   if (ncol(expr_mat) == 0) {
-    stop("query expression matrix has 0 cols")
+    stop("query expression matrix has 0 cols", call. = FALSE)
   }
   
   if (nrow(ref_mat) == 0) {
-    stop("after subsetting to shared genes, reference expression matrix has 0 rows")
+    stop("after subsetting to shared genes, reference expression matrix has 0 rows", call. = FALSE)
   }
   
   if (ncol(ref_mat) == 0) {
-    stop("reference expression matrix has 0 cols")
+    stop("reference expression matrix has 0 cols", call. = FALSE)
   }
   
   ref_clust <- colnames(ref_mat)
   if (ncol(expr_mat) != length(cluster_ids)) {
-    stop("number of cells in expression matrix not equal to metadata/cluster_col")
+    stop("number of cells in expression matrix not equal to metadata/cluster_col", call. = FALSE)
   }
   
   if (sum(is.na(cluster_ids)) > 0) {
@@ -239,11 +239,11 @@ calc_similarity <- function(query_mat,
 vector_similarity <- function(vec1, vec2, compute_method, ...) {
   # examine whether two vectors are of the same size
   if (!is.numeric(vec1) || !is.numeric(vec2) || length(vec1) != length(vec2)) {
-    stop("compute_similarity: two input vectors are not numeric or of different sizes.")
+    stop("compute_similarity: two input vectors are not numeric or of different sizes.", call. = FALSE)
   }
 
   if (!(compute_method %in% c("cosine", "kl_divergence"))) {
-    stop(paste(compute_method, "not implemented"))
+    stop(paste(compute_method, "not implemented"), call. = FALSE)
   }
 
   if (compute_method == "kl_divergence") {

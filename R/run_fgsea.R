@@ -26,7 +26,7 @@ run_gsea <- function(expr_mat,
   }
 
   if (!per_cell & (ncol(expr_mat) != length(cluster_ids))) {
-    stop("cluster_ids do not match number of cells (columns) in expr_mat ")
+    stop("cluster_ids do not match number of cells (columns) in expr_mat", call. = FALSE)
   }
 
   if (n_perm > 1e4 & per_cell) {

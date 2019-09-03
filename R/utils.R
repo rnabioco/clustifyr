@@ -41,7 +41,7 @@ average_clusters <- function(mat, cluster_info,
     cluster_ids <- split(colnames(mat), cluster_info)
   } else {
     stop("cluster_info not formatted correctly,
-         supply either a  vector or a dataframe")
+         supply either a  vector or a dataframe", call. = FALSE)
   }
 
   if (method == "mean") {
@@ -49,7 +49,7 @@ average_clusters <- function(mat, cluster_info,
       cluster_ids,
       function(cell_ids) {
         if (!all(cell_ids %in% colnames(mat))) {
-          stop("cell ids not found in input matrix")
+          stop("cell ids not found in input matrix", call. = FALSE)
         }
         if (if_log) {
           mat_data <- expm1(mat[, cell_ids, drop = FALSE])
@@ -68,7 +68,7 @@ average_clusters <- function(mat, cluster_info,
       cluster_ids,
       function(cell_ids) {
         if (!all(cell_ids %in% colnames(mat))) {
-          stop("cell ids not found in input matrix")
+          stop("cell ids not found in input matrix", call. = FALSE)
         }
         mat_data <- mat[, cell_ids, drop = FALSE]
         res <- apply(mat_data, 1, function(x) {
@@ -307,7 +307,7 @@ average_clusters_filter <- function(mat, cluster_info,
   cell_ids <- 0
   eval(parse(text = paste0("cell_ids <- cluster_info[[filter_on]] ", filter_method, "filter_value")))
   if (sum(cell_ids) == 0) {
-    stop("no cells kept after filtering")
+    stop("no cells kept after filtering", call. = FALSE)
   }
 
   if (!is.null(group_by)) {
@@ -437,12 +437,12 @@ assign_ident <- function(metadata,
                          clusters,
                          idents) {
   if (!is.vector(clusters) | !is.vector(idents)) {
-    stop("unsupported clusters or idents")
+    stop("unsupported clusters or idents", call. = FALSE)
   } else {
     if (length(idents) == 1) {
       idents <- rep(idents, length(clusters))
     } else if (length(idents) != length(clusters)) {
-      stop("unsupported lengths pairs of clusters and idents")
+      stop("unsupported lengths pairs of clusters and idents", call. = FALSE)
     }
   }
 
@@ -591,7 +591,7 @@ gene_pct_markerm <- function(matrix,
     cluster_info <- cluster_info[[cluster_col]]
   } else {
     stop("cluster_info not formatted correctly,
-         supply either a  vector or a dataframe")
+         supply either a  vector or a dataframe", call. = FALSE)
   }
 
   # coerce factors in character
@@ -1400,7 +1400,7 @@ downsample_matrix <- function(mat,
       cluster_ids <- split(colnames(mat), cluster_info)
     } else {
       stop("cluster_info not formatted correctly,
-         supply either a  vector or a dataframe")
+         supply either a  vector or a dataframe", call. = FALSE)
     }
     if (n < 1) {
       n2 <- sapply(cluster_ids, function(x) as.integer(length(x) * n))
