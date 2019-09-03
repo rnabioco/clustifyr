@@ -16,7 +16,6 @@ list of positive and negative gene markers
 takes files with positive and negative markers, as described in garnett, and returns list of markers
 }
 \examples{
-\donttest{
 marker_file <- system.file(
   "extdata",
   "hsPBMC_markers.txt",
@@ -24,5 +23,4 @@ marker_file <- system.file(
 )
 
 markers <- file_marker_parse(marker_file)
-}
 }

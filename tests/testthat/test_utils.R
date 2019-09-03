@@ -174,6 +174,26 @@ test_that("average_clusters_filter works with nonlog data", {
   expect_equal(class(avg1), "matrix")
 })
 
+test_that("average_clusters_filter returns vector of values if group_by is null", {
+  avg1 <- average_clusters_filter(
+    pbmc_matrix_small,
+    pbmc_meta,
+    filter_on = "seurat_clusters",
+    filter_method = "==",
+    filter_value = "1"
+  )
+  
+  avg1 <- average_clusters_filter(
+    pbmc_matrix_small,
+    pbmc_meta,
+    filter_on = "seurat_clusters",
+    filter_method = "==",
+    filter_value = "1",
+    if_log = F
+  )
+  expect_true(is.vector(avg1))
+})
+
 test_that("cor_to_call threshold works as intended", {
   res <- clustify(
     input = pbmc_matrix_small,
@@ -877,4 +897,60 @@ test_that("more readable error message when cluster_col exist but is wrong info"
                               pbmc_meta,
                               "seurat_clusters"
   ))
+})
+
+marker_file <- system.file(
+  "extdata",
+  "hsPBMC_markers.txt",
+  package = "clustifyr"
+)
+
+test_that("paring marker files works on included example", {
+  markers <- file_marker_parse(marker_file)
+  expect_true(length(markers) == 2)
+})
+
+gmt_file <- system.file(
+  "extdata",
+  "c2.cp.reactome.v6.2.symbols.gmt",
+  package = "clustifyr"
+)
+
+test_that("paring gmt files works on included example", {
+  gmt_list <- gmt_to_list(path = gmt_file)
+  expect_true(class(gmt_list) == "list")
+})
+
+test_that("clustify_nudge works with pos_neg_select and seurat2 object", {
+  pn_ref2 <- data.frame(
+    "CD8 T" = c(0, 0, 1),
+    row.names = c("CD4", "clustifyr0", "CD8B"), check.names = FALSE
+  )
+  res <- clustify_nudge(
+    s_small,
+    cbmc_ref,
+    pn_ref2,
+    cluster_col = "res.1",
+    norm = 0.5,
+    dr = "tsne",
+    seurat_out = F
+  )
+  expect_true(nrow(res) == 4)
+})
+
+test_that("clustify_nudge works with pos_neg_select and Seurat3 object", {
+  pn_ref2 <- data.frame(
+    "CD8 T" = c(0, 0, 1),
+    row.names = c("CD4", "clustifyr0", "CD8B"), check.names = FALSE
+  )
+  res <- clustify_nudge(
+    s_small3,
+    cbmc_ref,
+    pn_ref2,
+    cluster_col = "RNA_snn_res.1",
+    norm = 0.5,
+    dr = "tsne",
+    seurat_out = F
+  )
+  expect_true(nrow(res) == 3)
 })
