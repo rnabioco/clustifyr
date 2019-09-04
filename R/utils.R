@@ -1110,7 +1110,7 @@ parse_loc_object <- function(input,
 #' @param lookuptable if not supplied, will look in built-in table for object parsing
 #' @return new object with new metadata inserted
 #' @examples
-#' clustifyr_obj <- insert_meta_object(s_small3, seurat_meta(s_small3, dr = "tsne"))
+#' \dontrun{clustifyr_obj <- insert_meta_object(s_small3, seurat_meta(s_small3, dr = "tsne"))}
 #' @export
 insert_meta_object <- function(input,
                                new_meta,
