@@ -26,6 +26,9 @@ clustify <- function(input, ...) {
 #' @param verbose whether to report certain variables chosen
 #' @param lookuptable if not supplied, will look in built-in table for object parsing
 #' @param rm0 consider 0 as missing data, recommended for per_cell
+#' @param obj_out whether to output object instead of cor matrix
+#' @param rename_prefix prefix to add to type and r column names
+#' @param threshold identity calling minimum correlation score threshold, only used when obj_out = T
 #' @param ... additional arguments to pass to compute_method function
 #'
 #' @return matrix of correlation values, clusters from input as row names, cell
@@ -83,6 +86,9 @@ clustify.default <- function(input,
                              verbose = FALSE,
                              lookuptable = NULL,
                              rm0 = FALSE,
+                             obj_out = FALSE,
+                             rename_prefix = NULL,
+                             threshold = 0,
                              ...) {
   if (!compute_method %in% clustifyr_methods) {
     stop(paste(compute_method, "correlation method not implemented"), call. = FALSE)
@@ -185,7 +191,32 @@ clustify.default <- function(input,
     )
   }
 
-  return(res)
+  if (obj_out && !inherits(input_original, c("matrix", "Matrix", "data.frame"))) {
+    df_temp <- cor_to_call(
+      res,
+      metadata = metadata,
+      cluster_col = cluster_col,
+      threshold = threshold
+    )
+    
+    df_temp_full <- call_to_metadata(
+      df_temp,
+      metadata = metadata,
+      cluster_col = cluster_col,
+      per_cell = per_cell,
+      rename_prefix = rename_prefix
+    )
+    
+    out <- insert_meta_object(
+      input_original, 
+      df_temp_full, 
+      lookuptable = lookuptable
+    )
+    
+    return(out)
+  } else {
+    return(res)
+  }
 }
 
 #' @rdname clustify
@@ -410,6 +441,9 @@ clustify_lists <- function(input, ...) {
 #' @param output_high if true (by default to fit with rest of package),
 #' -log10 transform p-value
 #' @param lookuptable if not supplied, will look in built-in table for object parsing
+#' @param obj_out whether to output object instead of cor matrix
+#' @param rename_prefix prefix to add to type and r column names
+#' @param threshold identity calling minimum correlation score threshold, only used when obj_out = T
 #' @param ... passed to matrixize_markers
 #' 
 #' @return matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
@@ -428,6 +462,9 @@ clustify_lists.default <- function(input,
                                    metric = "hyper",
                                    output_high = TRUE,
                                    lookuptable = NULL,
+                                   obj_out = FALSE,
+                                   rename_prefix = NULL,
+                                   threshold = 0,
                                    ...) {
   if (!inherits(input, c("matrix", "Matrix", "data.frame"))) {
     input_original <- input
@@ -464,12 +501,39 @@ clustify_lists.default <- function(input,
     )
   }
 
-  compare_lists(bin_input,
+  res <- compare_lists(bin_input,
     marker_mat = marker,
     n = genome_n,
     metric = metric,
     output_high = output_high
   )
+  
+  if (obj_out && !inherits(input_original, c("matrix", "Matrix", "data.frame"))) {
+    df_temp <- cor_to_call(
+      res,
+      metadata = metadata,
+      cluster_col = cluster_col,
+      threshold = threshold
+    )
+    
+    df_temp_full <- call_to_metadata(
+      df_temp,
+      metadata = metadata,
+      cluster_col = cluster_col,
+      per_cell = per_cell,
+      rename_prefix = rename_prefix
+    )
+    
+    out <- insert_meta_object(
+      input_original, 
+      df_temp_full, 
+      lookuptable = lookuptable
+    )
+    
+    return(out)
+  } else {
+    return(res)
+  }
 }
 
 #' @rdname clustify_lists

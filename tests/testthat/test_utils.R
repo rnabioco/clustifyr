@@ -441,6 +441,48 @@ test_that("clustify_nudge.Seurat works with seurat_out option", {
   expect_true(nrow(res) == 3)
 })
 
+test_that("clustify_nudge works with obj_out option", {
+  s3 <- s_small3
+  setClass(
+    'ser3', 
+    representation(meta.data = 'data.frame')
+  )
+  class(s3) <- "ser3"
+  object_loc_lookup2 <- data.frame(ser3 = c(
+    expr = "input@assays$RNA@data",
+    meta = "input@meta.data",
+    var = "input@assays$RNA@var.features",
+    col = "RNA_snn_res.1"
+  ), stringsAsFactors = FALSE)
+  
+  res <- clustify_nudge(
+    input = s3,
+    ref_mat = cbmc_ref,
+    marker = cbmc_m,
+    lookuptable = object_loc_lookup2,
+    cluster_col = "RNA_snn_res.1",
+    threshold = 0.8,
+    obj_out = T,
+    marker_inmatrix = FALSE,
+    mode = "pct",
+    dr = "tsne"
+  )
+  
+  res2 <- clustify_nudge(
+    input = s3,
+    ref_mat = cbmc_ref,
+    marker = cbmc_m,
+    lookuptable = object_loc_lookup2,
+    cluster_col = "RNA_snn_res.1",
+    threshold = 0.8,
+    obj_out = F,
+    marker_inmatrix = FALSE,
+    mode = "pct",
+    dr = "tsne"
+  )
+  expect_true(nrow(res2) == 3)
+})
+
 test_that("clustify_nudge works with list of markers", {
   res <- clustify_nudge(
     input = pbmc_matrix_small,
@@ -712,6 +754,39 @@ test_that("object parsing works for custom object", {
   )
 
   expect_true(nrow(res) == nrow(res2))
+})
+
+test_that("object metadata assignment works for custom object", {
+  s3 <- s_small3
+  setClass(
+    'ser3', 
+    representation(meta.data = 'data.frame')
+  )
+  class(s3) <- "ser3"
+  object_loc_lookup2 <- data.frame(ser3 = c(
+    expr = "input@assays$RNA@data",
+    meta = "input@meta.data",
+    var = "input@assays$RNA@var.features",
+    col = "RNA_snn_res.1"
+  ), stringsAsFactors = FALSE)
+  
+  res2 <- clustify(
+    s3,
+    cbmc_ref,
+    lookuptable = object_loc_lookup2,
+    obj_out = T
+  )
+  
+  res3 <- clustify_lists(
+    s3,
+    marker = pbmc_markers,
+    marker_inmatrix = FALSE,
+    lookuptable = object_loc_lookup2,
+    obj_out = T,
+    rename_prefix = "A"
+  )
+  
+  expect_true(class(res2) == "ser3")
 })
 
 test_that("make_comb_ref uses correct sep", {

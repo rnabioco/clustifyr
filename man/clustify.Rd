@@ -12,7 +12,8 @@ clustify(input, ...)
 \method{clustify}{default}(input, ref_mat, metadata = NULL,
   cluster_col = NULL, query_genes = NULL, per_cell = FALSE,
   n_perm = 0, compute_method = "spearman", verbose = FALSE,
-  lookuptable = NULL, rm0 = FALSE, ...)
+  lookuptable = NULL, rm0 = FALSE, obj_out = FALSE,
+  rename_prefix = NULL, threshold = 0, ...)
 
 \method{clustify}{seurat}(input, ref_mat, cluster_col = NULL,
   query_genes = NULL, per_cell = FALSE, n_perm = 0,
@@ -56,16 +57,18 @@ common genes between the expr_mat and ref_mat will be used for comparision.}
 
 \item{rm0}{consider 0 as missing data, recommended for per_cell}
 
+\item{obj_out}{whether to output object instead of cor matrix}
+
+\item{rename_prefix}{prefix to add to type and r column names}
+
+\item{threshold}{identity calling minimum correlation score threshold, only used when obj_out = T}
+
 \item{use_var_genes}{if providing a seurat object, use the variable genes
 (stored in seurat_object@var.genes) as the query_genes.}
 
 \item{dr}{stored dimension reduction}
 
 \item{seurat_out}{output cor matrix or called seurat object}
-
-\item{threshold}{identity calling minimum correlation score threshold}
-
-\item{rename_prefix}{prefix to add to type and r column names}
 
 \item{ref_mat}{reference expression matrix}
 
@@ -88,9 +91,13 @@ the expr_mat and ref_mat will be used for comparision.}
 
 \item{seurat_out}{output cor matrix or called seurat object}
 
+\item{threshold}{identity calling minimum correlation score threshold}
+
 \item{verbose}{whether to report certain variables chosen}
 
 \item{rm0}{consider 0 as missing data, recommended for per_cell}
+
+\item{rename_prefix}{prefix to add to type and r column names}
 
 \item{...}{additional arguments to pass to compute_method function}
 
