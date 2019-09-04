@@ -25,7 +25,8 @@ clustify_nudge(input, ...)
   cluster_col = NULL, query_genes = NULL,
   compute_method = "spearman", weight = 1, seurat_out = TRUE,
   threshold = -Inf, dr = "umap", norm = "diff", call = TRUE,
-  marker_inmatrix = TRUE, mode = "rank", ...)
+  marker_inmatrix = TRUE, mode = "rank", obj_out = FALSE,
+  rename_prefix = NULL, lookuptable = NULL, ...)
 }
 \arguments{
 \item{input}{seurat 2 object}
@@ -64,6 +65,10 @@ the expr_mat and ref_mat will be used for comparision.}
 data.frame is supplied then \code{cluster_col} needs to be set.}
 
 \item{call}{make call or just return score matrix}
+
+\item{obj_out}{whether to output object instead of cor matrix}
+
+\item{lookuptable}{if not supplied, will look in built-in table for object parsing}
 
 \item{input}{seurat 3 object}
 
@@ -118,6 +123,8 @@ column of metadata if not supplied. Not required if running correlation per cell
 \item{marker_inmatrix}{whether markers genes are already in preprocessed matrix form}
 
 \item{mode}{use marker expression pct or ranked cor score for nudging}
+
+\item{rename_prefix}{prefix to add to type and r column names}
 }
 \value{
 seurat2 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names

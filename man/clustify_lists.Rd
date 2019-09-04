@@ -12,7 +12,8 @@ clustify_lists(input, ...)
 \method{clustify_lists}{default}(input, marker, marker_inmatrix = TRUE,
   cluster_info = NULL, cluster_col = NULL, if_log = TRUE,
   per_cell = FALSE, topn = 800, cut = 0, genome_n = 30000,
-  metric = "hyper", output_high = TRUE, lookuptable = NULL, ...)
+  metric = "hyper", output_high = TRUE, lookuptable = NULL,
+  obj_out = FALSE, rename_prefix = NULL, threshold = 0, ...)
 
 \method{clustify_lists}{seurat}(input, cluster_info = NULL,
   cluster_col = NULL, if_log = TRUE, per_cell = FALSE, topn = 800,
@@ -58,13 +59,15 @@ provide the cluster_col parameters.}
 
 \item{lookuptable}{if not supplied, will look in built-in table for object parsing}
 
+\item{obj_out}{whether to output object instead of cor matrix}
+
+\item{rename_prefix}{prefix to add to type and r column names}
+
+\item{threshold}{identity calling minimum correlation score threshold, only used when obj_out = T}
+
 \item{dr}{stored dimension reduction}
 
 \item{seurat_out}{output cor matrix or called seurat object}
-
-\item{threshold}{identity calling minimum score threshold}
-
-\item{rename_prefix}{prefix to add to type and r column names}
 
 \item{input}{seurat object}
 
@@ -93,6 +96,10 @@ averaging will be done on unlogged data}
 
 \item{output_high}{if true (by default to fit with rest of package),
 -log10 transform p-value}
+
+\item{threshold}{identity calling minimum score threshold}
+
+\item{rename_prefix}{prefix to add to type and r column names}
 
 \item{...}{passed to matrixize_markers}
 

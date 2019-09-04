@@ -897,6 +897,10 @@ clustify_nudge.Seurat <- function(input,
 #' @param call make call or just return score matrix
 #' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
 #' @param mode use marker expression pct or ranked cor score for nudging
+#' @param obj_out whether to output object instead of cor matrix
+#' @param rename_prefix prefix to add to type and r column names
+#' @param lookuptable if not supplied, will look in built-in table for object parsing
+
 #' @return matrix of numeric values, clusters from input as row names, cell types from ref_mat as column names
 #' @export
 clustify_nudge.default <- function(input,
@@ -914,6 +918,9 @@ clustify_nudge.default <- function(input,
                                    call = TRUE,
                                    marker_inmatrix = TRUE,
                                    mode = "rank",
+                                   obj_out = FALSE,
+                                   rename_prefix = NULL,
+                                   lookuptable = NULL,
                                    ...) {
   if (marker_inmatrix != TRUE) {
     marker <- matrixize_markers(
@@ -922,15 +929,21 @@ clustify_nudge.default <- function(input,
     )
   }
 
-  if (!(stringr::str_detect(class(input), "atrix"))) {
+  if (!inherits(input, c("matrix", "Matrix", "data.frame"))) {
     input_original <- input
     temp <- parse_loc_object(input,
-      type = class(input),
-      expr_loc = NULL,
-      meta_loc = NULL,
-      var_loc = NULL,
-      cluster_col = cluster_col
+                             type = class(input),
+                             expr_loc = NULL,
+                             meta_loc = NULL,
+                             var_loc = NULL,
+                             cluster_col = cluster_col,
+                             lookuptable = lookuptable
     )
+    
+    if (!(is.null(temp[["expr"]]))) {
+      message(paste0("recognized object type - ", class(input)))
+    }
+    
     input <- temp[["expr"]]
     metadata <- temp[["meta"]]
     if (is.null(query_genes)) {
@@ -970,16 +983,43 @@ clustify_nudge.default <- function(input,
     resb <- cbind(resb, empty_mat)
   }
 
-  if (call == TRUE) {
-    df_temp <- cor_to_call(resa[order(rownames(resa)), order(colnames(resa))] +
-      resb[order(rownames(resb)), order(colnames(resb))] * weight,
-    threshold = threshold
+  res <- resa[order(rownames(resa)), order(colnames(resa))] +
+    resb[order(rownames(resb)), order(colnames(resb))] * weight
+  
+  if (obj_out && !inherits(input_original, c("matrix", "Matrix", "data.frame"))) {
+    df_temp <- cor_to_call(
+      res,
+      metadata = metadata,
+      cluster_col = cluster_col,
+      threshold = threshold
     )
-    colnames(df_temp) <- c(cluster_col, "type", "score")
-    df_temp
+    
+    df_temp_full <- call_to_metadata(
+      df_temp,
+      metadata = metadata,
+      cluster_col = cluster_col,
+      per_cell = FALSE,
+      rename_prefix = rename_prefix
+    )
+    
+    out <- insert_meta_object(
+      input_original, 
+      df_temp_full, 
+      lookuptable = lookuptable
+    )
+    
+    return(out)
   } else {
-    resa[order(rownames(resa)), order(colnames(resa))] +
-      resb[order(rownames(resb)), order(colnames(resb))] * weight
+    if (call == TRUE) {
+      df_temp <- cor_to_call(
+        res,
+        threshold = threshold
+      )
+      colnames(df_temp) <- c(cluster_col, "type", "score")
+      return(df_temp)
+    } else {
+      return(res)
+    }
   }
 }
 
@@ -1061,6 +1101,37 @@ parse_loc_object <- function(input,
   parsed
 }
 
+#' more flexible metadata update of single cell objects
+#'
+#' @param input input object
+#' @param new_meta new metadata table to insert back into object
+#' @param type look up predefined slots/loc
+#' @param meta_loc metadata location
+#' @param lookuptable if not supplied, will look in built-in table for object parsing
+#' @return new object with new metadata inserted
+#' @examples
+#' clustifyr_obj <- insert_meta_object(s_small3, seurat_meta(s_small3, dr = "tsne"))
+#' @export
+insert_meta_object <- function(input,
+                               new_meta,
+                               type = class(input),
+                               meta_loc = NULL,
+                               lookuptable = NULL) {
+  if (is.null(lookuptable)) {
+    object_loc_lookup1 <- clustifyr::object_loc_lookup
+  } else {
+    object_loc_lookup1 <- lookuptable
+  }
+  
+  if (!type %in% colnames(object_loc_lookup1)) {
+    stop("unrecognized object type", call. = FALSE)
+  } else {
+    text1 <<- paste0(object_loc_lookup1[[type]][2], " <- ", "new_meta")
+    eval(parse(text = text1))
+    return(input)
+  }
+}
+  
 #' compare clustering parameters and classification outcomes
 #'
 #' @param expr expression matrix
