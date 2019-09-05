@@ -61,21 +61,19 @@ saveRDS(l, "MCA_lung_mat")
 ```
 
 ```{r load, message=FALSE, warning=FALSE}
-library(here)
-library(clustifyr)
 library(tidyverse)
+library(clustifyr)
 library(clustifyrdata)
 
-l_mat <- readRDS(here("MCA_lung_mat"))
-l_meta <- readRDS(here("MCA_lung_meta"))
-load(here("data","ref_tabula_muris_drop.rda"))
+l_mat <- clustifyrdata::MCA_lung_mat
+l_meta <- clustifyrdata::MCA_lung_meta
 
 # find lung references, remove generic terms
 lung_cols <- colnames(ref_tabula_muris_drop) %>%
   grep("-Lung", ., value = T)
 
 tml_ref <- ref_tabula_muris_drop[, lung_cols]
-tml_ref <- tml_ref[, c(8,13)]
+tml_ref <- tml_ref[, -c(8,13)]
 
 
 # default with all genes
@@ -104,21 +102,21 @@ print(res_allgenes, n = nrow(res_allgenes))
 ## benchmark 2. Using sorted microarray data to classify 10x PBMC example data, available in `clustifyrdata` package
 
 ```{r micro}
-full_pbmc4k_matrix <- clustifyrdata::pbmc4k_matrix
-full_pbmc4k_meta <- clustifyrdata::pbmc4k_meta
+full_pbmc_matrix <- clustifyrdata::pbmc_matrix
+full_pbmc_meta <- clustifyrdata::pbmc_meta
 microarray_ref <- clustifyrdata::hema_microarray_matrix
 
 start <- proc.time()
 
 res <- clustify(
-  input = full_pbmc4k_matrix, 
+  input = full_pbmc_matrix, 
   ref_mat = microarray_ref, 
-  metadata = full_pbmc4k_meta, 
-  query_genes = pbmc4k_vargenes,
+  metadata = full_pbmc_meta, 
+  query_genes = pbmc_vargenes[1:500],
   cluster_col = "classified"
 )
 
-res2 <- cor_to_call(res)
+res2 <- cor_to_call(res, threshold = 0.5)
 
 end <- proc.time()
 names(res2) <- c("manual annotation", "clustifyr call", "r")

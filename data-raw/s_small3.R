@@ -1,7 +1,7 @@
 library(usethis)
 
-s_small3 <- Seurat::pbmc_small
-attr(attr(s_small3, "class"), "package") <- NULL
+s <- Seurat::pbmc_small
+attr(attr(s, "class"), "package") <- NULL
 
 attr(attr(s@commands$NormalizeData.RNA, "class"), "package") <- NULL
 attr(attr(s@commands$FindVariableFeatures.RNA, "class"), "package") <- NULL
@@ -15,8 +15,11 @@ attr(attr(s@commands$ScoreJackStraw.pca, "class"), "package") <- NULL
 attr(attr(s@commands$ProjectDim.RNA.pca, "class"), "package") <- NULL
 attr(attr(attr(s@reductions$pca, "jackstraw"), "class"), "package") <- NULL
 attr(attr(s@reductions$pca, "class"), "package") <- NULL
-attr(attr(s@reductions$tse, "class"), "package") <- NULL
+attr(attr(s@reductions$tsne, "class"), "package") <- NULL
 attr(attr(s@graphs$RNA_snn, "class"), "package") <- NULL
 attr(attr(s@assays$RNA, "class"), "package") <- NULL
+attr(attr(s@reductions$tsne@jackstraw, "class"), "package") <- NULL
+s@commands <- list()
+s_small3 <- s
 
 usethis::use_data(s_small3, compress = "xz", overwrite = TRUE)

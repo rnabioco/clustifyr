@@ -35,7 +35,11 @@ average_clusters <- function(mat, cluster_info,
   if (is.vector(cluster_info)) {
     cluster_ids <- split(colnames(mat), cluster_info)
   } else if (is.data.frame(cluster_info) & !is.null(cluster_col)) {
-    cluster_ids <- split(colnames(mat), cluster_info[[cluster_col]])
+    cluster_info_temp <- cluster_info[[cluster_col]]
+    if (is.factor(cluster_info_temp)) {
+      cluster_info_temp <- droplevels(cluster_info_temp)
+    }
+    cluster_ids <- split(colnames(mat), cluster_info_temp)
   } else if (class(cluster_info) == "factor") {
     cluster_info <- as.character(cluster_info)
     cluster_ids <- split(colnames(mat), cluster_info)
@@ -1043,26 +1047,6 @@ parse_loc_object <- function(input,
                              var_loc = NULL,
                              cluster_col = NULL,
                              lookuptable = NULL) {
-  # if (type == "SingleCellExperiment") {
-  #   parsed = list(input@assays$data$logcounts,
-  #                 as.data.frame(input@colData)),
-  #                 NULL,
-  #                 "cell_type1")
-  # }
-  #
-  # if (type == "URD") {
-  #   parsed = list(input@logupx.data,
-  #                 input@meta,
-  #                 input@var.genes,
-  #                 "cluster")
-  # }
-  #
-  # if (type == "FunctionalSingleCellExperiment") {
-  #   parsed = list(input@ExperimentList$rnaseq@assays$data$logcounts,
-  #                 input@ExperimentList$rnaseq@colData,
-  #                 NULL,
-  #                 "leiden_cluster")
-  # }
   if (is.null(lookuptable)) {
     object_loc_lookup1 <- clustifyr::object_loc_lookup
   } else {
@@ -1619,7 +1603,8 @@ pos_neg_select <- function(input,
     ref_mat,
     metadata,
     cluster_col = cluster_col,
-    per_cell = TRUE, verbose = TRUE
+    per_cell = TRUE, 
+    verbose = TRUE
   ))
   res[is.na(res)] <- 0
   suppressWarnings(res2 <- average_clusters(t(res),

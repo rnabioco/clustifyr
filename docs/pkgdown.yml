@@ -1,5 +1,5 @@
 pandoc: '2.4'
-pkgdown: 1.3.0
+pkgdown: 1.4.0
 pkgdown_sha: ~
 articles:
   benchmark: benchmark.html
@@ -9,6 +9,6 @@ articles:
   references: references.html
   visualizations: visualizations.html
 urls:
-  reference: http://rnabioco.github.io/clustifyR/reference
-  article: http://rnabioco.github.io/clustifyR/articles
+  reference: http://rnabioco.github.io/clustifyr/reference
+  article: http://rnabioco.github.io/clustifyr/articles
 

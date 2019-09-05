@@ -30,7 +30,6 @@ plot_tsne <- function(data, x = "UMAP_1", y = "UMAP_2",
     "logical",
     "factor"
   ))) {
-    # print("too many required, using ramp colors instead")
     c_cols <- pretty_palette_ramp_d(length(unique(data[[feature]])))
     d_cols <- pretty_palette_ramp_d(length(unique(data[[feature]])))
   }
