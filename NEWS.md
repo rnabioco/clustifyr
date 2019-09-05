@@ -1,3 +1,9 @@
+# clustifyr 09-06-19
+
+* support of SingleCellExperiment objects and more
+
+* bug fixes
+
 # clustifyr 05-29-19
 
 * Updated discussions, benchmark, and visualization example pages
