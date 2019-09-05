@@ -2,136 +2,74 @@
 % Please edit documentation in R/utils.R
 \name{clustify_nudge}
 \alias{clustify_nudge}
+\alias{clustify_nudge.default}
 \alias{clustify_nudge.seurat}
 \alias{clustify_nudge.Seurat}
-\alias{clustify_nudge.default}
 \title{Combined function to compare scRNA-seq data to bulk RNA-seq data and marker list}
 \usage{
 clustify_nudge(input, ...)
 
+\method{clustify_nudge}{default}(input, ref_mat, marker, metadata = NULL,
+  cluster_col = NULL, query_genes = NULL,
+  compute_method = "spearman", weight = 1, seurat_out = FALSE,
+  threshold = -Inf, dr = "umap", norm = "diff", call = TRUE,
+  marker_inmatrix = TRUE, mode = "rank", obj_out = FALSE,
+  rename_prefix = NULL, lookuptable = NULL, ...)
+
 \method{clustify_nudge}{seurat}(input, ref_mat, marker,
   cluster_col = NULL, query_genes = NULL,
   compute_method = "spearman", weight = 1, seurat_out = TRUE,
-  threshold = -Inf, dr = "umap", norm = "diff",
+  obj_out = FALSE, threshold = -Inf, dr = "umap", norm = "diff",
   marker_inmatrix = TRUE, mode = "rank", rename_prefix = NULL, ...)
 
 \method{clustify_nudge}{Seurat}(input, ref_mat, marker,
   cluster_col = NULL, query_genes = NULL,
   compute_method = "spearman", weight = 1, seurat_out = TRUE,
-  threshold = -Inf, dr = "umap", norm = "diff",
+  obj_out = FALSE, threshold = -Inf, dr = "umap", norm = "diff",
   marker_inmatrix = TRUE, mode = "rank", rename_prefix = NULL, ...)
-
-\method{clustify_nudge}{default}(input, ref_mat, marker, metadata = NULL,
-  cluster_col = NULL, query_genes = NULL,
-  compute_method = "spearman", weight = 1, seurat_out = TRUE,
-  threshold = -Inf, dr = "umap", norm = "diff", call = TRUE,
-  marker_inmatrix = TRUE, mode = "rank", obj_out = FALSE,
-  rename_prefix = NULL, lookuptable = NULL, ...)
 }
 \arguments{
-\item{input}{seurat 2 object}
+\item{input}{express matrix or object}
 
 \item{...}{passed to matrixize_markers}
 
 \item{ref_mat}{reference expression matrix}
 
 \item{marker}{matrix of markers}
-
-\item{cluster_col}{column in metadata that contains cluster ids per cell. Will default to first
-column of metadata if not supplied. Not required if running correlation per cell.}
-
-\item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
-the expr_mat and ref_mat will be used for comparision.}
-
-\item{compute_method}{method(s) for computing similarity scores}
-
-\item{weight}{relative weight for the gene list scores, when added to correlation score}
-
-\item{seurat_out}{output cor matrix or called seurat object}
-
-\item{threshold}{identity calling minimum score threshold}
-
-\item{dr}{stored dimension reduction}
-
-\item{norm}{whether and how the results are normalized}
-
-\item{marker_inmatrix}{whether markers genes are already in preprocessed matrix form}
-
-\item{mode}{use marker expression pct or ranked cor score for nudging}
-
-\item{rename_prefix}{prefix to add to type and r column names}
 
 \item{metadata}{cell cluster assignments, supplied as a vector or data.frame. If
 data.frame is supplied then \code{cluster_col} needs to be set.}
 
-\item{call}{make call or just return score matrix}
-
-\item{obj_out}{whether to output object instead of cor matrix}
-
-\item{lookuptable}{if not supplied, will look in built-in table for object parsing}
-
-\item{input}{seurat 3 object}
-
-\item{ref_mat}{reference expression matrix}
-
-\item{marker}{matrix of markers}
+\item{cluster_col}{column in metadata that contains cluster ids per cell. Will default to first
+column of metadata if not supplied. Not required if running correlation per cell.}
 
 \item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
 the expr_mat and ref_mat will be used for comparision.}
-
-\item{cluster_col}{column in metadata that contains cluster ids per cell. Will default to first
-column of metadata if not supplied. Not required if running correlation per cell.}
 
 \item{compute_method}{method(s) for computing similarity scores}
 
 \item{weight}{relative weight for the gene list scores, when added to correlation score}
 
-\item{dr}{stored dimension reduction}
-
 \item{seurat_out}{output cor matrix or called seurat object}
 
-\item{threshold}{identity calling minimum score threshold}
+\item{dr}{stored dimension reduction}
 
 \item{norm}{whether and how the results are normalized}
+
+\item{call}{make call or just return score matrix}
 
 \item{marker_inmatrix}{whether markers genes are already in preprocessed matrix form}
 
 \item{mode}{use marker expression pct or ranked cor score for nudging}
 
-\item{rename_prefix}{prefix to add to type and r column names}
-
-\item{...}{passed to matrixize_markers}
-
-\item{input}{express matrix}
-
-\item{ref_mat}{reference expression matrix}
-
-\item{marker}{matrix of markers}
-
-\item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
-the expr_mat and ref_mat will be used for comparision.}
-
-\item{cluster_col}{column in metadata that contains cluster ids per cell. Will default to first
-column of metadata if not supplied. Not required if running correlation per cell.}
-
-\item{compute_method}{method(s) for computing similarity scores}
-
-\item{...}{passed to matrixize_markers}
-
-\item{norm}{whether and how the results are normalized}
-
-\item{marker_inmatrix}{whether markers genes are already in preprocessed matrix form}
-
-\item{mode}{use marker expression pct or ranked cor score for nudging}
+\item{obj_out}{whether to output object instead of cor matrix}
 
 \item{rename_prefix}{prefix to add to type and r column names}
+
+\item{lookuptable}{if not supplied, will look in built-in table for object parsing}
 }
 \value{
-seurat2 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
-
-seurat3 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
-
-matrix of numeric values, clusters from input as row names, cell types from ref_mat as column names
+single cell object, or matrix of numeric values, clusters from input as row names, cell types from ref_mat as column names
 }
 \description{
 Combined function to compare scRNA-seq data to bulk RNA-seq data and marker list

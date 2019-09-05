@@ -682,8 +682,10 @@ clustify_nudge <- function(input, ...) {
 }
 
 #' @rdname clustify_nudge
-#' @param input seurat 2 object
+#' @param input express matrix or object
 #' @param ref_mat reference expression matrix
+#' @param metadata cell cluster assignments, supplied as a vector or data.frame. If
+#' data.frame is supplied then `cluster_col` needs to be set.
 #' @param marker matrix of markers
 #' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
 #' the expr_mat and ref_mat will be used for comparision.
@@ -692,14 +694,139 @@ clustify_nudge <- function(input, ...) {
 #' @param compute_method method(s) for computing similarity scores
 #' @param weight relative weight for the gene list scores, when added to correlation score
 #' @param dr stored dimension reduction
-#' @param seurat_out output cor matrix or called seurat object
-#' @param threshold identity calling minimum score threshold
+#' @param ... passed to matrixize_markers
 #' @param norm whether and how the results are normalized
+#' @param call make call or just return score matrix
 #' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
 #' @param mode use marker expression pct or ranked cor score for nudging
+#' @param obj_out whether to output object instead of cor matrix
+#' @param seurat_out output cor matrix or called seurat object
 #' @param rename_prefix prefix to add to type and r column names
-#' @param ... passed to matrixize_markers
-#' @return seurat2 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
+#' @param lookuptable if not supplied, will look in built-in table for object parsing
+
+#' @return single cell object, or matrix of numeric values, clusters from input as row names, cell types from ref_mat as column names
+#' @export
+clustify_nudge.default <- function(input,
+                                   ref_mat,
+                                   marker,
+                                   metadata = NULL,
+                                   cluster_col = NULL,
+                                   query_genes = NULL,
+                                   compute_method = "spearman",
+                                   weight = 1,
+                                   seurat_out = FALSE,
+                                   threshold = -Inf,
+                                   dr = "umap",
+                                   norm = "diff",
+                                   call = TRUE,
+                                   marker_inmatrix = TRUE,
+                                   mode = "rank",
+                                   obj_out = FALSE,
+                                   rename_prefix = NULL,
+                                   lookuptable = NULL,
+                                   ...) {
+  if (marker_inmatrix != TRUE) {
+    marker <- matrixize_markers(
+      marker,
+      ...
+    )
+  }
+  
+  if (!inherits(input, c("matrix", "Matrix", "data.frame"))) {
+    input_original <- input
+    temp <- parse_loc_object(input,
+                             type = class(input),
+                             expr_loc = NULL,
+                             meta_loc = NULL,
+                             var_loc = NULL,
+                             cluster_col = cluster_col,
+                             lookuptable = lookuptable
+    )
+    
+    if (!(is.null(temp[["expr"]]))) {
+      message(paste0("recognized object type - ", class(input)))
+    }
+    
+    input <- temp[["expr"]]
+    metadata <- temp[["meta"]]
+    if (is.null(query_genes)) {
+      query_genes <- temp[["var"]]
+    }
+    if (is.null(cluster_col)) {
+      cluster_col <- temp[["col"]]
+    }
+  }
+  
+  resa <- clustify(
+    input = input,
+    ref_mat = ref_mat,
+    metadata = metadata,
+    cluster_col = cluster_col,
+    query_genes = query_genes,
+    seurat_out = FALSE,
+    per_cell = FALSE
+  )
+  
+  if (mode == "pct") {
+    resb <- gene_pct_markerm(input,
+                             marker,
+                             metadata,
+                             cluster_col = cluster_col,
+                             norm = norm
+    )
+  } else if (mode == "rank") {
+    resb <- pos_neg_select(input,
+                           marker,
+                           metadata,
+                           cluster_col = cluster_col,
+                           cutoff_score = norm
+    )
+    empty_vec <- setdiff(colnames(resa), colnames(resb))
+    empty_mat <- matrix(0, nrow = nrow(resb), ncol = length(empty_vec), dimnames = list(rownames(resb), empty_vec))
+    resb <- cbind(resb, empty_mat)
+  }
+  
+  res <- resa[order(rownames(resa)), order(colnames(resa))] +
+    resb[order(rownames(resb)), order(colnames(resb))] * weight
+  
+  if ((obj_out || seurat_out) && !inherits(input_original, c("matrix", "Matrix", "data.frame"))) {
+    df_temp <- cor_to_call(
+      res,
+      metadata = metadata,
+      cluster_col = cluster_col,
+      threshold = threshold
+    )
+    
+    df_temp_full <- call_to_metadata(
+      df_temp,
+      metadata = metadata,
+      cluster_col = cluster_col,
+      per_cell = FALSE,
+      rename_prefix = rename_prefix
+    )
+    
+    out <- insert_meta_object(
+      input_original,
+      df_temp_full,
+      lookuptable = lookuptable
+    )
+    
+    return(out)
+  } else {
+    if (call == TRUE) {
+      df_temp <- cor_to_call(
+        res,
+        threshold = threshold
+      )
+      colnames(df_temp) <- c(cluster_col, "type", "score")
+      return(df_temp)
+    } else {
+      return(res)
+    }
+  }
+}
+
+#' @rdname clustify_nudge
 #' @export
 clustify_nudge.seurat <- function(input,
                                   ref_mat,
@@ -709,6 +836,7 @@ clustify_nudge.seurat <- function(input,
                                   compute_method = "spearman",
                                   weight = 1,
                                   seurat_out = TRUE,
+                                  obj_out = FALSE,
                                   threshold = -Inf,
                                   dr = "umap",
                                   norm = "diff",
@@ -754,7 +882,7 @@ clustify_nudge.seurat <- function(input,
   res <- resa[order(rownames(resa)), order(colnames(resa))] +
     resb[order(rownames(resb)), order(colnames(resb))] * weight
 
-  if (seurat_out == FALSE) {
+  if (!(seurat_out || obj_out)) {
     res
   } else {
     df_temp <- cor_to_call(
@@ -784,24 +912,6 @@ clustify_nudge.seurat <- function(input,
 }
 
 #' @rdname clustify_nudge
-#' @param input seurat 3 object
-#' @param ref_mat reference expression matrix
-#' @param marker matrix of markers
-#' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
-#' the expr_mat and ref_mat will be used for comparision.
-#' @param cluster_col column in metadata that contains cluster ids per cell. Will default to first
-#' column of metadata if not supplied. Not required if running correlation per cell.
-#' @param compute_method method(s) for computing similarity scores
-#' @param weight relative weight for the gene list scores, when added to correlation score
-#' @param dr stored dimension reduction
-#' @param seurat_out output cor matrix or called seurat object
-#' @param threshold identity calling minimum score threshold
-#' @param norm whether and how the results are normalized
-#' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
-#' @param mode use marker expression pct or ranked cor score for nudging
-#' @param rename_prefix prefix to add to type and r column names
-#' @param ... passed to matrixize_markers
-#' @return seurat3 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
 #' @export
 clustify_nudge.Seurat <- function(input,
                                   ref_mat,
@@ -811,6 +921,7 @@ clustify_nudge.Seurat <- function(input,
                                   compute_method = "spearman",
                                   weight = 1,
                                   seurat_out = TRUE,
+                                  obj_out = FALSE,
                                   threshold = -Inf,
                                   dr = "umap",
                                   norm = "diff",
@@ -856,7 +967,7 @@ clustify_nudge.Seurat <- function(input,
   res <- resa[order(rownames(resa)), order(colnames(resa))] +
     resb[order(rownames(resb)), order(colnames(resb))] * weight
 
-  if (seurat_out == FALSE) {
+  if (!(seurat_out || obj_out)) {
     res
   } else {
     df_temp <- cor_to_call(
@@ -882,148 +993,6 @@ clustify_nudge.Seurat <- function(input,
       return(res)
     }
     input
-  }
-}
-
-#' @rdname clustify_nudge
-#' @param input express matrix
-#' @param ref_mat reference expression matrix
-#' @param metadata cell cluster assignments, supplied as a vector or data.frame. If
-#' data.frame is supplied then `cluster_col` needs to be set.
-#' @param marker matrix of markers
-#' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
-#' the expr_mat and ref_mat will be used for comparision.
-#' @param cluster_col column in metadata that contains cluster ids per cell. Will default to first
-#' column of metadata if not supplied. Not required if running correlation per cell.
-#' @param compute_method method(s) for computing similarity scores
-#' @param ... passed to matrixize_markers
-#' @param norm whether and how the results are normalized
-#' @param call make call or just return score matrix
-#' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
-#' @param mode use marker expression pct or ranked cor score for nudging
-#' @param obj_out whether to output object instead of cor matrix
-#' @param rename_prefix prefix to add to type and r column names
-#' @param lookuptable if not supplied, will look in built-in table for object parsing
-
-#' @return matrix of numeric values, clusters from input as row names, cell types from ref_mat as column names
-#' @export
-clustify_nudge.default <- function(input,
-                                   ref_mat,
-                                   marker,
-                                   metadata = NULL,
-                                   cluster_col = NULL,
-                                   query_genes = NULL,
-                                   compute_method = "spearman",
-                                   weight = 1,
-                                   seurat_out = TRUE,
-                                   threshold = -Inf,
-                                   dr = "umap",
-                                   norm = "diff",
-                                   call = TRUE,
-                                   marker_inmatrix = TRUE,
-                                   mode = "rank",
-                                   obj_out = FALSE,
-                                   rename_prefix = NULL,
-                                   lookuptable = NULL,
-                                   ...) {
-  if (marker_inmatrix != TRUE) {
-    marker <- matrixize_markers(
-      marker,
-      ...
-    )
-  }
-
-  if (!inherits(input, c("matrix", "Matrix", "data.frame"))) {
-    input_original <- input
-    temp <- parse_loc_object(input,
-                             type = class(input),
-                             expr_loc = NULL,
-                             meta_loc = NULL,
-                             var_loc = NULL,
-                             cluster_col = cluster_col,
-                             lookuptable = lookuptable
-    )
-
-    if (!(is.null(temp[["expr"]]))) {
-      message(paste0("recognized object type - ", class(input)))
-    }
-
-    input <- temp[["expr"]]
-    metadata <- temp[["meta"]]
-    if (is.null(query_genes)) {
-      query_genes <- temp[["var"]]
-    }
-    if (is.null(cluster_col)) {
-      cluster_col <- temp[["col"]]
-    }
-  }
-
-  resa <- clustify(
-    input = input,
-    ref_mat = ref_mat,
-    metadata = metadata,
-    cluster_col = cluster_col,
-    query_genes = query_genes,
-    seurat_out = FALSE,
-    per_cell = FALSE
-  )
-
-  if (mode == "pct") {
-    resb <- gene_pct_markerm(input,
-      marker,
-      metadata,
-      cluster_col = cluster_col,
-      norm = norm
-    )
-  } else if (mode == "rank") {
-    resb <- pos_neg_select(input,
-      marker,
-      metadata,
-      cluster_col = cluster_col,
-      cutoff_score = norm
-    )
-    empty_vec <- setdiff(colnames(resa), colnames(resb))
-    empty_mat <- matrix(0, nrow = nrow(resb), ncol = length(empty_vec), dimnames = list(rownames(resb), empty_vec))
-    resb <- cbind(resb, empty_mat)
-  }
-
-  res <- resa[order(rownames(resa)), order(colnames(resa))] +
-    resb[order(rownames(resb)), order(colnames(resb))] * weight
-
-  if (obj_out && !inherits(input_original, c("matrix", "Matrix", "data.frame"))) {
-    df_temp <- cor_to_call(
-      res,
-      metadata = metadata,
-      cluster_col = cluster_col,
-      threshold = threshold
-    )
-
-    df_temp_full <- call_to_metadata(
-      df_temp,
-      metadata = metadata,
-      cluster_col = cluster_col,
-      per_cell = FALSE,
-      rename_prefix = rename_prefix
-    )
-
-    out <- insert_meta_object(
-      input_original,
-      df_temp_full,
-      lookuptable = lookuptable
-    )
-
-    return(out)
-  } else {
-    if (call == TRUE) {
-      df_temp <- cor_to_call(
-        res,
-        threshold = threshold
-      )
-      colnames(df_temp) <- c(cluster_col, "type", "score")
-      return(df_temp)
-    } else {
-      return(res)
-    }
   }
 }
 
