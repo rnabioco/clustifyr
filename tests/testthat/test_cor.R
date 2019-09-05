@@ -330,26 +330,30 @@ test_that("correct error message is displayed for nonexistent cluster_col", {
   ))
 })
 
-test_that("input metadata columns are not changed (type, r, rn, etc). #259",{
+test_that("input Seurat metadata columns are not changed (type, r, rn, etc). #259",{
 
-  data("s_small3")
+  if ("Seurat" %in% rownames(installed.packages())){
+    library(Seurat)
+    tmp <- s_small3
+    tmp@meta.data$type <- 0L
+    tmp@meta.data$rn <- 0L
+    tmp@meta.data$r <- 0L
 
-  tmp <- s_small3
-  tmp$type <- 0L
-  tmp$rn <- 0L
-  tmp$r <- 0L
+    res <- clustify(
+      input = tmp,
+      ref_mat = pbmc_bulk_matrix,
+      cluster_col = "RNA_snn_res.1",
+      dr = "tsne"
+    )
 
-  res <- clustify(
-    input = tmp,
-    ref_mat = pbmc_bulk_matrix,
-    cluster_col = "RNA_snn_res.1",
-    dr = "tsne"
-  )
+    expect_true(all(c("type", "rn", "r") %in% colnames(res@meta.data)))
+    expect_true(all(res@meta.data$type == 0L))
+    expect_true(all(res@meta.data$rn == 0L))
+    expect_true(all(res@meta.data$r == 0L))
 
-  expect_true(all(c("type", "rn", "r") %in% colnames(res@meta.data)))
-  expect_true(all(res@meta.data$type == 0L))
-  expect_true(all(res@meta.data$rn == 0L))
-  expect_true(all(res@meta.data$r == 0L))
+    detach("package:Seurat", unload=TRUE)
+  }
+
 
 })
 
