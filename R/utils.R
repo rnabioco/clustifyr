@@ -1680,3 +1680,25 @@ file_marker_parse <- function(filename) {
   }
   list("pos" = ident_pos, "neg" = ident_neg)
 }
+
+
+
+#' Generate a unique column id for a dataframe
+#' @param df dataframe with column names
+#' @param id desired id if unique
+#' @return character
+#'
+get_unique_column <- function(df, id = NULL){
+  if(!is.null(id)){
+    out_id <- id
+  } else {
+    out_id <- "x"
+  }
+
+  res <- ifelse(out_id %in% colnames(df),
+                make.unique(c(colnames(df), out_id))[length(c(colnames(df), out_id))],
+                out_id)
+
+  res
+}
+
