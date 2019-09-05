@@ -114,6 +114,7 @@ clustify.default <- function(input,
     if (is.null(query_genes)) {
       query_genes <- temp[["var"]]
     }
+    
     if (is.null(cluster_col)) {
       cluster_col <- temp[["col"]]
     }
@@ -127,6 +128,11 @@ clustify.default <- function(input,
     stop("given `cluster_col` is not a column in `metadata`", call. = FALSE)
   }
 
+  if (length(query_genes) == 0) {
+    message("var.features not found, using all genes instead")
+    query_genes <- NULL
+  }
+  
   expr_mat <- input
 
   # select gene subsets
