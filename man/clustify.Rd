@@ -5,7 +5,7 @@
 \alias{clustify.default}
 \alias{clustify.seurat}
 \alias{clustify.Seurat}
-\title{Compare scRNA-seq data to bulk RNA-seq data.}
+\title{Compare scRNA-seq data to reference data.}
 \usage{
 clustify(input, ...)
 
@@ -75,7 +75,7 @@ single cell object with identity assigned in metadata, or matrix of correlation 
 types from ref_mat as column names
 }
 \description{
-Compare scRNA-seq data to bulk RNA-seq data.
+Compare scRNA-seq data to reference data.
 }
 \examples{
 # Annotate a matrix and metadata
