@@ -6,8 +6,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • clustifyR</title>
+<title>Function reference • clustifyr</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
@@ -16,13 +23,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -32,7 +41,7 @@
 
 <meta property="og:title" content="Function reference" />
 
-<meta property="og:image" content="http://rnabioco.github.io/clustifyR/logo.png" />
+<meta property="og:image" content="http://rnabioco.github.io/clustifyr/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -45,6 +54,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -62,7 +72,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">clustifyR</a>
+        <a class="navbar-link" href="../index.html">clustifyr</a>
         <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
       </span>
     </div>
@@ -71,12 +81,9 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
-</li>
-<li>
-  <a href="../articles/clustifyR.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -89,19 +96,22 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/benchmark.html">Benchmarking clustifyR</a>
+      <a href="../articles/benchmark.html">Benchmarking clustifyr</a>
+    </li>
+    <li>
+      <a href="../articles/clustifyR.html">Introduction to clustifyr</a>
     </li>
     <li>
       <a href="../articles/otherformats.html">Support for various single cell object formats</a>
     </li>
     <li>
-      <a href="../articles/othertools.html">Other considerations w/ clustifyR</a>
+      <a href="../articles/othertools.html">Other considerations w/ clustifyr</a>
     </li>
     <li>
-      <a href="../articles/references.html">Reference building for clustifyR</a>
+      <a href="../articles/references.html">Reference building for clustifyr</a>
     </li>
     <li>
-      <a href="../articles/visualizations.html">Visualization of clustifyR results</a>
+      <a href="../articles/visualizations.html">Visualization of clustifyr results</a>
     </li>
   </ul>
 </li>
@@ -112,8 +122,8 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/rnabioco/clustifyR">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/rnabioco/clustifyr">
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -124,6 +134,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -164,7 +175,7 @@
         <td>
           <p><code><a href="average_clusters.html">average_clusters()</a></code> </p>
         </td>
-        <td><p>Average expression values per cluster</p></td>
+        <td><p>#' Average expression values per cluster</p></td>
       </tr><tr>
         
         <td>
@@ -192,27 +203,27 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="call_to_metadata.html">call_to_metadata()</a></code> </p>
+        </td>
+        <td><p>Insert called ident results into metadata</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="cbmc_m.html">cbmc_m</a></code> </p>
         </td>
-        <td><p>reference marker matrix from seurat citeseq CBMC</p></td>
+        <td><p>reference marker matrix from seurat citeseq CBMC tutorial</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="cbmc_ref.html">cbmc_ref</a></code> </p>
         </td>
-        <td><p>reference matrix from seurat citeseq CBMC</p></td>
+        <td><p>reference matrix from seurat citeseq CBMC tutorial</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="clustify.html">clustify()</a></code> </p>
         </td>
-        <td><p>Main function to compare scRNA-seq data to bulk RNA-seq data.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="clustifyR.html">clustifyR</a></code> </p>
-        </td>
-        <td><p>clustifyR</p></td>
+        <td><p>Compare scRNA-seq data to bulk RNA-seq data.</p></td>
       </tr><tr>
         
         <td>
@@ -236,7 +247,13 @@
         <td>
           <p><code><a href="clustifyr_methods.html">clustifyr_methods</a></code> </p>
         </td>
-        <td><p>Correlation functions available in clustifyR</p></td>
+        <td><p>Correlation functions available in clustifyr</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="collapse_to_cluster.html">collapse_to_cluster()</a></code> </p>
+        </td>
+        <td><p>From per-cell calls, take highest freq call in each cluster</p></td>
       </tr><tr>
         
         <td>
@@ -321,7 +338,7 @@ or jaccard index</p></td>
         <td>
           <p><code><a href="get_similarity.html">get_similarity()</a></code> </p>
         </td>
-        <td><p>Compute the p-value for similarity using permutation</p></td>
+        <td><p>Compute similarity of matrices</p></td>
       </tr><tr>
         
         <td>
@@ -334,6 +351,12 @@ or jaccard index</p></td>
           <p><code><a href="gmt_to_list.html">gmt_to_list()</a></code> </p>
         </td>
         <td><p>convert gmt format of pathways to list of vectors</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="insert_meta_object.html">insert_meta_object()</a></code> </p>
+        </td>
+        <td><p>more flexible metadata update of single cell objects</p></td>
       </tr><tr>
         
         <td>
@@ -373,6 +396,12 @@ or jaccard index</p></td>
       </tr><tr>
         
         <td>
+          <p><code><a href="object_ref.html">object_ref()</a></code> </p>
+        </td>
+        <td><p>Function to convert labelled object to avg expression matrix</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="overcluster_test.html">overcluster_test()</a></code> </p>
         </td>
         <td><p>compare clustering parameters and classification outcomes</p></td>
@@ -385,45 +414,39 @@ or jaccard index</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="pbmc4k_markers.html">pbmc4k_markers</a></code> </p>
-        </td>
-        <td><p>Marker genes identified by Seurat from single-cell RNA-seq PBMCs.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pbmc4k_markers_M3Drop.html">pbmc4k_markers_M3Drop</a></code> </p>
-        </td>
-        <td><p>Marker genes identified by M3Drop from single-cell RNA-seq PBMCs.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pbmc4k_matrix.html">pbmc4k_matrix</a></code> </p>
-        </td>
-        <td><p>Matrix of single-cell RNA-seq PBMCs.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pbmc4k_meta.html">pbmc4k_meta</a></code> </p>
-        </td>
-        <td><p>Meta-data for single-cell RNA-seq PBMCs.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pbmc4k_vargenes.html">pbmc4k_vargenes</a></code> </p>
-        </td>
-        <td><p>variable genes identified by Seurat from single-cell RNA-seq PBMCs.</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="pbmc_bulk_matrix.html">pbmc_bulk_matrix</a></code> </p>
         </td>
         <td><p>Bulk RNA-Seq data from sorted populations isolated from PBMCs.</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="pbmc_pca.html">pbmc_pca</a></code> </p>
+          <p><code><a href="pbmc_markers.html">pbmc_markers</a></code> </p>
         </td>
-        <td><p>Variable genes defined by Principal components analysis of pbmc4k data</p></td>
+        <td><p>Marker genes identified by Seurat from single-cell RNA-seq PBMCs.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pbmc_markers_M3Drop.html">pbmc_markers_M3Drop</a></code> </p>
+        </td>
+        <td><p>Marker genes identified by M3Drop from single-cell RNA-seq PBMCs.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pbmc_matrix_small.html">pbmc_matrix_small</a></code> </p>
+        </td>
+        <td><p>Matrix of single-cell RNA-seq PBMCs.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pbmc_meta.html">pbmc_meta</a></code> </p>
+        </td>
+        <td><p>Meta-data for single-cell RNA-seq PBMCs.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pbmc_vargenes.html">pbmc_vargenes</a></code> </p>
+        </td>
+        <td><p>Variable genes identified by Seurat from single-cell RNA-seq PBMCs.</p></td>
       </tr><tr>
         
         <td>
@@ -441,13 +464,13 @@ or jaccard index</p></td>
         <td>
           <p><code><a href="plot_best_call.html">plot_best_call()</a></code> </p>
         </td>
-        <td><p>Plot best calls for each cluster on a tSNE</p></td>
+        <td><p>Plot best calls for each cluster on a tSNE or umap</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="plot_call.html">plot_call()</a></code> </p>
         </td>
-        <td><p>Plot called clusters on a tSNE, for each reference cluster given</p></td>
+        <td><p>Plot called clusters on a tSNE or umap, for each reference cluster given</p></td>
       </tr><tr>
         
         <td>
@@ -459,7 +482,7 @@ or jaccard index</p></td>
         <td>
           <p><code><a href="plot_cor.html">plot_cor()</a></code> </p>
         </td>
-        <td><p>Plot similarity measures on a tSNE</p></td>
+        <td><p>Plot similarity measures on a tSNE or umap</p></td>
       </tr><tr>
         
         <td>
@@ -471,7 +494,7 @@ or jaccard index</p></td>
         <td>
           <p><code><a href="plot_gene.html">plot_gene()</a></code> </p>
         </td>
-        <td><p>Plot gene expression on to tSNE</p></td>
+        <td><p>Plot gene expression on to tSNE or umap</p></td>
       </tr><tr>
         
         <td>
@@ -483,7 +506,7 @@ or jaccard index</p></td>
         <td>
           <p><code><a href="plot_tsne.html">plot_tsne()</a></code> </p>
         </td>
-        <td><p>Plot a tSNE colored by feature.</p></td>
+        <td><p>Plot a tSNE or umap colored by feature.</p></td>
       </tr><tr>
         
         <td>
@@ -553,27 +576,15 @@ or jaccard index</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="use_object_comp.html">use_object_comp()</a></code> </p>
-        </td>
-        <td><p>Function to convert labelled object to avg expression matrix</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="use_seurat3_comp.html">use_seurat3_comp()</a></code> </p>
-        </td>
-        <td><p>Function to convert labelled seurat3 object to avg expression matrix</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="use_seurat_comp.html">use_seurat_comp()</a></code> </p>
-        </td>
-        <td><p>Function to convert labelled seurat object to avg expression matrix</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="use_seurat_meta.html">use_seurat_meta()</a></code> </p>
+          <p><code><a href="seurat_meta.html">seurat_meta()</a></code> </p>
         </td>
         <td><p>Function to convert labelled seurat object to fully prepared metadata</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="seurat_ref.html">seurat_ref()</a></code> </p>
+        </td>
+        <td><p>Function to convert labelled seurat object to avg expression matrix</p></td>
       </tr><tr>
         
         <td>
@@ -593,19 +604,23 @@ or jaccard index</p></td>
   </div>
 </div>
 
+
       <footer>
       <div class="copyright">
   <p>Developed by Rui Fu, Kent Riemondy, Austin Gillen, Chengzhe Tian, Jay Hesselberth.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

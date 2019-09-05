@@ -27,9 +27,11 @@ In its simplest form, a reference matrix is built by averaging expression (also 
 
 ```{r average}
 library(clustifyr)
+full_pbmc_matrix <- clustifyrdata::pbmc_matrix
+full_pbmc_meta <- clustifyrdata::pbmc_meta
 new_ref_matrix <- average_clusters(
-  pbmc4k_matrix, 
-  cluster_info = pbmc4k_meta$cluster,
+  full_pbmc_matrix, 
+  cluster_info = full_pbmc_meta$classified,
   if_log = T
 )
 
@@ -41,12 +43,12 @@ head(new_ref_matrix)
 For further convenience, a shortcut function for generating reference matrix from  `seurat` object is used here.
 
 ```{r seruat}
-new_ref_matrix_v2 <- use_seurat_comp(
+new_ref_matrix_v2 <- seurat_ref(
   seurat_object = s_small,
   cluster_col = "res.1"
 )
 
-new_ref_matrix_v3 <- use_seurat_comp(
+new_ref_matrix_v3 <- seurat_ref(
   seurat_object = s_small3,
   cluster_col = "RNA_snn_res.1"
 )
@@ -57,13 +59,13 @@ tail(new_ref_matrix_v3)
 If given additional `assay_name`, output ref will include features from the designated slots (such as for CITE-seq data).
 
 ```{r seruat2}
-new_ref_matrix_v2 <- use_seurat_comp(
+new_ref_matrix_v2 <- seurat_ref(
   seurat_object = s_small,
   cluster_col = "res.1",
   assay_name = c("ADT","ADT2")
 )
 
-new_ref_matrix_v3 <- use_seurat_comp(
+new_ref_matrix_v3 <- seurat_ref(
   seurat_object = s_small3,
   cluster_col = "RNA_snn_res.1",
   assay_name = c("ADT","ADT2")
@@ -210,7 +212,7 @@ clustifyrdata::hema_microarray_matrix[1:5,1:5]
 
 ```{r genelist}
 # directly from seurat function
-head(pbmc4k_markers)
+head(pbmc_markers)
 
 # manually enter into dataframe format
 betam <- c("INS", "IGF2", "IAPP","MAFA","NPTX2")
@@ -220,7 +222,7 @@ data.frame(alpham, betam, deltam)
 
 # use matrixize_markers function to convert
 mm <- matrixize_markers(
-  pbmc4k_markers, 
+  pbmc_markers, 
   remove_rp = T, 
   unique = T, 
   n = 10
@@ -243,7 +245,7 @@ cbmc_m <- matrixize_markers(
 A few reference datasets are built into clustifyr for vignettes and testing:
 `pbmc_bulk_matrix`,
 `cbmc_ref`,
-`pbmc4k_markers`,
+`pbmc_markers`,
 `cbmc_m`
 
 ## Prebuilt references, in clustifyrdata
