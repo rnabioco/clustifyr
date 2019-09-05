@@ -97,7 +97,6 @@ seurat_ref.Seurat <- function(seurat_object,
 }
 
 #' Function to convert labelled seurat object to fully prepared metadata#' 
-#' @param ... additional arguments
 #' @return dataframe of metadata, including dimension reduction plotting info
 #' @examples
 #' \dontrun{meta_data <- seurat_meta(s_small)}

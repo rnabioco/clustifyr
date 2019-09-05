@@ -18,8 +18,6 @@ seurat_meta(seurat_object, ...)
 \item{...}{additional arguments}
 
 \item{dr}{dimension reduction method}
-
-\item{...}{additional arguments}
 }
 \value{
 dataframe of metadata, including dimension reduction plotting info

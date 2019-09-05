@@ -410,6 +410,8 @@ clustify_lists <- function(input, ...) {
 #' @param obj_out whether to output object instead of cor matrix
 #' @param rename_prefix prefix to add to type and r column names
 #' @param threshold identity calling minimum correlation score threshold, only used when obj_out = T
+#' @param dr stored dimension reduction
+#' @param seurat_out output cor matrix or called seurat object
 #' @param ... passed to matrixize_markers
 #' 
 #' @return matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
@@ -429,6 +431,7 @@ clustify_lists.default <- function(input,
                                    output_high = TRUE,
                                    lookuptable = NULL,
                                    obj_out = FALSE,
+                                   seurat_out = FALSE,
                                    rename_prefix = NULL,
                                    threshold = 0,
                                    ...) {
@@ -474,7 +477,7 @@ clustify_lists.default <- function(input,
     output_high = output_high
   )
   
-  if (obj_out && !inherits(input_original, c("matrix", "Matrix", "data.frame"))) {
+  if ((obj_out || seurat_out) && !inherits(input_original, c("matrix", "Matrix", "data.frame"))) {
     df_temp <- cor_to_call(
       res,
       metadata = metadata,
@@ -503,29 +506,6 @@ clustify_lists.default <- function(input,
 }
 
 #' @rdname clustify_lists
-#' @param input seurat object
-#' @param cluster_info data.frame or vector containing cluster assignments per cell.
-#' Order must match column order in supplied matrix. If a data.frame
-#' provide the cluster_col parameters.
-#' @param cluster_col column in cluster_info with cluster number
-#' @param if_log input data is natural log,
-#' averaging will be done on unlogged data
-#' @param per_cell compare per cell or per cluster
-#' @param topn number of top expressing genes to keep from input matrix
-#' @param cut expression cut off from input matrix
-#' @param marker matrix or dataframe of candidate genes for each cluster
-#' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
-#' @param genome_n number of genes in the genome
-#' @param metric adjusted p-value for hypergeometric test, or jaccard index
-#' @param output_high if true (by default to fit with rest of package),
-#' -log10 transform p-value
-#' @param dr stored dimension reduction
-#' @param seurat_out output cor matrix or called seurat object
-#' @param threshold identity calling minimum score threshold
-#' @param rename_prefix prefix to add to type and r column names
-
-#' @param ... passed to matrixize_markers
-#' @return seurat2 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
 #' @export
 clustify_lists.seurat <- function(input,
                                   cluster_info = NULL,
@@ -541,6 +521,7 @@ clustify_lists.seurat <- function(input,
                                   output_high = TRUE,
                                   dr = "umap",
                                   seurat_out = TRUE,
+                                  obj_out = FALSE,
                                   threshold = 0,
                                   rename_prefix = NULL,
                                   ...) {
@@ -565,7 +546,7 @@ clustify_lists.seurat <- function(input,
     ...
   )
 
-  if (!seurat_out) {
+  if (!(seurat_out || obj_out)) {
     res
   } else {
     df_temp <- cor_to_call(
@@ -595,29 +576,7 @@ clustify_lists.seurat <- function(input,
 }
 
 #' @rdname clustify_lists
-#' @param input seurat object
-#' @param cluster_info data.frame or vector containing cluster assignments per cell.
-#' Order must match column order in supplied matrix. If a data.frame
-#' provide the cluster_col parameters.
-#' @param cluster_col column in cluster_info with cluster number
-#' @param if_log input data is natural log,
-#' averaging will be done on unlogged data
-#' @param per_cell compare per cell or per cluster
-#' @param topn number of top expressing genes to keep from input matrix
-#' @param cut expression cut off from input matrix
-#' @param marker matrix or dataframe of candidate genes for each cluster
-#' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
-#' @param genome_n number of genes in the genome
-#' @param metric adjusted p-value for hypergeometric test, or jaccard index
-#' @param output_high if true (by default to fit with rest of package),
-#' -log10 transform p-value
-#' @param dr stored dimension reduction
-#' @param seurat_out output cor matrix or called seurat object
-#' @param threshold identity calling minimum score threshold
-#' @param rename_prefix prefix to add to type and r column names
-#' @param ... passed to matrixize_markers
-
-#' @return seurat3 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
+#' @export
 clustify_lists.Seurat <- function(input,
                                   cluster_info = NULL,
                                   cluster_col = NULL,
@@ -632,6 +591,7 @@ clustify_lists.Seurat <- function(input,
                                   output_high = TRUE,
                                   dr = "umap",
                                   seurat_out = TRUE,
+                                  obj_out = FALSE,
                                   threshold = 0,
                                   rename_prefix = NULL,
                                   ...) {
@@ -656,7 +616,7 @@ clustify_lists.Seurat <- function(input,
     ...
   )
 
-  if (!seurat_out) {
+  if (!(seurat_out || obj_out)) {
     res
   } else {
     df_temp <- cor_to_call(
