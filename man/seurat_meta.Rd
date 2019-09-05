@@ -20,18 +20,8 @@ seurat_meta(seurat_object, ...)
 \item{dr}{dimension reduction method}
 
 \item{...}{additional arguments}
-
-\item{seurat_object}{seurat_object after tsne or umap projections and clustering}
-
-\item{dr}{dimension reduction method}
-
-\item{...}{additional arguments}
 }
 \value{
-dataframe of metadata, including dimension reduction plotting info
-
-dataframe of metadata, including dimension reduction plotting info
-
 dataframe of metadata, including dimension reduction plotting info
 }
 \description{

@@ -13,19 +13,19 @@ clustify(input, ...)
   cluster_col = NULL, query_genes = NULL, per_cell = FALSE,
   n_perm = 0, compute_method = "spearman", verbose = FALSE,
   lookuptable = NULL, rm0 = FALSE, obj_out = FALSE,
-  rename_prefix = NULL, threshold = 0, ...)
+  seurat_out = FALSE, rename_prefix = NULL, threshold = 0, ...)
 
 \method{clustify}{seurat}(input, ref_mat, cluster_col = NULL,
   query_genes = NULL, per_cell = FALSE, n_perm = 0,
   compute_method = "spearman", use_var_genes = TRUE, dr = "umap",
-  seurat_out = TRUE, threshold = 0, verbose = FALSE, rm0 = FALSE,
-  rename_prefix = NULL, ...)
+  seurat_out = TRUE, obj_out = FALSE, threshold = 0,
+  verbose = FALSE, rm0 = FALSE, rename_prefix = NULL, ...)
 
 \method{clustify}{Seurat}(input, ref_mat, cluster_col = NULL,
   query_genes = NULL, per_cell = FALSE, n_perm = 0,
   compute_method = "spearman", use_var_genes = TRUE, dr = "umap",
-  seurat_out = TRUE, threshold = 0, verbose = FALSE, rm0 = FALSE,
-  rename_prefix = NULL, ...)
+  seurat_out = TRUE, obj_out = FALSE, threshold = 0,
+  verbose = FALSE, rm0 = FALSE, rename_prefix = NULL, ...)
 }
 \arguments{
 \item{input}{single-cell expression matrix or Seurat object}
@@ -57,7 +57,9 @@ common genes between the expr_mat and ref_mat will be used for comparision.}
 
 \item{rm0}{consider 0 as missing data, recommended for per_cell}
 
-\item{obj_out}{whether to output object instead of cor matrix}
+\item{obj_out}{equivalent to seurat_out}
+
+\item{seurat_out}{output cor matrix or called seurat object}
 
 \item{rename_prefix}{prefix to add to type and r column names}
 
@@ -68,81 +70,11 @@ common genes between the expr_mat and ref_mat will be used for comparision.}
 
 \item{dr}{stored dimension reduction}
 
-\item{seurat_out}{output cor matrix or called seurat object}
-
-\item{ref_mat}{reference expression matrix}
-
-\item{cluster_col}{column in metadata that contains cluster ids per cell. Will default to first
-column of metadata if not supplied. Not required if running correlation per cell.}
-
-\item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
-the expr_mat and ref_mat will be used for comparision.}
-
-\item{per_cell}{if true run per cell, otherwise per cluster.}
-
-\item{n_perm}{number of permutations, set to 0 by default}
-
-\item{compute_method}{method(s) for computing similarity scores}
-
-\item{use_var_genes}{if providing a seurat object, use the variable genes
-(stored in seurat_object@var.genes) as the query_genes.}
-
-\item{dr}{stored dimension reduction}
-
-\item{seurat_out}{output cor matrix or called seurat object}
-
-\item{threshold}{identity calling minimum correlation score threshold}
-
-\item{verbose}{whether to report certain variables chosen}
-
-\item{rm0}{consider 0 as missing data, recommended for per_cell}
-
-\item{rename_prefix}{prefix to add to type and r column names}
-
-\item{...}{additional arguments to pass to compute_method function}
-
-\item{ref_mat}{reference expression matrix}
-
-\item{cluster_col}{column in metadata that contains cluster ids per cell. Will default to first
-column of metadata if not supplied. Not required if running correlation per cell.}
-
-\item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
-the expr_mat and ref_mat will be used for comparision.}
-
-\item{per_cell}{if true run per cell, otherwise per cluster.}
-
-\item{n_perm}{number of permutations, set to 0 by default}
-
-\item{compute_method}{method(s) for computing similarity scores}
-
-\item{use_var_genes}{if providing a seurat object, use the variable genes
-(stored in seurat_object@var.genes) as the query_genes.}
-
-\item{dr}{stored dimension reduction}
-
-\item{seurat_out}{output cor matrix or called seurat object}
-
-\item{threshold}{identity calling minimum correlation score threshold}
-
-\item{verbose}{whether to report certain variables chosen}
-
-\item{rm0}{consider 0 as missing data, recommended for per_cell}
-
-\item{rename_prefix}{prefix to add to type and r column names}
-
-\item{...}{additional arguments to pass to compute_method function}
+\item{obj_out}{whether to output object instead of cor matrix}
 }
 \value{
-matrix of correlation values, clusters from input as row names, cell
+single cell object with identity assigned in metadata, or matrix of correlation values, clusters from input as row names, cell
 types from ref_mat as column names
-
-seurat2 object with type assigned in metadata, or matrix of
-correlation values, clusters from input as row names, cell types from
-ref_mat as column names
-
-seurat3 object with type assigned in metadata, or matrix of
-correlation values, clusters from input as row names, cell types from
-ref_mat as column names
 }
 \description{
 Compare scRNA-seq data to bulk RNA-seq data.

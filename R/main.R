@@ -23,6 +23,7 @@ clustify <- function(input, ...) {
 #'   (stored in seurat_object@var.genes) as the query_genes.
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
+#' @param obj_out equivalent to seurat_out
 #' @param verbose whether to report certain variables chosen
 #' @param lookuptable if not supplied, will look in built-in table for object parsing
 #' @param rm0 consider 0 as missing data, recommended for per_cell
@@ -31,7 +32,7 @@ clustify <- function(input, ...) {
 #' @param threshold identity calling minimum correlation score threshold, only used when obj_out = T
 #' @param ... additional arguments to pass to compute_method function
 #'
-#' @return matrix of correlation values, clusters from input as row names, cell
+#' @return single cell object with identity assigned in metadata, or matrix of correlation values, clusters from input as row names, cell
 #'   types from ref_mat as column names
 #'   
 #' @examples
@@ -87,6 +88,7 @@ clustify.default <- function(input,
                              lookuptable = NULL,
                              rm0 = FALSE,
                              obj_out = FALSE,
+                             seurat_out = FALSE,
                              rename_prefix = NULL,
                              threshold = 0,
                              ...) {
@@ -197,7 +199,7 @@ clustify.default <- function(input,
     )
   }
 
-  if (obj_out && !inherits(input_original, c("matrix", "Matrix", "data.frame"))) {
+  if ((obj_out || seurat_out) && !inherits(input_original, c("matrix", "Matrix", "data.frame"))) {
     df_temp <- cor_to_call(
       res,
       metadata = metadata,
@@ -226,28 +228,6 @@ clustify.default <- function(input,
 }
 
 #' @rdname clustify
-#' @param ref_mat reference expression matrix
-#' @param cluster_col column in metadata that contains cluster ids per cell. Will default to first
-#' column of metadata if not supplied. Not required if running correlation per cell.
-#' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
-#' the expr_mat and ref_mat will be used for comparision.
-#' @param per_cell if true run per cell, otherwise per cluster.
-#' @param n_perm number of permutations, set to 0 by default
-#' @param compute_method method(s) for computing similarity scores
-#' @param use_var_genes if providing a seurat object, use the variable genes
-#'  (stored in seurat_object@var.genes) as the query_genes.
-#' @param dr stored dimension reduction
-#' @param seurat_out output cor matrix or called seurat object
-#' @param threshold identity calling minimum correlation score threshold
-#' @param verbose whether to report certain variables chosen
-#' @param rm0 consider 0 as missing data, recommended for per_cell
-#' @param rename_prefix prefix to add to type and r column names
-#' @param ... additional arguments to pass to compute_method function
-#'
-#' @return seurat2 object with type assigned in metadata, or matrix of
-#'   correlation values, clusters from input as row names, cell types from
-#'   ref_mat as column names
-#'
 #' @export
 clustify.seurat <- function(input,
                             ref_mat,
@@ -259,6 +239,7 @@ clustify.seurat <- function(input,
                             use_var_genes = TRUE,
                             dr = "umap",
                             seurat_out = TRUE,
+                            obj_out = FALSE,
                             threshold = 0,
                             verbose = FALSE,
                             rm0 = FALSE,
@@ -291,7 +272,7 @@ clustify.seurat <- function(input,
     res <- -log(res$p_val + .01, 10)
   }
 
-  if (!seurat_out) {
+  if (!(seurat_out || obj_out)) {
     res
   } else {
     df_temp <- cor_to_call(
@@ -321,28 +302,6 @@ clustify.seurat <- function(input,
 }
 
 #' @rdname clustify
-#' @param ref_mat reference expression matrix
-#' @param cluster_col column in metadata that contains cluster ids per cell. Will default to first
-#' column of metadata if not supplied. Not required if running correlation per cell.
-#' @param query_genes A vector of genes of interest to compare. If NULL, then common genes between
-#' the expr_mat and ref_mat will be used for comparision.
-#' @param per_cell if true run per cell, otherwise per cluster.
-#' @param n_perm number of permutations, set to 0 by default
-#' @param compute_method method(s) for computing similarity scores
-#' @param use_var_genes if providing a seurat object, use the variable genes
-#'  (stored in seurat_object@var.genes) as the query_genes.
-#' @param dr stored dimension reduction
-#' @param seurat_out output cor matrix or called seurat object
-#' @param threshold identity calling minimum correlation score threshold
-#' @param verbose whether to report certain variables chosen
-#' @param rm0 consider 0 as missing data, recommended for per_cell
-#' @param rename_prefix prefix to add to type and r column names
-#' @param ... additional arguments to pass to compute_method function
-#' 
-#' @return seurat3 object with type assigned in metadata, or matrix of
-#'   correlation values, clusters from input as row names, cell types from
-#'   ref_mat as column names
-#'   
 #' @export
 clustify.Seurat <- function(input,
                             ref_mat,
@@ -354,6 +313,7 @@ clustify.Seurat <- function(input,
                             use_var_genes = TRUE,
                             dr = "umap",
                             seurat_out = TRUE,
+                            obj_out = FALSE,
                             threshold = 0,
                             verbose = FALSE,
                             rm0 = FALSE,
@@ -386,7 +346,7 @@ clustify.Seurat <- function(input,
     res <- -log(res$p_val + .01, 10)
   }
 
-  if (!seurat_out) {
+  if (!(seurat_out || obj_out)) {
     res
   } else {
     df_temp <- cor_to_call(
