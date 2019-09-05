@@ -35,7 +35,11 @@ average_clusters <- function(mat, cluster_info,
   if (is.vector(cluster_info)) {
     cluster_ids <- split(colnames(mat), cluster_info)
   } else if (is.data.frame(cluster_info) & !is.null(cluster_col)) {
-    cluster_ids <- split(colnames(mat), cluster_info[[cluster_col]])
+    cluster_info_temp <- cluster_info[[cluster_col]]
+    if (is.factor(cluster_info_temp)) {
+      cluster_info_temp <- droplevels(cluster_info_temp)
+    }
+    cluster_ids <- split(colnames(mat), cluster_info_temp)
   } else if (class(cluster_info) == "factor") {
     cluster_info <- as.character(cluster_info)
     cluster_ids <- split(colnames(mat), cluster_info)
