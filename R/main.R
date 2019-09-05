@@ -1,4 +1,4 @@
-#' Compare scRNA-seq data to bulk RNA-seq data.
+#' Compare scRNA-seq data to reference data.
 #'
 #' @export
 clustify <- function(input, ...) {
