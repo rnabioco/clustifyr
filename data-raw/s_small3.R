@@ -15,8 +15,9 @@ attr(attr(s@commands$ScoreJackStraw.pca, "class"), "package") <- NULL
 attr(attr(s@commands$ProjectDim.RNA.pca, "class"), "package") <- NULL
 attr(attr(attr(s@reductions$pca, "jackstraw"), "class"), "package") <- NULL
 attr(attr(s@reductions$pca, "class"), "package") <- NULL
-attr(attr(s@reductions$tse, "class"), "package") <- NULL
+attr(attr(s@reductions$tsne, "class"), "package") <- NULL
 attr(attr(s@graphs$RNA_snn, "class"), "package") <- NULL
 attr(attr(s@assays$RNA, "class"), "package") <- NULL
+attr(attr(s@reductions$tsne@jackstraw, "class"), "package") <- NULL
 
 usethis::use_data(s_small3, compress = "xz", overwrite = TRUE)
