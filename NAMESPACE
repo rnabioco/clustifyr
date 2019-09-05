@@ -3,6 +3,7 @@
 S3method(clustify,Seurat)
 S3method(clustify,default)
 S3method(clustify,seurat)
+S3method(clustify_lists,Seurat)
 S3method(clustify_lists,default)
 S3method(clustify_lists,seurat)
 S3method(clustify_nudge,Seurat)
