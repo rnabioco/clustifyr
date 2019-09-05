@@ -943,11 +943,11 @@ clustify_nudge.default <- function(input,
                              cluster_col = cluster_col,
                              lookuptable = lookuptable
     )
-    
+
     if (!(is.null(temp[["expr"]]))) {
       message(paste0("recognized object type - ", class(input)))
     }
-    
+
     input <- temp[["expr"]]
     metadata <- temp[["meta"]]
     if (is.null(query_genes)) {
@@ -989,7 +989,7 @@ clustify_nudge.default <- function(input,
 
   res <- resa[order(rownames(resa)), order(colnames(resa))] +
     resb[order(rownames(resb)), order(colnames(resb))] * weight
-  
+
   if (obj_out && !inherits(input_original, c("matrix", "Matrix", "data.frame"))) {
     df_temp <- cor_to_call(
       res,
@@ -997,7 +997,7 @@ clustify_nudge.default <- function(input,
       cluster_col = cluster_col,
       threshold = threshold
     )
-    
+
     df_temp_full <- call_to_metadata(
       df_temp,
       metadata = metadata,
@@ -1005,13 +1005,13 @@ clustify_nudge.default <- function(input,
       per_cell = FALSE,
       rename_prefix = rename_prefix
     )
-    
+
     out <- insert_meta_object(
-      input_original, 
-      df_temp_full, 
+      input_original,
+      df_temp_full,
       lookuptable = lookuptable
     )
-    
+
     return(out)
   } else {
     if (call == TRUE) {
@@ -1047,26 +1047,6 @@ parse_loc_object <- function(input,
                              var_loc = NULL,
                              cluster_col = NULL,
                              lookuptable = NULL) {
-  # if (type == "SingleCellExperiment") {
-  #   parsed = list(input@assays$data$logcounts,
-  #                 as.data.frame(input@colData)),
-  #                 NULL,
-  #                 "cell_type1")
-  # }
-  #
-  # if (type == "URD") {
-  #   parsed = list(input@logupx.data,
-  #                 input@meta,
-  #                 input@var.genes,
-  #                 "cluster")
-  # }
-  #
-  # if (type == "FunctionalSingleCellExperiment") {
-  #   parsed = list(input@ExperimentList$rnaseq@assays$data$logcounts,
-  #                 input@ExperimentList$rnaseq@colData,
-  #                 NULL,
-  #                 "leiden_cluster")
-  # }
   if (is.null(lookuptable)) {
     object_loc_lookup1 <- clustifyr::object_loc_lookup
   } else {
@@ -1126,7 +1106,7 @@ insert_meta_object <- function(input,
   } else {
     object_loc_lookup1 <- lookuptable
   }
-  
+
   if (!type %in% colnames(object_loc_lookup1)) {
     stop("unrecognized object type", call. = FALSE)
   } else {
@@ -1135,7 +1115,7 @@ insert_meta_object <- function(input,
     return(input)
   }
 }
-  
+
 #' compare clustering parameters and classification outcomes
 #'
 #' @param expr expression matrix
