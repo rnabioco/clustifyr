@@ -147,7 +147,7 @@ get_best_match_matrix <- function(cor_mat) {
 #' @param best_mat binarized call matrix
 #' @param cor_mat correlation matrix
 #' @param carry_cor whether the correlation score gets reported
-#' @param string with ident call and possibly cor value
+#' @return string with ident call and possibly cor value
 #' @examples
 #' cor_mat <- res <- clustify(
 #'   input = pbmc_matrix_small,
@@ -340,7 +340,7 @@ average_clusters_filter <- function(mat, cluster_info,
 #' @param mat expression matrix
 #' @param background vector or dataframe or matrix of high expression genes in background
 #' @param n the number of top genes to exclude, 0 defaults to all
-#' @param expression matrix with rows removed
+#' @return expression matrix with rows removed
 #' @examples
 #' avg1 <- average_clusters_filter(
 #'   mat = pbmc_matrix_small,
@@ -1110,7 +1110,7 @@ insert_meta_object <- function(input,
   if (!type %in% colnames(object_loc_lookup1)) {
     stop("unrecognized object type", call. = FALSE)
   } else {
-    text1 <<- paste0(object_loc_lookup1[[type]][2], " <- ", "new_meta")
+    text1 <- paste0(object_loc_lookup1[[type]][2], " <- ", "new_meta")
     eval(parse(text = text1))
     return(input)
   }
