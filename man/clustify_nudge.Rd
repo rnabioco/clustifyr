@@ -52,6 +52,8 @@ the expr_mat and ref_mat will be used for comparision.}
 
 \item{seurat_out}{output cor matrix or called seurat object}
 
+\item{threshold}{identity calling minimum score threshold, only used when obj_out = T}
+
 \item{dr}{stored dimension reduction}
 
 \item{norm}{whether and how the results are normalized}

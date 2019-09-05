@@ -703,6 +703,7 @@ clustify_nudge <- function(input, ...) {
 #' @param seurat_out output cor matrix or called seurat object
 #' @param rename_prefix prefix to add to type and r column names
 #' @param lookuptable if not supplied, will look in built-in table for object parsing
+#' @param threshold identity calling minimum score threshold, only used when obj_out = T
 
 #' @return single cell object, or matrix of numeric values, clusters from input as row names, cell types from ref_mat as column names
 #' @export
