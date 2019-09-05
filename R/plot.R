@@ -36,8 +36,12 @@ plot_tsne <- function(data, x = "UMAP_1", y = "UMAP_2",
   # sort data to avoid plotting null values over colors
   data <- dplyr::arrange(data, !!dplyr::sym(feature))
 
+  # Add backticks to allow special characters in column names
+  x <- paste0("`", x, "`")
+  y <- paste0("`", y, "`")
+
   p <- ggplot2::ggplot(data, ggplot2::aes_string(x, y)) +
-    geom_point(ggplot2::aes_string(color = paste0("`", feature, "`")), # backticks protect special character gene names
+    geom_point(ggplot2::aes_string(color = paste0("`", feature, "`")),
       size = pt_size
     )
 
@@ -175,6 +179,11 @@ plot_cor <- function(cor_matrix,
     -dplyr::matches(cluster_col)
   )
 
+  # If cluster_col is factor, convert to character
+  if (is.factor(metadata[, cluster_col])) {
+    metadata[, cluster_col] <- as.character(metadata[, cluster_col])
+  }
+
   # checks matrix rownames, 2 branches for cluster number (avg) or cell bar code (each cell)
   if (cor_df[[cluster_col]][1] %in% metadata[[cluster_col]]) {
     plt_data <- dplyr::left_join(cor_df_long,
@@ -204,6 +213,7 @@ plot_cor <- function(cor_matrix,
   }
 
   plts <- vector("list", length(data_to_plot))
+
   for (i in seq_along(data_to_plot)) {
     tmp_data <- dplyr::filter(
       plt_data,
