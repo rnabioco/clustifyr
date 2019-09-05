@@ -33,35 +33,26 @@ res <- clustify(
   input = s_small,
   cluster_col = "res.1",
   ref_mat = pbmc_bulk_matrix,
-  seurat_out = T
+  seurat_out = T,
+  dr = "tsne"
 )
 
 # or return a correlation matrix, if seurat_out is set to F
 res2 <- clustify_lists(
   s_small,
   per_cell = F,
-  marker = pbmc4k_markers,
+  marker = pbmc_markers,
   marker_inmatrix = F,
   cluster_col = "res.1",
-  seurat_out = F
-)
-
-# and combined ref matrix and marker info
-res3 <- clustify_nudge(
-  input = s_small3,
-  ref_mat = cbmc_ref,
-  marker = cbmc_m,
-  cluster_col = "RNA_snn_res.1",
-  seurat_out = F
+  seurat_out = F,
+  dr = "tsne"
 )
 ```
 
 ## Other scRNA-seq object formats are easily supported, by adding defaults to a lookup file `object_loc_lookup`, currently including `SCE`, `URD`, `CDS`, `FSCE`.
 
-```{r}
+```{r, eval = F}
 # location of data in object in this format
-library(clustifyr)
-
 object_loc_lookup
 
 # adding seurat3 locations
@@ -80,7 +71,7 @@ res <- clustify_nudge(
   fsce_small,
   cbmc_ref,
   cbmc_m,
-  query_genes = pbmc4k_vargenes,
+  query_genes = pbmc_vargenes,
   cluster_col = "k_cluster"
 )
 ```
@@ -90,7 +81,7 @@ Making scRNA-seq objects into references is assisted by wrappers as well.
 
 ```{r eval = F}
 # for both v2 and v3
-seurat_ref <- use_seurat_comp(
+seurat_ref <- seurat_ref(
   s_small3,
   cluster_col = "RNA_snn_res.1"
 )

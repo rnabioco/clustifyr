@@ -13,6 +13,8 @@ output:
 
 ```{r knitr_opts, echo = FALSE, message = FALSE, warning = FALSE}
 knitr::opts_chunk$set(
+  message = FALSE,
+  warning = FALSE,
   collapse = TRUE,
   comment = "#>",
   fig.align = "center"
@@ -25,19 +27,21 @@ knitr::opts_chunk$set(
 
 ```{r "Create tSNE", fig.height = 8, fig.width = 10}
 library(clustifyr)
-
+library(tidyverse)
+full_pbmc_matrix <- clustifyrdata::pbmc_matrix
+full_pbmc_meta <- clustifyrdata::pbmc_meta
 # Matrix of normalized single-cell RNA-seq counts
-pbmc4k_matrix
+full_pbmc_matrix[1:3,1:3]
 
 # meta.data table containing cluster assignments for each cell 
-pbmc4k_meta[1:5, ]
+full_pbmc_meta[1:5, ]
 
 # Create tSNE and color cells based on cluster ID
 plot_tsne(
-  x = "tSNE_1",             # name of column in the meta.data containing the data to plot on x-axis
-  y = "tSNE_2",             # name of column in the meta.data containing the data to plot on y-axis
-  data = pbmc4k_meta,       # meta.data table containing cluster assignments for each cell
-  feature = "cluster"       # name of column in meta.data to color cells by
+  x = "UMAP_1",             # name of column in the meta.data containing the data to plot on x-axis
+  y = "UMAP_2",             # name of column in the meta.data containing the data to plot on y-axis
+  data = full_pbmc_meta,       # meta.data table containing cluster assignments for each cell
+  feature = "seurat_clusters"       # name of column in meta.data to color cells by
 )
 ```
 
@@ -46,10 +50,10 @@ Cells can also be colored based on the expression level of a gene or list of gen
 ```{r "Overlay gene expression"}
 # Create tSNE and color cells based on gene expression
 plot_gene(
-  x = "tSNE_1",                # name of column in the meta.data containing the data to plot on x-axis
-  y = "tSNE_2",                # name of column in the meta.data containing the data to plot on y-axis
-  expr_mat = pbmc4k_matrix,    # matrix of normalized single-cell RNA-seq counts
-  metadata = pbmc4k_meta,      # meta.data table containing cluster assignments for each cell
+  x = "UMAP_1",                # name of column in the meta.data containing the data to plot on x-axis
+  y = "UMAP_2",                # name of column in the meta.data containing the data to plot on y-axis
+  expr_mat = full_pbmc_matrix,    # matrix of normalized single-cell RNA-seq counts
+  metadata = full_pbmc_meta %>% rownames_to_column("rn"),      # meta.data table containing cluster assignments for each cell
   genes = c("CD79B", "CD8A"),  # vector of gene names to color cells
   cell_col = "rn"              # name of column in meta.data containing the cell IDs
 )
@@ -64,11 +68,11 @@ Cell type assignments can be assessed by plotting the `clustifyr()` correlation 
 ```{r "Correlation heatmap"}
 # Run clustifyr()
 res <- clustify(
-  input = pbmc4k_matrix,          # matrix of normalized single-cell RNA-seq counts
-  metadata = pbmc4k_meta,         # meta.data table containing cluster assignments for each cell
+  input = full_pbmc_matrix,          # matrix of normalized single-cell RNA-seq counts
+  metadata = full_pbmc_meta,         # meta.data table containing cluster assignments for each cell
   ref_mat = cbmc_ref,             # reference matrix containing bulk RNA-seq data for each cell type
-  query_genes = pbmc4k_vargenes,  # list of highly varible genes identified with Seurat
-  cluster_col = "cluster"         # name of column in meta.data containing cell clusters
+  query_genes = pbmc_vargenes,  # list of highly varible genes identified with Seurat
+  cluster_col = "seurat_clusters"         # name of column in meta.data containing cell clusters
 )
 
 # Create heatmap using the clustifyr correlation matrix
@@ -82,12 +86,12 @@ The `plot_cor()` function can also be used to create a tSNE for each cell type o
 ```{r "Overlay corr coefficients", fig.height = 5.5, fig.width = 12}
 # Create a tSNE for each cell type of interest and color cells based on correlation coefficients
 plot_cor(
-  x = "tSNE_1",                       # name of column in the meta.data containing the data to plot on x-axis
-  y = "tSNE_2",                       # name of column in the meta.data containing the data to plot on y-axis
+  x = "UMAP_1",                       # name of column in the meta.data containing the data to plot on x-axis
+  y = "UMAP_2",                       # name of column in the meta.data containing the data to plot on y-axis
   cor_matrix = res,                   # matrix of correlation coefficients from clustifyr()
-  metadata = pbmc4k_meta,             # meta.data table containing cluster assignments for each cell
+  metadata = full_pbmc_meta,          # meta.data table containing cluster assignments for each cell
   data_to_plot = colnames(res)[1:2],  # name of cell type(s) to plot correlation coefficients
-  cluster_col = "cluster"             # name of column in meta.data containing cell clusters
+  cluster_col = "seurat_clusters"     # name of column in meta.data containing cell clusters
 )
 ```
 
@@ -96,10 +100,11 @@ Cell clusters can also be labeled using the `plot_best_call()` function, which t
 ```{r "Label clusters with cell types", fig.height = 8, fig.width = 10}
 # Create tSNE and label clusters with the cell type that has the highest correlation coefficient
 plot_best_call(
-  cor_matrix = res,        # matrix of correlation coefficients from clustifyr()
-  metadata = pbmc4k_meta,  # meta.data table containing UMAP or tSNE data
-  do_label = TRUE,         # should the feature label be shown on each cluster?
-  do_legend = FALSE        # should the legend be shown?
+  cor_matrix = res,           # matrix of correlation coefficients from clustifyr()
+  metadata = full_pbmc_meta,  # meta.data table containing UMAP or tSNE data
+  do_label = TRUE,            # should the feature label be shown on each cluster?
+  do_legend = FALSE,          # should the legend be shown?
+  cluster_col = "seurat_clusters"
 )
 ```
 
@@ -110,11 +115,11 @@ The `clustifyr()` results can also be evaluated by over-clustering the data and 
 ```{r "Overclustering test", fig.height = 8, fig.width = 10}
 # Overcluster cells and compare cell type assignments with and without over-clustering
 overcluster_test(
-  expr = pbmc4k_matrix,     # matrix of normalized single-cell RNA-seq counts
-  metadata = pbmc4k_meta,   # meta.data table containing UMAP or tSNE data
-  ref_mat = cbmc_ref,       # reference matrix containing bulk RNA-seq data for each cell type      
-  cluster_col = "cluster",  # name of column in meta.data containing cell clusters
-  n = 5                     # expand cluster number n-fold for overclustering
+  expr = full_pbmc_matrix,     # matrix of normalized single-cell RNA-seq counts
+  metadata = full_pbmc_meta,   # meta.data table containing UMAP or tSNE data
+  ref_mat = cbmc_ref,          # reference matrix containing bulk RNA-seq data for each cell type      
+  cluster_col = "seurat_clusters",  # name of column in meta.data containing cell clusters
+  n = 5                        # expand cluster number n-fold for overclustering
 )
 ```
 
@@ -131,19 +136,20 @@ comb_ref[1:5, 1:5]
 
 # Run clustifyr() using the combined reference
 comb_res <- clustify(
-  input = pbmc4k_matrix,          # matrix of normalized single-cell RNA-seq counts
-  metadata = pbmc4k_meta,         # meta.data table containing cluster assignments for each cell
-  ref_mat = comb_ref,             # reference matrix containing bulk RNA-seq data for each cell type
-  query_genes = pbmc4k_vargenes,  # list of highly varible genes identified with Seurat
-  cluster_col = "cluster"         # name of column in meta.data containing cell clusters
+  input = full_pbmc_matrix,          # matrix of normalized single-cell RNA-seq counts
+  metadata = full_pbmc_meta,         # meta.data table containing cluster assignments for each cell
+  ref_mat = comb_ref,                # reference matrix containing bulk RNA-seq data for each cell type
+  query_genes = pbmc_vargenes,       # list of highly varible genes identified with Seurat
+  cluster_col = "seurat_clusters"    # name of column in meta.data containing cell clusters
 )
 
 # Create tSNE and label clusters with the assigned cell types from the combined reference
 plot_best_call(
-  cor_matrix = comb_res,   # matrix of correlation coefficients from clustifyr()
-  metadata = pbmc4k_meta,  # meta.data table containing UMAP or tSNE data
-  do_label = TRUE,         # should the feature label be shown on each cluster?
-  do_legend = FALSE        # should the legend be shown?
+  cor_matrix = comb_res,      # matrix of correlation coefficients from clustifyr()
+  metadata = full_pbmc_meta,  # meta.data table containing UMAP or tSNE data
+  do_label = TRUE,            # should the feature label be shown on each cluster?
+  do_legend = FALSE,          # should the legend be shown?
+  cluster_col = "seurat_clusters"
 )
 ```
 

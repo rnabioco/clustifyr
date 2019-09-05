@@ -1623,7 +1623,8 @@ pos_neg_select <- function(input,
     ref_mat,
     metadata,
     cluster_col = cluster_col,
-    per_cell = TRUE, verbose = TRUE
+    per_cell = TRUE, 
+    verbose = TRUE
   ))
   res[is.na(res)] <- 0
   suppressWarnings(res2 <- average_clusters(t(res),
