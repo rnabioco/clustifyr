@@ -29,12 +29,12 @@ plot_tsne <- function(data,
                       do_legend = TRUE) {
 
   # add backticks to allow special characters in column names
-  x <- paste0("`", x, "`")
-  y <- paste0("`", y, "`")
+  x_col <- paste0("`", x, "`")
+  y_col <- paste0("`", y, "`")
 
   # If feature is not provided return unlabeled plot
   if (is.null(feature)) {
-    p <- ggplot2::ggplot(data, ggplot2::aes_string(x, y)) +
+    p <- ggplot2::ggplot(data, ggplot2::aes_string(x_col, y_col)) +
       geom_point(size = pt_size) +
       cowplot::theme_cowplot()
 
@@ -57,7 +57,7 @@ plot_tsne <- function(data,
   )
 
   # If there are too many features, add more colors for pretty_palette2
-  if ((n_features > 9) & identical(c_cols, pretty_palette2) & (typeof(feature_data) %in% feature_types)) {
+  if (identical(c_cols, pretty_palette2) & (n_features > length(pretty_palette2)) & (typeof(feature_data) %in% feature_types)) {
     c_cols <- pretty_palette_ramp_d(n_features)
     d_cols <- pretty_palette_ramp_d(n_features)
   }
@@ -65,7 +65,7 @@ plot_tsne <- function(data,
   # sort data to avoid plotting null values over colors
   data <- dplyr::arrange(data, !!dplyr::sym(feature))
 
-  p <- ggplot2::ggplot(data, ggplot2::aes_string(x, y)) +
+  p <- ggplot2::ggplot(data, ggplot2::aes_string(x_col, y_col)) +
     geom_point(ggplot2::aes_string(color = paste0("`", feature, "`")), size = pt_size)
 
   # discrete values
