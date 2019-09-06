@@ -11,6 +11,7 @@ seurat_ref <- function(seurat_object, ...) {
 #' @param var_genes_only whether to keep only var_genes in the final matrix output, could also look up genes used for PCA
 #' @param assay_name any additional assay data, such as ADT, to include. If more than 1, pass a vector of names
 #' @param method whether to take mean (default) or median
+#' @param ... additional arguments
 #' @examples
 #' avg <- seurat_ref(
 #'   seurat_object = s_small,
@@ -54,12 +55,6 @@ seurat_ref.seurat <- function(seurat_object,
 }
 
 #' @rdname seurat_ref
-#' @param seurat_object seurat_object after tsne or umap projections and clustering
-#' @param cluster_col column name where classified cluster names are stored in seurat meta data, cannot be "rn"
-#' @param var_genes_only whether to keep only var_genes in the final matrix output, could also look up genes used for PCA
-#' @param assay_name any additional assay data, such as ADT, to include. If more than 1, pass a vector of names
-#' @param method whether to take mean (default) or median
-#'
 #' @export
 seurat_ref.Seurat <- function(seurat_object,
                               cluster_col = "classified",
@@ -101,12 +96,10 @@ seurat_ref.Seurat <- function(seurat_object,
   temp_res
 }
 
-#' Function to convert labelled seurat object to fully prepared metadata
+#' Function to convert labelled seurat object to fully prepared metadata#' 
 #' @return dataframe of metadata, including dimension reduction plotting info
-#' #' @examples
-#' \donttest{
-#' meta_data <- seurat_meta(s_small)
-#' }
+#' @examples
+#' \dontrun{meta_data <- seurat_meta(s_small)}
 #' @export
 seurat_meta <- function(seurat_object, ...) {
   UseMethod("seurat_meta", seurat_object)
@@ -115,6 +108,7 @@ seurat_meta <- function(seurat_object, ...) {
 #' @rdname seurat_meta
 #' @param seurat_object seurat_object after tsne or umap projections and clustering
 #' @param dr dimension reduction method
+#' @param ... additional arguments
 #' @export
 seurat_meta.seurat <- function(seurat_object,
                                dr = "umap",
@@ -129,19 +123,21 @@ seurat_meta.seurat <- function(seurat_object,
 }
 
 #' @rdname seurat_meta
-#' @param seurat_object seurat_object after tsne or umap projections and clustering
-#' @param dr dimension reduction method
 #' @export
 seurat_meta.Seurat <- function(seurat_object,
                                dr = "umap",
                                ...) {
   dr2 <- dr
+
+  mdata <- seurat_object@meta.data
+  temp_col_id <- get_unique_column(mdata, "rn")
+
   temp_dr <- as.data.frame(seurat_object@reductions[[dr2]]@cell.embeddings)
 
-  temp_dr <- tibble::rownames_to_column(temp_dr, "rn")
-  temp_meta <- tibble::rownames_to_column(seurat_object@meta.data, "rn")
-  temp <- dplyr::left_join(temp_meta, temp_dr, by = "rn")
-  tibble::column_to_rownames(temp, "rn")
+  temp_dr <- tibble::rownames_to_column(temp_dr, temp_col_id)
+  temp_meta <- tibble::rownames_to_column(mdata, temp_col_id)
+  temp <- dplyr::left_join(temp_meta, temp_dr, by = temp_col_id)
+  tibble::column_to_rownames(temp, temp_col_id)
 }
 
 #' Function to convert labelled object to avg expression matrix

@@ -98,26 +98,43 @@ call_to_metadata <- function(res,
                              cluster_col,
                              per_cell = FALSE,
                              rename_prefix = NULL) {
+
+
+  temp_col_id <- get_unique_column(metadata, "rn")
+
   df_temp <- res
   if (per_cell == FALSE) {
     if (!(cluster_col %in% colnames(metadata))) {
       stop("cluster_col is not a column of metadata", call. = FALSE)
     }
-    
+
     if (!(cluster_col %in% colnames(res))) {
       stop("cluster_col is not a column of called cell type dataframe", call. = FALSE)
     }
-    
+
     if (!(all(unique(df_temp[[cluster_col]]) %in% unique(metadata[[cluster_col]])))) {
       stop("cluster_col from clustify step and joining to metadata step are not the same", call. = FALSE)
     }
-    
-    df_temp_full <- suppressWarnings(dplyr::left_join(tibble::rownames_to_column(metadata, "rn"), df_temp, by = cluster_col))
-    df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
+
+    df_temp_full <- suppressWarnings(dplyr::left_join(tibble::rownames_to_column(metadata,
+                                                                                 temp_col_id),
+                                                      df_temp,
+                                                      by = cluster_col,
+                                                      suffix = c("", ".clustify")))
+
+    df_temp_full <- tibble::column_to_rownames(df_temp_full,
+                                               temp_col_id)
   } else {
-    df_temp <- dplyr::rename(df_temp, "rn" = 1)
-    df_temp_full <- suppressWarnings(dplyr::left_join(tibble::rownames_to_column(metadata, "rn"), df_temp, by = "rn"))
-    df_temp_full <- tibble::column_to_rownames(df_temp_full, "rn")
+    colnames(df_temp)[1] <- cluster_col
+    names(cluster_col) <- temp_col_id
+
+    df_temp_full <- suppressWarnings(dplyr::left_join(tibble::rownames_to_column(metadata,
+                                                                                 temp_col_id),
+                                                      df_temp,
+                                                      by = cluster_col,
+                                                      suffix = c("", ".clustify")))
+
+    df_temp_full <- tibble::column_to_rownames(df_temp_full, temp_col_id)
   }
   if (!is.null(rename_prefix)) {
     eval(parse(text = paste0("df_temp_full <- dplyr::rename(df_temp_full, ", paste0(rename_prefix, "_type"), " = type, ", paste0(rename_prefix, "_r"), " = r)")))

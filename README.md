@@ -43,6 +43,10 @@ pre-calculated tSNE projection (stored in `pbmc_meta`).
 
 ``` r
 library(clustifyr)
+library(Seurat)
+#> Registered S3 method overwritten by 'R.oo':
+#>   method        from       
+#>   throw.default R.methodsS3
 res <- clustify(
   input = pbmc_matrix_small,
   metadata = pbmc_meta$classified,

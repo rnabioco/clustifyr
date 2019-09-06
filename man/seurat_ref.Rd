@@ -17,15 +17,7 @@ seurat_ref(seurat_object, ...)
 \arguments{
 \item{seurat_object}{seurat_object after tsne or umap projections and clustering}
 
-\item{cluster_col}{column name where classified cluster names are stored in seurat meta data, cannot be "rn"}
-
-\item{var_genes_only}{whether to keep only var_genes in the final matrix output, could also look up genes used for PCA}
-
-\item{assay_name}{any additional assay data, such as ADT, to include. If more than 1, pass a vector of names}
-
-\item{method}{whether to take mean (default) or median}
-
-\item{seurat_object}{seurat_object after tsne or umap projections and clustering}
+\item{...}{additional arguments}
 
 \item{cluster_col}{column name where classified cluster names are stored in seurat meta data, cannot be "rn"}
 

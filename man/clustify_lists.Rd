@@ -13,19 +13,22 @@ clustify_lists(input, ...)
   cluster_info = NULL, cluster_col = NULL, if_log = TRUE,
   per_cell = FALSE, topn = 800, cut = 0, genome_n = 30000,
   metric = "hyper", output_high = TRUE, lookuptable = NULL,
-  obj_out = FALSE, rename_prefix = NULL, threshold = 0, ...)
+  obj_out = FALSE, seurat_out = FALSE, rename_prefix = NULL,
+  threshold = 0, ...)
 
 \method{clustify_lists}{seurat}(input, cluster_info = NULL,
   cluster_col = NULL, if_log = TRUE, per_cell = FALSE, topn = 800,
   cut = 0, marker, marker_inmatrix = TRUE, genome_n = 30000,
   metric = "hyper", output_high = TRUE, dr = "umap",
-  seurat_out = TRUE, threshold = 0, rename_prefix = NULL, ...)
+  seurat_out = TRUE, obj_out = FALSE, threshold = 0,
+  rename_prefix = NULL, ...)
 
 \method{clustify_lists}{Seurat}(input, cluster_info = NULL,
   cluster_col = NULL, if_log = TRUE, per_cell = FALSE, topn = 800,
   cut = 0, marker, marker_inmatrix = TRUE, genome_n = 30000,
   metric = "hyper", output_high = TRUE, dr = "umap",
-  seurat_out = TRUE, threshold = 0, rename_prefix = NULL, ...)
+  seurat_out = TRUE, obj_out = FALSE, threshold = 0,
+  rename_prefix = NULL, ...)
 }
 \arguments{
 \item{input}{single-cell expression matrix or Seurat object}
@@ -61,92 +64,16 @@ provide the cluster_col parameters.}
 
 \item{obj_out}{whether to output object instead of cor matrix}
 
+\item{seurat_out}{output cor matrix or called seurat object}
+
 \item{rename_prefix}{prefix to add to type and r column names}
 
 \item{threshold}{identity calling minimum correlation score threshold, only used when obj_out = T}
 
 \item{dr}{stored dimension reduction}
-
-\item{seurat_out}{output cor matrix or called seurat object}
-
-\item{input}{seurat object}
-
-\item{cluster_info}{data.frame or vector containing cluster assignments per cell.
-Order must match column order in supplied matrix. If a data.frame
-provide the cluster_col parameters.}
-
-\item{cluster_col}{column in cluster_info with cluster number}
-
-\item{if_log}{input data is natural log,
-averaging will be done on unlogged data}
-
-\item{per_cell}{compare per cell or per cluster}
-
-\item{topn}{number of top expressing genes to keep from input matrix}
-
-\item{cut}{expression cut off from input matrix}
-
-\item{marker}{matrix or dataframe of candidate genes for each cluster}
-
-\item{marker_inmatrix}{whether markers genes are already in preprocessed matrix form}
-
-\item{genome_n}{number of genes in the genome}
-
-\item{metric}{adjusted p-value for hypergeometric test, or jaccard index}
-
-\item{output_high}{if true (by default to fit with rest of package),
--log10 transform p-value}
-
-\item{threshold}{identity calling minimum score threshold}
-
-\item{rename_prefix}{prefix to add to type and r column names}
-
-\item{...}{passed to matrixize_markers}
-
-\item{input}{seurat object}
-
-\item{cluster_info}{data.frame or vector containing cluster assignments per cell.
-Order must match column order in supplied matrix. If a data.frame
-provide the cluster_col parameters.}
-
-\item{cluster_col}{column in cluster_info with cluster number}
-
-\item{if_log}{input data is natural log,
-averaging will be done on unlogged data}
-
-\item{per_cell}{compare per cell or per cluster}
-
-\item{topn}{number of top expressing genes to keep from input matrix}
-
-\item{cut}{expression cut off from input matrix}
-
-\item{marker}{matrix or dataframe of candidate genes for each cluster}
-
-\item{marker_inmatrix}{whether markers genes are already in preprocessed matrix form}
-
-\item{genome_n}{number of genes in the genome}
-
-\item{metric}{adjusted p-value for hypergeometric test, or jaccard index}
-
-\item{output_high}{if true (by default to fit with rest of package),
--log10 transform p-value}
-
-\item{dr}{stored dimension reduction}
-
-\item{seurat_out}{output cor matrix or called seurat object}
-
-\item{threshold}{identity calling minimum score threshold}
-
-\item{rename_prefix}{prefix to add to type and r column names}
-
-\item{...}{passed to matrixize_markers}
 }
 \value{
 matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
-
-seurat2 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
-
-seurat3 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
 }
 \description{
 Main function to compare scRNA-seq data to gene lists.
