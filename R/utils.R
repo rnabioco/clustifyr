@@ -769,18 +769,23 @@ clustify_nudge.default <- function(input,
   )
   
   if (mode == "pct") {
-    resb <- gene_pct_markerm(input,
-                             marker,
-                             metadata,
-                             cluster_col = cluster_col,
-                             norm = norm
+    resb <- gene_pct_markerm(
+      input,
+      marker,
+      metadata,
+      cluster_col = cluster_col,
+      norm = norm
     )
   } else if (mode == "rank") {
-    resb <- pos_neg_select(input,
-                           marker,
-                           metadata,
-                           cluster_col = cluster_col,
-                           cutoff_score = norm
+    if (ncol(marker) > 1 && class(marker[1,1]) == "character") {
+      marker <- pos_neg_marker(marker)
+    }
+    resb <- pos_neg_select(
+      input,
+      marker,
+      metadata,
+      cluster_col = cluster_col,
+      cutoff_score = NULL
     )
     empty_vec <- setdiff(colnames(resa), colnames(resb))
     empty_mat <- matrix(0, nrow = nrow(resb), ncol = length(empty_vec), dimnames = list(rownames(resb), empty_vec))
@@ -869,11 +874,14 @@ clustify_nudge.seurat <- function(input,
       norm = norm
     )
   } else if (mode == "rank") {
+    if (ncol(marker) > 1 && class(marker[1,1]) == "character") {
+      marker <- pos_neg_marker(marker)
+    }
     resb <- pos_neg_select(input@data,
       marker,
       metadata = input@meta.data,
       cluster_col = cluster_col,
-      cutoff_score = norm
+      cutoff_score = NULL
     )
     empty_vec <- setdiff(colnames(resa), colnames(resb))
     empty_mat <- matrix(0, nrow = nrow(resb), ncol = length(empty_vec), dimnames = list(rownames(resb), empty_vec))
@@ -954,11 +962,14 @@ clustify_nudge.Seurat <- function(input,
       norm = norm
     )
   } else if (mode == "rank") {
+    if (ncol(marker) > 1 && class(marker[1,1]) == "character") {
+      marker <- pos_neg_marker(marker)
+    }
     resb <- pos_neg_select(input@assays$RNA@data,
       marker,
       metadata = input@meta.data,
       cluster_col = cluster_col,
-      cutoff_score = norm
+      cutoff_score = NULL
     )
     empty_vec <- setdiff(colnames(resa), colnames(resb))
     empty_mat <- matrix(0, nrow = nrow(resb), ncol = length(empty_vec), dimnames = list(rownames(resb), empty_vec))
