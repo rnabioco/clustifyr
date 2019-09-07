@@ -1029,3 +1029,21 @@ test_that("clustify_nudge works with pos_neg_select and Seurat3 object", {
   )
   expect_true(nrow(res) == 3)
 })
+
+test_that("pos_neg_marker takes list, matrix, and dataframe", {
+  res <- pos_neg_marker(cbmc_m)
+  res2 <- pos_neg_marker(as.matrix(cbmc_m))
+  res3 <- pos_neg_marker(as.list(cbmc_m))
+  expect_true(nrow(res) == nrow(res2))
+})
+
+test_that("pos_neg_marker takes uneven list", {
+  genelist <- list(
+    precusor_oligodendrocyte = c("Olig1", "Olig2"),
+    mature_oligodendrocyte = c("Olig1", "Olig2", "Mbp"), 
+    microglia = c("Aif1", "Tmem119"), 
+    astrocyte = c("Gfap", "Aqp4")
+  )
+  res <- pos_neg_marker(genelist)
+  expect_true(ncol(res) == length(genelist))
+})

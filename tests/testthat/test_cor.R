@@ -352,7 +352,17 @@ test_that("input Seurat metadata columns are not changed (type, r, rn, etc). #25
 
 })
 
-
+test_that("clustify_lists works with pos_neg_select and Seurat3 object", {
+  res <- clustify_lists(
+    s_small3,
+    marker = cbmc_m,
+    cluster_col = "RNA_snn_res.1",
+    dr = "tsne", 
+    metric = "posneg",
+    seurat_out = FALSE
+  )
+  expect_true(nrow(res) == 3)
+})
 
 
 

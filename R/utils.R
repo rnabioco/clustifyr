@@ -1574,7 +1574,8 @@ pos_neg_select <- function(input,
     metadata,
     cluster_col = cluster_col,
     per_cell = TRUE, 
-    verbose = TRUE
+    verbose = TRUE,
+    query_genes = rownames(ref_mat)
   ))
   res[is.na(res)] <- 0
   suppressWarnings(res2 <- average_clusters(t(res),
@@ -1612,6 +1613,30 @@ reverse_marker_matrix <- function(mat) {
   as.data.frame(mat_rev)
 }
 
+#' generate pos and negative marker expression matrix from a list/dataframe of positive markers
+#' @param mat matrix or dataframe of markers
+#' @return matrix of gene expression
+#' @examples
+#' m1 <- pos_neg_marker(cbmc_m)
+#' @export
+pos_neg_marker <- function(mat) {
+  if (class(mat) == "data.frame") {
+    mat <- as.list(mat)
+  } else if (class(mat)  == "matrix") {
+    mat <- as.list(as.data.frame(mat))
+  } else if (class(mat) != "list") {
+    stop("unsupported marker format, must be dataframe, matrix, or list", call. = FALSE)
+  }
+  genelist <- mat
+  typenames <- names(genelist)
+  g2 <- sapply(typenames, FUN = function(x) {data.frame(type = x, gene = genelist[[x]])}, simplify = F)
+  g2 <- do.call("rbind", g2)
+  g2 <- dplyr::mutate(g2, expression = 1)
+  g2 <- tidyr::spread(g2, key = "type", value = "expression")
+  g2 <- tibble::column_to_rownames(g2, "gene")
+  g2[is.na(g2)] <- 0
+  g2
+}
 #' takes files with positive and negative markers, as described in garnett, and returns list of markers
 #' @param filename txt file to load
 #' @return list of positive and negative gene markers
