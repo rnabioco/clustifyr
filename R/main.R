@@ -452,7 +452,10 @@ clustify_lists.default <- function(input,
       cluster_col <- temp[["col"]]
     }
   }
-
+  
+  if (metric == "posneg") {
+    per_cell <- TRUE
+  }
   if (!(per_cell)) {
     input <- average_clusters(input,
       cluster_info,
@@ -469,13 +472,26 @@ clustify_lists.default <- function(input,
       ...
     )
   }
-
-  res <- compare_lists(bin_input,
-    marker_mat = marker,
-    n = genome_n,
-    metric = metric,
-    output_high = output_high
-  )
+  
+  if (metric != "posneg") {
+    res <- compare_lists(bin_input,
+      marker_mat = marker,
+      n = genome_n,
+      metric = metric,
+      output_high = output_high
+    )
+  } else {
+    if (ncol(marker) > 1) {
+      marker <- pos_neg_marker(marker)
+    }
+    res <- pos_neg_select(
+      input,
+      marker,
+      cluster_info,
+      cluster_col = cluster_col,
+      cutoff_score = NULL
+    )
+  }
   
   if ((obj_out || seurat_out) && !inherits(input_original, c("matrix", "Matrix", "data.frame"))) {
     df_temp <- cor_to_call(
