@@ -384,6 +384,19 @@ test_that("clustify_nudge works with seurat_out", {
   expect_true(3 == 3)
 })
 
+test_that("clustify_nudge works with rank/posneg option", {
+  res <- clustify_nudge(
+    input = s_small,
+    ref_mat = cbmc_ref,
+    marker = cbmc_m,
+    cluster_col = "res.1",
+    threshold = 0.8,
+    seurat_out = FALSE,
+    mode = "rank",
+    dr = "tsne"
+  )
+  expect_true(nrow(res) == 4)
+})
 
 test_that("clustify_nudge works with options and seruat3", {
   res <- clustify_nudge(
