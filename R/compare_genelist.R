@@ -234,8 +234,8 @@ compare_lists <- function(bin_mat,
             bin_temp <- bin_temp[order(bin_temp, decreasing = TRUE)]
             list_top <- names(bin_temp)
             v2 <- list_top[list_top %in% v1]
-            v1 <<- v1
-            v2 <<- v2
+            v1 <- v1
+            v2 <- v2
             sum(sapply(seq_along(v1), function(i) abs(i - (which(v2 == v1[i])))))
           }
         )
