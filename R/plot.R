@@ -384,7 +384,7 @@ plot_best_call <- function(cor_matrix,
     threshold = threshold
   )
 
-  df_temp_full <<- call_to_metadata(
+  df_temp_full <- call_to_metadata(
     df_temp,
     metadata = metadata,
     cluster_col = cluster_col,
