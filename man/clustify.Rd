@@ -57,7 +57,7 @@ common genes between the expr_mat and ref_mat will be used for comparision.}
 
 \item{rm0}{consider 0 as missing data, recommended for per_cell}
 
-\item{obj_out}{equivalent to seurat_out}
+\item{obj_out}{whether to output object instead of cor matrix}
 
 \item{seurat_out}{output cor matrix or called seurat object}
 
@@ -69,8 +69,6 @@ common genes between the expr_mat and ref_mat will be used for comparision.}
 (stored in seurat_object@var.genes) as the query_genes.}
 
 \item{dr}{stored dimension reduction}
-
-\item{obj_out}{whether to output object instead of cor matrix}
 }
 \value{
 single cell object with identity assigned in metadata, or matrix of correlation values, clusters from input as row names, cell

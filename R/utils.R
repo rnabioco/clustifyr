@@ -1109,6 +1109,7 @@ insert_meta_object <- function(input,
 #' @param ngenes number of genes to use for feature selection, use all genes if NULL
 #' @param query_genes vector, otherwise genes with be recalculated
 #' @param do_label whether to label each cluster at median center
+#' @param do_legend whether to draw legend
 #' @param seed set seed for kmeans
 #' @param newclustering use kmeans if NULL on dr or col name for second column of clustering
 #' @return faceted ggplot object
@@ -1133,7 +1134,9 @@ overcluster_test <- function(expr,
                              n = 5,
                              ngenes = NULL,
                              query_genes = NULL,
+                             threshold = 0,
                              do_label = TRUE,
+                             do_legend = FALSE,
                              seed = 42,
                              newclustering = NULL) {
   if (!(is.null(seed))) {
@@ -1189,14 +1192,18 @@ overcluster_test <- function(expr,
   p1 <- plot_best_call(res1,
     metadata,
     cluster_col,
+    threshold = threshold,
     do_label = do_label,
+    do_legend = do_legend,
     x = x_col,
     y = y_col
   )
   p2 <- plot_best_call(res2,
     metadata,
     "new_clusters",
+    threshold = threshold,
     do_label = do_label,
+    do_legend = do_legend,
     x = x_col,
     y = y_col
   )
