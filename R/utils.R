@@ -18,12 +18,16 @@ overcluster <- function(mat,
   mat <- as.matrix(mat)
   new_ids <- list()
   for (name in names(cluster_id)) {
-    set.seed(seed)
     ids <- cluster_id[[name]]
-    new_clusters <- stats::kmeans(t(mat[, ids]), centers = as.integer(length(ids)^power))
-    new_ids1 <- split(names(new_clusters$cluster), new_clusters$cluster)
-    names(new_ids1) <- stringr::str_c(name, names(new_ids1), sep = "_")
-    new_ids <- append(new_ids, new_ids1)
+    if (length(ids) > 1) {
+      set.seed(seed)
+      new_clusters <- stats::kmeans(t(mat[, ids]), centers = as.integer(length(ids)^power))
+      new_ids1 <- split(names(new_clusters$cluster), new_clusters$cluster)
+      names(new_ids1) <- stringr::str_c(name, names(new_ids1), sep = "_")
+      new_ids <- append(new_ids, new_ids1)
+    } else {
+      new_ids <- append(new_ids, cluster_id[name])
+    }
   }
   new_ids
 }
@@ -79,7 +83,7 @@ average_clusters <- function(mat, cluster_info,
     stop("cluster_info not formatted correctly,
          supply either a  vector or a dataframe", call. = FALSE)
   }
-  
+
   if (subclusterpower > 0) {
     cluster_ids <- overcluster(mat, cluster_ids, power = subclusterpower)
   }

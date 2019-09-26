@@ -11,6 +11,7 @@ seurat_ref <- function(seurat_object, ...) {
 #' @param var_genes_only whether to keep only var_genes in the final matrix output, could also look up genes used for PCA
 #' @param assay_name any additional assay data, such as ADT, to include. If more than 1, pass a vector of names
 #' @param method whether to take mean (default) or median
+#' @param subclusterpower whether to get multiple averages per original cluster
 #' @param ... additional arguments
 #' @examples
 #' avg <- seurat_ref(
@@ -24,6 +25,7 @@ seurat_ref.seurat <- function(seurat_object,
                               var_genes_only = FALSE,
                               assay_name = NULL,
                               method = "mean",
+                              subclusterpower = 0,
                               ...) {
   temp_mat <- seurat_object@data
   if (class(var_genes_only) == "logical" && var_genes_only) {
@@ -48,7 +50,8 @@ seurat_ref.seurat <- function(seurat_object,
     seurat_object@meta.data,
     if_log = TRUE,
     cluster_col = cluster_col,
-    method = method
+    method = method,
+    subclusterpower = subclusterpower
   )
 
   temp_res
@@ -61,6 +64,7 @@ seurat_ref.Seurat <- function(seurat_object,
                               var_genes_only = FALSE,
                               assay_name = NULL,
                               method = "mean",
+                              subclusterpower = 0,
                               ...) {
   if (class(seurat_object) == "Seurat") {
     temp_mat <- seurat_object@assays$RNA@data
@@ -90,7 +94,8 @@ seurat_ref.Seurat <- function(seurat_object,
     seurat_object@meta.data,
     if_log = TRUE,
     cluster_col = cluster_col,
-    method = method
+    method = method,
+    subclusterpower = subclusterpower
   )
 
   temp_res
