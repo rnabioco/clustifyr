@@ -28,6 +28,8 @@ overcluster_test(expr, metadata, ref_mat, cluster_col, x_col = "UMAP_1",
 
 \item{query_genes}{vector, otherwise genes with be recalculated}
 
+\item{threshold}{type calling threshold}
+
 \item{do_label}{whether to label each cluster at median center}
 
 \item{do_legend}{whether to draw legend}
