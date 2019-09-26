@@ -6,9 +6,9 @@
 #' @param seed seed for kmeans
 #' @return new cluster_id list of more clusters
 #' @examples
-# pbmc_ids <- overcluster(
-#   mat = pbmc_matrix_small,
-#   cluster_id = split(colnames(pbmc_matrix_small), pbmc_meta$classified)
+#' pbmc_ids <- overcluster(
+#'   mat = pbmc_matrix_small,
+#'   cluster_id = split(colnames(pbmc_matrix_small), pbmc_meta$classified)
 #' )
 #' @export
 overcluster <- function(mat,
@@ -48,11 +48,11 @@ overcluster <- function(mat,
 #' @param subclusterpower whether to get multiple averages per original cluster
 #' @return average expression matrix, with genes for row names, and clusters for column names
 #' @examples
-# pbmc_avg <- average_clusters(
-#   mat = pbmc_matrix_small,
-#   cluster_info = pbmc_meta,
-#   cluster_col = "classified",
-#   if_log = FALSE
+#' pbmc_avg <- average_clusters(
+#'   mat = pbmc_matrix_small,
+#'   cluster_info = pbmc_meta,
+#'   cluster_col = "classified",
+#'  if_log = FALSE
 #' )
 #' @export
 average_clusters <- function(mat, cluster_info,
@@ -1152,6 +1152,7 @@ insert_meta_object <- function(input,
 #' @param do_legend whether to draw legend
 #' @param seed set seed for kmeans
 #' @param newclustering use kmeans if NULL on dr or col name for second column of clustering
+#' @param threshold type calling threshold
 #' @return faceted ggplot object
 #' @examples
 #' plt <- overcluster_test(
