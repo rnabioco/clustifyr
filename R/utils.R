@@ -1,4 +1,38 @@
-#' #' Average expression values per cluster
+#' Overcluster by kmeans per cluster
+#'
+#' @param mat expression matrix
+#' @param cluster_id list of ids per cluster
+#' @param power decides the number of clusters for kmeans
+#' @param seed seed for kmeans
+#' @return new cluster_id list of more clusters
+#' @examples
+# pbmc_ids <- overcluster(
+#   mat = pbmc_matrix_small,
+#   cluster_id = split(colnames(pbmc_matrix_small), pbmc_meta$classified)
+#' )
+#' @export
+overcluster <- function(mat,
+                        cluster_id,
+                        power = 0.15,
+                        seed = 42) {
+  mat <- as.matrix(mat)
+  new_ids <- list()
+  for (name in names(cluster_id)) {
+    ids <- cluster_id[[name]]
+    if (length(ids) > 1) {
+      set.seed(seed)
+      new_clusters <- stats::kmeans(t(mat[, ids]), centers = as.integer(length(ids)^power))
+      new_ids1 <- split(names(new_clusters$cluster), new_clusters$cluster)
+      names(new_ids1) <- stringr::str_c(name, names(new_ids1), sep = "_")
+      new_ids <- append(new_ids, new_ids1)
+    } else {
+      new_ids <- append(new_ids, cluster_id[name])
+    }
+  }
+  new_ids
+}
+
+#' Average expression values per cluster
 #'
 #' @param mat expression matrix
 #' @param cluster_info data.frame or vector containing cluster assignments per cell.
@@ -11,13 +45,14 @@
 #' @param low_threshold option to remove clusters with too few cells
 #' @param method whether to take mean (default) or median
 #' @param output_log whether to report log results
+#' @param subclusterpower whether to get multiple averages per original cluster
 #' @return average expression matrix, with genes for row names, and clusters for column names
 #' @examples
-#' pbmc_avg <- average_clusters(
-#'   mat = pbmc_matrix_small,
-#'   cluster_info = pbmc_meta,
-#'   cluster_col = "classified",
-#'   if_log = FALSE
+# pbmc_avg <- average_clusters(
+#   mat = pbmc_matrix_small,
+#   cluster_info = pbmc_meta,
+#   cluster_col = "classified",
+#   if_log = FALSE
 #' )
 #' @export
 average_clusters <- function(mat, cluster_info,
@@ -26,7 +61,8 @@ average_clusters <- function(mat, cluster_info,
                              cell_col = NULL,
                              low_threshold = 0,
                              method = "mean",
-                             output_log = TRUE) {
+                             output_log = TRUE,
+                             subclusterpower = 0) {
   if (!(is.null(cell_col))) {
     if (!(all(colnames(mat) == cluster_info[[cell_col]]))) {
       mat <- mat[, cluster_info[[cell_col]]]
@@ -46,6 +82,10 @@ average_clusters <- function(mat, cluster_info,
   } else {
     stop("cluster_info not formatted correctly,
          supply either a  vector or a dataframe", call. = FALSE)
+  }
+
+  if (subclusterpower > 0) {
+    cluster_ids <- overcluster(mat, cluster_ids, power = subclusterpower)
   }
 
   if (method == "mean") {

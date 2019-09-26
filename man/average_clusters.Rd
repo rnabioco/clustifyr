@@ -2,11 +2,11 @@
 % Please edit documentation in R/utils.R
 \name{average_clusters}
 \alias{average_clusters}
-\title{#' Average expression values per cluster}
+\title{Average expression values per cluster}
 \usage{
 average_clusters(mat, cluster_info, if_log = TRUE,
   cluster_col = "cluster", cell_col = NULL, low_threshold = 0,
-  method = "mean", output_log = TRUE)
+  method = "mean", output_log = TRUE, subclusterpower = 0)
 }
 \arguments{
 \item{mat}{expression matrix}
@@ -27,18 +27,15 @@ averaging will be done on unlogged data}
 \item{method}{whether to take mean (default) or median}
 
 \item{output_log}{whether to report log results}
+
+\item{subclusterpower}{whether to get multiple averages per original cluster}
 }
 \value{
 average expression matrix, with genes for row names, and clusters for column names
 }
 \description{
-#' Average expression values per cluster
+Average expression values per cluster
 }
 \examples{
-pbmc_avg <- average_clusters(
-  mat = pbmc_matrix_small,
-  cluster_info = pbmc_meta,
-  cluster_col = "classified",
-  if_log = FALSE
 )
 }

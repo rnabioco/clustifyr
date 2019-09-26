@@ -1060,3 +1060,13 @@ test_that("pos_neg_marker takes uneven list", {
   res <- pos_neg_marker(genelist)
   expect_true(ncol(res) == length(genelist))
 })
+
+test_that("average_clusters can generate subclusters", {
+  ref_mat = average_clusters(
+    pbmc_matrix_small,
+    pbmc_meta,
+    cluster_col = "classified",
+    subclusterpower = 0.15
+  )
+  expect_true(ncol(ref_mat) > length(unique(pbmc_meta$classified)))
+})
