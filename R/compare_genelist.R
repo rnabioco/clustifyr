@@ -174,8 +174,7 @@ compare_lists <- function(bin_mat,
     warning("non-binarized data, running spearman instead")
     metric <- "spearman"
   }
-
-  # "expressed" genes per single cell data cluster
+  
   if (metric == "hyper") {
     out <- lapply(
       colnames(bin_mat),
@@ -199,9 +198,7 @@ compare_lists <- function(bin_mat,
     if (any(sapply(out, is.na))) {
       error("NaN produced, possibly due to wrong n")
     }
-  }
-
-  if (metric == "jaccard") {
+  } else if (metric == "jaccard") {
     out <- lapply(
       colnames(bin_mat),
       function(x) {
@@ -219,9 +216,7 @@ compare_lists <- function(bin_mat,
         do.call(cbind, per_col)
       }
     )
-  }
-
-  if (metric == "spearman") {
+  } else if (metric == "spearman") {
     out <- lapply(
       colnames(bin_mat),
       function(x) {
@@ -242,15 +237,7 @@ compare_lists <- function(bin_mat,
         do.call(cbind, per_col)
       }
     )
-  }
-
-  if (metric != "gsea") {
-    res <- do.call(rbind, out)
-    rownames(res) <- colnames(bin_mat)
-    colnames(res) <- colnames(marker_mat)
-  }
-
-  if (metric == "gsea") {
+  } else if (metric == "gsea") {
     out <- lapply(
       colnames(marker_mat),
       function(y) {
@@ -267,6 +254,14 @@ compare_lists <- function(bin_mat,
     rownames(res2) <- rownames(res)
     colnames(res2) <- colnames(marker_mat)
     res <- res2
+  } else {
+    stop("unrecognized metric", call. = FALSE)
+  }
+
+  if (metric != "gsea") {
+    res <- do.call(rbind, out)
+    rownames(res) <- colnames(bin_mat)
+    colnames(res) <- colnames(marker_mat)
   }
 
   if (output_high) {

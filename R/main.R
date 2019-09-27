@@ -452,7 +452,7 @@ clustify_lists.default <- function(input,
     }
   }
   
-  if (metric == "posneg") {
+  if (metric %in% c("posneg", "pct")) {
     per_cell <- TRUE
   }
   if (!(per_cell)) {
@@ -472,7 +472,14 @@ clustify_lists.default <- function(input,
     )
   }
   
-  if (metric != "posneg") {
+  if (metric == "pct") {
+    res <- gene_pct_markerm(
+      input,
+      marker,
+      cluster_info,
+      cluster_col = cluster_col
+    )
+  } else if (metric != "posneg") {
     res <- compare_lists(bin_input,
       marker_mat = marker,
       n = genome_n,

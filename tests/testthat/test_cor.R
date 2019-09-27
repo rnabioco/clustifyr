@@ -364,6 +364,27 @@ test_that("clustify_lists works with pos_neg_select and Seurat3 object", {
   expect_true(nrow(res) == 3)
 })
 
+test_that("clustify_lists works with pct and Seurat3 object", {
+  res <- clustify_lists(
+    s_small3,
+    marker = cbmc_m,
+    cluster_col = "RNA_snn_res.1",
+    dr = "tsne", 
+    metric = "pct",
+    seurat_out = FALSE
+  )
+  expect_true(nrow(res) == 3)
+})
 
+test_that("clustify_lists gives correct error message upon unrecognized method", {
+  expect_error(res <- clustify_lists(
+    s_small3,
+    marker = cbmc_m,
+    cluster_col = "RNA_snn_res.1",
+    dr = "tsne", 
+    metric = "ptc",
+    seurat_out = FALSE
+  ))
+})
 
 
