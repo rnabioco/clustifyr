@@ -13,18 +13,18 @@ clustify(input, ...)
   cluster_col = NULL, query_genes = NULL, per_cell = FALSE,
   n_perm = 0, compute_method = "spearman", verbose = FALSE,
   lookuptable = NULL, rm0 = FALSE, obj_out = FALSE,
-  seurat_out = FALSE, rename_prefix = NULL, threshold = 0, ...)
+  seurat_out = FALSE, rename_prefix = NULL, threshold = "auto", ...)
 
 \method{clustify}{seurat}(input, ref_mat, cluster_col = NULL,
   query_genes = NULL, per_cell = FALSE, n_perm = 0,
   compute_method = "spearman", use_var_genes = TRUE, dr = "umap",
-  seurat_out = TRUE, obj_out = FALSE, threshold = 0,
+  seurat_out = TRUE, obj_out = FALSE, threshold = "auto",
   verbose = FALSE, rm0 = FALSE, rename_prefix = NULL, ...)
 
 \method{clustify}{Seurat}(input, ref_mat, cluster_col = NULL,
   query_genes = NULL, per_cell = FALSE, n_perm = 0,
   compute_method = "spearman", use_var_genes = TRUE, dr = "umap",
-  seurat_out = TRUE, obj_out = FALSE, threshold = 0,
+  seurat_out = TRUE, obj_out = FALSE, threshold = "auto",
   verbose = FALSE, rm0 = FALSE, rename_prefix = NULL, ...)
 }
 \arguments{
