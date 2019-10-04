@@ -1070,3 +1070,21 @@ test_that("average_clusters can generate subclusters", {
   )
   expect_true(ncol(ref_mat) > length(unique(pbmc_meta$classified)))
 })
+
+test_that("cor_to_call threshold works as intended", {
+  res <- clustify(
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    ref_mat = pbmc_bulk_matrix,
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified"
+  )
+  call1 <- cor_to_call(res,
+                       metadata = pbmc_meta,
+                       cluster_col = "classified",
+                       collapse_to_cluster = FALSE,
+                       threshold = "auto"
+  )
+  
+  expect_true("r<0.53, unassigned" %in% call1$type)
+})

@@ -24,6 +24,10 @@ cor_to_call <- function(correlation_matrix,
                         collapse_to_cluster = FALSE,
                         threshold = 0,
                         rename_prefix = NULL) {
+  if (threshold == "auto") {
+    threshold = round(0.75 * max(correlation_matrix), 2)
+    message(paste0("using threshold of ", threshold))
+  }
   df_temp <- tibble::as_tibble(correlation_matrix, rownames = cluster_col)
   df_temp <- tidyr::gather(df_temp, key = !!dplyr::sym("type"), value = !!dplyr::sym("r"), -!!cluster_col)
   df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold, ", unassigned")
