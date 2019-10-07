@@ -102,8 +102,6 @@ call_to_metadata <- function(res,
                              cluster_col,
                              per_cell = FALSE,
                              rename_prefix = NULL) {
-
-
   temp_col_id <- get_unique_column(metadata, "rn")
 
   df_temp <- res

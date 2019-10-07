@@ -5,6 +5,7 @@
 \alias{clustify.default}
 \alias{clustify.seurat}
 \alias{clustify.Seurat}
+\alias{clustify.SingleCellExperiment}
 \title{Compare scRNA-seq data to reference data.}
 \usage{
 clustify(input, ...)
@@ -26,6 +27,13 @@ clustify(input, ...)
   compute_method = "spearman", use_var_genes = TRUE, dr = "umap",
   seurat_out = TRUE, obj_out = FALSE, threshold = "auto",
   verbose = FALSE, rm0 = FALSE, rename_prefix = NULL, ...)
+
+\method{clustify}{SingleCellExperiment}(input, ref_mat,
+  cluster_col = NULL, query_genes = NULL, per_cell = FALSE,
+  n_perm = 0, compute_method = "spearman", use_var_genes = TRUE,
+  dr = "umap", seurat_out = TRUE, obj_out = TRUE,
+  threshold = "auto", verbose = FALSE, rm0 = FALSE,
+  rename_prefix = NULL, ...)
 }
 \arguments{
 \item{input}{single-cell expression matrix or Seurat object}

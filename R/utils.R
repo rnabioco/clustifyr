@@ -1735,13 +1735,11 @@ file_marker_parse <- function(filename) {
   list("pos" = ident_pos, "neg" = ident_neg)
 }
 
-
-
 #' Generate a unique column id for a dataframe
 #' @param df dataframe with column names
 #' @param id desired id if unique
 #' @return character
-#'
+#' @export
 get_unique_column <- function(df, id = NULL){
   if(!is.null(id)){
     out_id <- id

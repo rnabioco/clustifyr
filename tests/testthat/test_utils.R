@@ -1088,3 +1088,10 @@ test_that("cor_to_call threshold works as intended", {
   
   expect_true("r<0.53, unassigned" %in% call1$type)
 })
+
+test_that("object_ref with sce", {
+  avg <- object_ref(sce_small,
+                    cluster_col = "cell_type1"
+  )
+  expect_true(ncol(avg) == 13)
+})

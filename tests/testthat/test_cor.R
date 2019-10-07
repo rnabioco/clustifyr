@@ -387,4 +387,26 @@ test_that("clustify_lists gives correct error message upon unrecognized method",
   ))
 })
 
+test_that("sce object clustifying", {
+  res <- clustify(sce_small,
+                  pbmc_bulk_matrix,
+                  cluster_col = "cell_type1",
+                  obj_out = F
+  )
+  expect_true(nrow(res) == 13)
+})
 
+test_that("sce object clustify_lists", {
+  other <- c("TAF12", "SNHG3")
+  delta <- c("PCSK1","LEPR")
+  panm <- data.frame(other, delta)
+
+  res <- clustify_lists(sce_small,
+                  marker = panm,
+                  cluster_col = "cell_type1",
+                  obj_out = F,
+                  n = 100,
+                  metric = "pct"
+  )
+  expect_true(nrow(res) == 13)
+})
