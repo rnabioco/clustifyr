@@ -393,7 +393,8 @@ clustify.SingleCellExperiment <- function(input,
                             rename_prefix = NULL,
                             ...) {
   s_object <- input
-  expr_mat <- s_object@assays$data$logcounts
+  #expr_mat <- s_object@assays$data$logcounts
+  expr_mat <- s_object@assays@.xData[["data"]][["logcounts"]]
   metadata <- as.data.frame(s_object@colData)
   
   res <- clustify(
@@ -440,8 +441,8 @@ clustify.SingleCellExperiment <- function(input,
         col_type <- "type"
         col_r <- "r"
       }
-      colData(s_object)[[col_type]] <- df_temp_full[[col_type]]
-      colData(s_object)[[col_r]] <- df_temp_full[[col_r]]
+      s_object@colData[[col_type]] <- df_temp_full[[col_type]]
+      s_object@colData[[col_r]] <- df_temp_full[[col_r]]
       return(s_object)
     } else {
       message("SingleCellExperiment not loaded, returning cor_mat instead")
@@ -766,7 +767,8 @@ clustify_lists.SingleCellExperiment <- function(input,
                                   rename_prefix = NULL,
                                   ...) {
   s_object <- input
-  expr_mat <- s_object@assays$data$logcounts
+  #expr_mat <- s_object@assays$data$logcounts
+  expr_mat <- s_object@assays@.xData[["data"]][["logcounts"]]
   metadata <- as.data.frame(s_object@colData)
   
   res <- clustify_lists(expr_mat,

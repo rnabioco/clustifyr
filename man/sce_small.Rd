@@ -4,11 +4,11 @@
 \name{sce_small}
 \alias{sce_small}
 \title{Small clustered SCE object}
-\format{XXX
+\format{sce object
 \describe{
 }}
 \source{
-\code{[sce_small]} subsampled from pancreas data
+subsampled from pancreas data
 }
 \usage{
 sce_small
