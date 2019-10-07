@@ -787,14 +787,14 @@ clustify_lists.SingleCellExperiment <- function(input,
   if (!(seurat_out && obj_out)) {
     res
   } else {
-    df_temp <<- cor_to_call(
+    df_temp <- cor_to_call(
       res,
       metadata = metadata,
       cluster_col = cluster_col,
       threshold = threshold
     )
     
-    df_temp_full <<- call_to_metadata(
+    df_temp_full <- call_to_metadata(
       df_temp,
       metadata = metadata,
       cluster_col = cluster_col,
