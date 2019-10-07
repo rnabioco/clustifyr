@@ -16,6 +16,6 @@ attr(attr(sce_small@rowRanges@unlistData@elementMetadata, "class"), "package") <
 attr(attr(sce_small@rowRanges@unlistData@seqnames, "class"), "package") <- NULL
 attr(attr(sce_small@rowRanges@unlistData@ranges, "class"), "package") <- NULL
 attr(attr(sce_small@rowRanges@unlistData@strand, "class"), "package") <- NULL
-
+attr(attr(sce_small@rowRanges@unlistData@seqinfo, "class"), "package") <- NULL
 
 usethis::use_data(sce_small, compress = "xz", overwrite = TRUE)
