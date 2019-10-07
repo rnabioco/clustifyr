@@ -111,9 +111,9 @@
 
 #' Small clustered SCE object
 #'
-#' @format XXX
+#' @format sce object
 #' \describe{
 #' }
 #'
-#' @source  `[sce_small]` subsampled from pancreas data
+#' @source subsampled from pancreas data
 "sce_small"
