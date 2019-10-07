@@ -9,5 +9,13 @@ attr(attr(sce_small@rowRanges, "class"), "package") <- NULL
 attr(attr(sce_small@colData, "class"), "package") <- NULL
 attr(attr(sce_small, "class"), "package") <- NULL
 attr(attr(sce_small@assays, "class"), "package") <- NULL
+attr(attr(sce_small@rowRanges@partitioning, "class"), "package") <- NULL
+attr(attr(sce_small@rowRanges@elementMetadata, "class"), "package") <- NULL
+attr(attr(sce_small@rowRanges@unlistData, "class"), "package") <- NULL
+attr(attr(sce_small@rowRanges@unlistData@elementMetadata, "class"), "package") <- NULL
+attr(attr(sce_small@rowRanges@unlistData@seqnames, "class"), "package") <- NULL
+attr(attr(sce_small@rowRanges@unlistData@ranges, "class"), "package") <- NULL
+attr(attr(sce_small@rowRanges@unlistData@strand, "class"), "package") <- NULL
+
 
 usethis::use_data(sce_small, compress = "xz", overwrite = TRUE)
