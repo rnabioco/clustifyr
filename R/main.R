@@ -812,8 +812,8 @@ clustify_lists.SingleCellExperiment <- function(input,
         col_type <- "type"
         col_r <- "r"
       }
-      colData(s_object)[[col_type]] <- df_temp_full[[col_type]]
-      colData(s_object)[[col_r]] <- df_temp_full[[col_r]]
+      s_object@colData[[col_type]] <- df_temp_full[[col_type]]
+      s_object@colData[[col_r]] <- df_temp_full[[col_r]]
       return(s_object)
     } else {
       message("SingleCellExperiment not loaded, returning cor_mat instead")
