@@ -108,3 +108,12 @@
 #'
 #' @source  various packages
 "object_loc_lookup"
+
+#' Small clustered SCE object
+#'
+#' @format XXX
+#' \describe{
+#' }
+#'
+#' @source  `[sce_small]` subsampled from pancreas data
+"sce_small"
