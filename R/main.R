@@ -373,6 +373,84 @@ clustify.Seurat <- function(input,
     s_object
   }
 }
+
+#' @rdname clustify
+#' @export
+clustify.SingleCellExperiment <- function(input,
+                            ref_mat,
+                            cluster_col = NULL,
+                            query_genes = NULL,
+                            per_cell = FALSE,
+                            n_perm = 0,
+                            compute_method = "spearman",
+                            use_var_genes = TRUE,
+                            dr = "umap",
+                            seurat_out = TRUE,
+                            obj_out = TRUE,
+                            threshold = "auto",
+                            verbose = FALSE,
+                            rm0 = FALSE,
+                            rename_prefix = NULL,
+                            ...) {
+  s_object <- input
+  expr_mat <- s_object@assays$data$logcounts
+  metadata <- as.data.frame(s_object@colData)
+  
+  res <- clustify(
+    expr_mat,
+    ref_mat,
+    metadata,
+    query_genes,
+    per_cell = per_cell,
+    n_perm = n_perm,
+    cluster_col = cluster_col,
+    compute_method = compute_method,
+    verbose = verbose,
+    rm0 = rm0,
+    ...
+  )
+  
+  if (n_perm != 0) {
+    res <- -log(res$p_val + .01, 10)
+  }
+  
+  if (!(seurat_out && obj_out)) {
+    res
+  } else {
+    df_temp <- cor_to_call(
+      res,
+      metadata = metadata,
+      cluster_col = cluster_col,
+      threshold = threshold
+    )
+    
+    df_temp_full <- call_to_metadata(
+      df_temp,
+      metadata = metadata,
+      cluster_col = cluster_col,
+      per_cell = per_cell,
+      rename_prefix = rename_prefix
+    )
+    
+    if ("SingleCellExperiment" %in% loadedNamespaces()) {
+      if (!(is.null(rename_prefix))) {
+        col_type <- stringr::str_c(rename_prefix, "_type")
+        col_r <- stringr::str_c(rename_prefix, "_r")
+      } else {
+        col_type <- "type"
+        col_r <- "r"
+      }
+      colData(s_object)[[col_type]] <- df_temp_full[[col_type]]
+      colData(s_object)[[col_r]] <- df_temp_full[[col_r]]
+      return(s_object)
+    } else {
+      message("SingleCellExperiment not loaded, returning cor_mat instead")
+      return(res)
+    }
+    s_object
+  }
+}
+
 #' Correlation functions available in clustifyr
 #' @export
 clustifyr_methods <- c(
@@ -661,6 +739,82 @@ clustify_lists.Seurat <- function(input,
       return(s_object)
     } else {
       message("seurat not loaded, returning cor_mat instead")
+      return(res)
+    }
+    s_object
+  }
+}
+
+#' @rdname clustify_lists
+#' @export
+clustify_lists.SingleCellExperiment <- function(input,
+                                  cluster_info = NULL,
+                                  cluster_col = NULL,
+                                  if_log = TRUE,
+                                  per_cell = FALSE,
+                                  topn = 800,
+                                  cut = 0,
+                                  marker,
+                                  marker_inmatrix = TRUE,
+                                  genome_n = 30000,
+                                  metric = "hyper",
+                                  output_high = TRUE,
+                                  dr = "umap",
+                                  seurat_out = TRUE,
+                                  obj_out = TRUE,
+                                  threshold = 0,
+                                  rename_prefix = NULL,
+                                  ...) {
+  s_object <- input
+  expr_mat <- s_object@assays$data$logcounts
+  metadata <- as.data.frame(s_object@colData)
+  
+  res <- clustify_lists(expr_mat,
+                        per_cell = per_cell,
+                        cluster_info = metadata,
+                        if_log = if_log,
+                        cluster_col = cluster_col,
+                        topn = topn,
+                        cut = cut,
+                        marker,
+                        marker_inmatrix = marker_inmatrix,
+                        genome_n = genome_n,
+                        metric = metric,
+                        output_high = output_high,
+                        ...
+  )
+  
+  if (!(seurat_out && obj_out)) {
+    res
+  } else {
+    df_temp <<- cor_to_call(
+      res,
+      metadata = metadata,
+      cluster_col = cluster_col,
+      threshold = threshold
+    )
+    
+    df_temp_full <<- call_to_metadata(
+      df_temp,
+      metadata = metadata,
+      cluster_col = cluster_col,
+      per_cell = per_cell,
+      rename_prefix = rename_prefix
+    )
+    
+    if ("SingleCellExperiment" %in% loadedNamespaces()) {
+      if (!(is.null(rename_prefix))) {
+        col_type <- stringr::str_c(rename_prefix, "_type")
+        col_r <- stringr::str_c(rename_prefix, "_r")
+      } else {
+        col_type <- "type"
+        col_r <- "r"
+      }
+      colData(s_object)[[col_type]] <- df_temp_full[[col_type]]
+      colData(s_object)[[col_r]] <- df_temp_full[[col_r]]
+      return(s_object)
+    } else {
+      message("SingleCellExperiment not loaded, returning cor_mat instead")
       return(res)
     }
     s_object

@@ -5,6 +5,7 @@
 \alias{clustify_lists.default}
 \alias{clustify_lists.seurat}
 \alias{clustify_lists.Seurat}
+\alias{clustify_lists.SingleCellExperiment}
 \title{Main function to compare scRNA-seq data to gene lists.}
 \usage{
 clustify_lists(input, ...)
@@ -28,6 +29,13 @@ clustify_lists(input, ...)
   cut = 0, marker, marker_inmatrix = TRUE, genome_n = 30000,
   metric = "hyper", output_high = TRUE, dr = "umap",
   seurat_out = TRUE, obj_out = FALSE, threshold = 0,
+  rename_prefix = NULL, ...)
+
+\method{clustify_lists}{SingleCellExperiment}(input, cluster_info = NULL,
+  cluster_col = NULL, if_log = TRUE, per_cell = FALSE, topn = 800,
+  cut = 0, marker, marker_inmatrix = TRUE, genome_n = 30000,
+  metric = "hyper", output_high = TRUE, dr = "umap",
+  seurat_out = TRUE, obj_out = TRUE, threshold = 0,
   rename_prefix = NULL, ...)
 }
 \arguments{
