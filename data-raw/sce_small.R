@@ -18,5 +18,8 @@ attr(attr(sce_small@rowRanges@unlistData@ranges, "class"), "package") <- NULL
 attr(attr(sce_small@rowRanges@unlistData@strand, "class"), "package") <- NULL
 attr(attr(sce_small@rowRanges@unlistData@seqinfo, "class"), "package") <- NULL
 attr(attr(sce_small@assays@.xData[["data"]], "class"), "package") <- NULL
+attr(attr(sce_small@assays$`.->data`, "class"), "package") <- NULL
+attr(attr(sce_small@assays$data, "class"), "package") <- NULL
+sce_small@assays$.objectPackage <- NULL
 
 usethis::use_data(sce_small, compress = "xz", overwrite = TRUE)

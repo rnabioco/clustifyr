@@ -199,3 +199,27 @@ test_that("clustify_lists inserts seurat3 metadata correctly", {
   )
   expect_true(class(res) %in% c("matrix", "Seurat"))
 })
+
+test_that("run all gene list functions and then use consensus_call", {
+  pbmc_mm <- matrixize_markers(pbmc_markers)
+  pbmc_avg <- average_clusters(
+    pbmc_matrix_small,
+    pbmc_meta,
+    cluster_col = "classified"
+  )
+  pbmc_avgb <- binarize_expr(pbmc_avg)
+  gene_list_methods <- c("spearman", "hyper", "jaccard", "gsea")
+  results <- lapply(
+    gene_list_methods,
+    function(x) {
+      compare_lists(pbmc_avgb,
+                    pbmc_mm,
+                    metric = x
+      )
+    }
+  )
+  call_list <- lapply(results,
+                      cor_to_call_rank)
+  calls <- call_consensus(call_list)
+  expect_equal(4, length(results))
+})

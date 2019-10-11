@@ -167,3 +167,77 @@ collapse_to_cluster <- function(res,
   df_temp_full2 <- dplyr::right_join(df_temp_full2, select(df_temp_full, -!!dplyr::sym("type")), by = stats::setNames(cluster_col, "type2"))
   df_temp_full <- dplyr::mutate(df_temp_full2, type = tidyr::replace_na(!!dplyr::sym("type"), paste0("r<", threshold, ", unassigned")))
 }
+
+#' get ranked calls for each cluster
+#'
+#' @param correlation_matrix input similarity matrix
+#' @param metadata input metadata with tsne or umap coordinates and cluster ids
+#' @param cluster_col metadata column, can be cluster or cellid
+#' @param collapse_to_cluster if a column name is provided, takes the most frequent call of entire cluster to color in plot
+#' @param threshold minimum correlation coefficent cutoff for calling clusters
+#' @param rename_prefix prefix to add to type and r column names
+#' @param top_n the number of ranks to keep, the rest will be set to 100
+#' @return dataframe of cluster, new ident, and r info
+#' @examples
+#' res <- clustify(
+#'   input = pbmc_matrix_small,
+#'   metadata = pbmc_meta,
+#'   cluster_info = pbmc_meta,
+#'   cluster_col = "classified",
+#'   ref_mat = pbmc_bulk_matrix
+#' )
+#'
+#' res2 <- cor_to_call_rank(res, threshold = "auto")
+#' @export
+cor_to_call_rank <- function(correlation_matrix,
+                        metadata = NULL,
+                        cluster_col = "cluster",
+                        collapse_to_cluster = FALSE,
+                        threshold = 0,
+                        rename_prefix = NULL,
+                        top_n = NULL) {
+  if (threshold == "auto") {
+    threshold = round(0.75 * max(correlation_matrix), 2)
+    message(paste0("using threshold of ", threshold))
+  }
+  df_temp <- tibble::as_tibble(correlation_matrix, rownames = cluster_col)
+  df_temp <- tidyr::gather(df_temp, key = !!dplyr::sym("type"), value = !!dplyr::sym("r"), -!!cluster_col)
+  df_temp <- dplyr::mutate(dplyr::group_by_at(df_temp, 1), rank = dplyr::dense_rank(desc(!!dplyr::sym("r"))))
+  df_temp[["rank"]][df_temp$r < threshold] <- 100
+  if (!(is.null(top_n))) {
+    df_temp <- dplyr::filter(df_temp, rank <= top_n)
+  }
+  df_temp_full <- df_temp
+  if (!is.null(rename_prefix)) {
+    eval(parse(text = paste0("df_temp_full <- dplyr::rename(df_temp_full, ", paste0(rename_prefix, "_type"), " = type, ", paste0(rename_prefix, "_r"), " = r)")))
+  }
+  df_temp_full
+}
+
+#' get concensus calls for a list of cor calls
+#'
+#' @param list_of_res list of call dataframes from cor_to_call_rank
+#' @return dataframe of cluster, new ident, and mean rank
+#' @examples
+#' res <- clustify(
+#'   input = pbmc_matrix_small,
+#'   metadata = pbmc_meta,
+#'   cluster_info = pbmc_meta,
+#'   cluster_col = "classified",
+#'   ref_mat = pbmc_bulk_matrix
+#' )
+#'
+#' res2 <- cor_to_call_rank(res, threshold = "auto")
+#' res3 <- cor_to_call_rank(res)
+#' res4 <- call_consensus(list(res2, res3))
+#' @export
+call_consensus <- function(list_of_res) {
+  # group_by(cluster, type) %>% summarize(m = mean(rank)) %>% top_n(-1, m)
+  res <- do.call("rbind", list_of_res)
+  df_temp <- dplyr::group_by_at(res, c(1,2))
+  df_temp <- dplyr::summarize_at(df_temp, 2, mean)
+  df_temp <- dplyr::top_n(df_temp, -1)
+  df_temp <- dplyr::group_by_at(df_temp, c(1,3))
+  df_temp <- dplyr::summarize_at(df_temp, 1, function(x) stringr::str_c(x, collapse = "__"))
+  df_temp <- dplyr::select(df_temp, c(1,3,2))
+}

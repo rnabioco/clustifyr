@@ -1088,6 +1088,55 @@ test_that("cor_to_call threshold works as intended", {
   
   expect_true("r<0.53, unassigned" %in% call1$type)
 })
+
+test_that("cor_to_call_rank threshold works as intended", {
+  res <- clustify(
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    ref_mat = pbmc_bulk_matrix,
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified"
+  )
+  call1 <- cor_to_call_rank(res,
+                       metadata = pbmc_meta,
+                       cluster_col = "classified",
+                       collapse_to_cluster = FALSE,
+                       threshold = "auto"
+  )
+  
+  expect_true(max(call1$rank) == 100)
+})
+
+test_that("call_consensus marks ties", {
+  res <- clustify(
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    ref_mat = pbmc_bulk_matrix,
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified"
+  )
+  call1 <- cor_to_call_rank(res,
+                            metadata = pbmc_meta,
+                            cluster_col = "classified",
+                            collapse_to_cluster = FALSE,
+                            threshold = "auto"
+  )
+  res2 <- clustify(
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    ref_mat = pbmc_bulk_matrix,
+    cluster_col = "classified"
+  )
+  call2 <- cor_to_call_rank(res2,
+                            metadata = pbmc_meta,
+                            cluster_col = "classified",
+                            collapse_to_cluster = FALSE,
+                            threshold = "auto"
+  )
+  call_f <- call_consensus(list(call1, call2))
+  expect_true(nrow(call_f) == length(unique(pbmc_meta$classified)))
+})
+
 # 
 # test_that("object_ref with sce", {
 #   avg <- object_ref(sce_small,
