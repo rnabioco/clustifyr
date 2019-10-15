@@ -223,3 +223,38 @@ test_that("run all gene list functions and then use consensus_call", {
   calls <- call_consensus(call_list)
   expect_equal(4, length(results))
 })
+
+test_that("run all gene list functions in clustify_lists", {
+  res <- clustify_lists(
+    clustifyrdata::pbmc_matrix,
+    cbmc_m,
+    cluster_info = pbmc_meta,
+    cluster_col = "classified",
+    metric = "consensus"
+  )
+  expect_equal(9, nrow(res))
+})
+
+test_that("run all gene list functions in clustify_lists and seurat object", {
+  res <- clustify_lists(
+    s_small3,
+    marker = cbmc_m,
+    dr = "tsne",
+    cluster_col = "RNA_snn_res.1",
+    metric = "consensus",
+    seurat_out = T
+  )
+  expect_true(is.data.frame(res) | class(res) == "Seurat")
+})
+
+test_that("run all gene list functions in clustify_lists and seurat object", {
+  res <- clustify_lists(
+    s_small,
+    marker = cbmc_m,
+    dr = "tsne",
+    cluster_col = "res.1",
+    metric = "consensus",
+    seurat_out = T
+  )
+  expect_true(is.data.frame(res) | class(res) == "seurat")
+})

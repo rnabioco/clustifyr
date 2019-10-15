@@ -513,6 +513,7 @@ clustify_lists.default <- function(input,
                                    rename_prefix = NULL,
                                    threshold = 0,
                                    ...) {
+  orig_input <- input
   if (!inherits(input, c("matrix", "Matrix", "data.frame"))) {
     input_original <- input
     temp <- parse_loc_object(input,
@@ -551,7 +552,23 @@ clustify_lists.default <- function(input,
     )
   }
   
-  if (metric == "pct") {
+  if (metric == "consensus") {
+    results <- lapply(
+      c("hyper", "jaccard", "pct", "posneg"),
+      function(x) {
+        clustify_lists(
+          orig_input,
+          marker,
+          cluster_info = cluster_info,
+          cluster_col = cluster_col,
+          metric = x
+        )
+      }
+    )
+    call_list <- lapply(results,
+                        cor_to_call_rank)
+    res <- call_consensus(call_list)
+  } else if (metric == "pct") {
     res <- gene_pct_markerm(
       input,
       marker,
@@ -579,21 +596,26 @@ clustify_lists.default <- function(input,
   }
   
   if ((obj_out || seurat_out) && !inherits(input_original, c("matrix", "Matrix", "data.frame"))) {
-    df_temp <- cor_to_call(
-      res,
-      metadata = metadata,
-      cluster_col = cluster_col,
-      threshold = threshold
-    )
+    if (metric != "consensus") {
     
-    df_temp_full <- call_to_metadata(
-      df_temp,
-      metadata = metadata,
-      cluster_col = cluster_col,
-      per_cell = per_cell,
-      rename_prefix = rename_prefix
-    )
-    
+      df_temp <- cor_to_call(
+        res,
+        metadata = metadata,
+        cluster_col = cluster_col,
+        threshold = threshold
+      )
+      
+      df_temp_full <- call_to_metadata(
+        df_temp,
+        metadata = metadata,
+        cluster_col = cluster_col,
+        per_cell = per_cell,
+        rename_prefix = rename_prefix
+      )
+    } else {
+      df_temp_full <- res
+    }
+      
     out <- insert_meta_object(
       input_original, 
       df_temp_full, 
@@ -650,21 +672,25 @@ clustify_lists.seurat <- function(input,
   if (!(seurat_out || obj_out)) {
     res
   } else {
-    df_temp <- cor_to_call(
-      res,
-      metadata = metadata,
-      cluster_col = cluster_col,
-      threshold = threshold
-    )
-
-    df_temp_full <- call_to_metadata(
-      df_temp,
-      metadata = metadata,
-      cluster_col = cluster_col,
-      per_cell = per_cell,
-      rename_prefix = rename_prefix
-    )
-
+    if (metric != "consensus") {
+      df_temp <- cor_to_call(
+        res,
+        metadata = metadata,
+        cluster_col = cluster_col,
+        threshold = threshold
+      )
+    } else {
+      df_temp <- res
+      colnames(df_temp)[1] <- cluster_col
+    }
+      df_temp_full <- call_to_metadata(
+        df_temp,
+        metadata = metadata,
+        cluster_col = cluster_col,
+        per_cell = per_cell,
+        rename_prefix = rename_prefix
+      )
+    
     if ("Seurat" %in% loadedNamespaces()) {
       s_object@meta.data <- df_temp_full
       return(s_object)
@@ -720,19 +746,24 @@ clustify_lists.Seurat <- function(input,
   if (!(seurat_out || obj_out)) {
     res
   } else {
-    df_temp <- cor_to_call(
-      res,
-      metadata = metadata,
-      cluster_col = cluster_col,
-      threshold = threshold
-    )
-
+    if (metric != "consensus") {
+      df_temp <<- cor_to_call(
+        res,
+        metadata = metadata,
+        cluster_col = cluster_col,
+        threshold = threshold
+      )
+    } else {
+      df_temp <- res
+      colnames(df_temp)[1] <- cluster_col
+    }
+    
     df_temp_full <- call_to_metadata(
-      df_temp,
-      metadata = metadata,
-      cluster_col = cluster_col,
-      per_cell = per_cell,
-      rename_prefix = rename_prefix
+        df_temp,
+        metadata = metadata,
+        cluster_col = cluster_col,
+        per_cell = per_cell,
+        rename_prefix = rename_prefix
     )
 
     if ("Seurat" %in% loadedNamespaces()) {
