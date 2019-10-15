@@ -1074,7 +1074,8 @@ parse_loc_object <- function(input,
     object_loc_lookup1 <- lookuptable
   }
 
-  if (type %in% colnames(object_loc_lookup1)) {
+  if (length(intersect(type, colnames(object_loc_lookup1))) > 0) {
+    type <- intersect(type, colnames(object_loc_lookup1))[1]
     parsed <- list(
       eval(parse(text = object_loc_lookup1[[type]][1])),
       as.data.frame(eval(parse(text = object_loc_lookup1[[type]][2]))),

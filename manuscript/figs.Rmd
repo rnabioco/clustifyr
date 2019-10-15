@@ -576,7 +576,7 @@ ggsave("Fig1B.pdf", cowplot::plot_grid(a,b, nrow = 1), width =7, height = 7, dpi
 r <- readRDS("res_pbmcbench2.rds")
 r2 <- r %>% separate(run, sep = "_", into = c("sample", "exp", "sub"))
 
-g1 <- ggplot(r2, aes(x = exp, y = res, fill = method)) + 
+g1 <- ggplot(r2 %>% filter(method != "kl_divergence"), aes(x = exp, y = res, fill = method)) + 
   geom_boxplot(outlier.shape = NA) +
   #geom_jitter() +
   cowplot::theme_cowplot() + 
@@ -586,6 +586,7 @@ g1 <- ggplot(r2, aes(x = exp, y = res, fill = method)) +
   ylim(0,1)
 
 g1
+ggsave("Fig2E.pdf", g1, width = 7, height = 7, dpi = 400)
 
 r <- readRDS("res_pbmcbench.rds")
 r2 <- r %>% separate(run, sep = "_", into = c("sample", "exp", "sub"))
