@@ -573,10 +573,10 @@ ggsave("Fig1B.pdf", cowplot::plot_grid(a,b, nrow = 1), width =7, height = 7, dpi
 ## Fig2A. clustifyr performs well with pbmcbench datasets.
 
 ```{r}
-r <- readRDS("res_pbmcbench.rds")
+r <- readRDS("res_pbmcbench2.rds")
 r2 <- r %>% separate(run, sep = "_", into = c("sample", "exp", "sub"))
 
-g <- ggplot(r2, aes(x = exp, y = res, fill = sub)) + 
+g1 <- ggplot(r2, aes(x = exp, y = res, fill = method)) + 
   geom_boxplot(outlier.shape = NA) +
   #geom_jitter() +
   cowplot::theme_cowplot() + 
@@ -585,7 +585,21 @@ g <- ggplot(r2, aes(x = exp, y = res, fill = sub)) +
   xlab("") +
   ylim(0,1)
 
-g
+g1
+
+r <- readRDS("res_pbmcbench.rds")
+r2 <- r %>% separate(run, sep = "_", into = c("sample", "exp", "sub"))
+
+g2 <- ggplot(r2, aes(x = exp, y = res, fill = sub)) + 
+  geom_boxplot(outlier.shape = NA) +
+  #geom_jitter() +
+  cowplot::theme_cowplot() + 
+  theme(axis.title.y.right = element_text(color = "red"), axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust=0.5)) +
+  ylab("F1-score") +
+  xlab("") +
+  ylim(0,1)
+
+g2
 #ggsave("Fig2A.pdf", g, width = 7, height = 7, dpi = 400)
 ```
 

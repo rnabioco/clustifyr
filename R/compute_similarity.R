@@ -213,7 +213,7 @@ calc_similarity <- function(query_mat,
     )
     return(similarity_score)
   } else {
-    if (any(compute_method %in% c("pearson", "spearman"))) {
+    if (any(compute_method %in% c("pearson", "spearman","kendall"))) {
       similarity_score <- cor(as.matrix(query_mat),
         ref_mat,
         method = compute_method

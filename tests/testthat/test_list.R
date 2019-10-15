@@ -226,7 +226,7 @@ test_that("run all gene list functions and then use consensus_call", {
 
 test_that("run all gene list functions in clustify_lists", {
   res <- clustify_lists(
-    clustifyrdata::pbmc_matrix,
+    pbmc_matrix_small,
     cbmc_m,
     cluster_info = pbmc_meta,
     cluster_col = "classified",
@@ -244,7 +244,7 @@ test_that("run all gene list functions in clustify_lists and seurat object", {
     metric = "consensus",
     seurat_out = T
   )
-  expect_true(is.data.frame(res) | class(res) == "Seurat")
+  expect_true(is.data.frame(res) | "Seurat" %in% class(res))
 })
 
 test_that("run all gene list functions in clustify_lists and seurat object", {
@@ -256,5 +256,5 @@ test_that("run all gene list functions in clustify_lists and seurat object", {
     metric = "consensus",
     seurat_out = T
   )
-  expect_true(is.data.frame(res) | class(res) == "seurat")
+  expect_true(is.data.frame(res) | "seurat" %in% class(res))
 })

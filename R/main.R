@@ -458,7 +458,8 @@ clustifyr_methods <- c(
   "pearson",
   "spearman",
   "cosine",
-  "kl_divergence"
+  "kl_divergence",
+  "kendall"
 )
 
 #' Main function to compare scRNA-seq data to gene lists.
