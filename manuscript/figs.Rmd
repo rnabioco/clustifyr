@@ -1194,24 +1194,28 @@ g
 
 ## Fig3A. Scheme of classes and supported objects
 
-## Fig3B. Comparison of ranked correlation vs genelist metrics
+## Fig3B. Comparison of ranked correlation vs genelist metrics.
 
 ```{r}
 # plot_tsne(clustifyrdata::pan_smartseq2_meta,
 #           feature = "cell_type1", x = "tSNE_1", y = "tSNE_2", do_label = F, do_legend = F)
-
+pan_smartseq2_avg <- average_clusters(
+  pan_smartseq2_matrix,
+  pan_smartseq2_meta,
+  cluster_col = "cell_type1"
+)
 resc <- clustify(
   input = pan_indrop_matrix,
   ref_mat = pan_smartseq2_avg,
   metadata = pan_indrop_meta,
   cluster_col = "cell_type1",
-  query_genes = pan_indrop_vargenes
+  query_genes = ref_feature_select(pan_smartseq2_avg, n = 700)
 )
 a0 <- plot_cor(resc,
               clustifyrdata::pan_indrop_meta,
               cluster_col = "cell_type1", x = "tSNE_1", y = "tSNE_2",
-              data_to_plot = "1")
-
+              data_to_plot = "alpha")
+rescc<- resc[,c("alpha","beta","delta")]
 beta <- c("INS", "IGF2", "IAPP","MAFA","NPTX2")
 alpha <- c("GCG", "PDK4","LOXL2","IRX2","GC")
 delta <- c("SST", "RBP4","HHEX","PCSK1","LEPR")
@@ -1260,6 +1264,45 @@ c <- plot_cor(res3,
 g <- cowplot::plot_grid(a0[[1]],a[[1]],b[[1]],c[[1]], ncol = 2, labels = c("spearman_cor","pct_express","ranked_cor_markers", "jaccard"))
 
 g
-#ggsave("Fig3B.pdf", g, width = 10, height = 10, dpi = 400)
+ggsave("Fig3B.pdf", g, width = 10, height = 10, dpi = 400)
+
+callc <- cor_to_call_rank(rescc,
+                            metadata = clustifyrdata::pan_indrop_meta,
+                            cluster_col = "cell_type1",
+                            collapse_to_cluster = FALSE,
+                          threshold = "auto"
+)
+call <- cor_to_call_rank(res,
+                            metadata = clustifyrdata::pan_indrop_meta,
+                            cluster_col = "cell_type1",
+                            collapse_to_cluster = FALSE,
+                          threshold = "auto"
+)
+call2 <- cor_to_call_rank(res2,
+                            metadata = clustifyrdata::pan_indrop_meta,
+                            cluster_col = "cell_type1",
+                            collapse_to_cluster = FALSE,
+                          threshold = "auto"
+)
+call3 <- cor_to_call_rank(res3,
+                            metadata = clustifyrdata::pan_indrop_meta,
+                            cluster_col = "cell_type1",
+                            collapse_to_cluster = FALSE,
+                          threshold = "auto"
+)
+call_f <- call_consensus(list(callc, call, call2, call3)) %>% mutate(score = 1/rank)
+m2 <- call_to_metadata(
+  call_f,
+  metadata = clustifyrdata::pan_indrop_meta,
+  cluster_col = "cell_type1"
+)
+
+c <- plot_tsne(m2,
+               x = "tSNE_1", y = "tSNE_2",
+              feature= "type",
+              alpha_col = "score", do_legend = F
+              )
+ggsave("Fig3C.pdf", c, width = 5, height = 5, dpi = 400)
 ```
 
+## Fig3C. Consensus calls from scRNAseq and gene list on pancreatic data.

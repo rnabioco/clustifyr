@@ -10,6 +10,7 @@
 #' @param d_cols character vector of colors for discrete values.
 #' defaults to RColorBrewer paired palette
 #' @param pt_size point size
+#' @param alpha_col whether to refer to data column for alpha values
 #' @param scale_limits defaults to min = 0, max = max(data$x),
 #' otherwise a two-element numeric vector indicating min and max to plot
 #' @param do_label whether to label each cluster at median center
@@ -22,6 +23,7 @@ plot_tsne <- function(data, x = "UMAP_1", y = "UMAP_2",
                       c_cols = pretty_palette2,
                       d_cols = NULL,
                       pt_size = 0.25,
+                      alpha_col = NULL,
                       scale_limits = NULL,
                       do_label = FALSE,
                       do_legend = TRUE) {
@@ -36,10 +38,16 @@ plot_tsne <- function(data, x = "UMAP_1", y = "UMAP_2",
   # sort data to avoid plotting null values over colors
   data <- dplyr::arrange(data, !!dplyr::sym(feature))
 
-  p <- ggplot2::ggplot(data, ggplot2::aes_string(x, y)) +
-    geom_point(ggplot2::aes_string(color = paste0("`", feature, "`")), # backticks protect special character gene names
-      size = pt_size
-    )
+  if (!is.null(alpha_col)) {
+    p <- ggplot2::ggplot(data, ggplot2::aes_string(x, y)) +
+      geom_point(ggplot2::aes_string(color = paste0("`", feature, "`"), alpha = paste0("`", alpha_col, "`")), # backticks protect special character gene names
+        size = pt_size
+    ) + scale_alpha_continuous(range = c(0, 1)) } else {
+      p <- ggplot2::ggplot(data, ggplot2::aes_string(x, y)) +
+        geom_point(ggplot2::aes_string(color = paste0("`", feature, "`")), # backticks protect special character gene names
+                    size = pt_size
+      )
+    }
 
   if (typeof(data[[feature]]) %in% c(
     "character",
