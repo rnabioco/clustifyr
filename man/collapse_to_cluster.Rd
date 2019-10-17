@@ -4,7 +4,7 @@
 \alias{collapse_to_cluster}
 \title{From per-cell calls, take highest freq call in each cluster}
 \usage{
-collapse_to_cluster(res, metadata, cluster_col, threshold = 0)
+collapse_to_cluster(res, metadata, cluster_col, threshold)
 }
 \arguments{
 \item{res}{dataframe of idents, such as output of cor_to_call}
