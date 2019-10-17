@@ -44,9 +44,6 @@ pre-calculated tSNE projection (stored in `pbmc_meta`).
 ``` r
 library(clustifyr)
 library(Seurat)
-#> Registered S3 method overwritten by 'R.oo':
-#>   method        from       
-#>   throw.default R.methodsS3
 res <- clustify(
   input = pbmc_matrix_small,
   metadata = pbmc_meta$classified,
@@ -147,5 +144,5 @@ res <- clustify_lists(
 
 ## Additional reference data
 
-More reference data (including tabula muris, immgen, etc) is available
+More reference data (including tabula muris, immgen, etc) are available
 at <https://github.com/rnabioco/clustifyrdata>.

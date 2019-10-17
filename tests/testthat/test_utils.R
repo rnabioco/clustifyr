@@ -602,13 +602,13 @@ test_that("feature_select_PCA can handle precalculated PCA", {
 
 test_that("downsample_matrix sets seed correctly", {
   mat1 <- downsample_matrix(pbmc_matrix_small,
-    cluster_info = pbmc_meta$classified,
+    metadata = pbmc_meta$classified,
     n = 0.5,
     keep_cluster_proportions = TRUE,
     set_seed = 41
   )
   mat2 <- downsample_matrix(pbmc_matrix_small,
-    cluster_info = pbmc_meta$classified,
+                            metadata = pbmc_meta$classified,
     n = 0.5,
     keep_cluster_proportions = TRUE,
     set_seed = 41
@@ -619,14 +619,14 @@ test_that("downsample_matrix sets seed correctly", {
 test_that("downsample_matrix can select same number of cells per cluster", {
   mat1 <- downsample_matrix(
     pbmc_matrix_small,
-    cluster_info = pbmc_meta$classified,
+    metadata = pbmc_meta$classified,
     n = 10,
     keep_cluster_proportions = TRUE,
     set_seed = 41
   )
   mat2 <- downsample_matrix(
     pbmc_matrix_small,
-    cluster_info = pbmc_meta$classified,
+    metadata = pbmc_meta$classified,
     n = 10,
     keep_cluster_proportions = FALSE,
     set_seed = 41
@@ -1165,7 +1165,7 @@ test_that("cor_to_call and collapse_to_cluster work on objects", {
     per_cell = T,
     collapse_to_cluster = T
   )
-  expect_true(is.data.frame(res) | "seurat" %in% class(res))
+  expect_true(is.matrix(res) | "seurat" %in% class(res))
 })
 
 # 

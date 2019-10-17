@@ -123,7 +123,7 @@ d <- plot_tsne(
   do_label = T,
   do_legend = F)
 
-ggsave("Fig1A.pdf", cowplot::plot_grid(a,b,c,d, ncol = 1, labels = c("orig","microarray_ref","sorted_bulk_ref","scRNA-seq_ref")), width =7, height = 15, dpi = 400)
+#ggsave("Fig1A.pdf", cowplot::plot_grid(a,b,c,d, ncol = 1, labels = c("orig","microarray_ref","sorted_bulk_ref","scRNA-seq_ref")), width =7, height = 15, dpi = 400)
 ```
 
 ## Fig1B. Performance benchmark of clustifyr and competition on tabula muris dataset.
@@ -1224,7 +1224,7 @@ panm <- data.frame(alpha, beta, delta)
 res <- clustify_lists(
   input = clustifyrdata::pan_indrop_matrix, 
   marker = panm,
-  cluster_info = clustifyrdata::pan_indrop_meta,
+  metadata = clustifyrdata::pan_indrop_meta,
   cluster_col = "cell_type1",
   metric = "pct"
 )
@@ -1237,7 +1237,7 @@ a <- plot_cor(res,
 res2 <- clustify_lists(
   input = clustifyrdata::pan_indrop_matrix, 
   marker = panm,
-  cluster_info = clustifyrdata::pan_indrop_meta,
+  metadata = clustifyrdata::pan_indrop_meta,
   cluster_col = "cell_type1",
   metric = "posneg"
 )
@@ -1250,7 +1250,7 @@ b <- plot_cor(res2,
 res3 <- clustify_lists(
   input = clustifyrdata::pan_indrop_matrix, 
   marker = panm,
-  cluster_info = clustifyrdata::pan_indrop_meta,
+  metadata = clustifyrdata::pan_indrop_meta,
   cluster_col = "cell_type1",
   metric = "jaccard"
 )

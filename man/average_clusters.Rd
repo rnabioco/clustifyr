@@ -4,21 +4,21 @@
 \alias{average_clusters}
 \title{Average expression values per cluster}
 \usage{
-average_clusters(mat, cluster_info, if_log = TRUE,
-  cluster_col = "cluster", cell_col = NULL, low_threshold = 0,
-  method = "mean", output_log = TRUE, subclusterpower = 0)
+average_clusters(mat, metadata, if_log = TRUE, cluster_col = "cluster",
+  cell_col = NULL, low_threshold = 0, method = "mean",
+  output_log = TRUE, subclusterpower = 0)
 }
 \arguments{
 \item{mat}{expression matrix}
 
-\item{cluster_info}{data.frame or vector containing cluster assignments per cell.
+\item{metadata}{data.frame or vector containing cluster assignments per cell.
 Order must match column order in supplied matrix. If a data.frame
 provide the cluster_col parameters.}
 
 \item{if_log}{input data is natural log,
 averaging will be done on unlogged data}
 
-\item{cluster_col}{column in cluster_info with cluster number}
+\item{cluster_col}{column in metadata with cluster number}
 
 \item{cell_col}{if provided, will reorder matrix first}
 
@@ -39,7 +39,7 @@ Average expression values per cluster
 \examples{
 pbmc_avg <- average_clusters(
   mat = pbmc_matrix_small,
-  cluster_info = pbmc_meta,
+  metadata = pbmc_meta,
   cluster_col = "classified",
  if_log = FALSE
 )

@@ -473,10 +473,10 @@ clustify_lists <- function(input, ...) {
 #' @param input single-cell expression matrix or Seurat object
 #' @param marker matrix or dataframe of candidate genes for each cluster
 #' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
-#' @param cluster_info data.frame or vector containing cluster assignments per cell.
-#' Order must match column order in supplied matrix. If a data.frame
-#' provide the cluster_col parameters.
-#' @param cluster_col column in cluster_info with cluster number
+#' @param metadata cell cluster assignments, supplied as a vector or data.frame.
+#'   If data.frame is supplied then `cluster_col` needs to be set. Not required
+#'   if running correlation per cell.
+#' @param cluster_col column in metadata with cluster number
 #' @param if_log input data is natural log, averaging will be done on unlogged data
 #' @param per_cell compare per cell or per cluster
 #' @param topn number of top expressing genes to keep from input matrix
@@ -499,7 +499,7 @@ clustify_lists <- function(input, ...) {
 clustify_lists.default <- function(input,
                                    marker,
                                    marker_inmatrix = TRUE,
-                                   cluster_info = NULL,
+                                   metadata = NULL,
                                    cluster_col = NULL,
                                    if_log = TRUE,
                                    per_cell = FALSE,
@@ -531,6 +531,8 @@ clustify_lists.default <- function(input,
     if (is.null(cluster_col)) {
       cluster_col <- temp[["col"]]
     }
+  } else {
+    cluster_info <- metadata
   }
   
   if (metric %in% c("posneg", "pct")) {
@@ -560,7 +562,7 @@ clustify_lists.default <- function(input,
         clustify_lists(
           orig_input,
           marker,
-          cluster_info = cluster_info,
+          metadata = cluster_info,
           cluster_col = cluster_col,
           metric = x
         )
@@ -632,7 +634,7 @@ clustify_lists.default <- function(input,
 #' @rdname clustify_lists
 #' @export
 clustify_lists.seurat <- function(input,
-                                  cluster_info = NULL,
+                                  metadata = NULL,
                                   cluster_col = NULL,
                                   if_log = TRUE,
                                   per_cell = FALSE,
@@ -652,12 +654,16 @@ clustify_lists.seurat <- function(input,
   s_object <- input
   # for seurat < 3.0
   input <- s_object@data
-  cluster_info <- as.data.frame(seurat_meta(s_object, dr = dr))
-  metadata <- cluster_info
+  if (is.null(metadata)) {
+    cluster_info <- as.data.frame(seurat_meta(s_object, dr = dr))
+    metadata <- cluster_info
+  } else {
+    cluster_info <- metadata
+  }
 
   res <- clustify_lists(input,
     per_cell = per_cell,
-    cluster_info = cluster_info,
+    metadata = cluster_info,
     if_log = if_log,
     cluster_col = cluster_col,
     topn = topn,
@@ -706,7 +712,7 @@ clustify_lists.seurat <- function(input,
 #' @rdname clustify_lists
 #' @export
 clustify_lists.Seurat <- function(input,
-                                  cluster_info = NULL,
+                                  metadata = NULL,
                                   cluster_col = NULL,
                                   if_log = TRUE,
                                   per_cell = FALSE,
@@ -726,12 +732,16 @@ clustify_lists.Seurat <- function(input,
   s_object <- input
   # for seurat 3.0 +
   input <- s_object@assays$RNA@data
-  cluster_info <- as.data.frame(seurat_meta(s_object, dr = dr))
-  metadata <- cluster_info
+  if (is.null(metadata)) {
+    cluster_info <- as.data.frame(seurat_meta(s_object, dr = dr))
+    metadata <- cluster_info
+  } else {
+    cluster_info <- metadata
+  }
 
   res <- clustify_lists(input,
     per_cell = per_cell,
-    cluster_info = cluster_info,
+    metadata = cluster_info,
     if_log = if_log,
     cluster_col = cluster_col,
     topn = topn,
@@ -781,7 +791,7 @@ clustify_lists.Seurat <- function(input,
 #' @rdname clustify_lists
 #' @export
 clustify_lists.SingleCellExperiment <- function(input,
-                                  cluster_info = NULL,
+                                  metadata = NULL,
                                   cluster_col = NULL,
                                   if_log = TRUE,
                                   per_cell = FALSE,
@@ -799,13 +809,14 @@ clustify_lists.SingleCellExperiment <- function(input,
                                   rename_prefix = NULL,
                                   ...) {
   s_object <- input
-  #expr_mat <- s_object@assays$data$logcounts
   expr_mat <- s_object@assays@.xData[["data"]][["logcounts"]]
-  metadata <- as.data.frame(s_object@colData)
+  if (is.null(metadata)) {
+    metadata <- as.data.frame(s_object@colData)
+  }
   
   res <- clustify_lists(expr_mat,
                         per_cell = per_cell,
-                        cluster_info = metadata,
+                        metadata = metadata,
                         if_log = if_log,
                         cluster_col = cluster_col,
                         topn = topn,

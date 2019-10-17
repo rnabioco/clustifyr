@@ -68,7 +68,7 @@ test_that("run all gene list functions in clustify_lists", {
     function(x) {
       clustify_lists(pbmc_matrix_small,
         per_cell = FALSE,
-        cluster_info = pbmc_meta,
+        metadata = pbmc_meta,
         cluster_col = "classified",
         marker = pbmc_markers,
         marker_inmatrix = FALSE,
@@ -83,7 +83,7 @@ test_that("run all gene list functions in clustify_lists", {
 test_that("gsea outputs in cor matrix format", {
   res <- clustify_lists(pbmc_matrix_small,
     per_cell = FALSE,
-    cluster_info = pbmc_meta,
+    metadata = pbmc_meta,
     cluster_col = "classified",
     marker = pbmc_markers,
     marker_inmatrix = FALSE,
@@ -228,7 +228,7 @@ test_that("run all gene list functions in clustify_lists", {
   res <- clustify_lists(
     pbmc_matrix_small,
     cbmc_m,
-    cluster_info = pbmc_meta,
+    metadata = pbmc_meta,
     cluster_col = "classified",
     metric = "consensus"
   )

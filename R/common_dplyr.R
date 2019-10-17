@@ -11,7 +11,6 @@
 #' res <- clustify(
 #'   input = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
-#'   cluster_info = pbmc_meta,
 #'   cluster_col = "classified",
 #'   ref_mat = pbmc_bulk_matrix
 #' )
@@ -73,7 +72,6 @@ cor_to_call <- function(correlation_matrix,
 #' res <- clustify(
 #'   input = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
-#'   cluster_info = pbmc_meta,
 #'   cluster_col = "classified",
 #'   ref_mat = pbmc_bulk_matrix
 #' )
@@ -177,7 +175,6 @@ collapse_to_cluster <- function(res,
 #' res <- clustify(
 #'   input = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
-#'   cluster_info = pbmc_meta,
 #'   cluster_col = "classified",
 #'   ref_mat = pbmc_bulk_matrix
 #' )
@@ -217,7 +214,6 @@ cor_to_call_rank <- function(correlation_matrix,
 #' res <- clustify(
 #'   input = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
-#'   cluster_info = pbmc_meta,
 #'   cluster_col = "classified",
 #'   ref_mat = pbmc_bulk_matrix
 #' )

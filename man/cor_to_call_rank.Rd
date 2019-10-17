@@ -33,7 +33,6 @@ get ranked calls for each cluster
 res <- clustify(
   input = pbmc_matrix_small,
   metadata = pbmc_meta,
-  cluster_info = pbmc_meta,
   cluster_col = "classified",
   ref_mat = pbmc_bulk_matrix
 )

@@ -46,7 +46,7 @@ run_gsea <- function(expr_mat,
   }
 
   if (!per_cell) {
-    avg_mat <- average_clusters(expr_mat, cluster_info = cluster_ids)
+    avg_mat <- average_clusters(expr_mat, metadata = cluster_ids)
   } else {
     avg_mat <- expr_mat
   }

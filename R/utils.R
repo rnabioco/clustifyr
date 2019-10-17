@@ -35,12 +35,12 @@ overcluster <- function(mat,
 #' Average expression values per cluster
 #'
 #' @param mat expression matrix
-#' @param cluster_info data.frame or vector containing cluster assignments per cell.
+#' @param metadata data.frame or vector containing cluster assignments per cell.
 #' Order must match column order in supplied matrix. If a data.frame
 #' provide the cluster_col parameters.
 #' @param if_log input data is natural log,
 #' averaging will be done on unlogged data
-#' @param cluster_col column in cluster_info with cluster number
+#' @param cluster_col column in metadata with cluster number
 #' @param cell_col if provided, will reorder matrix first
 #' @param low_threshold option to remove clusters with too few cells
 #' @param method whether to take mean (default) or median
@@ -50,12 +50,12 @@ overcluster <- function(mat,
 #' @examples
 #' pbmc_avg <- average_clusters(
 #'   mat = pbmc_matrix_small,
-#'   cluster_info = pbmc_meta,
+#'   metadata = pbmc_meta,
 #'   cluster_col = "classified",
 #'  if_log = FALSE
 #' )
 #' @export
-average_clusters <- function(mat, cluster_info,
+average_clusters <- function(mat, metadata,
                              if_log = TRUE,
                              cluster_col = "cluster",
                              cell_col = NULL,
@@ -63,6 +63,7 @@ average_clusters <- function(mat, cluster_info,
                              method = "mean",
                              output_log = TRUE,
                              subclusterpower = 0) {
+  cluster_info <- metadata
   if (!(is.null(cell_col))) {
     if (!(all(colnames(mat) == cluster_info[[cell_col]]))) {
       mat <- mat[, cluster_info[[cell_col]]]
@@ -80,7 +81,7 @@ average_clusters <- function(mat, cluster_info,
     cluster_info <- as.character(cluster_info)
     cluster_ids <- split(colnames(mat), cluster_info)
   } else {
-    stop("cluster_info not formatted correctly,
+    stop("metadata not formatted correctly,
          supply either a  vector or a dataframe", call. = FALSE)
   }
 
@@ -135,26 +136,27 @@ average_clusters <- function(mat, cluster_info,
 #' Percentage detected per cluster
 #'
 #' @param mat expression matrix
-#' @param cluster_info data.frame with cells
-#' @param cluster_col column in cluster_info with cluster number
+#' @param metadata data.frame with cells
+#' @param cluster_col column in metadata with cluster number
 #' @param cut_num binary cutoff for detection
 #' @return matrix of numeric values, with genes for row names, and clusters for column names
 #' @examples
 #' pbmc_percentage <- percent_clusters(
 #'   mat = pbmc_matrix_small,
-#'   cluster_info = pbmc_meta,
+#'   metadata = pbmc_meta,
 #'   cluster_col = "classified"
 #' )
 #' @export
-percent_clusters <- function(mat, cluster_info,
+percent_clusters <- function(mat, metadata,
                              cluster_col = "cluster",
                              cut_num = 0.5) {
+  cluster_info <- metadata
   mat[mat >= cut_num] <- 1
   mat[mat <= cut_num] <- 0
 
   average_clusters(mat, cluster_info,
     if_log = FALSE,
-    cluster_col = cluster_col
+    metadata = cluster_col
   )
 }
 
@@ -322,12 +324,12 @@ clustify_intra <- function(expr_mat,
 #' Average expression values per cluster, filtered by set parameter, defaults to calculating background
 #'
 #' @param mat expression matrix
-#' @param cluster_info data.frame or vector containing cluster assignments per cell, and attribute to filter on.
+#' @param metadata data.frame or vector containing cluster assignments per cell, and attribute to filter on.
 #' Order must match column order in supplied matrix. If a data.frame
 #' provide the cluster_col parameters.
 #' @param if_log input data is natural log,
 #' averaging will be done on unlogged data
-#' @param filter_on column in cluster_info to filter on
+#' @param filter_on column in metadata to filter on
 #' @param group_by column name to use for cluster identity
 #' @param filter_method "<", "==", ">" compared to filter_value
 #' @param filter_value baseline minimum as background cutoff
@@ -335,19 +337,20 @@ clustify_intra <- function(expr_mat,
 #' @examples
 #' avg1 <- average_clusters_filter(
 #'   mat = pbmc_matrix_small,
-#'   cluster_info = pbmc_meta,
+#'   metadata = pbmc_meta,
 #'   group_by = "classified",
 #'   filter_on = "seurat_clusters",
 #'   filter_method = "==",
 #'   filter_value = "1"
 #' )
 #' @export
-average_clusters_filter <- function(mat, cluster_info,
+average_clusters_filter <- function(mat, metadata,
                                     if_log = TRUE,
                                     filter_on = "nGene",
                                     group_by = NULL,
                                     filter_method = "<=",
                                     filter_value = 300) {
+  cluster_info <- metadata
   cell_ids <- 0
   eval(parse(text = paste0("cell_ids <- cluster_info[[filter_on]] ", filter_method, "filter_value")))
   if (sum(cell_ids) == 0) {
@@ -384,7 +387,7 @@ average_clusters_filter <- function(mat, cluster_info,
 #' @examples
 #' avg1 <- average_clusters_filter(
 #'   mat = pbmc_matrix_small,
-#'   cluster_info = pbmc_meta,
+#'   metadata = pbmc_meta,
 #'   filter_on = "nFeature_RNA"
 #' )
 #'
@@ -422,7 +425,7 @@ remove_background <- function(mat, background, n = 0) {
 #'
 #' pbmc_avg <- average_clusters(
 #'   mat = pbmc_matrix_small,
-#'   cluster_info = pbmc_meta,
+#'   metadata = pbmc_meta,
 #'   cluster_col = "classified"
 #' )
 #'
@@ -615,30 +618,31 @@ gene_pct <- function(matrix,
 #'
 #' @param matrix expression matrix
 #' @param marker_m matrixized markers
-#' @param cluster_info data.frame or vector containing cluster assignments per cell.
+#' @param metadata data.frame or vector containing cluster assignments per cell.
 #' Order must match column order in supplied matrix. If a data.frame
 #' provide the cluster_col parameters.
-#' @param cluster_col column in cluster_info with cluster number
+#' @param cluster_col column in metadata with cluster number
 #' @param norm whether and how the results are normalized
 #' @return matrix of numeric values, clusters from mat as row names, cell types from marker_m as column names
 #' @examples
 #' res <- gene_pct_markerm(
 #'   matrix = pbmc_matrix_small,
 #'   marker_m = cbmc_m,
-#'   cluster_info = pbmc_meta,
+#'   metadata = pbmc_meta,
 #'   cluster_col = "classified"
 #' )
 #' @export
 gene_pct_markerm <- function(matrix,
                              marker_m,
-                             cluster_info,
+                             metadata,
                              cluster_col = NULL,
                              norm = NULL) {
+  cluster_info <- metadata
   if (is.vector(cluster_info)) {
   } else if (is.data.frame(cluster_info) & !is.null(cluster_col)) {
     cluster_info <- cluster_info[[cluster_col]]
   } else {
-    stop("cluster_info not formatted correctly,
+    stop("metadata not formatted correctly,
          supply either a  vector or a dataframe", call. = FALSE)
   }
 
@@ -1268,7 +1272,7 @@ overcluster_test <- function(expr,
 #' @examples
 #' pbmc_avg <- average_clusters(
 #'   mat = pbmc_matrix_small,
-#'   cluster_info = pbmc_meta,
+#'   metadata = pbmc_meta,
 #'   cluster_col = "classified"
 #' )
 #'
@@ -1410,7 +1414,7 @@ gmt_to_list <- function(path,
 #'
 #' pbmc_avg <- average_clusters(
 #'   mat = pbmc_matrix_small,
-#'   cluster_info = pbmc_meta,
+#'   metadata = pbmc_meta,
 #'   cluster_col = "classified"
 #' )
 #'
@@ -1461,16 +1465,16 @@ RowVar <- function(x, na.rm = TRUE) {
 #' @param mat expression matrix
 #' @param n number per cluster or fraction to keep
 #' @param keep_cluster_proportions whether to subsample
-#' @param cluster_info data.frame or vector containing cluster assignments per cell.
+#' @param metadata data.frame or vector containing cluster assignments per cell.
 #' Order must match column order in supplied matrix. If a data.frame
 #' provide the cluster_col parameters.
-#' @param cluster_col column in cluster_info with cluster number
+#' @param cluster_col column in metadata with cluster number
 #' @param set_seed random seed
 #' @return new smaller mat with less cell_id columns
 #' @examples
 #' mat1 <- downsample_matrix(
 #'   mat = pbmc_matrix_small,
-#'   cluster_info = pbmc_meta$classified,
+#'   metadata = pbmc_meta$classified,
 #'   n = 10,
 #'   keep_cluster_proportions = TRUE,
 #'   set_seed = 41
@@ -1479,9 +1483,10 @@ RowVar <- function(x, na.rm = TRUE) {
 downsample_matrix <- function(mat,
                               n = 1,
                               keep_cluster_proportions = TRUE,
-                              cluster_info = NULL,
+                              metadata = NULL,
                               cluster_col = "cluster",
                               set_seed = NULL) {
+  cluster_info <- metadata
   if (keep_cluster_proportions == FALSE) {
     cluster_ids <- colnames(mat)
     if (n < 1) {
@@ -1498,7 +1503,7 @@ downsample_matrix <- function(mat,
       cluster_info <- as.character(cluster_info)
       cluster_ids <- split(colnames(mat), cluster_info)
     } else {
-      stop("cluster_info not formatted correctly,
+      stop("metadata not formatted correctly,
          supply either a  vector or a dataframe", call. = FALSE)
     }
     if (n < 1) {
@@ -1579,7 +1584,7 @@ ref_marker_select <- function(mat, cut = 0.5, arrange = TRUE, compto = 1) {
 #' @examples
 #' pbmc_avg <- average_clusters(
 #'   mat = pbmc_matrix_small,
-#'   cluster_info = pbmc_meta,
+#'   metadata = pbmc_meta,
 #'   cluster_col = "classified",
 #'   if_log = FALSE
 #' )

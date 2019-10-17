@@ -38,7 +38,7 @@ In this example we use the following built-in input data:
 
 We then calculate correlation coefficients and plot them on a pre-calculated tSNE projection (stored in `pbmc_meta`).
 
-```{r readme_example, warning=F}
+```{r readme_example, warning=F, message=F}
 library(clustifyr)
 library(Seurat)
 res <- clustify(
@@ -118,4 +118,4 @@ res <- clustify_lists(
 
 ## Additional reference data
 
-More reference data (including tabula muris, immgen, etc) is available at https://github.com/rnabioco/clustifyrdata.
+More reference data (including tabula muris, immgen, etc) are available at https://github.com/rnabioco/clustifyrdata.
