@@ -1168,6 +1168,16 @@ test_that("cor_to_call and collapse_to_cluster work on objects", {
   expect_true(is.matrix(res) | "seurat" %in% class(res))
 })
 
+test_that("seurat_meta warns about not finding dr", {
+  m <- seurat_meta(s_small,
+              dr = "tsne"
+  )
+  m2 <- seurat_meta(s_small,
+                   dr = "s"
+  )
+  expect_true(all(rownames(m) == rownames(m2)))
+})
+
 # 
 # test_that("object_ref with sce", {
 #   avg <- object_ref(sce_small,

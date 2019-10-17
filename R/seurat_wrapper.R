@@ -119,12 +119,19 @@ seurat_meta.seurat <- function(seurat_object,
                                dr = "umap",
                                ...) {
   dr2 <- dr
-  temp_dr <- as.data.frame(seurat_object@dr[[dr2]]@cell.embeddings)
-
-  temp_dr <- tibble::rownames_to_column(temp_dr, "rn")
-  temp_meta <- tibble::rownames_to_column(seurat_object@meta.data, "rn")
-  temp <- dplyr::left_join(temp_meta, temp_dr, by = "rn")
-  tibble::column_to_rownames(temp, "rn")
+  temp_dr <- tryCatch(as.data.frame(seurat_object@dr[[dr2]]@cell.embeddings),
+                      error = function(e) {
+                        message("cannot find dr info")
+                        return(NA)
+                      })
+  if (class(temp_dr) != "data.frame") {
+    return(seurat_object@meta.data)
+  } else {
+    temp_dr <- tibble::rownames_to_column(temp_dr, "rn")
+    temp_meta <- tibble::rownames_to_column(seurat_object@meta.data, "rn")
+    temp <- dplyr::left_join(temp_meta, temp_dr, by = "rn")
+    return(tibble::column_to_rownames(temp, "rn"))
+  }
 }
 
 #' @rdname seurat_meta
@@ -137,12 +144,19 @@ seurat_meta.Seurat <- function(seurat_object,
   mdata <- seurat_object@meta.data
   temp_col_id <- get_unique_column(mdata, "rn")
 
-  temp_dr <- as.data.frame(seurat_object@reductions[[dr2]]@cell.embeddings)
-
-  temp_dr <- tibble::rownames_to_column(temp_dr, temp_col_id)
-  temp_meta <- tibble::rownames_to_column(mdata, temp_col_id)
-  temp <- dplyr::left_join(temp_meta, temp_dr, by = temp_col_id)
-  tibble::column_to_rownames(temp, temp_col_id)
+  temp_dr <- tryCatch(as.data.frame(seurat_object@reductions[[dr2]]@cell.embeddings),
+                      error = function(e) {
+                        message("cannot find dr info")
+                        return(NA)
+                      })
+  if (class(temp_dr) != "data.frame") {
+    return(mdata)
+  } else {
+    temp_dr <- tibble::rownames_to_column(temp_dr, temp_col_id)
+    temp_meta <- tibble::rownames_to_column(mdata, temp_col_id)
+    temp <- dplyr::left_join(temp_meta, temp_dr, by = temp_col_id)
+    return(tibble::column_to_rownames(temp, temp_col_id))
+  }
 }
 
 #' Function to convert labelled object to avg expression matrix
