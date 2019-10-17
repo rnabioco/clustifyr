@@ -4,11 +4,11 @@
 \alias{cor_to_call_topn}
 \title{get top calls for each cluster}
 \usage{
-cor_to_call_topn(correlation_matrix, metadata = NULL, col = "cluster",
+cor_to_call_topn(cor_mat, metadata = NULL, col = "cluster",
   collapse_to_cluster = FALSE, threshold = 0, topn = 2)
 }
 \arguments{
-\item{correlation_matrix}{input similarity matrix}
+\item{cor_mat}{input similarity matrix}
 
 \item{metadata}{input metadata with tsne or umap coordinates and cluster ids}
 
@@ -36,7 +36,7 @@ res <- clustify(
 )
 
 call1 <- cor_to_call_topn(
-  correlation_matrix = res,
+  cor_mat = res,
   metadata = pbmc_meta,
   col = "classified",
   collapse_to_cluster = FALSE,

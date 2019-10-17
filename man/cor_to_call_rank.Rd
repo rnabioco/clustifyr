@@ -4,12 +4,12 @@
 \alias{cor_to_call_rank}
 \title{get ranked calls for each cluster}
 \usage{
-cor_to_call_rank(correlation_matrix, metadata = NULL,
-  cluster_col = "cluster", collapse_to_cluster = FALSE,
-  threshold = 0, rename_prefix = NULL, top_n = NULL)
+cor_to_call_rank(cor_mat, metadata = NULL, cluster_col = "cluster",
+  collapse_to_cluster = FALSE, threshold = 0, rename_prefix = NULL,
+  top_n = NULL)
 }
 \arguments{
-\item{correlation_matrix}{input similarity matrix}
+\item{cor_mat}{input similarity matrix}
 
 \item{metadata}{input metadata with tsne or umap coordinates and cluster ids}
 
