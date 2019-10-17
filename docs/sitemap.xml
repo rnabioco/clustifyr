@@ -25,6 +25,9 @@
     <loc>http://rnabioco.github.io/clustifyr/reference/calculate_pathway_gsea.html</loc>
   </url>
   <url>
+    <loc>http://rnabioco.github.io/clustifyr/reference/call_consensus.html</loc>
+  </url>
+  <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/call_to_metadata.html</loc>
   </url>
   <url>
@@ -64,6 +67,9 @@
     <loc>http://rnabioco.github.io/clustifyr/reference/cor_to_call.html</loc>
   </url>
   <url>
+    <loc>http://rnabioco.github.io/clustifyr/reference/cor_to_call_rank.html</loc>
+  </url>
+  <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/cor_to_call_topn.html</loc>
   </url>
   <url>
@@ -97,6 +103,9 @@
     <loc>http://rnabioco.github.io/clustifyr/reference/get_similarity.html</loc>
   </url>
   <url>
+    <loc>http://rnabioco.github.io/clustifyr/reference/get_unique_column.html</loc>
+  </url>
+  <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/get_vargenes.html</loc>
   </url>
   <url>
@@ -125,6 +134,9 @@
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/object_ref.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyr/reference/overcluster.html</loc>
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/overcluster_test.html</loc>
@@ -181,6 +193,9 @@
     <loc>http://rnabioco.github.io/clustifyr/reference/plot_tsne.html</loc>
   </url>
   <url>
+    <loc>http://rnabioco.github.io/clustifyr/reference/pos_neg_marker.html</loc>
+  </url>
+  <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/pos_neg_select.html</loc>
   </url>
   <url>
@@ -212,6 +227,9 @@
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/s_small3.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyr/reference/sce_small.html</loc>
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/seurat_meta.html</loc>

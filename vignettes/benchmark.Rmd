@@ -87,7 +87,7 @@ res <- clustify(
 )
 
 res_allgenes <- cor_to_call(
-  correlation_matrix = res, 
+  cor_mat = res, 
   metadata = l_meta, 
   cluster_col = "Annotation"
 )

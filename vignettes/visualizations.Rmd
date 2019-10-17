@@ -77,7 +77,7 @@ res <- clustify(
 
 # Create heatmap using the clustifyr correlation matrix
 plot_cor_heatmap(
-  cor_matrix = res  # matrix of correlation coefficients from clustifyr()
+  cor_mat = res  # matrix of correlation coefficients from clustifyr()
 )
 ```
 
@@ -88,7 +88,7 @@ The `plot_cor()` function can also be used to create a tSNE for each cell type o
 plot_cor(
   x = "UMAP_1",                       # name of column in the meta.data containing the data to plot on x-axis
   y = "UMAP_2",                       # name of column in the meta.data containing the data to plot on y-axis
-  cor_matrix = res,                   # matrix of correlation coefficients from clustifyr()
+  cor_mat = res,                   # matrix of correlation coefficients from clustifyr()
   metadata = full_pbmc_meta,          # meta.data table containing cluster assignments for each cell
   data_to_plot = colnames(res)[1:2],  # name of cell type(s) to plot correlation coefficients
   cluster_col = "seurat_clusters"     # name of column in meta.data containing cell clusters
@@ -100,7 +100,7 @@ Cell clusters can also be labeled using the `plot_best_call()` function, which t
 ```{r "Label clusters with cell types", fig.height = 8, fig.width = 10}
 # Create tSNE and label clusters with the cell type that has the highest correlation coefficient
 plot_best_call(
-  cor_matrix = res,           # matrix of correlation coefficients from clustifyr()
+  cor_mat = res,           # matrix of correlation coefficients from clustifyr()
   metadata = full_pbmc_meta,  # meta.data table containing UMAP or tSNE data
   do_label = TRUE,            # should the feature label be shown on each cluster?
   do_legend = FALSE,          # should the legend be shown?
@@ -145,7 +145,7 @@ comb_res <- clustify(
 
 # Create tSNE and label clusters with the assigned cell types from the combined reference
 plot_best_call(
-  cor_matrix = comb_res,      # matrix of correlation coefficients from clustifyr()
+  cor_mat = comb_res,      # matrix of correlation coefficients from clustifyr()
   metadata = full_pbmc_meta,  # meta.data table containing UMAP or tSNE data
   do_label = TRUE,            # should the feature label be shown on each cluster?
   do_legend = FALSE,          # should the legend be shown?

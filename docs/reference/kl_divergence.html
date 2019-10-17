@@ -15,11 +15,13 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -39,8 +41,8 @@
 
 
 
-<meta property="og:title" content="KL divergence — kl_divergence" />
 
+<meta property="og:title" content="KL divergence — kl_divergence" />
 <meta property="og:description" content="Use package entropy to compute Kullback-Leibler divergence.
 The function first converts each vector's reads to pseudo-number of
 transcripts by normalizing the total reads to total_reads.
@@ -50,9 +52,9 @@ Function entropy::KL.shrink() is called to compute the KL-divergence between
 the two vectors, and the maximal allowed divergence is set to max_KL.
 Finally, a linear transform is performed to convert the KL divergence,
 which is between 0 and max_KL, to a similarity score between -1 and 1." />
-
 <meta property="og:image" content="http://rnabioco.github.io/clustifyr/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -129,7 +131,6 @@ which is between 0 and max_KL, to a similarity score between -1 and 1." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/rnabioco/clustifyr">
@@ -156,7 +157,6 @@ which is between 0 and max_KL, to a similarity score between -1 and 1." />
     </div>
 
     <div class="ref-description">
-    
     <p>Use package entropy to compute Kullback-Leibler divergence.
 The function first converts each vector's reads to pseudo-number of
 transcripts by normalizing the total reads to total_reads.
@@ -166,12 +166,11 @@ Function <code><a href='https://rdrr.io/pkg/entropy/man/entropy.shrink.html'>ent
 the two vectors, and the maximal allowed divergence is set to max_KL.
 Finally, a linear transform is performed to convert the KL divergence,
 which is between 0 and max_KL, to a similarity score between -1 and 1.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>kl_divergence</span>(<span class='no'>vec1</span>, <span class='no'>vec2</span>, <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>total_reads</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
   <span class='kw'>max_KL</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -197,20 +196,18 @@ raw count should be computed before computing KL-divergence.</p></td>
       <td><p>Maximal allowed value of KL-divergence.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>numeric value, with additional attributes, of kl divergence between the vectors</p>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
@@ -222,7 +219,7 @@ raw count should be computed before computing KL-divergence.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

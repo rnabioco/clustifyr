@@ -31,7 +31,7 @@ full_pbmc_matrix <- clustifyrdata::pbmc_matrix
 full_pbmc_meta <- clustifyrdata::pbmc_meta
 new_ref_matrix <- average_clusters(
   full_pbmc_matrix, 
-  cluster_info = full_pbmc_meta$classified,
+  metadata = full_pbmc_meta$classified,
   if_log = T
 )
 

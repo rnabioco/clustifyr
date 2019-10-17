@@ -88,7 +88,7 @@ To visualize the `clustifyr()` results we can use the `plot_cor_heatmap()` funct
 ```{r "Create correlation heatmap", fig.height = 6, fig.width = 8}
 # Create heatmap of correlation coefficients
 plot_cor_heatmap(
-  cor_matrix = res  # matrix of correlation coefficients from clustifyr()
+  cor_mat = res  # matrix of correlation coefficients from clustifyr()
 )
 ```
 
@@ -99,7 +99,7 @@ plot_cor_heatmap(
 ```{r "Overlay corr coefficients on UMAP", fig.height = 5, fig.width = 12}
 # Overlay correlation coefficients on UMAPs for the first two cell types
 plot_cor(
-  cor_matrix = res,                   # matrix of correlation coefficients from clustifyr()
+  cor_mat = res,                   # matrix of correlation coefficients from clustifyr()
   metadata = full_pbmc_meta,        # meta.data table containing UMAP or tSNE data
   data_to_plot = colnames(res)[1:2],  # name of cell type(s) to plot correlation coefficients
   cluster_col = "seurat_clusters"             # name of column in meta.data containing cell clusters
@@ -111,7 +111,7 @@ The `plot_best_call()` function can be used to label each cluster with the cell 
 ```{r "Label clusters", fig.height = 5.5, fig.width = 12}
 # Label clusters with clustifyr cell identities
 clustifyr_types <- plot_best_call(
-  cor_matrix = res,             # matrix of correlation coefficients from clustifyr()
+  cor_mat = res,             # matrix of correlation coefficients from clustifyr()
   metadata = full_pbmc_meta,    # meta.data table containing UMAP or tSNE data
   do_label = TRUE,              # should the feature label be shown on each cluster?
   do_legend = FALSE,            # should the legend be shown?
@@ -146,7 +146,7 @@ cell_res <- clustify(
 
 # Overlay correlation coefficients on UMAPs
 plot_cor(
-  cor_matrix = cell_res,                      # matrix of correlation coefficients from clustifyr()
+  cor_mat = cell_res,                      # matrix of correlation coefficients from clustifyr()
   metadata = full_pbmc_meta,                # meta.data table containing UMAP or tSNE data
   data_to_plot = colnames(cell_res)[c(1, 5)]  # name of cell type(s) to plot correlation coefficient
 )
@@ -164,7 +164,7 @@ cbmc_m
 # Available metrics include: "hyper", "jaccard", "spearman", "gsea"
 list_res <- clustify_lists(
   input = full_pbmc_matrix,       # matrix of normalized single-cell RNA-seq counts
-  cluster_info = full_pbmc_meta,  # meta.data table containing cell clusters
+  metadata = full_pbmc_meta,  # meta.data table containing cell clusters
   cluster_col = "seurat_clusters",          # name of column in meta.data containing cell clusters
   marker = cbmc_m,                  # list of known marker genes
   metric = "hyper"                  # test to use for assigning cell types
@@ -172,7 +172,7 @@ list_res <- clustify_lists(
 
 # view as heatmap, or plot_best_call
 plot_cor_heatmap(
-  cor_matrix = list_res,         # matrix of correlation coefficients from clustify_lists()
+  cor_mat = list_res,         # matrix of correlation coefficients from clustify_lists()
   col = not_pretty_palette,      # colors to use for heatmap
   cluster_rows = FALSE,          # cluster by row?
   cluster_columns = FALSE,       # cluster by column?

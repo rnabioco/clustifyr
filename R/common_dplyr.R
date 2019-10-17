@@ -39,8 +39,7 @@ cor_to_call <- function(cor_mat,
     clash <- dplyr::pull(clash, 1)
     df_temp[lapply(df_temp[, 1], FUN = function(x) x %in% clash)[[1]], 2] <- paste0(df_temp[["type"]][lapply(df_temp[, 1], FUN = function(x) x %in% clash)[[1]]], "-CLASH!")
     df_temp2 <- df_temp
-    df_temp_full <- dplyr::distinct_at(df_temp, vars(-type), .keep_all = TRUE)
-    #df_temp_full <- dplyr::select(df_temp, -!!dplyr::sym("exclude"))
+    df_temp_full <- dplyr::distinct_at(df_temp, vars(-!!dplyr::sym("type")), .keep_all = TRUE)
   } else {
     df_temp_full <- df_temp
   }
