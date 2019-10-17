@@ -506,7 +506,7 @@ assign_ident <- function(metadata,
 
 #' get top calls for each cluster
 #'
-#' @param correlation_matrix input similarity matrix
+#' @param cor_mat input similarity matrix
 #' @param metadata input metadata with tsne or umap coordinates and cluster ids
 #' @param col metadata column, can be cluster or cellid
 #' @param collapse_to_cluster if a column name is provided, takes the most frequent call of entire cluster to color in plot
@@ -523,19 +523,20 @@ assign_ident <- function(metadata,
 #' )
 #'
 #' call1 <- cor_to_call_topn(
-#'   correlation_matrix = res,
+#'   cor_mat = res,
 #'   metadata = pbmc_meta,
 #'   col = "classified",
 #'   collapse_to_cluster = FALSE,
 #'   threshold = 0.5
 #' )
 #' @export
-cor_to_call_topn <- function(correlation_matrix,
+cor_to_call_topn <- function(cor_mat,
                              metadata = NULL,
                              col = "cluster",
                              collapse_to_cluster = FALSE,
                              threshold = 0,
                              topn = 2) {
+  correlation_matrix <- cor_mat
   df_temp <- tibble::as_tibble(correlation_matrix, rownames = col)
   df_temp <- tidyr::gather(df_temp, key = !!dplyr::sym("type"), value = !!dplyr::sym("r"), -!!col)
   df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold, ", unassigned")

@@ -4,12 +4,11 @@
 \alias{cor_to_call}
 \title{get best calls for each cluster}
 \usage{
-cor_to_call(correlation_matrix, metadata = NULL,
-  cluster_col = "cluster", collapse_to_cluster = FALSE,
-  threshold = 0, rename_prefix = NULL)
+cor_to_call(cor_mat, metadata = NULL, cluster_col = "cluster",
+  collapse_to_cluster = FALSE, threshold = 0, rename_prefix = NULL)
 }
 \arguments{
-\item{correlation_matrix}{input similarity matrix}
+\item{cor_mat}{input similarity matrix}
 
 \item{metadata}{input metadata with tsne or umap coordinates and cluster ids}
 

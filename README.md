@@ -52,7 +52,7 @@ res <- clustify(
 )
 
 plot_cor(
-  cor_matrix = res,
+  cor_mat = res,
   metadata = pbmc_meta,
   data_to_plot = colnames(res)[1],
   cluster_col = "classified"
@@ -65,7 +65,7 @@ plot_cor(
 ``` r
 
 plot_best_call(
-  cor_matrix = res, 
+  cor_mat = res, 
   metadata = pbmc_meta, 
   cluster_col = "classified"
 )

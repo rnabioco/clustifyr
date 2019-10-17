@@ -1,6 +1,6 @@
 #' get best calls for each cluster
 #'
-#' @param correlation_matrix input similarity matrix
+#' @param cor_mat input similarity matrix
 #' @param metadata input metadata with tsne or umap coordinates and cluster ids
 #' @param cluster_col metadata column, can be cluster or cellid
 #' @param collapse_to_cluster if a column name is provided, takes the most frequent call of entire cluster to color in plot
@@ -17,16 +17,18 @@
 #'
 #' res2 <- cor_to_call(res)
 #' @export
-cor_to_call <- function(correlation_matrix,
+cor_to_call <- function(cor_mat,
                         metadata = NULL,
                         cluster_col = "cluster",
                         collapse_to_cluster = FALSE,
                         threshold = 0,
                         rename_prefix = NULL) {
+  correlation_matrix <- cor_mat
   if (threshold == "auto") {
     threshold = round(0.75 * max(correlation_matrix), 2)
     message(paste0("using threshold of ", threshold))
   }
+  correlation_matrix[is.na(correlation_matrix)] <- 0
   df_temp <- tibble::as_tibble(correlation_matrix, rownames = cluster_col)
   df_temp <- tidyr::gather(df_temp, key = !!dplyr::sym("type"), value = !!dplyr::sym("r"), -!!cluster_col)
   df_temp[["type"]][df_temp$r < threshold] <- paste0("r<", threshold, ", unassigned")
@@ -36,8 +38,9 @@ cor_to_call <- function(correlation_matrix,
     clash <- dplyr::filter(clash, n > 1)
     clash <- dplyr::pull(clash, 1)
     df_temp[lapply(df_temp[, 1], FUN = function(x) x %in% clash)[[1]], 2] <- paste0(df_temp[["type"]][lapply(df_temp[, 1], FUN = function(x) x %in% clash)[[1]]], "-CLASH!")
-    df_temp <- dplyr::distinct(df_temp, exclude = "type", .keep_all = TRUE)
-    df_temp_full <- dplyr::select(df_temp, -!!dplyr::sym("exclude"))
+    df_temp2 <- df_temp
+    df_temp_full <- dplyr::distinct_at(df_temp, vars(-type), .keep_all = TRUE)
+    #df_temp_full <- dplyr::select(df_temp, -!!dplyr::sym("exclude"))
   } else {
     df_temp_full <- df_temp
   }
@@ -163,7 +166,7 @@ collapse_to_cluster <- function(res,
 
 #' get ranked calls for each cluster
 #'
-#' @param correlation_matrix input similarity matrix
+#' @param cor_mat input similarity matrix
 #' @param metadata input metadata with tsne or umap coordinates and cluster ids
 #' @param cluster_col metadata column, can be cluster or cellid
 #' @param collapse_to_cluster if a column name is provided, takes the most frequent call of entire cluster to color in plot
@@ -181,13 +184,14 @@ collapse_to_cluster <- function(res,
 #'
 #' res2 <- cor_to_call_rank(res, threshold = "auto")
 #' @export
-cor_to_call_rank <- function(correlation_matrix,
+cor_to_call_rank <- function(cor_mat,
                         metadata = NULL,
                         cluster_col = "cluster",
                         collapse_to_cluster = FALSE,
                         threshold = 0,
                         rename_prefix = NULL,
                         top_n = NULL) {
+  correlation_matrix <- cor_mat
   if (threshold == "auto") {
     threshold = round(0.75 * max(correlation_matrix), 2)
     message(paste0("using threshold of ", threshold))
