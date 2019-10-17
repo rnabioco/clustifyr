@@ -834,8 +834,8 @@ test_that("cor_to_call renaming with suffix input works as intended, per_cell or
   )
   call2 <- cor_to_call(res2,
     metadata = pbmc_meta %>% tibble::rownames_to_column("rn"),
-    cluster_col = "rn",
-    collapse_to_cluster = "classified",
+    cluster_col = "classified",
+    collapse_to_cluster = T,
     threshold = 0,
     rename_prefix = "a"
   )
@@ -1135,6 +1135,37 @@ test_that("call_consensus marks ties", {
   )
   call_f <- call_consensus(list(call1, call2))
   expect_true(nrow(call_f) == length(unique(pbmc_meta$classified)))
+})
+
+test_that("cor_to_call can collapse_to_cluster", {
+  res <- clustify(
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    ref_mat = pbmc_bulk_matrix,
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified",
+    per_cell = T
+  )
+  call1 <- cor_to_call(res,
+                       metadata = pbmc_meta,
+                       cluster_col = "classified",
+                       collapse_to_cluster = T,
+                       threshold = 0.1
+  )
+  expect_true(ncol(call1) == 4)
+})
+
+test_that("cor_to_call and collapse_to_cluster work on objects", {
+  res <- clustify(
+    input = s_small,
+    ref_mat = pbmc_bulk_matrix,
+    query_genes = pbmc_vargenes,
+    cluster_col = "res.1",
+    dr = "tsne",
+    per_cell = T,
+    collapse_to_cluster = T
+  )
+  expect_true(is.data.frame(res) | "seurat" %in% class(res))
 })
 
 # 
