@@ -4,15 +4,14 @@
 \alias{percent_clusters}
 \title{Percentage detected per cluster}
 \usage{
-percent_clusters(mat, cluster_info, cluster_col = "cluster",
-  cut_num = 0.5)
+percent_clusters(mat, metadata, cluster_col = "cluster", cut_num = 0.5)
 }
 \arguments{
 \item{mat}{expression matrix}
 
-\item{cluster_info}{data.frame with cells}
+\item{metadata}{data.frame with cells}
 
-\item{cluster_col}{column in cluster_info with cluster number}
+\item{cluster_col}{column in metadata with cluster number}
 
 \item{cut_num}{binary cutoff for detection}
 }
@@ -25,7 +24,7 @@ Percentage detected per cluster
 \examples{
 pbmc_percentage <- percent_clusters(
   mat = pbmc_matrix_small,
-  cluster_info = pbmc_meta,
+  metadata = pbmc_meta,
   cluster_col = "classified"
 )
 }
