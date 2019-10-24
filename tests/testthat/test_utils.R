@@ -1086,7 +1086,7 @@ test_that("cor_to_call threshold works as intended", {
                        threshold = "auto"
   )
   
-  expect_true("r<0.53, unassigned" %in% call1$type)
+  expect_true("r<0.54, unassigned" %in% call1$type)
 })
 
 test_that("cor_to_call_rank threshold works as intended", {
@@ -1178,6 +1178,29 @@ test_that("seurat_meta warns about not finding dr", {
   expect_true(all(rownames(m) == rownames(m2)))
 })
 
+test_that("find_rank_bias filters out unassigned", {
+  res <- clustify(
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    ref_mat = pbmc_bulk_matrix,
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified"
+  )
+  call1 <- cor_to_call(res,
+                       metadata = pbmc_meta,
+                       cluster_col = "classified",
+                       collapse_to_cluster = FALSE,
+                       threshold = 0.6
+  )
+  pbmc_meta2 <- call_to_metadata(call1,
+                                 pbmc_meta,
+                                 "classified")
+  b <- find_rank_bias(pbmc_matrix_small, 
+                      pbmc_meta2, "type", 
+                      pbmc_bulk_matrix,
+                      query_genes = pbmc_vargenes)
+  expect_true(length(unique(pbmc_meta2$type)) > ncol(b))
+})
 # 
 # test_that("object_ref with sce", {
 #   avg <- object_ref(sce_small,

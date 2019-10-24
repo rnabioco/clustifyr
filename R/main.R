@@ -29,6 +29,7 @@ clustify <- function(input, ...) {
 #' @param obj_out whether to output object instead of cor matrix
 #' @param rename_prefix prefix to add to type and r column names
 #' @param threshold identity calling minimum correlation score threshold, only used when obj_out = T
+#' @param exclude_genes a vector of gene names to throw out of query
 #' @param ... additional arguments to pass to compute_method function
 #'
 #' @return single cell object with identity assigned in metadata, or matrix of correlation values, clusters from input as row names, cell
@@ -90,6 +91,7 @@ clustify.default <- function(input,
                              seurat_out = FALSE,
                              rename_prefix = NULL,
                              threshold = "auto",
+                             exclude_genes = rownames(ref_mat)[stringr::str_detect(rownames(ref_mat), "RP[0-9,L,S]|Rp[0-9,l,s]")],
                              ...) {
   if (!compute_method %in% clustifyr_methods) {
     stop(paste(compute_method, "correlation method not implemented"), call. = FALSE)
@@ -142,6 +144,10 @@ clustify.default <- function(input,
     rownames(ref_mat),
     query_genes
   )
+  
+  if (length(exclude_genes) > 0) {
+    gene_constraints <- setdiff(gene_constraints, exclude_genes)
+  }
 
   if (verbose) {
     message(paste0("using # of genes: ", length(gene_constraints)))
@@ -243,6 +249,7 @@ clustify.seurat <- function(input,
                             verbose = FALSE,
                             rm0 = FALSE,
                             rename_prefix = NULL,
+                            exclude_genes = c(),
                             ...) {
   s_object <- input
   # for seurat < 3.0
@@ -264,6 +271,7 @@ clustify.seurat <- function(input,
     compute_method = compute_method,
     verbose = verbose,
     rm0 = rm0,
+    exclude_genes = exclude_genes,
     ...
   )
 
@@ -317,6 +325,7 @@ clustify.Seurat <- function(input,
                             verbose = FALSE,
                             rm0 = FALSE,
                             rename_prefix = NULL,
+                            exclude_genes = c(),
                             ...) {
   s_object <- input
   # for seurat 3.0 +
@@ -338,6 +347,7 @@ clustify.Seurat <- function(input,
     compute_method = compute_method,
     verbose = verbose,
     rm0 = rm0,
+    exclude_genes = exclude_genes,
     ...
   )
   
@@ -391,6 +401,7 @@ clustify.SingleCellExperiment <- function(input,
                             verbose = FALSE,
                             rm0 = FALSE,
                             rename_prefix = NULL,
+                            exclude_genes = c(),
                             ...) {
   s_object <- input
   #expr_mat <- s_object@assays$data$logcounts
@@ -408,6 +419,7 @@ clustify.SingleCellExperiment <- function(input,
     compute_method = compute_method,
     verbose = verbose,
     rm0 = rm0,
+    exclude_genes = exclude_genes,
     ...
   )
   

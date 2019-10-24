@@ -387,6 +387,26 @@ test_that("clustify_lists gives correct error message upon unrecognized method",
   ))
 })
 
+test_that("clustify takes factor for metadata", {
+  res <- clustify(
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta$classified,
+    ref_mat = pbmc_bulk_matrix,
+    query_genes = pbmc_vargenes,
+    verbose = TRUE
+  )
+  
+  res2 <- clustify(
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta$classified,
+    ref_mat = pbmc_bulk_matrix,
+    query_genes = pbmc_vargenes,
+    verbose = TRUE,
+    exclude_genes = c("CD27", "ZNF232", "ZYX")
+  )
+  
+  expect_true(res[1,1] != res2[1,1])
+})
 # test_that("sce object clustifying", {
 #   res <- clustify(sce_small,
 #                   pbmc_bulk_matrix,

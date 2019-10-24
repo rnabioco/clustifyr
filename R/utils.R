@@ -1761,3 +1761,35 @@ get_unique_column <- function(df, id = NULL){
   res
 }
 
+#' Find rank bias
+#' @param mat original query expression matrix
+#' @param metadata metadata after calling types
+#' @param type_col column name in metadata that contains ids
+#' @param ref_mat reference expression matrix
+#' @param query_genes original vector of genes used to clustify
+#' @param filter_out whether to only report filtered results
+#' @return matrix of rank diff values
+#' @export
+find_rank_bias <- function(mat,
+                           metadata,
+                           type_col,
+                           ref_mat,
+                           query_genes = NULL,
+                           filter_out = TRUE) {
+  if (is.null(query_genes)) {
+    query_genes <- intersect(rownames(mat), rownames(ref_mat))
+  } else {
+    query_genes <- intersect(query_genes, intersect(rownames(mat), rownames(ref_mat)))
+  }
+  avg2 <- average_clusters(mat[,rownames(metadata)], metadata[[type_col]])
+  r2 <- apply(-avg2[query_genes,], 2, rank)
+  r2 <- r2[,colnames(r2)[!stringr::str_detect(colnames(r2), "unassigned")]]
+  r1 <- apply(-ref_mat[query_genes,], 2, rank)[,colnames(r2)]
+  rdiff <- r1 - r2
+  if (filter_out) {
+    prob <- rdiff[Matrix::rowSums(rdiff > length(query_genes) / 4) == ncol(rdiff) | Matrix::rowSums(rdiff < -length(query_genes) / 4) == ncol(rdiff),]
+    return(prob)
+  } else {
+    return(rdiff)
+  }
+}
