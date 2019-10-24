@@ -1768,6 +1768,9 @@ get_unique_column <- function(df, id = NULL){
 #' @param ref_mat reference expression matrix
 #' @param query_genes original vector of genes used to clustify
 #' @param filter_out whether to only report filtered results
+#' @param expr_cut consider all lower expressing genes as off
+#' @param threshold diff threshold
+#' @param consensus_cut filter out if lower than number of types show large diff
 #' @return matrix of rank diff values
 #' @export
 find_rank_bias <- function(mat,
@@ -1775,7 +1778,10 @@ find_rank_bias <- function(mat,
                            type_col,
                            ref_mat,
                            query_genes = NULL,
-                           filter_out = TRUE) {
+                           filter_out = TRUE,
+                           threshold = 0.33,
+                           expr_cut = 3000,
+                           consensus_cut = 1) {
   if (is.null(query_genes)) {
     query_genes <- intersect(rownames(mat), rownames(ref_mat))
   } else {
@@ -1785,9 +1791,22 @@ find_rank_bias <- function(mat,
   r2 <- apply(-avg2[query_genes,], 2, rank)
   r2 <- r2[,colnames(r2)[!stringr::str_detect(colnames(r2), "unassigned")]]
   r1 <- apply(-ref_mat[query_genes,], 2, rank)[,colnames(r2)]
+  
+  if (!(is.null(expr_cut))) {
+    r1[r1 > expr_cut] <- expr_cut
+    r2[r2 > expr_cut] <- expr_cut
+    nthreshold <- expr_cut * threshold
+  } else {
+    nthreshold <- length(query_genes) * threshold
+  }
   rdiff <- r1 - r2
   if (filter_out) {
-    prob <- rdiff[Matrix::rowSums(rdiff > length(query_genes) / 4) == ncol(rdiff) | Matrix::rowSums(rdiff < -length(query_genes) / 4) == ncol(rdiff),]
+    rp <- rdiff > nthreshold | rdiff < -nthreshold
+    rp[r1 > 0.9 * expr_cut & r2 > 0.9 * expr_cut] <- NA
+    v <- rowMeans(rp, na.rm = T) == 1
+    v[is.na(v)] <- FALSE
+    v2 <- Matrix::rowSums(rp, na.rm = T) == 1
+    prob <- rdiff[v & !v2,]
     return(prob)
   } else {
     return(rdiff)

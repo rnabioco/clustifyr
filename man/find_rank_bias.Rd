@@ -5,7 +5,8 @@
 \title{Find rank bias}
 \usage{
 find_rank_bias(mat, metadata, type_col, ref_mat, query_genes = NULL,
-  filter_out = TRUE)
+  filter_out = TRUE, threshold = 0.33, expr_cut = 3000,
+  consensus_cut = 1)
 }
 \arguments{
 \item{mat}{original query expression matrix}
@@ -19,6 +20,12 @@ find_rank_bias(mat, metadata, type_col, ref_mat, query_genes = NULL,
 \item{query_genes}{original vector of genes used to clustify}
 
 \item{filter_out}{whether to only report filtered results}
+
+\item{threshold}{diff threshold}
+
+\item{expr_cut}{consider all lower expressing genes as off}
+
+\item{consensus_cut}{filter out if lower than number of types show large diff}
 }
 \value{
 matrix of rank diff values
