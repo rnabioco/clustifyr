@@ -124,6 +124,17 @@ test_that("average_clusters works when low cell number clusters should be remove
   expect_equal(ncol(pbmc_avg2), 9)
 })
 
+test_that("average_clusters works with cutoff gene number", {
+  pbmc_avg2 <- average_clusters(
+    pbmc_matrix_small,
+    pbmc_meta,
+    cluster_col = "classified",
+    if_log = FALSE,
+    cut_n = 1
+  )
+  expect_true(sum(pbmc_avg2[,"B"]) < 10)
+})
+
 test_that("average_clusters works when cluster info contains NA", {
   pbmc_meta2 <- pbmc_meta
   pbmc_meta2[1, "classified"] <- NA

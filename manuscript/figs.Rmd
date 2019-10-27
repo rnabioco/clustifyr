@@ -46,7 +46,7 @@ res <- clustify(
 )
 
 res_allgenes <- cor_to_call(
-  correlation_matrix = res, 
+  cor_mat = res, 
   metadata = meta, 
   cluster_col = "classified",
   threshold = 0.5
@@ -1305,4 +1305,24 @@ c <- plot_tsne(m2,
 ggsave("Fig3C.pdf", c, width = 5, height = 5, dpi = 400)
 ```
 
-## Fig3C. Consensus calls from scRNAseq and gene list on pancreatic data.
+## Supp2. Cross-platform comparisons reveal larger differences in gene expression rankings.
+```{r}
+d <- readRDS("/Users/rf/Desktop/vig/diff_rank_genes.rds") %>% gather(-method, key = key, value = val) %>% mutate(val = as.numeric(val))
+g1 <- ggplot(d %>% filter(key == "n"), aes(x = method, y = val, fill = method)) + 
+  geom_col() +
+  cowplot::theme_cowplot() + 
+  theme(axis.title.y.right = element_text(color = "red"), axis.text.x = element_blank()) +
+  ylab("") +
+  scale_x_discrete(limits=c("10x Chromium (v2)_pbmc1_rethawed", "10x Chromium (v2)_pbmc1_pbmc2", "inDrops_Smart-seq2_pbmc2", "inDrops_Smart-seq2_pbmc1", "10x Chromium (v3)_immgen"))
+
+g2 <- ggplot(d %>% filter(key != "n"), aes(x = method, y = val, fill = key)) + 
+  geom_col(position = 'dodge') +
+  cowplot::theme_cowplot() + 
+  theme(axis.title.y.right = element_text(color = "red"), axis.text.x = element_blank()) +
+  ylab("") +
+  scale_x_discrete(limits=c("10x Chromium (v2)_pbmc1_rethawed", "10x Chromium (v2)_pbmc1_pbmc2", "inDrops_Smart-seq2_pbmc2", "inDrops_Smart-seq2_pbmc1", "10x Chromium (v3)_immgen"))
+
+g <- cowplot::plot_grid(g1, g2)
+ggsave("Supp2.pdf", g, width = 10, height = 10, dpi = 400)
+```
+

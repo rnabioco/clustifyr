@@ -46,6 +46,7 @@ overcluster <- function(mat,
 #' @param method whether to take mean (default) or median
 #' @param output_log whether to report log results
 #' @param subclusterpower whether to get multiple averages per original cluster
+#' @param cut_n set on a limit of genes as expressed, lower ranked genes are set to 0, considered unexpressed
 #' @return average expression matrix, with genes for row names, and clusters for column names
 #' @examples
 #' pbmc_avg <- average_clusters(
@@ -56,13 +57,14 @@ overcluster <- function(mat,
 #' )
 #' @export
 average_clusters <- function(mat, metadata,
-                             if_log = TRUE,
                              cluster_col = "cluster",
+                             if_log = TRUE,
                              cell_col = NULL,
                              low_threshold = 0,
                              method = "mean",
                              output_log = TRUE,
-                             subclusterpower = 0) {
+                             subclusterpower = 0,
+                             cut_n = NULL) {
   cluster_info <- metadata
   if (!(is.null(cell_col))) {
     if (!(all(colnames(mat) == cluster_info[[cell_col]]))) {
@@ -130,6 +132,14 @@ average_clusters <- function(mat, metadata,
     fil <- sapply(cluster_ids, FUN = length) > low_threshold
     out <- out[, as.vector(fil)]
   }
+  if (!(is.null(cut_n))) {
+    expr_mat <- out
+    expr_df <- as.data.frame(as.matrix(expr_mat))
+    df_temp <- apply(-expr_df, 2, rank)
+    expr_mat[df_temp > cut_n] <- 0
+    out <- expr_mat  
+  }
+  
   return(out)
 }
 
