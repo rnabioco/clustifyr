@@ -4,9 +4,9 @@
 \alias{average_clusters}
 \title{Average expression values per cluster}
 \usage{
-average_clusters(mat, metadata, if_log = TRUE, cluster_col = "cluster",
+average_clusters(mat, metadata, cluster_col = "cluster", if_log = TRUE,
   cell_col = NULL, low_threshold = 0, method = "mean",
-  output_log = TRUE, subclusterpower = 0)
+  output_log = TRUE, subclusterpower = 0, cut_n = NULL)
 }
 \arguments{
 \item{mat}{expression matrix}
@@ -15,10 +15,10 @@ average_clusters(mat, metadata, if_log = TRUE, cluster_col = "cluster",
 Order must match column order in supplied matrix. If a data.frame
 provide the cluster_col parameters.}
 
+\item{cluster_col}{column in metadata with cluster number}
+
 \item{if_log}{input data is natural log,
 averaging will be done on unlogged data}
-
-\item{cluster_col}{column in metadata with cluster number}
 
 \item{cell_col}{if provided, will reorder matrix first}
 
@@ -29,6 +29,8 @@ averaging will be done on unlogged data}
 \item{output_log}{whether to report log results}
 
 \item{subclusterpower}{whether to get multiple averages per original cluster}
+
+\item{cut_n}{set on a limit of genes as expressed, lower ranked genes are set to 0, considered unexpressed}
 }
 \value{
 average expression matrix, with genes for row names, and clusters for column names
