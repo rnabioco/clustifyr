@@ -225,6 +225,22 @@ test_that("get_similarity handles NA entries", {
   expect_equal(n_clusters + 1, nrow(res))
 })
 
+test_that("get_similarity handles NA entries", {
+  pbmc_meta2 <- pbmc_meta
+  pbmc_meta2[1, "classified"] <- NA
+  res <- get_similarity(
+    pbmc_matrix_small[intersect(rownames(pbmc_matrix_small), rownames(pbmc_bulk_matrix)),],
+    ref_mat = pbmc_bulk_matrix[intersect(rownames(pbmc_matrix_small), rownames(pbmc_bulk_matrix)),],
+    pbmc_meta2$classified,
+    compute_method = "spearman"
+  )
+  n_clusters <- length(unique(pbmc_meta$classified))
+  n_ref_samples <- ncol(pbmc_bulk_matrix)
+  
+  expect_equal(ncol(res), n_ref_samples)
+  expect_equal(n_clusters + 1, nrow(res))
+})
+
 test_that("get_similarity can exclude 0s as missing data", {
   res <- clustify(
     input = pbmc_matrix_small,

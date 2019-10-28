@@ -48,6 +48,7 @@ get_similarity <- function(expr_mat,
     message("reassigning NAs to unknown")
     cluster_ids <- factor(cluster_ids)
     cluster_ids <- factor(cluster_ids, levels = c(levels(cluster_ids), NA), labels = c(levels(cluster_ids), "unknown"), exclude = NULL)
+    cluster_ids <- as.character(cluster_ids)
   }
   
   if (!per_cell) {

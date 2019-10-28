@@ -844,11 +844,18 @@ test_that("cor_to_call renaming with suffix input works as intended, per_cell or
     per_cell = TRUE
   )
   call2 <- cor_to_call(res2,
-    metadata = pbmc_meta %>% tibble::rownames_to_column("rn"),
+    metadata = tibble::rownames_to_column(pbmc_meta, "rn"),
     cluster_col = "classified",
     collapse_to_cluster = T,
     threshold = 0,
     rename_prefix = "a"
+  )
+  call3 <- cor_to_call(res2,
+                       pbmc_meta,
+                       cluster_col = "rn",
+                       collapse_to_cluster = T,
+                       threshold = 0,
+                       rename_prefix = "a"
   )
   expect_true("a_type" %in% colnames(call1) & "a_type" %in% colnames(call2))
 })
@@ -1112,10 +1119,31 @@ test_that("cor_to_call_rank threshold works as intended", {
                        metadata = pbmc_meta,
                        cluster_col = "classified",
                        collapse_to_cluster = FALSE,
-                       threshold = "auto"
+                       threshold = "auto",
+                       rename_prefix = "a"
   )
   
   expect_true(max(call1$rank) == 100)
+})
+
+test_that("cor_to_call_rank options", {
+  res <- clustify(
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    ref_mat = pbmc_bulk_matrix,
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified"
+  )
+  call1 <- cor_to_call_rank(res,
+                            metadata = pbmc_meta,
+                            cluster_col = "classified",
+                            collapse_to_cluster = FALSE,
+                            threshold = "auto",
+                            rename_prefix = "a",
+                            top_n = 1
+  )
+  
+  expect_true(max(call1$rank) == 1)
 })
 
 test_that("call_consensus marks ties", {
