@@ -29,20 +29,17 @@ Insert called ident results into metadata
 res <- clustify(
   input = pbmc_matrix_small,
   metadata = pbmc_meta,
-  cluster_info = pbmc_meta,
   cluster_col = "classified",
   ref_mat = pbmc_bulk_matrix
 )
 
-res2 <- cor_to_call(res)
-
-pbmc
+res2 <- cor_to_call(res, cluster_col = "classified")
 
 pbmc_meta2 <- call_to_metadata(
   res = res2,
   metadata = pbmc_meta,
-  cluster_col = "cluster",
-  rename_suff = "_assigned"
+  cluster_col = "classified",
+  rename_prefix = "assigned"
 )
 }
 }

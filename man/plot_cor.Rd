@@ -4,12 +4,12 @@
 \alias{plot_cor}
 \title{Plot similarity measures on a tSNE or umap}
 \usage{
-plot_cor(cor_matrix, metadata, data_to_plot = colnames(cor_matrix),
+plot_cor(cor_mat, metadata, data_to_plot = colnames(cor_mat),
   cluster_col = NULL, x = "UMAP_1", y = "UMAP_2",
   scale_legends = FALSE, ...)
 }
 \arguments{
-\item{cor_matrix}{input similarity matrix}
+\item{cor_mat}{input similarity matrix}
 
 \item{metadata}{input metadata with per cell tsne or umap coordinates and cluster ids}
 
@@ -46,7 +46,7 @@ res <- clustify(
 )
 
 plts <- plot_cor(
-  cor_matrix = res,
+  cor_mat = res,
   metadata = pbmc_meta,
   data_to_plot = colnames(res)[1:2],
   cluster_col = "classified",

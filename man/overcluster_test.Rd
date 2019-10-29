@@ -6,7 +6,8 @@
 \usage{
 overcluster_test(expr, metadata, ref_mat, cluster_col, x_col = "UMAP_1",
   y_col = "UMAP_2", n = 5, ngenes = NULL, query_genes = NULL,
-  do_label = TRUE, seed = 42, newclustering = NULL)
+  threshold = 0, do_label = TRUE, do_legend = FALSE, seed = 42,
+  newclustering = NULL)
 }
 \arguments{
 \item{expr}{expression matrix}
@@ -27,7 +28,11 @@ overcluster_test(expr, metadata, ref_mat, cluster_col, x_col = "UMAP_1",
 
 \item{query_genes}{vector, otherwise genes with be recalculated}
 
+\item{threshold}{type calling threshold}
+
 \item{do_label}{whether to label each cluster at median center}
+
+\item{do_legend}{whether to draw legend}
 
 \item{seed}{set seed for kmeans}
 

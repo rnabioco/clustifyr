@@ -4,10 +4,10 @@
 \alias{plot_call}
 \title{Plot called clusters on a tSNE or umap, for each reference cluster given}
 \usage{
-plot_call(cor_matrix, metadata, data_to_plot = colnames(cor_matrix), ...)
+plot_call(cor_mat, metadata, data_to_plot = colnames(cor_mat), ...)
 }
 \arguments{
-\item{cor_matrix}{input similarity matrix}
+\item{cor_mat}{input similarity matrix}
 
 \item{metadata}{input metadata with tsne or umap coordinates and cluster ids}
 
@@ -31,7 +31,7 @@ res <- clustify(
 )
 
 plts <- plot_call(
-  cor_matrix = res,
+  cor_mat = res,
   metadata = pbmc_meta,
   data_to_plot = colnames(res)[1:2],
   cluster_col = "classified"

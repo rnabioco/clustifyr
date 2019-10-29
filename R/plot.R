@@ -10,6 +10,7 @@
 #' @param d_cols character vector of colors for discrete values.
 #' defaults to RColorBrewer paired palette
 #' @param pt_size point size
+#' @param alpha_col whether to refer to data column for alpha values
 #' @param scale_limits defaults to min = 0, max = max(data$x),
 #' otherwise a two-element numeric vector indicating min and max to plot
 #' @param do_label whether to label each cluster at median center
@@ -24,6 +25,7 @@ plot_tsne <- function(data,
                       c_cols = pretty_palette2,
                       d_cols = NULL,
                       pt_size = 0.25,
+                      alpha_col = NULL,
                       scale_limits = NULL,
                       do_label = FALSE,
                       do_legend = TRUE) {
@@ -65,8 +67,16 @@ plot_tsne <- function(data,
   # sort data to avoid plotting null values over colors
   data <- dplyr::arrange(data, !!dplyr::sym(feature))
 
-  p <- ggplot2::ggplot(data, ggplot2::aes_string(x_col, y_col)) +
-    geom_point(ggplot2::aes_string(color = paste0("`", feature, "`")), size = pt_size)
+  if (!is.null(alpha_col)) {
+    p <- ggplot2::ggplot(data, ggplot2::aes_string(x_col, y_col)) +
+      geom_point(ggplot2::aes_string(color = paste0("`", feature, "`"), alpha = paste0("`", alpha_col, "`")), # backticks protect special character gene names
+        size = pt_size
+    ) + scale_alpha_continuous(range = c(0, 1)) } else {
+      p <- ggplot2::ggplot(data, ggplot2::aes_string(x_col, y_col)) +
+        geom_point(ggplot2::aes_string(color = paste0("`", feature, "`")), # backticks protect special character gene names
+                    size = pt_size
+      )
+    }
 
   # discrete values
   if (!is.numeric(feature_data)) {
@@ -147,7 +157,7 @@ pretty_palette_ramp_d <- grDevices::colorRampPalette(scales::brewer_pal(palette 
 
 #' Plot similarity measures on a tSNE or umap
 #'
-#' @param cor_matrix input similarity matrix
+#' @param cor_mat input similarity matrix
 #' @param metadata input metadata with per cell tsne or umap coordinates and cluster ids
 #' @param data_to_plot colname of data to plot, defaults to all
 #' @param cluster_col colname of clustering data in metadata, defaults to rownames of the
@@ -171,7 +181,7 @@ pretty_palette_ramp_d <- grDevices::colorRampPalette(scales::brewer_pal(palette 
 #' )
 #'
 #' plts <- plot_cor(
-#'   cor_matrix = res,
+#'   cor_mat = res,
 #'   metadata = pbmc_meta,
 #'   data_to_plot = colnames(res)[1:2],
 #'   cluster_col = "classified",
@@ -181,15 +191,15 @@ pretty_palette_ramp_d <- grDevices::colorRampPalette(scales::brewer_pal(palette 
 #'
 #' plts
 #' @export
-plot_cor <- function(cor_matrix,
+plot_cor <- function(cor_mat,
                      metadata,
-                     data_to_plot = colnames(cor_matrix),
+                     data_to_plot = colnames(cor_mat),
                      cluster_col = NULL,
                      x = "UMAP_1",
                      y = "UMAP_2",
                      scale_legends = FALSE,
                      ...) {
-
+  cor_matrix <- cor_mat
   if (!any(data_to_plot %in% colnames(cor_matrix))) {
     stop("cluster ids not shared between metadata and correlation matrix", call. = FALSE)
   }
@@ -340,7 +350,7 @@ plot_gene <- function(expr_mat,
 
 #' Plot called clusters on a tSNE or umap, for each reference cluster given
 #'
-#' @param cor_matrix input similarity matrix
+#' @param cor_mat input similarity matrix
 #' @param metadata input metadata with tsne or umap coordinates and cluster ids
 #' @param data_to_plot colname of data to plot, defaults to all
 #' @param ... passed to plot_tsne
@@ -355,7 +365,7 @@ plot_gene <- function(expr_mat,
 #' )
 #'
 #' plts <- plot_call(
-#'   cor_matrix = res,
+#'   cor_mat = res,
 #'   metadata = pbmc_meta,
 #'   data_to_plot = colnames(res)[1:2],
 #'   cluster_col = "classified"
@@ -363,10 +373,11 @@ plot_gene <- function(expr_mat,
 #'
 #' plts
 #' @export
-plot_call <- function(cor_matrix,
+plot_call <- function(cor_mat,
                       metadata,
-                      data_to_plot = colnames(cor_matrix),
+                      data_to_plot = colnames(cor_mat),
                       ...) {
+  cor_matrix <- cor_mat
   df_temp <- as.data.frame(t(apply(cor_matrix, 1, function(x) x - max(x))))
   df_temp[df_temp == 0] <- "1"
   df_temp[df_temp != "1"] <- "0"
@@ -380,7 +391,7 @@ plot_call <- function(cor_matrix,
 
 #' Plot best calls for each cluster on a tSNE or umap
 #'
-#' @param cor_matrix input similarity matrix
+#' @param cor_mat input similarity matrix
 #' @param metadata input metadata with tsne or umap coordinates and cluster ids
 #' @param cluster_col metadata column, can be cluster or cellid
 #' @param collapse_to_cluster if a column name is provided, takes the most frequent call of entire cluster to color in plot
@@ -388,7 +399,7 @@ plot_call <- function(cor_matrix,
 #' @param x x variable
 #' @param y y variable
 #' @param plot_r whether to include second plot of cor eff for best call
-#' @param per_cell whether the cor_matrix was generate per cell or per cluster
+#' @param per_cell whether the cor_mat was generate per cell or per cluster
 #' @param ... passed to plot_tsne
 #' @return ggplot object, cells projected by dr, colored by cell type classification
 #' @examples
@@ -401,14 +412,14 @@ plot_call <- function(cor_matrix,
 #' )
 #'
 #' plts <- plot_best_call(
-#'   cor_matrix = res,
+#'   cor_mat = res,
 #'   metadata = pbmc_meta,
 #'   cluster_col = "classified"
 #' )
 #'
 #' plts
 #' @export
-plot_best_call <- function(cor_matrix,
+plot_best_call <- function(cor_mat,
                            metadata,
                            cluster_col = "cluster",
                            collapse_to_cluster = FALSE,
@@ -417,6 +428,7 @@ plot_best_call <- function(cor_matrix,
                            plot_r = FALSE,
                            per_cell = FALSE,
                            ...) {
+  cor_matrix <- cor_mat
   col_meta <- colnames(metadata)
   if ("type" %in% col_meta | "type2" %in% col_meta) {
     warning('metadata column name clash of "type"/"type2"')
@@ -429,7 +441,7 @@ plot_best_call <- function(cor_matrix,
     threshold = threshold
   )
 
-  df_temp_full <<- call_to_metadata(
+  df_temp_full <- call_to_metadata(
     df_temp,
     metadata = metadata,
     cluster_col = cluster_col,
@@ -540,7 +552,7 @@ plot_cols <- function(metadata,
 
 #' Plot similarity measures on heatmap
 #'
-#' @param cor_matrix input similarity matrix
+#' @param cor_mat input similarity matrix
 #' @param metadata input metadata with per cell tsne or umap cooordinates and cluster ids
 #' @param cluster_col colname of clustering data in metadata, defaults to rownames of the
 #' metadata if not supplied.
@@ -562,12 +574,13 @@ plot_cols <- function(metadata,
 #'
 #' plt
 #' @export
-plot_cor_heatmap <- function(cor_matrix,
+plot_cor_heatmap <- function(cor_mat,
                              metadata = NULL,
                              cluster_col = NULL,
                              col = not_pretty_palette,
                              legend_title = NULL,
                              ...) {
+  cor_matrix <- cor_mat
   ComplexHeatmap::Heatmap(cor_matrix,
     col = col,
     heatmap_legend_param = list(title = legend_title),

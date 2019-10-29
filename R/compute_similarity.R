@@ -48,6 +48,7 @@ get_similarity <- function(expr_mat,
     message("reassigning NAs to unknown")
     cluster_ids <- factor(cluster_ids)
     cluster_ids <- factor(cluster_ids, levels = c(levels(cluster_ids), NA), labels = c(levels(cluster_ids), "unknown"), exclude = NULL)
+    cluster_ids <- as.character(cluster_ids)
   }
   
   if (!per_cell) {
@@ -213,7 +214,7 @@ calc_similarity <- function(query_mat,
     )
     return(similarity_score)
   } else {
-    if (any(compute_method %in% c("pearson", "spearman"))) {
+    if (any(compute_method %in% c("pearson", "spearman","kendall"))) {
       similarity_score <- cor(as.matrix(query_mat),
         ref_mat,
         method = compute_method

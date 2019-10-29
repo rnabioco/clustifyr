@@ -15,11 +15,13 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -39,12 +41,12 @@
 
 
 
+
 <meta property="og:title" content="plot GSEA pathway scores as heatmap, returns a list containing results and plot. — plot_pathway_gsea" />
-
 <meta property="og:description" content="plot GSEA pathway scores as heatmap, returns a list containing results and plot." />
-
 <meta property="og:image" content="http://rnabioco.github.io/clustifyr/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -121,7 +123,6 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/rnabioco/clustifyr">
@@ -148,14 +149,12 @@
     </div>
 
     <div class="ref-description">
-    
     <p>plot GSEA pathway scores as heatmap, returns a list containing results and plot.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>plot_pathway_gsea</span>(<span class='no'>mat</span>, <span class='no'>pathway_list</span>, <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>topn</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>returning</span> <span class='kw'>=</span> <span class='st'>"both"</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -184,11 +183,10 @@
       <td><p>to return "both" list and plot, or either one</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>list of matrix and plot, or just plot, matrix of GSEA NES values, cell types as row names, pathways as column names</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>gl</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
@@ -198,7 +196,7 @@
 
 <span class='no'>pbmc_avg</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='average_clusters.html'>average_clusters</a></span>(
   <span class='kw'>mat</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
-  <span class='kw'>cluster_info</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
+  <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
   <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>
 )
 
@@ -212,9 +210,7 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -228,7 +224,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

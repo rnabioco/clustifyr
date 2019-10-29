@@ -11,6 +11,7 @@ seurat_ref <- function(seurat_object, ...) {
 #' @param var_genes_only whether to keep only var_genes in the final matrix output, could also look up genes used for PCA
 #' @param assay_name any additional assay data, such as ADT, to include. If more than 1, pass a vector of names
 #' @param method whether to take mean (default) or median
+#' @param subclusterpower whether to get multiple averages per original cluster
 #' @param ... additional arguments
 #' @examples
 #' avg <- seurat_ref(
@@ -24,6 +25,7 @@ seurat_ref.seurat <- function(seurat_object,
                               var_genes_only = FALSE,
                               assay_name = NULL,
                               method = "mean",
+                              subclusterpower = 0,
                               ...) {
   temp_mat <- seurat_object@data
   if (class(var_genes_only) == "logical" && var_genes_only) {
@@ -33,14 +35,9 @@ seurat_ref.seurat <- function(seurat_object,
   }
 
   if (!is.null(assay_name)) {
-    if (!is.vector(assay_name)) {
-      temp_mat2 <- seurat_object@assay[[assay_name]]@raw.data
-      temp_mat <- rbind(temp_mat, as.matrix(temp_mat2))
-    } else {
       for (element in assay_name) {
         temp_mat2 <- seurat_object@assay[[element]]@raw.data
         temp_mat <- rbind(temp_mat, as.matrix(temp_mat2))
-      }
     }
   }
 
@@ -48,7 +45,8 @@ seurat_ref.seurat <- function(seurat_object,
     seurat_object@meta.data,
     if_log = TRUE,
     cluster_col = cluster_col,
-    method = method
+    method = method,
+    subclusterpower = subclusterpower
   )
 
   temp_res
@@ -61,6 +59,7 @@ seurat_ref.Seurat <- function(seurat_object,
                               var_genes_only = FALSE,
                               assay_name = NULL,
                               method = "mean",
+                              subclusterpower = 0,
                               ...) {
   if (class(seurat_object) == "Seurat") {
     temp_mat <- seurat_object@assays$RNA@data
@@ -72,14 +71,9 @@ seurat_ref.Seurat <- function(seurat_object,
     }
 
     if (!is.null(assay_name)) {
-      if (!is.vector(assay_name)) {
-        temp_mat2 <- seurat_object@assays[[assay_name]]@counts
-        temp_mat <- rbind(temp_mat, as.matrix(temp_mat2))
-      } else {
         for (element in assay_name) {
           temp_mat2 <- seurat_object@assays[[element]]@counts
           temp_mat <- rbind(temp_mat, as.matrix(temp_mat2))
-        }
       }
     }
   } else {
@@ -90,7 +84,8 @@ seurat_ref.Seurat <- function(seurat_object,
     seurat_object@meta.data,
     if_log = TRUE,
     cluster_col = cluster_col,
-    method = method
+    method = method,
+    subclusterpower = subclusterpower
   )
 
   temp_res
@@ -114,12 +109,19 @@ seurat_meta.seurat <- function(seurat_object,
                                dr = "umap",
                                ...) {
   dr2 <- dr
-  temp_dr <- as.data.frame(seurat_object@dr[[dr2]]@cell.embeddings)
-
-  temp_dr <- tibble::rownames_to_column(temp_dr, "rn")
-  temp_meta <- tibble::rownames_to_column(seurat_object@meta.data, "rn")
-  temp <- dplyr::left_join(temp_meta, temp_dr, by = "rn")
-  tibble::column_to_rownames(temp, "rn")
+  temp_dr <- tryCatch(as.data.frame(seurat_object@dr[[dr2]]@cell.embeddings),
+                      error = function(e) {
+                        message("cannot find dr info")
+                        return(NA)
+                      })
+  if (class(temp_dr) != "data.frame") {
+    return(seurat_object@meta.data)
+  } else {
+    temp_dr <- tibble::rownames_to_column(temp_dr, "rn")
+    temp_meta <- tibble::rownames_to_column(seurat_object@meta.data, "rn")
+    temp <- dplyr::left_join(temp_meta, temp_dr, by = "rn")
+    return(tibble::column_to_rownames(temp, "rn"))
+  }
 }
 
 #' @rdname seurat_meta
@@ -132,12 +134,19 @@ seurat_meta.Seurat <- function(seurat_object,
   mdata <- seurat_object@meta.data
   temp_col_id <- get_unique_column(mdata, "rn")
 
-  temp_dr <- as.data.frame(seurat_object@reductions[[dr2]]@cell.embeddings)
-
-  temp_dr <- tibble::rownames_to_column(temp_dr, temp_col_id)
-  temp_meta <- tibble::rownames_to_column(mdata, temp_col_id)
-  temp <- dplyr::left_join(temp_meta, temp_dr, by = temp_col_id)
-  tibble::column_to_rownames(temp, temp_col_id)
+  temp_dr <- tryCatch(as.data.frame(seurat_object@reductions[[dr2]]@cell.embeddings),
+                      error = function(e) {
+                        message("cannot find dr info")
+                        return(NA)
+                      })
+  if (class(temp_dr) != "data.frame") {
+    return(mdata)
+  } else {
+    temp_dr <- tibble::rownames_to_column(temp_dr, temp_col_id)
+    temp_meta <- tibble::rownames_to_column(mdata, temp_col_id)
+    temp <- dplyr::left_join(temp_meta, temp_dr, by = temp_col_id)
+    return(tibble::column_to_rownames(temp, temp_col_id))
+  }
 }
 
 #' Function to convert labelled object to avg expression matrix

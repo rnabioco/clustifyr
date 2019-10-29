@@ -15,7 +15,7 @@ expression data, single-cell gene signatures, or marker genes.
 Single cell transcriptomes are difficult to annotate without extensive
 knowledge of the underlying biology of the system in question. Even with
 this knowledge, accurate identification can be challenging due to the
-lack of detectable expression of common marker genes. ClustifyR solves
+lack of detectable expression of common marker genes. clustifyr solves
 this problem by automatically annotating single cells or clusters using
 scRNA-seq, bulk RNA-seq data, microarray or marker gene lists.
 Additional functions allow for exploratory analysis of similarities
@@ -44,9 +44,6 @@ pre-calculated tSNE projection (stored in `pbmc_meta`).
 ``` r
 library(clustifyr)
 library(Seurat)
-#> Registered S3 method overwritten by 'R.oo':
-#>   method        from       
-#>   throw.default R.methodsS3
 res <- clustify(
   input = pbmc_matrix_small,
   metadata = pbmc_meta$classified,
@@ -55,9 +52,9 @@ res <- clustify(
 )
 
 plot_cor(
-  res,
-  pbmc_meta,
-  colnames(res)[1],
+  cor_mat = res,
+  metadata = pbmc_meta,
+  data_to_plot = colnames(res)[1],
   cluster_col = "classified"
 )
 #> [[1]]
@@ -68,9 +65,9 @@ plot_cor(
 ``` r
 
 plot_best_call(
-  res, 
-  pbmc_meta, 
-  "classified"
+  cor_mat = res, 
+  metadata = pbmc_meta, 
+  cluster_col = "classified"
 )
 ```
 
@@ -105,7 +102,7 @@ res2
 #>  2 dimensional reductions calculated: pca, tsne
 
 new_ref_matrix <- seurat_ref(
-  s_small,
+  seurat_object = s_small,
   cluster_col = "res.1",
   var.genes_only = FALSE
 )
@@ -125,9 +122,9 @@ matrix or `seurat` object based on marker gene lists.
 
 ``` r
 res <- clustify_lists(
-  pbmc_matrix_small,
+  input = pbmc_matrix_small,
   per_cell = FALSE,
-  cluster_info = pbmc_meta,
+  metadata = pbmc_meta,
   cluster_col = "classified",
   marker = pbmc_markers,
   marker_inmatrix = FALSE,
@@ -135,7 +132,7 @@ res <- clustify_lists(
 )
 
 res <- clustify_lists(
-  s_small,
+  input = s_small,
   per_cell = FALSE,
   marker = pbmc_markers,
   marker_inmatrix = FALSE,
@@ -147,5 +144,5 @@ res <- clustify_lists(
 
 ## Additional reference data
 
-More reference data (including tabula muris, immgen, etc) is available
+More reference data (including tabula muris, immgen, etc) are available
 at <https://github.com/rnabioco/clustifyrdata>.

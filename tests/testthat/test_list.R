@@ -68,7 +68,7 @@ test_that("run all gene list functions in clustify_lists", {
     function(x) {
       clustify_lists(pbmc_matrix_small,
         per_cell = FALSE,
-        cluster_info = pbmc_meta,
+        metadata = pbmc_meta,
         cluster_col = "classified",
         marker = pbmc_markers,
         marker_inmatrix = FALSE,
@@ -83,7 +83,7 @@ test_that("run all gene list functions in clustify_lists", {
 test_that("gsea outputs in cor matrix format", {
   res <- clustify_lists(pbmc_matrix_small,
     per_cell = FALSE,
-    cluster_info = pbmc_meta,
+    metadata = pbmc_meta,
     cluster_col = "classified",
     marker = pbmc_markers,
     marker_inmatrix = FALSE,
@@ -198,4 +198,63 @@ test_that("clustify_lists inserts seurat3 metadata correctly", {
     dr = "tsne"
   )
   expect_true(class(res) %in% c("matrix", "Seurat"))
+})
+
+test_that("run all gene list functions and then use consensus_call", {
+  pbmc_mm <- matrixize_markers(pbmc_markers)
+  pbmc_avg <- average_clusters(
+    pbmc_matrix_small,
+    pbmc_meta,
+    cluster_col = "classified"
+  )
+  pbmc_avgb <- binarize_expr(pbmc_avg)
+  gene_list_methods <- c("spearman", "hyper", "jaccard", "gsea")
+  results <- lapply(
+    gene_list_methods,
+    function(x) {
+      compare_lists(pbmc_avgb,
+                    pbmc_mm,
+                    metric = x
+      )
+    }
+  )
+  call_list <- lapply(results,
+                      cor_to_call_rank)
+  calls <- call_consensus(call_list)
+  expect_equal(4, length(results))
+})
+
+test_that("run all gene list functions in clustify_lists", {
+  res <- clustify_lists(
+    pbmc_matrix_small,
+    cbmc_m,
+    metadata = pbmc_meta,
+    cluster_col = "classified",
+    metric = "consensus"
+  )
+  expect_equal(9, nrow(res))
+})
+
+test_that("run all gene list functions in clustify_lists and seurat object", {
+  res <- clustify_lists(
+    s_small3,
+    marker = cbmc_m,
+    dr = "tsne",
+    cluster_col = "RNA_snn_res.1",
+    metric = "consensus",
+    seurat_out = T
+  )
+  expect_true(is.data.frame(res) | "Seurat" %in% class(res))
+})
+
+test_that("run all gene list functions in clustify_lists and seurat object", {
+  res <- clustify_lists(
+    s_small,
+    marker = cbmc_m,
+    dr = "tsne",
+    cluster_col = "res.1",
+    metric = "consensus",
+    seurat_out = T
+  )
+  expect_true(is.data.frame(res) | "seurat" %in% class(res))
 })

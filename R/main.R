@@ -23,13 +23,13 @@ clustify <- function(input, ...) {
 #'   (stored in seurat_object@var.genes) as the query_genes.
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
-#' @param obj_out equivalent to seurat_out
 #' @param verbose whether to report certain variables chosen
 #' @param lookuptable if not supplied, will look in built-in table for object parsing
 #' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param obj_out whether to output object instead of cor matrix
 #' @param rename_prefix prefix to add to type and r column names
 #' @param threshold identity calling minimum correlation score threshold, only used when obj_out = T
+#' @param exclude_genes a vector of gene names to throw out of query
 #' @param ... additional arguments to pass to compute_method function
 #'
 #' @return single cell object with identity assigned in metadata, or matrix of correlation values, clusters from input as row names, cell
@@ -90,7 +90,8 @@ clustify.default <- function(input,
                              obj_out = FALSE,
                              seurat_out = FALSE,
                              rename_prefix = NULL,
-                             threshold = 0,
+                             threshold = "auto",
+                             exclude_genes = rownames(ref_mat)[stringr::str_detect(rownames(ref_mat), "RP[0-9,L,S]|Rp[0-9,l,s]")],
                              ...) {
   if (!compute_method %in% clustifyr_methods) {
     stop(paste(compute_method, "correlation method not implemented"), call. = FALSE)
@@ -143,6 +144,10 @@ clustify.default <- function(input,
     rownames(ref_mat),
     query_genes
   )
+  
+  if (length(exclude_genes) > 0) {
+    gene_constraints <- setdiff(gene_constraints, exclude_genes)
+  }
 
   if (verbose) {
     message(paste0("using # of genes: ", length(gene_constraints)))
@@ -240,10 +245,11 @@ clustify.seurat <- function(input,
                             dr = "umap",
                             seurat_out = TRUE,
                             obj_out = FALSE,
-                            threshold = 0,
+                            threshold = "auto",
                             verbose = FALSE,
                             rm0 = FALSE,
                             rename_prefix = NULL,
+                            exclude_genes = c(),
                             ...) {
   s_object <- input
   # for seurat < 3.0
@@ -265,6 +271,7 @@ clustify.seurat <- function(input,
     compute_method = compute_method,
     verbose = verbose,
     rm0 = rm0,
+    exclude_genes = exclude_genes,
     ...
   )
 
@@ -314,10 +321,11 @@ clustify.Seurat <- function(input,
                             dr = "umap",
                             seurat_out = TRUE,
                             obj_out = FALSE,
-                            threshold = 0,
+                            threshold = "auto",
                             verbose = FALSE,
                             rm0 = FALSE,
                             rename_prefix = NULL,
+                            exclude_genes = c(),
                             ...) {
   s_object <- input
   # for seurat 3.0 +
@@ -339,6 +347,7 @@ clustify.Seurat <- function(input,
     compute_method = compute_method,
     verbose = verbose,
     rm0 = rm0,
+    exclude_genes = exclude_genes,
     ...
   )
   
@@ -374,13 +383,95 @@ clustify.Seurat <- function(input,
     s_object
   }
 }
+
+#' @rdname clustify
+#' @export
+clustify.SingleCellExperiment <- function(input,
+                            ref_mat,
+                            cluster_col = NULL,
+                            query_genes = NULL,
+                            per_cell = FALSE,
+                            n_perm = 0,
+                            compute_method = "spearman",
+                            use_var_genes = TRUE,
+                            dr = "umap",
+                            seurat_out = TRUE,
+                            obj_out = TRUE,
+                            threshold = "auto",
+                            verbose = FALSE,
+                            rm0 = FALSE,
+                            rename_prefix = NULL,
+                            exclude_genes = c(),
+                            ...) {
+  s_object <- input
+  #expr_mat <- s_object@assays$data$logcounts
+  expr_mat <- s_object@assays@.xData[["data"]][["logcounts"]]
+  metadata <- as.data.frame(s_object@colData)
+  
+  res <- clustify(
+    expr_mat,
+    ref_mat,
+    metadata,
+    query_genes,
+    per_cell = per_cell,
+    n_perm = n_perm,
+    cluster_col = cluster_col,
+    compute_method = compute_method,
+    verbose = verbose,
+    rm0 = rm0,
+    exclude_genes = exclude_genes,
+    ...
+  )
+  
+  if (n_perm != 0) {
+    res <- -log(res$p_val + .01, 10)
+  }
+  
+  if (!(seurat_out && obj_out)) {
+    res
+  } else {
+    df_temp <- cor_to_call(
+      res,
+      metadata = metadata,
+      cluster_col = cluster_col,
+      threshold = threshold
+    )
+    
+    df_temp_full <- call_to_metadata(
+      df_temp,
+      metadata = metadata,
+      cluster_col = cluster_col,
+      per_cell = per_cell,
+      rename_prefix = rename_prefix
+    )
+    
+    if ("SingleCellExperiment" %in% loadedNamespaces()) {
+      if (!(is.null(rename_prefix))) {
+        col_type <- stringr::str_c(rename_prefix, "_type")
+        col_r <- stringr::str_c(rename_prefix, "_r")
+      } else {
+        col_type <- "type"
+        col_r <- "r"
+      }
+      s_object@colData[[col_type]] <- df_temp_full[[col_type]]
+      s_object@colData[[col_r]] <- df_temp_full[[col_r]]
+      return(s_object)
+    } else {
+      message("SingleCellExperiment not loaded, returning cor_mat instead")
+      return(res)
+    }
+    s_object
+  }
+}
+
 #' Correlation functions available in clustifyr
 #' @export
 clustifyr_methods <- c(
   "pearson",
   "spearman",
   "cosine",
-  "kl_divergence"
+  "kl_divergence",
+  "kendall"
 )
 
 #' Main function to compare scRNA-seq data to gene lists.
@@ -394,10 +485,10 @@ clustify_lists <- function(input, ...) {
 #' @param input single-cell expression matrix or Seurat object
 #' @param marker matrix or dataframe of candidate genes for each cluster
 #' @param marker_inmatrix whether markers genes are already in preprocessed matrix form
-#' @param cluster_info data.frame or vector containing cluster assignments per cell.
-#' Order must match column order in supplied matrix. If a data.frame
-#' provide the cluster_col parameters.
-#' @param cluster_col column in cluster_info with cluster number
+#' @param metadata cell cluster assignments, supplied as a vector or data.frame.
+#'   If data.frame is supplied then `cluster_col` needs to be set. Not required
+#'   if running correlation per cell.
+#' @param cluster_col column in metadata with cluster number
 #' @param if_log input data is natural log, averaging will be done on unlogged data
 #' @param per_cell compare per cell or per cluster
 #' @param topn number of top expressing genes to keep from input matrix
@@ -420,7 +511,7 @@ clustify_lists <- function(input, ...) {
 clustify_lists.default <- function(input,
                                    marker,
                                    marker_inmatrix = TRUE,
-                                   cluster_info = NULL,
+                                   metadata = NULL,
                                    cluster_col = NULL,
                                    if_log = TRUE,
                                    per_cell = FALSE,
@@ -435,6 +526,7 @@ clustify_lists.default <- function(input,
                                    rename_prefix = NULL,
                                    threshold = 0,
                                    ...) {
+  orig_input <- input
   if (!inherits(input, c("matrix", "Matrix", "data.frame"))) {
     input_original <- input
     temp <- parse_loc_object(input,
@@ -451,8 +543,13 @@ clustify_lists.default <- function(input,
     if (is.null(cluster_col)) {
       cluster_col <- temp[["col"]]
     }
+  } else {
+    cluster_info <- metadata
   }
-
+  
+  if (metric %in% c("posneg", "pct")) {
+    per_cell <- TRUE
+  }
   if (!(per_cell)) {
     input <- average_clusters(input,
       cluster_info,
@@ -469,30 +566,71 @@ clustify_lists.default <- function(input,
       ...
     )
   }
-
-  res <- compare_lists(bin_input,
-    marker_mat = marker,
-    n = genome_n,
-    metric = metric,
-    output_high = output_high
-  )
+  
+  if (metric == "consensus") {
+    results <- lapply(
+      c("hyper", "jaccard", "pct", "posneg"),
+      function(x) {
+        clustify_lists(
+          orig_input,
+          marker,
+          metadata = cluster_info,
+          cluster_col = cluster_col,
+          metric = x
+        )
+      }
+    )
+    call_list <- lapply(results,
+                        cor_to_call_rank)
+    res <- call_consensus(call_list)
+  } else if (metric == "pct") {
+    res <- gene_pct_markerm(
+      input,
+      marker,
+      cluster_info,
+      cluster_col = cluster_col
+    )
+  } else if (metric != "posneg") {
+    res <- compare_lists(bin_input,
+      marker_mat = marker,
+      n = genome_n,
+      metric = metric,
+      output_high = output_high
+    )
+  } else {
+    if (ncol(marker) > 1) {
+      marker <- pos_neg_marker(marker)
+    }
+    res <- pos_neg_select(
+      input,
+      marker,
+      cluster_info,
+      cluster_col = cluster_col,
+      cutoff_score = NULL
+    )
+  }
   
   if ((obj_out || seurat_out) && !inherits(input_original, c("matrix", "Matrix", "data.frame"))) {
-    df_temp <- cor_to_call(
-      res,
-      metadata = metadata,
-      cluster_col = cluster_col,
-      threshold = threshold
-    )
+    if (metric != "consensus") {
     
-    df_temp_full <- call_to_metadata(
-      df_temp,
-      metadata = metadata,
-      cluster_col = cluster_col,
-      per_cell = per_cell,
-      rename_prefix = rename_prefix
-    )
-    
+      df_temp <- cor_to_call(
+        res,
+        metadata = metadata,
+        cluster_col = cluster_col,
+        threshold = threshold
+      )
+      
+      df_temp_full <- call_to_metadata(
+        df_temp,
+        metadata = metadata,
+        cluster_col = cluster_col,
+        per_cell = per_cell,
+        rename_prefix = rename_prefix
+      )
+    } else {
+      df_temp_full <- res
+    }
+      
     out <- insert_meta_object(
       input_original, 
       df_temp_full, 
@@ -508,7 +646,7 @@ clustify_lists.default <- function(input,
 #' @rdname clustify_lists
 #' @export
 clustify_lists.seurat <- function(input,
-                                  cluster_info = NULL,
+                                  metadata = NULL,
                                   cluster_col = NULL,
                                   if_log = TRUE,
                                   per_cell = FALSE,
@@ -528,12 +666,16 @@ clustify_lists.seurat <- function(input,
   s_object <- input
   # for seurat < 3.0
   input <- s_object@data
-  cluster_info <- as.data.frame(seurat_meta(s_object, dr = dr))
-  metadata <- cluster_info
+  if (is.null(metadata)) {
+    cluster_info <- as.data.frame(seurat_meta(s_object, dr = dr))
+    metadata <- cluster_info
+  } else {
+    cluster_info <- metadata
+  }
 
   res <- clustify_lists(input,
     per_cell = per_cell,
-    cluster_info = cluster_info,
+    metadata = cluster_info,
     if_log = if_log,
     cluster_col = cluster_col,
     topn = topn,
@@ -549,21 +691,25 @@ clustify_lists.seurat <- function(input,
   if (!(seurat_out || obj_out)) {
     res
   } else {
-    df_temp <- cor_to_call(
-      res,
-      metadata = metadata,
-      cluster_col = cluster_col,
-      threshold = threshold
-    )
-
-    df_temp_full <- call_to_metadata(
-      df_temp,
-      metadata = metadata,
-      cluster_col = cluster_col,
-      per_cell = per_cell,
-      rename_prefix = rename_prefix
-    )
-
+    if (metric != "consensus") {
+      df_temp <- cor_to_call(
+        res,
+        metadata = metadata,
+        cluster_col = cluster_col,
+        threshold = threshold
+      )
+    } else {
+      df_temp <- res
+      colnames(df_temp)[1] <- cluster_col
+    }
+      df_temp_full <- call_to_metadata(
+        df_temp,
+        metadata = metadata,
+        cluster_col = cluster_col,
+        per_cell = per_cell,
+        rename_prefix = rename_prefix
+      )
+    
     if ("Seurat" %in% loadedNamespaces()) {
       s_object@meta.data <- df_temp_full
       return(s_object)
@@ -578,7 +724,7 @@ clustify_lists.seurat <- function(input,
 #' @rdname clustify_lists
 #' @export
 clustify_lists.Seurat <- function(input,
-                                  cluster_info = NULL,
+                                  metadata = NULL,
                                   cluster_col = NULL,
                                   if_log = TRUE,
                                   per_cell = FALSE,
@@ -598,12 +744,16 @@ clustify_lists.Seurat <- function(input,
   s_object <- input
   # for seurat 3.0 +
   input <- s_object@assays$RNA@data
-  cluster_info <- as.data.frame(seurat_meta(s_object, dr = dr))
-  metadata <- cluster_info
+  if (is.null(metadata)) {
+    cluster_info <- as.data.frame(seurat_meta(s_object, dr = dr))
+    metadata <- cluster_info
+  } else {
+    cluster_info <- metadata
+  }
 
   res <- clustify_lists(input,
     per_cell = per_cell,
-    cluster_info = cluster_info,
+    metadata = cluster_info,
     if_log = if_log,
     cluster_col = cluster_col,
     topn = topn,
@@ -619,19 +769,24 @@ clustify_lists.Seurat <- function(input,
   if (!(seurat_out || obj_out)) {
     res
   } else {
-    df_temp <- cor_to_call(
-      res,
-      metadata = metadata,
-      cluster_col = cluster_col,
-      threshold = threshold
-    )
-
+    if (metric != "consensus") {
+      df_temp <<- cor_to_call(
+        res,
+        metadata = metadata,
+        cluster_col = cluster_col,
+        threshold = threshold
+      )
+    } else {
+      df_temp <- res
+      colnames(df_temp)[1] <- cluster_col
+    }
+    
     df_temp_full <- call_to_metadata(
-      df_temp,
-      metadata = metadata,
-      cluster_col = cluster_col,
-      per_cell = per_cell,
-      rename_prefix = rename_prefix
+        df_temp,
+        metadata = metadata,
+        cluster_col = cluster_col,
+        per_cell = per_cell,
+        rename_prefix = rename_prefix
     )
 
     if ("Seurat" %in% loadedNamespaces()) {
@@ -639,6 +794,84 @@ clustify_lists.Seurat <- function(input,
       return(s_object)
     } else {
       message("seurat not loaded, returning cor_mat instead")
+      return(res)
+    }
+    s_object
+  }
+}
+
+#' @rdname clustify_lists
+#' @export
+clustify_lists.SingleCellExperiment <- function(input,
+                                  metadata = NULL,
+                                  cluster_col = NULL,
+                                  if_log = TRUE,
+                                  per_cell = FALSE,
+                                  topn = 800,
+                                  cut = 0,
+                                  marker,
+                                  marker_inmatrix = TRUE,
+                                  genome_n = 30000,
+                                  metric = "hyper",
+                                  output_high = TRUE,
+                                  dr = "umap",
+                                  seurat_out = TRUE,
+                                  obj_out = TRUE,
+                                  threshold = 0,
+                                  rename_prefix = NULL,
+                                  ...) {
+  s_object <- input
+  expr_mat <- s_object@assays@.xData[["data"]][["logcounts"]]
+  if (is.null(metadata)) {
+    metadata <- as.data.frame(s_object@colData)
+  }
+  
+  res <- clustify_lists(expr_mat,
+                        per_cell = per_cell,
+                        metadata = metadata,
+                        if_log = if_log,
+                        cluster_col = cluster_col,
+                        topn = topn,
+                        cut = cut,
+                        marker,
+                        marker_inmatrix = marker_inmatrix,
+                        genome_n = genome_n,
+                        metric = metric,
+                        output_high = output_high,
+                        ...
+  )
+  
+  if (!(seurat_out && obj_out)) {
+    res
+  } else {
+    df_temp <- cor_to_call(
+      res,
+      metadata = metadata,
+      cluster_col = cluster_col,
+      threshold = threshold
+    )
+    
+    df_temp_full <- call_to_metadata(
+      df_temp,
+      metadata = metadata,
+      cluster_col = cluster_col,
+      per_cell = per_cell,
+      rename_prefix = rename_prefix
+    )
+    
+    if ("SingleCellExperiment" %in% loadedNamespaces()) {
+      if (!(is.null(rename_prefix))) {
+        col_type <- stringr::str_c(rename_prefix, "_type")
+        col_r <- stringr::str_c(rename_prefix, "_r")
+      } else {
+        col_type <- "type"
+        col_r <- "r"
+      }
+      s_object@colData[[col_type]] <- df_temp_full[[col_type]]
+      s_object@colData[[col_r]] <- df_temp_full[[col_r]]
+      return(s_object)
+    } else {
+      message("SingleCellExperiment not loaded, returning cor_mat instead")
       return(res)
     }
     s_object

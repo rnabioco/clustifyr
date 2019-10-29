@@ -225,6 +225,22 @@ test_that("get_similarity handles NA entries", {
   expect_equal(n_clusters + 1, nrow(res))
 })
 
+test_that("get_similarity handles NA entries", {
+  pbmc_meta2 <- pbmc_meta
+  pbmc_meta2[1, "classified"] <- NA
+  res <- get_similarity(
+    pbmc_matrix_small[intersect(rownames(pbmc_matrix_small), rownames(pbmc_bulk_matrix)),],
+    ref_mat = pbmc_bulk_matrix[intersect(rownames(pbmc_matrix_small), rownames(pbmc_bulk_matrix)),],
+    pbmc_meta2$classified,
+    compute_method = "spearman"
+  )
+  n_clusters <- length(unique(pbmc_meta$classified))
+  n_ref_samples <- ncol(pbmc_bulk_matrix)
+  
+  expect_equal(ncol(res), n_ref_samples)
+  expect_equal(n_clusters + 1, nrow(res))
+})
+
 test_that("get_similarity can exclude 0s as missing data", {
   res <- clustify(
     input = pbmc_matrix_small,
@@ -352,8 +368,81 @@ test_that("input Seurat metadata columns are not changed (type, r, rn, etc). #25
 
 })
 
+test_that("clustify_lists works with pos_neg_select and Seurat3 object", {
+  res <- clustify_lists(
+    s_small3,
+    marker = cbmc_m,
+    cluster_col = "RNA_snn_res.1",
+    dr = "tsne", 
+    metric = "posneg",
+    seurat_out = FALSE
+  )
+  expect_true(nrow(res) == 3)
+})
 
+test_that("clustify_lists works with pct and Seurat3 object", {
+  res <- clustify_lists(
+    s_small3,
+    marker = cbmc_m,
+    cluster_col = "RNA_snn_res.1",
+    dr = "tsne", 
+    metric = "pct",
+    seurat_out = FALSE
+  )
+  expect_true(nrow(res) == 3)
+})
 
+test_that("clustify_lists gives correct error message upon unrecognized method", {
+  expect_error(res <- clustify_lists(
+    s_small3,
+    marker = cbmc_m,
+    cluster_col = "RNA_snn_res.1",
+    dr = "tsne", 
+    metric = "ptc",
+    seurat_out = FALSE
+  ))
+})
 
-
-
+test_that("clustify takes factor for metadata", {
+  res <- clustify(
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta$classified,
+    ref_mat = pbmc_bulk_matrix,
+    query_genes = pbmc_vargenes,
+    verbose = TRUE
+  )
+  
+  res2 <- clustify(
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta$classified,
+    ref_mat = pbmc_bulk_matrix,
+    query_genes = pbmc_vargenes,
+    verbose = TRUE,
+    exclude_genes = c("CD27", "ZNF232", "ZYX")
+  )
+  
+  expect_true(res[1,1] != res2[1,1])
+})
+# test_that("sce object clustifying", {
+#   res <- clustify(sce_small,
+#                   pbmc_bulk_matrix,
+#                   cluster_col = "cell_type1",
+#                   obj_out = F
+#   )
+#   expect_true(nrow(res) == 13)
+# })
+# 
+# test_that("sce object clustify_lists", {
+#   other <- c("TAF12", "SNHG3")
+#   delta <- c("PCSK1","LEPR")
+#   panm <- data.frame(other, delta)
+# 
+#   res <- clustify_lists(sce_small,
+#                   marker = panm,
+#                   cluster_col = "cell_type1",
+#                   obj_out = F,
+#                   n = 100,
+#                   metric = "pct"
+#   )
+#   expect_true(nrow(res) == 13)
+# })

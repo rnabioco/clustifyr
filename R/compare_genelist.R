@@ -7,7 +7,7 @@
 #' @examples
 #' pbmc_avg <- average_clusters(
 #'   mat = pbmc_matrix_small,
-#'   cluster_info = pbmc_meta,
+#'   metadata = pbmc_meta,
 #'   cluster_col = "classified"
 #' )
 #'
@@ -174,8 +174,7 @@ compare_lists <- function(bin_mat,
     warning("non-binarized data, running spearman instead")
     metric <- "spearman"
   }
-
-  # "expressed" genes per single cell data cluster
+  
   if (metric == "hyper") {
     out <- lapply(
       colnames(bin_mat),
@@ -199,9 +198,7 @@ compare_lists <- function(bin_mat,
     if (any(sapply(out, is.na))) {
       error("NaN produced, possibly due to wrong n")
     }
-  }
-
-  if (metric == "jaccard") {
+  } else if (metric == "jaccard") {
     out <- lapply(
       colnames(bin_mat),
       function(x) {
@@ -219,9 +216,7 @@ compare_lists <- function(bin_mat,
         do.call(cbind, per_col)
       }
     )
-  }
-
-  if (metric == "spearman") {
+  } else if (metric == "spearman") {
     out <- lapply(
       colnames(bin_mat),
       function(x) {
@@ -234,23 +229,15 @@ compare_lists <- function(bin_mat,
             bin_temp <- bin_temp[order(bin_temp, decreasing = TRUE)]
             list_top <- names(bin_temp)
             v2 <- list_top[list_top %in% v1]
-            v1 <<- v1
-            v2 <<- v2
+            v1 <- v1
+            v2 <- v2
             sum(sapply(seq_along(v1), function(i) abs(i - (which(v2 == v1[i])))))
           }
         )
         do.call(cbind, per_col)
       }
     )
-  }
-
-  if (metric != "gsea") {
-    res <- do.call(rbind, out)
-    rownames(res) <- colnames(bin_mat)
-    colnames(res) <- colnames(marker_mat)
-  }
-
-  if (metric == "gsea") {
+  } else if (metric == "gsea") {
     out <- lapply(
       colnames(marker_mat),
       function(y) {
@@ -267,6 +254,14 @@ compare_lists <- function(bin_mat,
     rownames(res2) <- rownames(res)
     colnames(res2) <- colnames(marker_mat)
     res <- res2
+  } else {
+    stop("unrecognized metric", call. = FALSE)
+  }
+
+  if (metric != "gsea") {
+    res <- do.call(rbind, out)
+    rownames(res) <- colnames(bin_mat)
+    colnames(res) <- colnames(marker_mat)
   }
 
   if (output_high) {

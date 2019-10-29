@@ -188,3 +188,14 @@ test_that("plot_call works on defaults", {
 
   expect_true(ggplot2::is.ggplot(g[[1]]))
 })
+
+test_that("plot_tsne works with alpha_col", {
+  pbmc_meta2 <- pbmc_meta
+  pbmc_meta2$al <- 0
+  pbmc_meta2$al[1] <- 1#1:nrow(pbmc_meta)/nrow(pbmc_meta)
+  g <- plot_tsne(pbmc_meta2,
+                 feature = "classified",
+                 alpha_col = "al", do_legend = F
+  )
+  expect_true(ggplot2::is.ggplot(g))
+})

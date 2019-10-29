@@ -15,11 +15,13 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -39,12 +41,12 @@
 
 
 
+
 <meta property="og:title" content="Combined function to compare scRNA-seq data to bulk RNA-seq data and marker list — clustify_nudge" />
-
 <meta property="og:description" content="Combined function to compare scRNA-seq data to bulk RNA-seq data and marker list" />
-
 <meta property="og:image" content="http://rnabioco.github.io/clustifyr/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -121,7 +123,6 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/rnabioco/clustifyr">
@@ -148,41 +149,39 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Combined function to compare scRNA-seq data to bulk RNA-seq data and marker list</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>clustify_nudge</span>(<span class='no'>input</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for default</span>
+<span class='fu'>clustify_nudge</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>, <span class='no'>marker</span>, <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>weight</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>threshold</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>, <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"umap"</span>, <span class='kw'>norm</span> <span class='kw'>=</span> <span class='st'>"diff"</span>, <span class='kw'>call</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"rank"</span>, <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lookuptable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for seurat</span>
 <span class='fu'>clustify_nudge</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>, <span class='no'>marker</span>,
   <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>weight</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>, <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"umap"</span>, <span class='kw'>norm</span> <span class='kw'>=</span> <span class='st'>"diff"</span>,
+  <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>, <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"umap"</span>, <span class='kw'>norm</span> <span class='kw'>=</span> <span class='st'>"diff"</span>,
   <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"rank"</span>, <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for Seurat</span>
 <span class='fu'>clustify_nudge</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>, <span class='no'>marker</span>,
   <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>weight</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>, <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"umap"</span>, <span class='kw'>norm</span> <span class='kw'>=</span> <span class='st'>"diff"</span>,
-  <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"rank"</span>, <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+  <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>, <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"umap"</span>, <span class='kw'>norm</span> <span class='kw'>=</span> <span class='st'>"diff"</span>,
+  <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"rank"</span>, <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
 
-<span class='co'># S3 method for default</span>
-<span class='fu'>clustify_nudge</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>, <span class='no'>marker</span>, <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>weight</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>, <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"umap"</span>, <span class='kw'>norm</span> <span class='kw'>=</span> <span class='st'>"diff"</span>, <span class='kw'>call</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"rank"</span>, <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lookuptable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
-    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>input</th>
-      <td><p>seurat 2 object</p></td>
+      <td><p>express matrix or object</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -195,52 +194,6 @@
     <tr>
       <th>marker</th>
       <td><p>matrix of markers</p></td>
-    </tr>
-    <tr>
-      <th>cluster_col</th>
-      <td><p>column in metadata that contains cluster ids per cell. Will default to first
-column of metadata if not supplied. Not required if running correlation per cell.</p></td>
-    </tr>
-    <tr>
-      <th>query_genes</th>
-      <td><p>A vector of genes of interest to compare. If NULL, then common genes between
-the expr_mat and ref_mat will be used for comparision.</p></td>
-    </tr>
-    <tr>
-      <th>compute_method</th>
-      <td><p>method(s) for computing similarity scores</p></td>
-    </tr>
-    <tr>
-      <th>weight</th>
-      <td><p>relative weight for the gene list scores, when added to correlation score</p></td>
-    </tr>
-    <tr>
-      <th>seurat_out</th>
-      <td><p>output cor matrix or called seurat object</p></td>
-    </tr>
-    <tr>
-      <th>threshold</th>
-      <td><p>identity calling minimum score threshold</p></td>
-    </tr>
-    <tr>
-      <th>dr</th>
-      <td><p>stored dimension reduction</p></td>
-    </tr>
-    <tr>
-      <th>norm</th>
-      <td><p>whether and how the results are normalized</p></td>
-    </tr>
-    <tr>
-      <th>marker_inmatrix</th>
-      <td><p>whether markers genes are already in preprocessed matrix form</p></td>
-    </tr>
-    <tr>
-      <th>mode</th>
-      <td><p>use marker expression pct or ranked cor score for nudging</p></td>
-    </tr>
-    <tr>
-      <th>rename_prefix</th>
-      <td><p>prefix to add to type and r column names</p></td>
     </tr>
     <tr>
       <th>metadata</th>
@@ -248,38 +201,14 @@ the expr_mat and ref_mat will be used for comparision.</p></td>
 data.frame is supplied then <code>cluster_col</code> needs to be set.</p></td>
     </tr>
     <tr>
-      <th>call</th>
-      <td><p>make call or just return score matrix</p></td>
-    </tr>
-    <tr>
-      <th>obj_out</th>
-      <td><p>whether to output object instead of cor matrix</p></td>
-    </tr>
-    <tr>
-      <th>lookuptable</th>
-      <td><p>if not supplied, will look in built-in table for object parsing</p></td>
-    </tr>
-    <tr>
-      <th>input</th>
-      <td><p>seurat 3 object</p></td>
-    </tr>
-    <tr>
-      <th>ref_mat</th>
-      <td><p>reference expression matrix</p></td>
-    </tr>
-    <tr>
-      <th>marker</th>
-      <td><p>matrix of markers</p></td>
+      <th>cluster_col</th>
+      <td><p>column in metadata that contains cluster ids per cell. Will default to first
+column of metadata if not supplied. Not required if running correlation per cell.</p></td>
     </tr>
     <tr>
       <th>query_genes</th>
       <td><p>A vector of genes of interest to compare. If NULL, then common genes between
 the expr_mat and ref_mat will be used for comparision.</p></td>
-    </tr>
-    <tr>
-      <th>cluster_col</th>
-      <td><p>column in metadata that contains cluster ids per cell. Will default to first
-column of metadata if not supplied. Not required if running correlation per cell.</p></td>
     </tr>
     <tr>
       <th>compute_method</th>
@@ -290,20 +219,24 @@ column of metadata if not supplied. Not required if running correlation per cell
       <td><p>relative weight for the gene list scores, when added to correlation score</p></td>
     </tr>
     <tr>
-      <th>dr</th>
-      <td><p>stored dimension reduction</p></td>
-    </tr>
-    <tr>
       <th>seurat_out</th>
       <td><p>output cor matrix or called seurat object</p></td>
     </tr>
     <tr>
       <th>threshold</th>
-      <td><p>identity calling minimum score threshold</p></td>
+      <td><p>identity calling minimum score threshold, only used when obj_out = T</p></td>
+    </tr>
+    <tr>
+      <th>dr</th>
+      <td><p>stored dimension reduction</p></td>
     </tr>
     <tr>
       <th>norm</th>
       <td><p>whether and how the results are normalized</p></td>
+    </tr>
+    <tr>
+      <th>call</th>
+      <td><p>make call or just return score matrix</p></td>
     </tr>
     <tr>
       <th>marker_inmatrix</th>
@@ -314,67 +247,22 @@ column of metadata if not supplied. Not required if running correlation per cell
       <td><p>use marker expression pct or ranked cor score for nudging</p></td>
     </tr>
     <tr>
-      <th>rename_prefix</th>
-      <td><p>prefix to add to type and r column names</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>passed to matrixize_markers</p></td>
-    </tr>
-    <tr>
-      <th>input</th>
-      <td><p>express matrix</p></td>
-    </tr>
-    <tr>
-      <th>ref_mat</th>
-      <td><p>reference expression matrix</p></td>
-    </tr>
-    <tr>
-      <th>marker</th>
-      <td><p>matrix of markers</p></td>
-    </tr>
-    <tr>
-      <th>query_genes</th>
-      <td><p>A vector of genes of interest to compare. If NULL, then common genes between
-the expr_mat and ref_mat will be used for comparision.</p></td>
-    </tr>
-    <tr>
-      <th>cluster_col</th>
-      <td><p>column in metadata that contains cluster ids per cell. Will default to first
-column of metadata if not supplied. Not required if running correlation per cell.</p></td>
-    </tr>
-    <tr>
-      <th>compute_method</th>
-      <td><p>method(s) for computing similarity scores</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>passed to matrixize_markers</p></td>
-    </tr>
-    <tr>
-      <th>norm</th>
-      <td><p>whether and how the results are normalized</p></td>
-    </tr>
-    <tr>
-      <th>marker_inmatrix</th>
-      <td><p>whether markers genes are already in preprocessed matrix form</p></td>
-    </tr>
-    <tr>
-      <th>mode</th>
-      <td><p>use marker expression pct or ranked cor score for nudging</p></td>
+      <th>obj_out</th>
+      <td><p>whether to output object instead of cor matrix</p></td>
     </tr>
     <tr>
       <th>rename_prefix</th>
       <td><p>prefix to add to type and r column names</p></td>
+    </tr>
+    <tr>
+      <th>lookuptable</th>
+      <td><p>if not supplied, will look in built-in table for object parsing</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>seurat2 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names</p>
-<p>seurat3 object with type assigned in metadata, or matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names</p>
-<p>matrix of numeric values, clusters from input as row names, cell types from ref_mat as column names</p>
-    
+    <p>single cell object, or matrix of numeric values, clusters from input as row names, cell types from ref_mat as column names</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Seurat2</span>
@@ -419,9 +307,7 @@ column of metadata if not supplied. Not required if running correlation per cell
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -435,7 +321,7 @@ column of metadata if not supplied. Not required if running correlation per cell
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

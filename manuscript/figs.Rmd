@@ -1,0 +1,1328 @@
+---
+title: "`clustifyr` figures, for real"
+author: "RF"
+date: "9/30/2019"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_collapsed: false
+    fig_caption: yes
+    fig_retina: 1 
+    df_print: paged
+---
+```{r setup, echo=FALSE, warning=F}
+library(knitr)
+opts_chunk$set(engine.path = '/usr/local/bin/python3')
+knitr::opts_chunk$set(cache = TRUE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(cache.lazy = FALSE)
+```
+
+# Fig1. clustifyr uses various expression data forms to assign cluster identities.
+
+## Fig1A. Bulk RNA-seq, microarray, and sc-RNA-seq transcriptome signatures map cell types to sc-RNA-seq experiment.
+
+```{r, fig.height=15, fig.width=15}
+library(tidyverse)
+library(clustifyr)
+library(clustifyrdata)
+meta <- clustifyrdata::pbmc_meta %>% rownames_to_column("id") %>% mutate(classified = ifelse(str_detect(clustifyrdata::pbmc_meta$classified, "CD4"), "CD4 T", as.character(classified))) %>% column_to_rownames("id")
+
+a <- plot_tsne(
+  meta,
+  feature = "classified",
+  do_label = T,
+  do_legend = F)
+
+res <- clustify(
+  input = clustifyrdata::pbmc_matrix, 
+  ref_mat = clustifyrdata::hema_microarray_matrix,
+  metadata = meta, 
+  cluster_col = "classified",
+  query_genes = clustifyrdata::pbmc_markers_M3Drop$Gene
+)
+
+res_allgenes <- cor_to_call(
+  cor_mat = res, 
+  metadata = meta, 
+  cluster_col = "classified",
+  threshold = 0.5
+)
+
+meta2 <- call_to_metadata(
+  res_allgenes,
+  meta,
+  cluster_col = "classified",
+  rename_prefix = "microarray"
+)
+
+b <- plot_tsne(
+  meta2,
+  feature = "microarray_type",
+  do_label = T,
+  do_legend = F)
+
+immgen <- immgen_ref
+rownames(immgen) <- str_to_upper(rownames(immgen_ref))
+res2 <- clustify(
+  input = clustifyrdata::pbmc_matrix, 
+  ref_mat = immgen,
+  metadata = meta, 
+  cluster_col = "classified",
+  query_genes = clustifyrdata::pbmc_markers$gene
+)
+
+res_allgenes2 <- cor_to_call(
+  correlation_matrix = res2, 
+  metadata = meta, 
+  cluster_col = "classified",
+  threshold = 0.4
+)
+
+meta3 <- call_to_metadata(
+  res_allgenes2,
+  meta2,
+  cluster_col = "classified",
+  rename_prefix = "bulk"
+)
+
+c <- plot_tsne(
+  meta3,
+  feature = "bulk_type",
+  do_label = T,
+  do_legend = F)
+
+res3 <- clustify(
+  input = clustifyrdata::pbmc_matrix, 
+  ref_mat = cbmc_ref,
+  metadata = meta, 
+  cluster_col = "classified",
+  query_genes = clustifyrdata::pbmc_markers$gene
+)
+
+res_allgenes3 <- cor_to_call(
+  correlation_matrix = res3, 
+  metadata = meta, 
+  cluster_col = "classified",
+  threshold = 0.5
+)
+
+meta4 <- call_to_metadata(
+  res_allgenes3,
+  meta,
+  cluster_col = "classified",
+  rename_prefix = "five"
+)
+
+d <- plot_tsne(
+  meta4,
+  feature = "five_type",
+  do_label = T,
+  do_legend = F)
+
+#ggsave("Fig1A.pdf", cowplot::plot_grid(a,b,c,d, ncol = 1, labels = c("orig","microarray_ref","sorted_bulk_ref","scRNA-seq_ref")), width =7, height = 15, dpi = 400)
+```
+
+## Fig1B. Performance benchmark of clustifyr and competition on tabula muris dataset.
+
+```{r, eval = F}
+files_facs <- list.files(path = "/Users/rf/", pattern = "facs.*\\.Robj$")
+files_drop <- list.files(path = "/Users/rf/", pattern = "droplet.*\\.Robj$")
+
+tissue_facs <- str_extract(files_facs, "facs_.+?_") %>% str_sub(6, -2)
+tissue_drop <- str_extract(files_drop, "droplet_.+?_") %>% str_sub(9, -2)
+tissue_both <- intersect(tissue_drop, tissue_facs)
+files_facs_fil <- files_facs[tissue_facs %in% tissue_drop]
+files_drop_fil <- files_drop[tissue_drop %in% tissue_facs]
+
+load_obj <- function(f) {
+  env <- new.env()
+  nm <- load(f, env)[1]
+  env[[nm]]
+}
+```
+
+```{r, eval = F}
+## clustify with seurat vargenes
+times <- list()
+for (n in 1:length(tissue_both)) {
+  print(tissue_both[n])
+  s_d <- load_obj(paste0("/Users/rf/", files_facs_fil[n]))
+  s_f <- load_obj(paste0("/Users/rf/", files_drop_fil[n]))
+
+  start <- proc.time()
+  if (sum(is.na(s_f@meta.data$free_annotation)) + sum(is.na(s_d@meta.data$free_annotation)) < (nrow(s_f@meta.data) + nrow(s_d@meta.data)) * 0.25) {
+    print("use free_annotation")
+    if (length(unique(s_f@meta.data$free_annotation)) < length(unique(s_d@meta.data$free_annotation))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    avg <- seurat_ref(s_f, cluster_col = "free_annotation")
+    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "free_annotation", dr = "tsne")
+  } else {
+    print("use cell_ontology_class")
+    if (length(unique(s_f@meta.data$cell_ontology_class)) < length(unique(s_d@meta.data$cell_ontology_class))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    avg <- seurat_ref(s_f, cluster_col = "cell_ontology_class")
+    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "cell_ontology_class", dr = "tsne")
+  }  #avg <- cbind(avg, avg2)
+  res2 <- cor_to_call(res)
+  end <- proc.time()
+  times[n] = end - start
+  res2$tissue <- tissue_both[n]
+  if (n==1) {
+    resall <- res2
+  } else {
+    resall <- rbind(resall, res2)
+  }
+}
+
+saveRDS(resall, "clustifyr_res.rds")
+resall2 <- resall %>% mutate(call = ifelse(cluster == type, 1, 0))
+resall2negcor_all <- readRDS("/Users/rf/cluster/devel/3rd/clustifyR/resall2negcor_all")
+resall2 <- resall2 %>% mutate(finalcall = ifelse(call == 1, 1, ifelse(str_c(cluster, type) %in% str_c(resall2negcor_all$cluster, resall2negcor_all$type), 1, 0))) %>% filter(cluster != "orig.NA")
+
+# resall2negcor2 <- resall2[29,]
+# resall2negcor_all <- rbind(resall2negcor_all,resall2negcor2) %>% distinct(type, cluster, .keep_all = T)
+# resall2negcor_all <- saveRDS(resall2negcor_all, "/Users/rf/cluster/devel/3rd/clustifyR/resall2negcor_all")
+
+f <- resall2 %>% group_by(tissue) %>% summarize(per = mean(finalcall))
+f$time <- times
+f$method <- "clustifyr"
+```
+
+```{r, eval = F}
+library(SingleR)
+singler_s <- function(s, col, ref) {
+  singler = CreateSinglerObject(s@data, annot = NULL, "whatever", min.genes = 0,
+    technology = "10X", species = "Mouse", citation = "",
+    ref.list = list(ref), normalize.gene.length = F, variable.genes = "de",
+    fine.tune = F, do.signatures = F, clusters = s@meta.data[[col]], do.main.types = F, 
+    reduce.file.size = T, numCores = SingleR.numCores)
+  
+  singler$seurat = s # (optional)
+  singler$meta.data$orig.ident = s@meta.data$orig.ident # the original identities, if not supplied in 'annot'
+  ## if using a previous Seurat version use:
+  singler$meta.data$xy = s@dr$tsne@cell.embeddings # the tSNE coordinates
+  singler$meta.data$clusters = s@meta.data[[col]] # the Seurat clusters (if 'clusters' not provided)
+  singler
+}
+
+singler_r <- function(s, col) {
+  expr <- seurat_ref(s, cluster_col = col)
+  expr <- expr[rowSums(expr)  > 0,]
+  name = 'My_reference'
+  expr = as.matrix(expr) # the expression matrix
+  types = colnames(expr) # a character list of the main types. 
+  ref = list(name=name,data = expr, types=types)
+  
+  ref$de.genes.main = CreateVariableGeneSet(expr,types,300)
+  # sd = rowsSd(expr)
+  # sd.thres = sort(sd, decreasing = T)[4000] # or any other threshold
+  # ref$sd.thres = sd.thres
+  ref
+}
+
+times2 <- list()
+for (n in 1:length(tissue_both)) { # some issue with 5)
+  # if (n == 5) {
+  #   next
+  # }
+  print(tissue_both[n])
+  s_d <- load_obj(paste0("/Users/rf/", files_facs_fil[n]))
+  s_f <- load_obj(paste0("/Users/rf/", files_drop_fil[n]))
+
+  start <- proc.time()
+  if (sum(is.na(s_f@meta.data$free_annotation)) + sum(is.na(s_d@meta.data$free_annotation)) < (nrow(s_f@meta.data) + nrow(s_d@meta.data)) * 0.25) {
+    print("use free_annotation")
+    if (length(unique(s_f@meta.data$free_annotation)) < length(unique(s_d@meta.data$free_annotation))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    rm <- is.na(s_f@meta.data$free_annotation)
+    s_f@meta.data <- s_f@meta.data[!rm,]
+    s_f@data <- s_f@data[,!rm]
+    rm <- is.na(s_d@meta.data$free_annotation)
+    s_d@meta.data <- s_d@meta.data[!rm,]
+    s_d@data <- s_d@data[,!rm]
+    ref <- singler_r(s_f, "free_annotation")
+    s <- singler_s(s_d, "free_annotation", ref)
+  } else {
+    print("use cell_ontology_class")
+    if (length(unique(s_f@meta.data$cell_ontology_class)) < length(unique(s_d@meta.data$cell_ontology_class))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    rm <- is.na(s_f@meta.data$cell_ontology_class)
+    s_f@meta.data <- s_f@meta.data[!rm,]
+    s_f@data <- s_f@data[,!rm]
+    rm <- is.na(s_d@meta.data$cell_ontology_class)
+    s_d@meta.data <- s_d@meta.data[!rm,]
+    s_d@data <- s_d@data[,!rm]
+    ref <- singler_r(s_f, "cell_ontology_class")
+    s <- singler_s(s_d, "cell_ontology_class", ref)
+  } 
+  end <- proc.time()
+  times2[n] = end - start
+  res2 <- s$singler[[1]]$SingleR.clusters$labels %>% as.data.frame() %>% as_tibble(rownames = "orig")
+  res2$tissue <- tissue_both[n]
+  if (n==1) {
+    resall <- res2
+  } else {
+    resall <- rbind(resall, res2)
+  }
+}
+saveRDS(resall, "singler_res.rds")
+# resall2negcor_all[42,1]
+# resall2negcor2 <- resall2[c(23,26,29,35,37,42,54),] %>% select(cluster = orig, type = V1, r = finalcall, call, tissue) %>% mutate(type = as.character(type))
+# resall2negcor_all <- bind_rows(list(resall2negcor_all[,1:5],resall2negcor2)) %>% distinct(type, cluster, .keep_all = T)
+# resall2negcor_all <- saveRDS(resall2negcor_all, "/Users/rf/cluster/devel/3rd/clustifyR/resall2negcor_all")
+resall2 <- resall %>% mutate(call = ifelse(orig == V1, 1, 0))
+resall2 <- resall2 %>% mutate(finalcall = ifelse(call == 1, 1, ifelse(str_c(orig, V1) %in% str_c(resall2negcor_all$cluster, resall2negcor_all$type), 1, 0)))
+
+f <- f %>% filter(method != "SingleR")
+f2 <-f 
+f <- resall2 %>% group_by(tissue) %>% summarize(per = mean(finalcall))
+f$time <- times2[!is.na(times2)]
+f$method <- "SingleR"
+f <- rbind(f, f2)
+```
+
+```{r, eval = F}
+library(SingleCellExperiment)
+library(scmap)
+library(tidyverse)
+
+scmap_s <- function(s, s_ref, col) {
+  sce_s <- SingleCellExperiment(assays = list(normcounts = as.matrix(s@data)), colData = s@meta.data)
+  logcounts(sce_s) <- normcounts(sce_s)
+  rowData(sce_s)$feature_symbol <- rownames(sce_s)
+  sce_s <- sce_s[!duplicated(rownames(sce_s)), ]
+  sce_s@colData$cell_type1 <- sce_s@colData[[col]]
+  
+  sce_r <- SingleCellExperiment(assays = list(normcounts = as.matrix(s_ref@data)), colData = s_ref@meta.data)
+  logcounts(sce_r) <- normcounts(sce_r)
+  rowData(sce_r)$feature_symbol <- rownames(sce_r)
+  sce_r <- sce_r[!duplicated(rownames(sce_r)), ]
+  sce_r <- selectFeatures(sce_r, suppress_plot = FALSE)
+  sce_r@colData$cell_type1 <- sce_r@colData[[col]]
+  
+  start1 <<- proc.time()
+  sce_r <- indexCluster(sce_r)
+
+  res <- scmapCluster(threshold = 0.1,
+   projection = sce_s, 
+    index_list = list(
+      metadata(sce_r)$scmap_cluster_index
+      )
+    )
+  end1 <<- proc.time()
+  data.frame(cluster = s@meta.data[[col]], type = res$scmap_cluster_labs) %>% group_by_all() %>% tally()
+}
+```
+
+```{r, eval = F}
+times5 <- list()
+for (n in 1:length(tissue_both)) { # some issue with 5)
+  print(tissue_both[n])
+  s_d <- load_obj(paste0("/Users/rf/", files_facs_fil[n]))
+  s_f <- load_obj(paste0("/Users/rf/", files_drop_fil[n]))
+
+  if (sum(is.na(s_f@meta.data$free_annotation)) + sum(is.na(s_d@meta.data$free_annotation)) < (nrow(s_f@meta.data) + nrow(s_d@meta.data)) * 0.25) {
+    print("use free_annotation")
+    if (length(unique(s_f@meta.data$free_annotation)) < length(unique(s_d@meta.data$free_annotation))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    rm <- is.na(s_f@meta.data$free_annotation)
+    s_f@meta.data <- s_f@meta.data[!rm,]
+    s_f@data <- s_f@data[,!rm]
+    rm <- is.na(s_d@meta.data$free_annotation)
+    s_d@meta.data <- s_d@meta.data[!rm,]
+    s_d@data <- s_d@data[,!rm]
+    res <- scmap_s(s_d, s_f, "free_annotation")
+  } else {
+    print("use cell_ontology_class")
+    if (length(unique(s_f@meta.data$cell_ontology_class)) < length(unique(s_d@meta.data$cell_ontology_class))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    rm <- is.na(s_f@meta.data$cell_ontology_class)
+    s_f@meta.data <- s_f@meta.data[!rm,]
+    s_f@data <- s_f@data[,!rm]
+    rm <- is.na(s_d@meta.data$cell_ontology_class)
+    s_d@meta.data <- s_d@meta.data[!rm,]
+    s_d@data <- s_d@data[,!rm]
+    res <- scmap_s(s_d, s_f, "cell_ontology_class")
+  } 
+  
+  times5[n] = end1 - start1
+  res$tissue <- tissue_both[n]
+  if (n==1) {
+    resall <- res
+  } else {
+    resall <- rbind(resall, res)
+  }
+}
+saveRDS(resall, "scmap_res.rds")
+resall2 <- resall %>% mutate(call = ifelse(cluster == type, 1, 0))
+# resall2negcor2 <- resall2[c(1,),] %>% select(cluster = orig, type = V1, r = finalcall, call, tissue) %>% mutate(type = as.character(type))
+# resall2negcor_all <- bind_rows(list(resall2negcor_all[,1:5],resall2negcor2)) %>% distinct(type, cluster, .keep_all = T)
+# resall2negcor_all <- saveRDS(resall2negcor_all, "/Users/rf/cluster/devel/3rd/clustifyR/resall2negcor_all")
+
+resall2 <- resall2 %>% mutate(finalcall = ifelse(call == 1, 1, ifelse(str_c(type, cluster) %in% str_c(resall2negcor_all$cluster, resall2negcor_all$type), 1, 0))) %>% mutate(nx = n * finalcall) %>% group_by(cluster, tissue) %>% arrange(desc(n)) %>% dplyr::slice(1)
+
+f2 <- f
+f <- resall2 %>% group_by(tissue) %>% summarize(per = mean(finalcall))
+f$time <- times5
+f$method <- "scmap"
+# 
+f <- rbind(f, f2)
+saveRDS(f, "bench_clus.rds")
+```
+
+```{r, eval = F}
+library(Seurat)
+s_map <- function(ref, query, cluster_col) {
+  Idents(query) <- cluster_col
+  p <- FindTransferAnchors(reference = ref, query = query, 
+    dims = 1:30)
+  p2 <- TransferData(anchorset = p, refdata = ref[[cluster_col]][,1], 
+    dims = 1:30)
+  p3 <- AddMetaData(query, metadata = p2)
+  data.frame("orig" = p3@meta.data[[cluster_col]], 'V1' = p3@meta.data$predicted.id) %>% group_by_all() %>% summarize(n = n())
+}
+
+times5 <- list()
+for (n in 1:length(tissue_both)) {
+  print(tissue_both[n])
+  s_d <- load_obj(paste0("/Users/rf/", files_facs_fil[n]))
+  s_f <- load_obj(paste0("/Users/rf/", files_drop_fil[n]))
+  s_d <- UpdateSeuratObject(s_d)
+  s_f <- UpdateSeuratObject(s_f)
+
+  if (sum(is.na(s_f@meta.data$free_annotation)) + sum(is.na(s_d@meta.data$free_annotation)) < (nrow(s_f@meta.data) + nrow(s_d@meta.data)) * 0.25) {
+    print("use free_annotation")
+    if (length(unique(s_f@meta.data$free_annotation)) < length(unique(s_d@meta.data$free_annotation))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    start <- proc.time()
+    res <- s_map(s_f, s_d, "free_annotation")
+    end <- proc.time()
+  } else {
+    print("use cell_ontology_class")
+    if (length(unique(s_f@meta.data$cell_ontology_class)) < length(unique(s_d@meta.data$cell_ontology_class))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    start <- proc.time()
+    res <- s_map(s_f, s_d, "cell_ontology_class")
+    end <- proc.time()
+  } 
+  
+  times5[n] = end - start
+  res$tissue <- tissue_both[n]
+  if (n==1) {
+    resall <- res
+  } else {
+    resall <- rbind(resall, res)
+  }
+}
+saveRDS(resall, "seurat_res.rds")
+resall2 <- resall %>% mutate(call = ifelse(orig == V1, 1, 0))
+resall2 <- resall2 %>% mutate(finalcall = ifelse(call == 1, 1, ifelse(str_c(orig, V1) %in% str_c(resall2negcor_all$cluster, resall2negcor_all$type), 1, 0))) %>% mutate(nx = n * finalcall) %>% group_by(orig, tissue) %>% arrange(desc(n)) %>% dplyr::slice(1) %>% filter(!is.na(orig))
+
+f <- f %>% filter(method != "Seurat")
+f2 <- f
+f <- resall2 %>% group_by(tissue) %>% summarize(per = mean(finalcall))
+f$time <- times5
+f$method <- "Seurat"
+
+f <- rbind(f, f2)
+saveRDS(f, "bench_clus.rds")
+```
+
+```{r, eval = F}
+## clustify with m3drop
+times <- list()
+for (n in 1:length(tissue_both)) {
+  print(tissue_both[n])
+  s_d <- load_obj(paste0("/Users/rf/", files_facs_fil[n]))
+  s_f <- load_obj(paste0("/Users/rf/", files_drop_fil[n]))
+
+  start <- proc.time()
+  if (sum(is.na(s_f@meta.data$free_annotation)) + sum(is.na(s_d@meta.data$free_annotation)) < (nrow(s_f@meta.data) + nrow(s_d@meta.data)) * 0.25) {
+    print("use free_annotation")
+    if (length(unique(s_f@meta.data$free_annotation)) < length(unique(s_d@meta.data$free_annotation))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    
+    Normalized_data <- M3DropCleanData(s_d@data,
+                                       labels = rownames(s_d@data),
+                                       is.counts = FALSE,
+                                       suppress.plot = T
+                                       )
+    fits <- M3DropDropoutModels(Normalized_data$data, suppress.plot = T)
+    markers_M3Drop <- M3DropFeatureSelection(Normalized_data$data,
+                                             mt_method = "fdr",
+                                             mt_threshold = 0.01,
+                                             suppress.plot = T
+                                             )
+    avg <- seurat_ref(s_f, cluster_col = "free_annotation")
+    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "free_annotation", dr = "tsne", query_genes = markers_M3Drop$Gene)
+  } else {
+    print("use cell_ontology_class")
+    if (length(unique(s_f@meta.data$cell_ontology_class)) < length(unique(s_d@meta.data$cell_ontology_class))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    Normalized_data <- M3DropCleanData(s_d@data,
+                                       labels = rownames(s_d@data),
+                                       is.counts = FALSE,
+                                       suppress.plot = T
+                                       )
+    fits <- M3DropDropoutModels(Normalized_data$data, suppress.plot = T)
+    markers_M3Drop <- M3DropFeatureSelection(Normalized_data$data,
+                                             mt_method = "fdr",
+                                             mt_threshold = 0.01,
+                                             suppress.plot = T
+                                             )
+    avg <- seurat_ref(s_f, cluster_col = "cell_ontology_class")
+    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "cell_ontology_class", dr = "tsne", query_genes = markers_M3Drop$Gene)
+  }  #avg <- cbind(avg, avg2)
+  res2 <- cor_to_call(res)
+  end <- proc.time()
+  times[n] = end - start
+  res2$tissue <- tissue_both[n]
+  if (n==1) {
+    resall <- res2
+  } else {
+    resall <- rbind(resall, res2)
+  }
+}
+
+saveRDS(resall, "clustifyr_m3drop_res.rds")
+resall2 <- resall %>% mutate(call = ifelse(cluster == type, 1, 0))
+resall2 <- resall2 %>% mutate(finalcall = ifelse(call == 1, 1, ifelse(str_c(cluster, type) %in% str_c(resall2negcor_all$cluster, resall2negcor_all$type), 1, 0))) %>% filter(cluster != "orig.NA")
+
+# resall2negcor2 <- resall2[21,]
+# resall2negcor_all <- rbind(resall2negcor_all,resall2negcor2) %>% distinct(type, cluster, .keep_all = T)
+# resall2negcor_all <- saveRDS(resall2negcor_all, "/Users/rf/cluster/devel/3rd/clustifyR/resall2negcor_all")
+f <- f %>% filter(method != "clustifyr_m3drop")
+
+f2 <- f
+f <- resall2 %>% group_by(tissue) %>% summarize(per = mean(finalcall))
+f$time <- times
+f$method <- "clustifyr_m3drop"
+
+f <- rbind(f, f2)
+saveRDS(f, "bench_clus.rds")
+```
+
+```{r}
+f <- readRDS("/Users/rf/cluster/devel/4th/clu4th/vignettes/bench_clus.rds")
+a <- ggplot(f, aes(x = method, y = per, fill = method)) + 
+  geom_boxplot() +
+  #geom_jitter() +
+  cowplot::theme_cowplot() + 
+  theme(axis.title.y.right = element_text(color = "red"), axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust=0.5)) +
+  ylab("accuracy") + 
+  theme(legend.position="none")
+  
+
+b <- ggplot(f, aes(x = method, y = as.numeric(time), fill = method)) + 
+  geom_boxplot() +
+  #geom_jitter() +
+  cowplot::theme_cowplot() + 
+  theme(axis.title.y.right = element_text(color = "red"), axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust=0.5)) +
+  ylab("time(s)") + 
+  theme(legend.position="none")
+
+ggsave("Fig1B.pdf", cowplot::plot_grid(a,b, nrow = 1), width =7, height = 7, dpi = 400)
+```
+
+# Fig2. Parameter considerations for clustifyr.
+
+## Fig2A. clustifyr performs well with pbmcbench datasets.
+
+```{r}
+r <- readRDS("res_pbmcbench2.rds")
+r2 <- r %>% separate(run, sep = "_", into = c("sample", "exp", "sub"))
+
+g1 <- ggplot(r2 %>% filter(method != "kl_divergence"), aes(x = exp, y = res, fill = method)) + 
+  geom_boxplot(outlier.shape = NA) +
+  #geom_jitter() +
+  cowplot::theme_cowplot() + 
+  theme(axis.title.y.right = element_text(color = "red"), axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust=0.5)) +
+  ylab("F1-score") +
+  xlab("") +
+  ylim(0,1)
+
+g1
+ggsave("Fig2E.pdf", g1, width = 7, height = 7, dpi = 400)
+
+r <- readRDS("res_pbmcbench.rds")
+r2 <- r %>% separate(run, sep = "_", into = c("sample", "exp", "sub"))
+
+g2 <- ggplot(r2, aes(x = exp, y = res, fill = sub)) + 
+  geom_boxplot(outlier.shape = NA) +
+  #geom_jitter() +
+  cowplot::theme_cowplot() + 
+  theme(axis.title.y.right = element_text(color = "red"), axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust=0.5)) +
+  ylab("F1-score") +
+  xlab("") +
+  ylim(0,1)
+
+g2
+#ggsave("Fig2A.pdf", g, width = 7, height = 7, dpi = 400)
+```
+
+## Fig2B. Appropriate threshold on correlation prevents misclassification of missing types.
+
+```{r}
+null <- readr::read_rds('/Users/rf/Downloads/null.rds.gz')
+reference <- readr::read_rds('/Users/rf/Downloads/reference.rds.gz')
+query <- readr::read_rds('/Users/rf/Downloads/query.rds.gz')
+
+ref <- t(reference %>% select(-label))
+colnames(ref) <- 1:ncol(ref)
+ref_c <- average_clusters(ref, reference$label, if_log = F)
+
+q <- t(query %>% select(-label))
+colnames(q) <- 1:ncol(q)
+
+library(M3Drop)
+Normalized_data <- M3DropCleanData(q,
+  labels = rownames(q),
+  is.counts = FALSE,
+  suppress.plot = T
+)
+fits <- M3DropDropoutModels(Normalized_data$data, suppress.plot = T)
+markers_M3Drop <- M3DropFeatureSelection(Normalized_data$data,
+  mt_method = "fdr",
+  mt_threshold = 0.01,
+  suppress.plot = T
+)
+
+res <- clustify(q, ref_c, query$label, query_genes = markers_M3Drop %>% arrange(q.value) %>% slice(1:500) %>% pull(Gene))
+
+g <- plot_cor_heatmap(
+  res,
+  metadata = query$label,
+  cluster_rows = F,
+  cluster_columns = F
+)
+
+pdf("Fig2B.pdf", width = 7, height = 7)
+g
+dev.off()
+
+```
+
+## Fig2C. Feature selection is critical for correct cell type assignment by clustifyr.
+
+```{r, fig.height=15, fig.width=15}
+tm <- expm1(as.matrix(pan_smartseq2_matrix))
+Normalized_data <- M3DropCleanData(tm,
+  labels = rownames(pan_smartseq2_matrix),
+  is.counts = FALSE,
+  suppress.plot = T
+)
+fits <- M3DropDropoutModels(Normalized_data$data, suppress.plot = T)
+markers_M3Drop <- M3DropFeatureSelection(Normalized_data$data,
+  mt_method = "fdr",
+  mt_threshold = 0.05,
+  suppress.plot = T
+)
+
+res1 <- clustify(
+  input = pan_smartseq2_matrix, 
+  ref_mat = pan_indrop_avg,
+  metadata = pan_smartseq2_meta, 
+  cluster_col = "cell_type1"
+)
+
+a <- plot_cor_heatmap(
+  res1,
+  metadata = pan_smartseq2_meta, 
+  cluster_col = "cell_type1",
+  cluster_rows = F,
+  cluster_columns = F
+)
+
+res2 <- clustify(
+  input = pan_smartseq2_matrix, 
+  ref_mat = pan_indrop_avg,
+  metadata = pan_smartseq2_meta, 
+  cluster_col = "cell_type1",
+  query_genes = pan_indrop_vargenes
+)
+
+b <- plot_cor_heatmap(
+  res2,
+  metadata = pan_smartseq2_meta, 
+  cluster_col = "cell_type1",
+  cluster_rows = F,
+  cluster_columns = F
+)
+
+res3 <- clustify(
+  input = pan_smartseq2_matrix, 
+  ref_mat = pan_indrop_avg,
+  metadata = pan_smartseq2_meta, 
+  cluster_col = "cell_type1",
+  query_genes = markers_M3Drop$Gene
+)
+
+c <- plot_cor_heatmap(
+  res3,
+  metadata = pan_smartseq2_meta, 
+  cluster_col = "cell_type1",
+  cluster_rows = F,
+  cluster_columns = F
+)
+
+res4 <- clustify(
+  input = pan_smartseq2_matrix, 
+  ref_mat = pan_indrop_avg,
+  metadata = pan_smartseq2_meta, 
+  cluster_col = "cell_type1",
+  query_genes = ref_feature_select(pan_indrop_avg, 500)
+)
+
+d <- plot_cor_heatmap(
+  res4,
+  metadata = pan_smartseq2_meta, 
+  cluster_col = "cell_type1",
+  cluster_rows = F,
+  cluster_columns = F
+)
+# 
+# cor_to_call(res4, metadata = pan_smartseq2_meta, 
+#             cluster_col = "cell_type1")
+# 
+# res_allgenes <- cor_to_call(
+#   correlation_matrix = res3, 
+#   metadata = pan_smartseq2_meta, 
+#   cluster_col = "cell_type1",
+#   threshold = 0.5
+# )
+
+g<- cowplot::plot_grid(grid::grid.grabExpr(ComplexHeatmap::draw(a)),
+                   grid::grid.grabExpr(ComplexHeatmap::draw(b)),
+                   grid::grid.grabExpr(ComplexHeatmap::draw(c)), 
+                   grid::grid.grabExpr(ComplexHeatmap::draw(d)),
+                   ncol = 1,
+                   labels  = c("all_genes", "seurat_var", "m3drop_var", "ref_var"))
+
+ggsave("Fig2C.pdf", g, width = 7, height = 15, dpi = 400)
+```
+
+```{r, eval = F}
+files <- list.files(path = "/Users/rf/Downloads/rmbatch_dge")
+f_targets <- files[str_detect(files, "[a-zA-Z|1]_rm")]
+m <- read_csv("/Users/rf/Downloads/MCA_CellAssignments.csv")
+
+for (f1 in f_targets) {
+  print(f1)
+  # if (f1 == f_targets[3]){
+  #   break
+  # }
+  l1 <- read_delim(str_c("/Users/rf/Downloads/rmbatch_dge/",f1,sep = ""), delim = " ", n_max = 5)
+  l1 <- read_delim(str_c("/Users/rf/Downloads/rmbatch_dge/",f1,sep = ""), delim = " ", col_names = c("id",colnames(l1)), skip = 1)
+  l1 <- l1 %>% column_to_rownames("id")
+  
+  m %>% filter(Cell.name %in% colnames(l1)) -> l_meta
+  l_meta %>% column_to_rownames("Cell.name") -> l_meta
+  l1 <- l1[,rownames(l_meta)]
+  ref <- average_clusters(l1, l_meta, cluster_col = "Annotation")
+  
+  if (f1 == files[1]) {
+    ref_all <- ref
+  } else {
+    if (nrow(l1) < 10000 | ncol(l1) < 100) {
+      next
+    }
+    genes <- intersect(rownames(ref_all), rownames(ref))
+    ref_all <- ref_all[genes,]
+    ref <- ref[genes,]
+    ref_all <- cbind(ref_all, ref)
+  }
+}
+saveRDS(ref_all2, "ref_mca_1.rds")
+```
+
+```{r,eval=F}
+ref_facs <- clustifyrdata::ref_tabula_muris_facs[,-c(5,83,172)]
+ref_drop <- clustifyrdata::ref_tabula_muris_drop[,-c(14,28,52,109)]
+ref_mca <- readRDS("ref_mca_1.rds")
+
+library(M3Drop)
+Normalized_data <- M3DropCleanData(clustifyrdata::MCA_lung_mat,
+                                       labels = rownames(clustifyrdata::MCA_lung_mat),
+                                       is.counts = FALSE,
+                                       suppress.plot = T
+                                       )
+fits <- M3DropDropoutModels(Normalized_data$data, suppress.plot = T)
+markers_M3Drop <- M3DropFeatureSelection(Normalized_data$data,
+                                             mt_method = "fdr",
+                                             mt_threshold = 0.05,
+                                             suppress.plot = T
+                                             )
+res <- clustify(
+  input = clustifyrdata::MCA_lung_mat, 
+  ref_mat = ref_mca,
+  metadata = clustifyrdata::MCA_lung_meta, 
+  cluster_col = "Annotation",
+  query_genes = markers_M3Drop$Gene,
+  verbose = T
+)
+
+res_allgenes <- cor_to_call(
+  correlation_matrix = res, 
+  metadata = meta, 
+  cluster_col = "classified",
+  threshold = 0.4
+)
+
+lung_drop_res <- 26/32
+
+res <- clustify(
+  input = clustifyrdata::MCA_lung_mat, 
+  ref_mat = ref_facs,
+  metadata = clustifyrdata::MCA_lung_meta, 
+  cluster_col = "Annotation",
+  query_genes = markers_M3Drop$Gene,
+  verbose = T
+)
+
+res_allgenes <- cor_to_call(
+  correlation_matrix = res, 
+  metadata = meta, 
+  cluster_col = "classified",
+  threshold = 0.4
+)
+
+lung_facs_res <- 26/32
+
+Normalized_data <- M3DropCleanData(l,
+                                       labels = rownames(l),
+                                       is.counts = FALSE,
+                                       suppress.plot = T
+                                       )
+fits <- M3DropDropoutModels(Normalized_data$data, suppress.plot = T)
+markers_M3Drop <- M3DropFeatureSelection(Normalized_data$data,
+                                             mt_method = "fdr",
+                                             mt_threshold = 0.05,
+                                             suppress.plot = T
+                                             )
+
+res <- clustify(
+  input = l, 
+  ref_mat = ref_facs,
+  metadata = l_meta, 
+  cluster_col = "Annotation",
+  query_genes = markers_M3Drop$Gene,
+  verbose = T
+)
+
+res_allgenes <- cor_to_call(
+  correlation_matrix = res, 
+  metadata = meta, 
+  cluster_col = "classified",
+  threshold = 0.4
+)
+
+pan_facs <- 16/20
+
+res <- clustify(
+  input = l, 
+  ref_mat = ref_all,
+  metadata = l_meta, 
+  cluster_col = "Annotation",
+  query_genes = markers_M3Drop$Gene,
+  verbose = T
+)
+
+res_allgenes <- cor_to_call(
+  correlation_matrix = res, 
+  metadata = meta, 
+  cluster_col = "classified",
+  threshold = 0.4
+)
+
+pan_facs <- 13/20
+```
+
+## Fig2D. Cluster subsampling reveals a low number of cells is required for successful clustifying.
+
+```{r, eval = F}
+## clustify with seurat vargenes
+q <- ref_feature_select(ref_mca,
+                        n = 2000,
+                        mode = "var",
+                        rm.lowvar = TRUE)
+
+times <- list()
+for (n in 1:length(tissue_both)) {
+  print(tissue_both[n])
+  s_d <- load_obj(paste0("/Users/rf/", files_facs_fil[n]))
+  s_f <- load_obj(paste0("/Users/rf/", files_drop_fil[n]))
+
+  start <- proc.time()
+  if (sum(is.na(s_f@meta.data$free_annotation)) + sum(is.na(s_d@meta.data$free_annotation)) < (nrow(s_f@meta.data) + nrow(s_d@meta.data)) * 0.25) {
+    print("use free_annotation")
+    if (length(unique(s_f@meta.data$free_annotation)) < length(unique(s_d@meta.data$free_annotation))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    avg <- ref_mca
+    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "free_annotation", dr = "tsne", query_genes = q)
+  } else {
+    print("use cell_ontology_class")
+    if (length(unique(s_f@meta.data$cell_ontology_class)) < length(unique(s_d@meta.data$cell_ontology_class))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    avg <- ref_mca
+    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "cell_ontology_class", dr = "tsne", query_genes = q)
+  }  #avg <- cbind(avg, avg2)
+  res2 <- cor_to_call(res)
+  end <- proc.time()
+  times[n] = end - start
+  res2$tissue <- tissue_both[n]
+  if (n==1) {
+    resall <- res2
+  } else {
+    resall <- rbind(resall, res2)
+  }
+}
+
+saveRDS(resall, "clustifyr_res_mca_q.rds")
+resall <- readRDS("clustifyr_res_mca_q.rds")
+
+resall2 <- resall %>% rownames_to_column("rn")
+resall2 <- resall2 %>% mutate(finalcall = ifelse(rn %in% c(18,20,31,32,35,40,46,47,48,49), 0, 1)) %>% filter(cluster != "orig.NA") %>% select(-rn)
+
+# resall2negcor2 <- resall2[29,]
+# resall2negcor_all <- rbind(resall2negcor_all,resall2negcor2) %>% distinct(type, cluster, .keep_all = T)
+# resall2negcor_all <- saveRDS(resall2negcor_all, "/Users/rf/cluster/devel/3rd/clustifyR/resall2negcor_all")
+
+f <- resall2 %>% group_by(tissue) %>% summarize(per = mean(finalcall))
+f$time <- times
+f$method <- "clustifyr_mca_1"
+f_all <-f
+```
+
+```{r, eval = F}
+## clustify with seurat vargenes
+s_down <- function(mat, n, meta, col) {
+  downsample_matrix(mat,
+                    n = n,
+                    keep_cluster_proportions = TRUE,
+                    cluster_info = meta,
+                    cluster_col = col,
+                    set_seed = 5)
+}
+times <- list()
+for (n in 1:length(tissue_both)) {
+  print(tissue_both[n])
+  s_d <- load_obj(paste0("/Users/rf/", files_facs_fil[n]))
+  s_f <- load_obj(paste0("/Users/rf/", files_drop_fil[n]))
+
+  if (sum(is.na(s_f@meta.data$free_annotation)) + sum(is.na(s_d@meta.data$free_annotation)) < (nrow(s_f@meta.data) + nrow(s_d@meta.data)) * 0.25) {
+    print("use free_annotation")
+    if (length(unique(s_f@meta.data$free_annotation)) < length(unique(s_d@meta.data$free_annotation))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    avg <- ref_mca
+    mat <- s_down(as.matrix(s_d@data), n = 15, meta = s_d@meta.data, col = "free_annotation")
+    meta <- seurat_meta(s_d, dr = "tsne")[colnames(mat),]
+    start <- proc.time()
+    res <- clustify(mat, avg, meta, cluster_col = "free_annotation", dr = "tsne", query_genes = q)
+  } else {
+    print("use cell_ontology_class")
+    if (length(unique(s_f@meta.data$cell_ontology_class)) < length(unique(s_d@meta.data$cell_ontology_class))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    avg <- ref_mca
+    mat <- s_down(as.matrix(s_d@data), n = 15, meta = s_d@meta.data, col = "cell_ontology_class")
+    meta <- seurat_meta(s_d, dr = "tsne")[colnames(mat),]
+    start <- proc.time()
+    res <- clustify(mat, avg, meta, cluster_col = "cell_ontology_class", dr = "tsne", query_genes = q)
+  }  #avg <- cbind(avg, avg2)
+  res2 <- cor_to_call(res)
+  end <- proc.time()
+  times[n] = end - start
+  res2$tissue <- tissue_both[n]
+  if (n==1) {
+    resall <- res2
+  } else {
+    resall <- rbind(resall, res2)
+  }
+}
+
+saveRDS(resall, "clustifyr_res_mca15_q.rds")
+resall <- readRDS("clustifyr_res_mca15_q.rds")
+resall2 <- resall %>% rownames_to_column("rn")
+resall2 <- resall2 %>% mutate(finalcall = ifelse(rn %in% c(17,31,32,36,40,48,49,50,54,66), 0, 1)) %>% filter(cluster != "orig.NA") %>% select(-rn)
+
+# resall2negcor2 <- resall2[29,]
+# resall2negcor_all <- rbind(resall2negcor_all,resall2negcor2) %>% distinct(type, cluster, .keep_all = T)
+# resall2negcor_all <- saveRDS(resall2negcor_all, "/Users/rf/cluster/devel/3rd/clustifyR/resall2negcor_all")
+# 
+f2 <- resall2 %>% group_by(tissue) %>% summarize(per = mean(finalcall))
+f2$time <- times
+f2$method <- "clustifyr_mca_15"
+# 
+f_all <- rbind(f_all,f2)
+# saveRDS(f_all, "f_all_q.rds")
+
+```
+
+```{r, eval = F}
+## clustify with seurat vargenes
+s_down <- function(mat, n, meta, col) {
+  downsample_matrix(mat,
+                    n = n,
+                    keep_cluster_proportions = TRUE,
+                    cluster_info = meta,
+                    cluster_col = col,
+                    set_seed = 42)
+}
+times <- list()
+for (n in 1:length(tissue_both)) {
+  print(tissue_both[n])
+  s_d <- load_obj(paste0("/Users/rf/", files_facs_fil[n]))
+  s_f <- load_obj(paste0("/Users/rf/", files_drop_fil[n]))
+
+  if (sum(is.na(s_f@meta.data$free_annotation)) + sum(is.na(s_d@meta.data$free_annotation)) < (nrow(s_f@meta.data) + nrow(s_d@meta.data)) * 0.25) {
+    print("use free_annotation")
+    if (length(unique(s_f@meta.data$free_annotation)) < length(unique(s_d@meta.data$free_annotation))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    avg <- ref_mca
+    mat <- s_down(as.matrix(s_d@data), n = 8, meta = s_d@meta.data, col = "free_annotation")
+    meta <- seurat_meta(s_d, dr = "tsne")[colnames(mat),]
+    start <- proc.time()
+    res <- clustify(mat, avg, meta, cluster_col = "free_annotation", dr = "tsne", query_genes = q)
+  } else {
+    print("use cell_ontology_class")
+    if (length(unique(s_f@meta.data$cell_ontology_class)) < length(unique(s_d@meta.data$cell_ontology_class))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    avg <- ref_mca
+    mat <- s_down(as.matrix(s_d@data), n = 8, meta = s_d@meta.data, col = "cell_ontology_class")
+    meta <- seurat_meta(s_d, dr = "tsne")[colnames(mat),]
+    start <- proc.time()
+    res <- clustify(mat, avg, meta, cluster_col = "cell_ontology_class", dr = "tsne", query_genes = q)
+  }  #avg <- cbind(avg, avg2)
+  res2 <- cor_to_call(res)
+  end <- proc.time()
+  times[n] = end - start
+  res2$tissue <- tissue_both[n]
+  if (n==1) {
+    resall <- res2
+  } else {
+    resall <- rbind(resall, res2)
+  }
+}
+
+saveRDS(resall, "clustifyr_res_mca8_q.rds")
+resall <- readRDS("clustifyr_res_mca8_q.rds")
+resall2 <- resall %>% rownames_to_column("rn")
+resall2 <- resall2 %>% mutate(finalcall = ifelse(rn %in% c(20,26,29,33,35,41,45,46,47,48,53,66), 0, 1)) %>% filter(cluster != "orig.NA") %>% select(-rn)
+
+# resall2negcor2 <- resall2[29,]
+# resall2negcor_all <- rbind(resall2negcor_all,resall2negcor2) %>% distinct(type, cluster, .keep_all = T)
+# resall2negcor_all <- saveRDS(resall2negcor_all, "/Users/rf/cluster/devel/3rd/clustifyR/resall2negcor_all")
+# 
+f2 <- resall2 %>% group_by(tissue) %>% summarize(per = mean(finalcall))
+f2$time <- times
+f2$method <- "clustifyr_mca_8"
+# 
+f_all <- rbind(f_all,f2)
+```
+
+```{r, eval = F}
+## clustify with seurat vargenes
+s_down <- function(mat, n, meta, col) {
+  downsample_matrix(mat,
+                    n = n,
+                    keep_cluster_proportions = TRUE,
+                    cluster_info = meta,
+                    cluster_col = col,
+                    set_seed = 21)
+}
+times <- list()
+for (n in 1:length(tissue_both)) {
+  print(tissue_both[n])
+  s_d <- load_obj(paste0("/Users/rf/", files_facs_fil[n]))
+  s_f <- load_obj(paste0("/Users/rf/", files_drop_fil[n]))
+
+  if (sum(is.na(s_f@meta.data$free_annotation)) + sum(is.na(s_d@meta.data$free_annotation)) < (nrow(s_f@meta.data) + nrow(s_d@meta.data)) * 0.25) {
+    print("use free_annotation")
+    if (length(unique(s_f@meta.data$free_annotation)) < length(unique(s_d@meta.data$free_annotation))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    avg <- ref_mca
+    mat <- s_down(as.matrix(s_d@data), n = 4, meta = s_d@meta.data, col = "free_annotation")
+    meta <- seurat_meta(s_d, dr = "tsne")[colnames(mat),]
+    start <- proc.time()
+    res <- clustify(mat, avg, meta, cluster_col = "free_annotation", dr = "tsne", query_genes = q)
+  } else {
+    print("use cell_ontology_class")
+    if (length(unique(s_f@meta.data$cell_ontology_class)) < length(unique(s_d@meta.data$cell_ontology_class))) {
+      s_temp <- s_d
+      s_d <- s_f
+      s_f <- s_temp
+      print("switch")
+    }
+    avg <- ref_mca
+    mat <- s_down(as.matrix(s_d@data), n = 4, meta = s_d@meta.data, col = "cell_ontology_class")
+    meta <- seurat_meta(s_d, dr = "tsne")[colnames(mat),]
+    start <- proc.time()
+    res <- clustify(mat, avg, meta, cluster_col = "cell_ontology_class", dr = "tsne", query_genes = q)
+  }  #avg <- cbind(avg, avg2)
+  res2 <- cor_to_call(res)
+  end <- proc.time()
+  times[n] = end - start
+  res2$tissue <- tissue_both[n]
+  if (n==1) {
+    resall <- res2
+  } else {
+    resall <- rbind(resall, res2)
+  }
+}
+
+saveRDS(resall, "clustifyr_res_mca4_q.rds")
+resall <- readRDS("clustifyr_res_mca4_q.rds")
+
+resall2 <- resall %>% rownames_to_column("rn")
+resall2 <- resall2 %>% mutate(finalcall = ifelse(rn %in% c(21,31,32,36,41,45,46,47,48,49,53,55,66,67,68), 0, 1)) %>% filter(cluster != "orig.NA") %>% select(-rn)
+
+# resall2negcor2 <- resall2[29,]
+# resall2negcor_all <- rbind(resall2negcor_all,resall2negcor2) %>% distinct(type, cluster, .keep_all = T)
+# resall2negcor_all <- saveRDS(resall2negcor_all, "/Users/rf/cluster/devel/3rd/clustifyR/resall2negcor_all")
+# 
+f2 <- resall2 %>% group_by(tissue) %>% summarize(per = mean(finalcall))
+f2$time <- times
+f2$method <- "clustifyr_mca_4"
+# 
+f_all <- rbind(f_all,f2)
+```
+
+```{r}
+# saveRDS(f_all, "f_all_q.rds")
+f_all <- readRDS("f_all_q.rds") %>% mutate(method = str_remove(method, "clustifyr_mca_")) %>% mutate(method = ifelse(method == "1", "orig", method))
+a <- ggplot(f_all, aes(x = method, y = per, fill = method)) + 
+  geom_boxplot(outlier.shape = NA) +
+  #geom_jitter(width = 0.25) +
+  cowplot::theme_cowplot() + 
+  theme(axis.title.y.right = element_text(color = "red"), axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust=0.5)) +
+  ylab("accuracy") +
+  ylim(0,1) + 
+  scale_x_discrete(limits=c("orig", "15", "8", "4")) +
+  xlab("# of cells") + 
+  theme(legend.position="none")
+  
+
+b <- ggplot(f_all, aes(x = method, y = as.numeric(time), fill = method)) + 
+  geom_boxplot(outlier.shape = NA) +
+  #geom_jitter(width = 0.25) +
+  cowplot::theme_cowplot() + 
+  theme(axis.title.y.right = element_text(color = "red"), axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust=0.5)) +
+  ylab("time(s)") +
+  ylim(0,1) + 
+  scale_x_discrete(limits=c("orig", "15", "8", "4")) +
+  xlab("# of cells") + 
+  theme(legend.position="none")
+
+g <- cowplot::plot_grid(a,b)
+
+g
+#ggsave("Fig2D.pdf", g, width = 7, height = 7, dpi = 400)
+```
+
+# Fig3. clustifyr is lightweight and easily compatible with multiple workflows.
+
+## Fig3A. Scheme of classes and supported objects
+
+## Fig3B. Comparison of ranked correlation vs genelist metrics.
+
+```{r}
+# plot_tsne(clustifyrdata::pan_smartseq2_meta,
+#           feature = "cell_type1", x = "tSNE_1", y = "tSNE_2", do_label = F, do_legend = F)
+pan_smartseq2_avg <- average_clusters(
+  pan_smartseq2_matrix,
+  pan_smartseq2_meta,
+  cluster_col = "cell_type1"
+)
+resc <- clustify(
+  input = pan_indrop_matrix,
+  ref_mat = pan_smartseq2_avg,
+  metadata = pan_indrop_meta,
+  cluster_col = "cell_type1",
+  query_genes = ref_feature_select(pan_smartseq2_avg, n = 700)
+)
+a0 <- plot_cor(resc,
+              clustifyrdata::pan_indrop_meta,
+              cluster_col = "cell_type1", x = "tSNE_1", y = "tSNE_2",
+              data_to_plot = "alpha")
+rescc<- resc[,c("alpha","beta","delta")]
+beta <- c("INS", "IGF2", "IAPP","MAFA","NPTX2")
+alpha <- c("GCG", "PDK4","LOXL2","IRX2","GC")
+delta <- c("SST", "RBP4","HHEX","PCSK1","LEPR")
+panm <- data.frame(alpha, beta, delta)
+
+res <- clustify_lists(
+  input = clustifyrdata::pan_indrop_matrix, 
+  marker = panm,
+  metadata = clustifyrdata::pan_indrop_meta,
+  cluster_col = "cell_type1",
+  metric = "pct"
+)
+
+a <- plot_cor(res,
+              clustifyrdata::pan_indrop_meta,
+              cluster_col = "cell_type1", x = "tSNE_1", y = "tSNE_2",
+              data_to_plot = "alpha")
+
+res2 <- clustify_lists(
+  input = clustifyrdata::pan_indrop_matrix, 
+  marker = panm,
+  metadata = clustifyrdata::pan_indrop_meta,
+  cluster_col = "cell_type1",
+  metric = "posneg"
+)
+
+b <- plot_cor(res2,
+              clustifyrdata::pan_indrop_meta,
+              cluster_col = "cell_type1", x = "tSNE_1", y = "tSNE_2",
+              data_to_plot = "alpha")
+
+res3 <- clustify_lists(
+  input = clustifyrdata::pan_indrop_matrix, 
+  marker = panm,
+  metadata = clustifyrdata::pan_indrop_meta,
+  cluster_col = "cell_type1",
+  metric = "jaccard"
+)
+
+c <- plot_cor(res3,
+              clustifyrdata::pan_indrop_meta,
+              cluster_col = "cell_type1", x = "tSNE_1", y = "tSNE_2",
+              data_to_plot = "alpha",
+              )
+
+g <- cowplot::plot_grid(a0[[1]],a[[1]],b[[1]],c[[1]], ncol = 2, labels = c("spearman_cor","pct_express","ranked_cor_markers", "jaccard"))
+
+g
+ggsave("Fig3B.pdf", g, width = 10, height = 10, dpi = 400)
+
+callc <- cor_to_call_rank(rescc,
+                            metadata = clustifyrdata::pan_indrop_meta,
+                            cluster_col = "cell_type1",
+                            collapse_to_cluster = FALSE,
+                          threshold = "auto"
+)
+call <- cor_to_call_rank(res,
+                            metadata = clustifyrdata::pan_indrop_meta,
+                            cluster_col = "cell_type1",
+                            collapse_to_cluster = FALSE,
+                          threshold = "auto"
+)
+call2 <- cor_to_call_rank(res2,
+                            metadata = clustifyrdata::pan_indrop_meta,
+                            cluster_col = "cell_type1",
+                            collapse_to_cluster = FALSE,
+                          threshold = "auto"
+)
+call3 <- cor_to_call_rank(res3,
+                            metadata = clustifyrdata::pan_indrop_meta,
+                            cluster_col = "cell_type1",
+                            collapse_to_cluster = FALSE,
+                          threshold = "auto"
+)
+call_f <- call_consensus(list(callc, call, call2, call3)) %>% mutate(score = 1/rank)
+m2 <- call_to_metadata(
+  call_f,
+  metadata = clustifyrdata::pan_indrop_meta,
+  cluster_col = "cell_type1"
+)
+
+c <- plot_tsne(m2,
+               x = "tSNE_1", y = "tSNE_2",
+              feature= "type",
+              alpha_col = "score", do_legend = F
+              )
+ggsave("Fig3C.pdf", c, width = 5, height = 5, dpi = 400)
+```
+
+## Supp2. Cross-platform comparisons reveal larger differences in gene expression rankings.
+```{r}
+d <- readRDS("/Users/rf/Desktop/vig/diff_rank_genes.rds") %>% gather(-method, key = key, value = val) %>% mutate(val = as.numeric(val))
+g1 <- ggplot(d %>% filter(key == "n"), aes(x = method, y = val, fill = method)) + 
+  geom_col() +
+  cowplot::theme_cowplot() + 
+  theme(axis.title.y.right = element_text(color = "red"), axis.text.x = element_blank()) +
+  ylab("") +
+  scale_x_discrete(limits=c("10x Chromium (v2)_pbmc1_rethawed", "10x Chromium (v2)_pbmc1_pbmc2", "inDrops_Smart-seq2_pbmc2", "inDrops_Smart-seq2_pbmc1", "10x Chromium (v3)_immgen"))
+
+g2 <- ggplot(d %>% filter(key != "n"), aes(x = method, y = val, fill = key)) + 
+  geom_col(position = 'dodge') +
+  cowplot::theme_cowplot() + 
+  theme(axis.title.y.right = element_text(color = "red"), axis.text.x = element_blank()) +
+  ylab("") +
+  scale_x_discrete(limits=c("10x Chromium (v2)_pbmc1_rethawed", "10x Chromium (v2)_pbmc1_pbmc2", "inDrops_Smart-seq2_pbmc2", "inDrops_Smart-seq2_pbmc1", "10x Chromium (v3)_immgen"))
+
+g <- cowplot::plot_grid(g1, g2)
+ggsave("Supp2.pdf", g, width = 10, height = 10, dpi = 400)
+```
+

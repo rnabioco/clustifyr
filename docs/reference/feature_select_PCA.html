@@ -15,11 +15,13 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -39,14 +41,14 @@
 
 
 
-<meta property="og:title" content="Returns a list of variable genes based on PCA — feature_select_PCA" />
 
+<meta property="og:title" content="Returns a list of variable genes based on PCA — feature_select_PCA" />
 <meta property="og:description" content="Extract genes, i.e. &quot;features&quot;, based on the top
 loadings of principal components
 formed from the bulk expression data set" />
-
 <meta property="og:image" content="http://rnabioco.github.io/clustifyr/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -123,7 +125,6 @@ formed from the bulk expression data set" />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/rnabioco/clustifyr">
@@ -150,16 +151,14 @@ formed from the bulk expression data set" />
     </div>
 
     <div class="ref-description">
-    
     <p>Extract genes, i.e. "features", based on the top
 loadings of principal components
 formed from the bulk expression data set</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>feature_select_PCA</span>(<span class='kw'>mat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pcs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>n_pcs</span> <span class='kw'>=</span> <span class='fl'>10</span>,
   <span class='kw'>percentile</span> <span class='kw'>=</span> <span class='fl'>0.99</span>, <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -189,11 +188,10 @@ top point 1 percent of genes with the largest loadings.</p></td>
       <td><p>whether the data is already log transformed</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>vector of genes</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>feature_select_PCA</span>(
@@ -205,9 +203,7 @@ top point 1 percent of genes with the largest loadings.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -221,7 +217,7 @@ top point 1 percent of genes with the largest loadings.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

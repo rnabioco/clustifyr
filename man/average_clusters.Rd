@@ -2,23 +2,23 @@
 % Please edit documentation in R/utils.R
 \name{average_clusters}
 \alias{average_clusters}
-\title{#' Average expression values per cluster}
+\title{Average expression values per cluster}
 \usage{
-average_clusters(mat, cluster_info, if_log = TRUE,
-  cluster_col = "cluster", cell_col = NULL, low_threshold = 0,
-  method = "mean", output_log = TRUE)
+average_clusters(mat, metadata, cluster_col = "cluster", if_log = TRUE,
+  cell_col = NULL, low_threshold = 0, method = "mean",
+  output_log = TRUE, subclusterpower = 0, cut_n = NULL)
 }
 \arguments{
 \item{mat}{expression matrix}
 
-\item{cluster_info}{data.frame or vector containing cluster assignments per cell.
+\item{metadata}{data.frame or vector containing cluster assignments per cell.
 Order must match column order in supplied matrix. If a data.frame
 provide the cluster_col parameters.}
 
+\item{cluster_col}{column in metadata with cluster number}
+
 \item{if_log}{input data is natural log,
 averaging will be done on unlogged data}
-
-\item{cluster_col}{column in cluster_info with cluster number}
 
 \item{cell_col}{if provided, will reorder matrix first}
 
@@ -27,18 +27,22 @@ averaging will be done on unlogged data}
 \item{method}{whether to take mean (default) or median}
 
 \item{output_log}{whether to report log results}
+
+\item{subclusterpower}{whether to get multiple averages per original cluster}
+
+\item{cut_n}{set on a limit of genes as expressed, lower ranked genes are set to 0, considered unexpressed}
 }
 \value{
 average expression matrix, with genes for row names, and clusters for column names
 }
 \description{
-#' Average expression values per cluster
+Average expression values per cluster
 }
 \examples{
 pbmc_avg <- average_clusters(
   mat = pbmc_matrix_small,
-  cluster_info = pbmc_meta,
+  metadata = pbmc_meta,
   cluster_col = "classified",
-  if_log = FALSE
+ if_log = FALSE
 )
 }

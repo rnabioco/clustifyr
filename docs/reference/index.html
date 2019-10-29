@@ -15,11 +15,13 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -39,10 +41,11 @@
 
 
 
-<meta property="og:title" content="Function reference" />
 
+<meta property="og:title" content="Function reference" />
 <meta property="og:image" content="http://rnabioco.github.io/clustifyr/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -119,7 +122,6 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/rnabioco/clustifyr">
@@ -175,7 +177,7 @@
         <td>
           <p><code><a href="average_clusters.html">average_clusters()</a></code> </p>
         </td>
-        <td><p>#' Average expression values per cluster</p></td>
+        <td><p>Average expression values per cluster</p></td>
       </tr><tr>
         
         <td>
@@ -203,6 +205,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="call_consensus.html">call_consensus()</a></code> </p>
+        </td>
+        <td><p>get concensus calls for a list of cor calls</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="call_to_metadata.html">call_to_metadata()</a></code> </p>
         </td>
         <td><p>Insert called ident results into metadata</p></td>
@@ -223,7 +231,7 @@
         <td>
           <p><code><a href="clustify.html">clustify()</a></code> </p>
         </td>
-        <td><p>Compare scRNA-seq data to bulk RNA-seq data.</p></td>
+        <td><p>Compare scRNA-seq data to reference data.</p></td>
       </tr><tr>
         
         <td>
@@ -273,6 +281,12 @@ or jaccard index</p></td>
           <p><code><a href="cor_to_call.html">cor_to_call()</a></code> </p>
         </td>
         <td><p>get best calls for each cluster</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="cor_to_call_rank.html">cor_to_call_rank()</a></code> </p>
+        </td>
+        <td><p>get ranked calls for each cluster</p></td>
       </tr><tr>
         
         <td>
@@ -342,6 +356,12 @@ or jaccard index</p></td>
       </tr><tr>
         
         <td>
+          <p><code><a href="get_unique_column.html">get_unique_column()</a></code> </p>
+        </td>
+        <td><p>Generate a unique column id for a dataframe</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="get_vargenes.html">get_vargenes()</a></code> </p>
         </td>
         <td><p>Generate variable gene list from marker matrix</p></td>
@@ -399,6 +419,12 @@ or jaccard index</p></td>
           <p><code><a href="object_ref.html">object_ref()</a></code> </p>
         </td>
         <td><p>Function to convert labelled object to avg expression matrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="overcluster.html">overcluster()</a></code> </p>
+        </td>
+        <td><p>Overcluster by kmeans per cluster</p></td>
       </tr><tr>
         
         <td>
@@ -510,6 +536,12 @@ or jaccard index</p></td>
       </tr><tr>
         
         <td>
+          <p><code><a href="pos_neg_marker.html">pos_neg_marker()</a></code> </p>
+        </td>
+        <td><p>generate pos and negative marker expression matrix from a list/dataframe of positive markers</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="pos_neg_select.html">pos_neg_select()</a></code> </p>
         </td>
         <td><p>adapt clustify to tweak score for pos and neg markers</p></td>
@@ -576,9 +608,15 @@ or jaccard index</p></td>
       </tr><tr>
         
         <td>
+          <p><code><a href="sce_small.html">sce_small</a></code> </p>
+        </td>
+        <td><p>Small clustered SCE object</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="seurat_meta.html">seurat_meta()</a></code> </p>
         </td>
-        <td><p>Function to convert labelled seurat object to fully prepared metadata</p></td>
+        <td><p>Function to convert labelled seurat object to fully prepared metadata#'</p></td>
       </tr><tr>
         
         <td>
@@ -611,7 +649,7 @@ or jaccard index</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

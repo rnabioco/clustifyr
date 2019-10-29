@@ -5,6 +5,7 @@
 \alias{clustify.default}
 \alias{clustify.seurat}
 \alias{clustify.Seurat}
+\alias{clustify.SingleCellExperiment}
 \title{Compare scRNA-seq data to reference data.}
 \usage{
 clustify(input, ...)
@@ -13,19 +14,30 @@ clustify(input, ...)
   cluster_col = NULL, query_genes = NULL, per_cell = FALSE,
   n_perm = 0, compute_method = "spearman", verbose = FALSE,
   lookuptable = NULL, rm0 = FALSE, obj_out = FALSE,
-  seurat_out = FALSE, rename_prefix = NULL, threshold = 0, ...)
+  seurat_out = FALSE, rename_prefix = NULL, threshold = "auto",
+  exclude_genes = rownames(ref_mat)[stringr::str_detect(rownames(ref_mat),
+  "RP[0-9,L,S]|Rp[0-9,l,s]")], ...)
 
 \method{clustify}{seurat}(input, ref_mat, cluster_col = NULL,
   query_genes = NULL, per_cell = FALSE, n_perm = 0,
   compute_method = "spearman", use_var_genes = TRUE, dr = "umap",
-  seurat_out = TRUE, obj_out = FALSE, threshold = 0,
-  verbose = FALSE, rm0 = FALSE, rename_prefix = NULL, ...)
+  seurat_out = TRUE, obj_out = FALSE, threshold = "auto",
+  verbose = FALSE, rm0 = FALSE, rename_prefix = NULL,
+  exclude_genes = c(), ...)
 
 \method{clustify}{Seurat}(input, ref_mat, cluster_col = NULL,
   query_genes = NULL, per_cell = FALSE, n_perm = 0,
   compute_method = "spearman", use_var_genes = TRUE, dr = "umap",
-  seurat_out = TRUE, obj_out = FALSE, threshold = 0,
-  verbose = FALSE, rm0 = FALSE, rename_prefix = NULL, ...)
+  seurat_out = TRUE, obj_out = FALSE, threshold = "auto",
+  verbose = FALSE, rm0 = FALSE, rename_prefix = NULL,
+  exclude_genes = c(), ...)
+
+\method{clustify}{SingleCellExperiment}(input, ref_mat,
+  cluster_col = NULL, query_genes = NULL, per_cell = FALSE,
+  n_perm = 0, compute_method = "spearman", use_var_genes = TRUE,
+  dr = "umap", seurat_out = TRUE, obj_out = TRUE,
+  threshold = "auto", verbose = FALSE, rm0 = FALSE,
+  rename_prefix = NULL, exclude_genes = c(), ...)
 }
 \arguments{
 \item{input}{single-cell expression matrix or Seurat object}
@@ -64,6 +76,8 @@ common genes between the expr_mat and ref_mat will be used for comparision.}
 \item{rename_prefix}{prefix to add to type and r column names}
 
 \item{threshold}{identity calling minimum correlation score threshold, only used when obj_out = T}
+
+\item{exclude_genes}{a vector of gene names to throw out of query}
 
 \item{use_var_genes}{if providing a seurat object, use the variable genes
 (stored in seurat_object@var.genes) as the query_genes.}

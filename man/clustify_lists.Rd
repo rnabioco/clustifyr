@@ -5,29 +5,37 @@
 \alias{clustify_lists.default}
 \alias{clustify_lists.seurat}
 \alias{clustify_lists.Seurat}
+\alias{clustify_lists.SingleCellExperiment}
 \title{Main function to compare scRNA-seq data to gene lists.}
 \usage{
 clustify_lists(input, ...)
 
 \method{clustify_lists}{default}(input, marker, marker_inmatrix = TRUE,
-  cluster_info = NULL, cluster_col = NULL, if_log = TRUE,
+  metadata = NULL, cluster_col = NULL, if_log = TRUE,
   per_cell = FALSE, topn = 800, cut = 0, genome_n = 30000,
   metric = "hyper", output_high = TRUE, lookuptable = NULL,
   obj_out = FALSE, seurat_out = FALSE, rename_prefix = NULL,
   threshold = 0, ...)
 
-\method{clustify_lists}{seurat}(input, cluster_info = NULL,
+\method{clustify_lists}{seurat}(input, metadata = NULL,
   cluster_col = NULL, if_log = TRUE, per_cell = FALSE, topn = 800,
   cut = 0, marker, marker_inmatrix = TRUE, genome_n = 30000,
   metric = "hyper", output_high = TRUE, dr = "umap",
   seurat_out = TRUE, obj_out = FALSE, threshold = 0,
   rename_prefix = NULL, ...)
 
-\method{clustify_lists}{Seurat}(input, cluster_info = NULL,
+\method{clustify_lists}{Seurat}(input, metadata = NULL,
   cluster_col = NULL, if_log = TRUE, per_cell = FALSE, topn = 800,
   cut = 0, marker, marker_inmatrix = TRUE, genome_n = 30000,
   metric = "hyper", output_high = TRUE, dr = "umap",
   seurat_out = TRUE, obj_out = FALSE, threshold = 0,
+  rename_prefix = NULL, ...)
+
+\method{clustify_lists}{SingleCellExperiment}(input, metadata = NULL,
+  cluster_col = NULL, if_log = TRUE, per_cell = FALSE, topn = 800,
+  cut = 0, marker, marker_inmatrix = TRUE, genome_n = 30000,
+  metric = "hyper", output_high = TRUE, dr = "umap",
+  seurat_out = TRUE, obj_out = TRUE, threshold = 0,
   rename_prefix = NULL, ...)
 }
 \arguments{
@@ -39,11 +47,11 @@ clustify_lists(input, ...)
 
 \item{marker_inmatrix}{whether markers genes are already in preprocessed matrix form}
 
-\item{cluster_info}{data.frame or vector containing cluster assignments per cell.
-Order must match column order in supplied matrix. If a data.frame
-provide the cluster_col parameters.}
+\item{metadata}{cell cluster assignments, supplied as a vector or data.frame.
+If data.frame is supplied then \code{cluster_col} needs to be set. Not required
+if running correlation per cell.}
 
-\item{cluster_col}{column in cluster_info with cluster number}
+\item{cluster_col}{column in metadata with cluster number}
 
 \item{if_log}{input data is natural log, averaging will be done on unlogged data}
 

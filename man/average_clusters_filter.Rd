@@ -4,21 +4,21 @@
 \alias{average_clusters_filter}
 \title{Average expression values per cluster, filtered by set parameter, defaults to calculating background}
 \usage{
-average_clusters_filter(mat, cluster_info, if_log = TRUE,
+average_clusters_filter(mat, metadata, if_log = TRUE,
   filter_on = "nGene", group_by = NULL, filter_method = "<=",
   filter_value = 300)
 }
 \arguments{
 \item{mat}{expression matrix}
 
-\item{cluster_info}{data.frame or vector containing cluster assignments per cell, and attribute to filter on.
+\item{metadata}{data.frame or vector containing cluster assignments per cell, and attribute to filter on.
 Order must match column order in supplied matrix. If a data.frame
 provide the cluster_col parameters.}
 
 \item{if_log}{input data is natural log,
 averaging will be done on unlogged data}
 
-\item{filter_on}{column in cluster_info to filter on}
+\item{filter_on}{column in metadata to filter on}
 
 \item{group_by}{column name to use for cluster identity}
 
@@ -35,7 +35,7 @@ Average expression values per cluster, filtered by set parameter, defaults to ca
 \examples{
 avg1 <- average_clusters_filter(
   mat = pbmc_matrix_small,
-  cluster_info = pbmc_meta,
+  metadata = pbmc_meta,
   group_by = "classified",
   filter_on = "seurat_clusters",
   filter_method = "==",
