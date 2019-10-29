@@ -5,8 +5,8 @@
 #' @param y y variable
 #' @param feature feature to color by
 #' @param legend_name legend name to display, defaults to no name
-#' @param c_cols character vector of colors to built color gradient
-#' for continuous values. defaults to [`clustifyr::pretty_palette`]
+#' @param c_cols character vector of colors to build color gradient
+#' for continuous values, defaults to [`clustifyr::pretty_palette`]
 #' @param d_cols character vector of colors for discrete values.
 #' defaults to RColorBrewer paired palette
 #' @param pt_size point size
@@ -17,8 +17,10 @@
 #' @param do_legend whether to draw legend
 #' @return ggplot object, cells projected by dr, colored by feature
 #' @export
-plot_tsne <- function(data, x = "UMAP_1", y = "UMAP_2",
-                      feature,
+plot_tsne <- function(data,
+                      x = "UMAP_1",
+                      y = "UMAP_2",
+                      feature = NULL,
                       legend_name = "",
                       c_cols = pretty_palette2,
                       d_cols = NULL,
@@ -27,74 +29,106 @@ plot_tsne <- function(data, x = "UMAP_1", y = "UMAP_2",
                       scale_limits = NULL,
                       do_label = FALSE,
                       do_legend = TRUE) {
-  if ((length(unique(data[[feature]])) > 12) & identical(c_cols, pretty_palette2) & (typeof(data[[feature]]) %in% c(
+
+  # add backticks to allow special characters in column names
+  x_col <- paste0("`", x, "`")
+  y_col <- paste0("`", y, "`")
+
+  # If feature is not provided return unlabeled plot
+  if (is.null(feature)) {
+    p <- ggplot2::ggplot(data, ggplot2::aes_string(x_col, y_col)) +
+      geom_point(size = pt_size) +
+      cowplot::theme_cowplot()
+
+    if (!is.null(d_cols)) {
+      p <- p +
+        scale_color_manual(values = d_cols)
+    }
+
+    return(p)
+  }
+
+  # Retrieve features from data
+  feature_data <- data[[feature]]
+  n_features <- length(unique(feature_data))
+
+  feature_types <- c(
     "character",
     "logical",
     "factor"
-  ))) {
-    c_cols <- pretty_palette_ramp_d(length(unique(data[[feature]])))
-    d_cols <- pretty_palette_ramp_d(length(unique(data[[feature]])))
+  )
+
+  # If there are too many features, add more colors for pretty_palette2
+  if (identical(c_cols, pretty_palette2) & (n_features > length(pretty_palette2)) & (typeof(feature_data) %in% feature_types)) {
+    c_cols <- pretty_palette_ramp_d(n_features)
+    d_cols <- pretty_palette_ramp_d(n_features)
   }
+
   # sort data to avoid plotting null values over colors
   data <- dplyr::arrange(data, !!dplyr::sym(feature))
 
   if (!is.null(alpha_col)) {
-    p <- ggplot2::ggplot(data, ggplot2::aes_string(x, y)) +
+    p <- ggplot2::ggplot(data, ggplot2::aes_string(x_col, y_col)) +
       geom_point(ggplot2::aes_string(color = paste0("`", feature, "`"), alpha = paste0("`", alpha_col, "`")), # backticks protect special character gene names
         size = pt_size
     ) + scale_alpha_continuous(range = c(0, 1)) } else {
-      p <- ggplot2::ggplot(data, ggplot2::aes_string(x, y)) +
+      p <- ggplot2::ggplot(data, ggplot2::aes_string(x_col, y_col)) +
         geom_point(ggplot2::aes_string(color = paste0("`", feature, "`")), # backticks protect special character gene names
                     size = pt_size
       )
     }
 
-  if (typeof(data[[feature]]) %in% c(
-    "character",
-    "logical"
-  ) | is.factor(data[[feature]])) {
+  # discrete values
+  if (!is.numeric(feature_data)) {
+
+    # use colors provided
     if (!is.null(d_cols)) {
-      # use colors provided
-      p <- p + scale_color_manual(
-        values = d_cols,
-        name = legend_name
-      )
+      p <- p +
+        scale_color_manual(
+          values = d_cols,
+          name = legend_name
+        )
+
     } else {
-      p <- p + scale_color_brewer(
-        palette = "Paired",
-        name = legend_name
-      )
+      p <- p +
+        scale_color_brewer(
+          palette = "Paired",
+          name = legend_name
+        )
     }
+
+  # continuous values
   } else {
-    # continuous values
     if (is.null(scale_limits)) {
       scale_limits <- c(
-        ifelse(min(data[[feature]]) < 0,
-          min(data[[feature]]),
-          0
-        ),
-        max(data[[feature]])
+        ifelse(min(feature_data) < 0, min(feature_data), 0),
+        max(feature_data)
       )
     }
-    p <- p + scale_color_gradientn(
-      colors = c_cols,
-      name = legend_name,
-      limits = scale_limits
-    )
+
+    p <- p +
+      scale_color_gradientn(
+        colors = c_cols,
+        name = legend_name,
+        limits = scale_limits
+      )
   }
 
   if (do_label) {
-    centers <- dplyr::group_by_(data, .dots = feature)
+    centers <- dplyr::group_by(data, !!sym(feature))
     centers <- dplyr::summarize(centers, t1 = mean(!!dplyr::sym(x)), t2 = mean(!!dplyr::sym(y)))
+
     p <- p +
       geom_point(data = centers, mapping = aes(x = !!dplyr::sym("t1"), y = !!dplyr::sym("t2")), size = 0, alpha = 0) +
       geom_text(data = centers, mapping = aes(x = !!dplyr::sym("t1"), y = !!dplyr::sym("t2"), label = centers[[feature]]))
   }
 
-  p <- p + cowplot::theme_cowplot()
+  p <- p +
+    cowplot::theme_cowplot()
 
   if (!do_legend) {
-    p <- p + theme(legend.position = "none")
+    p <- p +
+      theme(legend.position = "none")
   }
 
   p
@@ -184,12 +218,18 @@ plot_cor <- function(cor_mat,
     -dplyr::matches(cluster_col)
   )
 
+  # If cluster_col is factor, convert to character
+  if (is.factor(metadata[, cluster_col])) {
+    metadata[, cluster_col] <- as.character(metadata[, cluster_col])
+  }
+
   # checks matrix rownames, 2 branches for cluster number (avg) or cell bar code (each cell)
   if (cor_df[[cluster_col]][1] %in% metadata[[cluster_col]]) {
     plt_data <- dplyr::left_join(cor_df_long,
       metadata,
       by = cluster_col
     )
+
   } else {
     plt_data <- dplyr::left_join(cor_df_long,
       metadata,
@@ -198,7 +238,7 @@ plot_cor <- function(cor_mat,
   }
 
   # determine scaling method, either same for all plots, or per plot (default)
-  if (typeof(scale_legends) == "logical" && scale_legends) {
+  if (is.logical(scale_legends) && scale_legends) {
     scale_limits <- c(
       ifelse(min(plt_data$expr) < 0,
         min(plt_data$expr),
@@ -206,19 +246,24 @@ plot_cor <- function(cor_mat,
       ),
       max(max(plt_data$expr))
     )
-  } else if (typeof(scale_legends) == "logical" && !scale_legends) {
+
+  } else if (is.logical(scale_legends) && !scale_legends) {
     scale_limits <- NULL
+
   } else {
     scale_limits <- scale_legends
   }
 
   plts <- vector("list", length(data_to_plot))
+
   for (i in seq_along(data_to_plot)) {
     tmp_data <- dplyr::filter(
       plt_data,
       !!dplyr::sym("ref_cluster") == data_to_plot[i]
     )
-    plts[[i]] <- plot_tsne(tmp_data,
+
+    plts[[i]] <- plot_tsne(
+      data = tmp_data,
       x = x,
       y = y,
       feature = "expr",
@@ -227,6 +272,7 @@ plot_cor <- function(cor_mat,
       ...
     )
   }
+
   plts
 }
 
