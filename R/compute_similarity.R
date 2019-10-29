@@ -208,7 +208,7 @@ calc_similarity <- function(query_mat,
   if (rm0) {
     message("considering 0 as missing data")
     query_mat[query_mat == 0] <- NA
-    similarity_score <- cor(as.matrix(query_mat),
+    similarity_score <- stats::cor(as.matrix(query_mat),
       ref_mat,
       method = compute_method, use = "pairwise.complete.obs"
     )
