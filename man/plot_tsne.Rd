@@ -4,7 +4,7 @@
 \alias{plot_tsne}
 \title{Plot a tSNE or umap colored by feature.}
 \usage{
-plot_tsne(data, x = "UMAP_1", y = "UMAP_2", feature,
+plot_tsne(data, x = "UMAP_1", y = "UMAP_2", feature = NULL,
   legend_name = "", c_cols = pretty_palette2, d_cols = NULL,
   pt_size = 0.25, alpha_col = NULL, scale_limits = NULL,
   do_label = FALSE, do_legend = TRUE)
@@ -20,8 +20,8 @@ plot_tsne(data, x = "UMAP_1", y = "UMAP_2", feature,
 
 \item{legend_name}{legend name to display, defaults to no name}
 
-\item{c_cols}{character vector of colors to built color gradient
-for continuous values. defaults to \code{\link[clustifyr:pretty_palette]{clustifyr::pretty_palette}}}
+\item{c_cols}{character vector of colors to build color gradient
+for continuous values, defaults to \code{\link[clustifyr:pretty_palette]{clustifyr::pretty_palette}}}
 
 \item{d_cols}{character vector of colors for discrete values.
 defaults to RColorBrewer paired palette}
