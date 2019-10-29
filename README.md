@@ -74,9 +74,16 @@ plot_best_call(
 ![](man/figures/readme_example-2.png)<!-- -->
 
 Alternatively, `clustify` can take a clustered `seurat` object (both v2
-and v3) and assign identities. New reference matrix can be made directly
-from `seurat` object as well. Other scRNAseq experiment object types are
-supported as well.
+and v3) and assign identities. Required data can be looked up by default
+or specified. New reference matrix can be made directly from `seurat`
+object as well. Other scRNAseq experiment object types are supported as
+well.
+
+  - a seuratV2 object (`s_small`)
+  - or a SeuratV3 object (`s_small3`)
+  - a matrix of bulk RNA-seq read counts (`pbmc_bulk_matrix`):
+
+<!-- end list -->
 
 ``` r
 res <- clustify(
