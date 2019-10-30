@@ -1703,13 +1703,14 @@ pos_neg_marker <- function(mat) {
   } else if (class(mat) == "matrix") {
     mat <- as.list(as.data.frame(mat))
   } else if (class(mat) != "list") {
-    stop("unsupported marker format, must be dataframe, matrix, or list", call. = FALSE)
+    stop("unsupported marker format, must be dataframe, matrix, or list",
+         call. = FALSE)
   }
   genelist <- mat
   typenames <- names(genelist)
   g2 <- sapply(typenames, FUN = function(x) {
     data.frame(type = x, gene = genelist[[x]])
-  }, simplify = F)
+  }, simplify = FALSE)
   g2 <- do.call("rbind", g2)
   g2 <- dplyr::mutate(g2, expression = 1)
   g2 <- tidyr::spread(g2, key = "type", value = "expression")
@@ -1798,11 +1799,15 @@ find_rank_bias <- function(mat,
                            expr_cut = 3000,
                            consensus_cut = 1) {
   if (is.null(query_genes)) {
-    query_genes <- intersect(rownames(mat), rownames(ref_mat))
+    query_genes <- intersect(rownames(mat),
+                             rownames(ref_mat))
   } else {
-    query_genes <- intersect(query_genes, intersect(rownames(mat), rownames(ref_mat)))
+    query_genes <- intersect(query_genes,
+                             intersect(rownames(mat),
+                                       rownames(ref_mat)))
   }
-  avg2 <- average_clusters(mat[, rownames(metadata)], metadata[[type_col]])
+  avg2 <- average_clusters(mat[, rownames(metadata)],
+                           metadata[[type_col]])
   r2 <- apply(-avg2[query_genes, ], 2, rank)
   r2 <- r2[, colnames(r2)[!stringr::str_detect(colnames(r2), "unassigned")]]
   r1 <- apply(-ref_mat[query_genes, ], 2, rank)[, colnames(r2)]
@@ -1818,9 +1823,9 @@ find_rank_bias <- function(mat,
   if (filter_out) {
     rp <- rdiff > nthreshold | rdiff < -nthreshold
     rp[r1 > 0.9 * expr_cut & r2 > 0.9 * expr_cut] <- NA
-    v <- rowMeans(rp, na.rm = T) == 1
+    v <- rowMeans(rp, na.rm = TRUE) == 1
     v[is.na(v)] <- FALSE
-    v2 <- Matrix::rowSums(rp, na.rm = T) == 1
+    v2 <- Matrix::rowSums(rp, na.rm = TRUE) == 1
     prob <- rdiff[v & !v2, ]
     return(prob)
   } else {

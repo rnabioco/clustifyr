@@ -127,7 +127,7 @@ test_that("plot_best_call threshold works as intended, on per cell and collapsin
   )
   call1 <- plot_best_call(res,
     metadata = pbmc_meta,
-    per_cell = T,
+    per_cell = TRUE,
     collapse_to_cluster = "classified",
     threshold = 0.3
   )
@@ -195,7 +195,7 @@ test_that("plot_tsne works with alpha_col", {
   pbmc_meta2$al[1] <- 1 # 1:nrow(pbmc_meta)/nrow(pbmc_meta)
   g <- plot_tsne(pbmc_meta2,
     feature = "classified",
-    alpha_col = "al", do_legend = F
+    alpha_col = "al", do_legend = FALSE
   )
   expect_true(ggplot2::is.ggplot(g))
 })

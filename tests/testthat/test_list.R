@@ -244,7 +244,7 @@ test_that("run all gene list functions in clustify_lists and seurat object", {
     dr = "tsne",
     cluster_col = "RNA_snn_res.1",
     metric = "consensus",
-    seurat_out = T
+    seurat_out = TRUE
   )
   expect_true(is.data.frame(res) | "Seurat" %in% class(res))
 })
@@ -256,7 +256,7 @@ test_that("run all gene list functions in clustify_lists and seurat object", {
     dr = "tsne",
     cluster_col = "res.1",
     metric = "consensus",
-    seurat_out = T
+    seurat_out = TRUE
   )
   expect_true(is.data.frame(res) | "seurat" %in% class(res))
 })

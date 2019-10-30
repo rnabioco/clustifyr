@@ -70,7 +70,7 @@ l_meta <- clustifyrdata::MCA_lung_meta
 
 # find lung references, remove generic terms
 lung_cols <- colnames(ref_tabula_muris_drop) %>%
-  grep("-Lung", ., value = T)
+  grep("-Lung", ., value = TRUE)
 
 tml_ref <- ref_tabula_muris_drop[, lung_cols]
 tml_ref <- tml_ref[, -c(8,13)]
@@ -136,9 +136,9 @@ default `clustify`, with all genes
 
 `clustify`, using `M3Drop` for feature selection
 
-`clustify`, using `per_cell = T` option, and then assign cluster consensus ident with `collapse_to_cluster = T`
+`clustify`, using `per_cell = TRUE` option, and then assign cluster consensus ident with `collapse_to_cluster = TRUE`
 
-`clustify`, after `ALRA` imputation, using `per_cell = T` option, and then assign cluster consensus ident with `collapse_to_cluster = T`
+`clustify`, after `ALRA` imputation, using `per_cell = TRUE` option, and then assign cluster consensus ident with `collapse_to_cluster = TRUE`
 
 `scmap-cluster`
 
@@ -233,7 +233,7 @@ for (n in 1:length(tissue_both)) {
       print("switch")
     }
     avg <- use_seurat_comp(s_f, cluster_col = "free_annotation")
-    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "free_annotation")
+    res <- clustify(s_d, avg, seurat_out = FALSE, cluster_col = "free_annotation")
   } else {
     print("use cell_ontology_class")
     if (length(unique(s_f@meta.data$cell_ontology_class)) < length(unique(s_d@meta.data$cell_ontology_class))) {
@@ -243,7 +243,7 @@ for (n in 1:length(tissue_both)) {
       print("switch")
     }
     avg <- use_seurat_comp(s_f, cluster_col = "cell_ontology_class")
-    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "cell_ontology_class")
+    res <- clustify(s_d, avg, seurat_out = FALSE, cluster_col = "cell_ontology_class")
   }  #avg <- cbind(avg, avg2)
   res2 <- cor_to_call(res) %>% mutate(call = ifelse(cluster == type, 1, 0))
   end <- proc.time()
@@ -295,7 +295,7 @@ for (n in 1:length(tissue_both)) {
     DE_genes <- M3DropDifferentialExpression(Normalized_data$data,
                                           mt_method="fdr", mt_threshold=0.01)
     
-    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "free_annotation", query_genes = DE_genes$Gene)
+    res <- clustify(s_d, avg, seurat_out = FALSE, cluster_col = "free_annotation", query_genes = DE_genes$Gene)
   } else {
     print("use cell_ontology_class")
     if (length(unique(s_f@meta.data$cell_ontology_class)) < length(unique(s_d@meta.data$cell_ontology_class))) {
@@ -314,7 +314,7 @@ for (n in 1:length(tissue_both)) {
                                           mt_method="fdr", mt_threshold=0.01)
     
     avg <- use_seurat_comp(s_f, cluster_col = "cell_ontology_class")
-    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "cell_ontology_class", query_genes = DE_genes$Gene)
+    res <- clustify(s_d, avg, seurat_out = FALSE, cluster_col = "cell_ontology_class", query_genes = DE_genes$Gene)
   }  #avg <- cbind(avg, avg2)
   res2 <- cor_to_call(res) %>% mutate(call = ifelse(cluster == type, 1, 0))
   end <- proc.time()
@@ -333,7 +333,7 @@ resall2 <- resall %>% filter(cluster != "unknown")
 # keep2 <- c(1,3,5,6,7,9,11,12,13, 15,16,17,18,19,20,21,23)
 # resall2negcor2 <- resall2neg[keep2,]
 
-#resall2negcor_all <- rbind(resall2negcor,resall2negcor2) %>% distinct(type, cluster, .keep_all = T)
+#resall2negcor_all <- rbind(resall2negcor,resall2negcor2) %>% distinct(type, cluster, .keep_all = TRUE)
 
 resall2 <- resall2 %>% mutate(finalcall = ifelse(call == 1, 1, ifelse(str_c(cluster, type) %in% str_c(resall2negcor_all$cluster, resall2negcor_all$type), 1, 0)))
 mean(resall2$finalcall) # 92.54% with mt_threshold 0.01 or 0.001, no difference
@@ -359,7 +359,7 @@ for (n in 1:length(tissue_both)) {
       print("switch")
     }
     avg <- use_seurat_comp(s_f, cluster_col = "free_annotation")
-    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "free_annotation", query_genes = rownames(s_d@data))
+    res <- clustify(s_d, avg, seurat_out = FALSE, cluster_col = "free_annotation", query_genes = rownames(s_d@data))
   } else {
     print("use cell_ontology_class")
     if (length(unique(s_f@meta.data$cell_ontology_class)) < length(unique(s_d@meta.data$cell_ontology_class))) {
@@ -369,7 +369,7 @@ for (n in 1:length(tissue_both)) {
       print("switch")
     }
     avg <- use_seurat_comp(s_f, cluster_col = "cell_ontology_class")
-    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "cell_ontology_class", query_genes = rownames(s_d@data))
+    res <- clustify(s_d, avg, seurat_out = FALSE, cluster_col = "cell_ontology_class", query_genes = rownames(s_d@data))
   }  #avg <- cbind(avg, avg2)
   res2 <- cor_to_call(res) %>% mutate(call = ifelse(cluster == type, 1, 0))
   end <- proc.time()
@@ -408,7 +408,7 @@ for (n in 1:length(tissue_both)) {
     }
     ids <- s_d@meta.data[["free_annotation"]]
     avg <- use_seurat_comp(s_f, cluster_col = "free_annotation")
-    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "free_annotation", per_cell = T)
+    res <- clustify(s_d, avg, seurat_out = FALSE, cluster_col = "free_annotation", per_cell = TRUE)
     res2 <- cor_to_call(res, metadata = s_d@meta.data %>% rownames_to_column("id"), cluster_col = "id", collapse_to_cluster = "free_annotation") %>% distinct(type, type2)
   } else {
     print("use cell_ontology_class")
@@ -420,7 +420,7 @@ for (n in 1:length(tissue_both)) {
     }
     ids <- s_d@meta.data[["cell_ontology_class"]]
     avg <- use_seurat_comp(s_f, cluster_col = "cell_ontology_class")
-    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "cell_ontology_class", per_cell = T)
+    res <- clustify(s_d, avg, seurat_out = FALSE, cluster_col = "cell_ontology_class", per_cell = TRUE)
     res2 <- cor_to_call(res, metadata = s_d@meta.data %>% rownames_to_column("id"), cluster_col = "id", collapse_to_cluster = "cell_ontology_class") %>% distinct(type, type2)
   }
   colnames(res2) <- c("cluster", "type")
@@ -471,7 +471,7 @@ for (n in 1:length(tissue_both)) {
     }
     ids <- s_d@meta.data[["free_annotation"]]
     avg <- use_seurat_comp(s_f, cluster_col = "free_annotation")
-    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "free_annotation", per_cell = T, rm0 = T)
+    res <- clustify(s_d, avg, seurat_out = FALSE, cluster_col = "free_annotation", per_cell = TRUE, rm0 = TRUE)
     res2 <- cor_to_call(res, metadata = s_d@meta.data %>% rownames_to_column("id"), cluster_col = "id", collapse_to_cluster = "free_annotation") %>% distinct(type, type2)
   } else {
     print("use cell_ontology_class")
@@ -483,7 +483,7 @@ for (n in 1:length(tissue_both)) {
     }
     ids <- s_d@meta.data[["cell_ontology_class"]]
     avg <- use_seurat_comp(s_f, cluster_col = "cell_ontology_class")
-    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "cell_ontology_class", per_cell = T, rm0 = T)
+    res <- clustify(s_d, avg, seurat_out = FALSE, cluster_col = "cell_ontology_class", per_cell = TRUE, rm0 = TRUE)
     res2 <- cor_to_call(res, metadata = s_d@meta.data %>% rownames_to_column("id"), cluster_col = "id", collapse_to_cluster = "cell_ontology_class") %>% distinct(type, type2)
   }
   colnames(res2) <- c("cluster", "type")
@@ -540,7 +540,7 @@ for (n in 1:length(tissue_both)) {
     ids <- s_d@meta.data[["free_annotation"]]
     avg <- use_seurat_comp(s_f, cluster_col = "free_annotation")
     s_d <- alraSeurat2(s_d)
-    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "free_annotation", per_cell = T)
+    res <- clustify(s_d, avg, seurat_out = FALSE, cluster_col = "free_annotation", per_cell = TRUE)
     res2 <- cor_to_call(res, metadata = s_d@meta.data %>% rownames_to_column("id"), cluster_col = "id", collapse_to_cluster = "free_annotation") %>% distinct(type, type2)
   } else {
     print("use cell_ontology_class")
@@ -553,7 +553,7 @@ for (n in 1:length(tissue_both)) {
     ids <- s_d@meta.data[["cell_ontology_class"]]
     avg <- use_seurat_comp(s_f, cluster_col = "cell_ontology_class")
     s_d <- alraSeurat2(s_d)
-    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "cell_ontology_class", per_cell = T)
+    res <- clustify(s_d, avg, seurat_out = FALSE, cluster_col = "cell_ontology_class", per_cell = TRUE)
     res2 <- cor_to_call(res, metadata = s_d@meta.data %>% rownames_to_column("id"), cluster_col = "id", collapse_to_cluster = "cell_ontology_class") %>% distinct(type, type2)
   }
   colnames(res2) <- c("cluster", "type")
@@ -598,10 +598,10 @@ for (n in 1:length(tissue_both)) {
   start <- proc.time()
   if (sum(is.na(s_f@meta.data$free_annotation)) + sum(is.na(s_d@meta.data$free_annotation)) < (nrow(s_f@meta.data) + nrow(s_d@meta.data)) * 0.25) {
     print("use free_annotation")
-    res <- clustify(s_f, ref_facs, seurat_out = F, cluster_col = "free_annotation")
+    res <- clustify(s_f, ref_facs, seurat_out = FALSE, cluster_col = "free_annotation")
   } else {
     print("use cell_ontology_class")
-    res <- clustify(s_f, ref_facs, seurat_out = F, cluster_col = "cell_ontology_class")
+    res <- clustify(s_f, ref_facs, seurat_out = FALSE, cluster_col = "cell_ontology_class")
   } 
   res2 <- cor_to_call(res) %>% mutate(call = ifelse(cluster == type, 1, 0))
   end <- proc.time()
@@ -676,7 +676,7 @@ for (n in 1:length(tissue_both)) {
       print("switch")
     }
     avg <- use_seurat_comp(s_f, cluster_col = "free_annotation")
-    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "cluster.ids")
+    res <- clustify(s_d, avg, seurat_out = FALSE, cluster_col = "cluster.ids")
     temp <- s_d@meta.data %>% distinct(cluster.ids, free_annotation)
     colnames(temp) <- c("cluster","old")
   } else {
@@ -688,7 +688,7 @@ for (n in 1:length(tissue_both)) {
       print("switch")
     }
     avg <- use_seurat_comp(s_f, cluster_col = "cell_ontology_class")
-    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "cluster.ids")
+    res <- clustify(s_d, avg, seurat_out = FALSE, cluster_col = "cluster.ids")
     temp <- s_d@meta.data %>% distinct(cluster.ids, cell_ontology_class)
     colnames(temp) <- c("cluster","old")
   }
@@ -720,10 +720,10 @@ mean(resall2$finalcall) # 91.41 %
 
 ```{r test_cluster_singlerREF, include = FALSE, eval = FALSE}
 # ref <- readRDS("tabula_muris_ref_drop_042119.rds")
-average_clusters(SingleR::mouse.rnaseq$data, SingleR::mouse.rnaseq$types, log_scale = F) -> mouse_ref
-average_clusters(scmap::yan, scmap::ann$cell_type1, log_scale = F) -> yan_ref
+average_clusters(SingleR::mouse.rnaseq$data, SingleR::mouse.rnaseq$types, log_scale = FALSE) -> mouse_ref
+average_clusters(scmap::yan, scmap::ann$cell_type1, log_scale = FALSE) -> yan_ref
 
-clustify(scmap::yan, yan_ref, scmap::ann, cluster_col = "cell_type1", per_cell = T) %>% cor_to_call() %>% left_join(scmap::ann %>% rownames_to_column("cluster")) ->res
+clustify(scmap::yan, yan_ref, scmap::ann, cluster_col = "cell_type1", per_cell = TRUE) %>% cor_to_call() %>% left_join(scmap::ann %>% rownames_to_column("cluster")) ->res
 
 
 times <- list()
@@ -741,7 +741,7 @@ for (n in 1:length(tissue_both)) {
       s_f <- s_temp
       print("switch")
     }
-    res <- clustify(s_d, mouse_ref, seurat_out = F, cluster_col = "cluster.ids")
+    res <- clustify(s_d, mouse_ref, seurat_out = FALSE, cluster_col = "cluster.ids")
     temp <- s_d@meta.data %>% distinct(cluster.ids, free_annotation)
     colnames(temp) <- c("cluster","old")
   } else {
@@ -752,7 +752,7 @@ for (n in 1:length(tissue_both)) {
       s_f <- s_temp
       print("switch")
     }
-    res <- clustify(s_d, mouse_ref, seurat_out = F, cluster_col = "cluster.ids")
+    res <- clustify(s_d, mouse_ref, seurat_out = FALSE, cluster_col = "cluster.ids")
     temp <- s_d@meta.data %>% distinct(cluster.ids, cell_ontology_class)
     colnames(temp) <- c("cluster","old")
   }
@@ -813,7 +813,7 @@ for (n in 7:length(tissue_both)) {# n = 6 and 12 fails
       print("switch")
     }
     avg <- use_seurat_comp(s_f, cluster_col = "free_annotation")
-    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "free_annotation")
+    res <- clustify(s_d, avg, seurat_out = FALSE, cluster_col = "free_annotation")
   } else {
     print("use cell_ontology_class")
     if (length(unique(s_f@meta.data$cell_ontology_class)) < length(unique(s_d@meta.data$cell_ontology_class))) {
@@ -823,7 +823,7 @@ for (n in 7:length(tissue_both)) {# n = 6 and 12 fails
       print("switch")
     }
     avg <- use_seurat_comp(s_f, cluster_col = "cell_ontology_class")
-    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "cell_ontology_class")
+    res <- clustify(s_d, avg, seurat_out = FALSE, cluster_col = "cell_ontology_class")
   }  #avg <- cbind(avg, avg2)
   res2 <- cor_to_call(res) %>% mutate(call = ifelse(cluster == type, 1, 0))
   end <- proc.time()

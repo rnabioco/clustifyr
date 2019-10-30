@@ -180,7 +180,7 @@ test_that("average_clusters_filter works with nonlog data", {
     filter_on = "seurat_clusters",
     filter_method = "==",
     filter_value = "1",
-    if_log = F
+    if_log = FALSE
   )
   expect_equal(class(avg1), "matrix")
 })
@@ -200,7 +200,7 @@ test_that("average_clusters_filter returns vector of values if group_by is null"
     filter_on = "seurat_clusters",
     filter_method = "==",
     filter_value = "1",
-    if_log = F
+    if_log = FALSE
   )
   expect_true(is.vector(avg1))
 })
@@ -445,7 +445,7 @@ test_that("clustify_nudge.Seurat works with seurat_out option", {
     marker = cbmc_m,
     cluster_col = "RNA_snn_res.1",
     threshold = 0.8,
-    seurat_out = T,
+    seurat_out = TRUE,
     marker_inmatrix = FALSE,
     mode = "pct",
     dr = "tsne"
@@ -486,7 +486,7 @@ test_that("clustify_nudge works with obj_out option", {
     lookuptable = object_loc_lookup2,
     cluster_col = "RNA_snn_res.1",
     threshold = 0.8,
-    obj_out = T,
+    obj_out = TRUE,
     marker_inmatrix = FALSE,
     mode = "pct",
     dr = "tsne"
@@ -499,7 +499,7 @@ test_that("clustify_nudge works with obj_out option", {
     lookuptable = object_loc_lookup2,
     cluster_col = "RNA_snn_res.1",
     threshold = 0.8,
-    obj_out = F,
+    obj_out = FALSE,
     marker_inmatrix = FALSE,
     mode = "pct",
     dr = "tsne"
@@ -798,7 +798,7 @@ test_that("object metadata assignment works for custom object", {
     s3,
     cbmc_ref,
     lookuptable = object_loc_lookup2,
-    obj_out = T
+    obj_out = TRUE
   )
 
   res3 <- clustify_lists(
@@ -806,7 +806,7 @@ test_that("object metadata assignment works for custom object", {
     marker = pbmc_markers,
     marker_inmatrix = FALSE,
     lookuptable = object_loc_lookup2,
-    obj_out = T,
+    obj_out = TRUE,
     rename_prefix = "A"
   )
 
@@ -846,14 +846,14 @@ test_that("cor_to_call renaming with suffix input works as intended, per_cell or
   call2 <- cor_to_call(res2,
     metadata = tibble::rownames_to_column(pbmc_meta, "rn"),
     cluster_col = "classified",
-    collapse_to_cluster = T,
+    collapse_to_cluster = TRUE,
     threshold = 0,
     rename_prefix = "a"
   )
   call3 <- cor_to_call(res2,
     pbmc_meta,
     cluster_col = "rn",
-    collapse_to_cluster = T,
+    collapse_to_cluster = TRUE,
     threshold = 0,
     rename_prefix = "a"
   )
@@ -1044,7 +1044,7 @@ test_that("clustify_nudge works with pos_neg_select and seurat2 object", {
     cluster_col = "res.1",
     norm = 0.5,
     dr = "tsne",
-    seurat_out = F
+    seurat_out = FALSE
   )
   expect_true(nrow(res) == 4)
 })
@@ -1061,7 +1061,7 @@ test_that("clustify_nudge works with pos_neg_select and Seurat3 object", {
     cluster_col = "RNA_snn_res.1",
     norm = 0.5,
     dr = "tsne",
-    seurat_out = F
+    seurat_out = FALSE
   )
   expect_true(nrow(res) == 3)
 })
@@ -1188,12 +1188,12 @@ test_that("cor_to_call can collapse_to_cluster", {
     ref_mat = pbmc_bulk_matrix,
     query_genes = pbmc_vargenes,
     cluster_col = "classified",
-    per_cell = T
+    per_cell = TRUE
   )
   call1 <- cor_to_call(res,
     metadata = pbmc_meta,
     cluster_col = "classified",
-    collapse_to_cluster = T,
+    collapse_to_cluster = TRUE,
     threshold = 0.1
   )
   expect_true(ncol(call1) == 4)
@@ -1206,8 +1206,8 @@ test_that("cor_to_call and collapse_to_cluster work on objects", {
     query_genes = pbmc_vargenes,
     cluster_col = "res.1",
     dr = "tsne",
-    per_cell = T,
-    collapse_to_cluster = T
+    per_cell = TRUE,
+    collapse_to_cluster = TRUE
   )
   expect_true(is.matrix(res) | "seurat" %in% class(res))
 })
