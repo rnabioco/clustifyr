@@ -54,16 +54,6 @@
 #' @source `[pbmc_matrix]` processed by Seurat
 "pbmc_vargenes"
 
-#' Bulk RNA-Seq data from sorted populations isolated from PBMCs.
-#'
-#'
-#' @format A read count matrix with 14 variables:
-#' \describe{
-#' }
-#'
-#' @source (http://duffel.rail.bio/recount/v2/SRP051688/rse_gene.Rdata)
-"pbmc_bulk_matrix"
-
 #' Small clustered Seurat2 object
 #'
 #' @format XXX

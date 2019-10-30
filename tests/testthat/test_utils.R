@@ -209,7 +209,7 @@ test_that("cor_to_call threshold works as intended", {
   res <- clustify(
     input = pbmc_matrix_small,
     metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix,
+    ref_mat = cbmc_ref,
     query_genes = pbmc_vargenes,
     cluster_col = "classified"
   )
@@ -217,17 +217,17 @@ test_that("cor_to_call threshold works as intended", {
     metadata = pbmc_meta,
     cluster_col = "classified",
     collapse_to_cluster = FALSE,
-    threshold = 0.5
+    threshold = 0.8
   )
 
-  expect_true("r<0.5, unassigned" %in% call1$type)
+  expect_true("r<0.8, unassigned" %in% call1$type)
 })
 
 test_that("cor_to_call threshold works as intended, on per cell and collapsing", {
   res <- clustify(
     input = pbmc_matrix_small,
     metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix,
+    ref_mat = cbmc_ref,
     query_genes = pbmc_vargenes,
     cluster_col = "classified",
     per_cell = TRUE
@@ -260,7 +260,7 @@ test_that("cor_to_call_topn works as intended", {
   res <- clustify(
     input = pbmc_matrix_small,
     metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix,
+    ref_mat = cbmc_ref,
     query_genes = pbmc_vargenes,
     cluster_col = "classified"
   )
@@ -278,7 +278,7 @@ test_that("cor_to_call_topn works as intended on collapse to cluster option", {
   res <- clustify(
     input = pbmc_matrix_small,
     metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix,
+    ref_mat = cbmc_ref,
     query_genes = pbmc_vargenes,
     cluster_col = "classified",
     per_cell = TRUE
@@ -599,14 +599,14 @@ test_that("ref_feature_select chooses the correct number of features with option
 })
 
 test_that("feature_select_PCA will log transform", {
-  res <- feature_select_PCA(pbmc_bulk_matrix, if_log = FALSE)
-  res2 <- feature_select_PCA(pbmc_bulk_matrix, if_log = TRUE)
+  res <- feature_select_PCA(cbmc_ref, if_log = FALSE)
+  res2 <- feature_select_PCA(cbmc_ref, if_log = TRUE)
   expect_true(length(res) > 0)
 })
 
 test_that("feature_select_PCA can handle precalculated PCA", {
-  pcs <- prcomp(t(as.matrix(pbmc_bulk_matrix)))$rotation
-  res <- feature_select_PCA(pbmc_bulk_matrix, if_log = TRUE)
+  pcs <- prcomp(t(as.matrix(cbmc_ref)))$rotation
+  res <- feature_select_PCA(cbmc_ref, if_log = TRUE)
   res2 <- feature_select_PCA(pcs = pcs, if_log = TRUE)
   expect_true(all.equal(rownames(res), rownames(res2)))
 })
@@ -658,15 +658,15 @@ test_that("get_best_str finds correct values", {
   res <- clustify(
     input = pbmc_matrix_small,
     metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix,
+    ref_mat = cbmc_ref,
     query_genes = pbmc_vargenes,
     cluster_col = "classified",
     per_cell = FALSE
   )
-  a <- get_best_str("CD8 T", get_best_match_matrix(res), res)
-  a2 <- get_best_str("CD8 T", get_best_match_matrix(res), res, carry_cor = FALSE)
+  a <- get_best_str("DC", get_best_match_matrix(res), res)
+  a2 <- get_best_str("DC", get_best_match_matrix(res), res, carry_cor = FALSE)
 
-  expect_equal(stringr::str_sub(a, 1, 3), stringr::str_sub(a2, 1, 3))
+  expect_equal(stringr::str_sub(a, 1, 2), stringr::str_sub(a2, 1, 2))
 })
 
 test_that("seurat_ref gets correct averages", {
@@ -824,7 +824,7 @@ test_that("cor_to_call renaming with suffix input works as intended, per_cell or
   res <- clustify(
     input = pbmc_matrix_small,
     metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix,
+    ref_mat = cbmc_ref,
     query_genes = pbmc_vargenes,
     cluster_col = "classified"
   )
@@ -838,7 +838,7 @@ test_that("cor_to_call renaming with suffix input works as intended, per_cell or
   res2 <- clustify(
     input = pbmc_matrix_small,
     metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix,
+    ref_mat = cbmc_ref,
     query_genes = pbmc_vargenes,
     cluster_col = "classified",
     per_cell = TRUE
@@ -863,14 +863,14 @@ test_that("cor_to_call renaming with suffix input works as intended, per_cell or
 test_that("renaming with suffix input works as intended with clusify wrapper", {
   res <- clustify(
     input = s_small,
-    ref_mat = pbmc_bulk_matrix,
+    ref_mat = cbmc_ref,
     cluster_col = "res.1",
     rename_suff = "a",
     dr = "tsne"
   )
   res2 <- clustify(
     input = s_small3,
-    ref_mat = pbmc_bulk_matrix,
+    ref_mat = cbmc_ref,
     cluster_col = "RNA_snn_res.1",
     rename_suff = "a",
     dr = "tsne"
@@ -958,7 +958,7 @@ test_that("more readable error message when cluster_col is not in metadata when 
   res <- clustify(
     input = pbmc_matrix_small,
     metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix,
+    ref_mat = cbmc_ref,
     query_genes = pbmc_vargenes,
     cluster_col = "classified",
     verbose = TRUE
@@ -975,7 +975,7 @@ test_that("more readable error message when cluster_col is not the previous col 
   res <- clustify(
     input = pbmc_matrix_small,
     metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix,
+    ref_mat = cbmc_ref,
     query_genes = pbmc_vargenes,
     cluster_col = "classified",
     verbose = TRUE
@@ -997,7 +997,7 @@ test_that("more readable error message when cluster_col exist but is wrong info"
   res <- clustify(
     input = pbmc_matrix_small,
     metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix,
+    ref_mat = cbmc_ref,
     query_genes = pbmc_vargenes,
     cluster_col = "classified",
     verbose = TRUE
@@ -1098,7 +1098,7 @@ test_that("cor_to_call threshold works as intended", {
   res <- clustify(
     input = pbmc_matrix_small,
     metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix,
+    ref_mat = cbmc_ref,
     query_genes = pbmc_vargenes,
     cluster_col = "classified"
   )
@@ -1109,14 +1109,14 @@ test_that("cor_to_call threshold works as intended", {
     threshold = "auto"
   )
 
-  expect_true("r<0.54, unassigned" %in% call1$type)
+  expect_true("r<0.69, unassigned" %in% call1$type)
 })
 
 test_that("cor_to_call_rank threshold works as intended", {
   res <- clustify(
     input = pbmc_matrix_small,
     metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix,
+    ref_mat = cbmc_ref,
     query_genes = pbmc_vargenes,
     cluster_col = "classified"
   )
@@ -1135,7 +1135,7 @@ test_that("cor_to_call_rank options", {
   res <- clustify(
     input = pbmc_matrix_small,
     metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix,
+    ref_mat = cbmc_ref,
     query_genes = pbmc_vargenes,
     cluster_col = "classified"
   )
@@ -1155,7 +1155,7 @@ test_that("call_consensus marks ties", {
   res <- clustify(
     input = pbmc_matrix_small,
     metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix,
+    ref_mat = cbmc_ref,
     query_genes = pbmc_vargenes,
     cluster_col = "classified"
   )
@@ -1168,7 +1168,7 @@ test_that("call_consensus marks ties", {
   res2 <- clustify(
     input = pbmc_matrix_small,
     metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix,
+    ref_mat = cbmc_ref,
     cluster_col = "classified"
   )
   call2 <- cor_to_call_rank(res2,
@@ -1185,7 +1185,7 @@ test_that("cor_to_call can collapse_to_cluster", {
   res <- clustify(
     input = pbmc_matrix_small,
     metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix,
+    ref_mat = cbmc_ref,
     query_genes = pbmc_vargenes,
     cluster_col = "classified",
     per_cell = T
@@ -1202,7 +1202,7 @@ test_that("cor_to_call can collapse_to_cluster", {
 test_that("cor_to_call and collapse_to_cluster work on objects", {
   res <- clustify(
     input = s_small,
-    ref_mat = pbmc_bulk_matrix,
+    ref_mat = cbmc_ref,
     query_genes = pbmc_vargenes,
     cluster_col = "res.1",
     dr = "tsne",
@@ -1226,7 +1226,7 @@ test_that("find_rank_bias filters out unassigned", {
   res <- clustify(
     input = pbmc_matrix_small,
     metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix,
+    ref_mat = cbmc_ref,
     query_genes = pbmc_vargenes,
     cluster_col = "classified"
   )
@@ -1234,7 +1234,7 @@ test_that("find_rank_bias filters out unassigned", {
     metadata = pbmc_meta,
     cluster_col = "classified",
     collapse_to_cluster = FALSE,
-    threshold = 0.6
+    threshold = 0.8
   )
   pbmc_meta2 <- call_to_metadata(
     call1,
@@ -1243,7 +1243,7 @@ test_that("find_rank_bias filters out unassigned", {
   )
   b <- find_rank_bias(pbmc_matrix_small,
     pbmc_meta2, "type",
-    pbmc_bulk_matrix,
+    cbmc_ref,
     query_genes = pbmc_vargenes
   )
   expect_true(length(unique(pbmc_meta2$type)) > ncol(b))

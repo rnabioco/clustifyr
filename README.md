@@ -36,7 +36,8 @@ In this example we use the following built-in input data:
     (`pbmc_matrix_small`)
   - a metadata data.frame (`pbmc_meta`)
   - a vector of variable genes (`pbmc_vargenes`)-
-  - a matrix of bulk RNA-seq read counts (`pbmc_bulk_matrix`):
+  - a matrix of mean normalized scRNA-seq UMI counts by cell type
+    (`cbmc_ref`):
 
 We then calculate correlation coefficients and plot them on a
 pre-calculated tSNE projection (stored in `pbmc_meta`).
@@ -47,7 +48,7 @@ library(Seurat)
 res <- clustify(
   input = pbmc_matrix_small,
   metadata = pbmc_meta$classified,
-  ref_mat = pbmc_bulk_matrix,
+  ref_mat = cbmc_ref,
   query_genes = pbmc_vargenes
 )
 
@@ -81,7 +82,8 @@ well.
 
   - a seuratV2 object (`s_small`)
   - or a SeuratV3 object (`s_small3`)
-  - a matrix of bulk RNA-seq read counts (`pbmc_bulk_matrix`):
+  - a matrix of mean normalized scRNA-seq UMI counts by cell type
+    (`cbmc_ref`):
 
 <!-- end list -->
 
@@ -89,7 +91,7 @@ well.
 res <- clustify(
   input = s_small,
   cluster_col = "res.1",
-  ref_mat = pbmc_bulk_matrix,
+  ref_mat = cbmc_ref,
   seurat_out = T,
   dr = "tsne"
 )
@@ -97,7 +99,7 @@ res <- clustify(
 res2 <- clustify(
   input = s_small3,
   cluster_col = "RNA_snn_res.1",
-  ref_mat = pbmc_bulk_matrix,
+  ref_mat = cbmc_ref,
   seurat_out = T,
   dr = "tsne"
 )

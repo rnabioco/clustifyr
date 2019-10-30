@@ -12,7 +12,7 @@
 #'   input = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
 #'   cluster_col = "classified",
-#'   ref_mat = pbmc_bulk_matrix
+#'   ref_mat = cbmc_ref
 #' )
 #'
 #' res2 <- cor_to_call(res)
@@ -75,7 +75,7 @@ cor_to_call <- function(cor_mat,
 #'   input = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
 #'   cluster_col = "classified",
-#'   ref_mat = pbmc_bulk_matrix
+#'   ref_mat = cbmc_ref
 #' )
 #'
 #' res2 <- cor_to_call(res, cluster_col = "classified")
@@ -184,7 +184,7 @@ collapse_to_cluster <- function(res,
 #'   input = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
 #'   cluster_col = "classified",
-#'   ref_mat = pbmc_bulk_matrix
+#'   ref_mat = cbmc_ref
 #' )
 #'
 #' res2 <- cor_to_call_rank(res, threshold = "auto")
@@ -224,7 +224,7 @@ cor_to_call_rank <- function(cor_mat,
 #'   input = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
 #'   cluster_col = "classified",
-#'   ref_mat = pbmc_bulk_matrix
+#'   ref_mat = cbmc_ref
 #' )
 #'
 #' res2 <- cor_to_call_rank(res, threshold = "auto")
