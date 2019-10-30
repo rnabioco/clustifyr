@@ -75,7 +75,7 @@ common genes between the expr_mat and ref_mat will be used for comparision.}
 
 \item{rename_prefix}{prefix to add to type and r column names}
 
-\item{threshold}{identity calling minimum correlation score threshold, only used when obj_out = T}
+\item{threshold}{identity calling minimum correlation score threshold, only used when obj_out = TRUE}
 
 \item{exclude_genes}{a vector of gene names to throw out of query}
 

@@ -27,7 +27,7 @@ res <- clustify(
   metadata = pbmc_meta,
   cluster_col = "classified",
   ref_mat = cbmc_ref,
-  per_cell = T
+  per_cell = TRUE
 )
 
 res2 <- cor_to_call(res)

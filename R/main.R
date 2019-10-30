@@ -28,7 +28,7 @@ clustify <- function(input, ...) {
 #' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param obj_out whether to output object instead of cor matrix
 #' @param rename_prefix prefix to add to type and r column names
-#' @param threshold identity calling minimum correlation score threshold, only used when obj_out = T
+#' @param threshold identity calling minimum correlation score threshold, only used when obj_out = TRUE
 #' @param exclude_genes a vector of gene names to throw out of query
 #' @param ... additional arguments to pass to compute_method function
 #'
