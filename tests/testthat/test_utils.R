@@ -611,36 +611,13 @@ test_that("feature_select_PCA can handle precalculated PCA", {
   expect_true(all.equal(rownames(res), rownames(res2)))
 })
 
-test_that("downsample_matrix sets seed correctly", {
-  mat1 <- downsample_matrix(pbmc_matrix_small,
-    metadata = pbmc_meta$classified,
-    n = 0.5,
-    keep_cluster_proportions = TRUE,
-    set_seed = 41
-  )
-  mat2 <- downsample_matrix(pbmc_matrix_small,
-    metadata = pbmc_meta$classified,
-    n = 0.5,
-    keep_cluster_proportions = TRUE,
-    set_seed = 41
-  )
-  expect_true(all.equal(colnames(mat1), colnames(mat2)))
-})
 
 test_that("downsample_matrix can select same number of cells per cluster", {
   mat1 <- downsample_matrix(
     pbmc_matrix_small,
     metadata = pbmc_meta$classified,
     n = 10,
-    keep_cluster_proportions = TRUE,
-    set_seed = 41
-  )
-  mat2 <- downsample_matrix(
-    pbmc_matrix_small,
-    metadata = pbmc_meta$classified,
-    n = 10,
-    keep_cluster_proportions = FALSE,
-    set_seed = 41
+    keep_cluster_proportions = TRUE
   )
   expect_true(all.equal(ncol(mat1), 10 * length(unique(pbmc_meta$classified))))
 })
