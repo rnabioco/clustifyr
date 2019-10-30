@@ -626,7 +626,7 @@ cor_to_call_topn <- function(cor_mat,
         !!dplyr::sym("type"),
         paste0("r<", threshold, ", unassigned")
       ))
-    df_temp_full <- dplyr::group_by_(df_temp_full, .dots = col)
+    df_temp_full <- dplyr::group_by(df_temp_full, !!dplyr::sym(col))
     df_temp_full <-
       dplyr::distinct(df_temp_full,
         !!dplyr::sym("type"),
@@ -635,7 +635,7 @@ cor_to_call_topn <- function(cor_mat,
       )
     dplyr::arrange(df_temp_full, desc(n), desc(sum), .by_group = TRUE)
   } else {
-    df_temp_full <- dplyr::group_by_(df_temp_full, .dots = col)
+    df_temp_full <- dplyr::group_by_(df_temp_full, !!dplyr::sym(col))
     dplyr::arrange(df_temp_full, desc(!!dplyr::sym("r")), .by_group = TRUE)
   }
 }
