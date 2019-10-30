@@ -150,11 +150,28 @@ call_to_metadata <- function(res,
 #' @param cluster_col metadata column for cluster
 #' @param threshold minimum correlation coefficent cutoff for calling clusters
 #' @return new metadata with added columns
+#' @examples
+#' res <- clustify(
+#'   input = pbmc_matrix_small,
+#'   metadata = pbmc_meta,
+#'   cluster_col = "classified",
+#'   ref_mat = cbmc_ref,
+#'   per_cell = T
+#' )
+#'
+#' res2 <- cor_to_call(res)
+#'
+#' res3 <- collapse_to_cluster(
+#'   res2,
+#'   metadata = pbmc_meta,
+#'   cluster_col = "classified",
+#'   threshold = 0
+#'  )
 #' @export
 collapse_to_cluster <- function(res,
                                 metadata,
                                 cluster_col,
-                                threshold) {
+                                threshold = 0) {
   res_temp <- res
   colnames(res_temp)[1] <- "rn"
   df_temp_full <- as.data.frame(res_temp)

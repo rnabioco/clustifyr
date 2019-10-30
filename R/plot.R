@@ -16,6 +16,10 @@
 #' @param do_label whether to label each cluster at median center
 #' @param do_legend whether to draw legend
 #' @return ggplot object, cells projected by dr, colored by feature
+#' @examples
+#' plot_tsne(
+#'   pbmc_meta,
+#'   feature = "classified")
 #' @export
 plot_tsne <- function(data,
                       x = "UMAP_1",

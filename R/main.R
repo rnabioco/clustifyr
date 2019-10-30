@@ -504,7 +504,25 @@ clustify_lists <- function(input, ...) {
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
 #' @param ... passed to matrixize_markers
+#' @examples
+#' # Annotate a matrix and metadata
+#' clustify_lists(
+#'   input = pbmc_matrix_small,
+#'   marker = cbmc_m,
+#'   metadata = pbmc_meta,
+#'   cluster_col = "classified",
+#'   verbose = TRUE
+#' )
 #'
+#' # Annotate using a different method
+#' clustify_lists(
+#'   input = pbmc_matrix_small,
+#'   marker = cbmc_m,
+#'   metadata = pbmc_meta,
+#'   cluster_col = "classified",
+#'   verbose = TRUE,
+#'   metric = "jaccard"
+#' )
 #' @return matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
 
 #' @export

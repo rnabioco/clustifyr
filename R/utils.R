@@ -1760,6 +1760,11 @@ file_marker_parse <- function(filename) {
 #' @param df dataframe with column names
 #' @param id desired id if unique
 #' @return character
+#' @examples
+#' get_unique_column(
+#'   pbmc_meta,
+#'   "orig.ident"
+#' )
 #' @export
 get_unique_column <- function(df, id = NULL) {
   if (!is.null(id)) {
@@ -1787,6 +1792,32 @@ get_unique_column <- function(df, id = NULL) {
 #' @param threshold diff threshold
 #' @param consensus_cut filter out if lower than number of types show large diff
 #' @return matrix of rank diff values
+#' @examples
+#' res <- clustify(
+#'   input = pbmc_matrix_small,
+#'   metadata = pbmc_meta,
+#'   ref_mat = cbmc_ref,
+#'   query_genes = pbmc_vargenes,
+#'   cluster_col = "classified"
+#' )
+#' call1 <- cor_to_call(
+#'   res,
+#'   metadata = pbmc_meta,
+#'   cluster_col = "classified",
+#'   collapse_to_cluster = FALSE,
+#'   threshold = 0.8
+#' )
+#' pbmc_meta2 <- call_to_metadata(
+#'   call1,
+#'   pbmc_meta,
+#'   "classified"
+#' )
+#' b <- find_rank_bias(
+#'   pbmc_matrix_small,
+#'   pbmc_meta2, "type",
+#'   cbmc_ref,
+#'   query_genes = pbmc_vargenes
+#' )
 #' @export
 find_rank_bias <- function(mat,
                            metadata,

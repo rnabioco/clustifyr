@@ -198,6 +198,13 @@ compute_mean_expr <- function(expr_mat,
 #' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param ...  additional parameters
 #' @return matrix of numeric values
+#' @examples
+#' calc_similarity(
+#'   query_mat = pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)],
+#'   ref_mat = cbmc_ref[c("PPBP", "LYZ", "S100A9"), 1:3],
+#'   cluster_ids = colnames(pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)]),
+#'   compute_method = "spearman"
+#' )
 #' @export
 calc_similarity <- function(query_mat,
                             ref_mat,

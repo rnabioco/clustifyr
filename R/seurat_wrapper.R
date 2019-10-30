@@ -162,7 +162,10 @@ seurat_meta.Seurat <- function(seurat_object,
 #' @param method whether to take mean (default) or median
 #' @param lookuptable if not supplied, will look in built-in table for object parsing
 #' @return reference expression matrix, with genes as row names, and cell types as column names
-
+#' @examples
+#' object_ref(
+#'   s_small3,
+#'   cluster_col = "RNA_snn_res.1")
 #' @export
 object_ref <- function(input,
                        cluster_col = NULL,

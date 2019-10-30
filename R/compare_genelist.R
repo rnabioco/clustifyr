@@ -127,6 +127,8 @@ matrixize_markers <- function(marker_df,
 #'
 #' @param marker_mat matrix or dataframe of candidate genes for each cluster
 #' @return vector of marker gene names
+#' @examples
+#' get_vargenes(cbmc_m)
 #' @export
 get_vargenes <- function(marker_mat) {
   if (rownames(marker_mat)[1] != "1") {
