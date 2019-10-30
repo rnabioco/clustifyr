@@ -33,3 +33,30 @@ matrix of rank diff values
 \description{
 Find rank bias
 }
+\examples{
+res <- clustify(
+  input = pbmc_matrix_small,
+  metadata = pbmc_meta,
+  ref_mat = cbmc_ref,
+  query_genes = pbmc_vargenes,
+  cluster_col = "classified"
+)
+call1 <- cor_to_call(
+  res,
+  metadata = pbmc_meta,
+  cluster_col = "classified",
+  collapse_to_cluster = FALSE,
+  threshold = 0.8
+)
+pbmc_meta2 <- call_to_metadata(
+  call1,
+  pbmc_meta,
+  "classified"
+)
+b <- find_rank_bias(
+  pbmc_matrix_small,
+  pbmc_meta2, "type",
+  cbmc_ref,
+  query_genes = pbmc_vargenes
+)
+}

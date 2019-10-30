@@ -14,4 +14,7 @@ vector of colors
 \description{
 Color palette for plotting continous variables
 }
+\examples{
+pretty_palette
+}
 \keyword{datasets}

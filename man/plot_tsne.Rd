@@ -43,3 +43,8 @@ ggplot object, cells projected by dr, colored by feature
 \description{
 Plot a tSNE or umap colored by feature.
 }
+\examples{
+plot_tsne(
+  pbmc_meta,
+  feature = "classified")
+}
