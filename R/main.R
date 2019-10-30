@@ -771,7 +771,7 @@ clustify_lists.Seurat <- function(input,
     res
   } else {
     if (metric != "consensus") {
-      df_temp <<- cor_to_call(
+      df_temp <- cor_to_call(
         res,
         metadata = metadata,
         cluster_col = cluster_col,
