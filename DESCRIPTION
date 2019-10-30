@@ -30,6 +30,7 @@ Authors@R:
              family = "Daya",
              role = "ctb",
              email = "michelle.daya@ucdenver.edu"))
+Maintainer: Rui Fu <raysinensis@gmail.com>
 Description: Classify cells from single-cell RNA sequencing data
     using external reference data (e.g., bulk RNA-seq).
 License: MIT + file LICENSE
