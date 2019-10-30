@@ -8,7 +8,7 @@ test_that("warning if matrix is not binarized", {
   )
   pbmc_avgb <- binarize_expr(pbmc_avg)
   gene_list_methods <- c("hyper")
-  results <- lapply(
+  expect_warning(results <- lapply(
     gene_list_methods,
     function(x) {
       compare_lists(pbmc_avg,
@@ -16,9 +16,7 @@ test_that("warning if matrix is not binarized", {
         metric = x
       )
     }
-  )
-
-  expect_true(results[[1]][1, 1] > 0)
+  ))
 })
 
 

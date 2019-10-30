@@ -127,7 +127,8 @@ matrixize_markers <- function(marker_df,
   if (!is.null(metadata)) {
     if (typeof(metadata) != "character") {
       metadata <-
-        dplyr::left_join(tibble::tibble(cluster = colnames(marker_temp2)),
+        suppressWarnings(dplyr::left_join(
+          tibble::tibble(cluster = colnames(marker_temp2)),
           unique(
             tibble::tibble(
               cluster = metadata$cluster,
@@ -135,7 +136,7 @@ matrixize_markers <- function(marker_df,
             )
           ),
           by = "cluster"
-        )
+        ))
       metadata <- metadata[[cluster_col]]
     }
     colnames(marker_temp2) <- metadata
@@ -151,6 +152,8 @@ matrixize_markers <- function(marker_df,
 #'
 #' @param marker_mat matrix or dataframe of candidate genes for each cluster
 #' @return vector of marker gene names
+#' @examples
+#' get_vargenes(cbmc_m)
 #' @export
 get_vargenes <- function(marker_mat) {
   if (rownames(marker_mat)[1] != "1") {

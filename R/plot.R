@@ -16,6 +16,10 @@
 #' @param do_label whether to label each cluster at median center
 #' @param do_legend whether to draw legend
 #' @return ggplot object, cells projected by dr, colored by feature
+#' @examples
+#' plot_tsne(
+#'   pbmc_meta,
+#'   feature = "classified")
 #' @export
 plot_tsne <- function(data,
                       x = "UMAP_1",
@@ -158,22 +162,30 @@ plot_tsne <- function(data,
 
 #' Color palette for plotting continous variables
 #' @return vector of colors
+#' @examples
+#' pretty_palette
 #' @export
 pretty_palette <- rev(scales::brewer_pal(palette = "RdGy")(6))
 
 #' Color palette for plotting continous variables, starting at gray
 #' @return vector of colors
+#' @examples
+#' pretty_palette2
 #' @export
 pretty_palette2 <- scales::brewer_pal(palette = "Reds")(9)
 
 #' black and white palette for plotting continous variables
 #' @return vector of colors
+#' @examples
+#' not_pretty_palette
 #' @export
 not_pretty_palette <- scales::brewer_pal(palette = "Greys")(9)
 
 #' Expanded color palette ramp for plotting discrete variables
 #' @param n number of colors to use
 #' @return color ramp
+#' @examples
+#' pretty_palette_ramp_d
 #' @export
 pretty_palette_ramp_d <-
   grDevices::colorRampPalette(scales::brewer_pal(palette = "Paired")(12))
@@ -198,7 +210,7 @@ pretty_palette_ramp_d <-
 #' res <- clustify(
 #'   input = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
-#'   ref_mat = pbmc_bulk_matrix,
+#'   ref_mat = cbmc_ref,
 #'   query_genes = pbmc_vargenes,
 #'   cluster_col = "classified"
 #' )
@@ -378,7 +390,7 @@ plot_gene <- function(expr_mat,
 #' res <- clustify(
 #'   input = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
-#'   ref_mat = pbmc_bulk_matrix,
+#'   ref_mat = cbmc_ref,
 #'   query_genes = pbmc_vargenes,
 #'   cluster_col = "classified"
 #' )
@@ -428,7 +440,7 @@ plot_call <- function(cor_mat,
 #' res <- clustify(
 #'   input = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
-#'   ref_mat = pbmc_bulk_matrix,
+#'   ref_mat = cbmc_ref,
 #'   query_genes = pbmc_vargenes,
 #'   cluster_col = "classified"
 #' )
@@ -598,7 +610,7 @@ plot_cols <- function(metadata,
 #' res <- clustify(
 #'   input = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
-#'   ref_mat = pbmc_bulk_matrix,
+#'   ref_mat = cbmc_ref,
 #'   query_genes = pbmc_vargenes,
 #'   cluster_col = "classified",
 #'   per_cell = FALSE

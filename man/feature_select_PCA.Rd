@@ -33,7 +33,7 @@ formed from the bulk expression data set
 }
 \examples{
 res <- feature_select_PCA(
-  pbmc_bulk_matrix,
+  cbmc_ref,
   if_log = FALSE
 )
 }

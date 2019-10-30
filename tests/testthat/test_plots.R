@@ -3,7 +3,7 @@ context("plotting")
 res <- clustify(
   input = pbmc_matrix_small,
   metadata = pbmc_meta,
-  ref_mat = pbmc_bulk_matrix,
+  ref_mat = cbmc_ref,
   query_genes = pbmc_vargenes,
   cluster_col = "classified"
 )
@@ -11,7 +11,7 @@ res <- clustify(
 res2 <- clustify(
   input = pbmc_matrix_small,
   metadata = pbmc_meta,
-  ref_mat = pbmc_bulk_matrix,
+  ref_mat = cbmc_ref,
   query_genes = pbmc_vargenes,
   cluster_col = "classified",
   per_cell = TRUE
@@ -28,8 +28,7 @@ test_that("plots can be generated", {
 test_that("plot_best_call warns about colnames", {
   pbmc_meta2 <- pbmc_meta
   pbmc_meta2$type <- 1
-  plts <- plot_best_call(res, pbmc_meta2)
-  expect_true(is.null(plts))
+  expect_warning(plts <- plot_best_call(res, pbmc_meta2))
 })
 
 test_that("call plots can be generated", {
@@ -68,7 +67,7 @@ test_that("plot_cor for all clusters by default", {
     y = "UMAP_2"
   )
 
-  expect_true(length(plts) == 14)
+  expect_true(length(plts) == ncol(cbmc_ref))
 })
 
 test_that("plot_cor works with scale_legends option", {
@@ -83,7 +82,7 @@ test_that("plot_cor works with scale_legends option", {
     cluster_col = "classified",
     scale_legends = c(0, 1)
   )
-  expect_true(length(plts) == 14)
+  expect_true(length(plts) == ncol(cbmc_ref))
 })
 
 test_that("plot_gene can handle strange and normal genenames", {
@@ -125,7 +124,7 @@ test_that("plot_best_call threshold works as intended, on per cell and collapsin
   res <- clustify(
     input = pbmc_matrix_small,
     metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix,
+    ref_mat = cbmc_ref,
     query_genes = pbmc_vargenes,
     cluster_col = "classified",
     per_cell = TRUE
@@ -142,8 +141,8 @@ test_that("plot_best_call threshold works as intended, on per cell and collapsin
 })
 
 test_that("plot_gene checks for presence of gene name", {
-  plot_gene(
-    pbmc_matrix_small,
+
+  expect_warning(plot_gene(pbmc_matrix_small,
     pbmc_meta %>% tibble::rownames_to_column("rn"),
     c("INIP", "ZFP36L3"),
     cell_col = "rn",
@@ -151,17 +150,15 @@ test_that("plot_gene checks for presence of gene name", {
     do_legend = FALSE,
     x = "UMAP_1",
     y = "UMAP_2"
-  )
-  expect_error(
-    plot_gene(
-      pbmc_matrix_small,
-      pbmc_meta %>% tibble::rownames_to_column("rn"),
-      c("ZFP36L3"),
-      cell_col = "rn",
-      x = "UMAP_1",
-      y = "UMAP_2"
-    )
-  )
+
+  ))
+  expect_error(expect_warning(plot_gene(pbmc_matrix_small,
+    pbmc_meta %>% tibble::rownames_to_column("rn"),
+    c("ZFP36L3"),
+    cell_col = "rn",
+    x = "UMAP_1",
+    y = "UMAP_2"
+  )))
 })
 
 test_that("plot_cols returns a ggplot object", {
@@ -181,7 +178,7 @@ test_that("plot_cor_heatmap returns a ggplot object", {
   res <- clustify(
     input = pbmc_matrix_small,
     metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix,
+    ref_mat = cbmc_ref,
     query_genes = pbmc_vargenes,
     cluster_col = "classified",
     per_cell = FALSE

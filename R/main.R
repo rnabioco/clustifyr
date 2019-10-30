@@ -28,7 +28,7 @@ clustify <- function(input, ...) {
 #' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param obj_out whether to output object instead of cor matrix
 #' @param rename_prefix prefix to add to type and r column names
-#' @param threshold identity calling minimum correlation score threshold, only used when obj_out = T
+#' @param threshold identity calling minimum correlation score threshold, only used when obj_out = TRUE
 #' @param exclude_genes a vector of gene names to throw out of query
 #' @param ... additional arguments to pass to compute_method function
 #'
@@ -40,7 +40,7 @@ clustify <- function(input, ...) {
 #' clustify(
 #'   input = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
-#'   ref_mat = pbmc_bulk_matrix,
+#'   ref_mat = cbmc_ref,
 #'   query_genes = pbmc_vargenes,
 #'   cluster_col = "classified",
 #'   verbose = TRUE
@@ -50,7 +50,7 @@ clustify <- function(input, ...) {
 #' res <- clustify(
 #'   input = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
-#'   ref_mat = pbmc_bulk_matrix,
+#'   ref_mat = cbmc_ref,
 #'   query_genes = pbmc_vargenes,
 #'   cluster_col = "classified",
 #'   compute_method = "cosine"
@@ -59,7 +59,7 @@ clustify <- function(input, ...) {
 #' # Annotate a Seurat object
 #' clustify(
 #'   s_small,
-#'   pbmc_bulk_matrix,
+#'   cbmc_ref,
 #'   cluster_col = "res.1",
 #'   seurat_out = TRUE,
 #'   per_cell = FALSE,
@@ -69,7 +69,7 @@ clustify <- function(input, ...) {
 #' # Annotate (and return) a Seurat object per-cell
 #' res <- clustify(
 #'   input = s_small,
-#'   ref_mat = pbmc_bulk_matrix,
+#'   ref_mat = cbmc_ref,
 #'   cluster_col = "res.1",
 #'   seurat_out = TRUE,
 #'   per_cell = TRUE,
@@ -514,7 +514,25 @@ clustify_lists <- function(input, ...) {
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
 #' @param ... passed to matrixize_markers
+#' @examples
+#' # Annotate a matrix and metadata
+#' clustify_lists(
+#'   input = pbmc_matrix_small,
+#'   marker = cbmc_m,
+#'   metadata = pbmc_meta,
+#'   cluster_col = "classified",
+#'   verbose = TRUE
+#' )
 #'
+#' # Annotate using a different method
+#' clustify_lists(
+#'   input = pbmc_matrix_small,
+#'   marker = cbmc_m,
+#'   metadata = pbmc_meta,
+#'   cluster_col = "classified",
+#'   verbose = TRUE,
+#'   metric = "jaccard"
+#' )
 #' @return matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names
 
 #' @export

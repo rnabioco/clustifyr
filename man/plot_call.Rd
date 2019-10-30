@@ -25,7 +25,7 @@ Plot called clusters on a tSNE or umap, for each reference cluster given
 res <- clustify(
   input = pbmc_matrix_small,
   metadata = pbmc_meta,
-  ref_mat = pbmc_bulk_matrix,
+  ref_mat = cbmc_ref,
   query_genes = pbmc_vargenes,
   cluster_col = "classified"
 )

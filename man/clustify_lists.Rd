@@ -86,3 +86,23 @@ matrix of numeric values, clusters from input as row names, cell types from mark
 \description{
 Main function to compare scRNA-seq data to gene lists.
 }
+\examples{
+# Annotate a matrix and metadata
+clustify_lists(
+  input = pbmc_matrix_small,
+  marker = cbmc_m,
+  metadata = pbmc_meta,
+  cluster_col = "classified",
+  verbose = TRUE
+)
+
+# Annotate using a different method
+clustify_lists(
+  input = pbmc_matrix_small,
+  marker = cbmc_m,
+  metadata = pbmc_meta,
+  cluster_col = "classified",
+  verbose = TRUE,
+  metric = "jaccard"
+)
+}

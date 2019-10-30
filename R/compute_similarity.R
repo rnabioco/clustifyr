@@ -211,6 +211,13 @@ compute_mean_expr <- function(expr_mat,
 #' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param ...  additional parameters
 #' @return matrix of numeric values
+#' @examples
+#' calc_similarity(
+#'   query_mat = pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)],
+#'   ref_mat = cbmc_ref[c("PPBP", "LYZ", "S100A9"), 1:3],
+#'   cluster_ids = colnames(pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)]),
+#'   compute_method = "spearman"
+#' )
 #' @export
 calc_similarity <- function(query_mat,
                             ref_mat,
@@ -221,18 +228,18 @@ calc_similarity <- function(query_mat,
   if (rm0) {
     message("considering 0 as missing data")
     query_mat[query_mat == 0] <- NA
-    similarity_score <- stats::cor(as.matrix(query_mat),
+    similarity_score <- suppressWarnings(stats::cor(as.matrix(query_mat),
       ref_mat,
       method = compute_method,
       use = "pairwise.complete.obs"
-    )
+    ))
     return(similarity_score)
   } else {
     if (any(compute_method %in% c("pearson", "spearman", "kendall"))) {
-      similarity_score <- cor(as.matrix(query_mat),
+      similarity_score <- suppressWarnings(stats::cor(as.matrix(query_mat),
         ref_mat,
         method = compute_method
-      )
+      ))
       return(similarity_score)
     }
   }

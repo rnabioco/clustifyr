@@ -186,7 +186,7 @@ percent_clusters <- function(mat,
 #'   input = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
 #'   cluster_col = "classified",
-#'   ref_mat = pbmc_bulk_matrix,
+#'   ref_mat = cbmc_ref,
 #'   query_genes = pbmc_vargenes
 #' )
 #'
@@ -215,7 +215,7 @@ get_best_match_matrix <- function(cor_mat) {
 #'   input = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
 #'   cluster_col = "classified",
-#'   ref_mat = pbmc_bulk_matrix,
+#'   ref_mat = cbmc_ref,
 #'   query_genes = pbmc_vargenes
 #' )
 #'
@@ -551,7 +551,7 @@ assign_ident <- function(metadata,
 #' res <- clustify(
 #'   input = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
-#'   ref_mat = pbmc_bulk_matrix,
+#'   ref_mat = cbmc_ref,
 #'   query_genes = pbmc_vargenes,
 #'   cluster_col = "classified"
 #' )
@@ -1432,7 +1432,7 @@ ref_feature_select <- function(mat,
 #' @return vector of genes
 #' @examples
 #' res <- feature_select_PCA(
-#'   pbmc_bulk_matrix,
+#'   cbmc_ref,
 #'   if_log = FALSE
 #' )
 #' @export
@@ -1546,8 +1546,9 @@ plot_pathway_gsea <- function(mat,
   coltopn <-
     unique(cor_to_call_topn(res, topn = topn, threshold = -Inf)$type)
   res[is.na(res)] <- 0
-  g <-
-    ComplexHeatmap::Heatmap(res[, coltopn], column_names_gp = grid::gpar(fontsize = 6))
+
+  g <- suppressWarnings(ComplexHeatmap::Heatmap(res[, coltopn],
+                                                column_names_gp = grid::gpar(fontsize = 6)))
 
   if (returning == "both") {
     return(list(res, g))
@@ -1903,6 +1904,11 @@ file_marker_parse <- function(filename) {
 #' @param df dataframe with column names
 #' @param id desired id if unique
 #' @return character
+#' @examples
+#' get_unique_column(
+#'   pbmc_meta,
+#'   "orig.ident"
+#' )
 #' @export
 get_unique_column <- function(df, id = NULL) {
   if (!is.null(id)) {
@@ -1930,6 +1936,32 @@ get_unique_column <- function(df, id = NULL) {
 #' @param threshold diff threshold
 #' @param consensus_cut filter out if lower than number of types show large diff
 #' @return matrix of rank diff values
+#' @examples
+#' res <- clustify(
+#'   input = pbmc_matrix_small,
+#'   metadata = pbmc_meta,
+#'   ref_mat = cbmc_ref,
+#'   query_genes = pbmc_vargenes,
+#'   cluster_col = "classified"
+#' )
+#' call1 <- cor_to_call(
+#'   res,
+#'   metadata = pbmc_meta,
+#'   cluster_col = "classified",
+#'   collapse_to_cluster = FALSE,
+#'   threshold = 0.8
+#' )
+#' pbmc_meta2 <- call_to_metadata(
+#'   call1,
+#'   pbmc_meta,
+#'   "classified"
+#' )
+#' b <- find_rank_bias(
+#'   pbmc_matrix_small,
+#'   pbmc_meta2, "type",
+#'   cbmc_ref,
+#'   query_genes = pbmc_vargenes
+#' )
 #' @export
 find_rank_bias <- function(mat,
                            metadata,
@@ -1959,9 +1991,14 @@ find_rank_bias <- function(mat,
     metadata[[type_col]]
   )
   r2 <- apply(-avg2[query_genes, ], 2, rank)
+<<<<<<< HEAD
   r2 <-
     r2[, colnames(r2)[!stringr::str_detect(colnames(r2), "unassigned")]]
   r1 <- apply(-ref_mat[query_genes, ], 2, rank)[, colnames(r2)]
+=======
+  r2 <- r2[, colnames(r2)[!stringr::str_detect(colnames(r2), "unassigned"), drop = FALSE], drop = FALSE]
+  r1 <- apply(-ref_mat[query_genes, ], 2, rank)[, colnames(r2), drop = FALSE]
+>>>>>>> origin
 
   if (!(is.null(expr_cut))) {
     r1[r1 > expr_cut] <- expr_cut
@@ -1976,8 +2013,13 @@ find_rank_bias <- function(mat,
     rp[r1 > 0.9 * expr_cut & r2 > 0.9 * expr_cut] <- NA
     v <- rowMeans(rp, na.rm = TRUE) == 1
     v[is.na(v)] <- FALSE
+<<<<<<< HEAD
     v2 <- Matrix::rowSums(rp, na.rm = TRUE) == 1
     prob <- rdiff[v & !v2, ]
+=======
+    v2 <- Matrix::rowSums(rp, na.rm = T) == 1
+    prob <- rdiff[v & !v2, , drop = FALSE]
+>>>>>>> origin
     return(prob)
   } else {
     return(rdiff)

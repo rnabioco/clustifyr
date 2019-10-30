@@ -75,7 +75,7 @@ common genes between the expr_mat and ref_mat will be used for comparision.}
 
 \item{rename_prefix}{prefix to add to type and r column names}
 
-\item{threshold}{identity calling minimum correlation score threshold, only used when obj_out = T}
+\item{threshold}{identity calling minimum correlation score threshold, only used when obj_out = TRUE}
 
 \item{exclude_genes}{a vector of gene names to throw out of query}
 
@@ -96,7 +96,7 @@ Compare scRNA-seq data to reference data.
 clustify(
   input = pbmc_matrix_small,
   metadata = pbmc_meta,
-  ref_mat = pbmc_bulk_matrix,
+  ref_mat = cbmc_ref,
   query_genes = pbmc_vargenes,
   cluster_col = "classified",
   verbose = TRUE
@@ -106,7 +106,7 @@ clustify(
 res <- clustify(
   input = pbmc_matrix_small,
   metadata = pbmc_meta,
-  ref_mat = pbmc_bulk_matrix,
+  ref_mat = cbmc_ref,
   query_genes = pbmc_vargenes,
   cluster_col = "classified",
   compute_method = "cosine"
@@ -115,7 +115,7 @@ res <- clustify(
 # Annotate a Seurat object
 clustify(
   s_small,
-  pbmc_bulk_matrix,
+  cbmc_ref,
   cluster_col = "res.1",
   seurat_out = TRUE,
   per_cell = FALSE,
@@ -125,7 +125,7 @@ clustify(
 # Annotate (and return) a Seurat object per-cell
 res <- clustify(
   input = s_small,
-  ref_mat = pbmc_bulk_matrix,
+  ref_mat = cbmc_ref,
   cluster_col = "res.1",
   seurat_out = TRUE,
   per_cell = TRUE,

@@ -29,15 +29,14 @@ test_that("run_gsea checks for matching number of clusters", {
 
 test_that("run_gsea warns slow runs", {
   data("pbmc_vargenes")
-  res <- run_gsea(
-    pbmc_matrix_small[, 1:3],
+
+  expect_warning(res <- run_gsea(pbmc_matrix_small[, 1:3],
     query_genes = pbmc_vargenes[1:2],
     n_perm = 10001,
     per_cell = TRUE,
     cluster_ids = pbmc_meta$classified,
     no_warnings = TRUE
-  )
-  expect_equal(length(res), 3)
+  ))
 })
 
 test_that("run_gsea warning suppression", {
