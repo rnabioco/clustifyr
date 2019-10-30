@@ -43,6 +43,6 @@ pbmc_avg <- average_clusters(
   mat = pbmc_matrix_small,
   metadata = pbmc_meta,
   cluster_col = "classified",
- if_log = FALSE
+  if_log = FALSE
 )
 }

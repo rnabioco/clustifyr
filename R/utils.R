@@ -179,7 +179,7 @@ percent_clusters <- function(mat, metadata,
 #'   input = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
 #'   cluster_col = "classified",
-#'   ref_mat = pbmc_bulk_matrix,
+#'   ref_mat = cbmc_ref,
 #'   query_genes = pbmc_vargenes
 #' )
 #'
@@ -205,7 +205,7 @@ get_best_match_matrix <- function(cor_mat) {
 #'   input = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
 #'   cluster_col = "classified",
-#'   ref_mat = pbmc_bulk_matrix,
+#'   ref_mat = cbmc_ref,
 #'   query_genes = pbmc_vargenes
 #' )
 #'
@@ -527,7 +527,7 @@ assign_ident <- function(metadata,
 #' res <- clustify(
 #'   input = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
-#'   ref_mat = pbmc_bulk_matrix,
+#'   ref_mat = cbmc_ref,
 #'   query_genes = pbmc_vargenes,
 #'   cluster_col = "classified"
 #' )
@@ -1338,7 +1338,7 @@ ref_feature_select <- function(mat,
 #' @return vector of genes
 #' @examples
 #' res <- feature_select_PCA(
-#'   pbmc_bulk_matrix,
+#'   cbmc_ref,
 #'   if_log = FALSE
 #' )
 #' @export
@@ -1804,8 +1804,8 @@ find_rank_bias <- function(mat,
   }
   avg2 <- average_clusters(mat[, rownames(metadata)], metadata[[type_col]])
   r2 <- apply(-avg2[query_genes, ], 2, rank)
-  r2 <- r2[, colnames(r2)[!stringr::str_detect(colnames(r2), "unassigned")]]
-  r1 <- apply(-ref_mat[query_genes, ], 2, rank)[, colnames(r2)]
+  r2 <- r2[, colnames(r2)[!stringr::str_detect(colnames(r2), "unassigned"), drop = FALSE], drop = FALSE]
+  r1 <- apply(-ref_mat[query_genes, ], 2, rank)[, colnames(r2), drop = FALSE]
 
   if (!(is.null(expr_cut))) {
     r1[r1 > expr_cut] <- expr_cut
@@ -1821,7 +1821,7 @@ find_rank_bias <- function(mat,
     v <- rowMeans(rp, na.rm = T) == 1
     v[is.na(v)] <- FALSE
     v2 <- Matrix::rowSums(rp, na.rm = T) == 1
-    prob <- rdiff[v & !v2, ]
+    prob <- rdiff[v & !v2, , drop = FALSE]
     return(prob)
   } else {
     return(rdiff)

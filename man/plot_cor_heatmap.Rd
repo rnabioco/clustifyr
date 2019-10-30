@@ -31,7 +31,7 @@ Plot similarity measures on heatmap
 res <- clustify(
   input = pbmc_matrix_small,
   metadata = pbmc_meta,
-  ref_mat = pbmc_bulk_matrix,
+  ref_mat = cbmc_ref,
   query_genes = pbmc_vargenes,
   cluster_col = "classified",
   per_cell = FALSE

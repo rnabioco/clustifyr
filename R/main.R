@@ -40,7 +40,7 @@ clustify <- function(input, ...) {
 #' clustify(
 #'   input = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
-#'   ref_mat = pbmc_bulk_matrix,
+#'   ref_mat = cbmc_ref,
 #'   query_genes = pbmc_vargenes,
 #'   cluster_col = "classified",
 #'   verbose = TRUE
@@ -50,7 +50,7 @@ clustify <- function(input, ...) {
 #' res <- clustify(
 #'   input = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
-#'   ref_mat = pbmc_bulk_matrix,
+#'   ref_mat = cbmc_ref,
 #'   query_genes = pbmc_vargenes,
 #'   cluster_col = "classified",
 #'   compute_method = "cosine"
@@ -59,7 +59,7 @@ clustify <- function(input, ...) {
 #' # Annotate a Seurat object
 #' clustify(
 #'   s_small,
-#'   pbmc_bulk_matrix,
+#'   cbmc_ref,
 #'   cluster_col = "res.1",
 #'   seurat_out = TRUE,
 #'   per_cell = FALSE,
@@ -69,7 +69,7 @@ clustify <- function(input, ...) {
 #' # Annotate (and return) a Seurat object per-cell
 #' res <- clustify(
 #'   input = s_small,
-#'   ref_mat = pbmc_bulk_matrix,
+#'   ref_mat = cbmc_ref,
 #'   cluster_col = "res.1",
 #'   seurat_out = TRUE,
 #'   per_cell = TRUE,

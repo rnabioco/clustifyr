@@ -3,7 +3,7 @@ context("plotting")
 res <- clustify(
   input = pbmc_matrix_small,
   metadata = pbmc_meta,
-  ref_mat = pbmc_bulk_matrix,
+  ref_mat = cbmc_ref,
   query_genes = pbmc_vargenes,
   cluster_col = "classified"
 )
@@ -11,7 +11,7 @@ res <- clustify(
 res2 <- clustify(
   input = pbmc_matrix_small,
   metadata = pbmc_meta,
-  ref_mat = pbmc_bulk_matrix,
+  ref_mat = cbmc_ref,
   query_genes = pbmc_vargenes,
   cluster_col = "classified",
   per_cell = TRUE
@@ -63,7 +63,7 @@ test_that("plot_cor for all clusters by default", {
     y = "UMAP_2"
   )
 
-  expect_true(length(plts) == 14)
+  expect_true(length(plts) == ncol(cbmc_ref))
 })
 
 test_that("plot_cor works with scale_legends option", {
@@ -78,7 +78,7 @@ test_that("plot_cor works with scale_legends option", {
     cluster_col = "classified",
     scale_legends = c(0, 1)
   )
-  expect_true(length(plts) == 14)
+  expect_true(length(plts) == ncol(cbmc_ref))
 })
 
 test_that("plot_gene can handle strange and normal genenames", {
@@ -120,7 +120,7 @@ test_that("plot_best_call threshold works as intended, on per cell and collapsin
   res <- clustify(
     input = pbmc_matrix_small,
     metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix,
+    ref_mat = cbmc_ref,
     query_genes = pbmc_vargenes,
     cluster_col = "classified",
     per_cell = TRUE
@@ -171,7 +171,7 @@ test_that("plot_cor_heatmap returns a ggplot object", {
   res <- clustify(
     input = pbmc_matrix_small,
     metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix,
+    ref_mat = cbmc_ref,
     query_genes = pbmc_vargenes,
     cluster_col = "classified",
     per_cell = FALSE
