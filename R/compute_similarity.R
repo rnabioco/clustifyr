@@ -208,17 +208,17 @@ calc_similarity <- function(query_mat,
   if (rm0) {
     message("considering 0 as missing data")
     query_mat[query_mat == 0] <- NA
-    similarity_score <- stats::cor(as.matrix(query_mat),
+    similarity_score <- suppressWarnings(stats::cor(as.matrix(query_mat),
       ref_mat,
       method = compute_method, use = "pairwise.complete.obs"
-    )
+    ))
     return(similarity_score)
   } else {
     if (any(compute_method %in% c("pearson", "spearman", "kendall"))) {
-      similarity_score <- cor(as.matrix(query_mat),
+      similarity_score <- suppressWarnings(stats::cor(as.matrix(query_mat),
         ref_mat,
         method = compute_method
-      )
+      ))
       return(similarity_score)
     }
   }
