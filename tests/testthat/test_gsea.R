@@ -2,7 +2,8 @@ context("run_gsea")
 
 test_that("output is correctly formatted", {
   data("pbmc_vargenes")
-  res <- run_gsea(pbmc_matrix_small,
+  res <- run_gsea(
+    pbmc_matrix_small,
     query_genes = pbmc_vargenes[1:100],
     n_perm = 10,
     cluster_ids = pbmc_meta$classified,
@@ -15,16 +16,20 @@ test_that("output is correctly formatted", {
 
 test_that("run_gsea checks for matching number of clusters", {
   data("pbmc_vargenes")
-  expect_error(res <- run_gsea(pbmc_matrix_small,
-    query_genes = pbmc_vargenes[1:100],
-    n_perm = 10,
-    cluster_ids = pbmc_meta$classified[1:3],
-    no_warnings = TRUE
-  ))
+  expect_error(
+    res <- run_gsea(
+      pbmc_matrix_small,
+      query_genes = pbmc_vargenes[1:100],
+      n_perm = 10,
+      cluster_ids = pbmc_meta$classified[1:3],
+      no_warnings = TRUE
+    )
+  )
 })
 
 test_that("run_gsea warns slow runs", {
   data("pbmc_vargenes")
+
   expect_warning(res <- run_gsea(pbmc_matrix_small[, 1:3],
     query_genes = pbmc_vargenes[1:2],
     n_perm = 10001,
@@ -36,13 +41,16 @@ test_that("run_gsea warns slow runs", {
 
 test_that("run_gsea warning suppression", {
   data("pbmc_vargenes")
-  expect_warning(res <- run_gsea(pbmc_matrix_small[, 1:3],
-    query_genes = pbmc_vargenes[1:2],
-    n_perm = 1,
-    per_cell = TRUE,
-    cluster_ids = pbmc_meta$classified,
-    no_warnings = FALSE
-  ))
+  expect_warning(
+    res <- run_gsea(
+      pbmc_matrix_small[, 1:3],
+      query_genes = pbmc_vargenes[1:2],
+      n_perm = 1,
+      per_cell = TRUE,
+      cluster_ids = pbmc_meta$classified,
+      no_warnings = FALSE
+    )
+  )
 })
 
 test_that("calculate_pathway_gsea gives appropriate output", {
@@ -50,8 +58,7 @@ test_that("calculate_pathway_gsea gives appropriate output", {
     "n" = c("PPBP", "LYZ", "S100A9"),
     "a" = c("IGLL5", "GNLY", "FTL")
   )
-  pbmc_avg <- average_clusters(
-    pbmc_matrix_small,
+  pbmc_avg <- average_clusters(pbmc_matrix_small,
     pbmc_meta,
     cluster_col = "classified"
   )
@@ -65,8 +72,7 @@ test_that("plot_pathway_gsea gives appropriate output", {
     "n" = c("PPBP", "LYZ", "S100A9"),
     "a" = c("IGLL5", "GNLY", "FTL")
   )
-  pbmc_avg <- average_clusters(
-    pbmc_matrix_small,
+  pbmc_avg <- average_clusters(pbmc_matrix_small,
     pbmc_meta,
     cluster_col = "classified"
   )
@@ -79,12 +85,11 @@ test_that("plot_pathway_gsea gives output depending on returning option", {
     "n" = c("PPBP", "LYZ", "S100A9"),
     "a" = c("IGLL5", "GNLY", "FTL")
   )
-  pbmc_avg <- average_clusters(
-    pbmc_matrix_small,
+  pbmc_avg <- average_clusters(pbmc_matrix_small,
     pbmc_meta,
     cluster_col = "classified"
   )
   g <- plot_pathway_gsea(pbmc_avg, gl, 5, returning = "plot")
   g2 <- plot_pathway_gsea(pbmc_avg, gl, 5, returning = "res")
-  expect_true(class(g) == "Heatmap" & class(g2) == "data.frame")
+  expect_true(is(g, "Heatmap") & is.data.frame(g2))
 })

@@ -16,5 +16,6 @@
 #' @importFrom tidyr gather
 #' @importFrom cowplot theme_cowplot
 #' @importFrom fgsea fgsea
+#' @importFrom methods is
 ## usethis namespace: end
 NULL

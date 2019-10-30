@@ -5,7 +5,7 @@
 \title{downsample matrix by cluster or completely random}
 \usage{
 downsample_matrix(mat, n = 1, keep_cluster_proportions = TRUE,
-  metadata = NULL, cluster_col = "cluster", set_seed = NULL)
+  metadata = NULL, cluster_col = "cluster")
 }
 \arguments{
 \item{mat}{expression matrix}
@@ -19,8 +19,6 @@ Order must match column order in supplied matrix. If a data.frame
 provide the cluster_col parameters.}
 
 \item{cluster_col}{column in metadata with cluster number}
-
-\item{set_seed}{random seed}
 }
 \value{
 new smaller mat with less cell_id columns
@@ -29,11 +27,11 @@ new smaller mat with less cell_id columns
 downsample matrix by cluster or completely random
 }
 \examples{
+set.seed(42)
 mat1 <- downsample_matrix(
   mat = pbmc_matrix_small,
   metadata = pbmc_meta$classified,
   n = 10,
-  keep_cluster_proportions = TRUE,
-  set_seed = 41
+  keep_cluster_proportions = TRUE
 )
 }
