@@ -12,8 +12,6 @@ overcluster(mat, cluster_id, power = 0.15)
 \item{cluster_id}{list of ids per cluster}
 
 \item{power}{decides the number of clusters for kmeans}
-
-\item{seed}{seed for kmeans}
 }
 \value{
 new cluster_id list of more clusters

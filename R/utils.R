@@ -3,7 +3,6 @@
 #' @param mat expression matrix
 #' @param cluster_id list of ids per cluster
 #' @param power decides the number of clusters for kmeans
-#' @param seed seed for kmeans
 #' @return new cluster_id list of more clusters
 #' @examples
 #' set.seed(42)
