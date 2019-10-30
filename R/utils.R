@@ -1991,14 +1991,8 @@ find_rank_bias <- function(mat,
     metadata[[type_col]]
   )
   r2 <- apply(-avg2[query_genes, ], 2, rank)
-<<<<<<< HEAD
-  r2 <-
-    r2[, colnames(r2)[!stringr::str_detect(colnames(r2), "unassigned")]]
-  r1 <- apply(-ref_mat[query_genes, ], 2, rank)[, colnames(r2)]
-=======
   r2 <- r2[, colnames(r2)[!stringr::str_detect(colnames(r2), "unassigned"), drop = FALSE], drop = FALSE]
   r1 <- apply(-ref_mat[query_genes, ], 2, rank)[, colnames(r2), drop = FALSE]
->>>>>>> origin
 
   if (!(is.null(expr_cut))) {
     r1[r1 > expr_cut] <- expr_cut
@@ -2013,13 +2007,10 @@ find_rank_bias <- function(mat,
     rp[r1 > 0.9 * expr_cut & r2 > 0.9 * expr_cut] <- NA
     v <- rowMeans(rp, na.rm = TRUE) == 1
     v[is.na(v)] <- FALSE
-<<<<<<< HEAD
+
     v2 <- Matrix::rowSums(rp, na.rm = TRUE) == 1
-    prob <- rdiff[v & !v2, ]
-=======
-    v2 <- Matrix::rowSums(rp, na.rm = T) == 1
     prob <- rdiff[v & !v2, , drop = FALSE]
->>>>>>> origin
+
     return(prob)
   } else {
     return(rdiff)
