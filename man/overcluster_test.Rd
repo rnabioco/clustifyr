@@ -6,7 +6,7 @@
 \usage{
 overcluster_test(expr, metadata, ref_mat, cluster_col, x_col = "UMAP_1",
   y_col = "UMAP_2", n = 5, ngenes = NULL, query_genes = NULL,
-  threshold = 0, do_label = TRUE, do_legend = FALSE, seed = 42,
+  threshold = 0, do_label = TRUE, do_legend = FALSE,
   newclustering = NULL)
 }
 \arguments{
@@ -34,8 +34,6 @@ overcluster_test(expr, metadata, ref_mat, cluster_col, x_col = "UMAP_1",
 
 \item{do_legend}{whether to draw legend}
 
-\item{seed}{set seed for kmeans}
-
 \item{newclustering}{use kmeans if NULL on dr or col name for second column of clustering}
 }
 \value{
@@ -45,6 +43,7 @@ faceted ggplot object
 compare clustering parameters and classification outcomes
 }
 \examples{
+set.seed(42)
 plt <- overcluster_test(
   expr = pbmc_matrix_small,
   metadata = pbmc_meta,

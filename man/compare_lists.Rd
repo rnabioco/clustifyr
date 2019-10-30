@@ -43,5 +43,4 @@ compare_lists(
   pbmc_mm,
   metric = "spearman"
 )
-
 }
