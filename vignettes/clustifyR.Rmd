@@ -193,18 +193,18 @@ res <- clustify(
   input = s_small,
   cluster_col = "res.1",
   ref_mat = pbmc_bulk_matrix,
-  seurat_out = T,
+  seurat_out = TRUE,
   dr = "tsne"
 )
 
 # or return a correlation matrix
 res <- clustify_lists(
   input = s_small,
-  per_cell = F,
+  per_cell = FALSE,
   marker = pbmc_markers,
-  marker_inmatrix = F,
+  marker_inmatrix = FALSE,
   cluster_col = "res.1",
-  seurat_out = F,
+  seurat_out = FALSE,
   dr = "tsne"
 )
 
@@ -215,7 +215,7 @@ res <- clustify_nudge(
   marker = cbmc_m,
   cluster_col = "res.1",
   threshold = 0.8,
-  seurat_out = F,
+  seurat_out = FALSE,
   dr = "tsne",
   mode = "pct"
 )

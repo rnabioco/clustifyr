@@ -4,7 +4,7 @@
 \alias{overcluster}
 \title{Overcluster by kmeans per cluster}
 \usage{
-overcluster(mat, cluster_id, power = 0.15, seed = 42)
+overcluster(mat, cluster_id, power = 0.15)
 }
 \arguments{
 \item{mat}{expression matrix}
@@ -12,8 +12,6 @@ overcluster(mat, cluster_id, power = 0.15, seed = 42)
 \item{cluster_id}{list of ids per cluster}
 
 \item{power}{decides the number of clusters for kmeans}
-
-\item{seed}{seed for kmeans}
 }
 \value{
 new cluster_id list of more clusters
@@ -22,6 +20,7 @@ new cluster_id list of more clusters
 Overcluster by kmeans per cluster
 }
 \examples{
+set.seed(42)
 pbmc_ids <- overcluster(
   mat = pbmc_matrix_small,
   cluster_id = split(colnames(pbmc_matrix_small), pbmc_meta$classified)

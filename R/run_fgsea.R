@@ -34,7 +34,9 @@ run_gsea <- function(expr_mat,
   }
 
   if (!per_cell & (ncol(expr_mat) != length(cluster_ids))) {
-    stop("cluster_ids do not match number of cells (columns) in expr_mat", call. = FALSE)
+    stop("cluster_ids do not match number of cells (columns) in expr_mat",
+      call. = FALSE
+    )
   }
 
   if (n_perm > 1e4 & per_cell) {
@@ -54,7 +56,8 @@ run_gsea <- function(expr_mat,
   res <- list()
   for (i in seq_along(colnames(avg_mat))) {
     if (!(no_warnings)) {
-      gsea_res <- fgsea::fgsea(geneset_list,
+      gsea_res <- fgsea::fgsea(
+        geneset_list,
         avg_mat[, i],
         minSize = 1,
         maxSize = max(sapply(geneset_list, length)),
@@ -62,18 +65,22 @@ run_gsea <- function(expr_mat,
         nperm = n_perm
       )
     } else {
-      suppressWarnings(gsea_res <- fgsea::fgsea(geneset_list,
-        avg_mat[, i],
-        minSize = 1,
-        maxSize = max(sapply(geneset_list, length)),
-        nproc = 1,
-        nperm = n_perm
-      ))
+      suppressWarnings(
+        gsea_res <- fgsea::fgsea(
+          geneset_list,
+          avg_mat[, i],
+          minSize = 1,
+          maxSize = max(sapply(geneset_list, length)),
+          nproc = 1,
+          nperm = n_perm
+        )
+      )
     }
     res[[i]] <- gsea_res[, c("pathway", "pval", "NES")]
   }
   gsea_res <- dplyr::bind_rows(res)
-  gsea_res <- as.data.frame(dplyr::mutate(gsea_res, cell = colnames(avg_mat)))
+  gsea_res <-
+    as.data.frame(dplyr::mutate(gsea_res, cell = colnames(avg_mat)))
   gsea_res <- tibble::column_to_rownames(gsea_res, "cell")
 
   gsea_res

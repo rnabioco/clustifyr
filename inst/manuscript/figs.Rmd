@@ -34,9 +34,9 @@ meta <- clustifyrdata::pbmc_meta %>% rownames_to_column("id") %>% mutate(classif
 a <- plot_tsne(
   meta,
   feature = "classified",
-  do_label = T,
-  do_legend = F)
-
+  do_label = TRUE,
+  do_legend = FALSE
+)
 res <- clustify(
   input = clustifyrdata::pbmc_matrix, 
   ref_mat = clustifyrdata::hema_microarray_matrix,
@@ -62,8 +62,8 @@ meta2 <- call_to_metadata(
 b <- plot_tsne(
   meta2,
   feature = "microarray_type",
-  do_label = T,
-  do_legend = F)
+  do_label = TRUE,
+  do_legend = FALSE)
 
 immgen <- immgen_ref
 rownames(immgen) <- str_to_upper(rownames(immgen_ref))
@@ -92,8 +92,8 @@ meta3 <- call_to_metadata(
 c <- plot_tsne(
   meta3,
   feature = "bulk_type",
-  do_label = T,
-  do_legend = F)
+  do_label = TRUE,
+  do_legend = FALSE)
 
 res3 <- clustify(
   input = clustifyrdata::pbmc_matrix, 
@@ -120,15 +120,15 @@ meta4 <- call_to_metadata(
 d <- plot_tsne(
   meta4,
   feature = "five_type",
-  do_label = T,
-  do_legend = F)
+  do_label = TRUE,
+  do_legend = FALSE)
 
 #ggsave("Fig1A.pdf", cowplot::plot_grid(a,b,c,d, ncol = 1, labels = c("orig","microarray_ref","sorted_bulk_ref","scRNA-seq_ref")), width =7, height = 15, dpi = 400)
 ```
 
 ## Fig1B. Performance benchmark of clustifyr and competition on tabula muris dataset.
 
-```{r, eval = F}
+```{r, eval = FALSE}
 files_facs <- list.files(path = "/Users/rf/", pattern = "facs.*\\.Robj$")
 files_drop <- list.files(path = "/Users/rf/", pattern = "droplet.*\\.Robj$")
 
@@ -145,7 +145,7 @@ load_obj <- function(f) {
 }
 ```
 
-```{r, eval = F}
+```{r, eval = FALSE}
 ## clustify with seurat vargenes
 times <- list()
 for (n in 1:length(tissue_both)) {
@@ -163,7 +163,7 @@ for (n in 1:length(tissue_both)) {
       print("switch")
     }
     avg <- seurat_ref(s_f, cluster_col = "free_annotation")
-    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "free_annotation", dr = "tsne")
+    res <- clustify(s_d, avg, seurat_out = FALSE cluster_col = "free_annotation", dr = "tsne")
   } else {
     print("use cell_ontology_class")
     if (length(unique(s_f@meta.data$cell_ontology_class)) < length(unique(s_d@meta.data$cell_ontology_class))) {
@@ -192,7 +192,7 @@ resall2negcor_all <- readRDS("/Users/rf/cluster/devel/3rd/clustifyR/resall2negco
 resall2 <- resall2 %>% mutate(finalcall = ifelse(call == 1, 1, ifelse(str_c(cluster, type) %in% str_c(resall2negcor_all$cluster, resall2negcor_all$type), 1, 0))) %>% filter(cluster != "orig.NA")
 
 # resall2negcor2 <- resall2[29,]
-# resall2negcor_all <- rbind(resall2negcor_all,resall2negcor2) %>% distinct(type, cluster, .keep_all = T)
+# resall2negcor_all <- rbind(resall2negcor_all,resall2negcor2) %>% distinct(type, cluster, .keep_all = TRUE)
 # resall2negcor_all <- saveRDS(resall2negcor_all, "/Users/rf/cluster/devel/3rd/clustifyR/resall2negcor_all")
 
 f <- resall2 %>% group_by(tissue) %>% summarize(per = mean(finalcall))
@@ -200,14 +200,14 @@ f$time <- times
 f$method <- "clustifyr"
 ```
 
-```{r, eval = F}
+```{r, eval = FALSE}
 library(SingleR)
 singler_s <- function(s, col, ref) {
   singler = CreateSinglerObject(s@data, annot = NULL, "whatever", min.genes = 0,
     technology = "10X", species = "Mouse", citation = "",
-    ref.list = list(ref), normalize.gene.length = F, variable.genes = "de",
-    fine.tune = F, do.signatures = F, clusters = s@meta.data[[col]], do.main.types = F, 
-    reduce.file.size = T, numCores = SingleR.numCores)
+    ref.list = list(ref), normalize.gene.length = FALSE, variable.genes = "de",
+    fine.tune = FALSE, do.signatures = FALSE, clusters = s@meta.data[[col]], do.main.types = FALSE, 
+    reduce.file.size = TRUE, numCores = SingleR.numCores)
   
   singler$seurat = s # (optional)
   singler$meta.data$orig.ident = s@meta.data$orig.ident # the original identities, if not supplied in 'annot'
@@ -227,7 +227,7 @@ singler_r <- function(s, col) {
   
   ref$de.genes.main = CreateVariableGeneSet(expr,types,300)
   # sd = rowsSd(expr)
-  # sd.thres = sort(sd, decreasing = T)[4000] # or any other threshold
+  # sd.thres = sort(sd, decreasing = TRUE)[4000] # or any other threshold
   # ref$sd.thres = sd.thres
   ref
 }
@@ -288,7 +288,7 @@ for (n in 1:length(tissue_both)) { # some issue with 5)
 saveRDS(resall, "singler_res.rds")
 # resall2negcor_all[42,1]
 # resall2negcor2 <- resall2[c(23,26,29,35,37,42,54),] %>% select(cluster = orig, type = V1, r = finalcall, call, tissue) %>% mutate(type = as.character(type))
-# resall2negcor_all <- bind_rows(list(resall2negcor_all[,1:5],resall2negcor2)) %>% distinct(type, cluster, .keep_all = T)
+# resall2negcor_all <- bind_rows(list(resall2negcor_all[,1:5],resall2negcor2)) %>% distinct(type, cluster, .keep_all = TRUE)
 # resall2negcor_all <- saveRDS(resall2negcor_all, "/Users/rf/cluster/devel/3rd/clustifyR/resall2negcor_all")
 resall2 <- resall %>% mutate(call = ifelse(orig == V1, 1, 0))
 resall2 <- resall2 %>% mutate(finalcall = ifelse(call == 1, 1, ifelse(str_c(orig, V1) %in% str_c(resall2negcor_all$cluster, resall2negcor_all$type), 1, 0)))
@@ -301,7 +301,7 @@ f$method <- "SingleR"
 f <- rbind(f, f2)
 ```
 
-```{r, eval = F}
+```{r, eval = FALSE}
 library(SingleCellExperiment)
 library(scmap)
 library(tidyverse)
@@ -334,7 +334,7 @@ scmap_s <- function(s, s_ref, col) {
 }
 ```
 
-```{r, eval = F}
+```{r, eval = FALSE}
 times5 <- list()
 for (n in 1:length(tissue_both)) { # some issue with 5)
   print(tissue_both[n])
@@ -384,7 +384,7 @@ for (n in 1:length(tissue_both)) { # some issue with 5)
 saveRDS(resall, "scmap_res.rds")
 resall2 <- resall %>% mutate(call = ifelse(cluster == type, 1, 0))
 # resall2negcor2 <- resall2[c(1,),] %>% select(cluster = orig, type = V1, r = finalcall, call, tissue) %>% mutate(type = as.character(type))
-# resall2negcor_all <- bind_rows(list(resall2negcor_all[,1:5],resall2negcor2)) %>% distinct(type, cluster, .keep_all = T)
+# resall2negcor_all <- bind_rows(list(resall2negcor_all[,1:5],resall2negcor2)) %>% distinct(type, cluster, .keep_all = TRUE)
 # resall2negcor_all <- saveRDS(resall2negcor_all, "/Users/rf/cluster/devel/3rd/clustifyR/resall2negcor_all")
 
 resall2 <- resall2 %>% mutate(finalcall = ifelse(call == 1, 1, ifelse(str_c(type, cluster) %in% str_c(resall2negcor_all$cluster, resall2negcor_all$type), 1, 0))) %>% mutate(nx = n * finalcall) %>% group_by(cluster, tissue) %>% arrange(desc(n)) %>% dplyr::slice(1)
@@ -398,7 +398,7 @@ f <- rbind(f, f2)
 saveRDS(f, "bench_clus.rds")
 ```
 
-```{r, eval = F}
+```{r, eval = FALSE}
 library(Seurat)
 s_map <- function(ref, query, cluster_col) {
   Idents(query) <- cluster_col
@@ -464,7 +464,7 @@ f <- rbind(f, f2)
 saveRDS(f, "bench_clus.rds")
 ```
 
-```{r, eval = F}
+```{r, eval = FALSE}
 ## clustify with m3drop
 times <- list()
 for (n in 1:length(tissue_both)) {
@@ -485,16 +485,16 @@ for (n in 1:length(tissue_both)) {
     Normalized_data <- M3DropCleanData(s_d@data,
                                        labels = rownames(s_d@data),
                                        is.counts = FALSE,
-                                       suppress.plot = T
+                                       suppress.plot = TRUE
                                        )
-    fits <- M3DropDropoutModels(Normalized_data$data, suppress.plot = T)
+    fits <- M3DropDropoutModels(Normalized_data$data, suppress.plot = TRUE)
     markers_M3Drop <- M3DropFeatureSelection(Normalized_data$data,
                                              mt_method = "fdr",
                                              mt_threshold = 0.01,
-                                             suppress.plot = T
+                                             suppress.plot = TRUE
                                              )
     avg <- seurat_ref(s_f, cluster_col = "free_annotation")
-    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "free_annotation", dr = "tsne", query_genes = markers_M3Drop$Gene)
+    res <- clustify(s_d, avg, seurat_out = FALSE, cluster_col = "free_annotation", dr = "tsne", query_genes = markers_M3Drop$Gene)
   } else {
     print("use cell_ontology_class")
     if (length(unique(s_f@meta.data$cell_ontology_class)) < length(unique(s_d@meta.data$cell_ontology_class))) {
@@ -506,16 +506,16 @@ for (n in 1:length(tissue_both)) {
     Normalized_data <- M3DropCleanData(s_d@data,
                                        labels = rownames(s_d@data),
                                        is.counts = FALSE,
-                                       suppress.plot = T
+                                       suppress.plot = TRUE
                                        )
-    fits <- M3DropDropoutModels(Normalized_data$data, suppress.plot = T)
+    fits <- M3DropDropoutModels(Normalized_data$data, suppress.plot = TRUE)
     markers_M3Drop <- M3DropFeatureSelection(Normalized_data$data,
                                              mt_method = "fdr",
                                              mt_threshold = 0.01,
-                                             suppress.plot = T
+                                             suppress.plot = TRUE
                                              )
     avg <- seurat_ref(s_f, cluster_col = "cell_ontology_class")
-    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "cell_ontology_class", dr = "tsne", query_genes = markers_M3Drop$Gene)
+    res <- clustify(s_d, avg, seurat_out = FALSE, cluster_col = "cell_ontology_class", dr = "tsne", query_genes = markers_M3Drop$Gene)
   }  #avg <- cbind(avg, avg2)
   res2 <- cor_to_call(res)
   end <- proc.time()
@@ -533,7 +533,7 @@ resall2 <- resall %>% mutate(call = ifelse(cluster == type, 1, 0))
 resall2 <- resall2 %>% mutate(finalcall = ifelse(call == 1, 1, ifelse(str_c(cluster, type) %in% str_c(resall2negcor_all$cluster, resall2negcor_all$type), 1, 0))) %>% filter(cluster != "orig.NA")
 
 # resall2negcor2 <- resall2[21,]
-# resall2negcor_all <- rbind(resall2negcor_all,resall2negcor2) %>% distinct(type, cluster, .keep_all = T)
+# resall2negcor_all <- rbind(resall2negcor_all,resall2negcor2) %>% distinct(type, cluster, .keep_all = TRUE)
 # resall2negcor_all <- saveRDS(resall2negcor_all, "/Users/rf/cluster/devel/3rd/clustifyR/resall2negcor_all")
 f <- f %>% filter(method != "clustifyr_m3drop")
 
@@ -613,7 +613,7 @@ query <- readr::read_rds('/Users/rf/Downloads/query.rds.gz')
 
 ref <- t(reference %>% select(-label))
 colnames(ref) <- 1:ncol(ref)
-ref_c <- average_clusters(ref, reference$label, if_log = F)
+ref_c <- average_clusters(ref, reference$label, if_log = FALSE)
 
 q <- t(query %>% select(-label))
 colnames(q) <- 1:ncol(q)
@@ -622,13 +622,13 @@ library(M3Drop)
 Normalized_data <- M3DropCleanData(q,
   labels = rownames(q),
   is.counts = FALSE,
-  suppress.plot = T
+  suppress.plot = TRUE
 )
-fits <- M3DropDropoutModels(Normalized_data$data, suppress.plot = T)
+fits <- M3DropDropoutModels(Normalized_data$data, suppress.plot = TRUE)
 markers_M3Drop <- M3DropFeatureSelection(Normalized_data$data,
   mt_method = "fdr",
   mt_threshold = 0.01,
-  suppress.plot = T
+  suppress.plot = TRUE
 )
 
 res <- clustify(q, ref_c, query$label, query_genes = markers_M3Drop %>% arrange(q.value) %>% slice(1:500) %>% pull(Gene))
@@ -636,8 +636,8 @@ res <- clustify(q, ref_c, query$label, query_genes = markers_M3Drop %>% arrange(
 g <- plot_cor_heatmap(
   res,
   metadata = query$label,
-  cluster_rows = F,
-  cluster_columns = F
+  cluster_rows = FALSE,
+  cluster_columns = FALSE
 )
 
 pdf("Fig2B.pdf", width = 7, height = 7)
@@ -653,13 +653,13 @@ tm <- expm1(as.matrix(pan_smartseq2_matrix))
 Normalized_data <- M3DropCleanData(tm,
   labels = rownames(pan_smartseq2_matrix),
   is.counts = FALSE,
-  suppress.plot = T
+  suppress.plot = TRUE
 )
-fits <- M3DropDropoutModels(Normalized_data$data, suppress.plot = T)
+fits <- M3DropDropoutModels(Normalized_data$data, suppress.plot = TRUE)
 markers_M3Drop <- M3DropFeatureSelection(Normalized_data$data,
   mt_method = "fdr",
   mt_threshold = 0.05,
-  suppress.plot = T
+  suppress.plot = TRUE
 )
 
 res1 <- clustify(
@@ -673,8 +673,8 @@ a <- plot_cor_heatmap(
   res1,
   metadata = pan_smartseq2_meta, 
   cluster_col = "cell_type1",
-  cluster_rows = F,
-  cluster_columns = F
+  cluster_rows = FALSE,
+  cluster_columns = FALSE
 )
 
 res2 <- clustify(
@@ -689,8 +689,8 @@ b <- plot_cor_heatmap(
   res2,
   metadata = pan_smartseq2_meta, 
   cluster_col = "cell_type1",
-  cluster_rows = F,
-  cluster_columns = F
+  cluster_rows = FALSE,
+  cluster_columns = FALSE
 )
 
 res3 <- clustify(
@@ -705,8 +705,8 @@ c <- plot_cor_heatmap(
   res3,
   metadata = pan_smartseq2_meta, 
   cluster_col = "cell_type1",
-  cluster_rows = F,
-  cluster_columns = F
+  cluster_rows = FALSE,
+  cluster_columns = FALSE
 )
 
 res4 <- clustify(
@@ -721,8 +721,8 @@ d <- plot_cor_heatmap(
   res4,
   metadata = pan_smartseq2_meta, 
   cluster_col = "cell_type1",
-  cluster_rows = F,
-  cluster_columns = F
+  cluster_rows = FALSE,
+  cluster_columns = FALSE
 )
 # 
 # cor_to_call(res4, metadata = pan_smartseq2_meta, 
@@ -745,7 +745,7 @@ g<- cowplot::plot_grid(grid::grid.grabExpr(ComplexHeatmap::draw(a)),
 ggsave("Fig2C.pdf", g, width = 7, height = 15, dpi = 400)
 ```
 
-```{r, eval = F}
+```{r, eval = FALSE}
 files <- list.files(path = "/Users/rf/Downloads/rmbatch_dge")
 f_targets <- files[str_detect(files, "[a-zA-Z|1]_rm")]
 m <- read_csv("/Users/rf/Downloads/MCA_CellAssignments.csv")
@@ -788,13 +788,13 @@ library(M3Drop)
 Normalized_data <- M3DropCleanData(clustifyrdata::MCA_lung_mat,
                                        labels = rownames(clustifyrdata::MCA_lung_mat),
                                        is.counts = FALSE,
-                                       suppress.plot = T
+                                       suppress.plot = TRUE
                                        )
-fits <- M3DropDropoutModels(Normalized_data$data, suppress.plot = T)
+fits <- M3DropDropoutModels(Normalized_data$data, suppress.plot = TRUE)
 markers_M3Drop <- M3DropFeatureSelection(Normalized_data$data,
                                              mt_method = "fdr",
                                              mt_threshold = 0.05,
-                                             suppress.plot = T
+                                             suppress.plot = TRUE
                                              )
 res <- clustify(
   input = clustifyrdata::MCA_lung_mat, 
@@ -802,7 +802,7 @@ res <- clustify(
   metadata = clustifyrdata::MCA_lung_meta, 
   cluster_col = "Annotation",
   query_genes = markers_M3Drop$Gene,
-  verbose = T
+  verbose = TRUE
 )
 
 res_allgenes <- cor_to_call(
@@ -820,7 +820,7 @@ res <- clustify(
   metadata = clustifyrdata::MCA_lung_meta, 
   cluster_col = "Annotation",
   query_genes = markers_M3Drop$Gene,
-  verbose = T
+  verbose = TRUE
 )
 
 res_allgenes <- cor_to_call(
@@ -835,13 +835,13 @@ lung_facs_res <- 26/32
 Normalized_data <- M3DropCleanData(l,
                                        labels = rownames(l),
                                        is.counts = FALSE,
-                                       suppress.plot = T
+                                       suppress.plot = TRUE
                                        )
-fits <- M3DropDropoutModels(Normalized_data$data, suppress.plot = T)
+fits <- M3DropDropoutModels(Normalized_data$data, suppress.plot = TRUE)
 markers_M3Drop <- M3DropFeatureSelection(Normalized_data$data,
                                              mt_method = "fdr",
                                              mt_threshold = 0.05,
-                                             suppress.plot = T
+                                             suppress.plot = TRUE
                                              )
 
 res <- clustify(
@@ -850,7 +850,7 @@ res <- clustify(
   metadata = l_meta, 
   cluster_col = "Annotation",
   query_genes = markers_M3Drop$Gene,
-  verbose = T
+  verbose = TRUE
 )
 
 res_allgenes <- cor_to_call(
@@ -868,7 +868,7 @@ res <- clustify(
   metadata = l_meta, 
   cluster_col = "Annotation",
   query_genes = markers_M3Drop$Gene,
-  verbose = T
+  verbose = TRUE
 )
 
 res_allgenes <- cor_to_call(
@@ -883,7 +883,7 @@ pan_facs <- 13/20
 
 ## Fig2D. Cluster subsampling reveals a low number of cells is required for successful clustifying.
 
-```{r, eval = F}
+```{r, eval = FALSE}
 ## clustify with seurat vargenes
 q <- ref_feature_select(ref_mca,
                         n = 2000,
@@ -906,7 +906,7 @@ for (n in 1:length(tissue_both)) {
       print("switch")
     }
     avg <- ref_mca
-    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "free_annotation", dr = "tsne", query_genes = q)
+    res <- clustify(s_d, avg, seurat_out = FALSE, cluster_col = "free_annotation", dr = "tsne", query_genes = q)
   } else {
     print("use cell_ontology_class")
     if (length(unique(s_f@meta.data$cell_ontology_class)) < length(unique(s_d@meta.data$cell_ontology_class))) {
@@ -916,7 +916,7 @@ for (n in 1:length(tissue_both)) {
       print("switch")
     }
     avg <- ref_mca
-    res <- clustify(s_d, avg, seurat_out = F, cluster_col = "cell_ontology_class", dr = "tsne", query_genes = q)
+    res <- clustify(s_d, avg, seurat_out = FALSE, cluster_col = "cell_ontology_class", dr = "tsne", query_genes = q)
   }  #avg <- cbind(avg, avg2)
   res2 <- cor_to_call(res)
   end <- proc.time()
@@ -936,7 +936,7 @@ resall2 <- resall %>% rownames_to_column("rn")
 resall2 <- resall2 %>% mutate(finalcall = ifelse(rn %in% c(18,20,31,32,35,40,46,47,48,49), 0, 1)) %>% filter(cluster != "orig.NA") %>% select(-rn)
 
 # resall2negcor2 <- resall2[29,]
-# resall2negcor_all <- rbind(resall2negcor_all,resall2negcor2) %>% distinct(type, cluster, .keep_all = T)
+# resall2negcor_all <- rbind(resall2negcor_all,resall2negcor2) %>% distinct(type, cluster, .keep_all = TRUE)
 # resall2negcor_all <- saveRDS(resall2negcor_all, "/Users/rf/cluster/devel/3rd/clustifyR/resall2negcor_all")
 
 f <- resall2 %>% group_by(tissue) %>% summarize(per = mean(finalcall))
@@ -945,7 +945,7 @@ f$method <- "clustifyr_mca_1"
 f_all <-f
 ```
 
-```{r, eval = F}
+```{r, eval = FALSE}
 ## clustify with seurat vargenes
 s_down <- function(mat, n, meta, col) {
   downsample_matrix(mat,
@@ -1005,7 +1005,7 @@ resall2 <- resall %>% rownames_to_column("rn")
 resall2 <- resall2 %>% mutate(finalcall = ifelse(rn %in% c(17,31,32,36,40,48,49,50,54,66), 0, 1)) %>% filter(cluster != "orig.NA") %>% select(-rn)
 
 # resall2negcor2 <- resall2[29,]
-# resall2negcor_all <- rbind(resall2negcor_all,resall2negcor2) %>% distinct(type, cluster, .keep_all = T)
+# resall2negcor_all <- rbind(resall2negcor_all,resall2negcor2) %>% distinct(type, cluster, .keep_all = TRUE)
 # resall2negcor_all <- saveRDS(resall2negcor_all, "/Users/rf/cluster/devel/3rd/clustifyR/resall2negcor_all")
 # 
 f2 <- resall2 %>% group_by(tissue) %>% summarize(per = mean(finalcall))
@@ -1017,7 +1017,7 @@ f_all <- rbind(f_all,f2)
 
 ```
 
-```{r, eval = F}
+```{r, eval = FALSE}
 ## clustify with seurat vargenes
 s_down <- function(mat, n, meta, col) {
   downsample_matrix(mat,
@@ -1077,7 +1077,7 @@ resall2 <- resall %>% rownames_to_column("rn")
 resall2 <- resall2 %>% mutate(finalcall = ifelse(rn %in% c(20,26,29,33,35,41,45,46,47,48,53,66), 0, 1)) %>% filter(cluster != "orig.NA") %>% select(-rn)
 
 # resall2negcor2 <- resall2[29,]
-# resall2negcor_all <- rbind(resall2negcor_all,resall2negcor2) %>% distinct(type, cluster, .keep_all = T)
+# resall2negcor_all <- rbind(resall2negcor_all,resall2negcor2) %>% distinct(type, cluster, .keep_all = TRUE)
 # resall2negcor_all <- saveRDS(resall2negcor_all, "/Users/rf/cluster/devel/3rd/clustifyR/resall2negcor_all")
 # 
 f2 <- resall2 %>% group_by(tissue) %>% summarize(per = mean(finalcall))
@@ -1087,7 +1087,7 @@ f2$method <- "clustifyr_mca_8"
 f_all <- rbind(f_all,f2)
 ```
 
-```{r, eval = F}
+```{r, eval = FALSE}
 ## clustify with seurat vargenes
 s_down <- function(mat, n, meta, col) {
   downsample_matrix(mat,
@@ -1148,7 +1148,7 @@ resall2 <- resall %>% rownames_to_column("rn")
 resall2 <- resall2 %>% mutate(finalcall = ifelse(rn %in% c(21,31,32,36,41,45,46,47,48,49,53,55,66,67,68), 0, 1)) %>% filter(cluster != "orig.NA") %>% select(-rn)
 
 # resall2negcor2 <- resall2[29,]
-# resall2negcor_all <- rbind(resall2negcor_all,resall2negcor2) %>% distinct(type, cluster, .keep_all = T)
+# resall2negcor_all <- rbind(resall2negcor_all,resall2negcor2) %>% distinct(type, cluster, .keep_all = TRUE)
 # resall2negcor_all <- saveRDS(resall2negcor_all, "/Users/rf/cluster/devel/3rd/clustifyR/resall2negcor_all")
 # 
 f2 <- resall2 %>% group_by(tissue) %>% summarize(per = mean(finalcall))
@@ -1198,7 +1198,7 @@ g
 
 ```{r}
 # plot_tsne(clustifyrdata::pan_smartseq2_meta,
-#           feature = "cell_type1", x = "tSNE_1", y = "tSNE_2", do_label = F, do_legend = F)
+#           feature = "cell_type1", x = "tSNE_1", y = "tSNE_2", do_label = FALSE, do_legend = FALSE)
 pan_smartseq2_avg <- average_clusters(
   pan_smartseq2_matrix,
   pan_smartseq2_meta,
@@ -1300,7 +1300,7 @@ m2 <- call_to_metadata(
 c <- plot_tsne(m2,
                x = "tSNE_1", y = "tSNE_2",
               feature= "type",
-              alpha_col = "score", do_legend = F
+              alpha_col = "score", do_legend = FALSE
               )
 ggsave("Fig3C.pdf", c, width = 5, height = 5, dpi = 400)
 ```

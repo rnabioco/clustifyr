@@ -5,7 +5,7 @@ Authors@R:
     c(person(given = "Rui",
              family = "Fu",
              role = c("aut", "cre"),
-             email = "rui.fu@ucdenver.edu"),
+             email = "raysinensis@gmail.com"),
       person(given = "Kent",
              family = "Riemondy",
              role = "aut",
@@ -30,7 +30,6 @@ Authors@R:
              family = "Daya",
              role = "ctb",
              email = "michelle.daya@ucdenver.edu"))
-Maintainer: Rui Fu <raysinensis@gmail.com>
 Description: Classify cells from single-cell RNA sequencing data
     using external reference data (e.g., bulk RNA-seq).
 License: MIT + file LICENSE
@@ -38,7 +37,7 @@ URL: http://github.com/rnabioco/clustifyr#readme,
     https://rnabioco.github.io/clustifyr/
 BugReports: https://github.com/rnabioco/clustifyr/issues
 Depends:
-    R (>= 3.2.0)
+    R (>= 3.6.0)
 Imports: 
     cowplot,
     dplyr,
@@ -51,7 +50,9 @@ Imports:
     scales,
     stringr,
     tibble,
-    tidyr
+    tidyr,
+    stats,
+    methods
 Suggests:
     ComplexHeatmap,
     covr,
@@ -65,3 +66,4 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
+biocViews: SingleCell, Annotation, Sequencing

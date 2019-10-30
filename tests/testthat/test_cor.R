@@ -69,6 +69,7 @@ test_that("run all correlation functions", {
 })
 
 test_that("test bad inputs", {
+
   expect_error(clustify(
     input = pbmc_matrix_small,
     metadata = pbmc_meta,
@@ -106,7 +107,8 @@ test_that("test permutation", {
     ref_mat = cbmc_ref,
     query_genes = pbmc_vargenes,
     cluster_col = "classified",
-    n_perm = 2, return_full = TRUE
+    n_perm = 2,
+    return_full = TRUE
   )
 
   expect_equal(res1, res_full$score)
@@ -120,6 +122,7 @@ test_that("seurat object clustifying", {
     cluster_col = "res.1",
     dr = "tsne"
   )
+
   res <- clustify(s_small,
     cbmc_ref,
     cluster_col = "res.1",
@@ -127,13 +130,15 @@ test_that("seurat object clustifying", {
     per_cell = TRUE,
     dr = "tsne"
   )
+
   res <- clustify(s_small,
     cbmc_ref,
     cluster_col = "res.1",
     seurat_out = FALSE,
     dr = "tsne"
   )
-  g <- plot_best_call(res,
+  g <- plot_best_call(
+    res,
     seurat_meta(s_small,
       dr = "tsne"
     ),
@@ -146,6 +151,7 @@ test_that("seurat object clustifying", {
 })
 
 test_that("clustify reinserts seurat metadata correctly", {
+
   res <- clustify(s_small,
                   cbmc_ref,
     cluster_col = "res.1",
@@ -153,6 +159,7 @@ test_that("clustify reinserts seurat metadata correctly", {
     per_cell = TRUE,
     dr = "tsne"
   )
+
   res2 <- clustify(s_small,
                    cbmc_ref,
     cluster_col = "res.1",
@@ -192,6 +199,7 @@ test_that("seurat3 object clustifying", {
 })
 
 test_that("clustify reinserts seurat3 metadata correctly", {
+
   res <- clustify(s_small3,
     cbmc_ref,
     cluster_col = "RNA_snn_res.1",
@@ -199,6 +207,7 @@ test_that("clustify reinserts seurat3 metadata correctly", {
     per_cell = TRUE,
     dr = "tsne"
   )
+
   res2 <- clustify(s_small3,
     cbmc_ref,
     cluster_col = "RNA_snn_res.1",
@@ -268,17 +277,20 @@ test_that("permute_similarity runs per cell", {
 })
 
 test_that("error for unsupported method", {
-  expect_error(res <- permute_similarity(
-    pbmc_matrix_small[c("RBM28", "CCDC136", "TNPO3"), c(7, 11)],
-    cbmc_ref[c("RBM28", "CCDC136", "TNPO3"), 1:3],
-    pbmc_meta$rn[c(7, 11)],
-    n_perm = 2,
-    per_cell = TRUE,
-    compute_method = "a"
-  ))
+  expect_error(
+    res <- permute_similarity(
+      pbmc_matrix_small[c("RBM28", "CCDC136", "TNPO3"), c(7, 11)],
+      cbmc_ref[c("RBM28", "CCDC136", "TNPO3"), 1:3],
+      pbmc_meta$rn[c(7, 11)],
+      n_perm = 2,
+      per_cell = TRUE,
+      compute_method = "a"
+    )
+  )
 })
 
 test_that("cor throws readable error when mat has 0 rows", {
+
   expect_error(res <- clustify(
     input = pbmc_matrix_small[0, ],
     metadata = pbmc_meta,
@@ -391,14 +403,16 @@ test_that("clustify_lists works with pct and Seurat3 object", {
 })
 
 test_that("clustify_lists gives correct error message upon unrecognized method", {
-  expect_error(res <- clustify_lists(
-    s_small3,
-    marker = cbmc_m,
-    cluster_col = "RNA_snn_res.1",
-    dr = "tsne",
-    metric = "ptc",
-    seurat_out = FALSE
-  ))
+  expect_error(
+    res <- clustify_lists(
+      s_small3,
+      marker = cbmc_m,
+      cluster_col = "RNA_snn_res.1",
+      dr = "tsne",
+      metric = "ptc",
+      seurat_out = FALSE
+    )
+  )
 })
 
 test_that("clustify takes factor for metadata", {

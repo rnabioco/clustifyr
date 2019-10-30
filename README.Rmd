@@ -73,7 +73,7 @@ res <- clustify(
   input = s_small,
   cluster_col = "res.1",
   ref_mat = cbmc_ref,
-  seurat_out = T,
+  seurat_out = TRUE,
   dr = "tsne"
 )
 
@@ -81,7 +81,7 @@ res2 <- clustify(
   input = s_small3,
   cluster_col = "RNA_snn_res.1",
   ref_mat = cbmc_ref,
-  seurat_out = T,
+  seurat_out = TRUE,
   dr = "tsne"
 )
 

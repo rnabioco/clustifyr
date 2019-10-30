@@ -19,7 +19,8 @@ test_that("matrixize_markers with remove_rp option", {
 
 test_that("matrixize_markers to turn matrix into ranked list", {
   pbmc_mm <- matrixize_markers(pbmc_markers, n = 50)
-  pbmc_mm2 <- matrixize_markers(pbmc_mm, ranked = TRUE, unique = TRUE)
+  pbmc_mm2 <-
+    matrixize_markers(pbmc_mm, ranked = TRUE, unique = TRUE)
 
   expect_true(nrow(pbmc_mm) < nrow(pbmc_mm2))
 })
@@ -42,8 +43,7 @@ test_that("matrixize_markers uses supplied labels", {
 })
 
 test_that("average_clusters works as intended", {
-  pbmc_avg2 <- average_clusters(
-    pbmc_matrix_small,
+  pbmc_avg2 <- average_clusters(pbmc_matrix_small,
     pbmc_meta,
     cluster_col = "classified",
     if_log = FALSE
@@ -72,18 +72,19 @@ test_that("average_clusters works with disordered data", {
 
 
 test_that("average_clusters detects wrong cluster ident", {
-  expect_error(pbmc_avg2 <- average_clusters(
-    pbmc_matrix_small,
-    matrix(5, 5),
-    if_log = FALSE,
-    cluster_col = "classified"
-  ))
+  expect_error(
+    pbmc_avg2 <- average_clusters(
+      pbmc_matrix_small,
+      matrix(5, 5),
+      if_log = FALSE,
+      cluster_col = "classified"
+    )
+  )
 })
 
 test_that("average_clusters able to coerce factors", {
   col <- factor(pbmc_meta$classified)
-  pbmc_avg2 <- average_clusters(
-    pbmc_matrix_small,
+  pbmc_avg2 <- average_clusters(pbmc_matrix_small,
     col,
     if_log = FALSE
   )
@@ -91,8 +92,7 @@ test_that("average_clusters able to coerce factors", {
 })
 
 test_that("average_clusters works with median option", {
-  pbmc_avg2 <- average_clusters(
-    pbmc_matrix_small,
+  pbmc_avg2 <- average_clusters(pbmc_matrix_small,
     pbmc_meta,
     method = "median",
     cluster_col = "classified"
@@ -104,8 +104,7 @@ test_that("average_clusters works when one cluster contains only 1 cell", {
   pbmc_meta2 <- pbmc_meta
   pbmc_meta2$classified <- as.character(pbmc_meta2$classified)
   pbmc_meta2[1, "classified"] <- 15
-  pbmc_avg2 <- average_clusters(
-    pbmc_matrix_small,
+  pbmc_avg2 <- average_clusters(pbmc_matrix_small,
     pbmc_meta2,
     cluster_col = "classified"
   )
@@ -115,8 +114,7 @@ test_that("average_clusters works when one cluster contains only 1 cell", {
 test_that("average_clusters works when low cell number clusters should be removed", {
   pbmc_meta2 <- pbmc_meta %>% mutate(classified = as.character(classified))
   pbmc_meta2[1, "classified"] <- 15
-  pbmc_avg2 <- average_clusters(
-    pbmc_matrix_small,
+  pbmc_avg2 <- average_clusters(pbmc_matrix_small,
     pbmc_meta2,
     low_threshold = 2,
     cluster_col = "classified"
@@ -138,8 +136,7 @@ test_that("average_clusters works with cutoff gene number", {
 test_that("average_clusters works when cluster info contains NA", {
   pbmc_meta2 <- pbmc_meta
   pbmc_meta2[1, "classified"] <- NA
-  pbmc_avg2 <- average_clusters(
-    pbmc_matrix_small,
+  pbmc_avg2 <- average_clusters(pbmc_matrix_small,
     pbmc_meta2,
     low_threshold = 2,
     cluster_col = "classified"
@@ -150,8 +147,7 @@ test_that("average_clusters works when cluster info contains NA", {
 test_that("average_clusters works when cluster info in factor form", {
   pbmc_meta2 <- pbmc_meta
   pbmc_meta2$classified <- as.factor(pbmc_meta2$classified)
-  pbmc_avg2 <- average_clusters(
-    pbmc_matrix_small,
+  pbmc_avg2 <- average_clusters(pbmc_matrix_small,
     pbmc_meta2,
     low_threshold = 2,
     cluster_col = "classified"
@@ -169,7 +165,7 @@ test_that("average_clusters_filter works on strings", {
     filter_value = "1"
   )
   remove_background(pbmc_matrix_small, avg1, 1)
-  expect_equal(class(avg1), "matrix")
+  expect_true(is.matrix(avg1))
 })
 
 test_that("average_clusters_filter works with nonlog data", {
@@ -180,9 +176,9 @@ test_that("average_clusters_filter works with nonlog data", {
     filter_on = "seurat_clusters",
     filter_method = "==",
     filter_value = "1",
-    if_log = F
+    if_log = FALSE
   )
-  expect_equal(class(avg1), "matrix")
+  expect_true(is.matrix(avg1))
 })
 
 test_that("average_clusters_filter returns vector of values if group_by is null", {
@@ -200,7 +196,7 @@ test_that("average_clusters_filter returns vector of values if group_by is null"
     filter_on = "seurat_clusters",
     filter_method = "==",
     filter_value = "1",
-    if_log = F
+    if_log = FALSE
   )
   expect_true(is.vector(avg1))
 })
@@ -213,7 +209,8 @@ test_that("cor_to_call threshold works as intended", {
     query_genes = pbmc_vargenes,
     cluster_col = "classified"
   )
-  call1 <- cor_to_call(res,
+  call1 <- cor_to_call(
+    res,
     metadata = pbmc_meta,
     cluster_col = "classified",
     collapse_to_cluster = FALSE,
@@ -232,7 +229,8 @@ test_that("cor_to_call threshold works as intended, on per cell and collapsing",
     cluster_col = "classified",
     per_cell = TRUE
   )
-  call1 <- cor_to_call(res,
+  call1 <- cor_to_call(
+    res,
     metadata = pbmc_meta %>% tibble::rownames_to_column("rn"),
     cluster_col = "rn",
     collapse_to_cluster = "classified",
@@ -243,12 +241,14 @@ test_that("cor_to_call threshold works as intended, on per cell and collapsing",
 })
 
 test_that("assign_ident works with equal length vectors and just 1 ident", {
-  m1 <- assign_ident(pbmc_meta,
+  m1 <- assign_ident(
+    pbmc_meta,
     ident_col = "classified",
     clusters = c("1", "2"),
     idents = c("whatever1", "whatever2")
   )
-  m2 <- assign_ident(pbmc_meta,
+  m2 <- assign_ident(
+    pbmc_meta,
     ident_col = "classified",
     clusters = c("1", "2"),
     idents = "whatever1"
@@ -264,7 +264,8 @@ test_that("cor_to_call_topn works as intended", {
     query_genes = pbmc_vargenes,
     cluster_col = "classified"
   )
-  call1 <- cor_to_call_topn(res,
+  call1 <- cor_to_call_topn(
+    res,
     metadata = pbmc_meta,
     col = "classified",
     collapse_to_cluster = FALSE,
@@ -283,7 +284,8 @@ test_that("cor_to_call_topn works as intended on collapse to cluster option", {
     cluster_col = "classified",
     per_cell = TRUE
   )
-  call1 <- cor_to_call_topn(res,
+  call1 <- cor_to_call_topn(
+    res,
     metadata = pbmc_meta %>% tibble::rownames_to_column("rn"),
     col = "rn",
     collapse_to_cluster = "classified",
@@ -305,23 +307,23 @@ test_that("gene_pct and gene_pct_markerm work as intended", {
     pbmc_meta,
     cluster_col = "classified"
   )
-  expect_error(res2 <- gene_pct_markerm(pbmc_matrix_small,
-    cbmc_m,
-    matrix(5, 5),
-    cluster_col = "classified"
-  ))
+  expect_error(
+    res2 <- gene_pct_markerm(pbmc_matrix_small,
+      cbmc_m,
+      matrix(5, 5),
+      cluster_col = "classified"
+    )
+  )
   expect_true(nrow(res2) == 9)
 })
 
 test_that("gene_pct can give min or max output", {
-  res <- gene_pct(
-    pbmc_matrix_small,
+  res <- gene_pct(pbmc_matrix_small,
     cbmc_m$B,
     pbmc_meta$classified,
     returning = "min"
   )
-  res2 <- gene_pct(
-    pbmc_matrix_small,
+  res2 <- gene_pct(pbmc_matrix_small,
     cbmc_m$B,
     pbmc_meta$classified,
     returning = "max"
@@ -331,22 +333,19 @@ test_that("gene_pct can give min or max output", {
 })
 
 test_that("gene_pct_markerm norm options work", {
-  res <- gene_pct_markerm(
-    pbmc_matrix_small,
+  res <- gene_pct_markerm(pbmc_matrix_small,
     cbmc_m,
     pbmc_meta,
     cluster_col = "classified",
     norm = NULL
   )
-  res2 <- gene_pct_markerm(
-    pbmc_matrix_small,
+  res2 <- gene_pct_markerm(pbmc_matrix_small,
     cbmc_m,
     pbmc_meta,
     cluster_col = "classified",
     norm = "divide"
   )
-  res3 <- gene_pct_markerm(
-    pbmc_matrix_small,
+  res3 <- gene_pct_markerm(pbmc_matrix_small,
     cbmc_m,
     pbmc_meta,
     cluster_col = "classified",
@@ -445,7 +444,7 @@ test_that("clustify_nudge.Seurat works with seurat_out option", {
     marker = cbmc_m,
     cluster_col = "RNA_snn_res.1",
     threshold = 0.8,
-    seurat_out = T,
+    seurat_out = TRUE,
     marker_inmatrix = FALSE,
     mode = "pct",
     dr = "tsne"
@@ -472,12 +471,15 @@ test_that("clustify_nudge works with obj_out option", {
     representation(meta.data = "data.frame")
   )
   class(s3) <- "ser3"
-  object_loc_lookup2 <- data.frame(ser3 = c(
-    expr = "input@assays$RNA@data",
-    meta = "input@meta.data",
-    var = "input@assays$RNA@var.features",
-    col = "RNA_snn_res.1"
-  ), stringsAsFactors = FALSE)
+  object_loc_lookup2 <- data.frame(
+    ser3 = c(
+      expr = "input@assays$RNA@data",
+      meta = "input@meta.data",
+      var = "input@assays$RNA@var.features",
+      col = "RNA_snn_res.1"
+    ),
+    stringsAsFactors = FALSE
+  )
 
   res <- clustify_nudge(
     input = s3,
@@ -486,7 +488,7 @@ test_that("clustify_nudge works with obj_out option", {
     lookuptable = object_loc_lookup2,
     cluster_col = "RNA_snn_res.1",
     threshold = 0.8,
-    obj_out = T,
+    obj_out = TRUE,
     marker_inmatrix = FALSE,
     mode = "pct",
     dr = "tsne"
@@ -499,7 +501,7 @@ test_that("clustify_nudge works with obj_out option", {
     lookuptable = object_loc_lookup2,
     cluster_col = "RNA_snn_res.1",
     threshold = 0.8,
-    obj_out = F,
+    obj_out = FALSE,
     marker_inmatrix = FALSE,
     mode = "pct",
     dr = "tsne"
@@ -510,8 +512,7 @@ test_that("clustify_nudge works with obj_out option", {
 test_that("clustify_nudge works with list of markers", {
   res <- clustify_nudge(
     input = pbmc_matrix_small,
-    ref_mat = average_clusters(
-      pbmc_matrix_small,
+    ref_mat = average_clusters(pbmc_matrix_small,
       pbmc_meta,
       cluster_col = "classified"
     ),
@@ -579,8 +580,7 @@ test_that("overcluster_test works with defined other cluster column", {
 })
 
 test_that("ref_feature_select chooses the correct number of features", {
-  pbmc_avg <- average_clusters(
-    pbmc_matrix_small,
+  pbmc_avg <- average_clusters(pbmc_matrix_small,
     pbmc_meta,
     cluster_col = "classified"
   )
@@ -589,8 +589,7 @@ test_that("ref_feature_select chooses the correct number of features", {
 })
 
 test_that("ref_feature_select chooses the correct number of features with options", {
-  pbmc_avg <- average_clusters(
-    pbmc_matrix_small,
+  pbmc_avg <- average_clusters(pbmc_matrix_small,
     pbmc_meta,
     cluster_col = "classified"
   )
@@ -611,43 +610,21 @@ test_that("feature_select_PCA can handle precalculated PCA", {
   expect_true(all.equal(rownames(res), rownames(res2)))
 })
 
-test_that("downsample_matrix sets seed correctly", {
-  mat1 <- downsample_matrix(pbmc_matrix_small,
-    metadata = pbmc_meta$classified,
-    n = 0.5,
-    keep_cluster_proportions = TRUE,
-    set_seed = 41
-  )
-  mat2 <- downsample_matrix(pbmc_matrix_small,
-    metadata = pbmc_meta$classified,
-    n = 0.5,
-    keep_cluster_proportions = TRUE,
-    set_seed = 41
-  )
-  expect_true(all.equal(colnames(mat1), colnames(mat2)))
-})
 
 test_that("downsample_matrix can select same number of cells per cluster", {
   mat1 <- downsample_matrix(
     pbmc_matrix_small,
     metadata = pbmc_meta$classified,
     n = 10,
-    keep_cluster_proportions = TRUE,
-    set_seed = 41
+    keep_cluster_proportions = TRUE
   )
-  mat2 <- downsample_matrix(
-    pbmc_matrix_small,
-    metadata = pbmc_meta$classified,
-    n = 10,
-    keep_cluster_proportions = FALSE,
-    set_seed = 41
-  )
-  expect_true(all.equal(ncol(mat1), 10 * length(unique(pbmc_meta$classified))))
+  expect_true(all.equal(ncol(mat1), 10 * length(unique(
+    pbmc_meta$classified
+  ))))
 })
 
 test_that("percent_clusters works with defaults", {
-  res <- percent_clusters(
-    pbmc_matrix_small,
+  res <- percent_clusters(pbmc_matrix_small,
     pbmc_meta,
     cluster_col = "classified"
   )
@@ -663,6 +640,7 @@ test_that("get_best_str finds correct values", {
     cluster_col = "classified",
     per_cell = FALSE
   )
+
   a <- get_best_str("DC", get_best_match_matrix(res), res)
   a2 <- get_best_str("DC", get_best_match_matrix(res), res, carry_cor = FALSE)
 
@@ -670,13 +648,11 @@ test_that("get_best_str finds correct values", {
 })
 
 test_that("seurat_ref gets correct averages", {
-  avg <- seurat_ref(
-    s_small,
+  avg <- seurat_ref(s_small,
     cluster_col = "res.1",
     var_genes_only = TRUE
   )
-  avg2 <- seurat_ref(
-    s_small,
+  avg2 <- seurat_ref(s_small,
     cluster_col = "res.1",
     var_genes_only = "PCA"
   )
@@ -694,12 +670,15 @@ test_that("object_ref with seurat3", {
 test_that("object_ref gets correct averages", {
   s3 <- s_small3
   class(s3) <- "ser3"
-  object_loc_lookup2 <- data.frame(ser3 = c(
-    expr = "input@assays$RNA@data",
-    meta = "input@meta.data",
-    var = "input@assays$RNA@var.features",
-    col = "RNA_snn_res.1"
-  ), stringsAsFactors = FALSE)
+  object_loc_lookup2 <- data.frame(
+    ser3 = c(
+      expr = "input@assays$RNA@data",
+      meta = "input@meta.data",
+      var = "input@assays$RNA@var.features",
+      col = "RNA_snn_res.1"
+    ),
+    stringsAsFactors = FALSE
+  )
   avg <- object_ref(s3,
     lookuptable = object_loc_lookup2,
     var_genes_only = TRUE
@@ -708,12 +687,14 @@ test_that("object_ref gets correct averages", {
 })
 
 test_that("seurat_ref gets other assay slots", {
-  avg <- seurat_ref(s_small,
+  avg <- seurat_ref(
+    s_small,
     cluster_col = "res.1",
     assay_name = "ADT",
     var_genes_only = TRUE
   )
-  avg2 <- seurat_ref(s_small,
+  avg2 <- seurat_ref(
+    s_small,
     cluster_col = "res.1",
     assay_name = c("ADT", "ADT2"),
     var_genes_only = TRUE
@@ -722,17 +703,20 @@ test_that("seurat_ref gets other assay slots", {
 })
 
 test_that("seurat_ref gets correct averages with seurat3 object", {
-  avg <- seurat_ref(s_small3,
+  avg <- seurat_ref(
+    s_small3,
     cluster_col = "RNA_snn_res.1",
     assay_name = c("ADT", "ADT2"),
     var_genes_only = TRUE
   )
-  avg <- seurat_ref(s_small3,
+  avg <- seurat_ref(
+    s_small3,
     cluster_col = "RNA_snn_res.1",
     assay_name = c("ADT"),
     var_genes_only = TRUE
   )
-  avg2 <- seurat_ref(s_small3,
+  avg2 <- seurat_ref(
+    s_small3,
     cluster_col = "RNA_snn_res.1",
     assay_name = c("ADT", "ADT2"),
     var_genes_only = "PCA"
@@ -743,8 +727,10 @@ test_that("seurat_ref gets correct averages with seurat3 object", {
 test_that("clustify_intra works on test data", {
   pbmc_meta2 <- pbmc_meta
   pbmc_meta2$sample <- c(rep("A", 1319), rep("B", 1319))
-  pbmc_meta2$classified <- c(pbmc_meta2$classified[1:1319], pbmc_meta2$classified[1320:2638])
-  res <- clustify_intra(pbmc_matrix_small,
+  pbmc_meta2$classified <-
+    c(pbmc_meta2$classified[1:1319], pbmc_meta2$classified[1320:2638])
+  res <- clustify_intra(
+    pbmc_matrix_small,
     pbmc_meta2,
     query_genes = pbmc_vargenes,
     cluster_col = "classified",
@@ -757,15 +743,17 @@ test_that("clustify_intra works on test data", {
 test_that("object parsing works for custom object", {
   s3 <- s_small3
   class(s3) <- "ser3"
-  object_loc_lookup2 <- data.frame(ser3 = c(
-    expr = "input@assays$RNA@data",
-    meta = "input@meta.data",
-    var = "input@assays$RNA@var.features",
-    col = "RNA_snn_res.1"
-  ), stringsAsFactors = FALSE)
+  object_loc_lookup2 <- data.frame(
+    ser3 = c(
+      expr = "input@assays$RNA@data",
+      meta = "input@meta.data",
+      var = "input@assays$RNA@var.features",
+      col = "RNA_snn_res.1"
+    ),
+    stringsAsFactors = FALSE
+  )
 
-  res2 <- clustify(
-    s3,
+  res2 <- clustify(s3,
     cbmc_ref,
     lookuptable = object_loc_lookup2
   )
@@ -787,18 +775,20 @@ test_that("object metadata assignment works for custom object", {
     representation(meta.data = "data.frame")
   )
   class(s3) <- "ser3"
-  object_loc_lookup2 <- data.frame(ser3 = c(
-    expr = "input@assays$RNA@data",
-    meta = "input@meta.data",
-    var = "input@assays$RNA@var.features",
-    col = "RNA_snn_res.1"
-  ), stringsAsFactors = FALSE)
+  object_loc_lookup2 <- data.frame(
+    ser3 = c(
+      expr = "input@assays$RNA@data",
+      meta = "input@meta.data",
+      var = "input@assays$RNA@var.features",
+      col = "RNA_snn_res.1"
+    ),
+    stringsAsFactors = FALSE
+  )
 
-  res2 <- clustify(
-    s3,
+  res2 <- clustify(s3,
     cbmc_ref,
     lookuptable = object_loc_lookup2,
-    obj_out = T
+    obj_out = TRUE
   )
 
   res3 <- clustify_lists(
@@ -806,18 +796,19 @@ test_that("object metadata assignment works for custom object", {
     marker = pbmc_markers,
     marker_inmatrix = FALSE,
     lookuptable = object_loc_lookup2,
-    obj_out = T,
+    obj_out = TRUE,
     rename_prefix = "A"
   )
 
-  expect_true(class(res2) == "ser3")
+  expect_true(is(res2, "ser3"))
 })
 
 test_that("make_comb_ref uses correct sep", {
   ref2 <- make_comb_ref(cbmc_ref,
     sep = "AAA"
   )
-  expect_true((ncol(ref2) > ncol(cbmc_ref)) & grepl("AAA", colnames(ref2)[22]))
+  expect_true((ncol(ref2) > ncol(cbmc_ref)) &
+    grepl("AAA", colnames(ref2)[22]))
 })
 
 test_that("cor_to_call renaming with suffix input works as intended, per_cell or otherwise", {
@@ -828,7 +819,8 @@ test_that("cor_to_call renaming with suffix input works as intended, per_cell or
     query_genes = pbmc_vargenes,
     cluster_col = "classified"
   )
-  call1 <- cor_to_call(res,
+  call1 <- cor_to_call(
+    res,
     metadata = pbmc_meta,
     cluster_col = "classified",
     collapse_to_cluster = FALSE,
@@ -843,21 +835,24 @@ test_that("cor_to_call renaming with suffix input works as intended, per_cell or
     cluster_col = "classified",
     per_cell = TRUE
   )
-  call2 <- cor_to_call(res2,
+  call2 <- cor_to_call(
+    res2,
     metadata = tibble::rownames_to_column(pbmc_meta, "rn"),
     cluster_col = "classified",
-    collapse_to_cluster = T,
+    collapse_to_cluster = TRUE,
     threshold = 0,
     rename_prefix = "a"
   )
-  call3 <- cor_to_call(res2,
+  call3 <- cor_to_call(
+    res2,
     pbmc_meta,
     cluster_col = "rn",
-    collapse_to_cluster = T,
+    collapse_to_cluster = TRUE,
     threshold = 0,
     rename_prefix = "a"
   )
-  expect_true("a_type" %in% colnames(call1) & "a_type" %in% colnames(call2))
+  expect_true("a_type" %in% colnames(call1) &
+    "a_type" %in% colnames(call2))
 })
 
 test_that("renaming with suffix input works as intended with clusify wrapper", {
@@ -880,7 +875,12 @@ test_that("renaming with suffix input works as intended with clusify wrapper", {
 
 test_that("ref_marker_select works with cutoffs", {
   res1 <- ref_marker_select(cbmc_ref, cut = 0)
-  mm <- matrixize_markers(res1, n = 5, unique = TRUE, remove_rp = TRUE)
+  mm <-
+    matrixize_markers(res1,
+      n = 5,
+      unique = TRUE,
+      remove_rp = TRUE
+    )
   res2 <- ref_marker_select(cbmc_ref, cut = 2)
   expect_true(nrow(res1) != nrow(res2))
 })
@@ -915,15 +915,13 @@ test_that("pos_neg_select normalizes res", {
     "a" = c(1, 0.01, 0),
     row.names = c("CD74", "clustifyr0", "CD79A")
   )
-  res <- pos_neg_select(
-    pbmc_matrix_small,
+  res <- pos_neg_select(pbmc_matrix_small,
     pn_ref2,
     pbmc_meta,
     "classified",
     cutoff_score = 0.8
   )
-  res2 <- pos_neg_select(
-    pbmc_matrix_small,
+  res2 <- pos_neg_select(pbmc_matrix_small,
     pn_ref2,
     pbmc_meta,
     "classified",
@@ -935,7 +933,8 @@ test_that("pos_neg_select normalizes res", {
 test_that("clustify_nudge works with pos_neg_select", {
   pn_ref2 <- data.frame(
     "CD8 T" = c(0, 0, 1),
-    row.names = c("CD4", "clustifyr0", "CD8B"), check.names = FALSE
+    row.names = c("CD4", "clustifyr0", "CD8B"),
+    check.names = FALSE
   )
   res <- clustify_nudge(
     pbmc_matrix_small,
@@ -1010,8 +1009,7 @@ test_that("more readable error message when cluster_col exist but is wrong info"
   ))
 })
 
-marker_file <- system.file(
-  "extdata",
+marker_file <- system.file("extdata",
   "hsPBMC_markers.txt",
   package = "clustifyr"
 )
@@ -1021,21 +1019,21 @@ test_that("paring marker files works on included example", {
   expect_true(length(markers) == 2)
 })
 
-gmt_file <- system.file(
-  "extdata",
+gmt_file <- system.file("extdata",
   "c2.cp.reactome.v6.2.symbols.gmt",
   package = "clustifyr"
 )
 
 test_that("paring gmt files works on included example", {
   gmt_list <- gmt_to_list(path = gmt_file)
-  expect_true(class(gmt_list) == "list")
+  expect_true(is.list(gmt_list))
 })
 
 test_that("clustify_nudge works with pos_neg_select and seurat2 object", {
   pn_ref2 <- data.frame(
     "CD8 T" = c(0, 0, 1),
-    row.names = c("CD4", "clustifyr0", "CD8B"), check.names = FALSE
+    row.names = c("CD4", "clustifyr0", "CD8B"),
+    check.names = FALSE
   )
   res <- clustify_nudge(
     s_small,
@@ -1044,7 +1042,7 @@ test_that("clustify_nudge works with pos_neg_select and seurat2 object", {
     cluster_col = "res.1",
     norm = 0.5,
     dr = "tsne",
-    seurat_out = F
+    seurat_out = FALSE
   )
   expect_true(nrow(res) == 4)
 })
@@ -1052,7 +1050,8 @@ test_that("clustify_nudge works with pos_neg_select and seurat2 object", {
 test_that("clustify_nudge works with pos_neg_select and Seurat3 object", {
   pn_ref2 <- data.frame(
     "CD8 T" = c(0, 0, 1),
-    row.names = c("CD4", "clustifyr0", "CD8B"), check.names = FALSE
+    row.names = c("CD4", "clustifyr0", "CD8B"),
+    check.names = FALSE
   )
   res <- clustify_nudge(
     s_small3,
@@ -1061,7 +1060,7 @@ test_that("clustify_nudge works with pos_neg_select and Seurat3 object", {
     cluster_col = "RNA_snn_res.1",
     norm = 0.5,
     dr = "tsne",
-    seurat_out = F
+    seurat_out = FALSE
   )
   expect_true(nrow(res) == 3)
 })
@@ -1102,7 +1101,8 @@ test_that("cor_to_call threshold works as intended", {
     query_genes = pbmc_vargenes,
     cluster_col = "classified"
   )
-  call1 <- cor_to_call(res,
+  call1 <- cor_to_call(
+    res,
     metadata = pbmc_meta,
     cluster_col = "classified",
     collapse_to_cluster = FALSE,
@@ -1120,7 +1120,8 @@ test_that("cor_to_call_rank threshold works as intended", {
     query_genes = pbmc_vargenes,
     cluster_col = "classified"
   )
-  call1 <- cor_to_call_rank(res,
+  call1 <- cor_to_call_rank(
+    res,
     metadata = pbmc_meta,
     cluster_col = "classified",
     collapse_to_cluster = FALSE,
@@ -1139,7 +1140,8 @@ test_that("cor_to_call_rank options", {
     query_genes = pbmc_vargenes,
     cluster_col = "classified"
   )
-  call1 <- cor_to_call_rank(res,
+  call1 <- cor_to_call_rank(
+    res,
     metadata = pbmc_meta,
     cluster_col = "classified",
     collapse_to_cluster = FALSE,
@@ -1159,7 +1161,8 @@ test_that("call_consensus marks ties", {
     query_genes = pbmc_vargenes,
     cluster_col = "classified"
   )
-  call1 <- cor_to_call_rank(res,
+  call1 <- cor_to_call_rank(
+    res,
     metadata = pbmc_meta,
     cluster_col = "classified",
     collapse_to_cluster = FALSE,
@@ -1171,7 +1174,8 @@ test_that("call_consensus marks ties", {
     ref_mat = cbmc_ref,
     cluster_col = "classified"
   )
-  call2 <- cor_to_call_rank(res2,
+  call2 <- cor_to_call_rank(
+    res2,
     metadata = pbmc_meta,
     cluster_col = "classified",
     collapse_to_cluster = FALSE,
@@ -1188,12 +1192,13 @@ test_that("cor_to_call can collapse_to_cluster", {
     ref_mat = cbmc_ref,
     query_genes = pbmc_vargenes,
     cluster_col = "classified",
-    per_cell = T
+    per_cell = TRUE
   )
-  call1 <- cor_to_call(res,
+  call1 <- cor_to_call(
+    res,
     metadata = pbmc_meta,
     cluster_col = "classified",
-    collapse_to_cluster = T,
+    collapse_to_cluster = TRUE,
     threshold = 0.1
   )
   expect_true(ncol(call1) == 4)
@@ -1206,10 +1211,10 @@ test_that("cor_to_call and collapse_to_cluster work on objects", {
     query_genes = pbmc_vargenes,
     cluster_col = "res.1",
     dr = "tsne",
-    per_cell = T,
-    collapse_to_cluster = T
+    per_cell = TRUE,
+    collapse_to_cluster = TRUE
   )
-  expect_true(is.matrix(res) | "seurat" %in% class(res))
+  expect_true(is.matrix(res) | is(res, "seurat"))
 })
 
 test_that("seurat_meta warns about not finding dr", {
@@ -1230,7 +1235,8 @@ test_that("find_rank_bias filters out unassigned", {
     query_genes = pbmc_vargenes,
     cluster_col = "classified"
   )
-  call1 <- cor_to_call(res,
+  call1 <- cor_to_call(
+    res,
     metadata = pbmc_meta,
     cluster_col = "classified",
     collapse_to_cluster = FALSE,

@@ -33,7 +33,6 @@ plot_tsne <- function(data,
                       scale_limits = NULL,
                       do_label = FALSE,
                       do_legend = TRUE) {
-
   # add backticks to allow special characters in column names
   x_col <- paste0("`", x, "`")
   y_col <- paste0("`", y, "`")
@@ -63,7 +62,9 @@ plot_tsne <- function(data,
   )
 
   # If there are too many features, add more colors for pretty_palette2
-  if (identical(c_cols, pretty_palette2) & (n_features > length(pretty_palette2)) & (typeof(feature_data) %in% feature_types)) {
+  if (identical(c_cols, pretty_palette2) &
+    (n_features > length(pretty_palette2)) &
+    (typeof(feature_data) %in% feature_types)) {
     c_cols <- pretty_palette_ramp_d(n_features)
     d_cols <- pretty_palette_ramp_d(n_features)
   }
@@ -73,8 +74,11 @@ plot_tsne <- function(data,
 
   if (!is.null(alpha_col)) {
     p <- ggplot2::ggplot(data, ggplot2::aes_string(x_col, y_col)) +
-      geom_point(ggplot2::aes_string(color = paste0("`", feature, "`"), alpha = paste0("`", alpha_col, "`")), # backticks protect special character gene names
-        size = pt_size
+      geom_point(ggplot2::aes_string(
+        color = paste0("`", feature, "`"),
+        alpha = paste0("`", alpha_col, "`")
+      ), # backticks protect special character gene names
+      size = pt_size
       ) + scale_alpha_continuous(range = c(0, 1))
   } else {
     p <- ggplot2::ggplot(data, ggplot2::aes_string(x_col, y_col)) +
@@ -85,7 +89,6 @@ plot_tsne <- function(data,
 
   # discrete values
   if (!is.numeric(feature_data)) {
-
     # use colors provided
     if (!is.null(d_cols)) {
       p <- p +
@@ -120,11 +123,30 @@ plot_tsne <- function(data,
 
   if (do_label) {
     centers <- dplyr::group_by(data, !!sym(feature))
-    centers <- dplyr::summarize(centers, t1 = mean(!!dplyr::sym(x)), t2 = mean(!!dplyr::sym(y)))
+    centers <-
+      dplyr::summarize(centers,
+        t1 = mean(!!dplyr::sym(x)),
+        t2 = mean(!!dplyr::sym(y))
+      )
 
     p <- p +
-      geom_point(data = centers, mapping = aes(x = !!dplyr::sym("t1"), y = !!dplyr::sym("t2")), size = 0, alpha = 0) +
-      geom_text(data = centers, mapping = aes(x = !!dplyr::sym("t1"), y = !!dplyr::sym("t2"), label = centers[[feature]]))
+      geom_point(
+        data = centers,
+        mapping = aes(
+          x = !!dplyr::sym("t1"),
+          y = !!dplyr::sym("t2")
+        ),
+        size = 0,
+        alpha = 0
+      ) +
+      geom_text(
+        data = centers,
+        mapping = aes(
+          x = !!dplyr::sym("t1"),
+          y = !!dplyr::sym("t2"),
+          label = centers[[feature]]
+        )
+      )
   }
 
   p <- p +
@@ -165,7 +187,8 @@ not_pretty_palette <- scales::brewer_pal(palette = "Greys")(9)
 #' @examples
 #' pretty_palette_ramp_d
 #' @export
-pretty_palette_ramp_d <- grDevices::colorRampPalette(scales::brewer_pal(palette = "Paired")(12))
+pretty_palette_ramp_d <-
+  grDevices::colorRampPalette(scales::brewer_pal(palette = "Paired")(12))
 
 #' Plot similarity measures on a tSNE or umap
 #'
@@ -213,7 +236,9 @@ plot_cor <- function(cor_mat,
                      ...) {
   cor_matrix <- cor_mat
   if (!any(data_to_plot %in% colnames(cor_matrix))) {
-    stop("cluster ids not shared between metadata and correlation matrix", call. = FALSE)
+    stop("cluster ids not shared between metadata and correlation matrix",
+      call. = FALSE
+    )
   }
 
   if (is.null(cluster_col)) {
@@ -226,8 +251,7 @@ plot_cor <- function(cor_mat,
   cor_df_long <- tidyr::gather(
     cor_df,
     "ref_cluster",
-    "expr",
-    -dplyr::matches(cluster_col)
+    "expr", -dplyr::matches(cluster_col)
   )
 
   # If cluster_col is factor, convert to character
@@ -266,10 +290,7 @@ plot_cor <- function(cor_mat,
   plts <- vector("list", length(data_to_plot))
 
   for (i in seq_along(data_to_plot)) {
-    tmp_data <- dplyr::filter(
-      plt_data,
-      !!dplyr::sym("ref_cluster") == data_to_plot[i]
-    )
+    tmp_data <- dplyr::filter(plt_data, !!dplyr::sym("ref_cluster") == data_to_plot[i])
 
     plts[[i]] <- plot_tsne(
       data = tmp_data,
@@ -328,7 +349,8 @@ plot_gene <- function(expr_mat,
     stop("no genes present to plot", call. = FALSE)
   }
   expr_dat <- t(as.matrix(expr_mat[genes_to_plot, , drop = FALSE]))
-  expr_dat <- tibble::rownames_to_column(as.data.frame(expr_dat), "cell")
+  expr_dat <-
+    tibble::rownames_to_column(as.data.frame(expr_dat), "cell")
 
   if (is.null(cell_col)) {
     mdata <- tibble::rownames_to_column(metadata, "cell")
@@ -387,7 +409,10 @@ plot_call <- function(cor_mat,
                       data_to_plot = colnames(cor_mat),
                       ...) {
   cor_matrix <- cor_mat
-  df_temp <- as.data.frame(t(apply(cor_matrix, 1, function(x) x - max(x))))
+  df_temp <-
+    as.data.frame(t(apply(cor_matrix, 1, function(x) {
+      x - max(x)
+    })))
   df_temp[df_temp == 0] <- "1"
   df_temp[df_temp != "1"] <- "0"
   plot_cor(
@@ -433,7 +458,8 @@ plot_best_call <- function(cor_mat,
                            cluster_col = "cluster",
                            collapse_to_cluster = FALSE,
                            threshold = 0,
-                           x = "UMAP_1", y = "UMAP_2",
+                           x = "UMAP_1",
+                           y = "UMAP_2",
                            plot_r = FALSE,
                            per_cell = FALSE,
                            ...) {
@@ -467,7 +493,8 @@ plot_best_call <- function(cor_mat,
 
   g <- plot_tsne(df_temp_full,
     feature = "type",
-    x = x, y = y,
+    x = x,
+    y = y,
     ...
   )
 
@@ -476,7 +503,8 @@ plot_best_call <- function(cor_mat,
     l[[1]] <- g
     l[[2]] <- plot_tsne(df_temp_full,
       feature = "r",
-      x = x, y = y,
+      x = x,
+      y = y,
       ...
     )
   } else {
@@ -516,12 +544,20 @@ plot_cols <- function(metadata,
                       metadata_ref,
                       cluster_col_ref,
                       plot_col_ref) {
-  temp1 <- dplyr::group_by_at(metadata, vars(cluster_col, cluster_col_called))
-  temp1 <- dplyr::summarise(temp1, med = median(!!dplyr::sym(plot_col), na.rm = TRUE))
-  colnames(temp1) <- c("original_cluster", "type", paste(plot_col, "query", sep = "_"))
+  temp1 <-
+    dplyr::group_by_at(metadata, vars(cluster_col, cluster_col_called))
+  temp1 <-
+    dplyr::summarise(temp1, med = median(!!dplyr::sym(plot_col), na.rm = TRUE))
+  colnames(temp1) <-
+    c(
+      "original_cluster",
+      "type",
+      paste(plot_col, "query", sep = "_")
+    )
 
   temp2 <- dplyr::group_by_at(metadata_ref, cluster_col_ref)
-  temp2 <- dplyr::summarise(temp2, med = median(!!dplyr::sym(plot_col_ref), na.rm = TRUE))
+  temp2 <-
+    dplyr::summarise(temp2, med = median(!!dplyr::sym(plot_col_ref), na.rm = TRUE))
   colnames(temp2) <- c("type", paste(plot_col, "ref", sep = "_"))
 
   temp <- dplyr::left_join(temp1,
@@ -529,7 +565,8 @@ plot_cols <- function(metadata,
     by = "type"
   )
   temp[is.na(temp)] <- 0
-  temp[["full"]] <- stringr::str_c(temp[["original_cluster"]], temp[["type"]], sep = "->")
+  temp[["full"]] <-
+    stringr::str_c(temp[["original_cluster"]], temp[["type"]], sep = "->")
   xmax <- max(temp[, 4])
   ymax <- max(temp[, 3])
 
@@ -590,7 +627,8 @@ plot_cor_heatmap <- function(cor_mat,
                              legend_title = NULL,
                              ...) {
   cor_matrix <- cor_mat
-  ComplexHeatmap::Heatmap(cor_matrix,
+  ComplexHeatmap::Heatmap(
+    cor_matrix,
     col = col,
     heatmap_legend_param = list(title = legend_title),
     ...

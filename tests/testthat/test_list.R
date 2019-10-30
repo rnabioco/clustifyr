@@ -2,8 +2,7 @@ context("compare_list")
 
 test_that("warning if matrix is not binarized", {
   pbmc_mm <- matrixize_markers(pbmc_markers)
-  pbmc_avg <- average_clusters(
-    pbmc_matrix_small,
+  pbmc_avg <- average_clusters(pbmc_matrix_small,
     pbmc_meta,
     cluster_col = "classified"
   )
@@ -23,8 +22,7 @@ test_that("warning if matrix is not binarized", {
 
 test_that("run all gene list functions", {
   pbmc_mm <- matrixize_markers(pbmc_markers)
-  pbmc_avg <- average_clusters(
-    pbmc_matrix_small,
+  pbmc_avg <- average_clusters(pbmc_matrix_small,
     pbmc_meta,
     cluster_col = "classified"
   )
@@ -45,18 +43,20 @@ test_that("run all gene list functions", {
 
 test_that("gene list function options", {
   pbmc_mm <- matrixize_markers(pbmc_markers)
-  pbmc_avg <- average_clusters(
-    pbmc_matrix_small,
+  pbmc_avg <- average_clusters(pbmc_matrix_small,
     pbmc_meta,
     cluster_col = "classified"
   )
   pbmc_avgb <- binarize_expr(pbmc_avg)
-  expect_error(suppressWarnings(res <- compare_lists(pbmc_avgb,
-    pbmc_mm,
-    metric = "hyper",
-    output_high = FALSE,
-    n = 5
-  )))
+  expect_error(suppressWarnings(
+    res <- compare_lists(
+      pbmc_avgb,
+      pbmc_mm,
+      metric = "hyper",
+      output_high = FALSE,
+      n = 5
+    )
+  ))
 })
 
 test_that("run all gene list functions in clustify_lists", {
@@ -64,7 +64,8 @@ test_that("run all gene list functions in clustify_lists", {
   results <- lapply(
     gene_list_methods,
     function(x) {
-      clustify_lists(pbmc_matrix_small,
+      clustify_lists(
+        pbmc_matrix_small,
         per_cell = FALSE,
         metadata = pbmc_meta,
         cluster_col = "classified",
@@ -79,7 +80,8 @@ test_that("run all gene list functions in clustify_lists", {
 })
 
 test_that("gsea outputs in cor matrix format", {
-  res <- clustify_lists(pbmc_matrix_small,
+  res <- clustify_lists(
+    pbmc_matrix_small,
     per_cell = FALSE,
     metadata = pbmc_meta,
     cluster_col = "classified",
@@ -93,7 +95,8 @@ test_that("gsea outputs in cor matrix format", {
 })
 
 test_that("seurat object clustify_lists-ing", {
-  res <- clustify_lists(s_small,
+  res <- clustify_lists(
+    s_small,
     per_cell = FALSE,
     marker = pbmc_markers,
     marker_inmatrix = FALSE,
@@ -102,7 +105,8 @@ test_that("seurat object clustify_lists-ing", {
     seurat_out = FALSE,
     dr = "tsne"
   )
-  res <- clustify_lists(s_small,
+  res <- clustify_lists(
+    s_small,
     per_cell = FALSE,
     marker = pbmc_markers,
     marker_inmatrix = FALSE,
@@ -111,7 +115,8 @@ test_that("seurat object clustify_lists-ing", {
     seurat_out = FALSE,
     dr = "tsne"
   )
-  g <- plot_best_call(res,
+  g <- plot_best_call(
+    res,
     seurat_meta(s_small,
       dr = "tsne"
     ),
@@ -124,7 +129,8 @@ test_that("seurat object clustify_lists-ing", {
 })
 
 test_that("clustify_lists inserts seurat metadata correctly", {
-  res <- clustify_lists(s_small,
+  res <- clustify_lists(
+    s_small,
     per_cell = FALSE,
     marker = pbmc_markers,
     marker_inmatrix = FALSE,
@@ -133,7 +139,8 @@ test_that("clustify_lists inserts seurat metadata correctly", {
     seurat_out = TRUE,
     dr = "tsne"
   )
-  res2 <- clustify_lists(s_small,
+  res2 <- clustify_lists(
+    s_small,
     per_cell = TRUE,
     marker = pbmc_markers,
     marker_inmatrix = FALSE,
@@ -146,7 +153,8 @@ test_that("clustify_lists inserts seurat metadata correctly", {
 })
 
 test_that("seurat3 object clustify_lists-ing", {
-  res <- clustify_lists(s_small3,
+  res <- clustify_lists(
+    s_small3,
     per_cell = FALSE,
     marker = pbmc_markers,
     marker_inmatrix = FALSE,
@@ -155,7 +163,8 @@ test_that("seurat3 object clustify_lists-ing", {
     seurat_out = TRUE,
     dr = "tsne"
   )
-  res <- clustify_lists(s_small3,
+  res <- clustify_lists(
+    s_small3,
     per_cell = FALSE,
     marker = pbmc_markers,
     marker_inmatrix = FALSE,
@@ -164,7 +173,8 @@ test_that("seurat3 object clustify_lists-ing", {
     seurat_out = FALSE,
     dr = "tsne"
   )
-  g <- plot_best_call(res,
+  g <- plot_best_call(
+    res,
     seurat_meta(s_small3,
       dr = "tsne"
     ),
@@ -177,7 +187,8 @@ test_that("seurat3 object clustify_lists-ing", {
 })
 
 test_that("clustify_lists inserts seurat3 metadata correctly", {
-  res <- clustify_lists(s_small3,
+  res <- clustify_lists(
+    s_small3,
     per_cell = FALSE,
     marker = pbmc_markers,
     marker_inmatrix = FALSE,
@@ -186,7 +197,8 @@ test_that("clustify_lists inserts seurat3 metadata correctly", {
     seurat_out = TRUE,
     dr = "tsne"
   )
-  res2 <- clustify_lists(s_small3,
+  res2 <- clustify_lists(
+    s_small3,
     per_cell = TRUE,
     marker = pbmc_markers,
     marker_inmatrix = FALSE,
@@ -200,8 +212,7 @@ test_that("clustify_lists inserts seurat3 metadata correctly", {
 
 test_that("run all gene list functions and then use consensus_call", {
   pbmc_mm <- matrixize_markers(pbmc_markers)
-  pbmc_avg <- average_clusters(
-    pbmc_matrix_small,
+  pbmc_avg <- average_clusters(pbmc_matrix_small,
     pbmc_meta,
     cluster_col = "classified"
   )
@@ -242,7 +253,7 @@ test_that("run all gene list functions in clustify_lists and seurat object", {
     dr = "tsne",
     cluster_col = "RNA_snn_res.1",
     metric = "consensus",
-    seurat_out = T
+    seurat_out = TRUE
   )
   expect_true(is.data.frame(res) | "Seurat" %in% class(res))
 })
@@ -254,7 +265,7 @@ test_that("run all gene list functions in clustify_lists and seurat object", {
     dr = "tsne",
     cluster_col = "res.1",
     metric = "consensus",
-    seurat_out = T
+    seurat_out = TRUE
   )
   expect_true(is.data.frame(res) | "seurat" %in% class(res))
 })
