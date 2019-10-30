@@ -1450,7 +1450,7 @@ plot_pathway_gsea <- function(mat,
   )
   coltopn <- unique(cor_to_call_topn(res, topn = topn, threshold = -Inf)$type)
   res[is.na(res)] <- 0
-  g <- ComplexHeatmap::Heatmap(res[, coltopn], column_names_gp = grid::gpar(fontsize = 6))
+  g <- suppressWarnings(ComplexHeatmap::Heatmap(res[, coltopn], column_names_gp = grid::gpar(fontsize = 6)))
 
   if (returning == "both") {
     return(list(res, g))

@@ -105,13 +105,13 @@ matrixize_markers <- function(marker_df,
   # if metadata is vector, adopt names in vector; if metadata is a metadata dataframe, pulls names from cluster_col column
   if (!is.null(metadata)) {
     if (typeof(metadata) != "character") {
-      metadata <- dplyr::left_join(tibble::tibble(cluster = colnames(marker_temp2)),
+      metadata <- suppressWarnings(dplyr::left_join(tibble::tibble(cluster = colnames(marker_temp2)),
         unique(tibble::tibble(
           cluster = metadata$cluster,
           classified = metadata[[cluster_col]]
         )),
         by = "cluster"
-      )
+      ))
       metadata <- metadata[[cluster_col]]
     }
     colnames(marker_temp2) <- metadata

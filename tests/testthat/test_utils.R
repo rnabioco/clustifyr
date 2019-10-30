@@ -113,7 +113,7 @@ test_that("average_clusters works when one cluster contains only 1 cell", {
 })
 
 test_that("average_clusters works when low cell number clusters should be removed", {
-  pbmc_meta2 <- pbmc_meta
+  pbmc_meta2 <- pbmc_meta %>% mutate(classified = as.character(classified))
   pbmc_meta2[1, "classified"] <- 15
   pbmc_avg2 <- average_clusters(
     pbmc_matrix_small,
