@@ -1,5 +1,5 @@
 s <- readRDS("segerstolpe.rds")
-sce_small <- s[1:200,1:200]
+sce_small <- s[1:200, 1:200]
 
 attr(attr(sce_small@int_elementMetadata, "class"), "package") <- NULL
 attr(attr(sce_small@int_colData, "class"), "package") <- NULL
