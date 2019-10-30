@@ -65,4 +65,4 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
-biocViews: SingleCell, Annotation
+biocViews: SingleCell, Annotation, Sequencing
