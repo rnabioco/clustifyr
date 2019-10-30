@@ -78,7 +78,7 @@ average_clusters <- function(mat, metadata,
       cluster_info_temp <- droplevels(cluster_info_temp)
     }
     cluster_ids <- split(colnames(mat), cluster_info_temp)
-  } else if (class(cluster_info) == "factor") {
+  } else if (is.factor(cluster_info)) {
     cluster_info <- as.character(cluster_info)
     cluster_ids <- split(colnames(mat), cluster_info)
   } else {
@@ -661,7 +661,7 @@ gene_pct_markerm <- function(matrix,
     cluster_info <- as.character(cluster_info)
   }
 
-  if (class(marker_m) != "data.frame") {
+  if (!is.data.frame(marker_m)) {
     marker_m <- as.data.frame(marker_m)
   }
 
@@ -831,7 +831,7 @@ clustify_nudge.default <- function(input,
       norm = norm
     )
   } else if (mode == "rank") {
-    if (ncol(marker) > 1 && class(marker[1, 1]) == "character") {
+    if (ncol(marker) > 1 && is.character(marker[1, 1])) {
       marker <- pos_neg_marker(marker)
     }
     resb <- pos_neg_select(
@@ -928,7 +928,7 @@ clustify_nudge.seurat <- function(input,
       norm = norm
     )
   } else if (mode == "rank") {
-    if (ncol(marker) > 1 && class(marker[1, 1]) == "character") {
+    if (ncol(marker) > 1 && is.character(marker[1, 1])) {
       marker <- pos_neg_marker(marker)
     }
     resb <- pos_neg_select(input@data,
@@ -1016,7 +1016,7 @@ clustify_nudge.Seurat <- function(input,
       norm = norm
     )
   } else if (mode == "rank") {
-    if (ncol(marker) > 1 && class(marker[1, 1]) == "character") {
+    if (ncol(marker) > 1 && is.character(marker[1, 1])) {
       marker <- pos_neg_marker(marker)
     }
     resb <- pos_neg_select(input@assays$RNA@data,
@@ -1504,7 +1504,7 @@ downsample_matrix <- function(mat,
       cluster_ids <- split(colnames(mat), cluster_info)
     } else if (is.data.frame(cluster_info) & !is.null(cluster_col)) {
       cluster_ids <- split(colnames(mat), cluster_info[[cluster_col]])
-    } else if (class(cluster_info) == "factor") {
+    } else if (is.factor(cluster_info)) {
       cluster_info <- as.character(cluster_info)
       cluster_ids <- split(colnames(mat), cluster_info)
     } else {
@@ -1564,7 +1564,7 @@ ref_marker_select <- function(mat, cut = 0.5, arrange = TRUE, compto = 1) {
   mat <- mat[Matrix::rowSums(mat) != 0, ]
   ref_cols <- colnames(mat)
   res <- apply(mat, 1, marker_select, ref_cols, cut, compto = compto)
-  if (class(res) == "list") {
+  if (is.list(res)) {
     res <- res[!sapply(res, is.null)]
   }
   resdf <- t(as.data.frame(res, stringsAsFactors = FALSE))
@@ -1689,11 +1689,11 @@ reverse_marker_matrix <- function(mat) {
 #' m1 <- pos_neg_marker(cbmc_m)
 #' @export
 pos_neg_marker <- function(mat) {
-  if (class(mat) == "data.frame") {
+  if (is.data.frame(mat)) {
     mat <- as.list(mat)
-  } else if (class(mat) == "matrix") {
+  } else if (is.matrix(mat)) {
     mat <- as.list(as.data.frame(mat))
-  } else if (class(mat) != "list") {
+  } else if (!is.list(mat)) {
     stop("unsupported marker format, must be dataframe, matrix, or list",
          call. = FALSE)
   }

@@ -169,7 +169,7 @@ test_that("average_clusters_filter works on strings", {
     filter_value = "1"
   )
   remove_background(pbmc_matrix_small, avg1, 1)
-  expect_equal(class(avg1), "matrix")
+  expect_true(is.matrix(avg1))
 })
 
 test_that("average_clusters_filter works with nonlog data", {
@@ -182,7 +182,7 @@ test_that("average_clusters_filter works with nonlog data", {
     filter_value = "1",
     if_log = FALSE
   )
-  expect_equal(class(avg1), "matrix")
+  expect_true(is.matrix(avg1))
 })
 
 test_that("average_clusters_filter returns vector of values if group_by is null", {
@@ -787,7 +787,7 @@ test_that("object metadata assignment works for custom object", {
     rename_prefix = "A"
   )
 
-  expect_true(class(res2) == "ser3")
+  expect_true(is(res2,"ser3"))
 })
 
 test_that("make_comb_ref uses correct sep", {
@@ -1006,7 +1006,7 @@ gmt_file <- system.file(
 
 test_that("paring gmt files works on included example", {
   gmt_list <- gmt_to_list(path = gmt_file)
-  expect_true(class(gmt_list) == "list")
+  expect_true(is.list(gmt_list))
 })
 
 test_that("clustify_nudge works with pos_neg_select and seurat2 object", {
@@ -1186,7 +1186,7 @@ test_that("cor_to_call and collapse_to_cluster work on objects", {
     per_cell = TRUE,
     collapse_to_cluster = TRUE
   )
-  expect_true(is.matrix(res) | "seurat" %in% class(res))
+  expect_true(is.matrix(res) | is(res, "seurat"))
 })
 
 test_that("seurat_meta warns about not finding dr", {

@@ -87,5 +87,5 @@ test_that("plot_pathway_gsea gives output depending on returning option", {
   )
   g <- plot_pathway_gsea(pbmc_avg, gl, 5, returning = "plot")
   g2 <- plot_pathway_gsea(pbmc_avg, gl, 5, returning = "res")
-  expect_true(class(g) == "Heatmap" & class(g2) == "data.frame")
+  expect_true(is(g, "Heatmap") & is.data.frame(g2))
 })

@@ -177,7 +177,7 @@ test_that("plot_cor_heatmap returns a ggplot object", {
     per_cell = FALSE
   )
   g <- plot_cor_heatmap(res)
-  expect_true(class(g) == "Heatmap")
+  expect_true(is(g, "Heatmap"))
 })
 
 test_that("plot_call works on defaults", {

@@ -28,7 +28,7 @@ seurat_ref.seurat <- function(seurat_object,
                               subclusterpower = 0,
                               ...) {
   temp_mat <- seurat_object@data
-  if (class(var_genes_only) == "logical" && var_genes_only) {
+  if (is.logical(var_genes_only) && var_genes_only) {
     temp_mat <- temp_mat[seurat_object@var.genes, ]
   } else if (var_genes_only == "PCA") {
     temp_mat <- temp_mat[rownames(seurat_object@dr$pca@gene.loadings), ]
@@ -61,10 +61,10 @@ seurat_ref.Seurat <- function(seurat_object,
                               method = "mean",
                               subclusterpower = 0,
                               ...) {
-  if (class(seurat_object) == "Seurat") {
+  if (is(seurat_object, "Seurat")) {
     temp_mat <- seurat_object@assays$RNA@data
 
-    if (class(var_genes_only) == "logical" && var_genes_only) {
+    if (is.logical(var_genes_only) && var_genes_only) {
       temp_mat <- temp_mat[seurat_object@assays$RNA@var.features, ]
     } else if (var_genes_only == "PCA") {
       temp_mat <- temp_mat[rownames(seurat_object@reductions$pca@feature.loadings), ]
@@ -117,7 +117,7 @@ seurat_meta.seurat <- function(seurat_object,
       return(NA)
     }
   )
-  if (class(temp_dr) != "data.frame") {
+  if (!is.data.frame(temp_dr)) {
     return(seurat_object@meta.data)
   } else {
     temp_dr <- tibble::rownames_to_column(temp_dr, "rn")
@@ -143,7 +143,7 @@ seurat_meta.Seurat <- function(seurat_object,
       return(NA)
     }
   )
-  if (class(temp_dr) != "data.frame") {
+  if (!is.data.frame(temp_dr)) {
     return(mdata)
   } else {
     temp_dr <- tibble::rownames_to_column(temp_dr, temp_col_id)
@@ -170,7 +170,7 @@ object_ref <- function(input,
                        assay_name = NULL,
                        method = "mean",
                        lookuptable = NULL) {
-  if (!(stringr::str_detect(class(input), "seurat"))) {
+  if (!is(input, "seurat")) {
     input_original <- input
     temp <- parse_loc_object(input,
       type = class(input),
@@ -192,7 +192,7 @@ object_ref <- function(input,
   }
 
   temp_mat <- input
-  if (class(var_genes_only) == "logical" && var_genes_only) {
+  if (is.logical(var_genes_only) && var_genes_only) {
     temp_mat <- temp_mat[query_genes, ]
   }
 
