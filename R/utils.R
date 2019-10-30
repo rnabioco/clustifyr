@@ -6,6 +6,7 @@
 #' @param seed seed for kmeans
 #' @return new cluster_id list of more clusters
 #' @examples
+#' set.seed(42)
 #' pbmc_ids <- overcluster(
 #'   mat = pbmc_matrix_small,
 #'   cluster_id = split(colnames(pbmc_matrix_small), pbmc_meta$classified)
@@ -13,14 +14,12 @@
 #' @export
 overcluster <- function(mat,
                         cluster_id,
-                        power = 0.15,
-                        seed = 42) {
+                        power = 0.15) {
   mat <- as.matrix(mat)
   new_ids <- list()
   for (name in names(cluster_id)) {
     ids <- cluster_id[[name]]
     if (length(ids) > 1) {
-      set.seed(seed)
       new_clusters <- stats::kmeans(t(mat[, ids]), centers = as.integer(length(ids)^power))
       new_ids1 <- split(names(new_clusters$cluster), new_clusters$cluster)
       names(new_ids1) <- stringr::str_c(name, names(new_ids1), sep = "_")
@@ -1168,11 +1167,11 @@ insert_meta_object <- function(input,
 #' @param query_genes vector, otherwise genes with be recalculated
 #' @param do_label whether to label each cluster at median center
 #' @param do_legend whether to draw legend
-#' @param seed set seed for kmeans
 #' @param newclustering use kmeans if NULL on dr or col name for second column of clustering
 #' @param threshold type calling threshold
 #' @return faceted ggplot object
 #' @examples
+#' set.seed(42)
 #' plt <- overcluster_test(
 #'   expr = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
@@ -1196,11 +1195,7 @@ overcluster_test <- function(expr,
                              threshold = 0,
                              do_label = TRUE,
                              do_legend = FALSE,
-                             seed = 42,
                              newclustering = NULL) {
-  if (!(is.null(seed))) {
-    set.seed(seed)
-  }
 
   if (is.null(newclustering)) {
     metadata$new_clusters <- as.character(stats::kmeans(metadata[, c(x_col, y_col)],
@@ -1482,30 +1477,27 @@ RowVar <- function(x, na.rm = TRUE) {
 #' Order must match column order in supplied matrix. If a data.frame
 #' provide the cluster_col parameters.
 #' @param cluster_col column in metadata with cluster number
-#' @param set_seed random seed
 #' @return new smaller mat with less cell_id columns
 #' @examples
+#' set.seed(42)
 #' mat1 <- downsample_matrix(
 #'   mat = pbmc_matrix_small,
 #'   metadata = pbmc_meta$classified,
 #'   n = 10,
-#'   keep_cluster_proportions = TRUE,
-#'   set_seed = 41
+#'   keep_cluster_proportions = TRUE
 #' )
 #' @export
 downsample_matrix <- function(mat,
                               n = 1,
                               keep_cluster_proportions = TRUE,
                               metadata = NULL,
-                              cluster_col = "cluster",
-                              set_seed = NULL) {
+                              cluster_col = "cluster") {
   cluster_info <- metadata
   if (keep_cluster_proportions == FALSE) {
     cluster_ids <- colnames(mat)
     if (n < 1) {
       n <- as.integer(ncol(mat) * n)
     }
-    set.seed(set_seed)
     cluster_ids_new <- sample(cluster_ids, n)
   } else {
     if (is.vector(cluster_info)) {
@@ -1523,7 +1515,6 @@ downsample_matrix <- function(mat,
       n2 <- sapply(cluster_ids, function(x) as.integer(length(x) * n))
       n <- n2
     }
-    set.seed(set_seed)
     cluster_ids_new <- mapply(sample, cluster_ids, n, SIMPLIFY = FALSE)
   }
   return(mat[, unlist(cluster_ids_new)])
