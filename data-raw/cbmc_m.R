@@ -55,8 +55,9 @@ m <- cbmc@meta.data %>%
   rownames_to_column("rn") %>%
   mutate(ID = ifelse(citeID != "CD8 T" & citeID != "CD4 T", as.character(rnaClusterID), as.character(citeID))) %>%
   mutate(ID = ifelse((rnaClusterID == "CD4 T" & citeID != "CD4 T") | (rnaClusterID == "CD8 T" & citeID != "CD8 T"),
-                     "Unknown",
-                     as.character(ID))) %>%
+    "Unknown",
+    as.character(ID)
+  )) %>%
   column_to_rownames("rn")
 cbmc@meta.data <- m
 
@@ -65,9 +66,11 @@ Idents(cbmc) <- "ID"
 m_cb <- FindAllMarkers(cbmc, only.pos = TRUE)
 
 cbmc_m <- matrixize_markers(
-  m_cb %>% filter(pct.1 - pct.2 > 0.15,
-                  cluster != "T/Mono doublets",
-                  cluster != "Unknown"),
+  m_cb %>% filter(
+    pct.1 - pct.2 > 0.15,
+    cluster != "T/Mono doublets",
+    cluster != "Unknown"
+  ),
   unique = TRUE,
   remove_rp = TRUE,
   n = 3

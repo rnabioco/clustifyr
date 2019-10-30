@@ -94,12 +94,15 @@ clustify.default <- function(input,
                              exclude_genes = rownames(ref_mat)[stringr::str_detect(rownames(ref_mat), "RP[0-9,L,S]|Rp[0-9,l,s]")],
                              ...) {
   if (!compute_method %in% clustifyr_methods) {
-    stop(paste(compute_method, "correlation method not implemented"), call. = FALSE)
+    stop(paste(compute_method, "correlation method not implemented"),
+      call. = FALSE
+    )
   }
 
   if (!inherits(input, c("matrix", "Matrix", "data.frame"))) {
     input_original <- input
-    temp <- parse_loc_object(input,
+    temp <- parse_loc_object(
+      input,
       type = class(input),
       expr_loc = NULL,
       meta_loc = NULL,
@@ -127,7 +130,8 @@ clustify.default <- function(input,
     stop("`metadata` needed for per cluster analysis", call. = FALSE)
   }
 
-  if (!is.null(cluster_col) && !cluster_col %in% colnames(metadata)) {
+  if (!is.null(cluster_col) &&
+    !cluster_col %in% colnames(metadata)) {
     stop("given `cluster_col` is not a column in `metadata`", call. = FALSE)
   }
 
@@ -152,7 +156,9 @@ clustify.default <- function(input,
   if (verbose) {
     message(paste0("using # of genes: ", length(gene_constraints)))
     if (length(gene_constraints) >= 10000) {
-      message("using a high number genes to calculate correlation, please consider feature selection to improve performance")
+      message(
+        "using a high number genes to calculate correlation, please consider feature selection to improve performance"
+      )
     }
   }
 
@@ -167,8 +173,11 @@ clustify.default <- function(input,
     } else if (is.data.frame(metadata) & !is.null(cluster_col)) {
       cluster_ids <- metadata[[cluster_col]]
     } else {
-      stop("metadata not formatted correctly,
-           supply either a character vector or a dataframe", call. = FALSE)
+      stop(
+        "metadata not formatted correctly,
+           supply either a character vector or a dataframe",
+        call. = FALSE
+      )
     }
     if (is.factor(cluster_ids)) {
       cluster_ids <- as.character(cluster_ids)
@@ -204,7 +213,9 @@ clustify.default <- function(input,
     )
   }
 
-  if ((obj_out || seurat_out) && !inherits(input_original, c("matrix", "Matrix", "data.frame"))) {
+  if ((obj_out ||
+    seurat_out) &&
+    !inherits(input_original, c("matrix", "Matrix", "data.frame"))) {
     df_temp <- cor_to_call(
       res,
       metadata = metadata,
@@ -220,8 +231,7 @@ clustify.default <- function(input,
       rename_prefix = rename_prefix
     )
 
-    out <- insert_meta_object(
-      input_original,
+    out <- insert_meta_object(input_original,
       df_temp_full,
       lookuptable = lookuptable
     )
@@ -529,7 +539,8 @@ clustify_lists.default <- function(input,
   orig_input <- input
   if (!inherits(input, c("matrix", "Matrix", "data.frame"))) {
     input_original <- input
-    temp <- parse_loc_object(input,
+    temp <- parse_loc_object(
+      input,
       type = class(input),
       expr_loc = NULL,
       meta_loc = NULL,
@@ -586,14 +597,14 @@ clustify_lists.default <- function(input,
     )
     res <- call_consensus(call_list)
   } else if (metric == "pct") {
-    res <- gene_pct_markerm(
-      input,
+    res <- gene_pct_markerm(input,
       marker,
       cluster_info,
       cluster_col = cluster_col
     )
   } else if (metric != "posneg") {
-    res <- compare_lists(bin_input,
+    res <- compare_lists(
+      bin_input,
       marker_mat = marker,
       n = genome_n,
       metric = metric,
@@ -603,8 +614,7 @@ clustify_lists.default <- function(input,
     if (ncol(marker) > 1) {
       marker <- pos_neg_marker(marker)
     }
-    res <- pos_neg_select(
-      input,
+    res <- pos_neg_select(input,
       marker,
       cluster_info,
       cluster_col = cluster_col,
@@ -612,7 +622,9 @@ clustify_lists.default <- function(input,
     )
   }
 
-  if ((obj_out || seurat_out) && !inherits(input_original, c("matrix", "Matrix", "data.frame"))) {
+  if ((obj_out ||
+    seurat_out) &&
+    !inherits(input_original, c("matrix", "Matrix", "data.frame"))) {
     if (metric != "consensus") {
       df_temp <- cor_to_call(
         res,
@@ -632,8 +644,7 @@ clustify_lists.default <- function(input,
       df_temp_full <- res
     }
 
-    out <- insert_meta_object(
-      input_original,
+    out <- insert_meta_object(input_original,
       df_temp_full,
       lookuptable = lookuptable
     )
@@ -674,7 +685,8 @@ clustify_lists.seurat <- function(input,
     cluster_info <- metadata
   }
 
-  res <- clustify_lists(input,
+  res <- clustify_lists(
+    input,
     per_cell = per_cell,
     metadata = cluster_info,
     if_log = if_log,
@@ -752,7 +764,8 @@ clustify_lists.Seurat <- function(input,
     cluster_info <- metadata
   }
 
-  res <- clustify_lists(input,
+  res <- clustify_lists(
+    input,
     per_cell = per_cell,
     metadata = cluster_info,
     if_log = if_log,
@@ -827,7 +840,8 @@ clustify_lists.SingleCellExperiment <- function(input,
     metadata <- as.data.frame(s_object@colData)
   }
 
-  res <- clustify_lists(expr_mat,
+  res <- clustify_lists(
+    expr_mat,
     per_cell = per_cell,
     metadata = metadata,
     if_log = if_log,

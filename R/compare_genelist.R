@@ -19,7 +19,10 @@ binarize_expr <- function(mat,
   expr_mat <- mat
   if (n < nrow(expr_mat)) {
     expr_df <- as.data.frame(as.matrix(expr_mat))
-    df_temp <- apply(expr_df, 2, function(x) x - x[order(x, decreasing = TRUE)[n + 1]])
+    df_temp <-
+      apply(expr_df, 2, function(x) {
+        x - x[order(x, decreasing = TRUE)[n + 1]]
+      })
     df_temp[df_temp > cut] <- 1
     df_temp[df_temp < cut] <- 0
     as.matrix(df_temp)
@@ -62,12 +65,19 @@ matrixize_markers <- function(marker_df,
 
   # if "gene" not present in column names, assume df is a matrix to be converted to ranked
   if (!("gene" %in% colnames(marker_df))) {
-    marker_df <- data.frame(lapply(marker_df, as.character), stringsAsFactors = FALSE)
-    marker_df <- tidyr::gather(marker_df, factor_key = TRUE, key = "cluster", value = "gene")
+    marker_df <-
+      data.frame(lapply(marker_df, as.character), stringsAsFactors = FALSE)
+    marker_df <-
+      tidyr::gather(marker_df,
+        factor_key = TRUE,
+        key = "cluster",
+        value = "gene"
+      )
   }
 
   if (remove_rp) {
-    marker_df <- dplyr::filter(marker_df, !(stringr::str_detect(gene, "^RP[0-9,L,S]|^Rp[0-9,l,s]")))
+    marker_df <-
+      dplyr::filter(marker_df, !(stringr::str_detect(gene, "^RP[0-9,L,S]|^Rp[0-9,l,s]")))
   }
 
   if (unique) {
@@ -91,27 +101,41 @@ matrixize_markers <- function(marker_df,
   marker_temp <- dplyr::group_by(marker_temp, cluster)
   marker_temp <- dplyr::slice(marker_temp, 1:cut_num)
   if (ranked) {
-    marker_temp <- dplyr::mutate(marker_temp, n = seq(step_weight * cut_num, by = -step_weight, length.out = cut_num) + background_weight)
-    marker_temp2 <- tidyr::spread(marker_temp, key = "cluster", value = n)
-    marker_temp2 <- as.data.frame(replace(marker_temp2, is.na(marker_temp2), 0))
+    marker_temp <-
+      dplyr::mutate(
+        marker_temp,
+        n = seq(
+          step_weight * cut_num,
+          by = -step_weight,
+          length.out = cut_num
+        ) + background_weight
+      )
+    marker_temp2 <-
+      tidyr::spread(marker_temp, key = "cluster", value = n)
+    marker_temp2 <-
+      as.data.frame(replace(marker_temp2, is.na(marker_temp2), 0))
     rownames(marker_temp2) <- marker_temp2$gene
     marker_temp2 <- dplyr::select(marker_temp2, -gene)
   } else {
     marker_temp <- dplyr::mutate(marker_temp, n = 1:cut_num)
-    marker_temp2 <- tidyr::spread(marker_temp, key = "cluster", value = "gene")
+    marker_temp2 <-
+      tidyr::spread(marker_temp, key = "cluster", value = "gene")
     marker_temp2 <- as.data.frame(dplyr::select(marker_temp2, -n))
   }
 
   # if metadata is vector, adopt names in vector; if metadata is a metadata dataframe, pulls names from cluster_col column
   if (!is.null(metadata)) {
     if (typeof(metadata) != "character") {
-      metadata <- dplyr::left_join(tibble::tibble(cluster = colnames(marker_temp2)),
-        unique(tibble::tibble(
-          cluster = metadata$cluster,
-          classified = metadata[[cluster_col]]
-        )),
-        by = "cluster"
-      )
+      metadata <-
+        dplyr::left_join(tibble::tibble(cluster = colnames(marker_temp2)),
+          unique(
+            tibble::tibble(
+              cluster = metadata$cluster,
+              classified = metadata[[cluster_col]]
+            )
+          ),
+          by = "cluster"
+        )
       metadata <- metadata[[cluster_col]]
     }
     colnames(marker_temp2) <- metadata
@@ -223,14 +247,19 @@ compare_lists <- function(bin_mat,
           colnames(marker_mat),
           function(y) {
             marker_list <- unlist(marker_mat[, y], use.names = FALSE)
-            v1 <- marker_list[marker_list %in% names(as.matrix(bin_mat)[, x])]
+            v1 <-
+              marker_list[marker_list %in% names(as.matrix(bin_mat)[, x])]
             bin_temp <- as.matrix(bin_mat)[, x]
             bin_temp <- bin_temp[order(bin_temp, decreasing = TRUE)]
             list_top <- names(bin_temp)
             v2 <- list_top[list_top %in% v1]
             v1 <- v1
             v2 <- v2
-            sum(sapply(seq_along(v1), function(i) abs(i - (which(v2 == v1[i])))))
+            sum(sapply(seq_along(v1), function(i) {
+              abs(i - (
+                which(v2 == v1[i])
+              ))
+            }))
           }
         )
         do.call(cbind, per_col)

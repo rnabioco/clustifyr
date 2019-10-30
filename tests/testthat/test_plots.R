@@ -18,8 +18,7 @@ res2 <- clustify(
 )
 
 test_that("plots can be generated", {
-  plts <- plot_best_call(
-    res,
+  plts <- plot_best_call(res,
     pbmc_meta,
     cluster_col = "classified"
   )
@@ -34,15 +33,20 @@ test_that("plot_best_call warns about colnames", {
 })
 
 test_that("call plots can be generated", {
-  plts <- plot_cor(res, pbmc_meta,
+  plts <- plot_cor(res,
+    pbmc_meta,
     data_to_plot = colnames(res)[1:2],
     cluster_col = "classified"
   )
 
-  expect_error(plts <- plot_cor(res, pbmc_meta,
-    data_to_plot = "nonsense",
-    cluster_col = "classified"
-  ))
+  expect_error(
+    plts <- plot_cor(
+      res,
+      pbmc_meta,
+      data_to_plot = "nonsense",
+      cluster_col = "classified"
+    )
+  )
 
   expect_true(is.list(plts))
   expect_true(ggplot2::is.ggplot(plts[[1]]))
@@ -56,7 +60,8 @@ test_that("plot_cor for all clusters by default", {
     y = "UMAP_2"
   )
 
-  plts2 <- plot_cor(res2,
+  plts2 <- plot_cor(
+    res2,
     pbmc_meta %>% tibble::rownames_to_column("rn"),
     cluster_col = "rn",
     x = "UMAP_1",
@@ -98,17 +103,17 @@ test_that("plot_gene can handle strange and normal genenames", {
 })
 
 test_that("plot_gene automatically plots all cells", {
-  genes <- c(
-    "ZYX"
+  genes <- c("ZYX")
+  expect_error(
+    plts <- plot_gene(
+      pbmc_matrix_small,
+      tibble::column_to_rownames(pbmc_meta, "rn"),
+      genes = genes,
+      cell_col = "nonsense"
+    )
   )
-  expect_error(plts <- plot_gene(pbmc_matrix_small,
-    tibble::column_to_rownames(pbmc_meta, "rn"),
-    genes = genes,
-    cell_col = "nonsense"
-  ))
 
-  plts <- plot_gene(
-    pbmc_matrix_small,
+  plts <- plot_gene(pbmc_matrix_small,
     pbmc_meta,
     genes = genes
   )
@@ -125,7 +130,8 @@ test_that("plot_best_call threshold works as intended, on per cell and collapsin
     cluster_col = "classified",
     per_cell = TRUE
   )
-  call1 <- plot_best_call(res,
+  call1 <- plot_best_call(
+    res,
     metadata = pbmc_meta,
     per_cell = TRUE,
     collapse_to_cluster = "classified",
@@ -136,7 +142,8 @@ test_that("plot_best_call threshold works as intended, on per cell and collapsin
 })
 
 test_that("plot_gene checks for presence of gene name", {
-  plot_gene(pbmc_matrix_small,
+  plot_gene(
+    pbmc_matrix_small,
     pbmc_meta %>% tibble::rownames_to_column("rn"),
     c("INIP", "ZFP36L3"),
     cell_col = "rn",
@@ -145,13 +152,16 @@ test_that("plot_gene checks for presence of gene name", {
     x = "UMAP_1",
     y = "UMAP_2"
   )
-  expect_error(plot_gene(pbmc_matrix_small,
-    pbmc_meta %>% tibble::rownames_to_column("rn"),
-    c("ZFP36L3"),
-    cell_col = "rn",
-    x = "UMAP_1",
-    y = "UMAP_2"
-  ))
+  expect_error(
+    plot_gene(
+      pbmc_matrix_small,
+      pbmc_meta %>% tibble::rownames_to_column("rn"),
+      c("ZFP36L3"),
+      cell_col = "rn",
+      x = "UMAP_1",
+      y = "UMAP_2"
+    )
+  )
 })
 
 test_that("plot_cols returns a ggplot object", {
@@ -193,9 +203,11 @@ test_that("plot_tsne works with alpha_col", {
   pbmc_meta2 <- pbmc_meta
   pbmc_meta2$al <- 0
   pbmc_meta2$al[1] <- 1 # 1:nrow(pbmc_meta)/nrow(pbmc_meta)
-  g <- plot_tsne(pbmc_meta2,
+  g <- plot_tsne(
+    pbmc_meta2,
     feature = "classified",
-    alpha_col = "al", do_legend = FALSE
+    alpha_col = "al",
+    do_legend = FALSE
   )
   expect_true(ggplot2::is.ggplot(g))
 })

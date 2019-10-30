@@ -69,13 +69,15 @@ test_that("run all correlation functions", {
 })
 
 test_that("test bad inputs", {
-  expect_error(clustify(
-    input = pbmc_matrix_small,
-    metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix,
-    query_genes = pbmc_vargenes,
-    compute_method = "foo"
-  ))
+  expect_error(
+    clustify(
+      input = pbmc_matrix_small,
+      metadata = pbmc_meta,
+      ref_mat = pbmc_bulk_matrix,
+      query_genes = pbmc_vargenes,
+      compute_method = "foo"
+    )
+  )
 })
 
 test_that("test per cell", {
@@ -106,7 +108,8 @@ test_that("test permutation", {
     ref_mat = pbmc_bulk_matrix,
     query_genes = pbmc_vargenes,
     cluster_col = "classified",
-    n_perm = 2, return_full = TRUE
+    n_perm = 2,
+    return_full = TRUE
   )
 
   expect_equal(res1, res_full$score)
@@ -120,20 +123,23 @@ test_that("seurat object clustifying", {
     cluster_col = "res.1",
     dr = "tsne"
   )
-  res <- clustify(s_small,
+  res <- clustify(
+    s_small,
     pbmc_bulk_matrix,
     cluster_col = "res.1",
     seurat_out = FALSE,
     per_cell = TRUE,
     dr = "tsne"
   )
-  res <- clustify(s_small,
+  res <- clustify(
+    s_small,
     pbmc_bulk_matrix,
     cluster_col = "res.1",
     seurat_out = FALSE,
     dr = "tsne"
   )
-  g <- plot_best_call(res,
+  g <- plot_best_call(
+    res,
     seurat_meta(s_small,
       dr = "tsne"
     ),
@@ -146,14 +152,16 @@ test_that("seurat object clustifying", {
 })
 
 test_that("clustify reinserts seurat metadata correctly", {
-  res <- clustify(s_small,
+  res <- clustify(
+    s_small,
     pbmc_bulk_matrix,
     cluster_col = "res.1",
     seurat_out = TRUE,
     per_cell = TRUE,
     dr = "tsne"
   )
-  res2 <- clustify(s_small,
+  res2 <- clustify(
+    s_small,
     pbmc_bulk_matrix,
     cluster_col = "res.1",
     seurat_out = TRUE,
@@ -168,14 +176,16 @@ test_that("seurat3 object clustifying", {
     cluster_col = "RNA_snn_res.1",
     dr = "tsne"
   )
-  res <- clustify(s_small3,
+  res <- clustify(
+    s_small3,
     pbmc_bulk_matrix,
     cluster_col = "RNA_snn_res.1",
     seurat_out = FALSE,
     per_cell = TRUE,
     dr = "tsne"
   )
-  res <- clustify(s_small3,
+  res <- clustify(
+    s_small3,
     pbmc_bulk_matrix,
     cluster_col = "RNA_snn_res.1",
     seurat_out = FALSE,
@@ -192,14 +202,16 @@ test_that("seurat3 object clustifying", {
 })
 
 test_that("clustify reinserts seurat3 metadata correctly", {
-  res <- clustify(s_small3,
+  res <- clustify(
+    s_small3,
     pbmc_bulk_matrix,
     cluster_col = "RNA_snn_res.1",
     seurat_out = TRUE,
     per_cell = TRUE,
     dr = "tsne"
   )
-  res2 <- clustify(s_small3,
+  res2 <- clustify(
+    s_small3,
     pbmc_bulk_matrix,
     cluster_col = "RNA_snn_res.1",
     seurat_out = TRUE,
@@ -268,58 +280,68 @@ test_that("permute_similarity runs per cell", {
 })
 
 test_that("error for unsupported method", {
-  expect_error(res <- permute_similarity(
-    pbmc_matrix_small[c("RBM28", "CCDC136", "TNPO3"), c(7, 11)],
-    cbmc_ref[c("RBM28", "CCDC136", "TNPO3"), 1:3],
-    pbmc_meta$rn[c(7, 11)],
-    n_perm = 2,
-    per_cell = TRUE,
-    compute_method = "a"
-  ))
+  expect_error(
+    res <- permute_similarity(
+      pbmc_matrix_small[c("RBM28", "CCDC136", "TNPO3"), c(7, 11)],
+      cbmc_ref[c("RBM28", "CCDC136", "TNPO3"), 1:3],
+      pbmc_meta$rn[c(7, 11)],
+      n_perm = 2,
+      per_cell = TRUE,
+      compute_method = "a"
+    )
+  )
 })
 
 test_that("cor throws readable error when mat has 0 rows", {
-  expect_error(res <- clustify(
-    input = pbmc_matrix_small[0, ],
-    metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix,
-    query_genes = pbmc_vargenes,
-    cluster_col = "classified",
-    verbose = TRUE
-  ))
+  expect_error(
+    res <- clustify(
+      input = pbmc_matrix_small[0, ],
+      metadata = pbmc_meta,
+      ref_mat = pbmc_bulk_matrix,
+      query_genes = pbmc_vargenes,
+      cluster_col = "classified",
+      verbose = TRUE
+    )
+  )
 })
 
 test_that("cor throws readable error when mat has wrong number of cols", {
-  expect_error(res <- clustify(
-    input = pbmc_matrix_small[, 1:2630],
-    metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix,
-    query_genes = pbmc_vargenes,
-    cluster_col = "classified",
-    verbose = TRUE
-  ))
+  expect_error(
+    res <- clustify(
+      input = pbmc_matrix_small[, 1:2630],
+      metadata = pbmc_meta,
+      ref_mat = pbmc_bulk_matrix,
+      query_genes = pbmc_vargenes,
+      cluster_col = "classified",
+      verbose = TRUE
+    )
+  )
 })
 
 test_that("cor throws readable error when ref_mat has 0 rows", {
-  expect_error(res <- clustify(
-    input = pbmc_matrix_small,
-    metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix[0, ],
-    query_genes = pbmc_vargenes,
-    cluster_col = "classified",
-    verbose = TRUE
-  ))
+  expect_error(
+    res <- clustify(
+      input = pbmc_matrix_small,
+      metadata = pbmc_meta,
+      ref_mat = pbmc_bulk_matrix[0, ],
+      query_genes = pbmc_vargenes,
+      cluster_col = "classified",
+      verbose = TRUE
+    )
+  )
 })
 
 test_that("cor throws readable error when ref_mat has 0 cols", {
-  expect_error(res <- clustify(
-    input = pbmc_matrix_small,
-    metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix[, 0],
-    query_genes = pbmc_vargenes,
-    cluster_col = "classified",
-    verbose = TRUE
-  ))
+  expect_error(
+    res <- clustify(
+      input = pbmc_matrix_small,
+      metadata = pbmc_meta,
+      ref_mat = pbmc_bulk_matrix[, 0],
+      query_genes = pbmc_vargenes,
+      cluster_col = "classified",
+      verbose = TRUE
+    )
+  )
 })
 
 test_that("sparse matrix is accepted as input", {
@@ -336,14 +358,16 @@ test_that("sparse matrix is accepted as input", {
 })
 
 test_that("correct error message is displayed for nonexistent cluster_col", {
-  expect_error(res <- clustify(
-    input = s_small3@assays$RNA@counts,
-    metadata = s_small3@meta.data,
-    ref_mat = pbmc_bulk_matrix,
-    query_genes = pbmc_vargenes,
-    cluster_col = "a",
-    verbose = TRUE
-  ))
+  expect_error(
+    res <- clustify(
+      input = s_small3@assays$RNA@counts,
+      metadata = s_small3@meta.data,
+      ref_mat = pbmc_bulk_matrix,
+      query_genes = pbmc_vargenes,
+      cluster_col = "a",
+      verbose = TRUE
+    )
+  )
 })
 
 test_that("input Seurat metadata columns are not changed (type, r, rn, etc). #259", {
@@ -391,14 +415,16 @@ test_that("clustify_lists works with pct and Seurat3 object", {
 })
 
 test_that("clustify_lists gives correct error message upon unrecognized method", {
-  expect_error(res <- clustify_lists(
-    s_small3,
-    marker = cbmc_m,
-    cluster_col = "RNA_snn_res.1",
-    dr = "tsne",
-    metric = "ptc",
-    seurat_out = FALSE
-  ))
+  expect_error(
+    res <- clustify_lists(
+      s_small3,
+      marker = cbmc_m,
+      cluster_col = "RNA_snn_res.1",
+      dr = "tsne",
+      metric = "ptc",
+      seurat_out = FALSE
+    )
+  )
 })
 
 test_that("clustify takes factor for metadata", {

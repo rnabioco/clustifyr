@@ -41,7 +41,8 @@ seurat_ref.seurat <- function(seurat_object,
     }
   }
 
-  temp_res <- average_clusters(temp_mat,
+  temp_res <- average_clusters(
+    temp_mat,
     seurat_object@meta.data,
     if_log = TRUE,
     cluster_col = cluster_col,
@@ -67,7 +68,8 @@ seurat_ref.Seurat <- function(seurat_object,
     if (is.logical(var_genes_only) && var_genes_only) {
       temp_mat <- temp_mat[seurat_object@assays$RNA@var.features, ]
     } else if (var_genes_only == "PCA") {
-      temp_mat <- temp_mat[rownames(seurat_object@reductions$pca@feature.loadings), ]
+      temp_mat <-
+        temp_mat[rownames(seurat_object@reductions$pca@feature.loadings), ]
     }
 
     if (!is.null(assay_name)) {
@@ -80,7 +82,8 @@ seurat_ref.Seurat <- function(seurat_object,
     stop("warning, not seurat3 object")
   }
 
-  temp_res <- average_clusters(temp_mat,
+  temp_res <- average_clusters(
+    temp_mat,
     seurat_object@meta.data,
     if_log = TRUE,
     cluster_col = cluster_col,
@@ -111,17 +114,20 @@ seurat_meta.seurat <- function(seurat_object,
                                dr = "umap",
                                ...) {
   dr2 <- dr
-  temp_dr <- tryCatch(as.data.frame(seurat_object@dr[[dr2]]@cell.embeddings),
-    error = function(e) {
-      message("cannot find dr info")
-      return(NA)
-    }
-  )
+  temp_dr <-
+    tryCatch(
+      as.data.frame(seurat_object@dr[[dr2]]@cell.embeddings),
+      error = function(e) {
+        message("cannot find dr info")
+        return(NA)
+      }
+    )
   if (!is.data.frame(temp_dr)) {
     return(seurat_object@meta.data)
   } else {
     temp_dr <- tibble::rownames_to_column(temp_dr, "rn")
-    temp_meta <- tibble::rownames_to_column(seurat_object@meta.data, "rn")
+    temp_meta <-
+      tibble::rownames_to_column(seurat_object@meta.data, "rn")
     temp <- dplyr::left_join(temp_meta, temp_dr, by = "rn")
     return(tibble::column_to_rownames(temp, "rn"))
   }
@@ -137,12 +143,14 @@ seurat_meta.Seurat <- function(seurat_object,
   mdata <- seurat_object@meta.data
   temp_col_id <- get_unique_column(mdata, "rn")
 
-  temp_dr <- tryCatch(as.data.frame(seurat_object@reductions[[dr2]]@cell.embeddings),
-    error = function(e) {
-      message("cannot find dr info")
-      return(NA)
-    }
-  )
+  temp_dr <-
+    tryCatch(
+      as.data.frame(seurat_object@reductions[[dr2]]@cell.embeddings),
+      error = function(e) {
+        message("cannot find dr info")
+        return(NA)
+      }
+    )
   if (!is.data.frame(temp_dr)) {
     return(mdata)
   } else {
@@ -172,7 +180,8 @@ object_ref <- function(input,
                        lookuptable = NULL) {
   if (!is(input, "seurat")) {
     input_original <- input
-    temp <- parse_loc_object(input,
+    temp <- parse_loc_object(
+      input,
       type = class(input),
       expr_loc = NULL,
       meta_loc = NULL,
@@ -196,7 +205,8 @@ object_ref <- function(input,
     temp_mat <- temp_mat[query_genes, ]
   }
 
-  temp_res <- average_clusters(temp_mat,
+  temp_res <- average_clusters(
+    temp_mat,
     metadata,
     if_log = TRUE,
     cluster_col = cluster_col,

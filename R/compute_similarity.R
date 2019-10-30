@@ -24,7 +24,9 @@ get_similarity <- function(expr_mat,
                            rm0 = FALSE,
                            ...) {
   if (nrow(expr_mat) == 0) {
-    stop("after subsetting to shared genes, query expression matrix has 0 rows", call. = FALSE)
+    stop("after subsetting to shared genes, query expression matrix has 0 rows",
+      call. = FALSE
+    )
   }
 
   if (ncol(expr_mat) == 0) {
@@ -32,7 +34,9 @@ get_similarity <- function(expr_mat,
   }
 
   if (nrow(ref_mat) == 0) {
-    stop("after subsetting to shared genes, reference expression matrix has 0 rows", call. = FALSE)
+    stop("after subsetting to shared genes, reference expression matrix has 0 rows",
+      call. = FALSE
+    )
   }
 
   if (ncol(ref_mat) == 0) {
@@ -41,13 +45,21 @@ get_similarity <- function(expr_mat,
 
   ref_clust <- colnames(ref_mat)
   if (ncol(expr_mat) != length(cluster_ids)) {
-    stop("number of cells in expression matrix not equal to metadata/cluster_col", call. = FALSE)
+    stop("number of cells in expression matrix not equal to metadata/cluster_col",
+      call. = FALSE
+    )
   }
 
   if (sum(is.na(cluster_ids)) > 0) {
     message("reassigning NAs to unknown")
     cluster_ids <- factor(cluster_ids)
-    cluster_ids <- factor(cluster_ids, levels = c(levels(cluster_ids), NA), labels = c(levels(cluster_ids), "unknown"), exclude = NULL)
+    cluster_ids <-
+      factor(
+        cluster_ids,
+        levels = c(levels(cluster_ids), NA),
+        labels = c(levels(cluster_ids), "unknown"),
+        exclude = NULL
+      )
     cluster_ids <- as.character(cluster_ids)
   }
 
@@ -63,8 +75,7 @@ get_similarity <- function(expr_mat,
     clust_avg <- expr_mat
   }
 
-  assigned_score <- calc_similarity(
-    clust_avg,
+  assigned_score <- calc_similarity(clust_avg,
     ref_mat,
     compute_method,
     rm0 = rm0,
@@ -124,8 +135,7 @@ permute_similarity <- function(expr_mat,
     clust_avg <- expr_mat
   }
 
-  assigned_score <- calc_similarity(
-    clust_avg,
+  assigned_score <- calc_similarity(clust_avg,
     ref_mat,
     compute_method,
     rm0 = rm0,
@@ -133,7 +143,8 @@ permute_similarity <- function(expr_mat,
   )
 
   # perform permutation
-  sig_counts <- matrix(0L, nrow = length(sc_clust), ncol = length(ref_clust))
+  sig_counts <-
+    matrix(0L, nrow = length(sc_clust), ncol = length(ref_clust))
 
   for (i in 1:n_perm) {
     resampled <- sample(cluster_ids,
@@ -152,14 +163,14 @@ permute_similarity <- function(expr_mat,
     }
 
     # permutate assignment
-    new_score <- calc_similarity(
-      permuted_avg,
+    new_score <- calc_similarity(permuted_avg,
       ref_mat,
       compute_method,
       rm0 = rm0,
       ...
     )
-    sig_counts <- sig_counts + as.numeric(new_score > assigned_score)
+    sig_counts <-
+      sig_counts + as.numeric(new_score > assigned_score)
   }
 
   rownames(assigned_score) <- sc_clust
@@ -188,7 +199,9 @@ permute_similarity <- function(expr_mat,
 compute_mean_expr <- function(expr_mat,
                               sc_assign,
                               sc_clust) {
-  sapply(sc_clust, function(x) Matrix::rowMeans(expr_mat[, sc_assign == x, drop = FALSE]))
+  sapply(sc_clust, function(x) {
+    Matrix::rowMeans(expr_mat[, sc_assign == x, drop = FALSE])
+  })
 }
 
 #' compute similarity
@@ -210,7 +223,8 @@ calc_similarity <- function(query_mat,
     query_mat[query_mat == 0] <- NA
     similarity_score <- stats::cor(as.matrix(query_mat),
       ref_mat,
-      method = compute_method, use = "pairwise.complete.obs"
+      method = compute_method,
+      use = "pairwise.complete.obs"
     )
     return(similarity_score)
   } else {
@@ -262,8 +276,12 @@ calc_similarity <- function(query_mat,
 #' @export
 vector_similarity <- function(vec1, vec2, compute_method, ...) {
   # examine whether two vectors are of the same size
-  if (!is.numeric(vec1) || !is.numeric(vec2) || length(vec1) != length(vec2)) {
-    stop("compute_similarity: two input vectors are not numeric or of different sizes.", call. = FALSE)
+  if (!is.numeric(vec1) ||
+    !is.numeric(vec2) || length(vec1) != length(vec2)) {
+    stop(
+      "compute_similarity: two input vectors are not numeric or of different sizes.",
+      call. = FALSE
+    )
   }
 
   if (!(compute_method %in% c("cosine", "kl_divergence"))) {
@@ -307,8 +325,11 @@ cosine <- function(vec1, vec2) {
 #' @param max_KL Maximal allowed value of KL-divergence.
 #' @return numeric value, with additional attributes, of kl divergence between the vectors
 #' @export
-kl_divergence <- function(vec1, vec2, if_log = FALSE,
-                          total_reads = 1000, max_KL = 1) {
+kl_divergence <- function(vec1,
+                          vec2,
+                          if_log = FALSE,
+                          total_reads = 1000,
+                          max_KL = 1) {
   if (if_log) {
     vec1 <- expm1(vec1)
     vec2 <- expm1(vec2)
