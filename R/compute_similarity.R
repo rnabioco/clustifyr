@@ -26,31 +26,31 @@ get_similarity <- function(expr_mat,
   if (nrow(expr_mat) == 0) {
     stop("after subsetting to shared genes, query expression matrix has 0 rows", call. = FALSE)
   }
-  
+
   if (ncol(expr_mat) == 0) {
     stop("query expression matrix has 0 cols", call. = FALSE)
   }
-  
+
   if (nrow(ref_mat) == 0) {
     stop("after subsetting to shared genes, reference expression matrix has 0 rows", call. = FALSE)
   }
-  
+
   if (ncol(ref_mat) == 0) {
     stop("reference expression matrix has 0 cols", call. = FALSE)
   }
-  
+
   ref_clust <- colnames(ref_mat)
   if (ncol(expr_mat) != length(cluster_ids)) {
     stop("number of cells in expression matrix not equal to metadata/cluster_col", call. = FALSE)
   }
-  
+
   if (sum(is.na(cluster_ids)) > 0) {
     message("reassigning NAs to unknown")
     cluster_ids <- factor(cluster_ids)
     cluster_ids <- factor(cluster_ids, levels = c(levels(cluster_ids), NA), labels = c(levels(cluster_ids), "unknown"), exclude = NULL)
     cluster_ids <- as.character(cluster_ids)
   }
-  
+
   if (!per_cell) {
     sc_clust <- sort(unique(cluster_ids))
     clust_avg <- compute_mean_expr(
@@ -204,7 +204,7 @@ calc_similarity <- function(query_mat,
                             compute_method,
                             rm0 = FALSE,
                             ...) {
-    # remove 0s ?
+  # remove 0s ?
   if (rm0) {
     message("considering 0 as missing data")
     query_mat[query_mat == 0] <- NA
@@ -214,7 +214,7 @@ calc_similarity <- function(query_mat,
     )
     return(similarity_score)
   } else {
-    if (any(compute_method %in% c("pearson", "spearman","kendall"))) {
+    if (any(compute_method %in% c("pearson", "spearman", "kendall"))) {
       similarity_score <- cor(as.matrix(query_mat),
         ref_mat,
         method = compute_method

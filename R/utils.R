@@ -53,7 +53,7 @@ overcluster <- function(mat,
 #'   mat = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
 #'   cluster_col = "classified",
-#'  if_log = FALSE
+#'   if_log = FALSE
 #' )
 #' @export
 average_clusters <- function(mat, metadata,
@@ -137,9 +137,9 @@ average_clusters <- function(mat, metadata,
     expr_df <- as.data.frame(as.matrix(expr_mat))
     df_temp <- apply(-expr_df, 2, rank)
     expr_mat[df_temp > cut_n] <- 0
-    out <- expr_mat  
+    out <- expr_mat
   }
-  
+
   return(out)
 }
 
@@ -596,7 +596,7 @@ gene_pct <- function(matrix,
                      returning = "mean") {
   genelist <- intersect(genelist, rownames(matrix))
   if (is.factor(clusters)) {
-    clusters = factor(clusters, levels=c(levels(clusters), "orig.NA"))
+    clusters <- factor(clusters, levels = c(levels(clusters), "orig.NA"))
   }
   clusters[is.na(clusters)] <- "orig.NA"
   unique_clusters <- unique(clusters)
@@ -787,22 +787,22 @@ clustify_nudge.default <- function(input,
       ...
     )
   }
-  
+
   if (!inherits(input, c("matrix", "Matrix", "data.frame"))) {
     input_original <- input
     temp <- parse_loc_object(input,
-                             type = class(input),
-                             expr_loc = NULL,
-                             meta_loc = NULL,
-                             var_loc = NULL,
-                             cluster_col = cluster_col,
-                             lookuptable = lookuptable
+      type = class(input),
+      expr_loc = NULL,
+      meta_loc = NULL,
+      var_loc = NULL,
+      cluster_col = cluster_col,
+      lookuptable = lookuptable
     )
-    
+
     if (!(is.null(temp[["expr"]]))) {
       message(paste0("recognized object type - ", class(input)))
     }
-    
+
     input <- temp[["expr"]]
     metadata <- temp[["meta"]]
     if (is.null(query_genes)) {
@@ -812,7 +812,7 @@ clustify_nudge.default <- function(input,
       cluster_col <- temp[["col"]]
     }
   }
-  
+
   resa <- clustify(
     input = input,
     ref_mat = ref_mat,
@@ -822,7 +822,7 @@ clustify_nudge.default <- function(input,
     seurat_out = FALSE,
     per_cell = FALSE
   )
-  
+
   if (mode == "pct") {
     resb <- gene_pct_markerm(
       input,
@@ -832,7 +832,7 @@ clustify_nudge.default <- function(input,
       norm = norm
     )
   } else if (mode == "rank") {
-    if (ncol(marker) > 1 && class(marker[1,1]) == "character") {
+    if (ncol(marker) > 1 && class(marker[1, 1]) == "character") {
       marker <- pos_neg_marker(marker)
     }
     resb <- pos_neg_select(
@@ -846,10 +846,10 @@ clustify_nudge.default <- function(input,
     empty_mat <- matrix(0, nrow = nrow(resb), ncol = length(empty_vec), dimnames = list(rownames(resb), empty_vec))
     resb <- cbind(resb, empty_mat)
   }
-  
+
   res <- resa[order(rownames(resa)), order(colnames(resa))] +
     resb[order(rownames(resb)), order(colnames(resb))] * weight
-  
+
   if ((obj_out || seurat_out) && !inherits(input_original, c("matrix", "Matrix", "data.frame"))) {
     df_temp <- cor_to_call(
       res,
@@ -857,7 +857,7 @@ clustify_nudge.default <- function(input,
       cluster_col = cluster_col,
       threshold = threshold
     )
-    
+
     df_temp_full <- call_to_metadata(
       df_temp,
       metadata = metadata,
@@ -865,13 +865,13 @@ clustify_nudge.default <- function(input,
       per_cell = FALSE,
       rename_prefix = rename_prefix
     )
-    
+
     out <- insert_meta_object(
       input_original,
       df_temp_full,
       lookuptable = lookuptable
     )
-    
+
     return(out)
   } else {
     if (call == TRUE) {
@@ -929,7 +929,7 @@ clustify_nudge.seurat <- function(input,
       norm = norm
     )
   } else if (mode == "rank") {
-    if (ncol(marker) > 1 && class(marker[1,1]) == "character") {
+    if (ncol(marker) > 1 && class(marker[1, 1]) == "character") {
       marker <- pos_neg_marker(marker)
     }
     resb <- pos_neg_select(input@data,
@@ -1017,7 +1017,7 @@ clustify_nudge.Seurat <- function(input,
       norm = norm
     )
   } else if (mode == "rank") {
-    if (ncol(marker) > 1 && class(marker[1,1]) == "character") {
+    if (ncol(marker) > 1 && class(marker[1, 1]) == "character") {
       marker <- pos_neg_marker(marker)
     }
     resb <- pos_neg_select(input@assays$RNA@data,
@@ -1131,7 +1131,9 @@ parse_loc_object <- function(input,
 #' @param lookuptable if not supplied, will look in built-in table for object parsing
 #' @return new object with new metadata inserted
 #' @examples
-#' \dontrun{clustifyr_obj <- insert_meta_object(s_small3, seurat_meta(s_small3, dr = "tsne"))}
+#' \dontrun{
+#' clustifyr_obj <- insert_meta_object(s_small3, seurat_meta(s_small3, dr = "tsne"))
+#' }
 #' @export
 insert_meta_object <- function(input,
                                new_meta,
@@ -1649,7 +1651,7 @@ pos_neg_select <- function(input,
     ref_mat,
     metadata,
     cluster_col = cluster_col,
-    per_cell = TRUE, 
+    per_cell = TRUE,
     verbose = TRUE,
     query_genes = rownames(ref_mat)
   ))
@@ -1698,14 +1700,16 @@ reverse_marker_matrix <- function(mat) {
 pos_neg_marker <- function(mat) {
   if (class(mat) == "data.frame") {
     mat <- as.list(mat)
-  } else if (class(mat)  == "matrix") {
+  } else if (class(mat) == "matrix") {
     mat <- as.list(as.data.frame(mat))
   } else if (class(mat) != "list") {
     stop("unsupported marker format, must be dataframe, matrix, or list", call. = FALSE)
   }
   genelist <- mat
   typenames <- names(genelist)
-  g2 <- sapply(typenames, FUN = function(x) {data.frame(type = x, gene = genelist[[x]])}, simplify = F)
+  g2 <- sapply(typenames, FUN = function(x) {
+    data.frame(type = x, gene = genelist[[x]])
+  }, simplify = F)
   g2 <- do.call("rbind", g2)
   g2 <- dplyr::mutate(g2, expression = 1)
   g2 <- tidyr::spread(g2, key = "type", value = "expression")
@@ -1757,16 +1761,17 @@ file_marker_parse <- function(filename) {
 #' @param id desired id if unique
 #' @return character
 #' @export
-get_unique_column <- function(df, id = NULL){
-  if(!is.null(id)){
+get_unique_column <- function(df, id = NULL) {
+  if (!is.null(id)) {
     out_id <- id
   } else {
     out_id <- "x"
   }
 
   res <- ifelse(out_id %in% colnames(df),
-                make.unique(c(colnames(df), out_id))[length(c(colnames(df), out_id))],
-                out_id)
+    make.unique(c(colnames(df), out_id))[length(c(colnames(df), out_id))],
+    out_id
+  )
 
   res
 }
@@ -1797,11 +1802,11 @@ find_rank_bias <- function(mat,
   } else {
     query_genes <- intersect(query_genes, intersect(rownames(mat), rownames(ref_mat)))
   }
-  avg2 <- average_clusters(mat[,rownames(metadata)], metadata[[type_col]])
-  r2 <- apply(-avg2[query_genes,], 2, rank)
-  r2 <- r2[,colnames(r2)[!stringr::str_detect(colnames(r2), "unassigned")]]
-  r1 <- apply(-ref_mat[query_genes,], 2, rank)[,colnames(r2)]
-  
+  avg2 <- average_clusters(mat[, rownames(metadata)], metadata[[type_col]])
+  r2 <- apply(-avg2[query_genes, ], 2, rank)
+  r2 <- r2[, colnames(r2)[!stringr::str_detect(colnames(r2), "unassigned")]]
+  r1 <- apply(-ref_mat[query_genes, ], 2, rank)[, colnames(r2)]
+
   if (!(is.null(expr_cut))) {
     r1[r1 > expr_cut] <- expr_cut
     r2[r2 > expr_cut] <- expr_cut
@@ -1816,7 +1821,7 @@ find_rank_bias <- function(mat,
     v <- rowMeans(rp, na.rm = T) == 1
     v[is.na(v)] <- FALSE
     v2 <- Matrix::rowSums(rp, na.rm = T) == 1
-    prob <- rdiff[v & !v2,]
+    prob <- rdiff[v & !v2, ]
     return(prob)
   } else {
     return(rdiff)

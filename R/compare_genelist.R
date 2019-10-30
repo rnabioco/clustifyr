@@ -162,7 +162,6 @@ get_vargenes <- function(marker_mat) {
 #'   pbmc_mm,
 #'   metric = "spearman"
 #' )
-#'
 #' @export
 compare_lists <- function(bin_mat,
                           marker_mat,
@@ -174,7 +173,7 @@ compare_lists <- function(bin_mat,
     warning("non-binarized data, running spearman instead")
     metric <- "spearman"
   }
-  
+
   if (metric == "hyper") {
     out <- lapply(
       colnames(bin_mat),

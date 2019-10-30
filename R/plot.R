@@ -71,12 +71,13 @@ plot_tsne <- function(data,
     p <- ggplot2::ggplot(data, ggplot2::aes_string(x_col, y_col)) +
       geom_point(ggplot2::aes_string(color = paste0("`", feature, "`"), alpha = paste0("`", alpha_col, "`")), # backticks protect special character gene names
         size = pt_size
-    ) + scale_alpha_continuous(range = c(0, 1)) } else {
-      p <- ggplot2::ggplot(data, ggplot2::aes_string(x_col, y_col)) +
-        geom_point(ggplot2::aes_string(color = paste0("`", feature, "`")), # backticks protect special character gene names
-                    size = pt_size
+      ) + scale_alpha_continuous(range = c(0, 1))
+  } else {
+    p <- ggplot2::ggplot(data, ggplot2::aes_string(x_col, y_col)) +
+      geom_point(ggplot2::aes_string(color = paste0("`", feature, "`")), # backticks protect special character gene names
+        size = pt_size
       )
-    }
+  }
 
   # discrete values
   if (!is.numeric(feature_data)) {
@@ -88,7 +89,6 @@ plot_tsne <- function(data,
           values = d_cols,
           name = legend_name
         )
-
     } else {
       p <- p +
         scale_color_brewer(
@@ -97,7 +97,7 @@ plot_tsne <- function(data,
         )
     }
 
-  # continuous values
+    # continuous values
   } else {
     if (is.null(scale_limits)) {
       scale_limits <- c(
@@ -229,7 +229,6 @@ plot_cor <- function(cor_mat,
       metadata,
       by = cluster_col
     )
-
   } else {
     plt_data <- dplyr::left_join(cor_df_long,
       metadata,
@@ -246,10 +245,8 @@ plot_cor <- function(cor_mat,
       ),
       max(max(plt_data$expr))
     )
-
   } else if (is.logical(scale_legends) && !scale_legends) {
     scale_limits <- NULL
-
   } else {
     scale_limits <- scale_legends
   }

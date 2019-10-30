@@ -213,13 +213,15 @@ test_that("run all gene list functions and then use consensus_call", {
     gene_list_methods,
     function(x) {
       compare_lists(pbmc_avgb,
-                    pbmc_mm,
-                    metric = x
+        pbmc_mm,
+        metric = x
       )
     }
   )
-  call_list <- lapply(results,
-                      cor_to_call_rank)
+  call_list <- lapply(
+    results,
+    cor_to_call_rank
+  )
   calls <- call_consensus(call_list)
   expect_equal(4, length(results))
 })

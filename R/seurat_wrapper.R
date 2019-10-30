@@ -35,9 +35,9 @@ seurat_ref.seurat <- function(seurat_object,
   }
 
   if (!is.null(assay_name)) {
-      for (element in assay_name) {
-        temp_mat2 <- seurat_object@assay[[element]]@raw.data
-        temp_mat <- rbind(temp_mat, as.matrix(temp_mat2))
+    for (element in assay_name) {
+      temp_mat2 <- seurat_object@assay[[element]]@raw.data
+      temp_mat <- rbind(temp_mat, as.matrix(temp_mat2))
     }
   }
 
@@ -71,9 +71,9 @@ seurat_ref.Seurat <- function(seurat_object,
     }
 
     if (!is.null(assay_name)) {
-        for (element in assay_name) {
-          temp_mat2 <- seurat_object@assays[[element]]@counts
-          temp_mat <- rbind(temp_mat, as.matrix(temp_mat2))
+      for (element in assay_name) {
+        temp_mat2 <- seurat_object@assays[[element]]@counts
+        temp_mat <- rbind(temp_mat, as.matrix(temp_mat2))
       }
     }
   } else {
@@ -91,10 +91,12 @@ seurat_ref.Seurat <- function(seurat_object,
   temp_res
 }
 
-#' Function to convert labelled seurat object to fully prepared metadata#' 
+#' Function to convert labelled seurat object to fully prepared metadata#'
 #' @return dataframe of metadata, including dimension reduction plotting info
 #' @examples
-#' \dontrun{meta_data <- seurat_meta(s_small)}
+#' \dontrun{
+#' meta_data <- seurat_meta(s_small)
+#' }
 #' @export
 seurat_meta <- function(seurat_object, ...) {
   UseMethod("seurat_meta", seurat_object)
@@ -110,10 +112,11 @@ seurat_meta.seurat <- function(seurat_object,
                                ...) {
   dr2 <- dr
   temp_dr <- tryCatch(as.data.frame(seurat_object@dr[[dr2]]@cell.embeddings),
-                      error = function(e) {
-                        message("cannot find dr info")
-                        return(NA)
-                      })
+    error = function(e) {
+      message("cannot find dr info")
+      return(NA)
+    }
+  )
   if (class(temp_dr) != "data.frame") {
     return(seurat_object@meta.data)
   } else {
@@ -135,10 +138,11 @@ seurat_meta.Seurat <- function(seurat_object,
   temp_col_id <- get_unique_column(mdata, "rn")
 
   temp_dr <- tryCatch(as.data.frame(seurat_object@reductions[[dr2]]@cell.embeddings),
-                      error = function(e) {
-                        message("cannot find dr info")
-                        return(NA)
-                      })
+    error = function(e) {
+      message("cannot find dr info")
+      return(NA)
+    }
+  )
   if (class(temp_dr) != "data.frame") {
     return(mdata)
   } else {

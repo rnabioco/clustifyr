@@ -229,14 +229,14 @@ test_that("get_similarity handles NA entries", {
   pbmc_meta2 <- pbmc_meta
   pbmc_meta2[1, "classified"] <- NA
   res <- get_similarity(
-    pbmc_matrix_small[intersect(rownames(pbmc_matrix_small), rownames(pbmc_bulk_matrix)),],
-    ref_mat = pbmc_bulk_matrix[intersect(rownames(pbmc_matrix_small), rownames(pbmc_bulk_matrix)),],
+    pbmc_matrix_small[intersect(rownames(pbmc_matrix_small), rownames(pbmc_bulk_matrix)), ],
+    ref_mat = pbmc_bulk_matrix[intersect(rownames(pbmc_matrix_small), rownames(pbmc_bulk_matrix)), ],
     pbmc_meta2$classified,
     compute_method = "spearman"
   )
   n_clusters <- length(unique(pbmc_meta$classified))
   n_ref_samples <- ncol(pbmc_bulk_matrix)
-  
+
   expect_equal(ncol(res), n_ref_samples)
   expect_equal(n_clusters + 1, nrow(res))
 })
@@ -280,7 +280,7 @@ test_that("error for unsupported method", {
 
 test_that("cor throws readable error when mat has 0 rows", {
   expect_error(res <- clustify(
-    input = pbmc_matrix_small[0,],
+    input = pbmc_matrix_small[0, ],
     metadata = pbmc_meta,
     ref_mat = pbmc_bulk_matrix,
     query_genes = pbmc_vargenes,
@@ -291,7 +291,7 @@ test_that("cor throws readable error when mat has 0 rows", {
 
 test_that("cor throws readable error when mat has wrong number of cols", {
   expect_error(res <- clustify(
-    input = pbmc_matrix_small[,1:2630],
+    input = pbmc_matrix_small[, 1:2630],
     metadata = pbmc_meta,
     ref_mat = pbmc_bulk_matrix,
     query_genes = pbmc_vargenes,
@@ -304,7 +304,7 @@ test_that("cor throws readable error when ref_mat has 0 rows", {
   expect_error(res <- clustify(
     input = pbmc_matrix_small,
     metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix[0,],
+    ref_mat = pbmc_bulk_matrix[0, ],
     query_genes = pbmc_vargenes,
     cluster_col = "classified",
     verbose = TRUE
@@ -315,7 +315,7 @@ test_that("cor throws readable error when ref_mat has 0 cols", {
   expect_error(res <- clustify(
     input = pbmc_matrix_small,
     metadata = pbmc_meta,
-    ref_mat = pbmc_bulk_matrix[,0],
+    ref_mat = pbmc_bulk_matrix[, 0],
     query_genes = pbmc_vargenes,
     cluster_col = "classified",
     verbose = TRUE
@@ -347,8 +347,7 @@ test_that("correct error message is displayed for nonexistent cluster_col", {
 })
 
 test_that("input Seurat metadata columns are not changed (type, r, rn, etc). #259", {
-
-  skip_if_not_installed('Seurat')
+  skip_if_not_installed("Seurat")
   tmp <- s_small3
   tmp@meta.data$type <- 0L
   tmp@meta.data$rn <- 0L
@@ -365,7 +364,6 @@ test_that("input Seurat metadata columns are not changed (type, r, rn, etc). #25
   expect_true(all(res@meta.data$type == 0L))
   expect_true(all(res@meta.data$rn == 0L))
   expect_true(all(res@meta.data$r == 0L))
-
 })
 
 test_that("clustify_lists works with pos_neg_select and Seurat3 object", {
@@ -373,7 +371,7 @@ test_that("clustify_lists works with pos_neg_select and Seurat3 object", {
     s_small3,
     marker = cbmc_m,
     cluster_col = "RNA_snn_res.1",
-    dr = "tsne", 
+    dr = "tsne",
     metric = "posneg",
     seurat_out = FALSE
   )
@@ -385,7 +383,7 @@ test_that("clustify_lists works with pct and Seurat3 object", {
     s_small3,
     marker = cbmc_m,
     cluster_col = "RNA_snn_res.1",
-    dr = "tsne", 
+    dr = "tsne",
     metric = "pct",
     seurat_out = FALSE
   )
@@ -397,7 +395,7 @@ test_that("clustify_lists gives correct error message upon unrecognized method",
     s_small3,
     marker = cbmc_m,
     cluster_col = "RNA_snn_res.1",
-    dr = "tsne", 
+    dr = "tsne",
     metric = "ptc",
     seurat_out = FALSE
   ))
@@ -411,7 +409,7 @@ test_that("clustify takes factor for metadata", {
     query_genes = pbmc_vargenes,
     verbose = TRUE
   )
-  
+
   res2 <- clustify(
     input = pbmc_matrix_small,
     metadata = pbmc_meta$classified,
@@ -420,8 +418,8 @@ test_that("clustify takes factor for metadata", {
     verbose = TRUE,
     exclude_genes = c("CD27", "ZNF232", "ZYX")
   )
-  
-  expect_true(res[1,1] != res2[1,1])
+
+  expect_true(res[1, 1] != res2[1, 1])
 })
 # test_that("sce object clustifying", {
 #   res <- clustify(sce_small,
@@ -431,12 +429,12 @@ test_that("clustify takes factor for metadata", {
 #   )
 #   expect_true(nrow(res) == 13)
 # })
-# 
+#
 # test_that("sce object clustify_lists", {
 #   other <- c("TAF12", "SNHG3")
 #   delta <- c("PCSK1","LEPR")
 #   panm <- data.frame(other, delta)
-# 
+#
 #   res <- clustify_lists(sce_small,
 #                   marker = panm,
 #                   cluster_col = "cell_type1",

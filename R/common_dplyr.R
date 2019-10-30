@@ -25,7 +25,7 @@ cor_to_call <- function(cor_mat,
                         rename_prefix = NULL) {
   correlation_matrix <- cor_mat
   if (threshold == "auto") {
-    threshold = round(0.75 * max(correlation_matrix), 2)
+    threshold <- round(0.75 * max(correlation_matrix), 2)
     message(paste0("using threshold of ", threshold))
   }
   correlation_matrix[is.na(correlation_matrix)] <- 0
@@ -109,23 +109,31 @@ call_to_metadata <- function(res,
       stop("cluster_col from clustify step and joining to metadata step are not the same", call. = FALSE)
     }
 
-    df_temp_full <- suppressWarnings(dplyr::left_join(tibble::rownames_to_column(metadata,
-                                                                                 temp_col_id),
-                                                      df_temp,
-                                                      by = cluster_col,
-                                                      suffix = c("", ".clustify")))
+    df_temp_full <- suppressWarnings(dplyr::left_join(tibble::rownames_to_column(
+      metadata,
+      temp_col_id
+    ),
+    df_temp,
+    by = cluster_col,
+    suffix = c("", ".clustify")
+    ))
 
-    df_temp_full <- tibble::column_to_rownames(df_temp_full,
-                                               temp_col_id)
+    df_temp_full <- tibble::column_to_rownames(
+      df_temp_full,
+      temp_col_id
+    )
   } else {
     colnames(df_temp)[1] <- cluster_col
     names(cluster_col) <- temp_col_id
 
-    df_temp_full <- suppressWarnings(dplyr::left_join(tibble::rownames_to_column(metadata,
-                                                                                 temp_col_id),
-                                                      df_temp,
-                                                      by = cluster_col,
-                                                      suffix = c("", ".clustify")))
+    df_temp_full <- suppressWarnings(dplyr::left_join(tibble::rownames_to_column(
+      metadata,
+      temp_col_id
+    ),
+    df_temp,
+    by = cluster_col,
+    suffix = c("", ".clustify")
+    ))
 
     df_temp_full <- tibble::column_to_rownames(df_temp_full, temp_col_id)
   }
@@ -145,7 +153,7 @@ call_to_metadata <- function(res,
 #' @export
 collapse_to_cluster <- function(res,
                                 metadata,
-                                cluster_col, 
+                                cluster_col,
                                 threshold) {
   res_temp <- res
   colnames(res_temp)[1] <- "rn"
@@ -182,15 +190,15 @@ collapse_to_cluster <- function(res,
 #' res2 <- cor_to_call_rank(res, threshold = "auto")
 #' @export
 cor_to_call_rank <- function(cor_mat,
-                        metadata = NULL,
-                        cluster_col = "cluster",
-                        collapse_to_cluster = FALSE,
-                        threshold = 0,
-                        rename_prefix = NULL,
-                        top_n = NULL) {
+                             metadata = NULL,
+                             cluster_col = "cluster",
+                             collapse_to_cluster = FALSE,
+                             threshold = 0,
+                             rename_prefix = NULL,
+                             top_n = NULL) {
   correlation_matrix <- cor_mat
   if (threshold == "auto") {
-    threshold = round(0.75 * max(correlation_matrix), 2)
+    threshold <- round(0.75 * max(correlation_matrix), 2)
     message(paste0("using threshold of ", threshold))
   }
   df_temp <- tibble::as_tibble(correlation_matrix, rownames = cluster_col)
@@ -226,10 +234,10 @@ cor_to_call_rank <- function(cor_mat,
 call_consensus <- function(list_of_res) {
   # group_by(cluster, type) %>% summarize(m = mean(rank)) %>% top_n(-1, m)
   res <- do.call("rbind", list_of_res)
-  df_temp <- dplyr::group_by_at(res, c(1,2))
+  df_temp <- dplyr::group_by_at(res, c(1, 2))
   df_temp <- dplyr::summarize_at(df_temp, 2, mean)
   df_temp <- dplyr::top_n(df_temp, -1)
-  df_temp <- dplyr::group_by_at(df_temp, c(1,3))
+  df_temp <- dplyr::group_by_at(df_temp, c(1, 3))
   df_temp <- dplyr::summarize_at(df_temp, 1, function(x) stringr::str_c(x, collapse = "__"))
-  df_temp <- dplyr::select(df_temp, c(1,3,2))
+  df_temp <- dplyr::select(df_temp, c(1, 3, 2))
 }
