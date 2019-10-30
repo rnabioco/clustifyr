@@ -16,3 +16,6 @@ vector of marker gene names
 Variable gene list is required for \code{clustify} main function. This
 function parses variables genes from a matrix input.
 }
+\examples{
+get_vargenes(cbmc_m)
+}

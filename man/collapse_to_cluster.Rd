@@ -4,7 +4,7 @@
 \alias{collapse_to_cluster}
 \title{From per-cell calls, take highest freq call in each cluster}
 \usage{
-collapse_to_cluster(res, metadata, cluster_col, threshold)
+collapse_to_cluster(res, metadata, cluster_col, threshold = 0)
 }
 \arguments{
 \item{res}{dataframe of idents, such as output of cor_to_call}
@@ -20,4 +20,22 @@ new metadata with added columns
 }
 \description{
 From per-cell calls, take highest freq call in each cluster
+}
+\examples{
+res <- clustify(
+  input = pbmc_matrix_small,
+  metadata = pbmc_meta,
+  cluster_col = "classified",
+  ref_mat = cbmc_ref,
+  per_cell = T
+)
+
+res2 <- cor_to_call(res)
+
+res3 <- collapse_to_cluster(
+  res2,
+  metadata = pbmc_meta,
+  cluster_col = "classified",
+  threshold = 0
+ )
 }
