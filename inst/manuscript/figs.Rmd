@@ -25,18 +25,31 @@ knitr::opts_chunk$set(cache.lazy = FALSE)
 
 ## Fig1A. Bulk RNA-seq, microarray, and sc-RNA-seq transcriptome signatures map cell types to sc-RNA-seq experiment.
 
-```{r, fig.height=15, fig.width=15}
+```{r}
 library(tidyverse)
 library(clustifyr)
 library(clustifyrdata)
-meta <- clustifyrdata::pbmc_meta %>% rownames_to_column("id") %>% mutate(classified = ifelse(str_detect(clustifyrdata::pbmc_meta$classified, "CD4"), "CD4 T", as.character(classified))) %>% column_to_rownames("id")
+library(cowplot)
+library(ComplexHeatmap)
+```
 
-a <- plot_tsne(
+
+```{r, fig.height=15, fig.width=15}
+meta <- clustifyrdata::pbmc_meta %>% 
+  rownames_to_column("id") %>% 
+  mutate(classified = ifelse(str_detect(clustifyrdata::pbmc_meta$classified, "CD4"),
+                             "CD4 T", 
+                             as.character(classified))) %>% 
+  column_to_rownames("id")
+
+p1 <- plot_tsne(
   meta,
   feature = "classified",
   do_label = TRUE,
   do_legend = FALSE
-)
+) +
+  labs(title = "Ground truth cell types")
+
 res <- clustify(
   input = clustifyrdata::pbmc_matrix, 
   ref_mat = clustifyrdata::hema_microarray_matrix,
@@ -59,11 +72,12 @@ meta2 <- call_to_metadata(
   rename_prefix = "microarray"
 )
 
-b <- plot_tsne(
+p2 <- plot_tsne(
   meta2,
   feature = "microarray_type",
   do_label = TRUE,
-  do_legend = FALSE)
+  do_legend = FALSE) +
+  labs(title = "Microarray reference data")
 
 immgen <- immgen_ref
 rownames(immgen) <- str_to_upper(rownames(immgen_ref))
@@ -76,7 +90,7 @@ res2 <- clustify(
 )
 
 res_allgenes2 <- cor_to_call(
-  correlation_matrix = res2, 
+  cor_mat = res2, 
   metadata = meta, 
   cluster_col = "classified",
   threshold = 0.4
@@ -89,11 +103,12 @@ meta3 <- call_to_metadata(
   rename_prefix = "bulk"
 )
 
-c <- plot_tsne(
+p3 <- plot_tsne(
   meta3,
   feature = "bulk_type",
   do_label = TRUE,
-  do_legend = FALSE)
+  do_legend = FALSE) +
+  labs(title = "Bulk RNA-seq reference data")
 
 res3 <- clustify(
   input = clustifyrdata::pbmc_matrix, 
@@ -104,7 +119,7 @@ res3 <- clustify(
 )
 
 res_allgenes3 <- cor_to_call(
-  correlation_matrix = res3, 
+  cor_mat = res3, 
   metadata = meta, 
   cluster_col = "classified",
   threshold = 0.5
@@ -117,13 +132,22 @@ meta4 <- call_to_metadata(
   rename_prefix = "five"
 )
 
-d <- plot_tsne(
+p4 <- plot_tsne(
   meta4,
   feature = "five_type",
   do_label = TRUE,
-  do_legend = FALSE)
+  do_legend = FALSE) +
+  labs(title = "scRNA-seq reference data")
 
-#ggsave("Fig1A.pdf", cowplot::plot_grid(a,b,c,d, ncol = 1, labels = c("orig","microarray_ref","sorted_bulk_ref","scRNA-seq_ref")), width =7, height = 15, dpi = 400)
+p <- plot_grid(p1, p2, p3, p4,
+               ncol = 2, 
+               nrow = 2)
+
+save_plot("Fig1A.pdf", p, 
+          nrow = 2, 
+          ncol = 2,
+          base_asp = 1,
+          base_height = 6)
 ```
 
 ## Fig1B. Performance benchmark of clustifyr and competition on tabula muris dataset.
@@ -547,25 +571,33 @@ saveRDS(f, "bench_clus.rds")
 ```
 
 ```{r}
-f <- readRDS("/Users/rf/cluster/devel/4th/clu4th/vignettes/bench_clus.rds")
-a <- ggplot(f, aes(x = method, y = per, fill = method)) + 
+f <- readRDS(url("https://www.dropbox.com/s/vn7911nnnlxciuk/bench_clus.rds?dl=1"))
+p1 <- ggplot(f, aes(x = method, y = per, fill = method)) + 
   geom_boxplot() +
-  #geom_jitter() +
+  scale_fill_brewer(name = "", 
+                    palette = "Paired") +
   cowplot::theme_cowplot() + 
-  theme(axis.title.y.right = element_text(color = "red"), axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust=0.5)) +
-  ylab("accuracy") + 
+  theme(axis.title.y.right = element_text(color = "red"), 
+        axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust=0.5)) +
+  labs(x = "", 
+       y = "accuracy") + 
   theme(legend.position="none")
   
 
-b <- ggplot(f, aes(x = method, y = as.numeric(time), fill = method)) + 
+p2 <- ggplot(f, aes(x = method, y = as.numeric(time), fill = method)) + 
   geom_boxplot() +
-  #geom_jitter() +
+  scale_fill_brewer(name = "", 
+                    palette = "Paired") +
   cowplot::theme_cowplot() + 
-  theme(axis.title.y.right = element_text(color = "red"), axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust=0.5)) +
-  ylab("time(s)") + 
+  theme(axis.title.y.right = element_text(color = "red"),
+        axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust=0.5)) +
+  labs(x = "",
+       y = "time(s)") + 
   theme(legend.position="none")
 
-ggsave("Fig1B.pdf", cowplot::plot_grid(a,b, nrow = 1), width =7, height = 7, dpi = 400)
+p <- cowplot::plot_grid(p1, p2, nrow = 1, ncol = 2)
+p
+save_plot("Fig1B.pdf", p, nrow = 1, ncol = 2, base_asp = 1)
 ```
 
 # Fig2. Parameter considerations for clustifyr.
@@ -573,12 +605,13 @@ ggsave("Fig1B.pdf", cowplot::plot_grid(a,b, nrow = 1), width =7, height = 7, dpi
 ## Fig2A. clustifyr performs well with pbmcbench datasets.
 
 ```{r}
-r <- readRDS("res_pbmcbench2.rds")
+r <- readRDS(url("https://www.dropbox.com/s/tqubdiqopmllsdv/res_pbmcbench2.rds?dl=1"))
 r2 <- r %>% separate(run, sep = "_", into = c("sample", "exp", "sub"))
 
 g1 <- ggplot(r2 %>% filter(method != "kl_divergence"), aes(x = exp, y = res, fill = method)) + 
   geom_boxplot(outlier.shape = NA) +
-  #geom_jitter() +
+   scale_fill_brewer(name = "", 
+                    palette = "Paired") +
   cowplot::theme_cowplot() + 
   theme(axis.title.y.right = element_text(color = "red"), axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust=0.5)) +
   ylab("F1-score") +
@@ -586,14 +619,15 @@ g1 <- ggplot(r2 %>% filter(method != "kl_divergence"), aes(x = exp, y = res, fil
   ylim(0,1)
 
 g1
-ggsave("Fig2E.pdf", g1, width = 7, height = 7, dpi = 400)
+save_plot("Fig2E.pdf", g1, base_asp = 1, base_height = 5)
 
-r <- readRDS("res_pbmcbench.rds")
+r <- readRDS(url("https://www.dropbox.com/s/63ceddpwvjatd97/res_pbmcbench.rds?dl=1"))
 r2 <- r %>% separate(run, sep = "_", into = c("sample", "exp", "sub"))
 
 g2 <- ggplot(r2, aes(x = exp, y = res, fill = sub)) + 
   geom_boxplot(outlier.shape = NA) +
-  #geom_jitter() +
+   scale_fill_brewer(name = "", 
+                    palette = "Paired") +
   cowplot::theme_cowplot() + 
   theme(axis.title.y.right = element_text(color = "red"), axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust=0.5)) +
   ylab("F1-score") +
@@ -601,15 +635,15 @@ g2 <- ggplot(r2, aes(x = exp, y = res, fill = sub)) +
   ylim(0,1)
 
 g2
-#ggsave("Fig2A.pdf", g, width = 7, height = 7, dpi = 400)
+save_plot("Fig2A.pdf", g2, base_asp = 1, base_height = 5)
 ```
 
 ## Fig2B. Appropriate threshold on correlation prevents misclassification of missing types.
 
 ```{r}
-null <- readr::read_rds('/Users/rf/Downloads/null.rds.gz')
-reference <- readr::read_rds('/Users/rf/Downloads/reference.rds.gz')
-query <- readr::read_rds('/Users/rf/Downloads/query.rds.gz')
+null <- readRDS(url('https://www.dropbox.com/s/yhlpxvwt4g00q6h/null.rds.gz?dl=1'))
+reference <- readRDS(url('https://www.dropbox.com/s/jds4fh3v406xwww/reference.rds.gz?dl=1'))
+query <- readRDS(url('https://www.dropbox.com/s/htxu2ynk21v6p49/query.rds.gz?dl=1'))
 
 ref <- t(reference %>% select(-label))
 colnames(ref) <- 1:ncol(ref)
@@ -637,7 +671,8 @@ g <- plot_cor_heatmap(
   res,
   metadata = query$label,
   cluster_rows = FALSE,
-  cluster_columns = FALSE
+  cluster_columns = FALSE,
+  legend_title = "Pearson Cor"
 )
 
 pdf("Fig2B.pdf", width = 7, height = 7)
@@ -669,12 +704,19 @@ res1 <- clustify(
   cluster_col = "cell_type1"
 )
 
-a <- plot_cor_heatmap(
+# use same colors for all heatmaps, only show 1 legend in final plot
+cols_fun <- circlize::colorRamp2(seq(0, 1, length.out = length(not_pretty_palette)),
+                             not_pretty_palette)
+
+h1 <- plot_cor_heatmap(
   res1,
   metadata = pan_smartseq2_meta, 
   cluster_col = "cell_type1",
   cluster_rows = FALSE,
-  cluster_columns = FALSE
+  cluster_columns = FALSE,
+  row_names_side =  "left",
+  column_title = "All genes",
+  col = cols_fun
 )
 
 res2 <- clustify(
@@ -685,12 +727,15 @@ res2 <- clustify(
   query_genes = pan_indrop_vargenes
 )
 
-b <- plot_cor_heatmap(
+h2 <- plot_cor_heatmap(
   res2,
   metadata = pan_smartseq2_meta, 
   cluster_col = "cell_type1",
   cluster_rows = FALSE,
-  cluster_columns = FALSE
+  cluster_columns = FALSE,
+  row_names_side =  "left",
+  column_title = "Seurat variable genes",
+  col = cols_fun
 )
 
 res3 <- clustify(
@@ -701,12 +746,15 @@ res3 <- clustify(
   query_genes = markers_M3Drop$Gene
 )
 
-c <- plot_cor_heatmap(
+h3 <- plot_cor_heatmap(
   res3,
   metadata = pan_smartseq2_meta, 
   cluster_col = "cell_type1",
   cluster_rows = FALSE,
-  cluster_columns = FALSE
+  cluster_columns = FALSE,
+  row_names_side =  "left",
+  column_title = "M3Drop variable genes",
+  col = cols_fun
 )
 
 res4 <- clustify(
@@ -717,32 +765,37 @@ res4 <- clustify(
   query_genes = ref_feature_select(pan_indrop_avg, 500)
 )
 
-d <- plot_cor_heatmap(
+h4 <- plot_cor_heatmap(
   res4,
   metadata = pan_smartseq2_meta, 
   cluster_col = "cell_type1",
   cluster_rows = FALSE,
-  cluster_columns = FALSE
+  cluster_columns = FALSE,
+  row_names_side =  "left",
+  column_title = "Reference variable genes",
+  col = cols_fun
 )
-# 
-# cor_to_call(res4, metadata = pan_smartseq2_meta, 
-#             cluster_col = "cell_type1")
-# 
-# res_allgenes <- cor_to_call(
-#   correlation_matrix = res3, 
-#   metadata = pan_smartseq2_meta, 
-#   cluster_col = "cell_type1",
-#   threshold = 0.5
-# )
 
-g<- cowplot::plot_grid(grid::grid.grabExpr(ComplexHeatmap::draw(a)),
-                   grid::grid.grabExpr(ComplexHeatmap::draw(b)),
-                   grid::grid.grabExpr(ComplexHeatmap::draw(c)), 
-                   grid::grid.grabExpr(ComplexHeatmap::draw(d)),
-                   ncol = 1,
-                   labels  = c("all_genes", "seurat_var", "m3drop_var", "ref_var"))
 
-ggsave("Fig2C.pdf", g, width = 7, height = 15, dpi = 400)
+g <- plot_grid(
+  grid::grid.grabExpr(draw(h1)),
+  grid::grid.grabExpr(draw(h2)),
+  grid::grid.grabExpr(draw(h3)),
+  grid::grid.grabExpr(draw(h4)),
+  ncol = 1,
+  nrow = 4)
+           
+save_plot("Fig2C.pdf", g, base_asp = 1.5, base_height = 5, ncol = 1, nrow = 4)
+
+# concatenate heatmaps with ComplexHeatmap.
+# h <- h1 %v% h2 %v% h3 %v% h4
+# 
+# pdf("Fig2C.pdf", width = 7, height = 15)
+# draw(h, 
+#      row_title = "Reference data cell types", 
+#      column_title = "scRNA-seq data cell types",
+#      column_title_side  = "bottom")
+# dev.off()
 ```
 
 ```{r, eval = FALSE}
@@ -1160,34 +1213,46 @@ f_all <- rbind(f_all,f2)
 
 ```{r}
 # saveRDS(f_all, "f_all_q.rds")
-f_all <- readRDS("f_all_q.rds") %>% mutate(method = str_remove(method, "clustifyr_mca_")) %>% mutate(method = ifelse(method == "1", "orig", method))
-a <- ggplot(f_all, aes(x = method, y = per, fill = method)) + 
+f_all <- readRDS(url("https://www.dropbox.com/s/k00xuyhfw7yyirm/f_all_q.rds?dl=1")) %>% 
+                   mutate(method = str_remove(method, "clustifyr_mca_")) %>%
+                   mutate(method = ifelse(method == "1", "orig", method))
+
+rename_x <- c("All cells (n = ?)" = "orig",
+              "15" = "15",
+              "8" = "8", 
+              "4" = "4")
+
+p1 <- ggplot(f_all, aes(x = method, y = per, fill = method)) + 
   geom_boxplot(outlier.shape = NA) +
-  #geom_jitter(width = 0.25) +
+  scale_fill_brewer(name = "",
+                    palette = "Paired") +
   cowplot::theme_cowplot() + 
   theme(axis.title.y.right = element_text(color = "red"), axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust=0.5)) +
   ylab("accuracy") +
   ylim(0,1) + 
-  scale_x_discrete(limits=c("orig", "15", "8", "4")) +
+  scale_x_discrete(limits=rename_x,
+                   labels = names(rename_x)) +
   xlab("# of cells") + 
   theme(legend.position="none")
   
 
-b <- ggplot(f_all, aes(x = method, y = as.numeric(time), fill = method)) + 
+p2 <- ggplot(f_all, aes(x = method, y = as.numeric(time), fill = method)) + 
   geom_boxplot(outlier.shape = NA) +
-  #geom_jitter(width = 0.25) +
+  scale_fill_brewer(name = "",
+                    palette = "Paired") +
   cowplot::theme_cowplot() + 
   theme(axis.title.y.right = element_text(color = "red"), axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust=0.5)) +
   ylab("time(s)") +
   ylim(0,1) + 
-  scale_x_discrete(limits=c("orig", "15", "8", "4")) +
+  scale_x_discrete(limits=rename_x,
+                   labels = names(rename_x)) +
   xlab("# of cells") + 
   theme(legend.position="none")
 
-g <- cowplot::plot_grid(a,b)
+g <- cowplot::plot_grid(p1, p2)
 
 g
-#ggsave("Fig2D.pdf", g, width = 7, height = 7, dpi = 400)
+save_plot("Fig2D.pdf", g, base_asp = 0.9, nrow = 1, ncol = 2)
 ```
 
 # Fig3. clustifyr is lightweight and easily compatible with multiple workflows.
@@ -1211,10 +1276,14 @@ resc <- clustify(
   cluster_col = "cell_type1",
   query_genes = ref_feature_select(pan_smartseq2_avg, n = 700)
 )
-a0 <- plot_cor(resc,
+
+p1 <- plot_cor(resc,
               clustifyrdata::pan_indrop_meta,
               cluster_col = "cell_type1", x = "tSNE_1", y = "tSNE_2",
-              data_to_plot = "alpha")
+              data_to_plot = "alpha")[[1]] +
+  labs(title = "Spearman") +
+  theme(legend.title = element_blank())
+
 rescc<- resc[,c("alpha","beta","delta")]
 beta <- c("INS", "IGF2", "IAPP","MAFA","NPTX2")
 alpha <- c("GCG", "PDK4","LOXL2","IRX2","GC")
@@ -1229,10 +1298,13 @@ res <- clustify_lists(
   metric = "pct"
 )
 
-a <- plot_cor(res,
+p2 <- plot_cor(res,
               clustifyrdata::pan_indrop_meta,
-              cluster_col = "cell_type1", x = "tSNE_1", y = "tSNE_2",
-              data_to_plot = "alpha")
+              cluster_col = "cell_type1", 
+              x = "tSNE_1", y = "tSNE_2",
+              data_to_plot = "alpha")[[1]] +
+  labs(title = "% of cells with expression") +
+   theme(legend.title = element_blank())
 
 res2 <- clustify_lists(
   input = clustifyrdata::pan_indrop_matrix, 
@@ -1242,10 +1314,12 @@ res2 <- clustify_lists(
   metric = "posneg"
 )
 
-b <- plot_cor(res2,
+p3 <- plot_cor(res2,
               clustifyrdata::pan_indrop_meta,
               cluster_col = "cell_type1", x = "tSNE_1", y = "tSNE_2",
-              data_to_plot = "alpha")
+              data_to_plot = "alpha")[[1]] +
+  labs(title = "Ranked list of markers") +
+   theme(legend.title = element_blank())
 
 res3 <- clustify_lists(
   input = clustifyrdata::pan_indrop_matrix, 
@@ -1255,16 +1329,20 @@ res3 <- clustify_lists(
   metric = "jaccard"
 )
 
-c <- plot_cor(res3,
+p4 <- plot_cor(res3,
               clustifyrdata::pan_indrop_meta,
               cluster_col = "cell_type1", x = "tSNE_1", y = "tSNE_2",
               data_to_plot = "alpha",
-              )
+              )[[1]] +
+  labs(title = "Jaccard index") +
+  theme(legend.title = element_blank())
 
-g <- cowplot::plot_grid(a0[[1]],a[[1]],b[[1]],c[[1]], ncol = 2, labels = c("spearman_cor","pct_express","ranked_cor_markers", "jaccard"))
+g <- cowplot::plot_grid(p1, p2, p3, p4, 
+                        ncol = 2, 
+                        nrow = 2)
 
 g
-ggsave("Fig3B.pdf", g, width = 10, height = 10, dpi = 400)
+save_plot("Fig3B.pdf", g, nrow = 2, ncol = 2, base_asp = 1.2)
 
 callc <- cor_to_call_rank(rescc,
                             metadata = clustifyrdata::pan_indrop_meta,
@@ -1297,16 +1375,16 @@ m2 <- call_to_metadata(
   cluster_col = "cell_type1"
 )
 
-c <- plot_tsne(m2,
+p <- plot_tsne(m2,
                x = "tSNE_1", y = "tSNE_2",
               feature= "type",
               alpha_col = "score", do_legend = FALSE
               )
-ggsave("Fig3C.pdf", c, width = 5, height = 5, dpi = 400)
+save_plot("Fig3C.pdf", p, base_asp = 1.2)
 ```
 
 ## Supp2. Cross-platform comparisons reveal larger differences in gene expression rankings.
-```{r}
+```{r, eval = FALSE}
 d <- readRDS("/Users/rf/Desktop/vig/diff_rank_genes.rds") %>% gather(-method, key = key, value = val) %>% mutate(val = as.numeric(val))
 g1 <- ggplot(d %>% filter(key == "n"), aes(x = method, y = val, fill = method)) + 
   geom_col() +
