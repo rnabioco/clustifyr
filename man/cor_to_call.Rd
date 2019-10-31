@@ -5,7 +5,8 @@
 \title{get best calls for each cluster}
 \usage{
 cor_to_call(cor_mat, metadata = NULL, cluster_col = "cluster",
-  collapse_to_cluster = FALSE, threshold = 0, rename_prefix = NULL)
+  collapse_to_cluster = FALSE, threshold = 0, rename_prefix = NULL,
+  carry_r = FALSE)
 }
 \arguments{
 \item{cor_mat}{input similarity matrix}
@@ -20,6 +21,8 @@ frequent call of entire cluster to color in plot}
 \item{threshold}{minimum correlation coefficent cutoff for calling clusters}
 
 \item{rename_prefix}{prefix to add to type and r column names}
+
+\item{carry_r}{whether to include threshold in unassigned names}
 }
 \value{
 dataframe of cluster, new ident, and r info
