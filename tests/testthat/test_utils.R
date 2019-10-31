@@ -214,7 +214,8 @@ test_that("cor_to_call threshold works as intended", {
     metadata = pbmc_meta,
     cluster_col = "classified",
     collapse_to_cluster = FALSE,
-    threshold = 0.8
+    threshold = 0.8,
+    carry_r = TRUE
   )
 
   expect_true("r<0.8, unassigned" %in% call1$type)
@@ -1106,7 +1107,8 @@ test_that("cor_to_call threshold works as intended", {
     metadata = pbmc_meta,
     cluster_col = "classified",
     collapse_to_cluster = FALSE,
-    threshold = "auto"
+    threshold = "auto",
+    carry_r = TRUE
   )
 
   expect_true("r<0.69, unassigned" %in% call1$type)

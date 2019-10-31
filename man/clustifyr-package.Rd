@@ -21,7 +21,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Rui Fu \email{rui.fu@ucdenver.edu}
+\strong{Maintainer}: Rui Fu \email{raysinensis@gmail.com}
 
 Authors:
 \itemize{

@@ -7,6 +7,7 @@
 #' frequent call of entire cluster to color in plot
 #' @param threshold minimum correlation coefficent cutoff for calling clusters
 #' @param rename_prefix prefix to add to type and r column names
+#' @param carry_r whether to include threshold in unassigned names
 #' @return dataframe of cluster, new ident, and r info
 #' @examples
 #' res <- clustify(
@@ -23,7 +24,8 @@ cor_to_call <- function(cor_mat,
                         cluster_col = "cluster",
                         collapse_to_cluster = FALSE,
                         threshold = 0,
-                        rename_prefix = NULL) {
+                        rename_prefix = NULL,
+                        carry_r = FALSE) {
   correlation_matrix <- cor_mat
   if (threshold == "auto") {
     threshold <- round(0.75 * max(correlation_matrix), 2)
@@ -37,8 +39,14 @@ cor_to_call <- function(cor_mat,
     key = !!dplyr::sym("type"),
     value = !!dplyr::sym("r"), -!!cluster_col
   )
-  df_temp[["type"]][df_temp$r < threshold] <-
-    paste0("r<", threshold, ", unassigned")
+
+  if (carry_r) {
+    df_temp[["type"]][df_temp$r < threshold] <-
+      paste0("r<", threshold, ", unassigned")
+  } else {
+    df_temp[["type"]][df_temp$r < threshold] <- "unassigned"
+  }
+
   df_temp <-
     dplyr::top_n(dplyr::group_by_at(df_temp, 1), 1, !!dplyr::sym("r"))
   if (nrow(df_temp) != nrow(correlation_matrix)) {
