@@ -271,8 +271,7 @@ test_that("run all gene list functions in clustify_lists and seurat object", {
 })
 
 test_that("lists of genes will work with posneg", {
-  lst_of_markers <- split(pbmc_markers, pbmc_markers$cluster) %>%
-    map(~pull(.x, gene))
+  lst_of_markers <- split(pbmc_markers$gene, pbmc_markers$cluster)
   res <- clustify_lists(
     input =  pbmc_matrix_small,
     per_cell = FALSE,
