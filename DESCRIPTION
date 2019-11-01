@@ -58,7 +58,8 @@ Suggests:
     covr,
     knitr,
     rmarkdown,
-    testthat
+    testthat,
+    ggrepel
 VignetteBuilder: 
     knitr
 ByteCompile: true

@@ -15,6 +15,7 @@
 #' otherwise a two-element numeric vector indicating min and max to plot
 #' @param do_label whether to label each cluster at median center
 #' @param do_legend whether to draw legend
+#' @param do_repel whether to use ggrepel on labels
 #' @return ggplot object, cells projected by dr, colored by feature
 #' @examples
 #' plot_tsne(
@@ -32,7 +33,8 @@ plot_tsne <- function(data,
                       alpha_col = NULL,
                       scale_limits = NULL,
                       do_label = FALSE,
-                      do_legend = TRUE) {
+                      do_legend = TRUE,
+                      do_repel = TRUE) {
   # add backticks to allow special characters in column names
   x_col <- paste0("`", x, "`")
   y_col <- paste0("`", y, "`")
@@ -129,24 +131,46 @@ plot_tsne <- function(data,
         t2 = mean(!!dplyr::sym(y))
       )
 
-    p <- p +
-      geom_point(
-        data = centers,
-        mapping = aes(
-          x = !!dplyr::sym("t1"),
-          y = !!dplyr::sym("t2")
-        ),
-        size = 0,
-        alpha = 0
-      ) +
-      geom_text(
-        data = centers,
-        mapping = aes(
-          x = !!dplyr::sym("t1"),
-          y = !!dplyr::sym("t2"),
-          label = centers[[feature]]
+    if (do_repel) {
+      p <- p +
+        geom_point(
+          data = centers,
+          mapping = aes(
+            x = !!dplyr::sym("t1"),
+            y = !!dplyr::sym("t2")
+          ),
+          size = 0,
+          alpha = 0
+        ) +
+        ggrepel::geom_text_repel(
+          box.padding = 0.75,
+          data = centers,
+          mapping = aes(
+            x = !!dplyr::sym("t1"),
+            y = !!dplyr::sym("t2"),
+            label = centers[[feature]]
+          )
         )
-      )
+    } else {
+      p <- p +
+        geom_point(
+          data = centers,
+          mapping = aes(
+            x = !!dplyr::sym("t1"),
+            y = !!dplyr::sym("t2")
+          ),
+          size = 0,
+          alpha = 0
+        ) +
+        geom_text(
+          data = centers,
+          mapping = aes(
+            x = !!dplyr::sym("t1"),
+            y = !!dplyr::sym("t2"),
+            label = centers[[feature]]
+          )
+        )
+    }
   }
 
   p <- p +

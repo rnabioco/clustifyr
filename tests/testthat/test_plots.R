@@ -206,5 +206,13 @@ test_that("plot_tsne works with alpha_col", {
     alpha_col = "al",
     do_legend = FALSE
   )
+  g2 <- plot_tsne(
+    pbmc_meta2,
+    feature = "classified",
+    alpha_col = "al",
+    do_legend = FALSE,
+    do_repel = TRUE,
+    do_label = TRUE
+  )
   expect_true(ggplot2::is.ggplot(g))
 })

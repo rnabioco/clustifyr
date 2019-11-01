@@ -7,7 +7,7 @@
 plot_tsne(data, x = "UMAP_1", y = "UMAP_2", feature = NULL,
   legend_name = "", c_cols = pretty_palette2, d_cols = NULL,
   pt_size = 0.25, alpha_col = NULL, scale_limits = NULL,
-  do_label = FALSE, do_legend = TRUE)
+  do_label = FALSE, do_legend = TRUE, do_repel = TRUE)
 }
 \arguments{
 \item{data}{input data}
@@ -36,6 +36,8 @@ otherwise a two-element numeric vector indicating min and max to plot}
 \item{do_label}{whether to label each cluster at median center}
 
 \item{do_legend}{whether to draw legend}
+
+\item{do_repel}{whether to use ggrepel on labels}
 }
 \value{
 ggplot object, cells projected by dr, colored by feature
