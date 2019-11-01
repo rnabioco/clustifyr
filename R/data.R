@@ -98,12 +98,3 @@
 #'
 #' @source  various packages
 "object_loc_lookup"
-
-#' Small clustered SCE object
-#'
-#' @format sce object
-#' \describe{
-#' }
-#'
-#' @source subsampled from pancreas data
-"sce_small"
