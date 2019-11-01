@@ -125,11 +125,22 @@ plot_tsne <- function(data,
 
   if (do_label) {
     centers <- dplyr::group_by(data, !!sym(feature))
-    centers <-
-      dplyr::summarize(centers,
-        t1 = mean(!!dplyr::sym(x)),
-        t2 = mean(!!dplyr::sym(y))
-      )
+
+    if (!(is.null(alpha_col))) {
+      centers <-
+        dplyr::summarize(centers,
+          t1 = median(!!dplyr::sym(x)),
+          t2 = median(!!dplyr::sym(y)),
+          a = median(!!dplyr::sym(alpha_col))
+        )
+    } else {
+      centers <-
+        dplyr::summarize(centers,
+                         t1 = median(!!dplyr::sym(x)),
+                         t2 = median(!!dplyr::sym(y)),
+                         a = 1
+        )
+    }
 
     if (do_repel) {
       p <- p +
@@ -148,6 +159,7 @@ plot_tsne <- function(data,
           mapping = aes(
             x = !!dplyr::sym("t1"),
             y = !!dplyr::sym("t2"),
+            alpha = !!dplyr::sym("a"),
             label = centers[[feature]]
           )
         )
@@ -167,6 +179,7 @@ plot_tsne <- function(data,
           mapping = aes(
             x = !!dplyr::sym("t1"),
             y = !!dplyr::sym("t2"),
+            alpha = !!dplyr::sym("a"),
             label = centers[[feature]]
           )
         )
