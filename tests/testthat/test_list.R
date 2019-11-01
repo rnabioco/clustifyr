@@ -269,3 +269,19 @@ test_that("run all gene list functions in clustify_lists and seurat object", {
   )
   expect_true(is.data.frame(res) | "seurat" %in% class(res))
 })
+
+test_that("lists of genes will work with posneg", {
+  lst_of_markers <- split(pbmc_markers, pbmc_markers$cluster) %>%
+    map(~pull(.x, gene))
+  res <- clustify_lists(
+    input =  pbmc_matrix_small,
+    per_cell = FALSE,
+    cluster_col = "classified",
+    metadata = pbmc_meta,
+    marker = lst_of_markers,
+    marker_inmatrix = TRUE,
+    metric = "posneg",
+    seurat_out = FALSE
+  )
+  expect_true(ncol(res) == length(lst_of_markers))
+  })

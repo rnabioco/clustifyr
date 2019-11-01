@@ -629,7 +629,7 @@ clustify_lists.default <- function(input,
       output_high = output_high
     )
   } else {
-    if (ncol(marker) > 1) {
+    if (length(marker) > 1) {
       marker <- pos_neg_marker(marker)
     }
     res <- pos_neg_select(input,
