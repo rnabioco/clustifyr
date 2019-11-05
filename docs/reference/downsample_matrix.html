@@ -106,6 +106,9 @@
       <a href="../articles/clustifyR.html">Introduction to clustifyr</a>
     </li>
     <li>
+      <a href="../articles/download_refs.html">Prebuilt references for clustifyr</a>
+    </li>
+    <li>
       <a href="../articles/otherformats.html">Support for various single cell object formats</a>
     </li>
     <li>
@@ -153,7 +156,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>downsample_matrix</span>(<span class='no'>mat</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>keep_cluster_proportions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>, <span class='kw'>set_seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -180,10 +183,6 @@ provide the cluster_col parameters.</p></td>
       <th>cluster_col</th>
       <td><p>column in metadata with cluster number</p></td>
     </tr>
-    <tr>
-      <th>set_seed</th>
-      <td><p>random seed</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -191,12 +190,12 @@ provide the cluster_col parameters.</p></td>
     <p>new smaller mat with less cell_id columns</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>mat1</span> <span class='kw'>&lt;-</span> <span class='fu'>downsample_matrix</span>(
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>42</span>)
+<span class='no'>mat1</span> <span class='kw'>&lt;-</span> <span class='fu'>downsample_matrix</span>(
   <span class='kw'>mat</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
   <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>$<span class='no'>classified</span>,
   <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>keep_cluster_proportions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>set_seed</span> <span class='kw'>=</span> <span class='fl'>41</span>
+  <span class='kw'>keep_cluster_proportions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -106,6 +106,9 @@
       <a href="../articles/clustifyR.html">Introduction to clustifyr</a>
     </li>
     <li>
+      <a href="../articles/download_refs.html">Prebuilt references for clustifyr</a>
+    </li>
+    <li>
       <a href="../articles/otherformats.html">Support for various single cell object formats</a>
     </li>
     <li>
@@ -159,21 +162,25 @@
   <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>lookuptable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rm0</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='no'>...</span>)
+  <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
+  <span class='kw'>exclude_genes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='no'>ref_mat</span>)[<span class='kw pkg'>stringr</span><span class='kw ns'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_detect.html'>str_detect</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='no'>ref_mat</span>),
+  <span class='st'>"RP[0-9,L,S]|Rp[0-9,l,s]"</span>)], <span class='no'>...</span>)
 
 <span class='co'># S3 method for seurat</span>
 <span class='fu'>clustify</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>use_var_genes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"umap"</span>,
   <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>rm0</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>rm0</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>exclude_genes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(), <span class='no'>...</span>)
 
 <span class='co'># S3 method for Seurat</span>
 <span class='fu'>clustify</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>use_var_genes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"umap"</span>,
   <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>rm0</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>rm0</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>exclude_genes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(), <span class='no'>...</span>)
 
 <span class='co'># S3 method for SingleCellExperiment</span>
 <span class='fu'>clustify</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>,
@@ -181,7 +188,7 @@
   <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>use_var_genes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"umap"</span>, <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>rm0</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exclude_genes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(), <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -253,7 +260,11 @@ common genes between the expr_mat and ref_mat will be used for comparision.</p><
     </tr>
     <tr>
       <th>threshold</th>
-      <td><p>identity calling minimum correlation score threshold, only used when obj_out = T</p></td>
+      <td><p>identity calling minimum correlation score threshold, only used when obj_out = TRUE</p></td>
+    </tr>
+    <tr>
+      <th>exclude_genes</th>
+      <td><p>a vector of gene names to throw out of query</p></td>
     </tr>
     <tr>
       <th>use_var_genes</th>
@@ -276,85 +287,45 @@ types from ref_mat as column names</p>
 <span class='fu'>clustify</span>(
   <span class='kw'>input</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
   <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
-  <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>pbmc_bulk_matrix</span>,
+  <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>cbmc_ref</span>,
   <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='no'>pbmc_vargenes</span>,
   <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</div><div class='output co'>#&gt; <span class='message'>using # of genes: 1688</span></div><div class='output co'>#&gt;              primary human B cells rep 1 primary human myeloid DC rep 1
-#&gt; B                             0.62161187                      0.5134249
-#&gt; CD14+ Mono                    0.38176061                      0.6585926
-#&gt; CD8 T                         0.43926595                      0.4648890
-#&gt; DC                            0.37326478                      0.5726146
-#&gt; FCGR3A+ Mono                  0.39707564                      0.6828512
-#&gt; Memory CD4 T                  0.47496679                      0.4835943
-#&gt; Naive CD4 T                   0.47847311                      0.4753289
-#&gt; NK                            0.41142231                      0.4600473
-#&gt; Platelet                      0.09448371                      0.2607297
-#&gt;              primary human monocytes rep 1 primary human neutrophils rep 1
-#&gt; B                                0.4858326                       0.4004996
-#&gt; CD14+ Mono                       0.6932047                       0.5548357
-#&gt; CD8 T                            0.4396090                       0.3759313
-#&gt; DC                               0.5619668                       0.3990601
-#&gt; FCGR3A+ Mono                     0.6464808                       0.5302247
-#&gt; Memory CD4 T                     0.4637761                       0.3883083
-#&gt; Naive CD4 T                      0.4615861                       0.3824808
-#&gt; NK                               0.4339593                       0.3824971
-#&gt; Platelet                         0.2607125                       0.2120760
-#&gt;              primary human NK cells rep 1 primary human PBMC rep 1
-#&gt; B                               0.4682206                0.4930223
-#&gt; CD14+ Mono                      0.4380704                0.5716609
-#&gt; CD8 T                           0.5988312                0.5230516
-#&gt; DC                              0.4031306                0.4926074
-#&gt; FCGR3A+ Mono                    0.4434886                0.5511974
-#&gt; Memory CD4 T                    0.5500075                0.5277524
-#&gt; Naive CD4 T                     0.5418622                0.5293089
-#&gt; NK                              0.6443927                0.5141864
-#&gt; Platelet                        0.1429789                0.2285756
-#&gt;              primary human T cells rep 1 primary human B cells rep 2
-#&gt; B                              0.4688555                   0.6409642
-#&gt; CD14+ Mono                     0.3525068                   0.4081323
-#&gt; CD8 T                          0.5533326                   0.4529453
-#&gt; DC                             0.3248138                   0.4027535
-#&gt; FCGR3A+ Mono                   0.3585348                   0.4240105
-#&gt; Memory CD4 T                   0.6017151                   0.4884443
-#&gt; Naive CD4 T                    0.6091448                   0.4899223
-#&gt; NK                             0.5180162                   0.4274134
-#&gt; Platelet                       0.0734803                   0.1147430
-#&gt;              primary human myeloid DC rep 2 primary human monocytes rep 2
-#&gt; B                                 0.5142264                     0.4817698
-#&gt; CD14+ Mono                        0.6585599                     0.7061875
-#&gt; CD8 T                             0.4657318                     0.4380312
-#&gt; DC                                0.5714870                     0.5624386
-#&gt; FCGR3A+ Mono                      0.6868239                     0.6588797
-#&gt; Memory CD4 T                      0.4841326                     0.4637714
-#&gt; Naive CD4 T                       0.4743983                     0.4603821
-#&gt; NK                                0.4652355                     0.4398213
-#&gt; Platelet                          0.2626675                     0.2685089
-#&gt;              primary human neutrophils rep 2 primary human NK cells rep 2
-#&gt; B                                  0.3882407                    0.4719677
-#&gt; CD14+ Mono                         0.5573050                    0.4408221
-#&gt; CD8 T                              0.3636086                    0.6007341
-#&gt; DC                                 0.3955419                    0.4074878
-#&gt; FCGR3A+ Mono                       0.5322509                    0.4450197
-#&gt; Memory CD4 T                       0.3760267                    0.5502540
-#&gt; Naive CD4 T                        0.3692816                    0.5415756
-#&gt; NK                                 0.3715250                    0.6474230
-#&gt; Platelet                           0.2165613                    0.1468565
-#&gt;              primary human PBMC rep 2 primary human T cells rep 2
-#&gt; B                           0.5179320                  0.48219201
-#&gt; CD14+ Mono                  0.6026460                  0.36879949
-#&gt; CD8 T                       0.5235911                  0.57153550
-#&gt; DC                          0.5077886                  0.33963841
-#&gt; FCGR3A+ Mono                0.5802021                  0.37464917
-#&gt; Memory CD4 T                0.5471137                  0.61932481
-#&gt; Naive CD4 T                 0.5498952                  0.62715073
-#&gt; NK                          0.5070531                  0.53661318
-#&gt; Platelet                    0.2523581                  0.08479795</div><div class='input'>
+)</div><div class='output co'>#&gt; <span class='message'>using # of genes: 1881</span></div><div class='output co'>#&gt;                      B CD14+ Mono CD16+ Mono     CD34+     CD4 T     CD8 T
+#&gt; B            0.8912913  0.6851783  0.7317660 0.7317217 0.7814900 0.7659276
+#&gt; CD14+ Mono   0.6989945  0.9081472  0.8847734 0.6710434 0.6670570 0.6521402
+#&gt; CD8 T        0.7525971  0.6651899  0.7126303 0.7136651 0.8400829 0.8368499
+#&gt; DC           0.7026957  0.7823684  0.7882898 0.6814873 0.6658926 0.6524832
+#&gt; FCGR3A+ Mono 0.7039327  0.8496499  0.9059093 0.6726128 0.6757769 0.6596604
+#&gt; Memory CD4 T 0.7758978  0.6820664  0.7241914 0.7427243 0.8948977 0.8702287
+#&gt; Naive CD4 T  0.7871487  0.6792475  0.7175664 0.7548765 0.9158677 0.8936029
+#&gt; NK           0.7192197  0.6526278  0.6958540 0.7067672 0.7940021 0.7937825
+#&gt; Platelet     0.3164496  0.3823818  0.3918461 0.3271915 0.2858296 0.2797719
+#&gt;                     DC     Eryth Memory CD4 T        Mk Naive CD4 T        NK
+#&gt; B            0.7253935 0.6300171    0.5959394 0.5450655   0.5953671 0.7474430
+#&gt; CD14+ Mono   0.8121193 0.6055132    0.5708809 0.6549038   0.5384300 0.7573710
+#&gt; CD8 T        0.6840079 0.6525508    0.6542797 0.5673165   0.6121911 0.8662208
+#&gt; DC           0.8327092 0.6049950    0.5657932 0.5748673   0.5260392 0.7190055
+#&gt; FCGR3A+ Mono 0.7784995 0.6097144    0.5710313 0.6356263   0.5300822 0.7552514
+#&gt; Memory CD4 T 0.6965506 0.6643080    0.6860640 0.5514448   0.6554955 0.8182608
+#&gt; Naive CD4 T  0.6958788 0.6677468    0.6913118 0.5530940   0.6622109 0.8080934
+#&gt; NK           0.6741498 0.6420863    0.6259194 0.5642024   0.5880876 0.8960291
+#&gt; Platelet     0.3476335 0.3599792    0.2945712 0.6304742   0.2899873 0.3402365
+#&gt;                   pDCs
+#&gt; B            0.6889127
+#&gt; CD14+ Mono   0.6405745
+#&gt; CD8 T        0.6317819
+#&gt; DC           0.7012226
+#&gt; FCGR3A+ Mono 0.6374282
+#&gt; Memory CD4 T 0.6434303
+#&gt; Naive CD4 T  0.6452324
+#&gt; NK           0.6263499
+#&gt; Platelet     0.3349940</div><div class='input'>
 <span class='co'># Annotate using a different method</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>clustify</span>(
   <span class='kw'>input</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
   <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
-  <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>pbmc_bulk_matrix</span>,
+  <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>cbmc_ref</span>,
   <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='no'>pbmc_vargenes</span>,
   <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
   <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"cosine"</span>
@@ -363,55 +334,35 @@ types from ref_mat as column names</p>
 <span class='co'># Annotate a Seurat object</span>
 <span class='fu'>clustify</span>(
   <span class='no'>s_small</span>,
-  <span class='no'>pbmc_bulk_matrix</span>,
+  <span class='no'>cbmc_ref</span>,
   <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"res.1"</span>,
   <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>
-)</div><div class='output co'>#&gt; <span class='message'>using threshold of 0.5</span></div><div class='output co'>#&gt; <span class='message'>seurat not loaded, returning cor_mat instead</span></div><div class='output co'>#&gt;   primary human B cells rep 1 primary human myeloid DC rep 1
-#&gt; 0                  0.56495413                      0.2905662
-#&gt; 1                  0.38339099                      0.6645159
-#&gt; 2                  0.01569994                      0.3132044
-#&gt; 3                 -0.42255352                     -0.1581610
-#&gt;   primary human monocytes rep 1 primary human neutrophils rep 1
-#&gt; 0                     0.2860993                      0.31382849
-#&gt; 1                     0.5913028                      0.54143473
-#&gt; 2                     0.2506601                      0.26686921
-#&gt; 3                    -0.1596368                     -0.04526416
-#&gt;   primary human NK cells rep 1 primary human PBMC rep 1
-#&gt; 0                    0.2521516                0.4810757
-#&gt; 1                    0.3960676                0.4553994
-#&gt; 2                    0.5476851                0.3873399
-#&gt; 3                   -0.2740145               -0.2484332
-#&gt;   primary human T cells rep 1 primary human B cells rep 2
-#&gt; 0                   0.5081027                   0.5427781
-#&gt; 1                   0.4296189                   0.3996944
-#&gt; 2                   0.3657692                   0.0329662
-#&gt; 3                  -0.3359033                  -0.3573163
-#&gt;   primary human myeloid DC rep 2 primary human monocytes rep 2
-#&gt; 0                      0.2512582                    0.21316182
-#&gt; 1                      0.6595903                    0.57611050
-#&gt; 2                      0.2938857                    0.22226395
-#&gt; 3                     -0.1374992                   -0.09252722
-#&gt;   primary human neutrophils rep 2 primary human NK cells rep 2
-#&gt; 0                      0.29267862                    0.3189304
-#&gt; 1                      0.55990915                    0.4737587
-#&gt; 2                      0.21612700                    0.5310227
-#&gt; 3                     -0.03016533                   -0.1999765
-#&gt;   primary human PBMC rep 2 primary human T cells rep 2
-#&gt; 0                0.4634318                   0.5432248
-#&gt; 1                0.4997303                   0.4406714
-#&gt; 2                0.2883316                   0.3448771
-#&gt; 3               -0.1891536                  -0.2745370</div><div class='input'>
+)</div><div class='output co'>#&gt; <span class='message'>using threshold of 0.61</span></div><div class='output co'>#&gt; <span class='message'>seurat not loaded, returning cor_mat instead</span></div><div class='output co'>#&gt;            B CD14+ Mono CD16+ Mono      CD34+       CD4 T      CD8 T
+#&gt; 0  0.5224110  0.3852326  0.4119037 0.41720039  0.61062598  0.5825024
+#&gt; 1  0.4136741  0.7251465  0.6939952 0.53311242  0.42401600  0.3648038
+#&gt; 2  0.2311589  0.6184823  0.6094641 0.42129146  0.46805261  0.4812869
+#&gt; 3 -0.1762557  0.1362385  0.1859978 0.01798528 -0.08048411 -0.1647901
+#&gt;            DC     Eryth Memory CD4 T          Mk Naive CD4 T        NK
+#&gt; 0  0.36476066 0.1523530    0.7047302 -0.10828917   0.6398803 0.4346006
+#&gt; 1  0.71146653 0.4359801    0.5349202  0.08053672   0.4304222 0.6174695
+#&gt; 2  0.67077257 0.4137920    0.6331816  0.18844401   0.5864320 0.8099383
+#&gt; 3 -0.05333518 0.4352437    0.1083785  0.74534070  -0.1097800 0.1124080
+#&gt;        pDCs
+#&gt; 0 0.3456669
+#&gt; 1 0.5116362
+#&gt; 2 0.2859966
+#&gt; 3 0.1901284</div><div class='input'>
 <span class='co'># Annotate (and return) a Seurat object per-cell</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>clustify</span>(
   <span class='kw'>input</span> <span class='kw'>=</span> <span class='no'>s_small</span>,
-  <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>pbmc_bulk_matrix</span>,
+  <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>cbmc_ref</span>,
   <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"res.1"</span>,
   <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>
-)</div><div class='output co'>#&gt; <span class='warning'>Warning: the standard deviation is zero</span></div><div class='output co'>#&gt; <span class='message'>using threshold of NA</span></div><div class='output co'>#&gt; <span class='message'>seurat not loaded, returning cor_mat instead</span></div></pre>
+)</div><div class='output co'>#&gt; <span class='message'>using threshold of NA</span></div><div class='output co'>#&gt; <span class='message'>seurat not loaded, returning cor_mat instead</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

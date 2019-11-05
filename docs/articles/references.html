@@ -67,6 +67,9 @@
       <a href="../articles/clustifyR.html">Introduction to clustifyr</a>
     </li>
     <li>
+      <a href="../articles/download_refs.html">Prebuilt references for clustifyr</a>
+    </li>
+    <li>
       <a href="../articles/otherformats.html">Support for various single cell object formats</a>
     </li>
     <li>
@@ -106,7 +109,7 @@
     <div class="page-header toc-ignore">
       <h1>Reference building for clustifyr</h1>
             
-            <h4 class="date">2019-10-17</h4>
+            <h4 class="date">2019-11-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyr/blob/master/vignettes/references.Rmd"><code>vignettes/references.Rmd</code></a></small>
       <div class="hidden name"><code>references.Rmd</code></div>
@@ -125,7 +128,7 @@
 <span id="cb1-4"><a href="#cb1-4"></a>new_ref_matrix &lt;-<span class="st"> </span><span class="kw"><a href="../reference/average_clusters.html">average_clusters</a></span>(</span>
 <span id="cb1-5"><a href="#cb1-5"></a>  full_pbmc_matrix, </span>
 <span id="cb1-6"><a href="#cb1-6"></a>  <span class="dt">metadata =</span> full_pbmc_meta<span class="op">$</span>classified,</span>
-<span id="cb1-7"><a href="#cb1-7"></a>  <span class="dt">if_log =</span> T</span>
+<span id="cb1-7"><a href="#cb1-7"></a>  <span class="dt">if_log =</span> <span class="ot">TRUE</span></span>
 <span id="cb1-8"><a href="#cb1-8"></a>)</span>
 <span id="cb1-9"><a href="#cb1-9"></a></span>
 <span id="cb1-10"><a href="#cb1-10"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(new_ref_matrix)</span>
@@ -284,7 +287,7 @@
 <div id="building-reference-matrix-from-microarray-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#building-reference-matrix-from-microarray-data" class="anchor"></a>Building reference matrix from microarray data</h2>
-<p><code>clustifyr</code> works with microarray data-derived gene expression matrix as well (see Benchmark page). An example of generating a matrix for sorted immune cell type can be found below. The matrix can be found at <code><a href="https://rdrr.io/pkg/clustifyrdata/man/hema_microarray_matrix.html">clustifyrdata::hema_microarray_matrix</a></code></p>
+<p><code>clustifyr</code> works with microarray data-derived gene expression matrix as well (see Benchmark page). An example of generating a matrix for sorted immune cell type can be found below. The matrix can be found at <code>clustifyrdata::hema_microarray_matrix</code></p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyverse)</span>
 <span id="cb5-2"><a href="#cb5-2"></a><span class="co"># read series matrix for column names</span></span>
 <span id="cb5-3"><a href="#cb5-3"></a>GSE24759 &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">"GSE24759/GSE24759_series_matrix.txt"</span>, <span class="dt">skip =</span> <span class="dv">25</span>, <span class="dt">n_max =</span> <span class="dv">1</span>)</span>
@@ -354,8 +357,8 @@
 <span id="cb7-23"><a href="#cb7-23"></a><span class="co"># use matrixize_markers function to convert</span></span>
 <span id="cb7-24"><a href="#cb7-24"></a>mm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/matrixize_markers.html">matrixize_markers</a></span>(</span>
 <span id="cb7-25"><a href="#cb7-25"></a>  pbmc_markers, </span>
-<span id="cb7-26"><a href="#cb7-26"></a>  <span class="dt">remove_rp =</span> T, </span>
-<span id="cb7-27"><a href="#cb7-27"></a>  <span class="dt">unique =</span> T, </span>
+<span id="cb7-26"><a href="#cb7-26"></a>  <span class="dt">remove_rp =</span> <span class="ot">TRUE</span>, </span>
+<span id="cb7-27"><a href="#cb7-27"></a>  <span class="dt">unique =</span> <span class="ot">TRUE</span>, </span>
 <span id="cb7-28"><a href="#cb7-28"></a>  <span class="dt">n =</span> <span class="dv">10</span></span>
 <span id="cb7-29"><a href="#cb7-29"></a>)</span>
 <span id="cb7-30"><a href="#cb7-30"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(mm)</span>
@@ -377,8 +380,8 @@
 <span id="cb7-46"><a href="#cb7-46"></a><span class="co"># get markers from ref_matrix, and then matrixize_markers</span></span>
 <span id="cb7-47"><a href="#cb7-47"></a>cbmc_m &lt;-<span class="st"> </span><span class="kw"><a href="../reference/matrixize_markers.html">matrixize_markers</a></span>(</span>
 <span id="cb7-48"><a href="#cb7-48"></a>  <span class="kw"><a href="../reference/ref_marker_select.html">ref_marker_select</a></span>(cbmc_ref),</span>
-<span id="cb7-49"><a href="#cb7-49"></a>  <span class="dt">remove_rp =</span> T,</span>
-<span id="cb7-50"><a href="#cb7-50"></a>  <span class="dt">unique =</span> T,</span>
+<span id="cb7-49"><a href="#cb7-49"></a>  <span class="dt">remove_rp =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb7-50"><a href="#cb7-50"></a>  <span class="dt">unique =</span> <span class="ot">TRUE</span>,</span>
 <span id="cb7-51"><a href="#cb7-51"></a>  <span class="dt">n =</span> <span class="dv">3</span></span>
 <span id="cb7-52"><a href="#cb7-52"></a>)</span>
 <span id="cb7-53"><a href="#cb7-53"></a></span>
@@ -393,6 +396,9 @@
 <h2 class="hasAnchor">
 <a href="#prebuilt-references-in-clustifyrdata" class="anchor"></a>Prebuilt references, in clustifyrdata</h2>
 <p>More reference data, including tabula muris, and code used to generate them are available at <a href="https://github.com/rnabioco/clustifyrdata" class="uri">https://github.com/rnabioco/clustifyrdata</a>.</p>
+<p>Also see list for individual downloads at <a href="https://rnabioco.github.io/clustifyr/articles/download_refs.html" class="uri">https://rnabioco.github.io/clustifyr/articles/download_refs.html</a></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># install.packages("devtools")</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"rnabioco/clustifyrdata"</span>)</span></code></pre></div>
 </div>
   </div>
 

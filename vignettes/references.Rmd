@@ -251,3 +251,10 @@ A few reference datasets are built into clustifyr for vignettes and testing:
 ## Prebuilt references, in clustifyrdata
 
 More reference data, including tabula muris, and code used to generate them are available at https://github.com/rnabioco/clustifyrdata.
+
+Also see list for individual downloads at https://rnabioco.github.io/clustifyr/articles/download_refs.html
+
+```{r, eval = F}
+# install.packages("devtools")
+devtools::install_github("rnabioco/clustifyrdata")
+```

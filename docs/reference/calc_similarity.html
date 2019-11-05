@@ -106,6 +106,9 @@
       <a href="../articles/clustifyR.html">Introduction to clustifyr</a>
     </li>
     <li>
+      <a href="../articles/download_refs.html">Prebuilt references for clustifyr</a>
+    </li>
+    <li>
       <a href="../articles/otherformats.html">Support for various single cell object formats</a>
     </li>
     <li>
@@ -183,12 +186,22 @@
 
     <p>matrix of numeric values</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>calc_similarity</span>(
+  <span class='kw'>query_mat</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"PPBP"</span>, <span class='st'>"LYZ"</span>, <span class='st'>"S100A9"</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>7</span>, <span class='fl'>11</span>)],
+  <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>cbmc_ref</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"PPBP"</span>, <span class='st'>"LYZ"</span>, <span class='st'>"S100A9"</span>), <span class='fl'>1</span>:<span class='fl'>3</span>],
+  <span class='kw'>cluster_ids</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>pbmc_matrix_small</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"PPBP"</span>, <span class='st'>"LYZ"</span>, <span class='st'>"S100A9"</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>7</span>, <span class='fl'>11</span>)]),
+  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>
+)</div><div class='output co'>#&gt;                B CD14+ Mono CD16+ Mono
+#&gt; AAACGCTGACCAGT 0          0  0.8660254
+#&gt; AAACTTGAAAAACG 0          0  0.8660254</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

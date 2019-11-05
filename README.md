@@ -92,7 +92,7 @@ res <- clustify(
   input = s_small,
   cluster_col = "res.1",
   ref_mat = cbmc_ref,
-  seurat_out = T,
+  seurat_out = TRUE,
   dr = "tsne"
 )
 
@@ -100,7 +100,7 @@ res2 <- clustify(
   input = s_small3,
   cluster_col = "RNA_snn_res.1",
   ref_mat = cbmc_ref,
-  seurat_out = T,
+  seurat_out = TRUE,
   dr = "tsne"
 )
 
@@ -155,3 +155,6 @@ res <- clustify_lists(
 
 More reference data (including tabula muris, immgen, etc) are available
 at <https://github.com/rnabioco/clustifyrdata>.
+
+Also see list for individual downloads at
+<https://rnabioco.github.io/clustifyr/articles/download_refs.html>

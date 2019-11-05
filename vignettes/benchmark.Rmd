@@ -104,7 +104,7 @@ print(res_allgenes, n = nrow(res_allgenes))
 ```{r micro}
 full_pbmc_matrix <- clustifyrdata::pbmc_matrix
 full_pbmc_meta <- clustifyrdata::pbmc_meta
-microarray_ref <- clustifyrdata::hema_microarray_matrix
+microarray_ref <- clustifyrdata::ref_hema_microarray
 
 start <- proc.time()
 

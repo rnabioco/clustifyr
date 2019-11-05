@@ -106,6 +106,9 @@
       <a href="../articles/clustifyR.html">Introduction to clustifyr</a>
     </li>
     <li>
+      <a href="../articles/download_refs.html">Prebuilt references for clustifyr</a>
+    </li>
+    <li>
       <a href="../articles/otherformats.html">Support for various single cell object formats</a>
     </li>
     <li>
@@ -154,7 +157,7 @@
 
     <pre class="usage"><span class='fu'>overcluster_test</span>(<span class='no'>expr</span>, <span class='no'>metadata</span>, <span class='no'>ref_mat</span>, <span class='no'>cluster_col</span>, <span class='kw'>x_col</span> <span class='kw'>=</span> <span class='st'>"UMAP_1"</span>,
   <span class='kw'>y_col</span> <span class='kw'>=</span> <span class='st'>"UMAP_2"</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>ngenes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>do_label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>do_legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>42</span>,
+  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>do_label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>do_legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>newclustering</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -209,10 +212,6 @@
       <td><p>whether to draw legend</p></td>
     </tr>
     <tr>
-      <th>seed</th>
-      <td><p>set seed for kmeans</p></td>
-    </tr>
-    <tr>
       <th>newclustering</th>
       <td><p>use kmeans if NULL on dr or col name for second column of clustering</p></td>
     </tr>
@@ -223,7 +222,8 @@
     <p>faceted ggplot object</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>plt</span> <span class='kw'>&lt;-</span> <span class='fu'>overcluster_test</span>(
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>42</span>)
+<span class='no'>plt</span> <span class='kw'>&lt;-</span> <span class='fu'>overcluster_test</span>(
   <span class='kw'>expr</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
   <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
   <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>cbmc_ref</span>,

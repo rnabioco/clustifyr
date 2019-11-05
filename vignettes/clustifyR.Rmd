@@ -29,13 +29,13 @@ Single cell transcriptomes are difficult to annotate without extensive knowledge
 
 ## A simple example: 10x Genomics PBMCs
 
-In this example, we take a 10x Genomics 3' scRNA-seq dataset from peripheral blood mononuclear cells (PBMCs) and annotate the cell clusters (identified using `Seurat`) using bulk RNA-seq data from isolated PBMC cell populations. The cell types in this dataset have been previously annotated, so this is a good dataset to use for testing the accuracy of `clustifyr`.
+In this example, we take a 10x Genomics 3' scRNA-seq dataset from peripheral blood mononuclear cells (PBMCs) and annotate the cell clusters (identified using `Seurat`) using scRNA-seq cell clusters assigned from CITE-seq experiment. The cell types in this dataset have been previously annotated, so this is a good dataset to use for testing the accuracy of `clustifyr`.
 
 To identify cell types, the `clustifyr()` function requires several inputs:
 
 * A matrix of normalized single-cell RNA-seq counts
 * A meta.data table containing the cluster assignments for each cell
-* A matrix containing bulk RNA-seq data for each cell type of interest
+* A matrix containing bulk RNA-seq data for each cell type of interest or matrix of mean scRNA-seq expression
 * A list of genes to use for comparison (optional)
 
 Using the `plot_tsne()` function, we can plot the known identities of each cluster, which were stored in the "classified" column of the meta.data table.
@@ -71,13 +71,10 @@ vargenes <- pbmc_vargenes[1:500]
 res <- clustify(
   input = full_pbmc_matrix,     # matrix of normalized single-cell RNA-seq counts
   metadata = full_pbmc_meta,    # meta.data table containing cell clusters
-  ref_mat = pbmc_bulk_matrix,   # matrix containing bulk RNA-seq data for each cell type
+  ref_mat = cbmc_ref,   # matrix of mean scRNA-seq expression data for each cell type
   query_genes = vargenes,  # list of highly varible genes identified with Seurat
   cluster_col = "seurat_clusters"       # name of column in meta.data containing cell clusters
 )
-
-# Tidy up column names
-colnames(res) <- gsub("primary human ", "", colnames(res))
 
 # Peek at correlation matrix
 res[1:5, 1:5]
@@ -106,7 +103,7 @@ plot_cor(
 )
 ```
 
-The `plot_best_call()` function can be used to label each cluster with the cell type that gives the highest corelation coefficient. The plots below show that the highest correlations between the bulk RNA-seq data and the 10x Genomics scRNA-seq dataset are restricted to the correct cell clusters.
+The `plot_best_call()` function can be used to label each cluster with the cell type that gives the highest corelation coefficient. The plots below show that the highest correlations between the reference RNA-seq data and the 10x Genomics scRNA-seq dataset are restricted to the correct cell clusters.
 
 ```{r "Label clusters", fig.height = 5.5, fig.width = 12}
 # Label clusters with clustifyr cell identities
@@ -139,7 +136,7 @@ Correlation coefficients can also be calculated on a per cell basis by setting `
 # Calculate correlation coefficients for each cell
 cell_res <- clustify(
   input = full_pbmc_matrix,     # matrix of normalized single-cell RNA-seq counts
-  ref_mat = pbmc_bulk_matrix,     # matrix containing bulk RNA-seq data for each cell type
+  ref_mat = cbmc_ref,     # matrix of mean scRNA-seq expression data for each cell type
   query_genes = pbmc_vargenes,  # list of highly varible genes identified with Seurat
   per_cell = TRUE
 )
@@ -192,7 +189,7 @@ plot_cor_heatmap(
 res <- clustify(
   input = s_small,
   cluster_col = "res.1",
-  ref_mat = pbmc_bulk_matrix,
+  ref_mat = cbmc_ref,
   seurat_out = TRUE,
   dr = "tsne"
 )

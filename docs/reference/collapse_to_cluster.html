@@ -106,6 +106,9 @@
       <a href="../articles/clustifyR.html">Introduction to clustifyr</a>
     </li>
     <li>
+      <a href="../articles/download_refs.html">Prebuilt references for clustifyr</a>
+    </li>
+    <li>
       <a href="../articles/otherformats.html">Support for various single cell object formats</a>
     </li>
     <li>
@@ -152,7 +155,7 @@
     <p>From per-cell calls, take highest freq call in each cluster</p>
     </div>
 
-    <pre class="usage"><span class='fu'>collapse_to_cluster</span>(<span class='no'>res</span>, <span class='no'>metadata</span>, <span class='no'>cluster_col</span>, <span class='no'>threshold</span>)</pre>
+    <pre class="usage"><span class='fu'>collapse_to_cluster</span>(<span class='no'>res</span>, <span class='no'>metadata</span>, <span class='no'>cluster_col</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -179,12 +182,29 @@
 
     <p>new metadata with added columns</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span>(
+  <span class='kw'>input</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
+  <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
+  <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>cbmc_ref</span>,
+  <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</div><div class='output co'>#&gt; <span class='message'>var.features not found, using all genes instead</span></div><div class='input'>
+<span class='no'>res2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='cor_to_call.html'>cor_to_call</a></span>(<span class='no'>res</span>)
+
+<span class='no'>res3</span> <span class='kw'>&lt;-</span> <span class='fu'>collapse_to_cluster</span>(
+  <span class='no'>res2</span>,
+  <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
+  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>
+ )</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

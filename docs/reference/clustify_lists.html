@@ -106,6 +106,9 @@
       <a href="../articles/clustifyR.html">Introduction to clustifyr</a>
     </li>
     <li>
+      <a href="../articles/download_refs.html">Prebuilt references for clustifyr</a>
+    </li>
+    <li>
       <a href="../articles/otherformats.html">Support for various single cell object formats</a>
     </li>
     <li>
@@ -274,12 +277,89 @@ if running correlation per cell.</p></td>
 
     <p>matrix of numeric values, clusters from input as row names, cell types from marker_mat as column names</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Annotate a matrix and metadata</span>
+<span class='fu'>clustify_lists</span>(
+  <span class='kw'>input</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
+  <span class='kw'>marker</span> <span class='kw'>=</span> <span class='no'>cbmc_m</span>,
+  <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</div><div class='output co'>#&gt;                   CD4 T      CD8 T Memory CD4 T CD14+ Mono Naive CD4 T
+#&gt; Naive CD4 T  0.06713589 0.06713589            0   3.609737           0
+#&gt; Memory CD4 T 0.06713589 0.00000000            0   3.609737           0
+#&gt; CD14+ Mono   0.00000000 0.00000000            0   3.609737           0
+#&gt; B            0.00000000 0.00000000            0   3.609737           0
+#&gt; CD8 T        0.06713589 0.00000000            0   1.600060           0
+#&gt; FCGR3A+ Mono 0.00000000 0.00000000            0   3.609737           0
+#&gt; NK           0.00000000 0.06713589            0   3.609737           0
+#&gt; DC           0.00000000 0.00000000            0   3.609737           0
+#&gt; Platelet     0.16506077 0.00000000            0   3.783946           0
+#&gt;                      NK         B CD16+ Mono CD34+ Eryth       Mk        DC
+#&gt; Naive CD4 T  3.60973732 0.0000000 0.00000000     0     0 0.000000 0.0000000
+#&gt; Memory CD4 T 3.60973732 0.0000000 0.00000000     0     0 0.000000 0.0000000
+#&gt; CD14+ Mono   1.60005988 0.0000000 0.00000000     0     0 0.000000 0.0000000
+#&gt; B            1.60005988 1.6000599 0.00000000     0     0 0.000000 0.0000000
+#&gt; CD8 T        3.60973732 0.0000000 0.00000000     0     0 0.000000 0.0000000
+#&gt; FCGR3A+ Mono 0.02934733 0.0000000 0.02934733     0     0 0.000000 0.0000000
+#&gt; NK           3.60973732 0.0000000 0.00000000     0     0 0.000000 0.0000000
+#&gt; DC           1.60005988 0.1085286 0.00000000     0     0 0.000000 0.1085286
+#&gt; Platelet     1.75292851 0.1650608 0.00000000     0     0 3.783946 0.0000000
+#&gt;                 pDCs
+#&gt; Naive CD4 T  0.00000
+#&gt; Memory CD4 T 0.00000
+#&gt; CD14+ Mono   0.00000
+#&gt; B            0.00000
+#&gt; CD8 T        0.00000
+#&gt; FCGR3A+ Mono 0.00000
+#&gt; NK           0.00000
+#&gt; DC           1.60006
+#&gt; Platelet     0.00000</div><div class='input'>
+<span class='co'># Annotate using a different method</span>
+<span class='fu'>clustify_lists</span>(
+  <span class='kw'>input</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
+  <span class='kw'>marker</span> <span class='kw'>=</span> <span class='no'>cbmc_m</span>,
+  <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>metric</span> <span class='kw'>=</span> <span class='st'>"jaccard"</span>
+)</div><div class='output co'>#&gt;                    CD4 T       CD8 T Memory CD4 T  CD14+ Mono Naive CD4 T
+#&gt; Naive CD4 T  0.001246883 0.001246883            0 0.003750000           0
+#&gt; Memory CD4 T 0.001246883 0.000000000            0 0.003750000           0
+#&gt; CD14+ Mono   0.000000000 0.000000000            0 0.003750000           0
+#&gt; B            0.000000000 0.000000000            0 0.003750000           0
+#&gt; CD8 T        0.001246883 0.000000000            0 0.002496879           0
+#&gt; FCGR3A+ Mono 0.000000000 0.000000000            0 0.003750000           0
+#&gt; NK           0.000000000 0.001246883            0 0.003750000           0
+#&gt; DC           0.000000000 0.000000000            0 0.003750000           0
+#&gt; Platelet     0.001424501 0.000000000            0 0.004285714           0
+#&gt;                       NK           B  CD16+ Mono CD34+ Eryth          Mk
+#&gt; Naive CD4 T  0.003750000 0.000000000 0.000000000     0     0 0.000000000
+#&gt; Memory CD4 T 0.003750000 0.000000000 0.000000000     0     0 0.000000000
+#&gt; CD14+ Mono   0.002496879 0.000000000 0.000000000     0     0 0.000000000
+#&gt; B            0.002496879 0.002496879 0.000000000     0     0 0.000000000
+#&gt; CD8 T        0.003750000 0.000000000 0.000000000     0     0 0.000000000
+#&gt; FCGR3A+ Mono 0.001246883 0.000000000 0.001246883     0     0 0.000000000
+#&gt; NK           0.003750000 0.000000000 0.000000000     0     0 0.000000000
+#&gt; DC           0.002496879 0.001246883 0.000000000     0     0 0.000000000
+#&gt; Platelet     0.002853067 0.001424501 0.000000000     0     0 0.004285714
+#&gt;                       DC        pDCs
+#&gt; Naive CD4 T  0.000000000 0.000000000
+#&gt; Memory CD4 T 0.000000000 0.000000000
+#&gt; CD14+ Mono   0.000000000 0.000000000
+#&gt; B            0.000000000 0.000000000
+#&gt; CD8 T        0.000000000 0.000000000
+#&gt; FCGR3A+ Mono 0.000000000 0.000000000
+#&gt; NK           0.000000000 0.000000000
+#&gt; DC           0.001246883 0.002496879
+#&gt; Platelet     0.000000000 0.000000000</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

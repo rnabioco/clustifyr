@@ -106,6 +106,9 @@
       <a href="../articles/clustifyR.html">Introduction to clustifyr</a>
     </li>
     <li>
+      <a href="../articles/download_refs.html">Prebuilt references for clustifyr</a>
+    </li>
+    <li>
       <a href="../articles/otherformats.html">Support for various single cell object formats</a>
     </li>
     <li>
@@ -152,7 +155,7 @@
     <p>Overcluster by kmeans per cluster</p>
     </div>
 
-    <pre class="usage"><span class='fu'>overcluster</span>(<span class='no'>mat</span>, <span class='no'>cluster_id</span>, <span class='kw'>power</span> <span class='kw'>=</span> <span class='fl'>0.15</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>42</span>)</pre>
+    <pre class="usage"><span class='fu'>overcluster</span>(<span class='no'>mat</span>, <span class='no'>cluster_id</span>, <span class='kw'>power</span> <span class='kw'>=</span> <span class='fl'>0.15</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -169,10 +172,6 @@
       <th>power</th>
       <td><p>decides the number of clusters for kmeans</p></td>
     </tr>
-    <tr>
-      <th>seed</th>
-      <td><p>seed for kmeans</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -180,7 +179,8 @@
     <p>new cluster_id list of more clusters</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>pbmc_ids</span> <span class='kw'>&lt;-</span> <span class='fu'>overcluster</span>(
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>42</span>)
+<span class='no'>pbmc_ids</span> <span class='kw'>&lt;-</span> <span class='fu'>overcluster</span>(
   <span class='kw'>mat</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
   <span class='kw'>cluster_id</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/split.html'>split</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>pbmc_matrix_small</span>), <span class='no'>pbmc_meta</span>$<span class='no'>classified</span>)
 )</div></pre>

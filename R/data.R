@@ -98,3 +98,12 @@
 #'
 #' @source  various packages
 "object_loc_lookup"
+
+#' table of references stored in clustifyrdata
+#'
+#' @format dataframe
+#' \describe{
+#' }
+#'
+#' @source  various packages
+"downrefs"

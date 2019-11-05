@@ -106,6 +106,9 @@
       <a href="../articles/clustifyR.html">Introduction to clustifyr</a>
     </li>
     <li>
+      <a href="../articles/download_refs.html">Prebuilt references for clustifyr</a>
+    </li>
+    <li>
       <a href="../articles/otherformats.html">Support for various single cell object formats</a>
     </li>
     <li>
@@ -152,10 +155,10 @@
     <p>Plot a tSNE or umap colored by feature.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plot_tsne</span>(<span class='no'>data</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"UMAP_1"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"UMAP_2"</span>, <span class='no'>feature</span>,
+    <pre class="usage"><span class='fu'>plot_tsne</span>(<span class='no'>data</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"UMAP_1"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"UMAP_2"</span>, <span class='kw'>feature</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>legend_name</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>c_cols</span> <span class='kw'>=</span> <span class='no'>pretty_palette2</span>, <span class='kw'>d_cols</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>pt_size</span> <span class='kw'>=</span> <span class='fl'>0.25</span>, <span class='kw'>alpha_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale_limits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>do_label</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>do_legend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>do_label</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>do_legend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>do_repel</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -182,8 +185,8 @@
     </tr>
     <tr>
       <th>c_cols</th>
-      <td><p>character vector of colors to built color gradient
-for continuous values. defaults to <code><a href='pretty_palette.html'>clustifyr::pretty_palette</a></code></p></td>
+      <td><p>character vector of colors to build color gradient
+for continuous values, defaults to <code><a href='pretty_palette.html'>clustifyr::pretty_palette</a></code></p></td>
     </tr>
     <tr>
       <th>d_cols</th>
@@ -211,18 +214,27 @@ otherwise a two-element numeric vector indicating min and max to plot</p></td>
       <th>do_legend</th>
       <td><p>whether to draw legend</p></td>
     </tr>
+    <tr>
+      <th>do_repel</th>
+      <td><p>whether to use ggrepel on labels</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>ggplot object, cells projected by dr, colored by feature</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>plot_tsne</span>(
+  <span class='no'>pbmc_meta</span>,
+  <span class='kw'>feature</span> <span class='kw'>=</span> <span class='st'>"classified"</span>)</div><div class='img'><img src='plot_tsne-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

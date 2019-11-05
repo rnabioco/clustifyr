@@ -4,6 +4,7 @@ pkgdown_sha: ~
 articles:
   benchmark: benchmark.html
   clustifyR: clustifyR.html
+  download_refs: download_refs.html
   otherformats: otherformats.html
   othertools: othertools.html
   references: references.html

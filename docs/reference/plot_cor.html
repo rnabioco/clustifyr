@@ -106,6 +106,9 @@
       <a href="../articles/clustifyR.html">Introduction to clustifyr</a>
     </li>
     <li>
+      <a href="../articles/download_refs.html">Prebuilt references for clustifyr</a>
+    </li>
+    <li>
       <a href="../articles/otherformats.html">Support for various single cell object formats</a>
     </li>
     <li>
@@ -206,7 +209,7 @@ two-element numeric vector can also be passed to supply custom values i.e. c(0, 
     <pre class="examples"><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span>(
   <span class='kw'>input</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
   <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
-  <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>pbmc_bulk_matrix</span>,
+  <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>cbmc_ref</span>,
   <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='no'>pbmc_vargenes</span>,
   <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>
 )
@@ -218,7 +221,8 @@ two-element numeric vector can also be passed to supply custom values i.e. c(0, 
   <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
   <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"UMAP_1"</span>,
   <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"UMAP_2"</span>
-)</div><div class='output co'>#&gt; <span class='warning'>Warning: Column `classified` joining character vector and factor, coercing into character vector</span></div><div class='input'>
+)
+
 <span class='no'>plts</span></div><div class='output co'>#&gt; [[1]]</div><div class='img'><img src='plot_cor-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
 #&gt; [[2]]</div><div class='img'><img src='plot_cor-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </div></pre>
   </div>

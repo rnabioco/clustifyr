@@ -76,6 +76,9 @@
     <loc>http://rnabioco.github.io/clustifyr/reference/cosine.html</loc>
   </url>
   <url>
+    <loc>http://rnabioco.github.io/clustifyr/reference/downrefs.html</loc>
+  </url>
+  <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/downsample_matrix.html</loc>
   </url>
   <url>
@@ -83,6 +86,9 @@
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/file_marker_parse.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyr/reference/find_rank_bias.html</loc>
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/gene_pct.html</loc>
@@ -143,9 +149,6 @@
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/parse_loc_object.html</loc>
-  </url>
-  <url>
-    <loc>http://rnabioco.github.io/clustifyr/reference/pbmc_bulk_matrix.html</loc>
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/pbmc_markers.html</loc>
@@ -229,9 +232,6 @@
     <loc>http://rnabioco.github.io/clustifyr/reference/s_small3.html</loc>
   </url>
   <url>
-    <loc>http://rnabioco.github.io/clustifyr/reference/sce_small.html</loc>
-  </url>
-  <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/seurat_meta.html</loc>
   </url>
   <url>
@@ -245,6 +245,9 @@
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyr/articles/clustifyR.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyr/articles/download_refs.html</loc>
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyr/articles/otherformats.html</loc>
