@@ -1,0 +1,37 @@
+---
+title: 'Prebuilt references for clustifyr'
+date: '`r Sys.Date()`'
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 3
+    vignette: >
+      %\VignetteIndexEntry{clustifyr-downrefs}
+      %\VignetteEngine{knitr::rmarkdown}
+      %\VignetteEncoding{UTF-8}
+---
+
+```{r "knitr options", echo = FALSE, message = FALSE, warning = FALSE}
+knitr::opts_chunk$set(
+  message = FALSE,
+  warning = FALSE,
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = "center"
+)
+```
+
+## Download all references from `clustifyrdata` (~200Mb)
+
+All references used in tutorials and more are available at https://github.com/rnabioco/clustifyrdata
+
+```{r, eval = F}
+# install.packages("devtools")
+devtools::install_github("rnabioco/clustifyrdata")
+```
+
+## List of references
+```{r}
+load("/Users/rf/cluster/devel/tar/clustifyr/data/downrefs.rda")
+knitr::kable(downrefs)
+```
