@@ -1,3 +1,11 @@
+# clustifyr 11-06-19
+
+* update to tutorials
+
+* bug fixes
+
+* cleanup for bioc
+
 # clustifyr 09-06-19
 
 * support of SingleCellExperiment objects and more

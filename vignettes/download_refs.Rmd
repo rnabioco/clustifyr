@@ -32,6 +32,5 @@ devtools::install_github("rnabioco/clustifyrdata")
 
 ## List of references
 ```{r}
-load("/Users/rf/cluster/devel/tar/clustifyr/data/downrefs.rda")
-knitr::kable(downrefs)
+knitr::kable(clustifyr::downrefs)
 ```
