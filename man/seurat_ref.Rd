@@ -10,11 +10,11 @@ seurat_ref(seurat_object, ...)
 
 \method{seurat_ref}{seurat}(seurat_object, cluster_col = "classified",
   var_genes_only = FALSE, assay_name = NULL, method = "mean",
-  subclusterpower = 0, ...)
+  subclusterpower = 0, if_log = TRUE, ...)
 
 \method{seurat_ref}{Seurat}(seurat_object, cluster_col = "classified",
   var_genes_only = FALSE, assay_name = NULL, method = "mean",
-  subclusterpower = 0, ...)
+  subclusterpower = 0, if_log = TRUE, ...)
 }
 \arguments{
 \item{seurat_object}{seurat_object after tsne or umap projections and clustering}
@@ -30,6 +30,9 @@ seurat_ref(seurat_object, ...)
 \item{method}{whether to take mean (default) or median}
 
 \item{subclusterpower}{whether to get multiple averages per original cluster}
+
+\item{if_log}{input data is natural log,
+averaging will be done on unlogged data}
 }
 \value{
 reference expression matrix, with genes as row names, and cell types as column names

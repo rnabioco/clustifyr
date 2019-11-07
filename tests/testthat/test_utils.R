@@ -653,6 +653,11 @@ test_that("seurat_ref gets correct averages", {
     cluster_col = "res.1",
     var_genes_only = TRUE
   )
+  avg3 <- seurat_ref(s_small,
+                    cluster_col = "res.1",
+                    var_genes_only = TRUE,
+                    if_log = FALSE
+  )
   avg2 <- seurat_ref(s_small,
     cluster_col = "res.1",
     var_genes_only = "PCA"

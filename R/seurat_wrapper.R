@@ -12,6 +12,8 @@ seurat_ref <- function(seurat_object, ...) {
 #' @param assay_name any additional assay data, such as ADT, to include. If more than 1, pass a vector of names
 #' @param method whether to take mean (default) or median
 #' @param subclusterpower whether to get multiple averages per original cluster
+#' @param if_log input data is natural log,
+#' averaging will be done on unlogged data
 #' @param ... additional arguments
 #' @examples
 #' avg <- seurat_ref(
@@ -26,6 +28,7 @@ seurat_ref.seurat <- function(seurat_object,
                               assay_name = NULL,
                               method = "mean",
                               subclusterpower = 0,
+                              if_log = TRUE,
                               ...) {
   temp_mat <- seurat_object@data
   if (is.logical(var_genes_only) && var_genes_only) {
@@ -44,10 +47,10 @@ seurat_ref.seurat <- function(seurat_object,
   temp_res <- average_clusters(
     temp_mat,
     seurat_object@meta.data,
-    if_log = TRUE,
     cluster_col = cluster_col,
     method = method,
-    subclusterpower = subclusterpower
+    subclusterpower = subclusterpower,
+    if_log = if_log
   )
 
   temp_res
@@ -61,6 +64,7 @@ seurat_ref.Seurat <- function(seurat_object,
                               assay_name = NULL,
                               method = "mean",
                               subclusterpower = 0,
+                              if_log = TRUE,
                               ...) {
   if (is(seurat_object, "Seurat")) {
     temp_mat <- seurat_object@assays$RNA@data
@@ -85,10 +89,10 @@ seurat_ref.Seurat <- function(seurat_object,
   temp_res <- average_clusters(
     temp_mat,
     seurat_object@meta.data,
-    if_log = TRUE,
     cluster_col = cluster_col,
     method = method,
-    subclusterpower = subclusterpower
+    subclusterpower = subclusterpower,
+    if_log = if_log
   )
 
   temp_res
@@ -169,6 +173,8 @@ seurat_meta.Seurat <- function(seurat_object,
 #' @param assay_name any additional assay data, such as ADT, to include. If more than 1, pass a vector of names
 #' @param method whether to take mean (default) or median
 #' @param lookuptable if not supplied, will look in built-in table for object parsing
+#' @param if_log input data is natural log,
+#' averaging will be done on unlogged data
 #' @return reference expression matrix, with genes as row names, and cell types as column names
 #' @examples
 #' object_ref(
@@ -180,7 +186,9 @@ object_ref <- function(input,
                        var_genes_only = FALSE,
                        assay_name = NULL,
                        method = "mean",
-                       lookuptable = NULL) {
+                       lookuptable = NULL,
+                       if_log = TRUE)
+  {
   if (!is(input, "seurat")) {
     input_original <- input
     temp <- parse_loc_object(
@@ -211,9 +219,9 @@ object_ref <- function(input,
   temp_res <- average_clusters(
     temp_mat,
     metadata,
-    if_log = TRUE,
     cluster_col = cluster_col,
-    method = method
+    method = method,
+    if_log = if_log
   )
 
   temp_res

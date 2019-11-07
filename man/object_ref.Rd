@@ -5,7 +5,8 @@
 \title{Function to convert labelled object to avg expression matrix}
 \usage{
 object_ref(input, cluster_col = NULL, var_genes_only = FALSE,
-  assay_name = NULL, method = "mean", lookuptable = NULL)
+  assay_name = NULL, method = "mean", lookuptable = NULL,
+  if_log = TRUE)
 }
 \arguments{
 \item{input}{object after tsne or umap projections and clustering}
@@ -19,6 +20,9 @@ object_ref(input, cluster_col = NULL, var_genes_only = FALSE,
 \item{method}{whether to take mean (default) or median}
 
 \item{lookuptable}{if not supplied, will look in built-in table for object parsing}
+
+\item{if_log}{input data is natural log,
+averaging will be done on unlogged data}
 }
 \value{
 reference expression matrix, with genes as row names, and cell types as column names
