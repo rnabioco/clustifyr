@@ -38,6 +38,7 @@ seurat_ref.seurat <- function(seurat_object,
   }
 
   if (!is.null(assay_name)) {
+    temp_mat <- temp_mat[0,]
     for (element in assay_name) {
       temp_mat2 <- seurat_object@assay[[element]]@raw.data
       temp_mat <- rbind(temp_mat, as.matrix(temp_mat2))
@@ -77,6 +78,7 @@ seurat_ref.Seurat <- function(seurat_object,
     }
 
     if (!is.null(assay_name)) {
+      temp_mat <- temp_mat[0,]
       for (element in assay_name) {
         temp_mat2 <- seurat_object@assays[[element]]@counts
         temp_mat <- rbind(temp_mat, as.matrix(temp_mat2))
