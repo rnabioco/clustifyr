@@ -620,6 +620,14 @@ clustify_lists.default <- function(input,
       cluster_info,
       cluster_col = cluster_col
     )
+  } else if (metric == "gsea") {
+    res <- compare_lists(
+      input,
+      marker_mat = marker,
+      n = genome_n,
+      metric = "gsea",
+      output_high = output_high
+    )
   } else if (metric != "posneg") {
     res <- compare_lists(
       bin_input,
