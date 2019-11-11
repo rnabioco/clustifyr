@@ -3,7 +3,8 @@ run_clustifyr <- function(DataPath,
                           CV_RDataPath,
                           OutputDir,
                           GeneOrderPath = NULL,
-                          NumGenes = NULL) {
+                          NumGenes = NULL,
+                          threshold = 0.75) {
   "
   run clustifyr
   Wrapper script to run clustifyr on a benchmark dataset with 5-fold cross validation,
@@ -19,6 +20,7 @@ run_clustifyr <- function(DataPath,
   GeneOrderPath : Gene order file path (.csv) obtained from feature selection,
   defining the genes order for each cross validation fold, default is NULL.
   NumGenes : Number of genes used in case of feature selection (integer), default is NULL.
+  threshold : whether calls are cut at min correlation coefficients
   "
 
   Data <- read.csv(DataPath,row.names = 1)
@@ -55,7 +57,7 @@ run_clustifyr <- function(DataPath,
         ref = ref,
         metadata = Labels[Test_Idx[[i]]]
       )
-      res2 <- cor_to_call(res, threshold = 0.75, cluster_col = "cluster")
+      res2 <- cor_to_call(res, threshold = threshold, cluster_col = "cluster")
       meta2 <- call_to_metadata(res2, meta, cluster_col = "cluster")
       end_time <- Sys.time()
     }
@@ -90,7 +92,7 @@ run_clustifyr <- function(DataPath,
 
       res2 <- cor_to_call(
         res,
-        threshold = 0.75,
+        threshold = threshold, #0.75,
         cluster_col = "cluster"
       )
       meta2 <- call_to_metadata(
