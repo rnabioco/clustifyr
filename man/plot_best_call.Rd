@@ -4,9 +4,18 @@
 \alias{plot_best_call}
 \title{Plot best calls for each cluster on a tSNE or umap}
 \usage{
-plot_best_call(cor_mat, metadata, cluster_col = "cluster",
-  collapse_to_cluster = FALSE, threshold = 0, x = "UMAP_1",
-  y = "UMAP_2", plot_r = FALSE, per_cell = FALSE, ...)
+plot_best_call(
+  cor_mat,
+  metadata,
+  cluster_col = "cluster",
+  collapse_to_cluster = FALSE,
+  threshold = 0,
+  x = "UMAP_1",
+  y = "UMAP_2",
+  plot_r = FALSE,
+  per_cell = FALSE,
+  ...
+)
 }
 \arguments{
 \item{cor_mat}{input similarity matrix}

@@ -10,34 +10,86 @@
 \usage{
 clustify(input, ...)
 
-\method{clustify}{default}(input, ref_mat, metadata = NULL,
-  cluster_col = NULL, query_genes = NULL, per_cell = FALSE,
-  n_perm = 0, compute_method = "spearman", verbose = FALSE,
-  lookuptable = NULL, rm0 = FALSE, obj_out = FALSE,
-  seurat_out = FALSE, rename_prefix = NULL, threshold = "auto",
+\method{clustify}{default}(
+  input,
+  ref_mat,
+  metadata = NULL,
+  cluster_col = NULL,
+  query_genes = NULL,
+  per_cell = FALSE,
+  n_perm = 0,
+  compute_method = "spearman",
+  verbose = FALSE,
+  lookuptable = NULL,
+  rm0 = FALSE,
+  obj_out = FALSE,
+  seurat_out = FALSE,
+  rename_prefix = NULL,
+  threshold = "auto",
   exclude_genes = rownames(ref_mat)[stringr::str_detect(rownames(ref_mat),
-  "RP[0-9,L,S]|Rp[0-9,l,s]")], ...)
+    "RP[0-9,L,S]|Rp[0-9,l,s]")],
+  ...
+)
 
-\method{clustify}{seurat}(input, ref_mat, cluster_col = NULL,
-  query_genes = NULL, per_cell = FALSE, n_perm = 0,
-  compute_method = "spearman", use_var_genes = TRUE, dr = "umap",
-  seurat_out = TRUE, obj_out = FALSE, threshold = "auto",
-  verbose = FALSE, rm0 = FALSE, rename_prefix = NULL,
-  exclude_genes = c(), ...)
+\method{clustify}{seurat}(
+  input,
+  ref_mat,
+  cluster_col = NULL,
+  query_genes = NULL,
+  per_cell = FALSE,
+  n_perm = 0,
+  compute_method = "spearman",
+  use_var_genes = TRUE,
+  dr = "umap",
+  seurat_out = TRUE,
+  obj_out = FALSE,
+  threshold = "auto",
+  verbose = FALSE,
+  rm0 = FALSE,
+  rename_prefix = NULL,
+  exclude_genes = c(),
+  ...
+)
 
-\method{clustify}{Seurat}(input, ref_mat, cluster_col = NULL,
-  query_genes = NULL, per_cell = FALSE, n_perm = 0,
-  compute_method = "spearman", use_var_genes = TRUE, dr = "umap",
-  seurat_out = TRUE, obj_out = FALSE, threshold = "auto",
-  verbose = FALSE, rm0 = FALSE, rename_prefix = NULL,
-  exclude_genes = c(), ...)
+\method{clustify}{Seurat}(
+  input,
+  ref_mat,
+  cluster_col = NULL,
+  query_genes = NULL,
+  per_cell = FALSE,
+  n_perm = 0,
+  compute_method = "spearman",
+  use_var_genes = TRUE,
+  dr = "umap",
+  seurat_out = TRUE,
+  obj_out = FALSE,
+  threshold = "auto",
+  verbose = FALSE,
+  rm0 = FALSE,
+  rename_prefix = NULL,
+  exclude_genes = c(),
+  ...
+)
 
-\method{clustify}{SingleCellExperiment}(input, ref_mat,
-  cluster_col = NULL, query_genes = NULL, per_cell = FALSE,
-  n_perm = 0, compute_method = "spearman", use_var_genes = TRUE,
-  dr = "umap", seurat_out = TRUE, obj_out = TRUE,
-  threshold = "auto", verbose = FALSE, rm0 = FALSE,
-  rename_prefix = NULL, exclude_genes = c(), ...)
+\method{clustify}{SingleCellExperiment}(
+  input,
+  ref_mat,
+  cluster_col = NULL,
+  query_genes = NULL,
+  per_cell = FALSE,
+  n_perm = 0,
+  compute_method = "spearman",
+  use_var_genes = TRUE,
+  dr = "umap",
+  seurat_out = TRUE,
+  obj_out = TRUE,
+  threshold = "auto",
+  verbose = FALSE,
+  rm0 = FALSE,
+  rename_prefix = NULL,
+  exclude_genes = c(),
+  ...
+)
 }
 \arguments{
 \item{input}{single-cell expression matrix or Seurat object}

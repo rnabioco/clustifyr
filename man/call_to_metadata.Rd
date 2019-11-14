@@ -4,8 +4,13 @@
 \alias{call_to_metadata}
 \title{Insert called ident results into metadata}
 \usage{
-call_to_metadata(res, metadata, cluster_col, per_cell = FALSE,
-  rename_prefix = NULL)
+call_to_metadata(
+  res,
+  metadata,
+  cluster_col,
+  per_cell = FALSE,
+  rename_prefix = NULL
+)
 }
 \arguments{
 \item{res}{dataframe of idents, such as output of cor_to_call}

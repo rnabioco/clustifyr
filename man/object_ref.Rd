@@ -4,9 +4,15 @@
 \alias{object_ref}
 \title{Function to convert labelled object to avg expression matrix}
 \usage{
-object_ref(input, cluster_col = NULL, var_genes_only = FALSE,
-  assay_name = NULL, method = "mean", lookuptable = NULL,
-  if_log = TRUE)
+object_ref(
+  input,
+  cluster_col = NULL,
+  var_genes_only = FALSE,
+  assay_name = NULL,
+  method = "mean",
+  lookuptable = NULL,
+  if_log = TRUE
+)
 }
 \arguments{
 \item{input}{object after tsne or umap projections and clustering}

@@ -4,8 +4,13 @@
 \alias{feature_select_PCA}
 \title{Returns a list of variable genes based on PCA}
 \usage{
-feature_select_PCA(mat = NULL, pcs = NULL, n_pcs = 10,
-  percentile = 0.99, if_log = TRUE)
+feature_select_PCA(
+  mat = NULL,
+  pcs = NULL,
+  n_pcs = 10,
+  percentile = 0.99,
+  if_log = TRUE
+)
 }
 \arguments{
 \item{mat}{Expression matrix. Rownames are genes,

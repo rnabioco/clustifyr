@@ -4,8 +4,14 @@
 \alias{plot_pathway_gsea}
 \title{plot GSEA pathway scores as heatmap, returns a list containing results and plot.}
 \usage{
-plot_pathway_gsea(mat, pathway_list, n_perm = 1000, scale = TRUE,
-  topn = 5, returning = "both")
+plot_pathway_gsea(
+  mat,
+  pathway_list,
+  n_perm = 1000,
+  scale = TRUE,
+  topn = 5,
+  returning = "both"
+)
 }
 \arguments{
 \item{mat}{expression matrix}

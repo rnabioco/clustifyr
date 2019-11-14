@@ -4,8 +4,17 @@
 \alias{clustify_intra}
 \title{Intra-experiment cluster projection for one sample/set to the rest}
 \usage{
-clustify_intra(expr_mat, metadata, query_genes, cluster_col, sample_col,
-  sample_id, per_cell = FALSE, compute_method = "spearman", ...)
+clustify_intra(
+  expr_mat,
+  metadata,
+  query_genes,
+  cluster_col,
+  sample_col,
+  sample_id,
+  per_cell = FALSE,
+  compute_method = "spearman",
+  ...
+)
 }
 \arguments{
 \item{expr_mat}{single-cell expression matrix or Seurat object}

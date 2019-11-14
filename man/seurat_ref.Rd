@@ -8,13 +8,27 @@
 \usage{
 seurat_ref(seurat_object, ...)
 
-\method{seurat_ref}{seurat}(seurat_object, cluster_col = "classified",
-  var_genes_only = FALSE, assay_name = NULL, method = "mean",
-  subclusterpower = 0, if_log = TRUE, ...)
+\method{seurat_ref}{seurat}(
+  seurat_object,
+  cluster_col = "classified",
+  var_genes_only = FALSE,
+  assay_name = NULL,
+  method = "mean",
+  subclusterpower = 0,
+  if_log = TRUE,
+  ...
+)
 
-\method{seurat_ref}{Seurat}(seurat_object, cluster_col = "classified",
-  var_genes_only = FALSE, assay_name = NULL, method = "mean",
-  subclusterpower = 0, if_log = TRUE, ...)
+\method{seurat_ref}{Seurat}(
+  seurat_object,
+  cluster_col = "classified",
+  var_genes_only = FALSE,
+  assay_name = NULL,
+  method = "mean",
+  subclusterpower = 0,
+  if_log = TRUE,
+  ...
+)
 }
 \arguments{
 \item{seurat_object}{seurat_object after tsne or umap projections and clustering}

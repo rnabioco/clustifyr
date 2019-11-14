@@ -4,8 +4,14 @@
 \alias{cor_to_call_topn}
 \title{get top calls for each cluster}
 \usage{
-cor_to_call_topn(cor_mat, metadata = NULL, col = "cluster",
-  collapse_to_cluster = FALSE, threshold = 0, topn = 2)
+cor_to_call_topn(
+  cor_mat,
+  metadata = NULL,
+  col = "cluster",
+  collapse_to_cluster = FALSE,
+  threshold = 0,
+  topn = 2
+)
 }
 \arguments{
 \item{cor_mat}{input similarity matrix}

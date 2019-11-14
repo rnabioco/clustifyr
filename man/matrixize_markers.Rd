@@ -4,9 +4,17 @@
 \alias{matrixize_markers}
 \title{Convert candidate genes list into matrix}
 \usage{
-matrixize_markers(marker_df, ranked = FALSE, n = NULL,
-  step_weight = 1, background_weight = 0, unique = FALSE,
-  metadata = NULL, cluster_col = "classified", remove_rp = FALSE)
+matrixize_markers(
+  marker_df,
+  ranked = FALSE,
+  n = NULL,
+  step_weight = 1,
+  background_weight = 0,
+  unique = FALSE,
+  metadata = NULL,
+  cluster_col = "classified",
+  remove_rp = FALSE
+)
 }
 \arguments{
 \item{marker_df}{dataframe of candidate genes, must contain "gene" and "cluster" columns, or a matrix of gene names to convert to ranked}

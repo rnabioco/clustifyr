@@ -4,9 +4,15 @@
 \alias{parse_loc_object}
 \title{more flexible parsing of single cell objects}
 \usage{
-parse_loc_object(input, type = class(input), expr_loc = NULL,
-  meta_loc = NULL, var_loc = NULL, cluster_col = NULL,
-  lookuptable = NULL)
+parse_loc_object(
+  input,
+  type = class(input),
+  expr_loc = NULL,
+  meta_loc = NULL,
+  var_loc = NULL,
+  cluster_col = NULL,
+  lookuptable = NULL
+)
 }
 \arguments{
 \item{input}{input object}

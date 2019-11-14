@@ -9,24 +9,65 @@
 \usage{
 clustify_nudge(input, ...)
 
-\method{clustify_nudge}{default}(input, ref_mat, marker, metadata = NULL,
-  cluster_col = NULL, query_genes = NULL,
-  compute_method = "spearman", weight = 1, seurat_out = FALSE,
-  threshold = -Inf, dr = "umap", norm = "diff", call = TRUE,
-  marker_inmatrix = TRUE, mode = "rank", obj_out = FALSE,
-  rename_prefix = NULL, lookuptable = NULL, ...)
+\method{clustify_nudge}{default}(
+  input,
+  ref_mat,
+  marker,
+  metadata = NULL,
+  cluster_col = NULL,
+  query_genes = NULL,
+  compute_method = "spearman",
+  weight = 1,
+  seurat_out = FALSE,
+  threshold = -Inf,
+  dr = "umap",
+  norm = "diff",
+  call = TRUE,
+  marker_inmatrix = TRUE,
+  mode = "rank",
+  obj_out = FALSE,
+  rename_prefix = NULL,
+  lookuptable = NULL,
+  ...
+)
 
-\method{clustify_nudge}{seurat}(input, ref_mat, marker,
-  cluster_col = NULL, query_genes = NULL,
-  compute_method = "spearman", weight = 1, seurat_out = TRUE,
-  obj_out = FALSE, threshold = -Inf, dr = "umap", norm = "diff",
-  marker_inmatrix = TRUE, mode = "rank", rename_prefix = NULL, ...)
+\method{clustify_nudge}{seurat}(
+  input,
+  ref_mat,
+  marker,
+  cluster_col = NULL,
+  query_genes = NULL,
+  compute_method = "spearman",
+  weight = 1,
+  seurat_out = TRUE,
+  obj_out = FALSE,
+  threshold = -Inf,
+  dr = "umap",
+  norm = "diff",
+  marker_inmatrix = TRUE,
+  mode = "rank",
+  rename_prefix = NULL,
+  ...
+)
 
-\method{clustify_nudge}{Seurat}(input, ref_mat, marker,
-  cluster_col = NULL, query_genes = NULL,
-  compute_method = "spearman", weight = 1, seurat_out = TRUE,
-  obj_out = FALSE, threshold = -Inf, dr = "umap", norm = "diff",
-  marker_inmatrix = TRUE, mode = "rank", rename_prefix = NULL, ...)
+\method{clustify_nudge}{Seurat}(
+  input,
+  ref_mat,
+  marker,
+  cluster_col = NULL,
+  query_genes = NULL,
+  compute_method = "spearman",
+  weight = 1,
+  seurat_out = TRUE,
+  obj_out = FALSE,
+  threshold = -Inf,
+  dr = "umap",
+  norm = "diff",
+  marker_inmatrix = TRUE,
+  mode = "rank",
+  rename_prefix = NULL,
+  ...
+)
 }
 \arguments{
 \item{input}{express matrix or object}

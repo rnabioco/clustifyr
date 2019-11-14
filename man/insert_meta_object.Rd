@@ -4,8 +4,13 @@
 \alias{insert_meta_object}
 \title{more flexible metadata update of single cell objects}
 \usage{
-insert_meta_object(input, new_meta, type = class(input),
-  meta_loc = NULL, lookuptable = NULL)
+insert_meta_object(
+  input,
+  new_meta,
+  type = class(input),
+  meta_loc = NULL,
+  lookuptable = NULL
+)
 }
 \arguments{
 \item{input}{input object}

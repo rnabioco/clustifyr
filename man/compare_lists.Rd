@@ -5,8 +5,13 @@
 \title{Calculate adjusted p-values for hypergeometric test of gene lists
 or jaccard index}
 \usage{
-compare_lists(bin_mat, marker_mat, n = 30000, metric = "hyper",
-  output_high = TRUE)
+compare_lists(
+  bin_mat,
+  marker_mat,
+  n = 30000,
+  metric = "hyper",
+  output_high = TRUE
+)
 }
 \arguments{
 \item{bin_mat}{binarized single-cell expression matrix, feed in by_cluster mat, if desired}

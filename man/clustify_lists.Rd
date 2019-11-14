@@ -10,33 +10,89 @@
 \usage{
 clustify_lists(input, ...)
 
-\method{clustify_lists}{default}(input, marker, marker_inmatrix = TRUE,
-  metadata = NULL, cluster_col = NULL, if_log = TRUE,
-  per_cell = FALSE, topn = 800, cut = 0, genome_n = 30000,
-  metric = "hyper", output_high = TRUE, lookuptable = NULL,
-  obj_out = FALSE, seurat_out = FALSE, rename_prefix = NULL,
-  threshold = 0, ...)
+\method{clustify_lists}{default}(
+  input,
+  marker,
+  marker_inmatrix = TRUE,
+  metadata = NULL,
+  cluster_col = NULL,
+  if_log = TRUE,
+  per_cell = FALSE,
+  topn = 800,
+  cut = 0,
+  genome_n = 30000,
+  metric = "hyper",
+  output_high = TRUE,
+  lookuptable = NULL,
+  obj_out = FALSE,
+  seurat_out = FALSE,
+  rename_prefix = NULL,
+  threshold = 0,
+  ...
+)
 
-\method{clustify_lists}{seurat}(input, metadata = NULL,
-  cluster_col = NULL, if_log = TRUE, per_cell = FALSE, topn = 800,
-  cut = 0, marker, marker_inmatrix = TRUE, genome_n = 30000,
-  metric = "hyper", output_high = TRUE, dr = "umap",
-  seurat_out = TRUE, obj_out = FALSE, threshold = 0,
-  rename_prefix = NULL, ...)
+\method{clustify_lists}{seurat}(
+  input,
+  metadata = NULL,
+  cluster_col = NULL,
+  if_log = TRUE,
+  per_cell = FALSE,
+  topn = 800,
+  cut = 0,
+  marker,
+  marker_inmatrix = TRUE,
+  genome_n = 30000,
+  metric = "hyper",
+  output_high = TRUE,
+  dr = "umap",
+  seurat_out = TRUE,
+  obj_out = FALSE,
+  threshold = 0,
+  rename_prefix = NULL,
+  ...
+)
 
-\method{clustify_lists}{Seurat}(input, metadata = NULL,
-  cluster_col = NULL, if_log = TRUE, per_cell = FALSE, topn = 800,
-  cut = 0, marker, marker_inmatrix = TRUE, genome_n = 30000,
-  metric = "hyper", output_high = TRUE, dr = "umap",
-  seurat_out = TRUE, obj_out = FALSE, threshold = 0,
-  rename_prefix = NULL, ...)
+\method{clustify_lists}{Seurat}(
+  input,
+  metadata = NULL,
+  cluster_col = NULL,
+  if_log = TRUE,
+  per_cell = FALSE,
+  topn = 800,
+  cut = 0,
+  marker,
+  marker_inmatrix = TRUE,
+  genome_n = 30000,
+  metric = "hyper",
+  output_high = TRUE,
+  dr = "umap",
+  seurat_out = TRUE,
+  obj_out = FALSE,
+  threshold = 0,
+  rename_prefix = NULL,
+  ...
+)
 
-\method{clustify_lists}{SingleCellExperiment}(input, metadata = NULL,
-  cluster_col = NULL, if_log = TRUE, per_cell = FALSE, topn = 800,
-  cut = 0, marker, marker_inmatrix = TRUE, genome_n = 30000,
-  metric = "hyper", output_high = TRUE, dr = "umap",
-  seurat_out = TRUE, obj_out = TRUE, threshold = 0,
-  rename_prefix = NULL, ...)
+\method{clustify_lists}{SingleCellExperiment}(
+  input,
+  metadata = NULL,
+  cluster_col = NULL,
+  if_log = TRUE,
+  per_cell = FALSE,
+  topn = 800,
+  cut = 0,
+  marker,
+  marker_inmatrix = TRUE,
+  genome_n = 30000,
+  metric = "hyper",
+  output_high = TRUE,
+  dr = "umap",
+  seurat_out = TRUE,
+  obj_out = TRUE,
+  threshold = 0,
+  rename_prefix = NULL,
+  ...
+)
 }
 \arguments{
 \item{input}{single-cell expression matrix or Seurat object}

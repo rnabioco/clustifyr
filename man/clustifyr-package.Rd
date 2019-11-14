@@ -6,10 +6,10 @@
 \alias{_PACKAGE}
 \title{clustifyr: Classifier for Single-cell RNA-seq Using Cell Clusters}
 \description{
-\if{html}{\figure{logo.png}{options: align='right'}}
+\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
 Classify cells from single-cell RNA sequencing data
-    using external reference data (e.g., bulk RNA-seq).
+    using external reference data (e.g., bulk RNA-seq, scRNA-seq, microarray, gene lists).
 }
 \seealso{
 Useful links:

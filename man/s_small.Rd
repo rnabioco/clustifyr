@@ -8,7 +8,7 @@
 \describe{
 }}
 \source{
-\code{[pbmc_small]} processed by seurat
+\verb{[pbmc_small]} processed by seurat
 }
 \usage{
 s_small
