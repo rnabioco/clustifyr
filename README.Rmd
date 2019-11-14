@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/rnabioco/clustifyr?branch=master&svg=true)](https://ci.appveyor.com/project/rnabioco/clustifyr)
 [![Coverage status](https://codecov.io/gh/rnabioco/clustifyr/branch/master/graph/badge.svg)](https://codecov.io/github/rnabioco/clustifyr?branch=master)
 
-clustifyr classifies cells and clusters in single-cell RNA sequencing experiments using reference bulk RNA-seq data sets, sorted microarray expression data, single-cell gene signatures, or marker genes. 
+clustifyr classifies cells and clusters in single-cell RNA sequencing experiments using reference bulk RNA-seq data sets, sorted microarray expression data, single-cell gene signatures, or lists of marker genes. 
 
 Single cell transcriptomes are difficult to annotate without extensive knowledge of the underlying biology of the system in question. Even with this knowledge, accurate identification can be challenging due to the lack of detectable expression of common marker genes. clustifyr solves this problem by automatically annotating single cells or clusters using scRNA-seq, bulk RNA-seq data, microarray or marker gene lists. Additional functions allow for exploratory analysis of similarities between single cell RNA-seq datasets and reference data.
 
@@ -32,29 +32,26 @@ devtools::install_github("rnabioco/clustifyr")
 In this example we use the following built-in input data:
 
 - an expression matrix of single cell RNA-seq data (`pbmc_matrix_small`)
-- a metadata data.frame (`pbmc_meta`)
-- a vector of variable genes (`pbmc_vargenes`)-
+- a metadata data.frame (`pbmc_meta`), with cluster information stored (`"classified"`)
+- a vector of variable genes (`pbmc_vargenes`)
 - a matrix of mean normalized scRNA-seq UMI counts by cell type (`cbmc_ref`):
 
 We then calculate correlation coefficients and plot them on a pre-calculated tSNE projection (stored in `pbmc_meta`).
 
 ```{r readme_example, warning=F, message=F}
 library(clustifyr)
-library(Seurat)
+
+# calculate correlation
 res <- clustify(
   input = pbmc_matrix_small,
   metadata = pbmc_meta$classified,
   ref_mat = cbmc_ref,
   query_genes = pbmc_vargenes
 )
+res2 <- cor_to_call(res)
+res2
 
-plot_cor(
-  cor_mat = res,
-  metadata = pbmc_meta,
-  data_to_plot = colnames(res)[1],
-  cluster_col = "classified"
-)
-
+# plotting
 plot_best_call(
   cor_mat = res, 
   metadata = pbmc_meta, 
@@ -69,28 +66,29 @@ Alternatively, `clustify` can take a clustered `seurat` object (both v2 and v3) 
 - a matrix of mean normalized scRNA-seq UMI counts by cell type (`cbmc_ref`):
 
 ```{r example_seurat, warning=F, message=F}
+library(Seurat)
+
+# for seurat2
 res <- clustify(
   input = s_small,
   cluster_col = "res.1",
   ref_mat = cbmc_ref,
-  seurat_out = TRUE,
-  dr = "tsne"
+  seurat_out = TRUE
 )
 
+# for Seurat3
 res2 <- clustify(
   input = s_small3,
   cluster_col = "RNA_snn_res.1",
   ref_mat = cbmc_ref,
-  seurat_out = TRUE,
-  dr = "tsne"
+  seurat_out = TRUE
 )
-
 res2
 
+# make reference from seurat objects
 new_ref_matrix <- seurat_ref(
   seurat_object = s_small,
-  cluster_col = "res.1",
-  var.genes_only = FALSE
+  cluster_col = "res.1"
 )
 
 head(new_ref_matrix)
@@ -98,25 +96,21 @@ head(new_ref_matrix)
 
 Similarly, `clustify_lists` can also handle identity assignment of matrix or `seurat` object based on marker gene lists.
 
-```{r example_seurat2, warning=F}
+```{r example_seurat2, warning=F, message=F}
 res <- clustify_lists(
   input = pbmc_matrix_small,
-  per_cell = FALSE,
   metadata = pbmc_meta,
   cluster_col = "classified",
   marker = pbmc_markers,
-  marker_inmatrix = FALSE,
-  metric = "hyper"
+  marker_inmatrix = FALSE
 )
 
 res <- clustify_lists(
   input = s_small,
-  per_cell = FALSE,
   marker = pbmc_markers,
   marker_inmatrix = FALSE,
   cluster_col = "res.1",
-  seurat_out = TRUE,
-  dr = "tsne"
+  seurat_out = TRUE
 )
 ```
 

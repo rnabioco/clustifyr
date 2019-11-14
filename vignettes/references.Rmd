@@ -30,8 +30,8 @@ library(clustifyr)
 full_pbmc_matrix <- clustifyrdata::pbmc_matrix
 full_pbmc_meta <- clustifyrdata::pbmc_meta
 new_ref_matrix <- average_clusters(
-  full_pbmc_matrix, 
-  metadata = full_pbmc_meta$classified,
+  mat = full_pbmc_matrix, 
+  metadata = full_pbmc_meta$classified, # or use metadata = full_pbmc_meta, cluster_col = "classified"
   if_log = TRUE
 )
 
@@ -198,12 +198,12 @@ GSE24759_mat <- ungroup(GSE24759) %>% select(-gene_symbol) %>% as.matrix()
 row.names(GSE24759_mat) <- GSE24759$gene_symbol
 
 # merge samples
-hema_microarray_matrix <- GSE24759_mat %>% t() %>% as.data.frame() %>% rownames_to_column("sample") %>% mutate(sample = str_remove(sample, ", .*")) %>% group_by(sample) %>% summarise_all(.funs = list(~log2(mean(2^.)))) %>% column_to_rownames("sample") %>% t()
+ref_hema_microarray <- GSE24759_mat %>% t() %>% as.data.frame() %>% rownames_to_column("sample") %>% mutate(sample = str_remove(sample, ", .*")) %>% group_by(sample) %>% summarise_all(.funs = list(~log2(mean(2^.)))) %>% column_to_rownames("sample") %>% t()
 ```
 
 Essentially, any data in matrix form is accepted by `clustifyR`.
 ```{r microarray2, warning=F, message=F}
-clustifyrdata::hema_microarray_matrix[1:5,1:5]
+clustifyrdata::ref_hema_microarray[1:5,1:5]
 ```
 
 ## Building reference gene list
@@ -222,7 +222,7 @@ data.frame(alpham, betam, deltam)
 
 # use matrixize_markers function to convert
 mm <- matrixize_markers(
-  pbmc_markers, 
+  marker_df = pbmc_markers, 
   remove_rp = TRUE, 
   unique = TRUE, 
   n = 10
@@ -231,7 +231,7 @@ head(mm)
 
 # get markers from ref_matrix, and then matrixize_markers
 cbmc_m <- matrixize_markers(
-  ref_marker_select(cbmc_ref),
+  marker_df = ref_marker_select(cbmc_ref),
   remove_rp = TRUE,
   unique = TRUE,
   n = 3
