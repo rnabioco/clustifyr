@@ -78,7 +78,7 @@ set ovelap" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">clustifyr</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.99.0</span>
       </span>
     </div>
 
@@ -157,8 +157,15 @@ set ovelap" />
 set ovelap</p>
     </div>
 
-    <pre class="usage"><span class='fu'>run_gsea</span>(<span class='no'>expr_mat</span>, <span class='no'>query_genes</span>, <span class='kw'>cluster_ids</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>no_warnings</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>run_gsea</span>(
+  <span class='no'>expr_mat</span>,
+  <span class='no'>query_genes</span>,
+  <span class='kw'>cluster_ids</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
+  <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>no_warnings</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

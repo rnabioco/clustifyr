@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">clustifyr</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.99.0</span>
       </span>
     </div>
 
@@ -158,37 +158,89 @@
     <pre class="usage"><span class='fu'>clustify</span>(<span class='no'>input</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>clustify</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>, <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>lookuptable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rm0</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
+<span class='fu'>clustify</span>(
+  <span class='no'>input</span>,
+  <span class='no'>ref_mat</span>,
+  <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>lookuptable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>rm0</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
   <span class='kw'>exclude_genes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='no'>ref_mat</span>)[<span class='kw pkg'>stringr</span><span class='kw ns'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_detect.html'>str_detect</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='no'>ref_mat</span>),
-  <span class='st'>"RP[0-9,L,S]|Rp[0-9,l,s]"</span>)], <span class='no'>...</span>)
+    <span class='st'>"RP[0-9,L,S]|Rp[0-9,l,s]"</span>)],
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for seurat</span>
-<span class='fu'>clustify</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>use_var_genes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"umap"</span>,
-  <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>rm0</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>exclude_genes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(), <span class='no'>...</span>)
+<span class='fu'>clustify</span>(
+  <span class='no'>input</span>,
+  <span class='no'>ref_mat</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>,
+  <span class='kw'>use_var_genes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"umap"</span>,
+  <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>rm0</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>exclude_genes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(),
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for Seurat</span>
-<span class='fu'>clustify</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>use_var_genes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"umap"</span>,
-  <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>rm0</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>exclude_genes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(), <span class='no'>...</span>)
+<span class='fu'>clustify</span>(
+  <span class='no'>input</span>,
+  <span class='no'>ref_mat</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>,
+  <span class='kw'>use_var_genes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"umap"</span>,
+  <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>rm0</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>exclude_genes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(),
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for SingleCellExperiment</span>
-<span class='fu'>clustify</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>,
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>use_var_genes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"umap"</span>, <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>rm0</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exclude_genes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(), <span class='no'>...</span>)</pre>
+<span class='fu'>clustify</span>(
+  <span class='no'>input</span>,
+  <span class='no'>ref_mat</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>,
+  <span class='kw'>use_var_genes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"umap"</span>,
+  <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>rm0</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>exclude_genes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(),
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

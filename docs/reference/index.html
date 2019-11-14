@@ -76,7 +76,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">clustifyr</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.99.0</span>
       </span>
     </div>
 
@@ -157,6 +157,82 @@
     </colgroup>
 
     <tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-main-functions" class="hasAnchor"><a href="#section-main-functions" class="anchor"></a>Main functions</h2>
+          <p class="section-desc"><p>Classify cell clusters by transcriptome profiles or gene lists, and building references</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="clustify.html">clustify()</a></code> </p>
+        </td>
+        <td><p>Compare scRNA-seq data to reference data.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="clustify_lists.html">clustify_lists()</a></code> </p>
+        </td>
+        <td><p>Main function to compare scRNA-seq data to gene lists.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="average_clusters.html">average_clusters()</a></code> </p>
+        </td>
+        <td><p>Average expression values per cluster</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="matrixize_markers.html">matrixize_markers()</a></code> </p>
+        </td>
+        <td><p>Convert candidate genes list into matrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="cor_to_call.html">cor_to_call()</a></code> </p>
+        </td>
+        <td><p>get best calls for each cluster</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="call_to_metadata.html">call_to_metadata()</a></code> </p>
+        </td>
+        <td><p>Insert called ident results into metadata</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-object-wrappers" class="hasAnchor"><a href="#section-object-wrappers" class="anchor"></a>Object wrappers</h2>
+          <p class="section-desc"><p>Retrieving metadata and reference building from supported object types</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="seurat_meta.html">seurat_meta()</a></code> </p>
+        </td>
+        <td><p>Function to convert labelled seurat object to fully prepared metadata#'</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="seurat_ref.html">seurat_ref()</a></code> </p>
+        </td>
+        <td><p>Function to convert labelled seurat object to avg expression matrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="object_ref.html">object_ref()</a></code> </p>
+        </td>
+        <td><p>Function to convert labelled object to avg expression matrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="object_loc_lookup.html">object_loc_lookup</a></code> </p>
+        </td>
+        <td><p>lookup table for single cell object structures</p></td>
+      </tr>
+    </tbody><tbody>
       <tr>
         <th colspan="2">
           <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
@@ -640,6 +716,8 @@ or jaccard index</p></td>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#section-main-functions">Main functions</a></li>
+      <li><a href="#section-object-wrappers">Object wrappers</a></li>
       <li><a href="#section-all-functions">All functions</a></li>
     </ul>
   </div>

@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">clustifyr</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.99.0</span>
       </span>
     </div>
 
@@ -109,7 +109,7 @@
     <div class="page-header toc-ignore">
       <h1>Visualization of clustifyr results</h1>
             
-            <h4 class="date">2019-11-06</h4>
+            <h4 class="date">2019-11-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyr/blob/master/vignettes/visualizations.Rmd"><code>vignettes/visualizations.Rmd</code></a></small>
       <div class="hidden name"><code>visualizations.Rmd</code></div>
@@ -136,32 +136,26 @@
 <span id="cb1-12"><a href="#cb1-12"></a></span>
 <span id="cb1-13"><a href="#cb1-13"></a><span class="co"># meta.data table containing cluster assignments for each cell </span></span>
 <span id="cb1-14"><a href="#cb1-14"></a>full_pbmc_meta[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ]</span>
-<span id="cb1-15"><a href="#cb1-15"></a><span class="co">#&gt;                orig.ident nCount_RNA nFeature_RNA percent.mt</span></span>
-<span id="cb1-16"><a href="#cb1-16"></a><span class="co">#&gt; AAACATACAACCAC     pbmc3k       2419          779  3.0177759</span></span>
-<span id="cb1-17"><a href="#cb1-17"></a><span class="co">#&gt; AAACATTGAGCTAC     pbmc3k       4903         1352  3.7935958</span></span>
-<span id="cb1-18"><a href="#cb1-18"></a><span class="co">#&gt; AAACATTGATCAGC     pbmc3k       3147         1129  0.8897363</span></span>
-<span id="cb1-19"><a href="#cb1-19"></a><span class="co">#&gt; AAACCGTGCTTCCG     pbmc3k       2639          960  1.7430845</span></span>
-<span id="cb1-20"><a href="#cb1-20"></a><span class="co">#&gt; AAACCGTGTATGCG     pbmc3k        980          521  1.2244898</span></span>
-<span id="cb1-21"><a href="#cb1-21"></a><span class="co">#&gt;                RNA_snn_res.0.5 seurat_clusters   classified     UMAP_1</span></span>
-<span id="cb1-22"><a href="#cb1-22"></a><span class="co">#&gt; AAACATACAACCAC               1               1 Memory CD4 T   2.341260</span></span>
-<span id="cb1-23"><a href="#cb1-23"></a><span class="co">#&gt; AAACATTGAGCTAC               3               3            B   3.712070</span></span>
-<span id="cb1-24"><a href="#cb1-24"></a><span class="co">#&gt; AAACATTGATCAGC               1               1 Memory CD4 T   5.065264</span></span>
-<span id="cb1-25"><a href="#cb1-25"></a><span class="co">#&gt; AAACCGTGCTTCCG               2               2   CD14+ Mono -11.783583</span></span>
-<span id="cb1-26"><a href="#cb1-26"></a><span class="co">#&gt; AAACCGTGTATGCG               6               6           NK   3.576498</span></span>
-<span id="cb1-27"><a href="#cb1-27"></a><span class="co">#&gt;                    UMAP_2</span></span>
-<span id="cb1-28"><a href="#cb1-28"></a><span class="co">#&gt; AAACATACAACCAC -3.0761487</span></span>
-<span id="cb1-29"><a href="#cb1-29"></a><span class="co">#&gt; AAACATTGAGCTAC 11.7883301</span></span>
-<span id="cb1-30"><a href="#cb1-30"></a><span class="co">#&gt; AAACATTGATCAGC -0.7839952</span></span>
-<span id="cb1-31"><a href="#cb1-31"></a><span class="co">#&gt; AAACCGTGCTTCCG  0.8343185</span></span>
-<span id="cb1-32"><a href="#cb1-32"></a><span class="co">#&gt; AAACCGTGTATGCG -8.9778881</span></span>
-<span id="cb1-33"><a href="#cb1-33"></a></span>
-<span id="cb1-34"><a href="#cb1-34"></a><span class="co"># Create tSNE and color cells based on cluster ID</span></span>
-<span id="cb1-35"><a href="#cb1-35"></a><span class="kw"><a href="../reference/plot_tsne.html">plot_tsne</a></span>(</span>
-<span id="cb1-36"><a href="#cb1-36"></a>  <span class="dt">x =</span> <span class="st">"UMAP_1"</span>,             <span class="co"># name of column in the meta.data containing the data to plot on x-axis</span></span>
-<span id="cb1-37"><a href="#cb1-37"></a>  <span class="dt">y =</span> <span class="st">"UMAP_2"</span>,             <span class="co"># name of column in the meta.data containing the data to plot on y-axis</span></span>
-<span id="cb1-38"><a href="#cb1-38"></a>  <span class="dt">data =</span> full_pbmc_meta,       <span class="co"># meta.data table containing cluster assignments for each cell</span></span>
-<span id="cb1-39"><a href="#cb1-39"></a>  <span class="dt">feature =</span> <span class="st">"seurat_clusters"</span>       <span class="co"># name of column in meta.data to color cells by</span></span>
-<span id="cb1-40"><a href="#cb1-40"></a>)</span></code></pre></div>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="co">#&gt;                orig.ident nCount_RNA nFeature_RNA percent.mt RNA_snn_res.0.5</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="co">#&gt; AAACATACAACCAC     pbmc3k       2419          779  3.0177759               1</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="co">#&gt; AAACATTGAGCTAC     pbmc3k       4903         1352  3.7935958               3</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="co">#&gt; AAACATTGATCAGC     pbmc3k       3147         1129  0.8897363               1</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a><span class="co">#&gt; AAACCGTGCTTCCG     pbmc3k       2639          960  1.7430845               2</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a><span class="co">#&gt; AAACCGTGTATGCG     pbmc3k        980          521  1.2244898               6</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a><span class="co">#&gt;                seurat_clusters   classified     UMAP_1     UMAP_2</span></span>
+<span id="cb1-22"><a href="#cb1-22"></a><span class="co">#&gt; AAACATACAACCAC               1 Memory CD4 T   2.341260 -3.0761487</span></span>
+<span id="cb1-23"><a href="#cb1-23"></a><span class="co">#&gt; AAACATTGAGCTAC               3            B   3.712070 11.7883301</span></span>
+<span id="cb1-24"><a href="#cb1-24"></a><span class="co">#&gt; AAACATTGATCAGC               1 Memory CD4 T   5.065264 -0.7839952</span></span>
+<span id="cb1-25"><a href="#cb1-25"></a><span class="co">#&gt; AAACCGTGCTTCCG               2   CD14+ Mono -11.783583  0.8343185</span></span>
+<span id="cb1-26"><a href="#cb1-26"></a><span class="co">#&gt; AAACCGTGTATGCG               6           NK   3.576498 -8.9778881</span></span>
+<span id="cb1-27"><a href="#cb1-27"></a></span>
+<span id="cb1-28"><a href="#cb1-28"></a><span class="co"># Create tSNE and color cells based on cluster ID</span></span>
+<span id="cb1-29"><a href="#cb1-29"></a><span class="kw"><a href="../reference/plot_tsne.html">plot_tsne</a></span>(</span>
+<span id="cb1-30"><a href="#cb1-30"></a>  <span class="dt">x =</span> <span class="st">"UMAP_1"</span>,             <span class="co"># name of column in the meta.data containing the data to plot on x-axis</span></span>
+<span id="cb1-31"><a href="#cb1-31"></a>  <span class="dt">y =</span> <span class="st">"UMAP_2"</span>,             <span class="co"># name of column in the meta.data containing the data to plot on y-axis</span></span>
+<span id="cb1-32"><a href="#cb1-32"></a>  <span class="dt">data =</span> full_pbmc_meta,       <span class="co"># meta.data table containing cluster assignments for each cell</span></span>
+<span id="cb1-33"><a href="#cb1-33"></a>  <span class="dt">feature =</span> <span class="st">"seurat_clusters"</span>       <span class="co"># name of column in meta.data to color cells by</span></span>
+<span id="cb1-34"><a href="#cb1-34"></a>)</span></code></pre></div>
 <p><img src="visualizations_files/figure-html/Create%20tSNE-1.png" width="960" style="display: block; margin: auto;"></p>
 <p>Cells can also be colored based on the expression level of a gene or list of genes using the <code><a href="../reference/plot_gene.html">plot_gene()</a></code> function.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Create tSNE and color cells based on gene expression</span></span>

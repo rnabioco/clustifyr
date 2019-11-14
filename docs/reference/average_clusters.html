@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">clustifyr</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.99.0</span>
       </span>
     </div>
 
@@ -155,9 +155,18 @@
     <p>Average expression values per cluster</p>
     </div>
 
-    <pre class="usage"><span class='fu'>average_clusters</span>(<span class='no'>mat</span>, <span class='no'>metadata</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>, <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>cell_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>low_threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
-  <span class='kw'>output_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>subclusterpower</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>cut_n</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>average_clusters</span>(
+  <span class='no'>mat</span>,
+  <span class='no'>metadata</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>,
+  <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>cell_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>low_threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
+  <span class='kw'>output_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>subclusterpower</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>cut_n</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

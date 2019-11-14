@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">clustifyr</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.99.0</span>
       </span>
     </div>
 
@@ -158,14 +158,28 @@
     <pre class="usage"><span class='fu'>seurat_ref</span>(<span class='no'>seurat_object</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for seurat</span>
-<span class='fu'>seurat_ref</span>(<span class='no'>seurat_object</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
-  <span class='kw'>var_genes_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>assay_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
-  <span class='kw'>subclusterpower</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>...</span>)
+<span class='fu'>seurat_ref</span>(
+  <span class='no'>seurat_object</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
+  <span class='kw'>var_genes_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>assay_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
+  <span class='kw'>subclusterpower</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for Seurat</span>
-<span class='fu'>seurat_ref</span>(<span class='no'>seurat_object</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
-  <span class='kw'>var_genes_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>assay_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
-  <span class='kw'>subclusterpower</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>seurat_ref</span>(
+  <span class='no'>seurat_object</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
+  <span class='kw'>var_genes_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>assay_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
+  <span class='kw'>subclusterpower</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -197,6 +211,11 @@
     <tr>
       <th>subclusterpower</th>
       <td><p>whether to get multiple averages per original cluster</p></td>
+    </tr>
+    <tr>
+      <th>if_log</th>
+      <td><p>input data is natural log,
+averaging will be done on unlogged data</p></td>
     </tr>
     </table>
 

@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">clustifyr</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.99.0</span>
       </span>
     </div>
 
@@ -155,9 +155,16 @@
     <p>Plot similarity measures on a tSNE or umap</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plot_cor</span>(<span class='no'>cor_mat</span>, <span class='no'>metadata</span>, <span class='kw'>data_to_plot</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>cor_mat</span>),
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"UMAP_1"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"UMAP_2"</span>,
-  <span class='kw'>scale_legends</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>plot_cor</span>(
+  <span class='no'>cor_mat</span>,
+  <span class='no'>metadata</span>,
+  <span class='kw'>data_to_plot</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>cor_mat</span>),
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"UMAP_1"</span>,
+  <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"UMAP_2"</span>,
+  <span class='kw'>scale_legends</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

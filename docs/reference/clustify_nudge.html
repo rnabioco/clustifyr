@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">clustifyr</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.99.0</span>
       </span>
     </div>
 
@@ -158,26 +158,67 @@
     <pre class="usage"><span class='fu'>clustify_nudge</span>(<span class='no'>input</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>clustify_nudge</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>, <span class='no'>marker</span>, <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>weight</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>, <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"umap"</span>, <span class='kw'>norm</span> <span class='kw'>=</span> <span class='st'>"diff"</span>, <span class='kw'>call</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"rank"</span>, <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lookuptable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>clustify_nudge</span>(
+  <span class='no'>input</span>,
+  <span class='no'>ref_mat</span>,
+  <span class='no'>marker</span>,
+  <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>,
+  <span class='kw'>weight</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>threshold</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>,
+  <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"umap"</span>,
+  <span class='kw'>norm</span> <span class='kw'>=</span> <span class='st'>"diff"</span>,
+  <span class='kw'>call</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"rank"</span>,
+  <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>lookuptable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for seurat</span>
-<span class='fu'>clustify_nudge</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>, <span class='no'>marker</span>,
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>weight</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>, <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"umap"</span>, <span class='kw'>norm</span> <span class='kw'>=</span> <span class='st'>"diff"</span>,
-  <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"rank"</span>, <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>clustify_nudge</span>(
+  <span class='no'>input</span>,
+  <span class='no'>ref_mat</span>,
+  <span class='no'>marker</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>,
+  <span class='kw'>weight</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>threshold</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>,
+  <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"umap"</span>,
+  <span class='kw'>norm</span> <span class='kw'>=</span> <span class='st'>"diff"</span>,
+  <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"rank"</span>,
+  <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for Seurat</span>
-<span class='fu'>clustify_nudge</span>(<span class='no'>input</span>, <span class='no'>ref_mat</span>, <span class='no'>marker</span>,
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>, <span class='kw'>weight</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>, <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"umap"</span>, <span class='kw'>norm</span> <span class='kw'>=</span> <span class='st'>"diff"</span>,
-  <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"rank"</span>, <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>clustify_nudge</span>(
+  <span class='no'>input</span>,
+  <span class='no'>ref_mat</span>,
+  <span class='no'>marker</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>,
+  <span class='kw'>weight</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>threshold</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>,
+  <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"umap"</span>,
+  <span class='kw'>norm</span> <span class='kw'>=</span> <span class='st'>"diff"</span>,
+  <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"rank"</span>,
+  <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

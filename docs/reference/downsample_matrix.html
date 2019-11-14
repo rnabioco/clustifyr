@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">clustifyr</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.99.0</span>
       </span>
     </div>
 
@@ -155,8 +155,13 @@
     <p>downsample matrix by cluster or completely random</p>
     </div>
 
-    <pre class="usage"><span class='fu'>downsample_matrix</span>(<span class='no'>mat</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>keep_cluster_proportions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>)</pre>
+    <pre class="usage"><span class='fu'>downsample_matrix</span>(
+  <span class='no'>mat</span>,
+  <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>keep_cluster_proportions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

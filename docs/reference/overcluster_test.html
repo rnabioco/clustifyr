@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">clustifyr</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.99.0</span>
       </span>
     </div>
 
@@ -155,10 +155,21 @@
     <p>compare clustering parameters and classification outcomes</p>
     </div>
 
-    <pre class="usage"><span class='fu'>overcluster_test</span>(<span class='no'>expr</span>, <span class='no'>metadata</span>, <span class='no'>ref_mat</span>, <span class='no'>cluster_col</span>, <span class='kw'>x_col</span> <span class='kw'>=</span> <span class='st'>"UMAP_1"</span>,
-  <span class='kw'>y_col</span> <span class='kw'>=</span> <span class='st'>"UMAP_2"</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>ngenes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>do_label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>do_legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>newclustering</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>overcluster_test</span>(
+  <span class='no'>expr</span>,
+  <span class='no'>metadata</span>,
+  <span class='no'>ref_mat</span>,
+  <span class='no'>cluster_col</span>,
+  <span class='kw'>x_col</span> <span class='kw'>=</span> <span class='st'>"UMAP_1"</span>,
+  <span class='kw'>y_col</span> <span class='kw'>=</span> <span class='st'>"UMAP_2"</span>,
+  <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>ngenes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>do_label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>do_legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>newclustering</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

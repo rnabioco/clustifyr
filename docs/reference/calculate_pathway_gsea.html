@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">clustifyr</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.99.0</span>
       </span>
     </div>
 
@@ -155,8 +155,13 @@
     <p>Convert expression matrix to GSEA pathway scores (would take a similar place in workflow before average_clusters/binarize)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>calculate_pathway_gsea</span>(<span class='no'>mat</span>, <span class='no'>pathway_list</span>, <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>no_warnings</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>calculate_pathway_gsea</span>(
+  <span class='no'>mat</span>,
+  <span class='no'>pathway_list</span>,
+  <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
+  <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>no_warnings</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
