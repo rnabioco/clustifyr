@@ -4,8 +4,13 @@
 \alias{downsample_matrix}
 \title{downsample matrix by cluster or completely random}
 \usage{
-downsample_matrix(mat, n = 1, keep_cluster_proportions = TRUE,
-  metadata = NULL, cluster_col = "cluster")
+downsample_matrix(
+  mat,
+  n = 1,
+  keep_cluster_proportions = TRUE,
+  metadata = NULL,
+  cluster_col = "cluster"
+)
 }
 \arguments{
 \item{mat}{expression matrix}

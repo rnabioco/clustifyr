@@ -1,6 +1,8 @@
 Package: clustifyr
 Title: Classifier for Single-cell RNA-seq Using Cell Clusters
-Version: 0.0.0.9000
+Version: 0.99.0
+Description: Classify cells from single-cell RNA sequencing data
+    using external reference data (e.g., bulk RNA-seq, scRNA-seq, microarray, gene lists).
 Authors@R: 
     c(person(given = "Rui",
              family = "Fu",
@@ -30,12 +32,8 @@ Authors@R:
              family = "Daya",
              role = "ctb",
              email = "michelle.daya@ucdenver.edu"))
-Description: Classify cells from single-cell RNA sequencing data
-    using external reference data (e.g., bulk RNA-seq).
 License: MIT + file LICENSE
-URL: http://github.com/rnabioco/clustifyr#readme,
-    https://rnabioco.github.io/clustifyr/
-BugReports: https://github.com/rnabioco/clustifyr/issues
+LazyData: true
 Depends:
     R (>= 3.6.0)
 Imports: 
@@ -60,11 +58,13 @@ Suggests:
     rmarkdown,
     testthat,
     ggrepel
+biocViews: SingleCell, Annotation, Sequencing
+BugReports: https://github.com/rnabioco/clustifyr/issues
+URL: http://github.com/rnabioco/clustifyr#readme,
+    https://rnabioco.github.io/clustifyr/
 VignetteBuilder: 
     knitr
 ByteCompile: true
 Encoding: UTF-8
-LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.1
-biocViews: SingleCell, Annotation, Sequencing
+RoxygenNote: 7.0.0

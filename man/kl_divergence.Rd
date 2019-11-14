@@ -4,8 +4,7 @@
 \alias{kl_divergence}
 \title{KL divergence}
 \usage{
-kl_divergence(vec1, vec2, if_log = FALSE, total_reads = 1000,
-  max_KL = 1)
+kl_divergence(vec1, vec2, if_log = FALSE, total_reads = 1000, max_KL = 1)
 }
 \arguments{
 \item{vec1}{Test vector}

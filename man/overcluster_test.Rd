@@ -4,10 +4,21 @@
 \alias{overcluster_test}
 \title{compare clustering parameters and classification outcomes}
 \usage{
-overcluster_test(expr, metadata, ref_mat, cluster_col, x_col = "UMAP_1",
-  y_col = "UMAP_2", n = 5, ngenes = NULL, query_genes = NULL,
-  threshold = 0, do_label = TRUE, do_legend = FALSE,
-  newclustering = NULL)
+overcluster_test(
+  expr,
+  metadata,
+  ref_mat,
+  cluster_col,
+  x_col = "UMAP_1",
+  y_col = "UMAP_2",
+  n = 5,
+  ngenes = NULL,
+  query_genes = NULL,
+  threshold = 0,
+  do_label = TRUE,
+  do_legend = FALSE,
+  newclustering = NULL
+)
 }
 \arguments{
 \item{expr}{expression matrix}

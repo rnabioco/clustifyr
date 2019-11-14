@@ -4,9 +4,15 @@
 \alias{average_clusters_filter}
 \title{Average expression values per cluster, filtered by set parameter, defaults to calculating background}
 \usage{
-average_clusters_filter(mat, metadata, if_log = TRUE,
-  filter_on = "nGene", group_by = NULL, filter_method = "<=",
-  filter_value = 300)
+average_clusters_filter(
+  mat,
+  metadata,
+  if_log = TRUE,
+  filter_on = "nGene",
+  group_by = NULL,
+  filter_method = "<=",
+  filter_value = 300
+)
 }
 \arguments{
 \item{mat}{expression matrix}

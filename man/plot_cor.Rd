@@ -4,9 +4,16 @@
 \alias{plot_cor}
 \title{Plot similarity measures on a tSNE or umap}
 \usage{
-plot_cor(cor_mat, metadata, data_to_plot = colnames(cor_mat),
-  cluster_col = NULL, x = "UMAP_1", y = "UMAP_2",
-  scale_legends = FALSE, ...)
+plot_cor(
+  cor_mat,
+  metadata,
+  data_to_plot = colnames(cor_mat),
+  cluster_col = NULL,
+  x = "UMAP_1",
+  y = "UMAP_2",
+  scale_legends = FALSE,
+  ...
+)
 }
 \arguments{
 \item{cor_mat}{input similarity matrix}

@@ -4,9 +4,17 @@
 \alias{find_rank_bias}
 \title{Find rank bias}
 \usage{
-find_rank_bias(mat, metadata, type_col, ref_mat, query_genes = NULL,
-  filter_out = TRUE, threshold = 0.33, expr_cut = 3000,
-  consensus_cut = 1)
+find_rank_bias(
+  mat,
+  metadata,
+  type_col,
+  ref_mat,
+  query_genes = NULL,
+  filter_out = TRUE,
+  threshold = 0.33,
+  expr_cut = 3000,
+  consensus_cut = 1
+)
 }
 \arguments{
 \item{mat}{original query expression matrix}

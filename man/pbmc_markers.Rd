@@ -8,7 +8,7 @@
 \describe{
 }}
 \source{
-\code{[pbmc_matrix]} processed by Seurat
+\verb{[pbmc_matrix]} processed by Seurat
 }
 \usage{
 pbmc_markers

@@ -4,8 +4,7 @@
 \alias{gene_pct_markerm}
 \title{pct of cells in every cluster that express a series of genelists}
 \usage{
-gene_pct_markerm(matrix, marker_m, metadata, cluster_col = NULL,
-  norm = NULL)
+gene_pct_markerm(matrix, marker_m, metadata, cluster_col = NULL, norm = NULL)
 }
 \arguments{
 \item{matrix}{expression matrix}

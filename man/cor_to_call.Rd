@@ -4,9 +4,15 @@
 \alias{cor_to_call}
 \title{get best calls for each cluster}
 \usage{
-cor_to_call(cor_mat, metadata = NULL, cluster_col = "cluster",
-  collapse_to_cluster = FALSE, threshold = 0, rename_prefix = NULL,
-  carry_r = FALSE)
+cor_to_call(
+  cor_mat,
+  metadata = NULL,
+  cluster_col = "cluster",
+  collapse_to_cluster = FALSE,
+  threshold = 0,
+  rename_prefix = NULL,
+  carry_r = FALSE
+)
 }
 \arguments{
 \item{cor_mat}{input similarity matrix}

@@ -4,8 +4,13 @@
 \alias{assign_ident}
 \title{manually change idents as needed}
 \usage{
-assign_ident(metadata, cluster_col = "cluster", ident_col = "type",
-  clusters, idents)
+assign_ident(
+  metadata,
+  cluster_col = "cluster",
+  ident_col = "type",
+  clusters,
+  idents
+)
 }
 \arguments{
 \item{metadata}{column of ident}

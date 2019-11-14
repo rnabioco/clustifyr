@@ -4,8 +4,16 @@
 \alias{permute_similarity}
 \title{Compute a p-value for similarity using permutation}
 \usage{
-permute_similarity(expr_mat, ref_mat, cluster_ids, n_perm,
-  per_cell = FALSE, compute_method, rm0 = FALSE, ...)
+permute_similarity(
+  expr_mat,
+  ref_mat,
+  cluster_ids,
+  n_perm,
+  per_cell = FALSE,
+  compute_method,
+  rm0 = FALSE,
+  ...
+)
 }
 \arguments{
 \item{expr_mat}{single-cell expression matrix}

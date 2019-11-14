@@ -4,8 +4,14 @@
 \alias{pos_neg_select}
 \title{adapt clustify to tweak score for pos and neg markers}
 \usage{
-pos_neg_select(input, ref_mat, metadata, cluster_col = "cluster",
-  cutoff_n = 0, cutoff_score = 0.5)
+pos_neg_select(
+  input,
+  ref_mat,
+  metadata,
+  cluster_col = "cluster",
+  cutoff_n = 0,
+  cutoff_score = 0.5
+)
 }
 \arguments{
 \item{input}{single-cell expression matrix}

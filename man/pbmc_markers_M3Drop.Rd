@@ -8,7 +8,7 @@
 \describe{
 }}
 \source{
-\code{[pbmc_matrix]} processed by \code{[M3Drop]}
+\verb{[pbmc_matrix]} processed by \verb{[M3Drop]}
 }
 \usage{
 pbmc_markers_M3Drop

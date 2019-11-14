@@ -4,8 +4,15 @@
 \alias{plot_cols}
 \title{Plot variable median per cluster from reference metadata vs new assigned metadata, for visually evaluating classification}
 \usage{
-plot_cols(metadata, cluster_col, cluster_col_called, plot_col,
-  metadata_ref, cluster_col_ref, plot_col_ref)
+plot_cols(
+  metadata,
+  cluster_col,
+  cluster_col_called,
+  plot_col,
+  metadata_ref,
+  cluster_col_ref,
+  plot_col_ref
+)
 }
 \arguments{
 \item{metadata}{clustify-ed metadata}

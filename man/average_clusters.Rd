@@ -4,9 +4,18 @@
 \alias{average_clusters}
 \title{Average expression values per cluster}
 \usage{
-average_clusters(mat, metadata, cluster_col = "cluster", if_log = TRUE,
-  cell_col = NULL, low_threshold = 0, method = "mean",
-  output_log = TRUE, subclusterpower = 0, cut_n = NULL)
+average_clusters(
+  mat,
+  metadata,
+  cluster_col = "cluster",
+  if_log = TRUE,
+  cell_col = NULL,
+  low_threshold = 0,
+  method = "mean",
+  output_log = TRUE,
+  subclusterpower = 0,
+  cut_n = NULL
+)
 }
 \arguments{
 \item{mat}{expression matrix}

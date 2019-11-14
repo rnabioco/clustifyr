@@ -4,8 +4,11 @@
 \alias{gmt_to_list}
 \title{convert gmt format of pathways to list of vectors}
 \usage{
-gmt_to_list(path, cutoff = 0,
-  sep = "\\thttp://www.broadinstitute.org/gsea/msigdb/cards/.*?\\t")
+gmt_to_list(
+  path,
+  cutoff = 0,
+  sep = "\\thttp://www.broadinstitute.org/gsea/msigdb/cards/.*?\\t"
+)
 }
 \arguments{
 \item{path}{gmt file path}

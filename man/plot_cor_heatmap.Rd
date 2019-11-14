@@ -4,8 +4,14 @@
 \alias{plot_cor_heatmap}
 \title{Plot similarity measures on heatmap}
 \usage{
-plot_cor_heatmap(cor_mat, metadata = NULL, cluster_col = NULL,
-  col = not_pretty_palette, legend_title = NULL, ...)
+plot_cor_heatmap(
+  cor_mat,
+  metadata = NULL,
+  cluster_col = NULL,
+  col = not_pretty_palette,
+  legend_title = NULL,
+  ...
+)
 }
 \arguments{
 \item{cor_mat}{input similarity matrix}
