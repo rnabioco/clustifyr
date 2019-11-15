@@ -41,7 +41,7 @@ In this example we use the following built-in input data:
     (`cbmc_ref`):
 
 We then calculate correlation coefficients and plot them on a
-pre-calculated tSNE projection (stored in `pbmc_meta`).
+pre-calculated projection (stored in `pbmc_meta`).
 
 ``` r
 library(clustifyr)
@@ -71,8 +71,8 @@ res2
 
 # plotting
 plot_best_call(
-  cor_mat = res, 
-  metadata = pbmc_meta, 
+  cor_mat = res,
+  metadata = pbmc_meta,
   cluster_col = "classified"
 )
 ```
@@ -151,7 +151,6 @@ res <- clustify_lists(
   cluster_col = "res.1",
   seurat_out = TRUE
 )
-#> cannot find dr info
 ```
 
 ## Additional reference data

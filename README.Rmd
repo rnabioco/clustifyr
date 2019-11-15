@@ -36,7 +36,7 @@ In this example we use the following built-in input data:
 - a vector of variable genes (`pbmc_vargenes`)
 - a matrix of mean normalized scRNA-seq UMI counts by cell type (`cbmc_ref`):
 
-We then calculate correlation coefficients and plot them on a pre-calculated tSNE projection (stored in `pbmc_meta`).
+We then calculate correlation coefficients and plot them on a pre-calculated projection (stored in `pbmc_meta`).
 
 ```{r readme_example, warning=F, message=F}
 library(clustifyr)
