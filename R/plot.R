@@ -20,7 +20,8 @@
 #' @examples
 #' plot_tsne(
 #'   pbmc_meta,
-#'   feature = "classified")
+#'   feature = "classified"
+#' )
 #' @export
 plot_tsne <- function(data,
                       x = "UMAP_1",
@@ -136,9 +137,9 @@ plot_tsne <- function(data,
     } else {
       centers <-
         dplyr::summarize(centers,
-                         t1 = median(!!dplyr::sym(x)),
-                         t2 = median(!!dplyr::sym(y)),
-                         a = 1
+          t1 = median(!!dplyr::sym(x)),
+          t2 = median(!!dplyr::sym(y)),
+          a = 1
         )
     }
 

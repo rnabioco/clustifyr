@@ -53,8 +53,8 @@ res2
 
 # plotting
 plot_best_call(
-  cor_mat = res, 
-  metadata = pbmc_meta, 
+  cor_mat = res,
+  metadata = pbmc_meta,
   cluster_col = "classified"
 )
 ```

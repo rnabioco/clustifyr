@@ -13,8 +13,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to clustifyr">
 <meta property="og:description" content="">
@@ -143,16 +143,16 @@
 <span id="cb1-5"><a href="#cb1-5"></a><span class="co"># Matrix of normalized single-cell RNA-seq counts</span></span>
 <span id="cb1-6"><a href="#cb1-6"></a>full_pbmc_matrix &lt;-<span class="st"> </span>clustifyrdata<span class="op">::</span>pbmc_matrix</span>
 <span id="cb1-7"><a href="#cb1-7"></a></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="co"># meta.data table containing cluster assignments for each cell </span></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="co"># meta.data table containing cluster assignments for each cell</span></span>
 <span id="cb1-9"><a href="#cb1-9"></a><span class="co"># The table that we are using also contains the known cell identities in the "classified" column</span></span>
 <span id="cb1-10"><a href="#cb1-10"></a>full_pbmc_meta &lt;-<span class="st"> </span>clustifyrdata<span class="op">::</span>pbmc_meta</span>
 <span id="cb1-11"><a href="#cb1-11"></a></span>
 <span id="cb1-12"><a href="#cb1-12"></a><span class="co"># Create tSNE showing known cell identities for each cluster</span></span>
 <span id="cb1-13"><a href="#cb1-13"></a><span class="kw"><a href="../reference/plot_tsne.html">plot_tsne</a></span>(</span>
-<span id="cb1-14"><a href="#cb1-14"></a>  <span class="dt">data =</span> full_pbmc_meta,  <span class="co"># meta.data table containing UMAP or tSNE data</span></span>
-<span id="cb1-15"><a href="#cb1-15"></a>  <span class="dt">feature =</span> <span class="st">"classified"</span>,   <span class="co"># name of column in meta.data to color cells by</span></span>
-<span id="cb1-16"><a href="#cb1-16"></a>  <span class="dt">do_label =</span> <span class="ot">TRUE</span>,          <span class="co"># should the feature label be shown on each cluster?</span></span>
-<span id="cb1-17"><a href="#cb1-17"></a>  <span class="dt">do_legend =</span> <span class="ot">FALSE</span>         <span class="co"># should the legend be shown?</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a>  <span class="dt">data =</span> full_pbmc_meta, <span class="co"># meta.data table containing UMAP or tSNE data</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a>  <span class="dt">feature =</span> <span class="st">"classified"</span>, <span class="co"># name of column in meta.data to color cells by</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a>  <span class="dt">do_label =</span> <span class="ot">TRUE</span>, <span class="co"># should the feature label be shown on each cluster?</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a>  <span class="dt">do_legend =</span> <span class="ot">FALSE</span> <span class="co"># should the legend be shown?</span></span>
 <span id="cb1-18"><a href="#cb1-18"></a>)</span></code></pre></div>
 <p><img src="clustifyR_files/figure-html/Load%20data-1.png" width="960" style="display: block; margin: auto;"></p>
 </div>
@@ -163,11 +163,11 @@
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Calculate correlation coefficients for each cluster (spearman by default)</span></span>
 <span id="cb2-2"><a href="#cb2-2"></a>vargenes &lt;-<span class="st"> </span>pbmc_vargenes[<span class="dv">1</span><span class="op">:</span><span class="dv">500</span>]</span>
 <span id="cb2-3"><a href="#cb2-3"></a>res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustify.html">clustify</a></span>(</span>
-<span id="cb2-4"><a href="#cb2-4"></a>  <span class="dt">input =</span> full_pbmc_matrix,     <span class="co"># matrix of normalized single-cell RNA-seq counts</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a>  <span class="dt">metadata =</span> full_pbmc_meta,    <span class="co"># meta.data table containing cell clusters</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a>  <span class="dt">ref_mat =</span> cbmc_ref,   <span class="co"># matrix of mean scRNA-seq expression data for each cell type</span></span>
-<span id="cb2-7"><a href="#cb2-7"></a>  <span class="dt">query_genes =</span> vargenes,  <span class="co"># list of highly varible genes identified with Seurat</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a>  <span class="dt">cluster_col =</span> <span class="st">"seurat_clusters"</span>       <span class="co"># name of column in meta.data containing cell clusters</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>  <span class="dt">input =</span> full_pbmc_matrix, <span class="co"># matrix of normalized single-cell RNA-seq counts</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>  <span class="dt">metadata =</span> full_pbmc_meta, <span class="co"># meta.data table containing cell clusters</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>  <span class="dt">ref_mat =</span> cbmc_ref, <span class="co"># matrix of mean scRNA-seq expression data for each cell type</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a>  <span class="dt">query_genes =</span> vargenes, <span class="co"># list of highly varible genes identified with Seurat</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a>  <span class="dt">cluster_col =</span> <span class="st">"seurat_clusters"</span> <span class="co"># name of column in meta.data containing cell clusters</span></span>
 <span id="cb2-9"><a href="#cb2-9"></a>)</span>
 <span id="cb2-10"><a href="#cb2-10"></a></span>
 <span id="cb2-11"><a href="#cb2-11"></a><span class="co"># Peek at correlation matrix</span></span>
@@ -181,7 +181,7 @@
 <p>To visualize the <code>clustifyr()</code> results we can use the <code><a href="../reference/plot_cor_heatmap.html">plot_cor_heatmap()</a></code> function to plot the correlation coefficients for each cluster and each cell type.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Create heatmap of correlation coefficients</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="kw"><a href="../reference/plot_cor_heatmap.html">plot_cor_heatmap</a></span>(</span>
-<span id="cb3-3"><a href="#cb3-3"></a>  <span class="dt">cor_mat =</span> res  <span class="co"># matrix of correlation coefficients from clustifyr()</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a>  <span class="dt">cor_mat =</span> res <span class="co"># matrix of correlation coefficients from clustifyr()</span></span>
 <span id="cb3-4"><a href="#cb3-4"></a>)</span></code></pre></div>
 <p><img src="clustifyR_files/figure-html/Create%20correlation%20heatmap-1.png" width="768" style="display: block; margin: auto;"></p>
 </div>
@@ -191,10 +191,10 @@
 <p><code>clustifyr</code> also provides functions to overlay correlation coefficients on pre-calculated tSNE embeddings (or those from any other dimensionality reduction method).</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Overlay correlation coefficients on UMAPs for the first two cell types</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a><span class="kw"><a href="../reference/plot_cor.html">plot_cor</a></span>(</span>
-<span id="cb4-3"><a href="#cb4-3"></a>  <span class="dt">cor_mat =</span> res,                   <span class="co"># matrix of correlation coefficients from clustifyr()</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a>  <span class="dt">metadata =</span> full_pbmc_meta,        <span class="co"># meta.data table containing UMAP or tSNE data</span></span>
-<span id="cb4-5"><a href="#cb4-5"></a>  <span class="dt">data_to_plot =</span> <span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(res)[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>],  <span class="co"># name of cell type(s) to plot correlation coefficients</span></span>
-<span id="cb4-6"><a href="#cb4-6"></a>  <span class="dt">cluster_col =</span> <span class="st">"seurat_clusters"</span>             <span class="co"># name of column in meta.data containing cell clusters</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a>  <span class="dt">cor_mat =</span> res, <span class="co"># matrix of correlation coefficients from clustifyr()</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>  <span class="dt">metadata =</span> full_pbmc_meta, <span class="co"># meta.data table containing UMAP or tSNE data</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>  <span class="dt">data_to_plot =</span> <span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(res)[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], <span class="co"># name of cell type(s) to plot correlation coefficients</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a>  <span class="dt">cluster_col =</span> <span class="st">"seurat_clusters"</span> <span class="co"># name of column in meta.data containing cell clusters</span></span>
 <span id="cb4-7"><a href="#cb4-7"></a>)</span>
 <span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt; [[1]]</span></span></code></pre></div>
 <p><img src="clustifyR_files/figure-html/Overlay%20corr%20coefficients%20on%20UMAP-1.png" width="1152" style="display: block; margin: auto;"></p>
@@ -204,20 +204,20 @@
 <p>The <code><a href="../reference/plot_best_call.html">plot_best_call()</a></code> function can be used to label each cluster with the cell type that gives the highest corelation coefficient. The plots below show that the highest correlations between the reference RNA-seq data and the 10x Genomics scRNA-seq dataset are restricted to the correct cell clusters.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># Label clusters with clustifyr cell identities</span></span>
 <span id="cb6-2"><a href="#cb6-2"></a>clustifyr_types &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plot_best_call.html">plot_best_call</a></span>(</span>
-<span id="cb6-3"><a href="#cb6-3"></a>  <span class="dt">cor_mat =</span> res,             <span class="co"># matrix of correlation coefficients from clustifyr()</span></span>
-<span id="cb6-4"><a href="#cb6-4"></a>  <span class="dt">metadata =</span> full_pbmc_meta,    <span class="co"># meta.data table containing UMAP or tSNE data</span></span>
-<span id="cb6-5"><a href="#cb6-5"></a>  <span class="dt">do_label =</span> <span class="ot">TRUE</span>,              <span class="co"># should the feature label be shown on each cluster?</span></span>
-<span id="cb6-6"><a href="#cb6-6"></a>  <span class="dt">do_legend =</span> <span class="ot">FALSE</span>,            <span class="co"># should the legend be shown?</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="dt">cor_mat =</span> res, <span class="co"># matrix of correlation coefficients from clustifyr()</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>  <span class="dt">metadata =</span> full_pbmc_meta, <span class="co"># meta.data table containing UMAP or tSNE data</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>  <span class="dt">do_label =</span> <span class="ot">TRUE</span>, <span class="co"># should the feature label be shown on each cluster?</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a>  <span class="dt">do_legend =</span> <span class="ot">FALSE</span>, <span class="co"># should the legend be shown?</span></span>
 <span id="cb6-7"><a href="#cb6-7"></a>  <span class="dt">cluster_col =</span> <span class="st">"seurat_clusters"</span></span>
 <span id="cb6-8"><a href="#cb6-8"></a>) <span class="op">+</span></span>
 <span id="cb6-9"><a href="#cb6-9"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"clustifyr cell types"</span>)</span>
 <span id="cb6-10"><a href="#cb6-10"></a></span>
 <span id="cb6-11"><a href="#cb6-11"></a><span class="co"># Compare clustifyr results with known cell identities</span></span>
 <span id="cb6-12"><a href="#cb6-12"></a>known_types &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plot_tsne.html">plot_tsne</a></span>(</span>
-<span id="cb6-13"><a href="#cb6-13"></a>  <span class="dt">data =</span> full_pbmc_meta,  <span class="co"># meta.data table containing UMAP or tSNE data</span></span>
-<span id="cb6-14"><a href="#cb6-14"></a>  <span class="dt">feature =</span> <span class="st">"classified"</span>,   <span class="co"># name of column in meta.data to color clusters by</span></span>
-<span id="cb6-15"><a href="#cb6-15"></a>  <span class="dt">do_label =</span> <span class="ot">TRUE</span>,          <span class="co"># should the feature label be shown on each cluster?</span></span>
-<span id="cb6-16"><a href="#cb6-16"></a>  <span class="dt">do_legend =</span> <span class="ot">FALSE</span>         <span class="co"># should the legend be shown?</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a>  <span class="dt">data =</span> full_pbmc_meta, <span class="co"># meta.data table containing UMAP or tSNE data</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a>  <span class="dt">feature =</span> <span class="st">"classified"</span>, <span class="co"># name of column in meta.data to color clusters by</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a>  <span class="dt">do_label =</span> <span class="ot">TRUE</span>, <span class="co"># should the feature label be shown on each cluster?</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a>  <span class="dt">do_legend =</span> <span class="ot">FALSE</span> <span class="co"># should the legend be shown?</span></span>
 <span id="cb6-17"><a href="#cb6-17"></a>) <span class="op">+</span></span>
 <span id="cb6-18"><a href="#cb6-18"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"Known cell types"</span>)</span>
 <span id="cb6-19"><a href="#cb6-19"></a></span>
@@ -230,17 +230,17 @@
 <p>Correlation coefficients can also be calculated on a per cell basis by setting <code>per_cell = TRUE</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># Calculate correlation coefficients for each cell</span></span>
 <span id="cb7-2"><a href="#cb7-2"></a>cell_res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustify.html">clustify</a></span>(</span>
-<span id="cb7-3"><a href="#cb7-3"></a>  <span class="dt">input =</span> full_pbmc_matrix,     <span class="co"># matrix of normalized single-cell RNA-seq counts</span></span>
-<span id="cb7-4"><a href="#cb7-4"></a>  <span class="dt">ref_mat =</span> cbmc_ref,     <span class="co"># matrix of mean scRNA-seq expression data for each cell type</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a>  <span class="dt">query_genes =</span> pbmc_vargenes,  <span class="co"># list of highly varible genes identified with Seurat</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="dt">input =</span> full_pbmc_matrix, <span class="co"># matrix of normalized single-cell RNA-seq counts</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>  <span class="dt">ref_mat =</span> cbmc_ref, <span class="co"># matrix of mean scRNA-seq expression data for each cell type</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>  <span class="dt">query_genes =</span> pbmc_vargenes, <span class="co"># list of highly varible genes identified with Seurat</span></span>
 <span id="cb7-6"><a href="#cb7-6"></a>  <span class="dt">per_cell =</span> <span class="ot">TRUE</span></span>
 <span id="cb7-7"><a href="#cb7-7"></a>)</span>
 <span id="cb7-8"><a href="#cb7-8"></a></span>
 <span id="cb7-9"><a href="#cb7-9"></a><span class="co"># Overlay correlation coefficients on UMAPs</span></span>
 <span id="cb7-10"><a href="#cb7-10"></a><span class="kw"><a href="../reference/plot_cor.html">plot_cor</a></span>(</span>
-<span id="cb7-11"><a href="#cb7-11"></a>  <span class="dt">cor_mat =</span> cell_res,                      <span class="co"># matrix of correlation coefficients from clustifyr()</span></span>
-<span id="cb7-12"><a href="#cb7-12"></a>  <span class="dt">metadata =</span> full_pbmc_meta,                <span class="co"># meta.data table containing UMAP or tSNE data</span></span>
-<span id="cb7-13"><a href="#cb7-13"></a>  <span class="dt">data_to_plot =</span> <span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(cell_res)[<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">5</span>)]  <span class="co"># name of cell type(s) to plot correlation coefficient</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a>  <span class="dt">cor_mat =</span> cell_res, <span class="co"># matrix of correlation coefficients from clustifyr()</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a>  <span class="dt">metadata =</span> full_pbmc_meta, <span class="co"># meta.data table containing UMAP or tSNE data</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a>  <span class="dt">data_to_plot =</span> <span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(cell_res)[<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">5</span>)] <span class="co"># name of cell type(s) to plot correlation coefficient</span></span>
 <span id="cb7-14"><a href="#cb7-14"></a>)</span>
 <span id="cb7-15"><a href="#cb7-15"></a><span class="co">#&gt; [[1]]</span></span></code></pre></div>
 <p><img src="clustifyR_files/figure-html/Per%20cell%20clustifyr-1.png" width="1152" style="display: block; margin: auto;"></p>
@@ -266,20 +266,20 @@
 <span id="cb9-12"><a href="#cb9-12"></a></span>
 <span id="cb9-13"><a href="#cb9-13"></a><span class="co"># Available metrics include: "hyper", "jaccard", "spearman", "gsea"</span></span>
 <span id="cb9-14"><a href="#cb9-14"></a>list_res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustify_lists.html">clustify_lists</a></span>(</span>
-<span id="cb9-15"><a href="#cb9-15"></a>  <span class="dt">input =</span> full_pbmc_matrix,       <span class="co"># matrix of normalized single-cell RNA-seq counts</span></span>
-<span id="cb9-16"><a href="#cb9-16"></a>  <span class="dt">metadata =</span> full_pbmc_meta,  <span class="co"># meta.data table containing cell clusters</span></span>
-<span id="cb9-17"><a href="#cb9-17"></a>  <span class="dt">cluster_col =</span> <span class="st">"seurat_clusters"</span>,          <span class="co"># name of column in meta.data containing cell clusters</span></span>
-<span id="cb9-18"><a href="#cb9-18"></a>  <span class="dt">marker =</span> cbmc_m,                  <span class="co"># list of known marker genes</span></span>
-<span id="cb9-19"><a href="#cb9-19"></a>  <span class="dt">metric =</span> <span class="st">"hyper"</span>                  <span class="co"># test to use for assigning cell types</span></span>
+<span id="cb9-15"><a href="#cb9-15"></a>  <span class="dt">input =</span> full_pbmc_matrix, <span class="co"># matrix of normalized single-cell RNA-seq counts</span></span>
+<span id="cb9-16"><a href="#cb9-16"></a>  <span class="dt">metadata =</span> full_pbmc_meta, <span class="co"># meta.data table containing cell clusters</span></span>
+<span id="cb9-17"><a href="#cb9-17"></a>  <span class="dt">cluster_col =</span> <span class="st">"seurat_clusters"</span>, <span class="co"># name of column in meta.data containing cell clusters</span></span>
+<span id="cb9-18"><a href="#cb9-18"></a>  <span class="dt">marker =</span> cbmc_m, <span class="co"># list of known marker genes</span></span>
+<span id="cb9-19"><a href="#cb9-19"></a>  <span class="dt">metric =</span> <span class="st">"hyper"</span> <span class="co"># test to use for assigning cell types</span></span>
 <span id="cb9-20"><a href="#cb9-20"></a>)</span>
 <span id="cb9-21"><a href="#cb9-21"></a></span>
 <span id="cb9-22"><a href="#cb9-22"></a><span class="co"># view as heatmap, or plot_best_call</span></span>
 <span id="cb9-23"><a href="#cb9-23"></a><span class="kw"><a href="../reference/plot_cor_heatmap.html">plot_cor_heatmap</a></span>(</span>
-<span id="cb9-24"><a href="#cb9-24"></a>  <span class="dt">cor_mat =</span> list_res,         <span class="co"># matrix of correlation coefficients from clustify_lists()</span></span>
-<span id="cb9-25"><a href="#cb9-25"></a>  <span class="dt">col =</span> not_pretty_palette,      <span class="co"># colors to use for heatmap</span></span>
-<span id="cb9-26"><a href="#cb9-26"></a>  <span class="dt">cluster_rows =</span> <span class="ot">FALSE</span>,          <span class="co"># cluster by row?</span></span>
-<span id="cb9-27"><a href="#cb9-27"></a>  <span class="dt">cluster_columns =</span> <span class="ot">FALSE</span>,       <span class="co"># cluster by column?</span></span>
-<span id="cb9-28"><a href="#cb9-28"></a>  <span class="dt">legend_title =</span> <span class="st">"-log10(padj)"</span>  <span class="co"># title of heatmap legend</span></span>
+<span id="cb9-24"><a href="#cb9-24"></a>  <span class="dt">cor_mat =</span> list_res, <span class="co"># matrix of correlation coefficients from clustify_lists()</span></span>
+<span id="cb9-25"><a href="#cb9-25"></a>  <span class="dt">col =</span> not_pretty_palette, <span class="co"># colors to use for heatmap</span></span>
+<span id="cb9-26"><a href="#cb9-26"></a>  <span class="dt">cluster_rows =</span> <span class="ot">FALSE</span>, <span class="co"># cluster by row?</span></span>
+<span id="cb9-27"><a href="#cb9-27"></a>  <span class="dt">cluster_columns =</span> <span class="ot">FALSE</span>, <span class="co"># cluster by column?</span></span>
+<span id="cb9-28"><a href="#cb9-28"></a>  <span class="dt">legend_title =</span> <span class="st">"-log10(padj)"</span> <span class="co"># title of heatmap legend</span></span>
 <span id="cb9-29"><a href="#cb9-29"></a>)</span></code></pre></div>
 <p><img src="clustifyR_files/figure-html/clustifyr%20with%20gene%20lists-1.png" width="576" style="display: block; margin: auto;"></p>
 <hr>
@@ -317,7 +317,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
 </div>
 
       </footer>

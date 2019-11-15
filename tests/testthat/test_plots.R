@@ -141,7 +141,6 @@ test_that("plot_best_call threshold works as intended, on per cell and collapsin
 })
 
 test_that("plot_gene checks for presence of gene name", {
-
   expect_warning(plot_gene(pbmc_matrix_small,
     pbmc_meta %>% tibble::rownames_to_column("rn"),
     c("INIP", "ZFP36L3"),
@@ -150,7 +149,6 @@ test_that("plot_gene checks for presence of gene name", {
     do_legend = FALSE,
     x = "UMAP_1",
     y = "UMAP_2"
-
   ))
   expect_error(expect_warning(plot_gene(pbmc_matrix_small,
     pbmc_meta %>% tibble::rownames_to_column("rn"),

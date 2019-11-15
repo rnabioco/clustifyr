@@ -38,7 +38,7 @@ seurat_ref.seurat <- function(seurat_object,
   }
 
   if (!is.null(assay_name)) {
-    temp_mat <- temp_mat[0,]
+    temp_mat <- temp_mat[0, ]
     for (element in assay_name) {
       temp_mat2 <- seurat_object@assay[[element]]@raw.data
       temp_mat <- rbind(temp_mat, as.matrix(temp_mat2))
@@ -78,7 +78,7 @@ seurat_ref.Seurat <- function(seurat_object,
     }
 
     if (!is.null(assay_name)) {
-      temp_mat <- temp_mat[0,]
+      temp_mat <- temp_mat[0, ]
       for (element in assay_name) {
         temp_mat2 <- seurat_object@assays[[element]]@counts
         temp_mat <- rbind(temp_mat, as.matrix(temp_mat2))
@@ -181,7 +181,8 @@ seurat_meta.Seurat <- function(seurat_object,
 #' @examples
 #' object_ref(
 #'   s_small3,
-#'   cluster_col = "RNA_snn_res.1")
+#'   cluster_col = "RNA_snn_res.1"
+#' )
 #' @export
 object_ref <- function(input,
                        cluster_col = NULL,
@@ -189,8 +190,7 @@ object_ref <- function(input,
                        assay_name = NULL,
                        method = "mean",
                        lookuptable = NULL,
-                       if_log = TRUE)
-  {
+                       if_log = TRUE) {
   if (!is(input, "seurat")) {
     input_original <- input
     temp <- parse_loc_object(

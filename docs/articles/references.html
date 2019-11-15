@@ -13,8 +13,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Reference building for clustifyr">
 <meta property="og:description" content="">
@@ -126,8 +126,8 @@
 <span id="cb1-2"><a href="#cb1-2"></a>full_pbmc_matrix &lt;-<span class="st"> </span>clustifyrdata<span class="op">::</span>pbmc_matrix</span>
 <span id="cb1-3"><a href="#cb1-3"></a>full_pbmc_meta &lt;-<span class="st"> </span>clustifyrdata<span class="op">::</span>pbmc_meta</span>
 <span id="cb1-4"><a href="#cb1-4"></a>new_ref_matrix &lt;-<span class="st"> </span><span class="kw"><a href="../reference/average_clusters.html">average_clusters</a></span>(</span>
-<span id="cb1-5"><a href="#cb1-5"></a>  full_pbmc_matrix, </span>
-<span id="cb1-6"><a href="#cb1-6"></a>  <span class="dt">metadata =</span> full_pbmc_meta<span class="op">$</span>classified,</span>
+<span id="cb1-5"><a href="#cb1-5"></a>  <span class="dt">mat =</span> full_pbmc_matrix,</span>
+<span id="cb1-6"><a href="#cb1-6"></a>  <span class="dt">metadata =</span> full_pbmc_meta<span class="op">$</span>classified, <span class="co"># or use metadata = full_pbmc_meta, cluster_col = "classified"</span></span>
 <span id="cb1-7"><a href="#cb1-7"></a>  <span class="dt">if_log =</span> <span class="ot">TRUE</span></span>
 <span id="cb1-8"><a href="#cb1-8"></a>)</span>
 <span id="cb1-9"><a href="#cb1-9"></a></span>
@@ -173,13 +173,13 @@
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>new_ref_matrix_v2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/seurat_ref.html">seurat_ref</a></span>(</span>
 <span id="cb3-2"><a href="#cb3-2"></a>  <span class="dt">seurat_object =</span> s_small,</span>
 <span id="cb3-3"><a href="#cb3-3"></a>  <span class="dt">cluster_col =</span> <span class="st">"res.1"</span>,</span>
-<span id="cb3-4"><a href="#cb3-4"></a>  <span class="dt">assay_name =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"ADT"</span>,<span class="st">"ADT2"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4"></a>  <span class="dt">assay_name =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"ADT"</span>, <span class="st">"ADT2"</span>)</span>
 <span id="cb3-5"><a href="#cb3-5"></a>)</span>
 <span id="cb3-6"><a href="#cb3-6"></a></span>
 <span id="cb3-7"><a href="#cb3-7"></a>new_ref_matrix_v3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/seurat_ref.html">seurat_ref</a></span>(</span>
 <span id="cb3-8"><a href="#cb3-8"></a>  <span class="dt">seurat_object =</span> s_small3,</span>
 <span id="cb3-9"><a href="#cb3-9"></a>  <span class="dt">cluster_col =</span> <span class="st">"RNA_snn_res.1"</span>,</span>
-<span id="cb3-10"><a href="#cb3-10"></a>  <span class="dt">assay_name =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"ADT"</span>,<span class="st">"ADT2"</span>)</span>
+<span id="cb3-10"><a href="#cb3-10"></a>  <span class="dt">assay_name =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"ADT"</span>, <span class="st">"ADT2"</span>)</span>
 <span id="cb3-11"><a href="#cb3-11"></a>)</span>
 <span id="cb3-12"><a href="#cb3-12"></a></span>
 <span id="cb3-13"><a href="#cb3-13"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">tail</a></span>(new_ref_matrix_v3)</span>
@@ -200,87 +200,88 @@
 <span id="cb4-5"><a href="#cb4-5"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(recount)</span>
 <span id="cb4-6"><a href="#cb4-6"></a></span>
 <span id="cb4-7"><a href="#cb4-7"></a>dl_recount &lt;-<span class="st"> </span><span class="cf">function</span>(sra_id) {</span>
-<span id="cb4-8"><a href="#cb4-8"></a>  </span>
-<span id="cb4-9"><a href="#cb4-9"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/files.html">file.exists</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(sra_id, <span class="st">"rse_gene.Rdata"</span>))) {</span>
-<span id="cb4-10"><a href="#cb4-10"></a>    <span class="kw">download_study</span>(sra_id)</span>
-<span id="cb4-11"><a href="#cb4-11"></a>  }</span>
-<span id="cb4-12"><a href="#cb4-12"></a>  </span>
-<span id="cb4-13"><a href="#cb4-13"></a>  <span class="kw"><a href="https://rdrr.io/r/base/load.html">load</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(sra_id, <span class="st">"rse_gene.Rdata"</span>))</span>
-<span id="cb4-14"><a href="#cb4-14"></a>  </span>
-<span id="cb4-15"><a href="#cb4-15"></a>  <span class="co"># no longer need to downloaded data</span></span>
-<span id="cb4-16"><a href="#cb4-16"></a>  <span class="kw"><a href="https://rdrr.io/r/base/unlink.html">unlink</a></span>(sra_id, <span class="dt">recursive =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb4-17"><a href="#cb4-17"></a>  rse &lt;-<span class="st"> </span><span class="kw">scale_counts</span>(rse_gene)</span>
-<span id="cb4-18"><a href="#cb4-18"></a>  read_counts &lt;-<span class="st"> </span><span class="kw">assay</span>(rse, <span class="st">"counts"</span>)</span>
-<span id="cb4-19"><a href="#cb4-19"></a>  gene_ids &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(read_counts)</span>
-<span id="cb4-20"><a href="#cb4-20"></a>  </span>
-<span id="cb4-21"><a href="#cb4-21"></a>  <span class="co"># get gene symbols, which are stored in rowData</span></span>
-<span id="cb4-22"><a href="#cb4-22"></a>  id2symbol &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">data_frame</a></span>(</span>
-<span id="cb4-23"><a href="#cb4-23"></a>    <span class="dt">ids =</span> <span class="kw">rowData</span>(rse_gene)<span class="op">$</span>gene_id,</span>
-<span id="cb4-24"><a href="#cb4-24"></a>    <span class="dt">symbols =</span> <span class="kw">rowData</span>(rse_gene)<span class="op">$</span>symbol<span class="op">@</span>listData</span>
-<span id="cb4-25"><a href="#cb4-25"></a>  ) <span class="op">%&gt;%</span></span>
-<span id="cb4-26"><a href="#cb4-26"></a><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">symbols =</span> <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span>(symbols, <span class="op">~</span>.x[<span class="dv">1</span>]))</span>
-<span id="cb4-27"><a href="#cb4-27"></a>  </span>
-<span id="cb4-28"><a href="#cb4-28"></a>  <span class="co"># clean up metadata into a dataframe</span></span>
-<span id="cb4-29"><a href="#cb4-29"></a>  <span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="st">"cleaning up meta"</span>)</span>
-<span id="cb4-30"><a href="#cb4-30"></a>  mdata &lt;-<span class="st"> </span><span class="kw">colData</span>(rse)</span>
-<span id="cb4-31"><a href="#cb4-31"></a>  mdata_cols &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(</span>
-<span id="cb4-32"><a href="#cb4-32"></a>    mdata<span class="op">$</span>characteristics,</span>
-<span id="cb4-33"><a href="#cb4-33"></a>    <span class="cf">function</span>(x){<span class="kw"><a href="https://stringr.tidyverse.org/reference/str_match.html">str_match</a></span>(x, <span class="st">"^([^:]+):"</span>)[, <span class="dv">2</span>]}</span>
-<span id="cb4-34"><a href="#cb4-34"></a>  ) <span class="op">%&gt;%</span></span>
-<span id="cb4-35"><a href="#cb4-35"></a><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>() <span class="op">%&gt;%</span></span>
-<span id="cb4-36"><a href="#cb4-36"></a><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>()</span>
-<span id="cb4-37"><a href="#cb4-37"></a>  </span>
-<span id="cb4-38"><a href="#cb4-38"></a>  mdata &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">data_frame</a></span>(</span>
-<span id="cb4-39"><a href="#cb4-39"></a>    <span class="dt">run =</span>  mdata<span class="op">$</span>run,</span>
-<span id="cb4-40"><a href="#cb4-40"></a>    <span class="dt">all_data =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">as.list</a></span>(mdata<span class="op">$</span>characteristics)</span>
-<span id="cb4-41"><a href="#cb4-41"></a>  ) <span class="op">%&gt;%</span></span>
-<span id="cb4-42"><a href="#cb4-42"></a><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">out =</span> purrr<span class="op">::</span><span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span>(all_data, <span class="op">~</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c</a></span>(.x, <span class="dt">collapse =</span> <span class="st">"::"</span>))) <span class="op">%&gt;%</span></span>
-<span id="cb4-43"><a href="#cb4-43"></a><span class="st">    </span>tidyr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/tidyr/man/separate.html">separate</a></span>(</span>
-<span id="cb4-44"><a href="#cb4-44"></a>      out,</span>
-<span id="cb4-45"><a href="#cb4-45"></a>      <span class="dt">sep =</span> <span class="st">"::"</span>,</span>
-<span id="cb4-46"><a href="#cb4-46"></a>      <span class="dt">into =</span> mdata_cols</span>
-<span id="cb4-47"><a href="#cb4-47"></a>    ) <span class="op">%&gt;%</span></span>
-<span id="cb4-48"><a href="#cb4-48"></a><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>all_data) <span class="op">%&gt;%</span></span>
-<span id="cb4-49"><a href="#cb4-49"></a><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_at</a></span>(</span>
-<span id="cb4-50"><a href="#cb4-50"></a>      <span class="dt">.vars =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="op">-</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">matches</a></span>(<span class="st">"run"</span>)),</span>
-<span id="cb4-51"><a href="#cb4-51"></a>      <span class="dt">.funs =</span> <span class="cf">function</span>(x) <span class="kw"><a href="https://stringr.tidyverse.org/reference/str_match.html">str_match</a></span>(x, <span class="st">": (.+)"</span>)[, <span class="dv">2</span>]</span>
-<span id="cb4-52"><a href="#cb4-52"></a>    )</span>
-<span id="cb4-53"><a href="#cb4-53"></a>  </span>
-<span id="cb4-54"><a href="#cb4-54"></a>  <span class="co"># convert ids to symbols</span></span>
-<span id="cb4-55"><a href="#cb4-55"></a>  row_ids_to_symbols &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">data_frame</a></span>(<span class="dt">ids =</span> gene_ids), id2symbol, <span class="dt">by =</span> <span class="st">"ids"</span>)</span>
-<span id="cb4-56"><a href="#cb4-56"></a>  </span>
-<span id="cb4-57"><a href="#cb4-57"></a>  <span class="cf">if</span>(<span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(gene_ids) <span class="op">!=</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(row_ids_to_symbols)) {</span>
-<span id="cb4-58"><a href="#cb4-58"></a>    <span class="kw"><a href="https://rdrr.io/r/base/warning.html">warning</a></span>(<span class="st">"gene id mapping to symbols produce more or less ids"</span>)</span>
-<span id="cb4-59"><a href="#cb4-59"></a>  }</span>
-<span id="cb4-60"><a href="#cb4-60"></a>  </span>
-<span id="cb4-61"><a href="#cb4-61"></a>  row_ids_to_symbols &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(row_ids_to_symbols, <span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(symbols))</span>
-<span id="cb4-62"><a href="#cb4-62"></a>  </span>
-<span id="cb4-63"><a href="#cb4-63"></a>  out_df &lt;-<span class="st"> </span>read_counts <span class="op">%&gt;%</span></span>
-<span id="cb4-64"><a href="#cb4-64"></a><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>() <span class="op">%&gt;%</span></span>
-<span id="cb4-65"><a href="#cb4-65"></a><span class="st">    </span>tibble<span class="op">::</span><span class="kw"><a href="https://tibble.tidyverse.org/reference/rownames.html">rownames_to_column</a></span>(<span class="st">"gene_id"</span>) <span class="op">%&gt;%</span></span>
-<span id="cb4-66"><a href="#cb4-66"></a><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(., row_ids_to_symbols, <span class="dt">by =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"gene_id"</span> =<span class="st"> "ids"</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb4-67"><a href="#cb4-67"></a><span class="st">    </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>gene_id) <span class="op">%&gt;%</span></span>
-<span id="cb4-68"><a href="#cb4-68"></a><span class="st">    </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(symbols, <span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">everything</a></span>()) <span class="op">%&gt;%</span></span>
-<span id="cb4-69"><a href="#cb4-69"></a><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(symbols))</span>
-<span id="cb4-70"><a href="#cb4-70"></a>  </span>
-<span id="cb4-71"><a href="#cb4-71"></a>  out_matrix &lt;-<span class="st"> </span>tidyr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/tidyr/man/gather.html">gather</a></span>(out_df, library, expr, <span class="op">-</span>symbols) <span class="op">%&gt;%</span></span>
-<span id="cb4-72"><a href="#cb4-72"></a><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(symbols, library) <span class="op">%&gt;%</span></span>
-<span id="cb4-73"><a href="#cb4-73"></a><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span>(<span class="dt">expr =</span> <span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(expr)) <span class="op">%&gt;%</span></span>
-<span id="cb4-74"><a href="#cb4-74"></a><span class="st">    </span>tidyr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/tidyr/man/spread.html">spread</a></span>(library, expr) <span class="op">%&gt;%</span></span>
-<span id="cb4-75"><a href="#cb4-75"></a><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>() <span class="op">%&gt;%</span></span>
-<span id="cb4-76"><a href="#cb4-76"></a><span class="st">    </span>tibble<span class="op">::</span><span class="kw"><a href="https://tibble.tidyverse.org/reference/rownames.html">column_to_rownames</a></span>(<span class="st">"symbols"</span>) <span class="op">%&gt;%</span></span>
-<span id="cb4-77"><a href="#cb4-77"></a><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>()</span>
-<span id="cb4-78"><a href="#cb4-78"></a>  </span>
-<span id="cb4-79"><a href="#cb4-79"></a>  <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</span>
-<span id="cb4-80"><a href="#cb4-80"></a>    <span class="dt">read_counts =</span> out_matrix,</span>
-<span id="cb4-81"><a href="#cb4-81"></a>    <span class="dt">meta_data =</span> mdata</span>
-<span id="cb4-82"><a href="#cb4-82"></a>  )</span>
-<span id="cb4-83"><a href="#cb4-83"></a>}</span>
-<span id="cb4-84"><a href="#cb4-84"></a></span>
-<span id="cb4-85"><a href="#cb4-85"></a>gtex_data &lt;-<span class="st"> </span><span class="kw">dl_recount</span>(<span class="st">"SRP012682"</span>)</span>
-<span id="cb4-86"><a href="#cb4-86"></a></span>
-<span id="cb4-87"><a href="#cb4-87"></a>gtex_data<span class="op">$</span>read_counts[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</span>
-<span id="cb4-88"><a href="#cb4-88"></a>gtex_data<span class="op">$</span>meta_data[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ]</span></code></pre></div>
+<span id="cb4-8"><a href="#cb4-8"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/files.html">file.exists</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(sra_id, <span class="st">"rse_gene.Rdata"</span>))) {</span>
+<span id="cb4-9"><a href="#cb4-9"></a>    <span class="kw">download_study</span>(sra_id)</span>
+<span id="cb4-10"><a href="#cb4-10"></a>  }</span>
+<span id="cb4-11"><a href="#cb4-11"></a></span>
+<span id="cb4-12"><a href="#cb4-12"></a>  <span class="kw"><a href="https://rdrr.io/r/base/load.html">load</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(sra_id, <span class="st">"rse_gene.Rdata"</span>))</span>
+<span id="cb4-13"><a href="#cb4-13"></a></span>
+<span id="cb4-14"><a href="#cb4-14"></a>  <span class="co"># no longer need to downloaded data</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a>  <span class="kw"><a href="https://rdrr.io/r/base/unlink.html">unlink</a></span>(sra_id, <span class="dt">recursive =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb4-16"><a href="#cb4-16"></a>  rse &lt;-<span class="st"> </span><span class="kw">scale_counts</span>(rse_gene)</span>
+<span id="cb4-17"><a href="#cb4-17"></a>  read_counts &lt;-<span class="st"> </span><span class="kw">assay</span>(rse, <span class="st">"counts"</span>)</span>
+<span id="cb4-18"><a href="#cb4-18"></a>  gene_ids &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(read_counts)</span>
+<span id="cb4-19"><a href="#cb4-19"></a></span>
+<span id="cb4-20"><a href="#cb4-20"></a>  <span class="co"># get gene symbols, which are stored in rowData</span></span>
+<span id="cb4-21"><a href="#cb4-21"></a>  id2symbol &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">data_frame</a></span>(</span>
+<span id="cb4-22"><a href="#cb4-22"></a>    <span class="dt">ids =</span> <span class="kw">rowData</span>(rse_gene)<span class="op">$</span>gene_id,</span>
+<span id="cb4-23"><a href="#cb4-23"></a>    <span class="dt">symbols =</span> <span class="kw">rowData</span>(rse_gene)<span class="op">$</span>symbol<span class="op">@</span>listData</span>
+<span id="cb4-24"><a href="#cb4-24"></a>  ) <span class="op">%&gt;%</span></span>
+<span id="cb4-25"><a href="#cb4-25"></a><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">symbols =</span> <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span>(symbols, <span class="op">~</span><span class="st"> </span>.x[<span class="dv">1</span>]))</span>
+<span id="cb4-26"><a href="#cb4-26"></a></span>
+<span id="cb4-27"><a href="#cb4-27"></a>  <span class="co"># clean up metadata into a dataframe</span></span>
+<span id="cb4-28"><a href="#cb4-28"></a>  <span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="st">"cleaning up meta"</span>)</span>
+<span id="cb4-29"><a href="#cb4-29"></a>  mdata &lt;-<span class="st"> </span><span class="kw">colData</span>(rse)</span>
+<span id="cb4-30"><a href="#cb4-30"></a>  mdata_cols &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(</span>
+<span id="cb4-31"><a href="#cb4-31"></a>    mdata<span class="op">$</span>characteristics,</span>
+<span id="cb4-32"><a href="#cb4-32"></a>    <span class="cf">function</span>(x) {</span>
+<span id="cb4-33"><a href="#cb4-33"></a>      <span class="kw"><a href="https://stringr.tidyverse.org/reference/str_match.html">str_match</a></span>(x, <span class="st">"^([^:]+):"</span>)[, <span class="dv">2</span>]</span>
+<span id="cb4-34"><a href="#cb4-34"></a>    }</span>
+<span id="cb4-35"><a href="#cb4-35"></a>  ) <span class="op">%&gt;%</span></span>
+<span id="cb4-36"><a href="#cb4-36"></a><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>() <span class="op">%&gt;%</span></span>
+<span id="cb4-37"><a href="#cb4-37"></a><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>()</span>
+<span id="cb4-38"><a href="#cb4-38"></a></span>
+<span id="cb4-39"><a href="#cb4-39"></a>  mdata &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">data_frame</a></span>(</span>
+<span id="cb4-40"><a href="#cb4-40"></a>    <span class="dt">run =</span> mdata<span class="op">$</span>run,</span>
+<span id="cb4-41"><a href="#cb4-41"></a>    <span class="dt">all_data =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">as.list</a></span>(mdata<span class="op">$</span>characteristics)</span>
+<span id="cb4-42"><a href="#cb4-42"></a>  ) <span class="op">%&gt;%</span></span>
+<span id="cb4-43"><a href="#cb4-43"></a><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">out =</span> purrr<span class="op">::</span><span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span>(all_data, <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c</a></span>(.x, <span class="dt">collapse =</span> <span class="st">"::"</span>))) <span class="op">%&gt;%</span></span>
+<span id="cb4-44"><a href="#cb4-44"></a><span class="st">    </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span>(</span>
+<span id="cb4-45"><a href="#cb4-45"></a>      out,</span>
+<span id="cb4-46"><a href="#cb4-46"></a>      <span class="dt">sep =</span> <span class="st">"::"</span>,</span>
+<span id="cb4-47"><a href="#cb4-47"></a>      <span class="dt">into =</span> mdata_cols</span>
+<span id="cb4-48"><a href="#cb4-48"></a>    ) <span class="op">%&gt;%</span></span>
+<span id="cb4-49"><a href="#cb4-49"></a><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>all_data) <span class="op">%&gt;%</span></span>
+<span id="cb4-50"><a href="#cb4-50"></a><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_at</a></span>(</span>
+<span id="cb4-51"><a href="#cb4-51"></a>      <span class="dt">.vars =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="op">-</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">matches</a></span>(<span class="st">"run"</span>)),</span>
+<span id="cb4-52"><a href="#cb4-52"></a>      <span class="dt">.funs =</span> <span class="cf">function</span>(x) <span class="kw"><a href="https://stringr.tidyverse.org/reference/str_match.html">str_match</a></span>(x, <span class="st">": (.+)"</span>)[, <span class="dv">2</span>]</span>
+<span id="cb4-53"><a href="#cb4-53"></a>    )</span>
+<span id="cb4-54"><a href="#cb4-54"></a></span>
+<span id="cb4-55"><a href="#cb4-55"></a>  <span class="co"># convert ids to symbols</span></span>
+<span id="cb4-56"><a href="#cb4-56"></a>  row_ids_to_symbols &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">data_frame</a></span>(<span class="dt">ids =</span> gene_ids), id2symbol, <span class="dt">by =</span> <span class="st">"ids"</span>)</span>
+<span id="cb4-57"><a href="#cb4-57"></a></span>
+<span id="cb4-58"><a href="#cb4-58"></a>  <span class="cf">if</span> (<span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(gene_ids) <span class="op">!=</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(row_ids_to_symbols)) {</span>
+<span id="cb4-59"><a href="#cb4-59"></a>    <span class="kw"><a href="https://rdrr.io/r/base/warning.html">warning</a></span>(<span class="st">"gene id mapping to symbols produce more or less ids"</span>)</span>
+<span id="cb4-60"><a href="#cb4-60"></a>  }</span>
+<span id="cb4-61"><a href="#cb4-61"></a></span>
+<span id="cb4-62"><a href="#cb4-62"></a>  row_ids_to_symbols &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(row_ids_to_symbols, <span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(symbols))</span>
+<span id="cb4-63"><a href="#cb4-63"></a></span>
+<span id="cb4-64"><a href="#cb4-64"></a>  out_df &lt;-<span class="st"> </span>read_counts <span class="op">%&gt;%</span></span>
+<span id="cb4-65"><a href="#cb4-65"></a><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>() <span class="op">%&gt;%</span></span>
+<span id="cb4-66"><a href="#cb4-66"></a><span class="st">    </span>tibble<span class="op">::</span><span class="kw"><a href="https://tibble.tidyverse.org/reference/rownames.html">rownames_to_column</a></span>(<span class="st">"gene_id"</span>) <span class="op">%&gt;%</span></span>
+<span id="cb4-67"><a href="#cb4-67"></a><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(., row_ids_to_symbols, <span class="dt">by =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"gene_id"</span> =<span class="st"> "ids"</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb4-68"><a href="#cb4-68"></a><span class="st">    </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>gene_id) <span class="op">%&gt;%</span></span>
+<span id="cb4-69"><a href="#cb4-69"></a><span class="st">    </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(symbols, <span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">everything</a></span>()) <span class="op">%&gt;%</span></span>
+<span id="cb4-70"><a href="#cb4-70"></a><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(symbols))</span>
+<span id="cb4-71"><a href="#cb4-71"></a></span>
+<span id="cb4-72"><a href="#cb4-72"></a>  out_matrix &lt;-<span class="st"> </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a></span>(out_df, library, expr, <span class="op">-</span>symbols) <span class="op">%&gt;%</span></span>
+<span id="cb4-73"><a href="#cb4-73"></a><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(symbols, library) <span class="op">%&gt;%</span></span>
+<span id="cb4-74"><a href="#cb4-74"></a><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span>(<span class="dt">expr =</span> <span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(expr)) <span class="op">%&gt;%</span></span>
+<span id="cb4-75"><a href="#cb4-75"></a><span class="st">    </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/spread.html">spread</a></span>(library, expr) <span class="op">%&gt;%</span></span>
+<span id="cb4-76"><a href="#cb4-76"></a><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>() <span class="op">%&gt;%</span></span>
+<span id="cb4-77"><a href="#cb4-77"></a><span class="st">    </span>tibble<span class="op">::</span><span class="kw"><a href="https://tibble.tidyverse.org/reference/rownames.html">column_to_rownames</a></span>(<span class="st">"symbols"</span>) <span class="op">%&gt;%</span></span>
+<span id="cb4-78"><a href="#cb4-78"></a><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>()</span>
+<span id="cb4-79"><a href="#cb4-79"></a></span>
+<span id="cb4-80"><a href="#cb4-80"></a>  <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</span>
+<span id="cb4-81"><a href="#cb4-81"></a>    <span class="dt">read_counts =</span> out_matrix,</span>
+<span id="cb4-82"><a href="#cb4-82"></a>    <span class="dt">meta_data =</span> mdata</span>
+<span id="cb4-83"><a href="#cb4-83"></a>  )</span>
+<span id="cb4-84"><a href="#cb4-84"></a>}</span>
+<span id="cb4-85"><a href="#cb4-85"></a></span>
+<span id="cb4-86"><a href="#cb4-86"></a>gtex_data &lt;-<span class="st"> </span><span class="kw">dl_recount</span>(<span class="st">"SRP012682"</span>)</span>
+<span id="cb4-87"><a href="#cb4-87"></a></span>
+<span id="cb4-88"><a href="#cb4-88"></a>gtex_data<span class="op">$</span>read_counts[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</span>
+<span id="cb4-89"><a href="#cb4-89"></a>gtex_data<span class="op">$</span>meta_data[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ]</span></code></pre></div>
 </div>
 <div id="building-reference-matrix-from-microarray-data" class="section level2">
 <h2 class="hasAnchor">
@@ -295,24 +296,34 @@
 <span id="cb5-7"><a href="#cb5-7"></a></span>
 <span id="cb5-8"><a href="#cb5-8"></a><span class="co"># read array metadata table, remove control probes and missing gene symbols</span></span>
 <span id="cb5-9"><a href="#cb5-9"></a>GPL4685 &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">"/Users/rf/microarray/GSE24759/GPL4685-15513.txt"</span>, <span class="dt">skip =</span> <span class="dv">14</span>) <span class="op">%&gt;%</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="st">`</span><span class="dt">Gene Symbol</span><span class="st">`</span>), <span class="st">`</span><span class="dt">Sequence Type</span><span class="st">`</span> <span class="op">!=</span><span class="st"> "Control sequence"</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/tidyr/man/separate.html">separate</a></span>(<span class="st">`</span><span class="dt">Gene Symbol</span><span class="st">`</span>, <span class="dt">into =</span> <span class="st">"gene_symbol"</span>, <span class="dt">sep =</span> <span class="st">' '</span>) <span class="op">%&gt;%</span></span>
-<span id="cb5-12"><a href="#cb5-12"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(ID,gene_symbol)</span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="st">`</span><span class="dt">Gene Symbol</span><span class="st">`</span>), <span class="st">`</span><span class="dt">Sequence Type</span><span class="st">`</span> <span class="op">!=</span><span class="st"> "Control sequence"</span>) <span class="op">%&gt;%</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span>(<span class="st">`</span><span class="dt">Gene Symbol</span><span class="st">`</span>, <span class="dt">into =</span> <span class="st">"gene_symbol"</span>, <span class="dt">sep =</span> <span class="st">" "</span>) <span class="op">%&gt;%</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(ID, gene_symbol)</span>
 <span id="cb5-13"><a href="#cb5-13"></a></span>
 <span id="cb5-14"><a href="#cb5-14"></a><span class="co"># join data and metadata, collapse gene symbols</span></span>
-<span id="cb5-15"><a href="#cb5-15"></a>GSE24759 &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(GSE24759, GPL4685) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb5-16"><a href="#cb5-16"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>ID) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb5-17"><a href="#cb5-17"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(gene_symbol) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb5-18"><a href="#cb5-18"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_at</a></span>(<span class="dt">.vars =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="op">-</span>gene_symbol), <span class="dt">.funs =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="op">~</span><span class="kw"><a href="https://rdrr.io/r/base/Log.html">log2</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="dv">2</span><span class="op">^</span>.))))</span>
+<span id="cb5-15"><a href="#cb5-15"></a>GSE24759 &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(GSE24759, GPL4685) <span class="op">%&gt;%</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>ID) <span class="op">%&gt;%</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(gene_symbol) <span class="op">%&gt;%</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_at</a></span>(<span class="dt">.vars =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="op">-</span>gene_symbol), <span class="dt">.funs =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Log.html">log2</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="dv">2</span><span class="op">^</span>.))))</span>
 <span id="cb5-19"><a href="#cb5-19"></a></span>
 <span id="cb5-20"><a href="#cb5-20"></a><span class="co"># convert to matrix, add rownames</span></span>
-<span id="cb5-21"><a href="#cb5-21"></a>GSE24759_mat &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span>(GSE24759) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>gene_symbol) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>()</span>
-<span id="cb5-22"><a href="#cb5-22"></a><span class="kw"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span>(GSE24759_mat) &lt;-<span class="st"> </span>GSE24759<span class="op">$</span>gene_symbol</span>
-<span id="cb5-23"><a href="#cb5-23"></a></span>
-<span id="cb5-24"><a href="#cb5-24"></a><span class="co"># merge samples</span></span>
-<span id="cb5-25"><a href="#cb5-25"></a>hema_microarray_matrix &lt;-<span class="st"> </span>GSE24759_mat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/t.html">t</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rownames_to_column</span>(<span class="st">"sample"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">sample =</span> <span class="kw"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span>(sample, <span class="st">", .*"</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(sample) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/summarise_all.html">summarise_all</a></span>(<span class="dt">.funs =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="op">~</span><span class="kw"><a href="https://rdrr.io/r/base/Log.html">log2</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="dv">2</span><span class="op">^</span>.)))) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">column_to_rownames</span>(<span class="st">"sample"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/t.html">t</a></span>()</span></code></pre></div>
+<span id="cb5-21"><a href="#cb5-21"></a>GSE24759_mat &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span>(GSE24759) <span class="op">%&gt;%</span></span>
+<span id="cb5-22"><a href="#cb5-22"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>gene_symbol) <span class="op">%&gt;%</span></span>
+<span id="cb5-23"><a href="#cb5-23"></a><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>()</span>
+<span id="cb5-24"><a href="#cb5-24"></a><span class="kw"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span>(GSE24759_mat) &lt;-<span class="st"> </span>GSE24759<span class="op">$</span>gene_symbol</span>
+<span id="cb5-25"><a href="#cb5-25"></a></span>
+<span id="cb5-26"><a href="#cb5-26"></a><span class="co"># merge samples</span></span>
+<span id="cb5-27"><a href="#cb5-27"></a>ref_hema_microarray &lt;-<span class="st"> </span>GSE24759_mat <span class="op">%&gt;%</span></span>
+<span id="cb5-28"><a href="#cb5-28"></a><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/t.html">t</a></span>() <span class="op">%&gt;%</span></span>
+<span id="cb5-29"><a href="#cb5-29"></a><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>() <span class="op">%&gt;%</span></span>
+<span id="cb5-30"><a href="#cb5-30"></a><span class="st">  </span><span class="kw">rownames_to_column</span>(<span class="st">"sample"</span>) <span class="op">%&gt;%</span></span>
+<span id="cb5-31"><a href="#cb5-31"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">sample =</span> <span class="kw"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span>(sample, <span class="st">", .*"</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb5-32"><a href="#cb5-32"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(sample) <span class="op">%&gt;%</span></span>
+<span id="cb5-33"><a href="#cb5-33"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/summarise_all.html">summarise_all</a></span>(<span class="dt">.funs =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Log.html">log2</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="dv">2</span><span class="op">^</span>.)))) <span class="op">%&gt;%</span></span>
+<span id="cb5-34"><a href="#cb5-34"></a><span class="st">  </span><span class="kw">column_to_rownames</span>(<span class="st">"sample"</span>) <span class="op">%&gt;%</span></span>
+<span id="cb5-35"><a href="#cb5-35"></a><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/t.html">t</a></span>()</span></code></pre></div>
 <p>Essentially, any data in matrix form is accepted by <code>clustifyR</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>clustifyrdata<span class="op">::</span>hema_microarray_matrix[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</span>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>clustifyrdata<span class="op">::</span>ref_hema_microarray[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</span>
 <span id="cb6-2"><a href="#cb6-2"></a><span class="co">#&gt;        Basophils CD4+ Central Memory CD4+ Effector Memory CD8+ Central Memory</span></span>
 <span id="cb6-3"><a href="#cb6-3"></a><span class="co">#&gt; DDR1    6.084244            5.967502             5.933039            6.005278</span></span>
 <span id="cb6-4"><a href="#cb6-4"></a><span class="co">#&gt; RFC2    6.280044            6.028615             6.047005            5.992979</span></span>
@@ -341,9 +352,9 @@
 <span id="cb7-9"><a href="#cb7-9"></a><span class="co">#&gt; RPS25 5.612007e-124 0.5203411 0.997 0.975 7.696306e-120       0 RPS25</span></span>
 <span id="cb7-10"><a href="#cb7-10"></a></span>
 <span id="cb7-11"><a href="#cb7-11"></a><span class="co"># manually enter into dataframe format</span></span>
-<span id="cb7-12"><a href="#cb7-12"></a>betam &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"INS"</span>, <span class="st">"IGF2"</span>, <span class="st">"IAPP"</span>,<span class="st">"MAFA"</span>,<span class="st">"NPTX2"</span>)</span>
-<span id="cb7-13"><a href="#cb7-13"></a>alpham &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"GCG"</span>, <span class="st">"PDK4"</span>,<span class="st">"LOXL2"</span>,<span class="st">"IRX2"</span>,<span class="st">"GC"</span>)</span>
-<span id="cb7-14"><a href="#cb7-14"></a>deltam &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"SST"</span>, <span class="st">"RBP4"</span>,<span class="st">"HHEX"</span>,<span class="st">"PCSK1"</span>,<span class="st">"LEPR"</span>)</span>
+<span id="cb7-12"><a href="#cb7-12"></a>betam &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"INS"</span>, <span class="st">"IGF2"</span>, <span class="st">"IAPP"</span>, <span class="st">"MAFA"</span>, <span class="st">"NPTX2"</span>)</span>
+<span id="cb7-13"><a href="#cb7-13"></a>alpham &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"GCG"</span>, <span class="st">"PDK4"</span>, <span class="st">"LOXL2"</span>, <span class="st">"IRX2"</span>, <span class="st">"GC"</span>)</span>
+<span id="cb7-14"><a href="#cb7-14"></a>deltam &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"SST"</span>, <span class="st">"RBP4"</span>, <span class="st">"HHEX"</span>, <span class="st">"PCSK1"</span>, <span class="st">"LEPR"</span>)</span>
 <span id="cb7-15"><a href="#cb7-15"></a><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(alpham, betam, deltam)</span>
 <span id="cb7-16"><a href="#cb7-16"></a><span class="co">#&gt;   alpham betam deltam</span></span>
 <span id="cb7-17"><a href="#cb7-17"></a><span class="co">#&gt; 1    GCG   INS    SST</span></span>
@@ -354,9 +365,9 @@
 <span id="cb7-22"><a href="#cb7-22"></a></span>
 <span id="cb7-23"><a href="#cb7-23"></a><span class="co"># use matrixize_markers function to convert</span></span>
 <span id="cb7-24"><a href="#cb7-24"></a>mm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/matrixize_markers.html">matrixize_markers</a></span>(</span>
-<span id="cb7-25"><a href="#cb7-25"></a>  pbmc_markers, </span>
-<span id="cb7-26"><a href="#cb7-26"></a>  <span class="dt">remove_rp =</span> <span class="ot">TRUE</span>, </span>
-<span id="cb7-27"><a href="#cb7-27"></a>  <span class="dt">unique =</span> <span class="ot">TRUE</span>, </span>
+<span id="cb7-25"><a href="#cb7-25"></a>  <span class="dt">marker_df =</span> pbmc_markers,</span>
+<span id="cb7-26"><a href="#cb7-26"></a>  <span class="dt">remove_rp =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb7-27"><a href="#cb7-27"></a>  <span class="dt">unique =</span> <span class="ot">TRUE</span>,</span>
 <span id="cb7-28"><a href="#cb7-28"></a>  <span class="dt">n =</span> <span class="dv">10</span></span>
 <span id="cb7-29"><a href="#cb7-29"></a>)</span>
 <span id="cb7-30"><a href="#cb7-30"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(mm)</span>
@@ -370,7 +381,7 @@
 <span id="cb7-38"><a href="#cb7-38"></a></span>
 <span id="cb7-39"><a href="#cb7-39"></a><span class="co"># get markers from ref_matrix, and then matrixize_markers</span></span>
 <span id="cb7-40"><a href="#cb7-40"></a>cbmc_m &lt;-<span class="st"> </span><span class="kw"><a href="../reference/matrixize_markers.html">matrixize_markers</a></span>(</span>
-<span id="cb7-41"><a href="#cb7-41"></a>  <span class="kw"><a href="../reference/ref_marker_select.html">ref_marker_select</a></span>(cbmc_ref),</span>
+<span id="cb7-41"><a href="#cb7-41"></a>  <span class="dt">marker_df =</span> <span class="kw"><a href="../reference/ref_marker_select.html">ref_marker_select</a></span>(cbmc_ref),</span>
 <span id="cb7-42"><a href="#cb7-42"></a>  <span class="dt">remove_rp =</span> <span class="ot">TRUE</span>,</span>
 <span id="cb7-43"><a href="#cb7-43"></a>  <span class="dt">unique =</span> <span class="ot">TRUE</span>,</span>
 <span id="cb7-44"><a href="#cb7-44"></a>  <span class="dt">n =</span> <span class="dv">3</span></span>
@@ -419,7 +430,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
 </div>
 
       </footer>

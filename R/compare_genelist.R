@@ -281,7 +281,7 @@ compare_lists <- function(bin_mat,
     )
     res <- do.call(cbind, out)
     n <- ncol(res)
-    res2 <- res[, 3 * c(1:(ncol(res) / 3)) -1, drop = FALSE]
+    res2 <- res[, 3 * c(1:(ncol(res) / 3)) - 1, drop = FALSE]
     rownames(res2) <- rownames(res)
     colnames(res2) <- colnames(marker_mat)
     res <- res2

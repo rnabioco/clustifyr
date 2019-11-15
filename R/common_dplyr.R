@@ -240,7 +240,7 @@ call_to_metadata <- function(res,
 #'   metadata = pbmc_meta,
 #'   cluster_col = "classified",
 #'   threshold = 0
-#'  )
+#' )
 #' @export
 collapse_to_cluster <- function(res,
                                 metadata,

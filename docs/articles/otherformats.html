@@ -13,8 +13,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Support for various single cell object formats">
 <meta property="og:description" content="">
@@ -129,20 +129,17 @@
 <span id="cb1-5"><a href="#cb1-5"></a>  <span class="dt">input =</span> s_small,</span>
 <span id="cb1-6"><a href="#cb1-6"></a>  <span class="dt">cluster_col =</span> <span class="st">"res.1"</span>,</span>
 <span id="cb1-7"><a href="#cb1-7"></a>  <span class="dt">ref_mat =</span> pbmc_bulk_matrix,</span>
-<span id="cb1-8"><a href="#cb1-8"></a>  <span class="dt">seurat_out =</span> T,</span>
-<span id="cb1-9"><a href="#cb1-9"></a>  <span class="dt">dr =</span> <span class="st">"tsne"</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a>)</span>
-<span id="cb1-11"><a href="#cb1-11"></a></span>
-<span id="cb1-12"><a href="#cb1-12"></a><span class="co"># or return a correlation matrix, if seurat_out is set to F</span></span>
-<span id="cb1-13"><a href="#cb1-13"></a>res2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustify_lists.html">clustify_lists</a></span>(</span>
-<span id="cb1-14"><a href="#cb1-14"></a>  s_small,</span>
-<span id="cb1-15"><a href="#cb1-15"></a>  <span class="dt">per_cell =</span> F,</span>
-<span id="cb1-16"><a href="#cb1-16"></a>  <span class="dt">marker =</span> pbmc_markers,</span>
-<span id="cb1-17"><a href="#cb1-17"></a>  <span class="dt">marker_inmatrix =</span> F,</span>
-<span id="cb1-18"><a href="#cb1-18"></a>  <span class="dt">cluster_col =</span> <span class="st">"res.1"</span>,</span>
-<span id="cb1-19"><a href="#cb1-19"></a>  <span class="dt">seurat_out =</span> F,</span>
-<span id="cb1-20"><a href="#cb1-20"></a>  <span class="dt">dr =</span> <span class="st">"tsne"</span></span>
-<span id="cb1-21"><a href="#cb1-21"></a>)</span></code></pre></div>
+<span id="cb1-8"><a href="#cb1-8"></a>  <span class="dt">seurat_out =</span> T</span>
+<span id="cb1-9"><a href="#cb1-9"></a>)</span>
+<span id="cb1-10"><a href="#cb1-10"></a></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="co"># or return a correlation matrix, if seurat_out is set to F</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>res2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustify_lists.html">clustify_lists</a></span>(</span>
+<span id="cb1-13"><a href="#cb1-13"></a>  <span class="dt">input =</span> s_small,</span>
+<span id="cb1-14"><a href="#cb1-14"></a>  <span class="dt">marker =</span> pbmc_markers,</span>
+<span id="cb1-15"><a href="#cb1-15"></a>  <span class="dt">marker_inmatrix =</span> F,</span>
+<span id="cb1-16"><a href="#cb1-16"></a>  <span class="dt">cluster_col =</span> <span class="st">"res.1"</span>,</span>
+<span id="cb1-17"><a href="#cb1-17"></a>  <span class="dt">seurat_out =</span> F</span>
+<span id="cb1-18"><a href="#cb1-18"></a>)</span></code></pre></div>
 </div>
 <div id="other-scrna-seq-object-formats-are-easily-supported-by-adding-defaults-to-a-lookup-file-object_loc_lookup-currently-including-sce-urd-cds-fsce-" class="section level2">
 <h2 class="hasAnchor">
@@ -152,16 +149,16 @@
 <span id="cb2-3"><a href="#cb2-3"></a></span>
 <span id="cb2-4"><a href="#cb2-4"></a><span class="co"># adding seurat3 locations</span></span>
 <span id="cb2-5"><a href="#cb2-5"></a>object_loc_lookup<span class="op">$</span>Seurat &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(</span>
-<span id="cb2-6"><a href="#cb2-6"></a>  <span class="dt">expr =</span> <span class="st">"input@assays$RNA@data"</span>, </span>
-<span id="cb2-7"><a href="#cb2-7"></a>  <span class="dt">meta =</span> <span class="st">"input@meta.data"</span>, </span>
+<span id="cb2-6"><a href="#cb2-6"></a>  <span class="dt">expr =</span> <span class="st">"input@assays$RNA@data"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7"></a>  <span class="dt">meta =</span> <span class="st">"input@meta.data"</span>,</span>
 <span id="cb2-8"><a href="#cb2-8"></a>  <span class="dt">var =</span> <span class="st">"input@assays$RNA@var.features"</span>,</span>
 <span id="cb2-9"><a href="#cb2-9"></a>  <span class="dt">col =</span> <span class="st">"RNA_snn_res.1"</span></span>
 <span id="cb2-10"><a href="#cb2-10"></a>)</span></code></pre></div>
 <p>For example, sample code for <code>scrunchy</code> is as easy as:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustify_nudge.html">clustify_nudge</a></span>(</span>
-<span id="cb3-2"><a href="#cb3-2"></a>  fsce_small,</span>
-<span id="cb3-3"><a href="#cb3-3"></a>  cbmc_ref,</span>
-<span id="cb3-4"><a href="#cb3-4"></a>  cbmc_m,</span>
+<span id="cb3-2"><a href="#cb3-2"></a>  <span class="dt">input =</span> fsce_small,</span>
+<span id="cb3-3"><a href="#cb3-3"></a>  <span class="dt">ref_mat =</span> cbmc_ref,</span>
+<span id="cb3-4"><a href="#cb3-4"></a>  <span class="dt">marker =</span> cbmc_m,</span>
 <span id="cb3-5"><a href="#cb3-5"></a>  <span class="dt">query_genes =</span> pbmc_vargenes,</span>
 <span id="cb3-6"><a href="#cb3-6"></a>  <span class="dt">cluster_col =</span> <span class="st">"k_cluster"</span></span>
 <span id="cb3-7"><a href="#cb3-7"></a>)</span></code></pre></div>
@@ -172,7 +169,7 @@
 <p>Making scRNA-seq objects into references is assisted by wrappers as well.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># for both v2 and v3</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a>seurat_ref &lt;-<span class="st"> </span><span class="kw"><a href="../reference/seurat_ref.html">seurat_ref</a></span>(</span>
-<span id="cb4-3"><a href="#cb4-3"></a>  s_small3,</span>
+<span id="cb4-3"><a href="#cb4-3"></a>  <span class="dt">seurat_object =</span> s_small3,</span>
 <span id="cb4-4"><a href="#cb4-4"></a>  <span class="dt">cluster_col =</span> <span class="st">"RNA_snn_res.1"</span></span>
 <span id="cb4-5"><a href="#cb4-5"></a>)</span>
 <span id="cb4-6"><a href="#cb4-6"></a></span>
@@ -203,7 +200,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
 </div>
 
       </footer>

@@ -30,7 +30,7 @@ library(clustifyr)
 full_pbmc_matrix <- clustifyrdata::pbmc_matrix
 full_pbmc_meta <- clustifyrdata::pbmc_meta
 new_ref_matrix <- average_clusters(
-  mat = full_pbmc_matrix, 
+  mat = full_pbmc_matrix,
   metadata = full_pbmc_meta$classified, # or use metadata = full_pbmc_meta, cluster_col = "classified"
   if_log = TRUE
 )
@@ -62,13 +62,13 @@ If given additional `assay_name`, output ref will include features from the desi
 new_ref_matrix_v2 <- seurat_ref(
   seurat_object = s_small,
   cluster_col = "res.1",
-  assay_name = c("ADT","ADT2")
+  assay_name = c("ADT", "ADT2")
 )
 
 new_ref_matrix_v3 <- seurat_ref(
   seurat_object = s_small3,
   cluster_col = "RNA_snn_res.1",
-  assay_name = c("ADT","ADT2")
+  assay_name = c("ADT", "ADT2")
 )
 
 tail(new_ref_matrix_v3)
@@ -86,41 +86,42 @@ library(stringr)
 library(recount)
 
 dl_recount <- function(sra_id) {
-  
   if (!file.exists(file.path(sra_id, "rse_gene.Rdata"))) {
     download_study(sra_id)
   }
-  
+
   load(file.path(sra_id, "rse_gene.Rdata"))
-  
+
   # no longer need to downloaded data
   unlink(sra_id, recursive = TRUE)
   rse <- scale_counts(rse_gene)
   read_counts <- assay(rse, "counts")
   gene_ids <- rownames(read_counts)
-  
+
   # get gene symbols, which are stored in rowData
   id2symbol <- data_frame(
     ids = rowData(rse_gene)$gene_id,
     symbols = rowData(rse_gene)$symbol@listData
   ) %>%
-    mutate(symbols = map_chr(symbols, ~.x[1]))
-  
+    mutate(symbols = map_chr(symbols, ~ .x[1]))
+
   # clean up metadata into a dataframe
   print("cleaning up meta")
   mdata <- colData(rse)
   mdata_cols <- lapply(
     mdata$characteristics,
-    function(x){str_match(x, "^([^:]+):")[, 2]}
+    function(x) {
+      str_match(x, "^([^:]+):")[, 2]
+    }
   ) %>%
     unique() %>%
     unlist()
-  
+
   mdata <- data_frame(
-    run =  mdata$run,
+    run = mdata$run,
     all_data = as.list(mdata$characteristics)
   ) %>%
-    mutate(out = purrr::map_chr(all_data, ~str_c(.x, collapse = "::"))) %>%
+    mutate(out = purrr::map_chr(all_data, ~ str_c(.x, collapse = "::"))) %>%
     tidyr::separate(
       out,
       sep = "::",
@@ -131,16 +132,16 @@ dl_recount <- function(sra_id) {
       .vars = vars(-matches("run")),
       .funs = function(x) str_match(x, ": (.+)")[, 2]
     )
-  
+
   # convert ids to symbols
   row_ids_to_symbols <- left_join(data_frame(ids = gene_ids), id2symbol, by = "ids")
-  
-  if(length(gene_ids) != nrow(row_ids_to_symbols)) {
+
+  if (length(gene_ids) != nrow(row_ids_to_symbols)) {
     warning("gene id mapping to symbols produce more or less ids")
   }
-  
+
   row_ids_to_symbols <- filter(row_ids_to_symbols, !is.na(symbols))
-  
+
   out_df <- read_counts %>%
     as.data.frame() %>%
     tibble::rownames_to_column("gene_id") %>%
@@ -148,7 +149,7 @@ dl_recount <- function(sra_id) {
     dplyr::select(-gene_id) %>%
     dplyr::select(symbols, everything()) %>%
     filter(!is.na(symbols))
-  
+
   out_matrix <- tidyr::gather(out_df, library, expr, -symbols) %>%
     group_by(symbols, library) %>%
     summarize(expr = sum(expr)) %>%
@@ -156,7 +157,7 @@ dl_recount <- function(sra_id) {
     as.data.frame() %>%
     tibble::column_to_rownames("symbols") %>%
     as.matrix()
-  
+
   list(
     read_counts = out_matrix,
     meta_data = mdata
@@ -183,27 +184,37 @@ GSE24759 <- read_tsv("GSE24759//GSE24759_series_matrix.txt", skip = 57, col_name
 
 # read array metadata table, remove control probes and missing gene symbols
 GPL4685 <- read_tsv("/Users/rf/microarray/GSE24759/GPL4685-15513.txt", skip = 14) %>%
-  filter(!is.na(`Gene Symbol`), `Sequence Type` != "Control sequence") %>% 
-  separate(`Gene Symbol`, into = "gene_symbol", sep = ' ') %>%
-  select(ID,gene_symbol)
+  filter(!is.na(`Gene Symbol`), `Sequence Type` != "Control sequence") %>%
+  separate(`Gene Symbol`, into = "gene_symbol", sep = " ") %>%
+  select(ID, gene_symbol)
 
 # join data and metadata, collapse gene symbols
-GSE24759 <- inner_join(GSE24759, GPL4685) %>% 
-  select(-ID) %>% 
-  group_by(gene_symbol) %>% 
-  mutate_at(.vars = vars(-gene_symbol), .funs = list(~log2(mean(2^.))))
+GSE24759 <- inner_join(GSE24759, GPL4685) %>%
+  select(-ID) %>%
+  group_by(gene_symbol) %>%
+  mutate_at(.vars = vars(-gene_symbol), .funs = list(~ log2(mean(2^.))))
 
 # convert to matrix, add rownames
-GSE24759_mat <- ungroup(GSE24759) %>% select(-gene_symbol) %>% as.matrix()
+GSE24759_mat <- ungroup(GSE24759) %>%
+  select(-gene_symbol) %>%
+  as.matrix()
 row.names(GSE24759_mat) <- GSE24759$gene_symbol
 
 # merge samples
-ref_hema_microarray <- GSE24759_mat %>% t() %>% as.data.frame() %>% rownames_to_column("sample") %>% mutate(sample = str_remove(sample, ", .*")) %>% group_by(sample) %>% summarise_all(.funs = list(~log2(mean(2^.)))) %>% column_to_rownames("sample") %>% t()
+ref_hema_microarray <- GSE24759_mat %>%
+  t() %>%
+  as.data.frame() %>%
+  rownames_to_column("sample") %>%
+  mutate(sample = str_remove(sample, ", .*")) %>%
+  group_by(sample) %>%
+  summarise_all(.funs = list(~ log2(mean(2^.)))) %>%
+  column_to_rownames("sample") %>%
+  t()
 ```
 
 Essentially, any data in matrix form is accepted by `clustifyR`.
 ```{r microarray2, warning=F, message=F}
-clustifyrdata::ref_hema_microarray[1:5,1:5]
+clustifyrdata::ref_hema_microarray[1:5, 1:5]
 ```
 
 ## Building reference gene list
@@ -215,16 +226,16 @@ clustifyrdata::ref_hema_microarray[1:5,1:5]
 head(pbmc_markers)
 
 # manually enter into dataframe format
-betam <- c("INS", "IGF2", "IAPP","MAFA","NPTX2")
-alpham <- c("GCG", "PDK4","LOXL2","IRX2","GC")
-deltam <- c("SST", "RBP4","HHEX","PCSK1","LEPR")
+betam <- c("INS", "IGF2", "IAPP", "MAFA", "NPTX2")
+alpham <- c("GCG", "PDK4", "LOXL2", "IRX2", "GC")
+deltam <- c("SST", "RBP4", "HHEX", "PCSK1", "LEPR")
 data.frame(alpham, betam, deltam)
 
 # use matrixize_markers function to convert
 mm <- matrixize_markers(
-  marker_df = pbmc_markers, 
-  remove_rp = TRUE, 
-  unique = TRUE, 
+  marker_df = pbmc_markers,
+  remove_rp = TRUE,
+  unique = TRUE,
   n = 10
 )
 head(mm)

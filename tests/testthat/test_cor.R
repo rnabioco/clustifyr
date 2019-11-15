@@ -69,7 +69,6 @@ test_that("run all correlation functions", {
 })
 
 test_that("test bad inputs", {
-
   expect_error(clustify(
     input = pbmc_matrix_small,
     metadata = pbmc_meta,
@@ -151,9 +150,8 @@ test_that("seurat object clustifying", {
 })
 
 test_that("clustify reinserts seurat metadata correctly", {
-
   res <- clustify(s_small,
-                  cbmc_ref,
+    cbmc_ref,
     cluster_col = "res.1",
     seurat_out = TRUE,
     per_cell = TRUE,
@@ -161,7 +159,7 @@ test_that("clustify reinserts seurat metadata correctly", {
   )
 
   res2 <- clustify(s_small,
-                   cbmc_ref,
+    cbmc_ref,
     cluster_col = "res.1",
     seurat_out = TRUE,
     dr = "tsne"
@@ -199,7 +197,6 @@ test_that("seurat3 object clustifying", {
 })
 
 test_that("clustify reinserts seurat3 metadata correctly", {
-
   res <- clustify(s_small3,
     cbmc_ref,
     cluster_col = "RNA_snn_res.1",
@@ -290,7 +287,6 @@ test_that("error for unsupported method", {
 })
 
 test_that("cor throws readable error when mat has 0 rows", {
-
   expect_error(res <- clustify(
     input = pbmc_matrix_small[0, ],
     metadata = pbmc_meta,

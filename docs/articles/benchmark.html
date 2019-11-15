@@ -13,8 +13,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Benchmarking clustifyr">
 <meta property="og:description" content="">
@@ -133,22 +133,22 @@
 <span id="cb1-10"><a href="#cb1-10"></a><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/grep.html">grep</a></span>(<span class="st">"-Lung"</span>, ., <span class="dt">value =</span> <span class="ot">TRUE</span>)</span>
 <span id="cb1-11"><a href="#cb1-11"></a></span>
 <span id="cb1-12"><a href="#cb1-12"></a>tml_ref &lt;-<span class="st"> </span>ref_tabula_muris_drop[, lung_cols]</span>
-<span id="cb1-13"><a href="#cb1-13"></a>tml_ref &lt;-<span class="st"> </span>tml_ref[, <span class="op">-</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">8</span>,<span class="dv">13</span>)]</span>
+<span id="cb1-13"><a href="#cb1-13"></a>tml_ref &lt;-<span class="st"> </span>tml_ref[, <span class="op">-</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">8</span>, <span class="dv">13</span>)]</span>
 <span id="cb1-14"><a href="#cb1-14"></a></span>
 <span id="cb1-15"><a href="#cb1-15"></a></span>
 <span id="cb1-16"><a href="#cb1-16"></a><span class="co"># default with all genes</span></span>
 <span id="cb1-17"><a href="#cb1-17"></a>start &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/proc.time.html">proc.time</a></span>()</span>
 <span id="cb1-18"><a href="#cb1-18"></a></span>
 <span id="cb1-19"><a href="#cb1-19"></a>res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustify.html">clustify</a></span>(</span>
-<span id="cb1-20"><a href="#cb1-20"></a>  <span class="dt">input =</span> l_mat, </span>
-<span id="cb1-21"><a href="#cb1-21"></a>  <span class="dt">ref_mat =</span> tml_ref, </span>
-<span id="cb1-22"><a href="#cb1-22"></a>  <span class="dt">metadata =</span> l_meta, </span>
+<span id="cb1-20"><a href="#cb1-20"></a>  <span class="dt">input =</span> l_mat,</span>
+<span id="cb1-21"><a href="#cb1-21"></a>  <span class="dt">ref_mat =</span> tml_ref,</span>
+<span id="cb1-22"><a href="#cb1-22"></a>  <span class="dt">metadata =</span> l_meta,</span>
 <span id="cb1-23"><a href="#cb1-23"></a>  <span class="dt">cluster_col =</span> <span class="st">"Annotation"</span></span>
 <span id="cb1-24"><a href="#cb1-24"></a>)</span>
 <span id="cb1-25"><a href="#cb1-25"></a></span>
 <span id="cb1-26"><a href="#cb1-26"></a>res_allgenes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cor_to_call.html">cor_to_call</a></span>(</span>
-<span id="cb1-27"><a href="#cb1-27"></a>  <span class="dt">cor_mat =</span> res, </span>
-<span id="cb1-28"><a href="#cb1-28"></a>  <span class="dt">metadata =</span> l_meta, </span>
+<span id="cb1-27"><a href="#cb1-27"></a>  <span class="dt">cor_mat =</span> res,</span>
+<span id="cb1-28"><a href="#cb1-28"></a>  <span class="dt">metadata =</span> l_meta,</span>
 <span id="cb1-29"><a href="#cb1-29"></a>  <span class="dt">cluster_col =</span> <span class="st">"Annotation"</span></span>
 <span id="cb1-30"><a href="#cb1-30"></a>)</span>
 <span id="cb1-31"><a href="#cb1-31"></a></span>
@@ -157,7 +157,7 @@
 <span id="cb1-34"><a href="#cb1-34"></a></span>
 <span id="cb1-35"><a href="#cb1-35"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(end <span class="op">-</span><span class="st"> </span>start)</span>
 <span id="cb1-36"><a href="#cb1-36"></a><span class="co">#&gt;    user  system elapsed </span></span>
-<span id="cb1-37"><a href="#cb1-37"></a><span class="co">#&gt;   1.344   0.506   1.865</span></span>
+<span id="cb1-37"><a href="#cb1-37"></a><span class="co">#&gt;   1.360   0.513   1.926</span></span>
 <span id="cb1-38"><a href="#cb1-38"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(res_allgenes, <span class="dt">n =</span> <span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(res_allgenes))</span>
 <span id="cb1-39"><a href="#cb1-39"></a><span class="co">#&gt; # A tibble: 32 x 3</span></span>
 <span id="cb1-40"><a href="#cb1-40"></a><span class="co">#&gt; # Groups:   Annotation [32]</span></span>
@@ -206,9 +206,9 @@
 <span id="cb2-5"><a href="#cb2-5"></a>start &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/proc.time.html">proc.time</a></span>()</span>
 <span id="cb2-6"><a href="#cb2-6"></a></span>
 <span id="cb2-7"><a href="#cb2-7"></a>res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustify.html">clustify</a></span>(</span>
-<span id="cb2-8"><a href="#cb2-8"></a>  <span class="dt">input =</span> full_pbmc_matrix, </span>
-<span id="cb2-9"><a href="#cb2-9"></a>  <span class="dt">ref_mat =</span> microarray_ref, </span>
-<span id="cb2-10"><a href="#cb2-10"></a>  <span class="dt">metadata =</span> full_pbmc_meta, </span>
+<span id="cb2-8"><a href="#cb2-8"></a>  <span class="dt">input =</span> full_pbmc_matrix,</span>
+<span id="cb2-9"><a href="#cb2-9"></a>  <span class="dt">ref_mat =</span> microarray_ref,</span>
+<span id="cb2-10"><a href="#cb2-10"></a>  <span class="dt">metadata =</span> full_pbmc_meta,</span>
 <span id="cb2-11"><a href="#cb2-11"></a>  <span class="dt">query_genes =</span> pbmc_vargenes[<span class="dv">1</span><span class="op">:</span><span class="dv">500</span>],</span>
 <span id="cb2-12"><a href="#cb2-12"></a>  <span class="dt">cluster_col =</span> <span class="st">"classified"</span></span>
 <span id="cb2-13"><a href="#cb2-13"></a>)</span>
@@ -220,7 +220,7 @@
 <span id="cb2-19"><a href="#cb2-19"></a></span>
 <span id="cb2-20"><a href="#cb2-20"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(end <span class="op">-</span><span class="st"> </span>start)</span>
 <span id="cb2-21"><a href="#cb2-21"></a><span class="co">#&gt;    user  system elapsed </span></span>
-<span id="cb2-22"><a href="#cb2-22"></a><span class="co">#&gt;   0.049   0.004   0.054</span></span>
+<span id="cb2-22"><a href="#cb2-22"></a><span class="co">#&gt;   0.043   0.004   0.046</span></span>
 <span id="cb2-23"><a href="#cb2-23"></a></span>
 <span id="cb2-24"><a href="#cb2-24"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(res2, <span class="dt">n =</span> <span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(res2))</span>
 <span id="cb2-25"><a href="#cb2-25"></a><span class="co">#&gt; # A tibble: 9 x 3</span></span>
@@ -285,7 +285,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
 </div>
 
       </footer>
