@@ -54,8 +54,8 @@ object_loc_lookup
 
 # adding seurat3 locations
 object_loc_lookup$Seurat <- c(
-  expr = "input@assays$RNA@data", 
-  meta = "input@meta.data", 
+  expr = "input@assays$RNA@data",
+  meta = "input@meta.data",
   var = "input@assays$RNA@var.features",
   col = "RNA_snn_res.1"
 )
