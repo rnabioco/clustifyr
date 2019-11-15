@@ -4,9 +4,7 @@
 \name{object_loc_lookup}
 \alias{object_loc_lookup}
 \title{lookup table for single cell object structures}
-\format{dataframe
-\describe{
-}}
+\format{An object of class \code{data.frame} with 4 rows and 6 columns.}
 \source{
 various packages
 }
@@ -16,4 +14,18 @@ object_loc_lookup
 \description{
 lookup table for single cell object structures
 }
+\seealso{
+Other data: 
+\code{\link{cbmc_m}},
+\code{\link{cbmc_ref}},
+\code{\link{downrefs}},
+\code{\link{pbmc_markers_M3Drop}},
+\code{\link{pbmc_markers}},
+\code{\link{pbmc_matrix_small}},
+\code{\link{pbmc_meta}},
+\code{\link{pbmc_vargenes}},
+\code{\link{s_small3}},
+\code{\link{s_small}}
+}
+\concept{data}
 \keyword{datasets}

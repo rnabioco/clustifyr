@@ -4,9 +4,7 @@
 \name{downrefs}
 \alias{downrefs}
 \title{table of references stored in clustifyrdata}
-\format{dataframe
-\describe{
-}}
+\format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 9 rows and 6 columns.}
 \source{
 various packages
 }
@@ -16,4 +14,18 @@ downrefs
 \description{
 table of references stored in clustifyrdata
 }
+\seealso{
+Other data: 
+\code{\link{cbmc_m}},
+\code{\link{cbmc_ref}},
+\code{\link{object_loc_lookup}},
+\code{\link{pbmc_markers_M3Drop}},
+\code{\link{pbmc_markers}},
+\code{\link{pbmc_matrix_small}},
+\code{\link{pbmc_meta}},
+\code{\link{pbmc_vargenes}},
+\code{\link{s_small3}},
+\code{\link{s_small}}
+}
+\concept{data}
 \keyword{datasets}

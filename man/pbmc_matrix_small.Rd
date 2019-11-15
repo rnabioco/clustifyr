@@ -4,11 +4,7 @@
 \name{pbmc_matrix_small}
 \alias{pbmc_matrix_small}
 \title{Matrix of single-cell RNA-seq PBMCs.}
-\format{A sparseMatrix with genes as rows and cells as columns.
-
-\describe{
-}
-R}
+\format{A sparseMatrix with genes as rows and cells as columns.}
 \source{
 (https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html)
 }
@@ -18,4 +14,18 @@ pbmc_matrix_small
 \description{
 Count matrix of 3k pbmcs from Seurat3 tutorial, with only var.features
 }
+\seealso{
+Other data: 
+\code{\link{cbmc_m}},
+\code{\link{cbmc_ref}},
+\code{\link{downrefs}},
+\code{\link{object_loc_lookup}},
+\code{\link{pbmc_markers_M3Drop}},
+\code{\link{pbmc_markers}},
+\code{\link{pbmc_meta}},
+\code{\link{pbmc_vargenes}},
+\code{\link{s_small3}},
+\code{\link{s_small}}
+}
+\concept{data}
 \keyword{datasets}
