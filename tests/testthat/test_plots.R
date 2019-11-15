@@ -214,3 +214,20 @@ test_that("plot_tsne works with alpha_col", {
   )
   expect_true(ggplot2::is.ggplot(g))
 })
+
+test_that("plot_tsne works with group_col", {
+  pbmc_meta2 <- pbmc_meta
+  pbmc_meta2$al <- 0
+  pbmc_meta2$al[1] <- 1 # 1:nrow(pbmc_meta)/nrow(pbmc_meta)
+  pbmc_meta2$b <- pbmc_meta2$classified
+  g2 <- plot_tsne(
+    pbmc_meta2,
+    feature = "classified",
+    alpha_col = "al",
+    group_col = "b",
+    do_legend = FALSE,
+    do_repel = TRUE,
+    do_label = TRUE
+  )
+  expect_true(ggplot2::is.ggplot(g2))
+})

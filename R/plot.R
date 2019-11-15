@@ -11,6 +11,7 @@
 #' defaults to RColorBrewer paired palette
 #' @param pt_size point size
 #' @param alpha_col whether to refer to data column for alpha values
+#' @param group_col group by another column instead of feature, useful for labels
 #' @param scale_limits defaults to min = 0, max = max(data$x),
 #' otherwise a two-element numeric vector indicating min and max to plot
 #' @param do_label whether to label each cluster at median center
@@ -32,6 +33,7 @@ plot_tsne <- function(data,
                       d_cols = NULL,
                       pt_size = 0.25,
                       alpha_col = NULL,
+                      group_col = NULL,
                       scale_limits = NULL,
                       do_label = FALSE,
                       do_legend = TRUE,
@@ -125,7 +127,11 @@ plot_tsne <- function(data,
   }
 
   if (do_label) {
-    centers <- dplyr::group_by(data, !!sym(feature))
+    if (is.null(group_col)) {
+      centers <- dplyr::group_by(data, !!sym(feature))
+    } else {
+      centers <- dplyr::group_by(data, !!sym(feature), !!sym(group_col))
+    }
 
     if (!(is.null(alpha_col))) {
       centers <-
@@ -133,36 +139,51 @@ plot_tsne <- function(data,
           t1 = median(!!dplyr::sym(x)),
           t2 = median(!!dplyr::sym(y)),
           a = median(!!dplyr::sym(alpha_col))
-        )
+        ) %>% dplyr::ungroup()
+
+      if (!(is.null(group_col))) {
+        centers <- dplyr::select(centers, -!!sym(group_col))
+      }
     } else {
       centers <-
         dplyr::summarize(centers,
           t1 = median(!!dplyr::sym(x)),
           t2 = median(!!dplyr::sym(y)),
           a = 1
-        )
+        ) %>% dplyr::ungroup()
+
+      if (!(is.null(group_col))) {
+        centers <- dplyr::select(centers, -!!sym(group_col))
+      }
     }
 
     if (do_repel) {
+      alldata <- dplyr::select(data, !!dplyr::sym(feature), !!dplyr::sym(x), !!dplyr::sym(y))
+      alldata[[1]] <- ""
+      alldata$a <- 0
+      colnames(alldata) <- colnames(centers)
+      alldata <- rbind(alldata, centers)
       p <- p +
         geom_point(
-          data = centers,
+          data = alldata,
           mapping = aes(
             x = !!dplyr::sym("t1"),
             y = !!dplyr::sym("t2")
           ),
-          size = 0,
+          size = 3,
           alpha = 0
         ) +
         ggrepel::geom_text_repel(
-          box.padding = 0.75,
-          data = centers,
+          data = alldata,
           mapping = aes(
             x = !!dplyr::sym("t1"),
             y = !!dplyr::sym("t2"),
             alpha = !!dplyr::sym("a"),
-            label = centers[[feature]]
-          )
+            label = alldata[[feature]]
+          ),
+          point.padding = 0.5,
+          box.padding = 0.5,
+          max.iter = 50000
         )
     } else {
       p <- p +
