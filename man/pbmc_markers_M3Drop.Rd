@@ -4,9 +4,7 @@
 \name{pbmc_markers_M3Drop}
 \alias{pbmc_markers_M3Drop}
 \title{Marker genes identified by M3Drop from single-cell RNA-seq PBMCs.}
-\format{A data frame with 3 variables:
-\describe{
-}}
+\format{A data frame with 3 variables:}
 \source{
 \verb{[pbmc_matrix]} processed by \verb{[M3Drop]}
 }
@@ -16,4 +14,18 @@ pbmc_markers_M3Drop
 \description{
 Selected features of 3k pbmcs from Seurat3 tutorial
 }
+\seealso{
+Other data: 
+\code{\link{cbmc_m}},
+\code{\link{cbmc_ref}},
+\code{\link{downrefs}},
+\code{\link{object_loc_lookup}},
+\code{\link{pbmc_markers}},
+\code{\link{pbmc_matrix_small}},
+\code{\link{pbmc_meta}},
+\code{\link{pbmc_vargenes}},
+\code{\link{s_small3}},
+\code{\link{s_small}}
+}
+\concept{data}
 \keyword{datasets}
