@@ -4,9 +4,7 @@
 \name{pbmc_meta}
 \alias{pbmc_meta}
 \title{Meta-data for single-cell RNA-seq PBMCs.}
-\format{A data frame with 5 variables:
-\describe{
-}}
+\format{An object of class \code{data.frame} with 2638 rows and 9 columns.}
 \source{
 \verb{[pbmc_matrix]} processed by Seurat
 }
@@ -16,4 +14,18 @@ pbmc_meta
 \description{
 Metadata, including umap, of 3k pbmcs from Seurat3 tutorial
 }
+\seealso{
+Other data: 
+\code{\link{cbmc_m}},
+\code{\link{cbmc_ref}},
+\code{\link{downrefs}},
+\code{\link{object_loc_lookup}},
+\code{\link{pbmc_markers_M3Drop}},
+\code{\link{pbmc_markers}},
+\code{\link{pbmc_matrix_small}},
+\code{\link{pbmc_vargenes}},
+\code{\link{s_small3}},
+\code{\link{s_small}}
+}
+\concept{data}
 \keyword{datasets}
