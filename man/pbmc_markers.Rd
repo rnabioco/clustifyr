@@ -4,9 +4,7 @@
 \name{pbmc_markers}
 \alias{pbmc_markers}
 \title{Marker genes identified by Seurat from single-cell RNA-seq PBMCs.}
-\format{A data frame with 7 variables:
-\describe{
-}}
+\format{An object of class \code{data.frame} with 2304 rows and 7 columns.}
 \source{
 \verb{[pbmc_matrix]} processed by Seurat
 }
@@ -16,4 +14,18 @@ pbmc_markers
 \description{
 Dataframe of markers from Seurat FindAllMarkers function
 }
+\seealso{
+Other data: 
+\code{\link{cbmc_m}},
+\code{\link{cbmc_ref}},
+\code{\link{downrefs}},
+\code{\link{object_loc_lookup}},
+\code{\link{pbmc_markers_M3Drop}},
+\code{\link{pbmc_matrix_small}},
+\code{\link{pbmc_meta}},
+\code{\link{pbmc_vargenes}},
+\code{\link{s_small3}},
+\code{\link{s_small}}
+}
+\concept{data}
 \keyword{datasets}
