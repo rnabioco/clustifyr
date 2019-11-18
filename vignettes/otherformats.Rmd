@@ -40,9 +40,9 @@ res <- clustify(
 res2 <- clustify_lists(
   input = s_small,
   marker = pbmc_markers,
-  marker_inmatrix = F,
+  marker_inmatrix = FALSE,
   cluster_col = "res.1",
-  seurat_out = F
+  seurat_out = FALSE
 )
 ```
 
