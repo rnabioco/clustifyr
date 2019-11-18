@@ -78,7 +78,7 @@ tail(new_ref_matrix_v3)
 
 Bulk RNA-Seq data can be obtained from any input source; in this example we will obtain a dataset from the [recount2](https://jhubiostatistics.shinyapps.io/recount/) database. This database provides > 2000 human RNA-Seq experiments that have been processed using a consistent pipeline. We have written a wrapper function to download a count matrix from `recount2`, given an SRA ID. 
 
-```{r recount, eval = FALSE}
+```{"recount example"}
 library(dplyr)
 library(purrr)
 library(tidyr)
@@ -174,7 +174,7 @@ gtex_data$meta_data[1:5, ]
 
 `clustifyr` works with microarray data-derived gene expression matrix as well (see Benchmark page). An example of generating a matrix for sorted immune cell type can be found below. The matrix can be found at `clustifyrdata::hema_microarray_matrix`
 
-```{r microarray, eval = FALSE}
+```{"microarray example"}
 library(tidyverse)
 # read series matrix for column names
 GSE24759 <- read_tsv("GSE24759/GSE24759_series_matrix.txt", skip = 25, n_max = 1)
@@ -265,7 +265,7 @@ More reference data, including tabula muris, and code used to generate them are 
 
 Also see list for individual downloads at https://rnabioco.github.io/clustifyr/articles/download_refs.html
 
-```{r, eval = F}
+```{"Installation"}
 # install.packages("devtools")
 devtools::install_github("rnabioco/clustifyrdata")
 ```

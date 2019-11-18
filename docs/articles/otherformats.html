@@ -109,7 +109,7 @@
     <div class="page-header toc-ignore">
       <h1>Support for various single cell object formats</h1>
             
-            <h4 class="date">2019-11-17</h4>
+            <h4 class="date">2019-11-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyr/blob/master/vignettes/otherformats.Rmd"><code>vignettes/otherformats.Rmd</code></a></small>
       <div class="hidden name"><code>otherformats.Rmd</code></div>
@@ -180,13 +180,13 @@
 <span id="cb2-34"><a href="#cb2-34"></a>  <span class="dt">col =</span> <span class="st">"RNA_snn_res.1"</span></span>
 <span id="cb2-35"><a href="#cb2-35"></a>)</span></code></pre></div>
 <p>For example, sample code for <code>scrunchy</code> is as easy as:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustify_nudge.html">clustify_nudge</a></span>(</span>
-<span id="cb3-2"><a href="#cb3-2"></a>  <span class="dt">input =</span> fsce_small,</span>
-<span id="cb3-3"><a href="#cb3-3"></a>  <span class="dt">ref_mat =</span> cbmc_ref,</span>
-<span id="cb3-4"><a href="#cb3-4"></a>  <span class="dt">marker =</span> cbmc_m,</span>
-<span id="cb3-5"><a href="#cb3-5"></a>  <span class="dt">query_genes =</span> pbmc_vargenes,</span>
-<span id="cb3-6"><a href="#cb3-6"></a>  <span class="dt">cluster_col =</span> <span class="st">"k_cluster"</span></span>
-<span id="cb3-7"><a href="#cb3-7"></a>)</span></code></pre></div>
+<pre class='{"example"}'><code>res &lt;- clustify_nudge(
+  input = fsce_small,
+  ref_mat = cbmc_ref,
+  marker = cbmc_m,
+  query_genes = pbmc_vargenes,
+  cluster_col = "k_cluster"
+)</code></pre>
 </div>
 <div id="making-new-references-from-objects" class="section level2">
 <h2 class="hasAnchor">

@@ -187,13 +187,13 @@
     <loc>http://rnabioco.github.io/clustifyr/reference/plot_cor_heatmap.html</loc>
   </url>
   <url>
+    <loc>http://rnabioco.github.io/clustifyr/reference/plot_dims.html</loc>
+  </url>
+  <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/plot_gene.html</loc>
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/plot_pathway_gsea.html</loc>
-  </url>
-  <url>
-    <loc>http://rnabioco.github.io/clustifyr/reference/plot_tsne.html</loc>
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/pos_neg_marker.html</loc>

@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 
 ## Plotting tSNE and UMAP results
 
-`clustifyr` provides several functions to plot tSNE or UMAP results. The `plot_tsne()` function will plot tSNE or UMAP data using a meta.data table and can color the cells based on cluster identity.
+`clustifyr` provides several functions to plot tSNE or UMAP results. The `plot_dims()` function will plot tSNE or UMAP data using a meta.data table and can color the cells based on cluster identity.
 
 ```{r "Create tSNE", fig.height = 8, fig.width = 10}
 library(clustifyr)
@@ -37,7 +37,7 @@ full_pbmc_matrix[1:3, 1:3]
 full_pbmc_meta[1:5, ]
 
 # Create tSNE and color cells based on cluster ID
-plot_tsne(
+plot_dims(
   x = "UMAP_1", # name of column in the meta.data containing the data to plot on x-axis
   y = "UMAP_2", # name of column in the meta.data containing the data to plot on y-axis
   data = full_pbmc_meta, # meta.data table containing cluster assignments for each cell
@@ -156,7 +156,3 @@ plot_best_call(
 ## Plotting other attributes from the meta.data table 
 
 Visualization of other attributes shared in the metadata between ref and query by `plot_cols`, such as nGene, nUMI, mt_percentage, as another way of identity confirmation after `clustify`. Certain cell types have distinct patterns, more genes detected, for example.
-
-
-
-

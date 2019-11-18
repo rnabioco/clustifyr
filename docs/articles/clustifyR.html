@@ -109,7 +109,7 @@
     <div class="page-header toc-ignore">
       <h1>Introduction to clustifyr</h1>
             
-            <h4 class="date">2019-11-17</h4>
+            <h4 class="date">2019-11-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyr/blob/master/vignettes/clustifyR.Rmd"><code>vignettes/clustifyR.Rmd</code></a></small>
       <div class="hidden name"><code>clustifyR.Rmd</code></div>
@@ -227,7 +227,7 @@ BiocManager::install("clustifyr")</a></code></pre>
 <span id="cb5-12"><a href="#cb5-12"></a>)</span></code></pre></div>
 <p><img src="clustifyR_files/figure-html/Overlay%20corr%20coefficients%20on%20UMAP-1.png" width="864" style="display: block; margin: auto;"></p>
 <p><br></p>
-<p>The <code><a href="../reference/plot_best_call.html">plot_best_call()</a></code> function can be used to label each cluster with the cell type that gives the highest corelation coefficient. Using the <code><a href="../reference/plot_tsne.html">plot_tsne()</a></code> function, we can also plot the known identities of each cluster, which were stored in the “classified” column of the meta.data table. The plots below show that the highest correlations between the reference RNA-seq data and the 10x Genomics scRNA-seq dataset are restricted to the correct cell clusters.</p>
+<p>The <code><a href="../reference/plot_best_call.html">plot_best_call()</a></code> function can be used to label each cluster with the cell type that gives the highest corelation coefficient. Using the <code><a href="../reference/plot_dims.html">plot_dims()</a></code> function, we can also plot the known identities of each cluster, which were stored in the “classified” column of the meta.data table. The plots below show that the highest correlations between the reference RNA-seq data and the 10x Genomics scRNA-seq dataset are restricted to the correct cell clusters.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># Label clusters with clustifyr cell identities</span></span>
 <span id="cb6-2"><a href="#cb6-2"></a>clustifyr_types &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plot_best_call.html">plot_best_call</a></span>(</span>
 <span id="cb6-3"><a href="#cb6-3"></a>  <span class="dt">cor_mat =</span> res,          <span class="co"># matrix of correlation coefficients from clustifyr()</span></span>
@@ -239,7 +239,7 @@ BiocManager::install("clustifyr")</a></code></pre>
 <span id="cb6-9"><a href="#cb6-9"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"clustifyr cell types"</span>)</span>
 <span id="cb6-10"><a href="#cb6-10"></a></span>
 <span id="cb6-11"><a href="#cb6-11"></a><span class="co"># Compare clustifyr results with known cell identities</span></span>
-<span id="cb6-12"><a href="#cb6-12"></a>known_types &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plot_tsne.html">plot_tsne</a></span>(</span>
+<span id="cb6-12"><a href="#cb6-12"></a>known_types &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plot_dims.html">plot_dims</a></span>(</span>
 <span id="cb6-13"><a href="#cb6-13"></a>  <span class="dt">data =</span> pbmc_meta,       <span class="co"># meta.data table containing UMAP or tSNE data</span></span>
 <span id="cb6-14"><a href="#cb6-14"></a>  <span class="dt">feature =</span> <span class="st">"classified"</span>, <span class="co"># name of column in meta.data to color clusters by</span></span>
 <span id="cb6-15"><a href="#cb6-15"></a>  <span class="dt">do_label =</span> <span class="ot">TRUE</span>,        <span class="co"># should the feature label be shown on each cluster?</span></span>

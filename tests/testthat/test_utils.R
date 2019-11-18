@@ -547,16 +547,16 @@ test_that("clustify_nudge autoconverts when markers are in matrix", {
 
 test_that("overcluster_test works with ngenes option", {
   g <- overcluster_test(
-    pbmc_matrix_small,
-    pbmc_meta,
+    pbmc_matrix_small[ ,1:100],
+    pbmc_meta[1:100, ],
     cbmc_ref,
     cluster_col = "classified",
     x_col = "UMAP_1",
     y_col = "UMAP_2"
   )
   g2 <- overcluster_test(
-    pbmc_matrix_small,
-    pbmc_meta,
+    pbmc_matrix_small[ ,1:100],
+    pbmc_meta[1:100, ],
     cbmc_ref,
     cluster_col = "classified",
     ngenes = 100,
@@ -568,8 +568,8 @@ test_that("overcluster_test works with ngenes option", {
 
 test_that("overcluster_test works with defined other cluster column", {
   g <- overcluster_test(
-    pbmc_matrix_small,
-    pbmc_meta,
+    pbmc_matrix_small[ ,1:100],
+    pbmc_meta[1:100, ],
     cbmc_ref,
     cluster_col = "seurat_clusters",
     newclustering = "classified",

@@ -13,7 +13,7 @@ plot_call(cor_mat, metadata, data_to_plot = colnames(cor_mat), ...)
 
 \item{data_to_plot}{colname of data to plot, defaults to all}
 
-\item{...}{passed to plot_tsne}
+\item{...}{passed to plot_dims}
 }
 \value{
 list of ggplot object, cells projected by dr, colored by cell type classification

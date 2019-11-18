@@ -1323,7 +1323,7 @@ overcluster_test <- function(expr,
     cluster_col = "new_clusters",
     seurat_out = FALSE
   )
-  o1 <- plot_tsne(
+  o1 <- plot_dims(
     metadata,
     feature = cluster_col,
     x = x_col,
@@ -1331,7 +1331,7 @@ overcluster_test <- function(expr,
     do_label = FALSE,
     do_legend = FALSE
   )
-  o2 <- plot_tsne(
+  o2 <- plot_dims(
     metadata,
     feature = "new_clusters",
     x = x_col,

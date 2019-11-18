@@ -109,7 +109,7 @@
     <div class="page-header toc-ignore">
       <h1>Visualization of clustifyr results</h1>
             
-            <h4 class="date">2019-11-17</h4>
+            <h4 class="date">2019-11-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyr/blob/master/vignettes/visualizations.Rmd"><code>vignettes/visualizations.Rmd</code></a></small>
       <div class="hidden name"><code>visualizations.Rmd</code></div>
@@ -121,7 +121,7 @@
 <div id="plotting-tsne-and-umap-results" class="section level2">
 <h2 class="hasAnchor">
 <a href="#plotting-tsne-and-umap-results" class="anchor"></a>Plotting tSNE and UMAP results</h2>
-<p><code>clustifyr</code> provides several functions to plot tSNE or UMAP results. The <code><a href="../reference/plot_tsne.html">plot_tsne()</a></code> function will plot tSNE or UMAP data using a meta.data table and can color the cells based on cluster identity.</p>
+<p><code>clustifyr</code> provides several functions to plot tSNE or UMAP results. The <code><a href="../reference/plot_dims.html">plot_dims()</a></code> function will plot tSNE or UMAP data using a meta.data table and can color the cells based on cluster identity.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(clustifyr)</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyverse)</span>
 <span id="cb1-3"><a href="#cb1-3"></a>full_pbmc_matrix &lt;-<span class="st"> </span>clustifyrdata<span class="op">::</span>pbmc_matrix</span>
@@ -150,7 +150,7 @@
 <span id="cb1-26"><a href="#cb1-26"></a><span class="co">#&gt; AAACCGTGTATGCG               6           NK   3.576498 -8.9778881</span></span>
 <span id="cb1-27"><a href="#cb1-27"></a></span>
 <span id="cb1-28"><a href="#cb1-28"></a><span class="co"># Create tSNE and color cells based on cluster ID</span></span>
-<span id="cb1-29"><a href="#cb1-29"></a><span class="kw"><a href="../reference/plot_tsne.html">plot_tsne</a></span>(</span>
+<span id="cb1-29"><a href="#cb1-29"></a><span class="kw"><a href="../reference/plot_dims.html">plot_dims</a></span>(</span>
 <span id="cb1-30"><a href="#cb1-30"></a>  <span class="dt">x =</span> <span class="st">"UMAP_1"</span>, <span class="co"># name of column in the meta.data containing the data to plot on x-axis</span></span>
 <span id="cb1-31"><a href="#cb1-31"></a>  <span class="dt">y =</span> <span class="st">"UMAP_2"</span>, <span class="co"># name of column in the meta.data containing the data to plot on y-axis</span></span>
 <span id="cb1-32"><a href="#cb1-32"></a>  <span class="dt">data =</span> full_pbmc_meta, <span class="co"># meta.data table containing cluster assignments for each cell</span></span>

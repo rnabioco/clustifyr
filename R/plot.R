@@ -19,12 +19,12 @@
 #' @param do_repel whether to use ggrepel on labels
 #' @return ggplot object, cells projected by dr, colored by feature
 #' @examples
-#' plot_tsne(
+#' plot_dims(
 #'   pbmc_meta,
 #'   feature = "classified"
 #' )
 #' @export
-plot_tsne <- function(data,
+plot_dims <- function(data,
                       x = "UMAP_1",
                       y = "UMAP_2",
                       feature = NULL,
@@ -139,7 +139,8 @@ plot_tsne <- function(data,
           t1 = median(!!dplyr::sym(x)),
           t2 = median(!!dplyr::sym(y)),
           a = median(!!dplyr::sym(alpha_col))
-        ) %>% dplyr::ungroup()
+        )
+      centers <- dplyr::ungroup(centers)
 
       if (!(is.null(group_col))) {
         centers <- dplyr::select(centers, -!!sym(group_col))
@@ -150,7 +151,8 @@ plot_tsne <- function(data,
           t1 = median(!!dplyr::sym(x)),
           t2 = median(!!dplyr::sym(y)),
           a = 1
-        ) %>% dplyr::ungroup()
+        )
+      centers <- dplyr::ungroup(centers)
 
       if (!(is.null(group_col))) {
         centers <- dplyr::select(centers, -!!sym(group_col))
@@ -187,23 +189,14 @@ plot_tsne <- function(data,
         )
     } else {
       p <- p +
-        geom_point(
-          data = centers,
-          mapping = aes(
-            x = !!dplyr::sym("t1"),
-            y = !!dplyr::sym("t2")
-          ),
-          size = 0,
-          alpha = 0
-        ) +
         geom_text(
           data = centers,
           mapping = aes(
             x = !!dplyr::sym("t1"),
             y = !!dplyr::sym("t2"),
-            alpha = !!dplyr::sym("a"),
             label = centers[[feature]]
-          )
+          ),
+          alpha = centers[["a"]]
         )
     }
   }
@@ -263,7 +256,7 @@ pretty_palette_ramp_d <-
 #' @param scale_legends if TRUE scale all legends to maximum values in entire
 #' correlation matrix. if FALSE scale legends to maximum for each plot. A
 #' two-element numeric vector can also be passed to supply custom values i.e. c(0, 1)
-#' @param ... passed to plot_tsne
+#' @param ... passed to plot_dims
 #' @return list of ggplot objects, cells projected by dr, colored by cor values
 #' @examples
 #' res <- clustify(
@@ -351,7 +344,7 @@ plot_cor <- function(cor_mat,
   for (i in seq_along(data_to_plot)) {
     tmp_data <- dplyr::filter(plt_data, !!dplyr::sym("ref_cluster") == data_to_plot[i])
 
-    plts[[i]] <- plot_tsne(
+    plts[[i]] <- plot_dims(
       data = tmp_data,
       x = x,
       y = y,
@@ -372,7 +365,7 @@ plot_cor <- function(cor_mat,
 #' @param genes gene(s) to color tSNE or umap
 #' @param cell_col column name in metadata containing cell ids, defaults
 #' to rownames if not supplied
-#' @param ... additional arguments passed to `[clustifyr::plot_tsne()]`
+#' @param ... additional arguments passed to `[clustifyr::plot_dims()]`
 #' @return list of ggplot object, cells projected by dr, colored by gene expression
 #' @examples
 #' genes <- c(
@@ -429,7 +422,7 @@ plot_gene <- function(expr_mat,
   lapply(
     genes_to_plot,
     function(gene) {
-      plot_tsne(plt_dat,
+      plot_dims(plt_dat,
         feature = gene,
         legend_name = gene,
         ...
@@ -443,7 +436,7 @@ plot_gene <- function(expr_mat,
 #' @param cor_mat input similarity matrix
 #' @param metadata input metadata with tsne or umap coordinates and cluster ids
 #' @param data_to_plot colname of data to plot, defaults to all
-#' @param ... passed to plot_tsne
+#' @param ... passed to plot_dims
 #' @return list of ggplot object, cells projected by dr, colored by cell type classification
 #' @examples
 #' res <- clustify(
@@ -493,7 +486,7 @@ plot_call <- function(cor_mat,
 #' @param y y variable
 #' @param plot_r whether to include second plot of cor eff for best call
 #' @param per_cell whether the cor_mat was generate per cell or per cluster
-#' @param ... passed to plot_tsne
+#' @param ... passed to plot_dims
 #' @return ggplot object, cells projected by dr, colored by cell type classification
 #' @examples
 #' res <- clustify(
@@ -550,7 +543,7 @@ plot_best_call <- function(cor_mat,
     )
   }
 
-  g <- plot_tsne(df_temp_full,
+  g <- plot_dims(df_temp_full,
     feature = "type",
     x = x,
     y = y,
@@ -560,7 +553,7 @@ plot_best_call <- function(cor_mat,
   if (plot_r) {
     l <- list()
     l[[1]] <- g
-    l[[2]] <- plot_tsne(df_temp_full,
+    l[[2]] <- plot_dims(df_temp_full,
       feature = "r",
       x = x,
       y = y,

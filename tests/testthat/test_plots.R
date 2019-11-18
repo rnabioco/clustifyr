@@ -22,6 +22,7 @@ test_that("plots can be generated", {
     pbmc_meta,
     cluster_col = "classified"
   )
+  plts2 <- plot_dims(pbmc_meta)
   expect_true(ggplot2::is.ggplot(plts))
 })
 
@@ -32,9 +33,9 @@ test_that("plot_best_call warns about colnames", {
 })
 
 test_that("call plots can be generated", {
-  plts <- plot_cor(res,
+  plts <- plot_cor(
+    res,
     pbmc_meta,
-    data_to_plot = colnames(res)[1:2],
     cluster_col = "classified"
   )
 
@@ -194,17 +195,17 @@ test_that("plot_call works on defaults", {
   expect_true(ggplot2::is.ggplot(g[[1]]))
 })
 
-test_that("plot_tsne works with alpha_col", {
+test_that("plot_dims works with alpha_col", {
   pbmc_meta2 <- pbmc_meta
   pbmc_meta2$al <- 0
-  pbmc_meta2$al[1] <- 1 # 1:nrow(pbmc_meta)/nrow(pbmc_meta)
-  g <- plot_tsne(
+  pbmc_meta2$al[1] <- 1
+  g <- plot_dims(
     pbmc_meta2,
     feature = "classified",
     alpha_col = "al",
     do_legend = FALSE
   )
-  g2 <- plot_tsne(
+  g2 <- plot_dims(
     pbmc_meta2,
     feature = "classified",
     alpha_col = "al",
@@ -215,12 +216,21 @@ test_that("plot_tsne works with alpha_col", {
   expect_true(ggplot2::is.ggplot(g))
 })
 
-test_that("plot_tsne works with group_col", {
+test_that("plot_dims works with group_col", {
   pbmc_meta2 <- pbmc_meta
-  pbmc_meta2$al <- 0
-  pbmc_meta2$al[1] <- 1 # 1:nrow(pbmc_meta)/nrow(pbmc_meta)
+  pbmc_meta2$al <- 1
+  pbmc_meta2$al[1:1500] <- 0
   pbmc_meta2$b <- pbmc_meta2$classified
-  g2 <- plot_tsne(
+  g <- plot_dims(
+    pbmc_meta2,
+    feature = "classified",
+    group_col = "b",
+    do_legend = FALSE,
+    do_repel = TRUE,
+    do_label = FALSE
+  )
+
+  g2 <- plot_dims(
     pbmc_meta2,
     feature = "classified",
     alpha_col = "al",

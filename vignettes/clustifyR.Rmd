@@ -123,7 +123,7 @@ plot_grid(
 
 <br>
 
-The `plot_best_call()` function can be used to label each cluster with the cell type that gives the highest corelation coefficient. Using the `plot_tsne()` function, we can also plot the known identities of each cluster, which were stored in the "classified" column of the meta.data table. The plots below show that the highest correlations between the reference RNA-seq data and the 10x Genomics scRNA-seq dataset are restricted to the correct cell clusters.
+The `plot_best_call()` function can be used to label each cluster with the cell type that gives the highest corelation coefficient. Using the `plot_dims()` function, we can also plot the known identities of each cluster, which were stored in the "classified" column of the meta.data table. The plots below show that the highest correlations between the reference RNA-seq data and the 10x Genomics scRNA-seq dataset are restricted to the correct cell clusters.
 
 ```{r "Label clusters", fig.height = 5.5, fig.width = 12}
 # Label clusters with clustifyr cell identities
@@ -137,7 +137,7 @@ clustifyr_types <- plot_best_call(
   ggtitle("clustifyr cell types")
 
 # Compare clustifyr results with known cell identities
-known_types <- plot_tsne(
+known_types <- plot_dims(
   data = pbmc_meta,       # meta.data table containing UMAP or tSNE data
   feature = "classified", # name of column in meta.data to color clusters by
   do_label = TRUE,        # should the feature label be shown on each cluster?

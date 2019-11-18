@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot best calls for each cluster on a tSNE or umap — plot_best_call • clustifyr</title>
+<title>Plot a tSNE or umap colored by feature. — plot_dims • clustifyr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,8 +42,8 @@
 
 
 
-<meta property="og:title" content="Plot best calls for each cluster on a tSNE or umap — plot_best_call" />
-<meta property="og:description" content="Plot best calls for each cluster on a tSNE or umap" />
+<meta property="og:title" content="Plot a tSNE or umap colored by feature. — plot_dims" />
+<meta property="og:description" content="Plot a tSNE or umap colored by feature." />
 <meta property="og:image" content="http://rnabioco.github.io/clustifyr/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -146,50 +146,38 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot best calls for each cluster on a tSNE or umap</h1>
+    <h1>Plot a tSNE or umap colored by feature.</h1>
     <small class="dont-index">Source: <a href='https://github.com/rnabioco/clustifyr/blob/master/R/plot.R'><code>R/plot.R</code></a></small>
-    <div class="hidden name"><code>plot_best_call.Rd</code></div>
+    <div class="hidden name"><code>plot_dims.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Plot best calls for each cluster on a tSNE or umap</p>
+    <p>Plot a tSNE or umap colored by feature.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plot_best_call</span>(
-  <span class='no'>cor_mat</span>,
-  <span class='no'>metadata</span>,
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>,
-  <span class='kw'>collapse_to_cluster</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+    <pre class="usage"><span class='fu'>plot_dims</span>(
+  <span class='no'>data</span>,
   <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"UMAP_1"</span>,
   <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"UMAP_2"</span>,
-  <span class='kw'>plot_r</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
+  <span class='kw'>feature</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>legend_name</span> <span class='kw'>=</span> <span class='st'>""</span>,
+  <span class='kw'>c_cols</span> <span class='kw'>=</span> <span class='no'>pretty_palette2</span>,
+  <span class='kw'>d_cols</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>pt_size</span> <span class='kw'>=</span> <span class='fl'>0.25</span>,
+  <span class='kw'>alpha_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>group_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>scale_limits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>do_label</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>do_legend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>do_repel</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>cor_mat</th>
-      <td><p>input similarity matrix</p></td>
-    </tr>
-    <tr>
-      <th>metadata</th>
-      <td><p>input metadata with tsne or umap coordinates and cluster ids</p></td>
-    </tr>
-    <tr>
-      <th>cluster_col</th>
-      <td><p>metadata column, can be cluster or cellid</p></td>
-    </tr>
-    <tr>
-      <th>collapse_to_cluster</th>
-      <td><p>if a column name is provided, takes the most frequent call of entire cluster to color in plot</p></td>
-    </tr>
-    <tr>
-      <th>threshold</th>
-      <td><p>minimum correlation coefficent cutoff for calling clusters</p></td>
+      <th>data</th>
+      <td><p>input data</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -200,39 +188,63 @@
       <td><p>y variable</p></td>
     </tr>
     <tr>
-      <th>plot_r</th>
-      <td><p>whether to include second plot of cor eff for best call</p></td>
+      <th>feature</th>
+      <td><p>feature to color by</p></td>
     </tr>
     <tr>
-      <th>per_cell</th>
-      <td><p>whether the cor_mat was generate per cell or per cluster</p></td>
+      <th>legend_name</th>
+      <td><p>legend name to display, defaults to no name</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>passed to plot_dims</p></td>
+      <th>c_cols</th>
+      <td><p>character vector of colors to build color gradient
+for continuous values, defaults to <code><a href='pretty_palette.html'>clustifyr::pretty_palette</a></code></p></td>
+    </tr>
+    <tr>
+      <th>d_cols</th>
+      <td><p>character vector of colors for discrete values.
+defaults to RColorBrewer paired palette</p></td>
+    </tr>
+    <tr>
+      <th>pt_size</th>
+      <td><p>point size</p></td>
+    </tr>
+    <tr>
+      <th>alpha_col</th>
+      <td><p>whether to refer to data column for alpha values</p></td>
+    </tr>
+    <tr>
+      <th>group_col</th>
+      <td><p>group by another column instead of feature, useful for labels</p></td>
+    </tr>
+    <tr>
+      <th>scale_limits</th>
+      <td><p>defaults to min = 0, max = max(data$x),
+otherwise a two-element numeric vector indicating min and max to plot</p></td>
+    </tr>
+    <tr>
+      <th>do_label</th>
+      <td><p>whether to label each cluster at median center</p></td>
+    </tr>
+    <tr>
+      <th>do_legend</th>
+      <td><p>whether to draw legend</p></td>
+    </tr>
+    <tr>
+      <th>do_repel</th>
+      <td><p>whether to use ggrepel on labels</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>ggplot object, cells projected by dr, colored by cell type classification</p>
+    <p>ggplot object, cells projected by dr, colored by feature</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span>(
-  <span class='kw'>input</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
-  <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
-  <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>cbmc_ref</span>,
-  <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='no'>pbmc_vargenes</span>,
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>
-)
-
-<span class='no'>plts</span> <span class='kw'>&lt;-</span> <span class='fu'>plot_best_call</span>(
-  <span class='kw'>cor_mat</span> <span class='kw'>=</span> <span class='no'>res</span>,
-  <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>
-)
-
-<span class='no'>plts</span></div><div class='img'><img src='plot_best_call-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>plot_dims</span>(
+  <span class='no'>pbmc_meta</span>,
+  <span class='kw'>feature</span> <span class='kw'>=</span> <span class='st'>"classified"</span>
+)</div><div class='img'><img src='plot_dims-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

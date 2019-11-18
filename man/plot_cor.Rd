@@ -35,7 +35,7 @@ defaults to "UMAP_2".}
 correlation matrix. if FALSE scale legends to maximum for each plot. A
 two-element numeric vector can also be passed to supply custom values i.e. c(0, 1)}
 
-\item{...}{passed to plot_tsne}
+\item{...}{passed to plot_dims}
 }
 \value{
 list of ggplot objects, cells projected by dr, colored by cor values

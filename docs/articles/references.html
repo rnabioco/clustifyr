@@ -109,7 +109,7 @@
     <div class="page-header toc-ignore">
       <h1>Reference building for clustifyr</h1>
             
-            <h4 class="date">2019-11-17</h4>
+            <h4 class="date">2019-11-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyr/blob/master/vignettes/references.Rmd"><code>vignettes/references.Rmd</code></a></small>
       <div class="hidden name"><code>references.Rmd</code></div>
@@ -193,201 +193,128 @@
 <h2 class="hasAnchor">
 <a href="#building-reference-matrix-from-recount2" class="anchor"></a>Building reference matrix from Recount2</h2>
 <p>Bulk RNA-Seq data can be obtained from any input source; in this example we will obtain a dataset from the <a href="https://jhubiostatistics.shinyapps.io/recount/">recount2</a> database. This database provides &gt; 2000 human RNA-Seq experiments that have been processed using a consistent pipeline. We have written a wrapper function to download a count matrix from <code>recount2</code>, given an SRA ID.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(purrr)</span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyr)</span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(stringr)</span>
-<span id="cb4-5"><a href="#cb4-5"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(recount)</span>
-<span id="cb4-6"><a href="#cb4-6"></a></span>
-<span id="cb4-7"><a href="#cb4-7"></a>dl_recount &lt;-<span class="st"> </span><span class="cf">function</span>(sra_id) {</span>
-<span id="cb4-8"><a href="#cb4-8"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/files.html">file.exists</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(sra_id, <span class="st">"rse_gene.Rdata"</span>))) {</span>
-<span id="cb4-9"><a href="#cb4-9"></a>    <span class="kw">download_study</span>(sra_id)</span>
-<span id="cb4-10"><a href="#cb4-10"></a>  }</span>
-<span id="cb4-11"><a href="#cb4-11"></a></span>
-<span id="cb4-12"><a href="#cb4-12"></a>  <span class="kw"><a href="https://rdrr.io/r/base/load.html">load</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(sra_id, <span class="st">"rse_gene.Rdata"</span>))</span>
-<span id="cb4-13"><a href="#cb4-13"></a></span>
-<span id="cb4-14"><a href="#cb4-14"></a>  <span class="co"># no longer need to downloaded data</span></span>
-<span id="cb4-15"><a href="#cb4-15"></a>  <span class="kw"><a href="https://rdrr.io/r/base/unlink.html">unlink</a></span>(sra_id, <span class="dt">recursive =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb4-16"><a href="#cb4-16"></a>  rse &lt;-<span class="st"> </span><span class="kw">scale_counts</span>(rse_gene)</span>
-<span id="cb4-17"><a href="#cb4-17"></a>  read_counts &lt;-<span class="st"> </span><span class="kw">assay</span>(rse, <span class="st">"counts"</span>)</span>
-<span id="cb4-18"><a href="#cb4-18"></a>  gene_ids &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(read_counts)</span>
-<span id="cb4-19"><a href="#cb4-19"></a></span>
-<span id="cb4-20"><a href="#cb4-20"></a>  <span class="co"># get gene symbols, which are stored in rowData</span></span>
-<span id="cb4-21"><a href="#cb4-21"></a>  id2symbol &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">data_frame</a></span>(</span>
-<span id="cb4-22"><a href="#cb4-22"></a>    <span class="dt">ids =</span> <span class="kw">rowData</span>(rse_gene)<span class="op">$</span>gene_id,</span>
-<span id="cb4-23"><a href="#cb4-23"></a>    <span class="dt">symbols =</span> <span class="kw">rowData</span>(rse_gene)<span class="op">$</span>symbol<span class="op">@</span>listData</span>
-<span id="cb4-24"><a href="#cb4-24"></a>  ) <span class="op">%&gt;%</span></span>
-<span id="cb4-25"><a href="#cb4-25"></a><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">symbols =</span> <span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span>(symbols, <span class="op">~</span><span class="st"> </span>.x[<span class="dv">1</span>]))</span>
-<span id="cb4-26"><a href="#cb4-26"></a></span>
-<span id="cb4-27"><a href="#cb4-27"></a>  <span class="co"># clean up metadata into a dataframe</span></span>
-<span id="cb4-28"><a href="#cb4-28"></a>  <span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="st">"cleaning up meta"</span>)</span>
-<span id="cb4-29"><a href="#cb4-29"></a>  mdata &lt;-<span class="st"> </span><span class="kw">colData</span>(rse)</span>
-<span id="cb4-30"><a href="#cb4-30"></a>  mdata_cols &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(</span>
-<span id="cb4-31"><a href="#cb4-31"></a>    mdata<span class="op">$</span>characteristics,</span>
-<span id="cb4-32"><a href="#cb4-32"></a>    <span class="cf">function</span>(x) {</span>
-<span id="cb4-33"><a href="#cb4-33"></a>      <span class="kw"><a href="https://stringr.tidyverse.org/reference/str_match.html">str_match</a></span>(x, <span class="st">"^([^:]+):"</span>)[, <span class="dv">2</span>]</span>
-<span id="cb4-34"><a href="#cb4-34"></a>    }</span>
-<span id="cb4-35"><a href="#cb4-35"></a>  ) <span class="op">%&gt;%</span></span>
-<span id="cb4-36"><a href="#cb4-36"></a><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>() <span class="op">%&gt;%</span></span>
-<span id="cb4-37"><a href="#cb4-37"></a><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>()</span>
-<span id="cb4-38"><a href="#cb4-38"></a></span>
-<span id="cb4-39"><a href="#cb4-39"></a>  mdata &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">data_frame</a></span>(</span>
-<span id="cb4-40"><a href="#cb4-40"></a>    <span class="dt">run =</span> mdata<span class="op">$</span>run,</span>
-<span id="cb4-41"><a href="#cb4-41"></a>    <span class="dt">all_data =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">as.list</a></span>(mdata<span class="op">$</span>characteristics)</span>
-<span id="cb4-42"><a href="#cb4-42"></a>  ) <span class="op">%&gt;%</span></span>
-<span id="cb4-43"><a href="#cb4-43"></a><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">out =</span> purrr<span class="op">::</span><span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span>(all_data, <span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c</a></span>(.x, <span class="dt">collapse =</span> <span class="st">"::"</span>))) <span class="op">%&gt;%</span></span>
-<span id="cb4-44"><a href="#cb4-44"></a><span class="st">    </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span>(</span>
-<span id="cb4-45"><a href="#cb4-45"></a>      out,</span>
-<span id="cb4-46"><a href="#cb4-46"></a>      <span class="dt">sep =</span> <span class="st">"::"</span>,</span>
-<span id="cb4-47"><a href="#cb4-47"></a>      <span class="dt">into =</span> mdata_cols</span>
-<span id="cb4-48"><a href="#cb4-48"></a>    ) <span class="op">%&gt;%</span></span>
-<span id="cb4-49"><a href="#cb4-49"></a><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>all_data) <span class="op">%&gt;%</span></span>
-<span id="cb4-50"><a href="#cb4-50"></a><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_at</a></span>(</span>
-<span id="cb4-51"><a href="#cb4-51"></a>      <span class="dt">.vars =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="op">-</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">matches</a></span>(<span class="st">"run"</span>)),</span>
-<span id="cb4-52"><a href="#cb4-52"></a>      <span class="dt">.funs =</span> <span class="cf">function</span>(x) <span class="kw"><a href="https://stringr.tidyverse.org/reference/str_match.html">str_match</a></span>(x, <span class="st">": (.+)"</span>)[, <span class="dv">2</span>]</span>
-<span id="cb4-53"><a href="#cb4-53"></a>    )</span>
-<span id="cb4-54"><a href="#cb4-54"></a></span>
-<span id="cb4-55"><a href="#cb4-55"></a>  <span class="co"># convert ids to symbols</span></span>
-<span id="cb4-56"><a href="#cb4-56"></a>  row_ids_to_symbols &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">data_frame</a></span>(<span class="dt">ids =</span> gene_ids), id2symbol, <span class="dt">by =</span> <span class="st">"ids"</span>)</span>
-<span id="cb4-57"><a href="#cb4-57"></a></span>
-<span id="cb4-58"><a href="#cb4-58"></a>  <span class="cf">if</span> (<span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(gene_ids) <span class="op">!=</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(row_ids_to_symbols)) {</span>
-<span id="cb4-59"><a href="#cb4-59"></a>    <span class="kw"><a href="https://rdrr.io/r/base/warning.html">warning</a></span>(<span class="st">"gene id mapping to symbols produce more or less ids"</span>)</span>
-<span id="cb4-60"><a href="#cb4-60"></a>  }</span>
-<span id="cb4-61"><a href="#cb4-61"></a></span>
-<span id="cb4-62"><a href="#cb4-62"></a>  row_ids_to_symbols &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(row_ids_to_symbols, <span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(symbols))</span>
-<span id="cb4-63"><a href="#cb4-63"></a></span>
-<span id="cb4-64"><a href="#cb4-64"></a>  out_df &lt;-<span class="st"> </span>read_counts <span class="op">%&gt;%</span></span>
-<span id="cb4-65"><a href="#cb4-65"></a><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>() <span class="op">%&gt;%</span></span>
-<span id="cb4-66"><a href="#cb4-66"></a><span class="st">    </span>tibble<span class="op">::</span><span class="kw"><a href="https://tibble.tidyverse.org/reference/rownames.html">rownames_to_column</a></span>(<span class="st">"gene_id"</span>) <span class="op">%&gt;%</span></span>
-<span id="cb4-67"><a href="#cb4-67"></a><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(., row_ids_to_symbols, <span class="dt">by =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"gene_id"</span> =<span class="st"> "ids"</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb4-68"><a href="#cb4-68"></a><span class="st">    </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>gene_id) <span class="op">%&gt;%</span></span>
-<span id="cb4-69"><a href="#cb4-69"></a><span class="st">    </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(symbols, <span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">everything</a></span>()) <span class="op">%&gt;%</span></span>
-<span id="cb4-70"><a href="#cb4-70"></a><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(symbols))</span>
-<span id="cb4-71"><a href="#cb4-71"></a></span>
-<span id="cb4-72"><a href="#cb4-72"></a>  out_matrix &lt;-<span class="st"> </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a></span>(out_df, library, expr, <span class="op">-</span>symbols) <span class="op">%&gt;%</span></span>
-<span id="cb4-73"><a href="#cb4-73"></a><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(symbols, library) <span class="op">%&gt;%</span></span>
-<span id="cb4-74"><a href="#cb4-74"></a><span class="st">    </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span>(<span class="dt">expr =</span> <span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(expr)) <span class="op">%&gt;%</span></span>
-<span id="cb4-75"><a href="#cb4-75"></a><span class="st">    </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/spread.html">spread</a></span>(library, expr) <span class="op">%&gt;%</span></span>
-<span id="cb4-76"><a href="#cb4-76"></a><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>() <span class="op">%&gt;%</span></span>
-<span id="cb4-77"><a href="#cb4-77"></a><span class="st">    </span>tibble<span class="op">::</span><span class="kw"><a href="https://tibble.tidyverse.org/reference/rownames.html">column_to_rownames</a></span>(<span class="st">"symbols"</span>) <span class="op">%&gt;%</span></span>
-<span id="cb4-78"><a href="#cb4-78"></a><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>()</span>
-<span id="cb4-79"><a href="#cb4-79"></a></span>
-<span id="cb4-80"><a href="#cb4-80"></a>  <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</span>
-<span id="cb4-81"><a href="#cb4-81"></a>    <span class="dt">read_counts =</span> out_matrix,</span>
-<span id="cb4-82"><a href="#cb4-82"></a>    <span class="dt">meta_data =</span> mdata</span>
-<span id="cb4-83"><a href="#cb4-83"></a>  )</span>
-<span id="cb4-84"><a href="#cb4-84"></a>}</span>
-<span id="cb4-85"><a href="#cb4-85"></a></span>
-<span id="cb4-86"><a href="#cb4-86"></a>gtex_data &lt;-<span class="st"> </span><span class="kw">dl_recount</span>(<span class="st">"SRP012682"</span>)</span>
-<span id="cb4-87"><a href="#cb4-87"></a></span>
-<span id="cb4-88"><a href="#cb4-88"></a>gtex_data<span class="op">$</span>read_counts[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</span>
-<span id="cb4-89"><a href="#cb4-89"></a>gtex_data<span class="op">$</span>meta_data[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ]</span></code></pre></div>
-</div>
-<div id="building-reference-matrix-from-microarray-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#building-reference-matrix-from-microarray-data" class="anchor"></a>Building reference matrix from microarray data</h2>
-<p><code>clustifyr</code> works with microarray data-derived gene expression matrix as well (see Benchmark page). An example of generating a matrix for sorted immune cell type can be found below. The matrix can be found at <code>clustifyrdata::hema_microarray_matrix</code></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyverse)</span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="co"># read series matrix for column names</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a>GSE24759 &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">"GSE24759/GSE24759_series_matrix.txt"</span>, <span class="dt">skip =</span> <span class="dv">25</span>, <span class="dt">n_max =</span> <span class="dv">1</span>)</span>
-<span id="cb5-4"><a href="#cb5-4"></a></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="co"># read series matrix for full dataset; apply column names</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a>GSE24759 &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">"GSE24759//GSE24759_series_matrix.txt"</span>, <span class="dt">skip =</span> <span class="dv">57</span>, <span class="dt">col_names =</span> <span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(GSE24759)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">rename</a></span>(<span class="dt">ID =</span> <span class="st">`</span><span class="dt">!Sample_title</span><span class="st">`</span>)</span>
-<span id="cb5-7"><a href="#cb5-7"></a></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="co"># read array metadata table, remove control probes and missing gene symbols</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a>GPL4685 &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">"/Users/rf/microarray/GSE24759/GPL4685-15513.txt"</span>, <span class="dt">skip =</span> <span class="dv">14</span>) <span class="op">%&gt;%</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="st">`</span><span class="dt">Gene Symbol</span><span class="st">`</span>), <span class="st">`</span><span class="dt">Sequence Type</span><span class="st">`</span> <span class="op">!=</span><span class="st"> "Control sequence"</span>) <span class="op">%&gt;%</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span>(<span class="st">`</span><span class="dt">Gene Symbol</span><span class="st">`</span>, <span class="dt">into =</span> <span class="st">"gene_symbol"</span>, <span class="dt">sep =</span> <span class="st">" "</span>) <span class="op">%&gt;%</span></span>
-<span id="cb5-12"><a href="#cb5-12"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(ID, gene_symbol)</span>
-<span id="cb5-13"><a href="#cb5-13"></a></span>
-<span id="cb5-14"><a href="#cb5-14"></a><span class="co"># join data and metadata, collapse gene symbols</span></span>
-<span id="cb5-15"><a href="#cb5-15"></a>GSE24759 &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(GSE24759, GPL4685) <span class="op">%&gt;%</span></span>
-<span id="cb5-16"><a href="#cb5-16"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>ID) <span class="op">%&gt;%</span></span>
-<span id="cb5-17"><a href="#cb5-17"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(gene_symbol) <span class="op">%&gt;%</span></span>
-<span id="cb5-18"><a href="#cb5-18"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html">mutate_at</a></span>(<span class="dt">.vars =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="op">-</span>gene_symbol), <span class="dt">.funs =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Log.html">log2</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="dv">2</span><span class="op">^</span>.))))</span>
-<span id="cb5-19"><a href="#cb5-19"></a></span>
-<span id="cb5-20"><a href="#cb5-20"></a><span class="co"># convert to matrix, add rownames</span></span>
-<span id="cb5-21"><a href="#cb5-21"></a>GSE24759_mat &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span>(GSE24759) <span class="op">%&gt;%</span></span>
-<span id="cb5-22"><a href="#cb5-22"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span>gene_symbol) <span class="op">%&gt;%</span></span>
-<span id="cb5-23"><a href="#cb5-23"></a><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>()</span>
-<span id="cb5-24"><a href="#cb5-24"></a><span class="kw"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span>(GSE24759_mat) &lt;-<span class="st"> </span>GSE24759<span class="op">$</span>gene_symbol</span>
-<span id="cb5-25"><a href="#cb5-25"></a></span>
-<span id="cb5-26"><a href="#cb5-26"></a><span class="co"># merge samples</span></span>
-<span id="cb5-27"><a href="#cb5-27"></a>ref_hema_microarray &lt;-<span class="st"> </span>GSE24759_mat <span class="op">%&gt;%</span></span>
-<span id="cb5-28"><a href="#cb5-28"></a><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/t.html">t</a></span>() <span class="op">%&gt;%</span></span>
-<span id="cb5-29"><a href="#cb5-29"></a><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>() <span class="op">%&gt;%</span></span>
-<span id="cb5-30"><a href="#cb5-30"></a><span class="st">  </span><span class="kw">rownames_to_column</span>(<span class="st">"sample"</span>) <span class="op">%&gt;%</span></span>
-<span id="cb5-31"><a href="#cb5-31"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">sample =</span> <span class="kw"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span>(sample, <span class="st">", .*"</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb5-32"><a href="#cb5-32"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(sample) <span class="op">%&gt;%</span></span>
-<span id="cb5-33"><a href="#cb5-33"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/summarise_all.html">summarise_all</a></span>(<span class="dt">.funs =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Log.html">log2</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="dv">2</span><span class="op">^</span>.)))) <span class="op">%&gt;%</span></span>
-<span id="cb5-34"><a href="#cb5-34"></a><span class="st">  </span><span class="kw">column_to_rownames</span>(<span class="st">"sample"</span>) <span class="op">%&gt;%</span></span>
-<span id="cb5-35"><a href="#cb5-35"></a><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/t.html">t</a></span>()</span></code></pre></div>
+<p>```{“recount example”} library(dplyr) library(purrr) library(tidyr) library(stringr) library(recount)</p>
+<p>dl_recount &lt;- function(sra_id) { if (!file.exists(file.path(sra_id, “rse_gene.Rdata”))) { download_study(sra_id) }</p>
+<p>load(file.path(sra_id, “rse_gene.Rdata”))</p>
+<p># no longer need to downloaded data unlink(sra_id, recursive = TRUE) rse &lt;- scale_counts(rse_gene) read_counts &lt;- assay(rse, “counts”) gene_ids &lt;- rownames(read_counts)</p>
+<p># get gene symbols, which are stored in rowData id2symbol &lt;- data_frame( ids = rowData(rse_gene)<span class="math inline">\(gene_id,  symbols = rowData(rse_gene)\)</span><a href="mailto:symbol@listData" class="email">symbol@listData</a> ) %&gt;% mutate(symbols = map_chr(symbols, ~ .x[1]))</p>
+<p># clean up metadata into a dataframe print(“cleaning up meta”) mdata &lt;- colData(rse) mdata_cols &lt;- lapply( mdata$characteristics, function(x) { str_match(x, “^([^:]+):”)[, 2] } ) %&gt;% unique() %&gt;% unlist()</p>
+<p>mdata &lt;- data_frame( run = mdata<span class="math inline">\(run,  all_data = as.list(mdata\)</span>characteristics) ) %&gt;% mutate(out = purrr::map_chr(all_data, ~ str_c(.x, collapse = “::”))) %&gt;% tidyr::separate( out, sep = “::”, into = mdata_cols ) %&gt;% select(-all_data) %&gt;% mutate_at( .vars = vars(-matches(“run”)), .funs = function(x) str_match(x, “: (.+)”)[, 2] )</p>
+<p># convert ids to symbols row_ids_to_symbols &lt;- left_join(data_frame(ids = gene_ids), id2symbol, by = “ids”)</p>
+<p>if (length(gene_ids) != nrow(row_ids_to_symbols)) { warning(“gene id mapping to symbols produce more or less ids”) }</p>
+<p>row_ids_to_symbols &lt;- filter(row_ids_to_symbols, !is.na(symbols))</p>
+<p>out_df &lt;- read_counts %&gt;% as.data.frame() %&gt;% tibble::rownames_to_column(“gene_id”) %&gt;% left_join(., row_ids_to_symbols, by = c(“gene_id” = “ids”)) %&gt;% dplyr::select(-gene_id) %&gt;% dplyr::select(symbols, everything()) %&gt;% filter(!is.na(symbols))</p>
+<p>out_matrix &lt;- tidyr::gather(out_df, library, expr, -symbols) %&gt;% group_by(symbols, library) %&gt;% summarize(expr = sum(expr)) %&gt;% tidyr::spread(library, expr) %&gt;% as.data.frame() %&gt;% tibble::column_to_rownames(“symbols”) %&gt;% as.matrix()</p>
+<p>list( read_counts = out_matrix, meta_data = mdata ) }</p>
+<p>gtex_data &lt;- dl_recount(“SRP012682”)</p>
+<p>gtex_data<span class="math inline">\(read_counts[1:5, 1:5] gtex_data\)</span>meta_data[1:5, ]</p>
+<pre><code>
+## Building reference matrix from microarray data
+
+`clustifyr` works with microarray data-derived gene expression matrix as well (see Benchmark page). An example of generating a matrix for sorted immune cell type can be found below. The matrix can be found at `clustifyrdata::hema_microarray_matrix`
+
+```{"microarray example"}
+library(tidyverse)
+# read series matrix for column names
+GSE24759 &lt;- read_tsv("GSE24759/GSE24759_series_matrix.txt", skip = 25, n_max = 1)
+
+# read series matrix for full dataset; apply column names
+GSE24759 &lt;- read_tsv("GSE24759//GSE24759_series_matrix.txt", skip = 57, col_names = colnames(GSE24759)) %&gt;% rename(ID = `!Sample_title`)
+
+# read array metadata table, remove control probes and missing gene symbols
+GPL4685 &lt;- read_tsv("/Users/rf/microarray/GSE24759/GPL4685-15513.txt", skip = 14) %&gt;%
+  filter(!is.na(`Gene Symbol`), `Sequence Type` != "Control sequence") %&gt;%
+  separate(`Gene Symbol`, into = "gene_symbol", sep = " ") %&gt;%
+  select(ID, gene_symbol)
+
+# join data and metadata, collapse gene symbols
+GSE24759 &lt;- inner_join(GSE24759, GPL4685) %&gt;%
+  select(-ID) %&gt;%
+  group_by(gene_symbol) %&gt;%
+  mutate_at(.vars = vars(-gene_symbol), .funs = list(~ log2(mean(2^.))))
+
+# convert to matrix, add rownames
+GSE24759_mat &lt;- ungroup(GSE24759) %&gt;%
+  select(-gene_symbol) %&gt;%
+  as.matrix()
+row.names(GSE24759_mat) &lt;- GSE24759$gene_symbol
+
+# merge samples
+ref_hema_microarray &lt;- GSE24759_mat %&gt;%
+  t() %&gt;%
+  as.data.frame() %&gt;%
+  rownames_to_column("sample") %&gt;%
+  mutate(sample = str_remove(sample, ", .*")) %&gt;%
+  group_by(sample) %&gt;%
+  summarise_all(.funs = list(~ log2(mean(2^.)))) %&gt;%
+  column_to_rownames("sample") %&gt;%
+  t()</code></pre>
 <p>Essentially, any data in matrix form is accepted by <code>clustifyR</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>clustifyrdata<span class="op">::</span>ref_hema_microarray[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="co">#&gt;        Basophils CD4+ Central Memory CD4+ Effector Memory CD8+ Central Memory</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="co">#&gt; DDR1    6.084244            5.967502             5.933039            6.005278</span></span>
-<span id="cb6-4"><a href="#cb6-4"></a><span class="co">#&gt; RFC2    6.280044            6.028615             6.047005            5.992979</span></span>
-<span id="cb6-5"><a href="#cb6-5"></a><span class="co">#&gt; HSPA6   6.535444            5.811475             5.746326            5.928349</span></span>
-<span id="cb6-6"><a href="#cb6-6"></a><span class="co">#&gt; PAX8    6.669153            5.896401             6.118577            6.270870</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="co">#&gt; GUCA1A  5.239230            5.232116             5.206960            5.227415</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a><span class="co">#&gt;        CD8+ Effector Memory</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a><span class="co">#&gt; DDR1               5.895926</span></span>
-<span id="cb6-10"><a href="#cb6-10"></a><span class="co">#&gt; RFC2               5.942426</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a><span class="co">#&gt; HSPA6              5.942670</span></span>
-<span id="cb6-12"><a href="#cb6-12"></a><span class="co">#&gt; PAX8               6.323922</span></span>
-<span id="cb6-13"><a href="#cb6-13"></a><span class="co">#&gt; GUCA1A             5.090882</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>clustifyrdata<span class="op">::</span>ref_hema_microarray[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="co">#&gt;        Basophils CD4+ Central Memory CD4+ Effector Memory CD8+ Central Memory</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="co">#&gt; DDR1    6.084244            5.967502             5.933039            6.005278</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#&gt; RFC2    6.280044            6.028615             6.047005            5.992979</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="co">#&gt; HSPA6   6.535444            5.811475             5.746326            5.928349</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co">#&gt; PAX8    6.669153            5.896401             6.118577            6.270870</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co">#&gt; GUCA1A  5.239230            5.232116             5.206960            5.227415</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="co">#&gt;        CD8+ Effector Memory</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt; DDR1               5.895926</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt; RFC2               5.942426</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co">#&gt; HSPA6              5.942670</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="co">#&gt; PAX8               6.323922</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="co">#&gt; GUCA1A             5.090882</span></span></code></pre></div>
 </div>
 <div id="building-reference-gene-list" class="section level2">
 <h2 class="hasAnchor">
 <a href="#building-reference-gene-list" class="anchor"></a>Building reference gene list</h2>
 <p><code>clustify_lists</code> and <code>clustify_nudge</code> uses dataframe or matrix of candidate genes for classification. Example formatting are shown below.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># directly from seurat function</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(pbmc_markers)</span>
-<span id="cb7-3"><a href="#cb7-3"></a><span class="co">#&gt;               p_val avg_logFC pct.1 pct.2     p_val_adj cluster  gene</span></span>
-<span id="cb7-4"><a href="#cb7-4"></a><span class="co">#&gt; RPS12 2.008629e-140 0.5029988 1.000 0.991 2.754633e-136       0 RPS12</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a><span class="co">#&gt; RPS27 2.624075e-140 0.5020359 0.999 0.992 3.598656e-136       0 RPS27</span></span>
-<span id="cb7-6"><a href="#cb7-6"></a><span class="co">#&gt; RPS6  1.280169e-138 0.4673635 1.000 0.995 1.755623e-134       0  RPS6</span></span>
-<span id="cb7-7"><a href="#cb7-7"></a><span class="co">#&gt; RPL32 4.358823e-135 0.4242773 0.999 0.995 5.977689e-131       0 RPL32</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a><span class="co">#&gt; RPS14 3.618793e-128 0.4283480 1.000 0.994 4.962812e-124       0 RPS14</span></span>
-<span id="cb7-9"><a href="#cb7-9"></a><span class="co">#&gt; RPS25 5.612007e-124 0.5203411 0.997 0.975 7.696306e-120       0 RPS25</span></span>
-<span id="cb7-10"><a href="#cb7-10"></a></span>
-<span id="cb7-11"><a href="#cb7-11"></a><span class="co"># manually enter into dataframe format</span></span>
-<span id="cb7-12"><a href="#cb7-12"></a>betam &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"INS"</span>, <span class="st">"IGF2"</span>, <span class="st">"IAPP"</span>, <span class="st">"MAFA"</span>, <span class="st">"NPTX2"</span>)</span>
-<span id="cb7-13"><a href="#cb7-13"></a>alpham &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"GCG"</span>, <span class="st">"PDK4"</span>, <span class="st">"LOXL2"</span>, <span class="st">"IRX2"</span>, <span class="st">"GC"</span>)</span>
-<span id="cb7-14"><a href="#cb7-14"></a>deltam &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"SST"</span>, <span class="st">"RBP4"</span>, <span class="st">"HHEX"</span>, <span class="st">"PCSK1"</span>, <span class="st">"LEPR"</span>)</span>
-<span id="cb7-15"><a href="#cb7-15"></a><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(alpham, betam, deltam)</span>
-<span id="cb7-16"><a href="#cb7-16"></a><span class="co">#&gt;   alpham betam deltam</span></span>
-<span id="cb7-17"><a href="#cb7-17"></a><span class="co">#&gt; 1    GCG   INS    SST</span></span>
-<span id="cb7-18"><a href="#cb7-18"></a><span class="co">#&gt; 2   PDK4  IGF2   RBP4</span></span>
-<span id="cb7-19"><a href="#cb7-19"></a><span class="co">#&gt; 3  LOXL2  IAPP   HHEX</span></span>
-<span id="cb7-20"><a href="#cb7-20"></a><span class="co">#&gt; 4   IRX2  MAFA  PCSK1</span></span>
-<span id="cb7-21"><a href="#cb7-21"></a><span class="co">#&gt; 5     GC NPTX2   LEPR</span></span>
-<span id="cb7-22"><a href="#cb7-22"></a></span>
-<span id="cb7-23"><a href="#cb7-23"></a><span class="co"># use matrixize_markers function to convert</span></span>
-<span id="cb7-24"><a href="#cb7-24"></a>mm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/matrixize_markers.html">matrixize_markers</a></span>(</span>
-<span id="cb7-25"><a href="#cb7-25"></a>  <span class="dt">marker_df =</span> pbmc_markers,</span>
-<span id="cb7-26"><a href="#cb7-26"></a>  <span class="dt">remove_rp =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb7-27"><a href="#cb7-27"></a>  <span class="dt">unique =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb7-28"><a href="#cb7-28"></a>  <span class="dt">n =</span> <span class="dv">10</span></span>
-<span id="cb7-29"><a href="#cb7-29"></a>)</span>
-<span id="cb7-30"><a href="#cb7-30"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(mm)</span>
-<span id="cb7-31"><a href="#cb7-31"></a><span class="co">#&gt;           0        1      2         3      4      5      6        7          8</span></span>
-<span id="cb7-32"><a href="#cb7-32"></a><span class="co">#&gt; 1    EEF1A1     AQP3 S100A9     CD79A   GZMK CDKN1C  SPON2   FCER1A        GP9</span></span>
-<span id="cb7-33"><a href="#cb7-33"></a><span class="co">#&gt; 2      CCR7   CD40LG S100A8     MS4A1   CD8A   HES4 AKR1C3 SERPINF1     ITGA2B</span></span>
-<span id="cb7-34"><a href="#cb7-34"></a><span class="co">#&gt; 3      NPM1    TRADD   CD14     CD79B   CD8B    CKB   XCL2  CLEC10A     TMEM40</span></span>
-<span id="cb7-35"><a href="#cb7-35"></a><span class="co">#&gt; 4 PRKCQ-AS1   TTC39C  CSF3R LINC00926  DUSP2 LILRA3  CLIC3     ENHO AP001189.4</span></span>
-<span id="cb7-36"><a href="#cb7-36"></a><span class="co">#&gt; 5   GLTSCR2      JUN  ASGR1     TCL1A MT-CYB MS4A4A  KLRD1    CLIC2     LY6G6F</span></span>
-<span id="cb7-37"><a href="#cb7-37"></a><span class="co">#&gt; 6      BTG1 ARHGAP15  FOLR3    VPREB3   DDX5 LILRB1  TTC38     CD1C      SEPT5</span></span>
-<span id="cb7-38"><a href="#cb7-38"></a></span>
-<span id="cb7-39"><a href="#cb7-39"></a><span class="co"># get markers from ref_matrix, and then matrixize_markers</span></span>
-<span id="cb7-40"><a href="#cb7-40"></a>cbmc_m &lt;-<span class="st"> </span><span class="kw"><a href="../reference/matrixize_markers.html">matrixize_markers</a></span>(</span>
-<span id="cb7-41"><a href="#cb7-41"></a>  <span class="dt">marker_df =</span> <span class="kw"><a href="../reference/ref_marker_select.html">ref_marker_select</a></span>(cbmc_ref),</span>
-<span id="cb7-42"><a href="#cb7-42"></a>  <span class="dt">remove_rp =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb7-43"><a href="#cb7-43"></a>  <span class="dt">unique =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb7-44"><a href="#cb7-44"></a>  <span class="dt">n =</span> <span class="dv">3</span></span>
-<span id="cb7-45"><a href="#cb7-45"></a>)</span>
-<span id="cb7-46"><a href="#cb7-46"></a></span>
-<span id="cb7-47"><a href="#cb7-47"></a><span class="co"># parse `garnett` marker files, see function `file_marker_parse`</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># directly from seurat function</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(pbmc_markers)</span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="co">#&gt;               p_val avg_logFC pct.1 pct.2     p_val_adj cluster  gene</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co">#&gt; RPS12 2.008629e-140 0.5029988 1.000 0.991 2.754633e-136       0 RPS12</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="co">#&gt; RPS27 2.624075e-140 0.5020359 0.999 0.992 3.598656e-136       0 RPS27</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="co">#&gt; RPS6  1.280169e-138 0.4673635 1.000 0.995 1.755623e-134       0  RPS6</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="co">#&gt; RPL32 4.358823e-135 0.4242773 0.999 0.995 5.977689e-131       0 RPL32</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="co">#&gt; RPS14 3.618793e-128 0.4283480 1.000 0.994 4.962812e-124       0 RPS14</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="co">#&gt; RPS25 5.612007e-124 0.5203411 0.997 0.975 7.696306e-120       0 RPS25</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="co"># manually enter into dataframe format</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a>betam &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"INS"</span>, <span class="st">"IGF2"</span>, <span class="st">"IAPP"</span>, <span class="st">"MAFA"</span>, <span class="st">"NPTX2"</span>)</span>
+<span id="cb6-13"><a href="#cb6-13"></a>alpham &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"GCG"</span>, <span class="st">"PDK4"</span>, <span class="st">"LOXL2"</span>, <span class="st">"IRX2"</span>, <span class="st">"GC"</span>)</span>
+<span id="cb6-14"><a href="#cb6-14"></a>deltam &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"SST"</span>, <span class="st">"RBP4"</span>, <span class="st">"HHEX"</span>, <span class="st">"PCSK1"</span>, <span class="st">"LEPR"</span>)</span>
+<span id="cb6-15"><a href="#cb6-15"></a><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(alpham, betam, deltam)</span>
+<span id="cb6-16"><a href="#cb6-16"></a><span class="co">#&gt;   alpham betam deltam</span></span>
+<span id="cb6-17"><a href="#cb6-17"></a><span class="co">#&gt; 1    GCG   INS    SST</span></span>
+<span id="cb6-18"><a href="#cb6-18"></a><span class="co">#&gt; 2   PDK4  IGF2   RBP4</span></span>
+<span id="cb6-19"><a href="#cb6-19"></a><span class="co">#&gt; 3  LOXL2  IAPP   HHEX</span></span>
+<span id="cb6-20"><a href="#cb6-20"></a><span class="co">#&gt; 4   IRX2  MAFA  PCSK1</span></span>
+<span id="cb6-21"><a href="#cb6-21"></a><span class="co">#&gt; 5     GC NPTX2   LEPR</span></span>
+<span id="cb6-22"><a href="#cb6-22"></a></span>
+<span id="cb6-23"><a href="#cb6-23"></a><span class="co"># use matrixize_markers function to convert</span></span>
+<span id="cb6-24"><a href="#cb6-24"></a>mm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/matrixize_markers.html">matrixize_markers</a></span>(</span>
+<span id="cb6-25"><a href="#cb6-25"></a>  <span class="dt">marker_df =</span> pbmc_markers,</span>
+<span id="cb6-26"><a href="#cb6-26"></a>  <span class="dt">remove_rp =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb6-27"><a href="#cb6-27"></a>  <span class="dt">unique =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb6-28"><a href="#cb6-28"></a>  <span class="dt">n =</span> <span class="dv">10</span></span>
+<span id="cb6-29"><a href="#cb6-29"></a>)</span>
+<span id="cb6-30"><a href="#cb6-30"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(mm)</span>
+<span id="cb6-31"><a href="#cb6-31"></a><span class="co">#&gt;           0        1      2         3      4      5      6        7          8</span></span>
+<span id="cb6-32"><a href="#cb6-32"></a><span class="co">#&gt; 1    EEF1A1     AQP3 S100A9     CD79A   GZMK CDKN1C  SPON2   FCER1A        GP9</span></span>
+<span id="cb6-33"><a href="#cb6-33"></a><span class="co">#&gt; 2      CCR7   CD40LG S100A8     MS4A1   CD8A   HES4 AKR1C3 SERPINF1     ITGA2B</span></span>
+<span id="cb6-34"><a href="#cb6-34"></a><span class="co">#&gt; 3      NPM1    TRADD   CD14     CD79B   CD8B    CKB   XCL2  CLEC10A     TMEM40</span></span>
+<span id="cb6-35"><a href="#cb6-35"></a><span class="co">#&gt; 4 PRKCQ-AS1   TTC39C  CSF3R LINC00926  DUSP2 LILRA3  CLIC3     ENHO AP001189.4</span></span>
+<span id="cb6-36"><a href="#cb6-36"></a><span class="co">#&gt; 5   GLTSCR2      JUN  ASGR1     TCL1A MT-CYB MS4A4A  KLRD1    CLIC2     LY6G6F</span></span>
+<span id="cb6-37"><a href="#cb6-37"></a><span class="co">#&gt; 6      BTG1 ARHGAP15  FOLR3    VPREB3   DDX5 LILRB1  TTC38     CD1C      SEPT5</span></span>
+<span id="cb6-38"><a href="#cb6-38"></a></span>
+<span id="cb6-39"><a href="#cb6-39"></a><span class="co"># get markers from ref_matrix, and then matrixize_markers</span></span>
+<span id="cb6-40"><a href="#cb6-40"></a>cbmc_m &lt;-<span class="st"> </span><span class="kw"><a href="../reference/matrixize_markers.html">matrixize_markers</a></span>(</span>
+<span id="cb6-41"><a href="#cb6-41"></a>  <span class="dt">marker_df =</span> <span class="kw"><a href="../reference/ref_marker_select.html">ref_marker_select</a></span>(cbmc_ref),</span>
+<span id="cb6-42"><a href="#cb6-42"></a>  <span class="dt">remove_rp =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb6-43"><a href="#cb6-43"></a>  <span class="dt">unique =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb6-44"><a href="#cb6-44"></a>  <span class="dt">n =</span> <span class="dv">3</span></span>
+<span id="cb6-45"><a href="#cb6-45"></a>)</span>
+<span id="cb6-46"><a href="#cb6-46"></a></span>
+<span id="cb6-47"><a href="#cb6-47"></a><span class="co"># parse `garnett` marker files, see function `file_marker_parse`</span></span></code></pre></div>
 </div>
 <div id="prebuilt-references-in-clustifyr" class="section level2">
 <h2 class="hasAnchor">
@@ -399,8 +326,8 @@
 <a href="#prebuilt-references-in-clustifyrdata" class="anchor"></a>Prebuilt references, in clustifyrdata</h2>
 <p>More reference data, including tabula muris, and code used to generate them are available at <a href="https://github.com/rnabioco/clustifyrdata" class="uri">https://github.com/rnabioco/clustifyrdata</a>.</p>
 <p>Also see list for individual downloads at <a href="https://rnabioco.github.io/clustifyr/articles/download_refs.html" class="uri">https://rnabioco.github.io/clustifyr/articles/download_refs.html</a></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># install.packages("devtools")</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a>devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"rnabioco/clustifyrdata"</span>)</span></code></pre></div>
+<pre class='{"installation"}'><code><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html"># install.packages("devtools")
+devtools::install_github("rnabioco/clustifyrdata")</a></code></pre>
 </div>
   </div>
 
@@ -413,7 +340,6 @@
 <li><a href="#building-reference-matrix-from-single-cell-expression-matrix">Building reference matrix from single cell expression matrix</a></li>
       <li><a href="#building-reference-matrix-from-seurat-object">Building reference matrix from <code>seurat</code> object</a></li>
       <li><a href="#building-reference-matrix-from-recount2">Building reference matrix from Recount2</a></li>
-      <li><a href="#building-reference-matrix-from-microarray-data">Building reference matrix from microarray data</a></li>
       <li><a href="#building-reference-gene-list">Building reference gene list</a></li>
       <li><a href="#prebuilt-references-in-clustifyr">Prebuilt references, in clustifyr</a></li>
       <li><a href="#prebuilt-references-in-clustifyrdata">Prebuilt references, in clustifyrdata</a></li>
