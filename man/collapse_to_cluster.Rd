@@ -37,5 +37,5 @@ res3 <- collapse_to_cluster(
   metadata = pbmc_meta,
   cluster_col = "classified",
   threshold = 0
- )
+)
 }
