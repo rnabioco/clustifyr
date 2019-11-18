@@ -213,7 +213,7 @@ ref_hema_microarray <- GSE24759_mat %>%
 ```
 
 Essentially, any data in matrix form is accepted by `clustifyR`.
-```{r microarray2, warning=F, message=F}
+```{r microarray2}
 clustifyrdata::ref_hema_microarray[1:5, 1:5]
 ```
 

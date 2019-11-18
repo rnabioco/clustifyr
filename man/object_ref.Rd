@@ -39,5 +39,6 @@ Function to convert labelled object to avg expression matrix
 \examples{
 object_ref(
   s_small3,
-  cluster_col = "RNA_snn_res.1")
+  cluster_col = "RNA_snn_res.1"
+)
 }

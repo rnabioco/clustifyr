@@ -130,7 +130,7 @@
 <li>a vector of variable genes (<code>pbmc_vargenes</code>)</li>
 <li>a matrix of mean normalized scRNA-seq UMI counts by cell type (<code>cbmc_ref</code>):</li>
 </ul>
-<p>We then calculate correlation coefficients and plot them on a pre-calculated tSNE projection (stored in <code>pbmc_meta</code>).</p>
+<p>We then calculate correlation coefficients and plot them on a pre-calculated projection (stored in <code>pbmc_meta</code>).</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(clustifyr)</span>
 <span id="cb2-2"><a href="#cb2-2"></a></span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="co"># calculate correlation</span></span>
@@ -158,8 +158,8 @@
 <span id="cb2-25"><a href="#cb2-25"></a></span>
 <span id="cb2-26"><a href="#cb2-26"></a><span class="co"># plotting</span></span>
 <span id="cb2-27"><a href="#cb2-27"></a><span class="kw"><a href="reference/plot_best_call.html">plot_best_call</a></span>(</span>
-<span id="cb2-28"><a href="#cb2-28"></a>  <span class="dt">cor_mat =</span> res, </span>
-<span id="cb2-29"><a href="#cb2-29"></a>  <span class="dt">metadata =</span> pbmc_meta, </span>
+<span id="cb2-28"><a href="#cb2-28"></a>  <span class="dt">cor_mat =</span> res,</span>
+<span id="cb2-29"><a href="#cb2-29"></a>  <span class="dt">metadata =</span> pbmc_meta,</span>
 <span id="cb2-30"><a href="#cb2-30"></a>  <span class="dt">cluster_col =</span> <span class="st">"classified"</span></span>
 <span id="cb2-31"><a href="#cb2-31"></a>)</span></code></pre></div>
 <p><img src="reference/figures/readme_example-1.png"><!-- --></p>
@@ -221,8 +221,7 @@
 <span id="cb4-12"><a href="#cb4-12"></a>  <span class="dt">marker_inmatrix =</span> <span class="ot">FALSE</span>,</span>
 <span id="cb4-13"><a href="#cb4-13"></a>  <span class="dt">cluster_col =</span> <span class="st">"res.1"</span>,</span>
 <span id="cb4-14"><a href="#cb4-14"></a>  <span class="dt">seurat_out =</span> <span class="ot">TRUE</span></span>
-<span id="cb4-15"><a href="#cb4-15"></a>)</span>
-<span id="cb4-16"><a href="#cb4-16"></a><span class="co">#&gt; cannot find dr info</span></span></code></pre></div>
+<span id="cb4-15"><a href="#cb4-15"></a>)</span></code></pre></div>
 </div>
 <div id="additional-reference-data" class="section level2">
 <h2 class="hasAnchor">

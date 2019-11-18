@@ -109,7 +109,7 @@
     <div class="page-header toc-ignore">
       <h1>Benchmarking clustifyr</h1>
             
-            <h4 class="date">2019-11-14</h4>
+            <h4 class="date">2019-11-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyr/blob/master/vignettes/benchmark.Rmd"><code>vignettes/benchmark.Rmd</code></a></small>
       <div class="hidden name"><code>benchmark.Rmd</code></div>
@@ -131,70 +131,68 @@
 <span id="cb1-8"><a href="#cb1-8"></a><span class="co"># find lung references, remove generic terms</span></span>
 <span id="cb1-9"><a href="#cb1-9"></a>lung_cols &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(ref_tabula_muris_drop) <span class="op">%&gt;%</span></span>
 <span id="cb1-10"><a href="#cb1-10"></a><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/grep.html">grep</a></span>(<span class="st">"-Lung"</span>, ., <span class="dt">value =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb1-11"><a href="#cb1-11"></a></span>
-<span id="cb1-12"><a href="#cb1-12"></a>tml_ref &lt;-<span class="st"> </span>ref_tabula_muris_drop[, lung_cols]</span>
-<span id="cb1-13"><a href="#cb1-13"></a>tml_ref &lt;-<span class="st"> </span>tml_ref[, <span class="op">-</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">8</span>, <span class="dv">13</span>)]</span>
-<span id="cb1-14"><a href="#cb1-14"></a></span>
-<span id="cb1-15"><a href="#cb1-15"></a></span>
-<span id="cb1-16"><a href="#cb1-16"></a><span class="co"># default with all genes</span></span>
-<span id="cb1-17"><a href="#cb1-17"></a>start &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/proc.time.html">proc.time</a></span>()</span>
-<span id="cb1-18"><a href="#cb1-18"></a></span>
-<span id="cb1-19"><a href="#cb1-19"></a>res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustify.html">clustify</a></span>(</span>
-<span id="cb1-20"><a href="#cb1-20"></a>  <span class="dt">input =</span> l_mat,</span>
-<span id="cb1-21"><a href="#cb1-21"></a>  <span class="dt">ref_mat =</span> tml_ref,</span>
-<span id="cb1-22"><a href="#cb1-22"></a>  <span class="dt">metadata =</span> l_meta,</span>
-<span id="cb1-23"><a href="#cb1-23"></a>  <span class="dt">cluster_col =</span> <span class="st">"Annotation"</span></span>
-<span id="cb1-24"><a href="#cb1-24"></a>)</span>
-<span id="cb1-25"><a href="#cb1-25"></a></span>
-<span id="cb1-26"><a href="#cb1-26"></a>res_allgenes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cor_to_call.html">cor_to_call</a></span>(</span>
-<span id="cb1-27"><a href="#cb1-27"></a>  <span class="dt">cor_mat =</span> res,</span>
-<span id="cb1-28"><a href="#cb1-28"></a>  <span class="dt">metadata =</span> l_meta,</span>
-<span id="cb1-29"><a href="#cb1-29"></a>  <span class="dt">cluster_col =</span> <span class="st">"Annotation"</span></span>
-<span id="cb1-30"><a href="#cb1-30"></a>)</span>
+<span id="cb1-11"><a href="#cb1-11"></a>tml_ref &lt;-<span class="st"> </span>ref_tabula_muris_drop[, lung_cols]</span>
+<span id="cb1-12"><a href="#cb1-12"></a>tml_ref &lt;-<span class="st"> </span>tml_ref[, <span class="op">-</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">8</span>, <span class="dv">13</span>)]</span>
+<span id="cb1-13"><a href="#cb1-13"></a></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="co"># default with all genes</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a>start &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/proc.time.html">proc.time</a></span>()</span>
+<span id="cb1-16"><a href="#cb1-16"></a></span>
+<span id="cb1-17"><a href="#cb1-17"></a>res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustify.html">clustify</a></span>(</span>
+<span id="cb1-18"><a href="#cb1-18"></a>  <span class="dt">input =</span> l_mat,</span>
+<span id="cb1-19"><a href="#cb1-19"></a>  <span class="dt">ref_mat =</span> tml_ref,</span>
+<span id="cb1-20"><a href="#cb1-20"></a>  <span class="dt">metadata =</span> l_meta,</span>
+<span id="cb1-21"><a href="#cb1-21"></a>  <span class="dt">cluster_col =</span> <span class="st">"Annotation"</span></span>
+<span id="cb1-22"><a href="#cb1-22"></a>)</span>
+<span id="cb1-23"><a href="#cb1-23"></a></span>
+<span id="cb1-24"><a href="#cb1-24"></a>res_allgenes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cor_to_call.html">cor_to_call</a></span>(</span>
+<span id="cb1-25"><a href="#cb1-25"></a>  <span class="dt">cor_mat =</span> res,</span>
+<span id="cb1-26"><a href="#cb1-26"></a>  <span class="dt">metadata =</span> l_meta,</span>
+<span id="cb1-27"><a href="#cb1-27"></a>  <span class="dt">cluster_col =</span> <span class="st">"Annotation"</span></span>
+<span id="cb1-28"><a href="#cb1-28"></a>)</span>
+<span id="cb1-29"><a href="#cb1-29"></a></span>
+<span id="cb1-30"><a href="#cb1-30"></a>end &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/proc.time.html">proc.time</a></span>()</span>
 <span id="cb1-31"><a href="#cb1-31"></a></span>
-<span id="cb1-32"><a href="#cb1-32"></a>end &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/proc.time.html">proc.time</a></span>()</span>
-<span id="cb1-33"><a href="#cb1-33"></a><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(res_allgenes) &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"MCA annotation"</span>, <span class="st">"clustifyr call"</span>, <span class="st">"r"</span>)</span>
-<span id="cb1-34"><a href="#cb1-34"></a></span>
-<span id="cb1-35"><a href="#cb1-35"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(end <span class="op">-</span><span class="st"> </span>start)</span>
-<span id="cb1-36"><a href="#cb1-36"></a><span class="co">#&gt;    user  system elapsed </span></span>
-<span id="cb1-37"><a href="#cb1-37"></a><span class="co">#&gt;   1.360   0.513   1.926</span></span>
-<span id="cb1-38"><a href="#cb1-38"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(res_allgenes, <span class="dt">n =</span> <span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(res_allgenes))</span>
-<span id="cb1-39"><a href="#cb1-39"></a><span class="co">#&gt; # A tibble: 32 x 3</span></span>
-<span id="cb1-40"><a href="#cb1-40"></a><span class="co">#&gt; # Groups:   Annotation [32]</span></span>
-<span id="cb1-41"><a href="#cb1-41"></a><span class="co">#&gt;    `MCA annotation`                `clustifyr call`                            r</span></span>
-<span id="cb1-42"><a href="#cb1-42"></a><span class="co">#&gt;    &lt;chr&gt;                           &lt;chr&gt;                                   &lt;dbl&gt;</span></span>
-<span id="cb1-43"><a href="#cb1-43"></a><span class="co">#&gt;  1 Alveolar macrophage_Ear2 high(… alveolar macrophage-Lung                0.878</span></span>
-<span id="cb1-44"><a href="#cb1-44"></a><span class="co">#&gt;  2 Alveolar macrophage_Pclaf high… alveolar macrophage-Lung                0.710</span></span>
-<span id="cb1-45"><a href="#cb1-45"></a><span class="co">#&gt;  3 B Cell(Lung)                    B cell-Lung                             0.834</span></span>
-<span id="cb1-46"><a href="#cb1-46"></a><span class="co">#&gt;  4 Ig−producing B cell(Lung)       B cell-Lung                             0.569</span></span>
-<span id="cb1-47"><a href="#cb1-47"></a><span class="co">#&gt;  5 Ciliated cell(Lung)             ciliated columnar cell of tracheobronc… 0.819</span></span>
-<span id="cb1-48"><a href="#cb1-48"></a><span class="co">#&gt;  6 Plasmacytoid dendritic cell(Lu… classical monocyte-Lung-CLASH!          0.846</span></span>
-<span id="cb1-49"><a href="#cb1-49"></a><span class="co">#&gt;  7 Eosinophil granulocyte(Lung)    leukocyte-Lung                          0.712</span></span>
-<span id="cb1-50"><a href="#cb1-50"></a><span class="co">#&gt;  8 Neutrophil granulocyte(Lung)    leukocyte-Lung                          0.627</span></span>
-<span id="cb1-51"><a href="#cb1-51"></a><span class="co">#&gt;  9 Endothelial cell_Kdr high(Lung) lung endothelial cell-Lung              0.743</span></span>
-<span id="cb1-52"><a href="#cb1-52"></a><span class="co">#&gt; 10 Endothelial cell_Tmem100 high(… lung endothelial cell-Lung              0.802</span></span>
-<span id="cb1-53"><a href="#cb1-53"></a><span class="co">#&gt; 11 Endothelial cells_Vwf high(Lun… lung endothelial cell-Lung              0.761</span></span>
-<span id="cb1-54"><a href="#cb1-54"></a><span class="co">#&gt; 12 Basophil(Lung)                  mast cell-Lung                          0.425</span></span>
-<span id="cb1-55"><a href="#cb1-55"></a><span class="co">#&gt; 13 NK Cell(Lung)                   natural killer cell-Lung                0.802</span></span>
-<span id="cb1-56"><a href="#cb1-56"></a><span class="co">#&gt; 14 Conventional dendritic cell_Gn… non-classical monocyte-Lung-CLASH!      0.786</span></span>
-<span id="cb1-57"><a href="#cb1-57"></a><span class="co">#&gt; 15 Stromal cell_Acta2 high(Lung)   stromal cell-Lung                       0.642</span></span>
-<span id="cb1-58"><a href="#cb1-58"></a><span class="co">#&gt; 16 Stromal cell_Dcn high(Lung)     stromal cell-Lung                       0.812</span></span>
-<span id="cb1-59"><a href="#cb1-59"></a><span class="co">#&gt; 17 Stromal cell_Inmt high(Lung)    stromal cell-Lung                       0.815</span></span>
-<span id="cb1-60"><a href="#cb1-60"></a><span class="co">#&gt; 18 Dividing T cells(Lung)          T cell-Lung                             0.717</span></span>
-<span id="cb1-61"><a href="#cb1-61"></a><span class="co">#&gt; 19 Nuocyte(Lung)                   T cell-Lung                             0.756</span></span>
-<span id="cb1-62"><a href="#cb1-62"></a><span class="co">#&gt; 20 T Cell_Cd8b1 high(Lung)         T cell-Lung                             0.824</span></span>
-<span id="cb1-63"><a href="#cb1-63"></a><span class="co">#&gt; 21 Alveolar bipotent progenitor(L… alveolar epithelial type 2 cells-Lung   0.657</span></span>
-<span id="cb1-64"><a href="#cb1-64"></a><span class="co">#&gt; 22 AT1 Cell(Lung)                  alveolar epithelial type 2 cells-Lung   0.767</span></span>
-<span id="cb1-65"><a href="#cb1-65"></a><span class="co">#&gt; 23 AT2 Cell(Lung)                  alveolar epithelial type 2 cells-Lung   0.879</span></span>
-<span id="cb1-66"><a href="#cb1-66"></a><span class="co">#&gt; 24 Clara Cell(Lung)                alveolar epithelial type 2 cells-Lung   0.730</span></span>
-<span id="cb1-67"><a href="#cb1-67"></a><span class="co">#&gt; 25 Dividing cells(Lung)            alveolar epithelial type 2 cells-Lung   0.642</span></span>
-<span id="cb1-68"><a href="#cb1-68"></a><span class="co">#&gt; 26 Conventional dendritic cell_H2… dendritic cells and interstital macrop… 0.541</span></span>
-<span id="cb1-69"><a href="#cb1-69"></a><span class="co">#&gt; 27 Conventional dendritic cell_Mg… dendritic cells and interstital macrop… 0.786</span></span>
-<span id="cb1-70"><a href="#cb1-70"></a><span class="co">#&gt; 28 Conventional dendritic cell_Tu… dendritic cells and interstital macrop… 0.666</span></span>
-<span id="cb1-71"><a href="#cb1-71"></a><span class="co">#&gt; 29 Dendritic cell_Naaa high(Lung)  dendritic cells and interstital macrop… 0.798</span></span>
-<span id="cb1-72"><a href="#cb1-72"></a><span class="co">#&gt; 30 Dividing dendritic cells(Lung)  dendritic cells and interstital macrop… 0.670</span></span>
-<span id="cb1-73"><a href="#cb1-73"></a><span class="co">#&gt; 31 Interstitial macrophage(Lung)   dendritic cells and interstital macrop… 0.803</span></span>
-<span id="cb1-74"><a href="#cb1-74"></a><span class="co">#&gt; 32 Monocyte progenitor cell(Lung)  dendritic cells and interstital macrop… 0.572</span></span></code></pre></div>
+<span id="cb1-32"><a href="#cb1-32"></a><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(res_allgenes) &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"MCA annotation"</span>, <span class="st">"clustifyr call"</span>, <span class="st">"r"</span>)</span>
+<span id="cb1-33"><a href="#cb1-33"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(end <span class="op">-</span><span class="st"> </span>start)</span>
+<span id="cb1-34"><a href="#cb1-34"></a><span class="co">#&gt;    user  system elapsed </span></span>
+<span id="cb1-35"><a href="#cb1-35"></a><span class="co">#&gt;   1.208   0.458   1.668</span></span>
+<span id="cb1-36"><a href="#cb1-36"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(res_allgenes, <span class="dt">n =</span> <span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(res_allgenes))</span>
+<span id="cb1-37"><a href="#cb1-37"></a><span class="co">#&gt; # A tibble: 32 x 3</span></span>
+<span id="cb1-38"><a href="#cb1-38"></a><span class="co">#&gt; # Groups:   Annotation [32]</span></span>
+<span id="cb1-39"><a href="#cb1-39"></a><span class="co">#&gt;    `MCA annotation`                `clustifyr call`                            r</span></span>
+<span id="cb1-40"><a href="#cb1-40"></a><span class="co">#&gt;    &lt;chr&gt;                           &lt;chr&gt;                                   &lt;dbl&gt;</span></span>
+<span id="cb1-41"><a href="#cb1-41"></a><span class="co">#&gt;  1 Alveolar macrophage_Ear2 high(… alveolar macrophage-Lung                0.878</span></span>
+<span id="cb1-42"><a href="#cb1-42"></a><span class="co">#&gt;  2 Alveolar macrophage_Pclaf high… alveolar macrophage-Lung                0.710</span></span>
+<span id="cb1-43"><a href="#cb1-43"></a><span class="co">#&gt;  3 B Cell(Lung)                    B cell-Lung                             0.834</span></span>
+<span id="cb1-44"><a href="#cb1-44"></a><span class="co">#&gt;  4 Ig−producing B cell(Lung)       B cell-Lung                             0.569</span></span>
+<span id="cb1-45"><a href="#cb1-45"></a><span class="co">#&gt;  5 Ciliated cell(Lung)             ciliated columnar cell of tracheobronc… 0.819</span></span>
+<span id="cb1-46"><a href="#cb1-46"></a><span class="co">#&gt;  6 Plasmacytoid dendritic cell(Lu… classical monocyte-Lung-CLASH!          0.846</span></span>
+<span id="cb1-47"><a href="#cb1-47"></a><span class="co">#&gt;  7 Eosinophil granulocyte(Lung)    leukocyte-Lung                          0.712</span></span>
+<span id="cb1-48"><a href="#cb1-48"></a><span class="co">#&gt;  8 Neutrophil granulocyte(Lung)    leukocyte-Lung                          0.627</span></span>
+<span id="cb1-49"><a href="#cb1-49"></a><span class="co">#&gt;  9 Endothelial cell_Kdr high(Lung) lung endothelial cell-Lung              0.743</span></span>
+<span id="cb1-50"><a href="#cb1-50"></a><span class="co">#&gt; 10 Endothelial cell_Tmem100 high(… lung endothelial cell-Lung              0.802</span></span>
+<span id="cb1-51"><a href="#cb1-51"></a><span class="co">#&gt; 11 Endothelial cells_Vwf high(Lun… lung endothelial cell-Lung              0.761</span></span>
+<span id="cb1-52"><a href="#cb1-52"></a><span class="co">#&gt; 12 Basophil(Lung)                  mast cell-Lung                          0.425</span></span>
+<span id="cb1-53"><a href="#cb1-53"></a><span class="co">#&gt; 13 NK Cell(Lung)                   natural killer cell-Lung                0.802</span></span>
+<span id="cb1-54"><a href="#cb1-54"></a><span class="co">#&gt; 14 Conventional dendritic cell_Gn… non-classical monocyte-Lung-CLASH!      0.786</span></span>
+<span id="cb1-55"><a href="#cb1-55"></a><span class="co">#&gt; 15 Stromal cell_Acta2 high(Lung)   stromal cell-Lung                       0.642</span></span>
+<span id="cb1-56"><a href="#cb1-56"></a><span class="co">#&gt; 16 Stromal cell_Dcn high(Lung)     stromal cell-Lung                       0.812</span></span>
+<span id="cb1-57"><a href="#cb1-57"></a><span class="co">#&gt; 17 Stromal cell_Inmt high(Lung)    stromal cell-Lung                       0.815</span></span>
+<span id="cb1-58"><a href="#cb1-58"></a><span class="co">#&gt; 18 Dividing T cells(Lung)          T cell-Lung                             0.717</span></span>
+<span id="cb1-59"><a href="#cb1-59"></a><span class="co">#&gt; 19 Nuocyte(Lung)                   T cell-Lung                             0.756</span></span>
+<span id="cb1-60"><a href="#cb1-60"></a><span class="co">#&gt; 20 T Cell_Cd8b1 high(Lung)         T cell-Lung                             0.824</span></span>
+<span id="cb1-61"><a href="#cb1-61"></a><span class="co">#&gt; 21 Alveolar bipotent progenitor(L… alveolar epithelial type 2 cells-Lung   0.657</span></span>
+<span id="cb1-62"><a href="#cb1-62"></a><span class="co">#&gt; 22 AT1 Cell(Lung)                  alveolar epithelial type 2 cells-Lung   0.767</span></span>
+<span id="cb1-63"><a href="#cb1-63"></a><span class="co">#&gt; 23 AT2 Cell(Lung)                  alveolar epithelial type 2 cells-Lung   0.879</span></span>
+<span id="cb1-64"><a href="#cb1-64"></a><span class="co">#&gt; 24 Clara Cell(Lung)                alveolar epithelial type 2 cells-Lung   0.730</span></span>
+<span id="cb1-65"><a href="#cb1-65"></a><span class="co">#&gt; 25 Dividing cells(Lung)            alveolar epithelial type 2 cells-Lung   0.642</span></span>
+<span id="cb1-66"><a href="#cb1-66"></a><span class="co">#&gt; 26 Conventional dendritic cell_H2… dendritic cells and interstital macrop… 0.541</span></span>
+<span id="cb1-67"><a href="#cb1-67"></a><span class="co">#&gt; 27 Conventional dendritic cell_Mg… dendritic cells and interstital macrop… 0.786</span></span>
+<span id="cb1-68"><a href="#cb1-68"></a><span class="co">#&gt; 28 Conventional dendritic cell_Tu… dendritic cells and interstital macrop… 0.666</span></span>
+<span id="cb1-69"><a href="#cb1-69"></a><span class="co">#&gt; 29 Dendritic cell_Naaa high(Lung)  dendritic cells and interstital macrop… 0.798</span></span>
+<span id="cb1-70"><a href="#cb1-70"></a><span class="co">#&gt; 30 Dividing dendritic cells(Lung)  dendritic cells and interstital macrop… 0.670</span></span>
+<span id="cb1-71"><a href="#cb1-71"></a><span class="co">#&gt; 31 Interstitial macrophage(Lung)   dendritic cells and interstital macrop… 0.803</span></span>
+<span id="cb1-72"><a href="#cb1-72"></a><span class="co">#&gt; 32 Monocyte progenitor cell(Lung)  dendritic cells and interstital macrop… 0.572</span></span></code></pre></div>
 </div>
 <div id="benchmark-2--using-sorted-microarray-data-to-classify-10x-pbmc-example-data-available-in-clustifyrdata-package" class="section level2">
 <h2 class="hasAnchor">
@@ -216,26 +214,25 @@
 <span id="cb2-15"><a href="#cb2-15"></a>res2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cor_to_call.html">cor_to_call</a></span>(res, <span class="dt">threshold =</span> <span class="fl">0.5</span>)</span>
 <span id="cb2-16"><a href="#cb2-16"></a></span>
 <span id="cb2-17"><a href="#cb2-17"></a>end &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/proc.time.html">proc.time</a></span>()</span>
-<span id="cb2-18"><a href="#cb2-18"></a><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(res2) &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"manual annotation"</span>, <span class="st">"clustifyr call"</span>, <span class="st">"r"</span>)</span>
-<span id="cb2-19"><a href="#cb2-19"></a></span>
+<span id="cb2-18"><a href="#cb2-18"></a></span>
+<span id="cb2-19"><a href="#cb2-19"></a><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(res2) &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"manual annotation"</span>, <span class="st">"clustifyr call"</span>, <span class="st">"r"</span>)</span>
 <span id="cb2-20"><a href="#cb2-20"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(end <span class="op">-</span><span class="st"> </span>start)</span>
 <span id="cb2-21"><a href="#cb2-21"></a><span class="co">#&gt;    user  system elapsed </span></span>
-<span id="cb2-22"><a href="#cb2-22"></a><span class="co">#&gt;   0.043   0.004   0.046</span></span>
-<span id="cb2-23"><a href="#cb2-23"></a></span>
-<span id="cb2-24"><a href="#cb2-24"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(res2, <span class="dt">n =</span> <span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(res2))</span>
-<span id="cb2-25"><a href="#cb2-25"></a><span class="co">#&gt; # A tibble: 9 x 3</span></span>
-<span id="cb2-26"><a href="#cb2-26"></a><span class="co">#&gt; # Groups:   cluster [9]</span></span>
-<span id="cb2-27"><a href="#cb2-27"></a><span class="co">#&gt;   `manual annotation` `clustifyr call`                    r</span></span>
-<span id="cb2-28"><a href="#cb2-28"></a><span class="co">#&gt;   &lt;chr&gt;               &lt;chr&gt;                           &lt;dbl&gt;</span></span>
-<span id="cb2-29"><a href="#cb2-29"></a><span class="co">#&gt; 1 Memory CD4 T        CD4+ Effector Memory            0.594</span></span>
-<span id="cb2-30"><a href="#cb2-30"></a><span class="co">#&gt; 2 Naive CD4 T         CD4+ Effector Memory            0.587</span></span>
-<span id="cb2-31"><a href="#cb2-31"></a><span class="co">#&gt; 3 CD8 T               CD8+ Effector Memory            0.602</span></span>
-<span id="cb2-32"><a href="#cb2-32"></a><span class="co">#&gt; 4 NK                  Mature NK cell_CD56+ CD16+ CD3- 0.553</span></span>
-<span id="cb2-33"><a href="#cb2-33"></a><span class="co">#&gt; 5 Platelet            unassigned                      0.294</span></span>
-<span id="cb2-34"><a href="#cb2-34"></a><span class="co">#&gt; 6 CD14+ Mono          Monocyte                        0.607</span></span>
-<span id="cb2-35"><a href="#cb2-35"></a><span class="co">#&gt; 7 FCGR3A+ Mono        Monocyte                        0.577</span></span>
-<span id="cb2-36"><a href="#cb2-36"></a><span class="co">#&gt; 8 DC                  Myeloid Dendritic Cell          0.579</span></span>
-<span id="cb2-37"><a href="#cb2-37"></a><span class="co">#&gt; 9 B                   Naïve B-cells                   0.642</span></span></code></pre></div>
+<span id="cb2-22"><a href="#cb2-22"></a><span class="co">#&gt;   0.042   0.003   0.046</span></span>
+<span id="cb2-23"><a href="#cb2-23"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(res2, <span class="dt">n =</span> <span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(res2))</span>
+<span id="cb2-24"><a href="#cb2-24"></a><span class="co">#&gt; # A tibble: 9 x 3</span></span>
+<span id="cb2-25"><a href="#cb2-25"></a><span class="co">#&gt; # Groups:   cluster [9]</span></span>
+<span id="cb2-26"><a href="#cb2-26"></a><span class="co">#&gt;   `manual annotation` `clustifyr call`                    r</span></span>
+<span id="cb2-27"><a href="#cb2-27"></a><span class="co">#&gt;   &lt;chr&gt;               &lt;chr&gt;                           &lt;dbl&gt;</span></span>
+<span id="cb2-28"><a href="#cb2-28"></a><span class="co">#&gt; 1 Memory CD4 T        CD4+ Effector Memory            0.594</span></span>
+<span id="cb2-29"><a href="#cb2-29"></a><span class="co">#&gt; 2 Naive CD4 T         CD4+ Effector Memory            0.587</span></span>
+<span id="cb2-30"><a href="#cb2-30"></a><span class="co">#&gt; 3 CD8 T               CD8+ Effector Memory            0.602</span></span>
+<span id="cb2-31"><a href="#cb2-31"></a><span class="co">#&gt; 4 NK                  Mature NK cell_CD56+ CD16+ CD3- 0.553</span></span>
+<span id="cb2-32"><a href="#cb2-32"></a><span class="co">#&gt; 5 Platelet            unassigned                      0.294</span></span>
+<span id="cb2-33"><a href="#cb2-33"></a><span class="co">#&gt; 6 CD14+ Mono          Monocyte                        0.607</span></span>
+<span id="cb2-34"><a href="#cb2-34"></a><span class="co">#&gt; 7 FCGR3A+ Mono        Monocyte                        0.577</span></span>
+<span id="cb2-35"><a href="#cb2-35"></a><span class="co">#&gt; 8 DC                  Myeloid Dendritic Cell          0.579</span></span>
+<span id="cb2-36"><a href="#cb2-36"></a><span class="co">#&gt; 9 B                   Naïve B-cells                   0.642</span></span></code></pre></div>
 </div>
 <div id="comparison-with-other-methods" class="section level2">
 <h2 class="hasAnchor">

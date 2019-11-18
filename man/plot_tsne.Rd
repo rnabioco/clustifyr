@@ -14,6 +14,7 @@ plot_tsne(
   d_cols = NULL,
   pt_size = 0.25,
   alpha_col = NULL,
+  group_col = NULL,
   scale_limits = NULL,
   do_label = FALSE,
   do_legend = TRUE,
@@ -41,6 +42,8 @@ defaults to RColorBrewer paired palette}
 
 \item{alpha_col}{whether to refer to data column for alpha values}
 
+\item{group_col}{group by another column instead of feature, useful for labels}
+
 \item{scale_limits}{defaults to min = 0, max = max(data$x),
 otherwise a two-element numeric vector indicating min and max to plot}
 
@@ -59,5 +62,6 @@ Plot a tSNE or umap colored by feature.
 \examples{
 plot_tsne(
   pbmc_meta,
-  feature = "classified")
+  feature = "classified"
+)
 }

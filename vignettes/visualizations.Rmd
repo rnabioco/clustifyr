@@ -157,68 +157,6 @@ plot_best_call(
 
 Visualization of other attributes shared in the metadata between ref and query by `plot_cols`, such as nGene, nUMI, mt_percentage, as another way of identity confirmation after `clustify`. Certain cell types have distinct patterns, more genes detected, for example.
 
-```{r "Plot other attributes", fig.height = 8, fig.width = 10}
-# plot_cols(
-#   metadata = pbmc_meta,
-#   cluster_col = "seurat_clusters",
-#   cluster_col_called = "classified",
-#   metadata_ref = "...",
-#   cluster_col_ref = "...",
-#   plot_col_ref = "..."
-# )
-```
-
-
-
-
-
-
-
-
-
-```{r "GSEA top hits", eval = F, include = F}
-# ARE WE KEEPING THIS??
-
-# gene lists can be converted from gmt files (Broad)
-list_reactome <- gmt_to_list(here("c2.cp.reactome.v6.2.symbols.gmt"))
-
-full_pbmc4k_avg <- average_clusters(
-  full_pbmc4k_matrix,
-  full_pbmc4k_meta,
-  cluster_col = "classified"
-)
-
-res <- plot_pathway_gsea(
-  full_pbmc4k_avg[, 1:2],
-  list_reactome,
-  topn = 3
-)
-
-# returns dataframe of gsea analysis
-res[[1]][1:2, 1:2]
-# and plot
-res[[2]]
-```
-
-```{r, eval = F, include = F}
-# plot_call(
-#   cor_matrix = res,
-#   metadata = full_pbmc4k_meta,
-#   data_to_plot = colnames(res)[1:2],
-#   x = "tSNE_1",
-#   y = "tSNE_2"
-#
-# )
-
-plot_cols(
-  metadata = full_pbmc4k_meta,
-  cluster_col = "cluster",
-  cluster_col_called = ""
-)
-```
-
-
-
 
 
 

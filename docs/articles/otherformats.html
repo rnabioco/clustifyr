@@ -109,7 +109,7 @@
     <div class="page-header toc-ignore">
       <h1>Support for various single cell object formats</h1>
             
-            <h4 class="date">2019-11-14</h4>
+            <h4 class="date">2019-11-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyr/blob/master/vignettes/otherformats.Rmd"><code>vignettes/otherformats.Rmd</code></a></small>
       <div class="hidden name"><code>otherformats.Rmd</code></div>
@@ -128,7 +128,7 @@
 <span id="cb1-4"><a href="#cb1-4"></a>res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustify.html">clustify</a></span>(</span>
 <span id="cb1-5"><a href="#cb1-5"></a>  <span class="dt">input =</span> s_small,</span>
 <span id="cb1-6"><a href="#cb1-6"></a>  <span class="dt">cluster_col =</span> <span class="st">"res.1"</span>,</span>
-<span id="cb1-7"><a href="#cb1-7"></a>  <span class="dt">ref_mat =</span> pbmc_bulk_matrix,</span>
+<span id="cb1-7"><a href="#cb1-7"></a>  <span class="dt">ref_mat =</span> cbmc_ref,</span>
 <span id="cb1-8"><a href="#cb1-8"></a>  <span class="dt">seurat_out =</span> T</span>
 <span id="cb1-9"><a href="#cb1-9"></a>)</span>
 <span id="cb1-10"><a href="#cb1-10"></a></span>
@@ -146,14 +146,39 @@
 <a href="#other-scrna-seq-object-formats-are-easily-supported-by-adding-defaults-to-a-lookup-file-object_loc_lookup-currently-including-sce-urd-cds-fsce-" class="anchor"></a>Other scRNA-seq object formats are easily supported, by adding defaults to a lookup file <code>object_loc_lookup</code>, currently including <code>SCE</code>, <code>URD</code>, <code>CDS</code>, <code>FSCE</code>.</h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># location of data in object in this format</span></span>
 <span id="cb2-2"><a href="#cb2-2"></a>object_loc_lookup</span>
-<span id="cb2-3"><a href="#cb2-3"></a></span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="co"># adding seurat3 locations</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a>object_loc_lookup<span class="op">$</span>Seurat &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(</span>
-<span id="cb2-6"><a href="#cb2-6"></a>  <span class="dt">expr =</span> <span class="st">"input@assays$RNA@data"</span>,</span>
-<span id="cb2-7"><a href="#cb2-7"></a>  <span class="dt">meta =</span> <span class="st">"input@meta.data"</span>,</span>
-<span id="cb2-8"><a href="#cb2-8"></a>  <span class="dt">var =</span> <span class="st">"input@assays$RNA@var.features"</span>,</span>
-<span id="cb2-9"><a href="#cb2-9"></a>  <span class="dt">col =</span> <span class="st">"RNA_snn_res.1"</span></span>
-<span id="cb2-10"><a href="#cb2-10"></a>)</span></code></pre></div>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co">#&gt;              SingleCellExperiment               URD</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co">#&gt; expr  input@assays$data$logcounts input@logupx.data</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co">#&gt; meta as.data.frame(input@colData)        input@meta</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="co">#&gt; var                          NULL   input@var.genes</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="co">#&gt; col                    cell_type1           cluster</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co">#&gt;                         FunctionalSingleCellExperiment</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="co">#&gt; expr input@ExperimentList$rnaseq@assays$data$logcounts</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="co">#&gt; meta               input@ExperimentList$rnaseq@colData</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="co">#&gt; var                                               NULL</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="co">#&gt; col                                     leiden_cluster</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="co">#&gt;                             Seurat</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="co">#&gt; expr         input@assays$RNA@data</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a><span class="co">#&gt; meta               input@meta.data</span></span>
+<span id="cb2-16"><a href="#cb2-16"></a><span class="co">#&gt; var  input@assays$RNA@var.features</span></span>
+<span id="cb2-17"><a href="#cb2-17"></a><span class="co">#&gt; col                  RNA_snn_res.1</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a><span class="co">#&gt;                                                                                                                CellDataSet</span></span>
+<span id="cb2-19"><a href="#cb2-19"></a><span class="co">#&gt; expr do.call(function(x) {row.names(x) &lt;- input@featureData@data$gene_short_name; return(x)}, list(input@assayData$exprs))</span></span>
+<span id="cb2-20"><a href="#cb2-20"></a><span class="co">#&gt; meta                                                                                   as.data.frame(input@phenoData@data)</span></span>
+<span id="cb2-21"><a href="#cb2-21"></a><span class="co">#&gt; var                     as.character(input@featureData@data$gene_short_name[input@featureData@data$use_for_ordering == T])</span></span>
+<span id="cb2-22"><a href="#cb2-22"></a><span class="co">#&gt; col                                                                                                           Main_Cluster</span></span>
+<span id="cb2-23"><a href="#cb2-23"></a><span class="co">#&gt;                                                                                                                                                                                                                                                                                              H5File</span></span>
+<span id="cb2-24"><a href="#cb2-24"></a><span class="co">#&gt; expr                                                                                                                {mat &lt;- input[["layers/norm_data"]][,];\ncolnames(mat) &lt;- input[["row_attrs/gene_names"]][];\nrownames(mat) &lt;- input[["col_attrs/cell_names"]][];\nmat &lt;- t(mat);\nreturn(mat)}</span></span>
+<span id="cb2-25"><a href="#cb2-25"></a><span class="co">#&gt; meta {l &lt;- input$ls(recursive=TRUE);\ns &lt;- l[,1][stringr::str_detect(l[,1], "col_attrs/")];\ns2 &lt;- sapply(s, FUN=function(x) {input[[x]][]});\ncolnames(s2) &lt;- stringr::str_remove(colnames(s2),"col_attrs/");\nmeta &lt;- tibble::column_to_rownames(as.data.frame(s2), "cell_names");\nreturn(meta)}</span></span>
+<span id="cb2-26"><a href="#cb2-26"></a><span class="co">#&gt; var                                                                                                                                                                                                                                                                                            NULL</span></span>
+<span id="cb2-27"><a href="#cb2-27"></a><span class="co">#&gt; col                                                                                                                                                                                                                                                                                      orig.ident</span></span>
+<span id="cb2-28"><a href="#cb2-28"></a></span>
+<span id="cb2-29"><a href="#cb2-29"></a><span class="co"># adding seurat3 locations</span></span>
+<span id="cb2-30"><a href="#cb2-30"></a>object_loc_lookup<span class="op">$</span>Seurat &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(</span>
+<span id="cb2-31"><a href="#cb2-31"></a>  <span class="dt">expr =</span> <span class="st">"input@assays$RNA@data"</span>,</span>
+<span id="cb2-32"><a href="#cb2-32"></a>  <span class="dt">meta =</span> <span class="st">"input@meta.data"</span>,</span>
+<span id="cb2-33"><a href="#cb2-33"></a>  <span class="dt">var =</span> <span class="st">"input@assays$RNA@var.features"</span>,</span>
+<span id="cb2-34"><a href="#cb2-34"></a>  <span class="dt">col =</span> <span class="st">"RNA_snn_res.1"</span></span>
+<span id="cb2-35"><a href="#cb2-35"></a>)</span></code></pre></div>
 <p>For example, sample code for <code>scrunchy</code> is as easy as:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/clustify_nudge.html">clustify_nudge</a></span>(</span>
 <span id="cb3-2"><a href="#cb3-2"></a>  <span class="dt">input =</span> fsce_small,</span>
@@ -174,7 +199,7 @@
 <span id="cb4-5"><a href="#cb4-5"></a>)</span>
 <span id="cb4-6"><a href="#cb4-6"></a></span>
 <span id="cb4-7"><a href="#cb4-7"></a><span class="co"># and other object types with lookup</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a>object_ref &lt;-<span class="st"> </span><span class="kw">use_object_comp</span>(<span class="dt">input =</span> input)</span></code></pre></div>
+<span id="cb4-8"><a href="#cb4-8"></a>object_ref &lt;-<span class="st"> </span><span class="kw"><a href="../reference/object_ref.html">object_ref</a></span>(<span class="dt">input =</span> s_small3)</span></code></pre></div>
 </div>
   </div>
 

@@ -25,14 +25,14 @@ knitr::opts_chunk$set(
 
 ## Direct handling of `seurat` objects, v2 and v3, extracting the required data, and inserting called cell types directly into the objects
 
-```{r eval = F}
+```{r}
 library(clustifyr)
 
 # can even returning a new object with `type` added to metadata.
 res <- clustify(
   input = s_small,
   cluster_col = "res.1",
-  ref_mat = pbmc_bulk_matrix,
+  ref_mat = cbmc_ref,
   seurat_out = T
 )
 
@@ -48,7 +48,7 @@ res2 <- clustify_lists(
 
 ## Other scRNA-seq object formats are easily supported, by adding defaults to a lookup file `object_loc_lookup`, currently including `SCE`, `URD`, `CDS`, `FSCE`.
 
-```{r, eval = F}
+```{r}
 # location of data in object in this format
 object_loc_lookup
 
@@ -63,7 +63,7 @@ object_loc_lookup$Seurat <- c(
 
 For example, sample code for `scrunchy` is as easy as:
 
-```{r eval = F}
+```{r, eval = F}
 res <- clustify_nudge(
   input = fsce_small,
   ref_mat = cbmc_ref,
@@ -76,7 +76,7 @@ res <- clustify_nudge(
 ## Making new references from objects
 Making scRNA-seq objects into references is assisted by wrappers as well.
 
-```{r eval = F}
+```{r, messag = T}
 # for both v2 and v3
 seurat_ref <- seurat_ref(
   seurat_object = s_small3,
@@ -84,5 +84,5 @@ seurat_ref <- seurat_ref(
 )
 
 # and other object types with lookup
-object_ref <- use_object_comp(input = input)
+object_ref <- object_ref(input = s_small3)
 ```

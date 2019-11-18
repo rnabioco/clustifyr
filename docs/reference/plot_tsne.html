@@ -165,6 +165,7 @@
   <span class='kw'>d_cols</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>pt_size</span> <span class='kw'>=</span> <span class='fl'>0.25</span>,
   <span class='kw'>alpha_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>group_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>scale_limits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>do_label</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>do_legend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
@@ -213,6 +214,10 @@ defaults to RColorBrewer paired palette</p></td>
       <td><p>whether to refer to data column for alpha values</p></td>
     </tr>
     <tr>
+      <th>group_col</th>
+      <td><p>group by another column instead of feature, useful for labels</p></td>
+    </tr>
+    <tr>
       <th>scale_limits</th>
       <td><p>defaults to min = 0, max = max(data$x),
 otherwise a two-element numeric vector indicating min and max to plot</p></td>
@@ -238,7 +243,8 @@ otherwise a two-element numeric vector indicating min and max to plot</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>plot_tsne</span>(
   <span class='no'>pbmc_meta</span>,
-  <span class='kw'>feature</span> <span class='kw'>=</span> <span class='st'>"classified"</span>)</div><div class='img'><img src='plot_tsne-1.png' alt='' width='700' height='433' /></div></pre>
+  <span class='kw'>feature</span> <span class='kw'>=</span> <span class='st'>"classified"</span>
+)</div><div class='img'><img src='plot_tsne-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
