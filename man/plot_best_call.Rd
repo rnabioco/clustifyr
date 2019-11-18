@@ -36,7 +36,7 @@ plot_best_call(
 
 \item{per_cell}{whether the cor_mat was generate per cell or per cluster}
 
-\item{...}{passed to plot_tsne}
+\item{...}{passed to plot_dims}
 }
 \value{
 ggplot object, cells projected by dr, colored by cell type classification

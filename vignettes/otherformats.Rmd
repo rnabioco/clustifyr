@@ -63,7 +63,7 @@ object_loc_lookup$Seurat <- c(
 
 For example, sample code for `scrunchy` is as easy as:
 
-```{r, eval = F}
+```{"example"}
 res <- clustify_nudge(
   input = fsce_small,
   ref_mat = cbmc_ref,

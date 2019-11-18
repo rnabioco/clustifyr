@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 
 All references used in tutorials and more are available at https://github.com/rnabioco/clustifyrdata
 
-```{r, eval = F}
+```{"Installation"}
 # install.packages("devtools")
 devtools::install_github("rnabioco/clustifyrdata")
 ```

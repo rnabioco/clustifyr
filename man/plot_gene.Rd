@@ -16,7 +16,7 @@ plot_gene(expr_mat, metadata, genes, cell_col = NULL, ...)
 \item{cell_col}{column name in metadata containing cell ids, defaults
 to rownames if not supplied}
 
-\item{...}{additional arguments passed to \verb{[clustifyr::plot_tsne()]}}
+\item{...}{additional arguments passed to \verb{[clustifyr::plot_dims()]}}
 }
 \value{
 list of ggplot object, cells projected by dr, colored by gene expression
