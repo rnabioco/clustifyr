@@ -148,6 +148,18 @@ call_to_metadata <- function(res,
   temp_col_id <- get_unique_column(metadata, "rn")
 
   df_temp <- res
+  if (!is.null(rename_prefix)) {
+    eval(parse(
+      text = paste0(
+        "df_temp <- dplyr::rename(df_temp, ",
+        paste0(rename_prefix, "_type"),
+        " = type, ",
+        paste0(rename_prefix, "_r"),
+        " = r)"
+      )
+    ))
+  }
+
   if (per_cell == FALSE) {
     if (!(cluster_col %in% colnames(metadata))) {
       stop("cluster_col is not a column of metadata", call. = FALSE)
@@ -202,17 +214,6 @@ call_to_metadata <- function(res,
 
     df_temp_full <-
       tibble::column_to_rownames(df_temp_full, temp_col_id)
-  }
-  if (!is.null(rename_prefix)) {
-    eval(parse(
-      text = paste0(
-        "df_temp_full <- dplyr::rename(df_temp_full, ",
-        paste0(rename_prefix, "_type"),
-        " = type, ",
-        paste0(rename_prefix, "_r"),
-        " = r)"
-      )
-    ))
   }
   df_temp_full
 }
