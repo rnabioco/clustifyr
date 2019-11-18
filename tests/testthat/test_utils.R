@@ -1231,6 +1231,9 @@ test_that("seurat_meta warns about not finding dr", {
   m2 <- seurat_meta(s_small,
     dr = "s"
   )
+  m3 <- seurat_meta(s_small3,
+                    dr = "s"
+  )
   expect_true(all(rownames(m) == rownames(m2)))
 })
 
