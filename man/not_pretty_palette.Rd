@@ -15,6 +15,6 @@ vector of colors
 black and white palette for plotting continous variables
 }
 \examples{
-not_pretty_palette
+clustifyr:::not_pretty_palette
 }
 \keyword{datasets}

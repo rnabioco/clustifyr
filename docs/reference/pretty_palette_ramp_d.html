@@ -171,7 +171,15 @@
     <p>color ramp</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>pretty_palette_ramp_d</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'pretty_palette_ramp_d' not found</span></div></pre>
+    <pre class="examples"><div class='input'><span class='kw pkg'>clustifyr</span><span class='kw ns'>:::</span><span class='no'><a href='http://rnabioco.github.io/clustifyr/reference/pretty_palette_ramp_d.html'>pretty_palette_ramp_d</a></span></div><div class='output co'>#&gt; function (n) 
+#&gt; {
+#&gt;     x &lt;- ramp(seq.int(0, 1, length.out = n))
+#&gt;     if (ncol(x) == 4L) 
+#&gt;         rgb(x[, 1L], x[, 2L], x[, 3L], x[, 4L], maxColorValue = 255)
+#&gt;     else rgb(x[, 1L], x[, 2L], x[, 3L], maxColorValue = 255)
+#&gt; }
+#&gt; &lt;bytecode: 0x7fe994762270&gt;
+#&gt; &lt;environment: 0x7fe994778cc0&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

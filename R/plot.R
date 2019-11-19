@@ -221,20 +221,20 @@ pretty_palette <- rev(scales::brewer_pal(palette = "RdGy")(6))
 #' Color palette for plotting continous variables, starting at gray
 #' @return vector of colors
 #' @examples
-#' pretty_palette2
+#' clustifyr:::pretty_palette2
 pretty_palette2 <- scales::brewer_pal(palette = "Reds")(9)
 
 #' black and white palette for plotting continous variables
 #' @return vector of colors
 #' @examples
-#' not_pretty_palette
+#' clustifyr:::not_pretty_palette
 not_pretty_palette <- scales::brewer_pal(palette = "Greys")(9)
 
 #' Expanded color palette ramp for plotting discrete variables
 #' @param n number of colors to use
 #' @return color ramp
 #' @examples
-#' pretty_palette_ramp_d
+#' clustifyr:::pretty_palette_ramp_d
 pretty_palette_ramp_d <-
   grDevices::colorRampPalette(scales::brewer_pal(palette = "Paired")(12))
 
