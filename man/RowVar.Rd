@@ -18,5 +18,5 @@ vector of numeric values
 get var per row for matrix
 }
 \examples{
-pbmc_small_rowvar <- RowVar(as.matrix(pbmc_matrix_small))
+pbmc_small_rowvar <- clustifyr:::RowVar(as.matrix(pbmc_matrix_small))
 }
