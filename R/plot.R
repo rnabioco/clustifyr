@@ -215,7 +215,7 @@ plot_dims <- function(data,
 #' Color palette for plotting continous variables
 #' @return vector of colors
 #' @examples
-#' pretty_palette
+#' clustifyr:::pretty_palette
 pretty_palette <- rev(scales::brewer_pal(palette = "RdGy")(6))
 
 #' Color palette for plotting continous variables, starting at gray
