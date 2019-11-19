@@ -109,7 +109,7 @@
     <div class="page-header toc-ignore">
       <h1>Introduction to clustifyr</h1>
             
-            <h4 class="date">2019-11-18</h4>
+            <h4 class="date">2019-11-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyr/blob/master/vignettes/clustifyR.Rmd"><code>vignettes/clustifyR.Rmd</code></a></small>
       <div class="hidden name"><code>clustifyR.Rmd</code></div>
@@ -128,9 +128,9 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>To install <code>clustifyr</code> BiocManager must be installed.</p>
-<pre class='{"installation"}'><code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("BiocManager")
-
-BiocManager::install("clustifyr")</a></code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"BiocManager"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a>BiocManager<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span>(<span class="st">"clustifyr"</span>)</span></code></pre></div>
 </div>
 <div id="a-simple-example-10x-genomics-pbmcs" class="section level2">
 <h2 class="hasAnchor">
@@ -277,11 +277,10 @@ BiocManager::install("clustifyr")</a></code></pre>
 <span id="cb7-21"><a href="#cb7-21"></a><span class="co"># View as heatmap, or plot_best_call</span></span>
 <span id="cb7-22"><a href="#cb7-22"></a><span class="kw"><a href="../reference/plot_cor_heatmap.html">plot_cor_heatmap</a></span>(</span>
 <span id="cb7-23"><a href="#cb7-23"></a>  <span class="dt">cor_mat =</span> list_res,              <span class="co"># matrix of correlation coefficients from clustify_lists()</span></span>
-<span id="cb7-24"><a href="#cb7-24"></a>  <span class="dt">col =</span> not_pretty_palette,        <span class="co"># colors to use for heatmap</span></span>
-<span id="cb7-25"><a href="#cb7-25"></a>  <span class="dt">cluster_rows =</span> <span class="ot">FALSE</span>,            <span class="co"># cluster by row?</span></span>
-<span id="cb7-26"><a href="#cb7-26"></a>  <span class="dt">cluster_columns =</span> <span class="ot">FALSE</span>,         <span class="co"># cluster by column?</span></span>
-<span id="cb7-27"><a href="#cb7-27"></a>  <span class="dt">legend_title =</span> <span class="st">"% expressed"</span>     <span class="co"># title of heatmap legend</span></span>
-<span id="cb7-28"><a href="#cb7-28"></a>)</span></code></pre></div>
+<span id="cb7-24"><a href="#cb7-24"></a>  <span class="dt">cluster_rows =</span> <span class="ot">FALSE</span>,            <span class="co"># cluster by row?</span></span>
+<span id="cb7-25"><a href="#cb7-25"></a>  <span class="dt">cluster_columns =</span> <span class="ot">FALSE</span>,         <span class="co"># cluster by column?</span></span>
+<span id="cb7-26"><a href="#cb7-26"></a>  <span class="dt">legend_title =</span> <span class="st">"% expressed"</span>     <span class="co"># title of heatmap legend</span></span>
+<span id="cb7-27"><a href="#cb7-27"></a>)</span></code></pre></div>
 <p><img src="clustifyR_files/figure-html/clustifyr%20with%20gene%20lists-1.png" width="576" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a></span>
 <span id="cb8-2"><a href="#cb8-2"></a><span class="co"># Downstream functions same as clustify()</span></span>

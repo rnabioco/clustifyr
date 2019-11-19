@@ -161,7 +161,6 @@ average_clusters <- function(mat,
 #'   metadata = pbmc_meta,
 #'   cluster_col = "classified"
 #' )
-#' @export
 percent_clusters <- function(mat,
                              metadata,
                              cluster_col = "cluster",
@@ -190,7 +189,6 @@ percent_clusters <- function(mat,
 #' )
 #'
 #' best_mat <- get_best_match_matrix(cor_mat)
-#' @export
 get_best_match_matrix <- function(cor_mat) {
   best_mat <-
     as.data.frame(t(apply(cor_mat, 1, function(x) {
@@ -225,7 +223,6 @@ get_best_match_matrix <- function(cor_mat) {
 #'   best_mat = best_mat,
 #'   cor_mat = cor_mat
 #' )
-#' @export
 get_best_str <- function(name,
                          best_mat,
                          cor_mat,
@@ -261,7 +258,6 @@ get_best_str <- function(name,
 #' b <- rep(4:10)
 #' c <- rep(4:6)
 #' get_common_elements(a, b, c)
-#' @export
 get_common_elements <- function(...) {
   vecs <- list(...)
   # drop NULL elements of list
@@ -308,7 +304,6 @@ get_common_elements <- function(...) {
 #'   sample_col = "sample",
 #'   sample_id = "A"
 #' )
-#' @export
 clustify_intra <- function(expr_mat,
                            metadata,
                            query_genes,
@@ -423,7 +418,6 @@ average_clusters_filter <- function(mat,
 #'
 #' pbmc_matrix_filtered <- remove_background(pbmc_matrix_small, avg1, 1)
 #' @export
-
 remove_background <- function(mat, background, n = 0) {
   if (n == 0) {
     n <- length(background)
@@ -514,7 +508,6 @@ calculate_pathway_gsea <- function(mat,
 #'     "primary human myeloid DC"
 #'   )
 #' )
-#' @export
 assign_ident <- function(metadata,
                          cluster_col = "cluster",
                          ident_col = "type",
@@ -652,7 +645,6 @@ cor_to_call_topn <- function(cor_mat,
 #'   genelist = cbmc_m$B,
 #'   clusters = pbmc_meta$classified
 #' )
-#' @export
 gene_pct <- function(matrix,
                      genelist,
                      clusters,
@@ -1566,7 +1558,6 @@ plot_pathway_gsea <- function(mat,
 #' @return vector of numeric values
 #' @examples
 #' pbmc_small_rowvar <- RowVar(as.matrix(pbmc_matrix_small))
-#' @export
 RowVar <- function(x, na.rm = TRUE) {
   rowSums((x - rowMeans(x, na.rm = na.rm))^2, na.rm = na.rm) / (dim(x)[2] - 1)
 }
@@ -1909,7 +1900,6 @@ file_marker_parse <- function(filename) {
 #'   pbmc_meta,
 #'   "orig.ident"
 #' )
-#' @export
 get_unique_column <- function(df, id = NULL) {
   if (!is.null(id)) {
     out_id <- id

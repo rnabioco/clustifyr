@@ -15,7 +15,6 @@
 #'   cluster_ids = colnames(pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)]),
 #'   compute_method = "spearman"
 #' )
-#' @export
 get_similarity <- function(expr_mat,
                            ref_mat,
                            cluster_ids,
@@ -112,7 +111,6 @@ get_similarity <- function(expr_mat,
 #'   per_cell = TRUE,
 #'   compute_method = "spearman"
 #' )
-#' @export
 permute_similarity <- function(expr_mat,
                                ref_mat,
                                cluster_ids,
@@ -195,7 +193,6 @@ permute_similarity <- function(expr_mat,
 #'   sc_assign = colnames(pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)]),
 #'   sc_clust = colnames(pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)])
 #' )
-#' @export
 compute_mean_expr <- function(expr_mat,
                               sc_assign,
                               sc_clust) {
@@ -218,7 +215,6 @@ compute_mean_expr <- function(expr_mat,
 #'   cluster_ids = colnames(pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)]),
 #'   compute_method = "spearman"
 #' )
-#' @export
 calc_similarity <- function(query_mat,
                             ref_mat,
                             compute_method,
@@ -280,7 +276,6 @@ calc_similarity <- function(query_mat,
 #' @param compute_method method to run i.e. corr_coef
 #' @param ... arguments to pass to compute_method function
 #' @return numeric value of desired correlation or distance measurement
-#' @export
 vector_similarity <- function(vec1, vec2, compute_method, ...) {
   # examine whether two vectors are of the same size
   if (!is.numeric(vec1) ||
@@ -308,7 +303,6 @@ vector_similarity <- function(vec1, vec2, compute_method, ...) {
 #' @param vec1 test vector
 #' @param vec2 reference vector
 #' @return numeric value of cosine distance between the vectors
-#' @export
 cosine <- function(vec1, vec2) {
   sum(vec1 * vec2) / sqrt(sum(vec1^2) * sum(vec2^2))
 }
@@ -331,7 +325,6 @@ cosine <- function(vec1, vec2) {
 #' @param total_reads Pseudo-library size
 #' @param max_KL Maximal allowed value of KL-divergence.
 #' @return numeric value, with additional attributes, of kl divergence between the vectors
-#' @export
 kl_divergence <- function(vec1,
                           vec2,
                           if_log = FALSE,

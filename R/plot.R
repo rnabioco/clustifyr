@@ -216,21 +216,18 @@ plot_dims <- function(data,
 #' @return vector of colors
 #' @examples
 #' pretty_palette
-#' @export
 pretty_palette <- rev(scales::brewer_pal(palette = "RdGy")(6))
 
 #' Color palette for plotting continous variables, starting at gray
 #' @return vector of colors
 #' @examples
 #' pretty_palette2
-#' @export
 pretty_palette2 <- scales::brewer_pal(palette = "Reds")(9)
 
 #' black and white palette for plotting continous variables
 #' @return vector of colors
 #' @examples
 #' not_pretty_palette
-#' @export
 not_pretty_palette <- scales::brewer_pal(palette = "Greys")(9)
 
 #' Expanded color palette ramp for plotting discrete variables
@@ -238,7 +235,6 @@ not_pretty_palette <- scales::brewer_pal(palette = "Greys")(9)
 #' @return color ramp
 #' @examples
 #' pretty_palette_ramp_d
-#' @export
 pretty_palette_ramp_d <-
   grDevices::colorRampPalette(scales::brewer_pal(palette = "Paired")(12))
 
@@ -455,7 +451,6 @@ plot_gene <- function(expr_mat,
 #' )
 #'
 #' plts
-#' @export
 plot_call <- function(cor_mat,
                       metadata,
                       data_to_plot = colnames(cor_mat),

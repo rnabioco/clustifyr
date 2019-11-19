@@ -113,7 +113,7 @@
 </h1></div>
 
 <p>clustifyr classifies cells and clusters in single-cell RNA sequencing experiments using reference bulk RNA-seq data sets, sorted microarray expression data, single-cell gene signatures, or lists of marker genes.</p>
-<p>Single cell transcriptomes are difficult to annotate without extensive knowledge of the underlying biology of the system in question. Even with this knowledge, accurate identification can be challenging due to the lack of detectable expression of common marker genes. clustifyr solves this problem by automatically annotating single cells or clusters using scRNA-seq, bulk RNA-seq data, microarray or marker gene lists. Additional functions allow for exploratory analysis of similarities between single cell RNA-seq datasets and reference data.</p>
+<p>Single cell transcriptomes are difficult to annotate without knowledge of the underlying biology. Even with this knowledge, accurate identification can be challenging due to the lack of detectable expression of common marker genes. clustifyr solves this problem by automatically annotating single cells or clusters of cells using single-cell RNA-seq, bulk RNA-seq data, microarray, or marker gene lists. Additional functions enable exploratory analysis of similarities between single cell RNA-seq datasets and reference data.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -140,94 +140,113 @@
 <span id="cb2-7"><a href="#cb2-7"></a>  <span class="dt">ref_mat =</span> cbmc_ref,</span>
 <span id="cb2-8"><a href="#cb2-8"></a>  <span class="dt">query_genes =</span> pbmc_vargenes</span>
 <span id="cb2-9"><a href="#cb2-9"></a>)</span>
-<span id="cb2-10"><a href="#cb2-10"></a>res2 &lt;-<span class="st"> </span><span class="kw"><a href="reference/cor_to_call.html">cor_to_call</a></span>(res)</span>
-<span id="cb2-11"><a href="#cb2-11"></a>res2</span>
-<span id="cb2-12"><a href="#cb2-12"></a><span class="co">#&gt; # A tibble: 9 x 3</span></span>
-<span id="cb2-13"><a href="#cb2-13"></a><span class="co">#&gt; # Groups:   cluster [9]</span></span>
-<span id="cb2-14"><a href="#cb2-14"></a><span class="co">#&gt;   cluster      type           r</span></span>
-<span id="cb2-15"><a href="#cb2-15"></a><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt;</span></span>
-<span id="cb2-16"><a href="#cb2-16"></a><span class="co">#&gt; 1 B            B          0.891</span></span>
-<span id="cb2-17"><a href="#cb2-17"></a><span class="co">#&gt; 2 CD14+ Mono   CD14+ Mono 0.908</span></span>
-<span id="cb2-18"><a href="#cb2-18"></a><span class="co">#&gt; 3 FCGR3A+ Mono CD16+ Mono 0.906</span></span>
-<span id="cb2-19"><a href="#cb2-19"></a><span class="co">#&gt; 4 Memory CD4 T CD4 T      0.895</span></span>
-<span id="cb2-20"><a href="#cb2-20"></a><span class="co">#&gt; 5 Naive CD4 T  CD4 T      0.916</span></span>
-<span id="cb2-21"><a href="#cb2-21"></a><span class="co">#&gt; 6 DC           DC         0.833</span></span>
-<span id="cb2-22"><a href="#cb2-22"></a><span class="co">#&gt; 7 Platelet     Mk         0.630</span></span>
-<span id="cb2-23"><a href="#cb2-23"></a><span class="co">#&gt; 8 CD8 T        NK         0.866</span></span>
-<span id="cb2-24"><a href="#cb2-24"></a><span class="co">#&gt; 9 NK           NK         0.896</span></span>
-<span id="cb2-25"><a href="#cb2-25"></a></span>
-<span id="cb2-26"><a href="#cb2-26"></a><span class="co"># plotting</span></span>
-<span id="cb2-27"><a href="#cb2-27"></a><span class="kw"><a href="reference/plot_best_call.html">plot_best_call</a></span>(</span>
-<span id="cb2-28"><a href="#cb2-28"></a>  <span class="dt">cor_mat =</span> res,</span>
-<span id="cb2-29"><a href="#cb2-29"></a>  <span class="dt">metadata =</span> pbmc_meta,</span>
-<span id="cb2-30"><a href="#cb2-30"></a>  <span class="dt">cluster_col =</span> <span class="st">"classified"</span></span>
-<span id="cb2-31"><a href="#cb2-31"></a>)</span></code></pre></div>
+<span id="cb2-10"><a href="#cb2-10"></a></span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="co"># print assignments</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="kw"><a href="reference/cor_to_call.html">cor_to_call</a></span>(res)</span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="co">#&gt; # A tibble: 9 x 3</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="co">#&gt; # Groups:   cluster [9]</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a><span class="co">#&gt;   cluster      type           r</span></span>
+<span id="cb2-16"><a href="#cb2-16"></a><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt;</span></span>
+<span id="cb2-17"><a href="#cb2-17"></a><span class="co">#&gt; 1 B            B          0.891</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a><span class="co">#&gt; 2 CD14+ Mono   CD14+ Mono 0.908</span></span>
+<span id="cb2-19"><a href="#cb2-19"></a><span class="co">#&gt; 3 FCGR3A+ Mono CD16+ Mono 0.906</span></span>
+<span id="cb2-20"><a href="#cb2-20"></a><span class="co">#&gt; 4 Memory CD4 T CD4 T      0.895</span></span>
+<span id="cb2-21"><a href="#cb2-21"></a><span class="co">#&gt; 5 Naive CD4 T  CD4 T      0.916</span></span>
+<span id="cb2-22"><a href="#cb2-22"></a><span class="co">#&gt; 6 DC           DC         0.833</span></span>
+<span id="cb2-23"><a href="#cb2-23"></a><span class="co">#&gt; 7 Platelet     Mk         0.630</span></span>
+<span id="cb2-24"><a href="#cb2-24"></a><span class="co">#&gt; 8 CD8 T        NK         0.866</span></span>
+<span id="cb2-25"><a href="#cb2-25"></a><span class="co">#&gt; 9 NK           NK         0.896</span></span>
+<span id="cb2-26"><a href="#cb2-26"></a></span>
+<span id="cb2-27"><a href="#cb2-27"></a><span class="co"># plot assignments on a projection</span></span>
+<span id="cb2-28"><a href="#cb2-28"></a><span class="kw"><a href="reference/plot_best_call.html">plot_best_call</a></span>(</span>
+<span id="cb2-29"><a href="#cb2-29"></a>  <span class="dt">cor_mat =</span> res,</span>
+<span id="cb2-30"><a href="#cb2-30"></a>  <span class="dt">metadata =</span> pbmc_meta,</span>
+<span id="cb2-31"><a href="#cb2-31"></a>  <span class="dt">cluster_col =</span> <span class="st">"classified"</span></span>
+<span id="cb2-32"><a href="#cb2-32"></a>)</span></code></pre></div>
 <p><img src="reference/figures/readme_example-1.png"><!-- --></p>
-<p>Alternatively, <code>clustify</code> can take a clustered <code>seurat</code> object (both v2 and v3) and assign identities. Required data can be looked up by default or specified. New reference matrix can be made directly from <code>seurat</code> object as well. Other scRNAseq experiment object types are supported as well.</p>
-<ul>
-<li>a seuratV2 object (<code>s_small</code>)</li>
-<li>or a SeuratV3 object (<code>s_small3</code>)</li>
-<li>a matrix of mean normalized scRNA-seq UMI counts by cell type (<code>cbmc_ref</code>):</li>
-</ul>
-<!-- end list --><div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(Seurat)</span>
+<p><code><a href="reference/clustify.html">clustify()</a></code> can also take a clustered <code>seurat</code> object (both v2 and v3) and assign identities.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(Seurat)</span>
 <span id="cb3-2"><a href="#cb3-2"></a></span>
 <span id="cb3-3"><a href="#cb3-3"></a><span class="co"># for seurat2</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a>res &lt;-<span class="st"> </span><span class="kw"><a href="reference/clustify.html">clustify</a></span>(</span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="kw"><a href="reference/clustify.html">clustify</a></span>(</span>
 <span id="cb3-5"><a href="#cb3-5"></a>  <span class="dt">input =</span> s_small,</span>
 <span id="cb3-6"><a href="#cb3-6"></a>  <span class="dt">cluster_col =</span> <span class="st">"res.1"</span>,</span>
 <span id="cb3-7"><a href="#cb3-7"></a>  <span class="dt">ref_mat =</span> cbmc_ref,</span>
 <span id="cb3-8"><a href="#cb3-8"></a>  <span class="dt">seurat_out =</span> <span class="ot">TRUE</span></span>
 <span id="cb3-9"><a href="#cb3-9"></a>)</span>
-<span id="cb3-10"><a href="#cb3-10"></a></span>
-<span id="cb3-11"><a href="#cb3-11"></a><span class="co"># for Seurat3</span></span>
-<span id="cb3-12"><a href="#cb3-12"></a>res2 &lt;-<span class="st"> </span><span class="kw"><a href="reference/clustify.html">clustify</a></span>(</span>
-<span id="cb3-13"><a href="#cb3-13"></a>  <span class="dt">input =</span> s_small3,</span>
-<span id="cb3-14"><a href="#cb3-14"></a>  <span class="dt">cluster_col =</span> <span class="st">"RNA_snn_res.1"</span>,</span>
-<span id="cb3-15"><a href="#cb3-15"></a>  <span class="dt">ref_mat =</span> cbmc_ref,</span>
-<span id="cb3-16"><a href="#cb3-16"></a>  <span class="dt">seurat_out =</span> <span class="ot">TRUE</span></span>
-<span id="cb3-17"><a href="#cb3-17"></a>)</span>
-<span id="cb3-18"><a href="#cb3-18"></a>res2</span>
-<span id="cb3-19"><a href="#cb3-19"></a><span class="co">#&gt; An object of class Seurat </span></span>
-<span id="cb3-20"><a href="#cb3-20"></a><span class="co">#&gt; 230 features across 80 samples within 1 assay </span></span>
-<span id="cb3-21"><a href="#cb3-21"></a><span class="co">#&gt; Active assay: RNA (230 features)</span></span>
-<span id="cb3-22"><a href="#cb3-22"></a><span class="co">#&gt;  2 dimensional reductions calculated: pca, tsne</span></span>
-<span id="cb3-23"><a href="#cb3-23"></a></span>
-<span id="cb3-24"><a href="#cb3-24"></a><span class="co"># make reference from seurat objects</span></span>
-<span id="cb3-25"><a href="#cb3-25"></a>new_ref_matrix &lt;-<span class="st"> </span><span class="kw"><a href="reference/seurat_ref.html">seurat_ref</a></span>(</span>
-<span id="cb3-26"><a href="#cb3-26"></a>  <span class="dt">seurat_object =</span> s_small,</span>
-<span id="cb3-27"><a href="#cb3-27"></a>  <span class="dt">cluster_col =</span> <span class="st">"res.1"</span></span>
-<span id="cb3-28"><a href="#cb3-28"></a>)</span>
-<span id="cb3-29"><a href="#cb3-29"></a></span>
-<span id="cb3-30"><a href="#cb3-30"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(new_ref_matrix)</span>
-<span id="cb3-31"><a href="#cb3-31"></a><span class="co">#&gt;                 0        1        2        3</span></span>
-<span id="cb3-32"><a href="#cb3-32"></a><span class="co">#&gt; MS4A1    4.517255 3.204766 0.000000 0.000000</span></span>
-<span id="cb3-33"><a href="#cb3-33"></a><span class="co">#&gt; CD79B    4.504191 3.549095 2.580662 0.000000</span></span>
-<span id="cb3-34"><a href="#cb3-34"></a><span class="co">#&gt; CD79A    4.457349 4.199849 0.000000 0.000000</span></span>
-<span id="cb3-35"><a href="#cb3-35"></a><span class="co">#&gt; HLA-DRA  6.211779 6.430463 3.659590 4.169965</span></span>
-<span id="cb3-36"><a href="#cb3-36"></a><span class="co">#&gt; TCL1A    4.394310 2.837922 0.000000 0.000000</span></span>
-<span id="cb3-37"><a href="#cb3-37"></a><span class="co">#&gt; HLA-DQB1 4.380289 4.325293 0.000000 1.666167</span></span></code></pre></div>
-<p>Similarly, <code>clustify_lists</code> can also handle identity assignment of matrix or <code>seurat</code> object based on marker gene lists.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>res &lt;-<span class="st"> </span><span class="kw"><a href="reference/clustify_lists.html">clustify_lists</a></span>(</span>
-<span id="cb4-2"><a href="#cb4-2"></a>  <span class="dt">input =</span> pbmc_matrix_small,</span>
-<span id="cb4-3"><a href="#cb4-3"></a>  <span class="dt">metadata =</span> pbmc_meta,</span>
-<span id="cb4-4"><a href="#cb4-4"></a>  <span class="dt">cluster_col =</span> <span class="st">"classified"</span>,</span>
-<span id="cb4-5"><a href="#cb4-5"></a>  <span class="dt">marker =</span> pbmc_markers,</span>
-<span id="cb4-6"><a href="#cb4-6"></a>  <span class="dt">marker_inmatrix =</span> <span class="ot">FALSE</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a>)</span>
-<span id="cb4-8"><a href="#cb4-8"></a></span>
-<span id="cb4-9"><a href="#cb4-9"></a>res &lt;-<span class="st"> </span><span class="kw"><a href="reference/clustify_lists.html">clustify_lists</a></span>(</span>
-<span id="cb4-10"><a href="#cb4-10"></a>  <span class="dt">input =</span> s_small,</span>
-<span id="cb4-11"><a href="#cb4-11"></a>  <span class="dt">marker =</span> pbmc_markers,</span>
-<span id="cb4-12"><a href="#cb4-12"></a>  <span class="dt">marker_inmatrix =</span> <span class="ot">FALSE</span>,</span>
-<span id="cb4-13"><a href="#cb4-13"></a>  <span class="dt">cluster_col =</span> <span class="st">"res.1"</span>,</span>
-<span id="cb4-14"><a href="#cb4-14"></a>  <span class="dt">seurat_out =</span> <span class="ot">TRUE</span></span>
-<span id="cb4-15"><a href="#cb4-15"></a>)</span></code></pre></div>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="co">#&gt; An old seurat object</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="co">#&gt;  230 genes across 80 samples</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a></span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="co"># for Seurat3</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="kw"><a href="reference/clustify.html">clustify</a></span>(</span>
+<span id="cb3-15"><a href="#cb3-15"></a>  <span class="dt">input =</span> s_small3,</span>
+<span id="cb3-16"><a href="#cb3-16"></a>  <span class="dt">cluster_col =</span> <span class="st">"RNA_snn_res.1"</span>,</span>
+<span id="cb3-17"><a href="#cb3-17"></a>  <span class="dt">ref_mat =</span> cbmc_ref,</span>
+<span id="cb3-18"><a href="#cb3-18"></a>  <span class="dt">seurat_out =</span> <span class="ot">TRUE</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a>)</span>
+<span id="cb3-20"><a href="#cb3-20"></a><span class="co">#&gt; An object of class Seurat </span></span>
+<span id="cb3-21"><a href="#cb3-21"></a><span class="co">#&gt; 230 features across 80 samples within 1 assay </span></span>
+<span id="cb3-22"><a href="#cb3-22"></a><span class="co">#&gt; Active assay: RNA (230 features)</span></span>
+<span id="cb3-23"><a href="#cb3-23"></a><span class="co">#&gt;  2 dimensional reductions calculated: pca, tsne</span></span></code></pre></div>
+<p>New reference matrix can be made directly from <code>seurat</code> object as well. Other scRNAseq experiment object types are supported as well.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># make reference from seurat objects</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>ref &lt;-<span class="st"> </span><span class="kw"><a href="reference/seurat_ref.html">seurat_ref</a></span>(</span>
+<span id="cb4-3"><a href="#cb4-3"></a>  <span class="dt">seurat_object =</span> s_small,</span>
+<span id="cb4-4"><a href="#cb4-4"></a>  <span class="dt">cluster_col =</span> <span class="st">"res.1"</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>)</span>
+<span id="cb4-6"><a href="#cb4-6"></a></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(ref)</span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt;                 0        1        2        3</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt; MS4A1    4.517255 3.204766 0.000000 0.000000</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt; CD79B    4.504191 3.549095 2.580662 0.000000</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt; CD79A    4.457349 4.199849 0.000000 0.000000</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#&gt; HLA-DRA  6.211779 6.430463 3.659590 4.169965</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co">#&gt; TCL1A    4.394310 2.837922 0.000000 0.000000</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt; HLA-DQB1 4.380289 4.325293 0.000000 1.666167</span></span></code></pre></div>
+<p><code><a href="reference/clustify_lists.html">clustify_lists()</a></code> handles identity assignment of matrix or <code>seurat</code> object based on marker gene lists.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw"><a href="reference/clustify_lists.html">clustify_lists</a></span>(</span>
+<span id="cb5-2"><a href="#cb5-2"></a>  <span class="dt">input =</span> pbmc_matrix_small,</span>
+<span id="cb5-3"><a href="#cb5-3"></a>  <span class="dt">metadata =</span> pbmc_meta,</span>
+<span id="cb5-4"><a href="#cb5-4"></a>  <span class="dt">cluster_col =</span> <span class="st">"classified"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5"></a>  <span class="dt">marker =</span> pbmc_markers,</span>
+<span id="cb5-6"><a href="#cb5-6"></a>  <span class="dt">marker_inmatrix =</span> <span class="ot">FALSE</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>)</span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="co">#&gt;                      0        1        2         3         4        5        6</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt; Naive CD4 T  1.5639055 20.19469 31.77095  8.664074 23.844992 19.06931 19.06931</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt; Memory CD4 T 1.5639055 20.19469 31.77095 10.568007 23.844992 17.97875 19.06931</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co">#&gt; CD14+ Mono   0.9575077 14.70716 76.21353 17.899569 11.687739 49.86699 16.83210</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="co">#&gt; B            0.6564777 12.70976 31.77095 26.422929 13.536295 20.19469 13.53630</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="co">#&gt; CD8 T        1.0785353 17.97875 31.82210 12.584823 31.822099 22.71234 40.45383</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="co">#&gt; FCGR3A+ Mono 0.6564777 13.63321 72.43684 17.899569  9.726346 56.48245 14.61025</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="co">#&gt; NK           0.6564777 14.61025 31.82210  7.757206 31.822099 22.71234 45.05072</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="co">#&gt; DC           0.6564777 15.80598 63.34978 19.069308 13.758144 40.56298 17.97875</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="co">#&gt; Platelet     0.7403358 13.71477 57.86117 13.714774 12.933078 47.83999 18.20599</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="co">#&gt;                      7          8</span></span>
+<span id="cb5-19"><a href="#cb5-19"></a><span class="co">#&gt; Naive CD4 T   6.165348  0.6055118</span></span>
+<span id="cb5-20"><a href="#cb5-20"></a><span class="co">#&gt; Memory CD4 T  6.165348  0.9575077</span></span>
+<span id="cb5-21"><a href="#cb5-21"></a><span class="co">#&gt; CD14+ Mono   25.181595  1.0785353</span></span>
+<span id="cb5-22"><a href="#cb5-22"></a><span class="co">#&gt; B            17.899569  0.1401901</span></span>
+<span id="cb5-23"><a href="#cb5-23"></a><span class="co">#&gt; CD8 T         7.882145  0.3309153</span></span>
+<span id="cb5-24"><a href="#cb5-24"></a><span class="co">#&gt; FCGR3A+ Mono 21.409177  0.3309153</span></span>
+<span id="cb5-25"><a href="#cb5-25"></a><span class="co">#&gt; NK            5.358651  0.3309153</span></span>
+<span id="cb5-26"><a href="#cb5-26"></a><span class="co">#&gt; DC           45.101877  0.1401901</span></span>
+<span id="cb5-27"><a href="#cb5-27"></a><span class="co">#&gt; Platelet     19.334716 64.9077516</span></span>
+<span id="cb5-28"><a href="#cb5-28"></a></span>
+<span id="cb5-29"><a href="#cb5-29"></a><span class="kw"><a href="reference/clustify_lists.html">clustify_lists</a></span>(</span>
+<span id="cb5-30"><a href="#cb5-30"></a>  <span class="dt">input =</span> s_small,</span>
+<span id="cb5-31"><a href="#cb5-31"></a>  <span class="dt">marker =</span> pbmc_markers,</span>
+<span id="cb5-32"><a href="#cb5-32"></a>  <span class="dt">marker_inmatrix =</span> <span class="ot">FALSE</span>,</span>
+<span id="cb5-33"><a href="#cb5-33"></a>  <span class="dt">cluster_col =</span> <span class="st">"res.1"</span>,</span>
+<span id="cb5-34"><a href="#cb5-34"></a>  <span class="dt">seurat_out =</span> <span class="ot">TRUE</span></span>
+<span id="cb5-35"><a href="#cb5-35"></a>)</span>
+<span id="cb5-36"><a href="#cb5-36"></a><span class="co">#&gt; An old seurat object</span></span>
+<span id="cb5-37"><a href="#cb5-37"></a><span class="co">#&gt;  230 genes across 80 samples</span></span></code></pre></div>
 </div>
 <div id="additional-reference-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#additional-reference-data" class="anchor"></a>Additional reference data</h2>
 <p>More reference data (including tabula muris, immgen, etc) are available at <a href="https://github.com/rnabioco/clustifyrdata" class="uri">https://github.com/rnabioco/clustifyrdata</a>.</p>
-<p>Also see list for individual downloads at <a href="https://rnabioco.github.io/clustifyr/articles/download_refs.html" class="uri">https://rnabioco.github.io/clustifyr/articles/download_refs.html</a></p>
+<p>Also see list for individual downloads at <code><a href="articles/download_refs.html">vignette("download_refs", package = "clustifyr")</a></code></p>
 </div>
 </div>
   </div>
@@ -268,7 +287,6 @@
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://travis-ci.org/rnabioco/clustifyr"><img src="https://travis-ci.org/rnabioco/clustifyr.svg?branch=master" alt="Build Status"></a></li>
-<li><a href="https://ci.appveyor.com/project/rnabioco/clustifyr"><img src="https://ci.appveyor.com/api/projects/status/github/rnabioco/clustifyr?branch=master&amp;svg=true" alt="AppVeyor build status"></a></li>
 <li><a href="https://codecov.io/github/rnabioco/clustifyr?branch=master"><img src="https://codecov.io/gh/rnabioco/clustifyr/branch/master/graph/badge.svg" alt="Coverage status"></a></li>
 </ul>
 </div>
