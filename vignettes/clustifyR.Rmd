@@ -31,7 +31,7 @@ Single cell transcriptomes are difficult to annotate without extensive knowledge
 
 To install `clustifyr` BiocManager must be installed.
 
-```{"Installation"}
+```{r "Installation", eval = FALSE}
 install.packages("BiocManager")
 
 BiocManager::install("clustifyr")
