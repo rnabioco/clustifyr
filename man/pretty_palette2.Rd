@@ -15,6 +15,6 @@ vector of colors
 Color palette for plotting continous variables, starting at gray
 }
 \examples{
-pretty_palette2
+clustifyr:::pretty_palette2
 }
 \keyword{datasets}

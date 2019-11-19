@@ -16,5 +16,5 @@ color ramp
 Expanded color palette ramp for plotting discrete variables
 }
 \examples{
-pretty_palette_ramp_d
+clustifyr:::pretty_palette_ramp_d
 }
