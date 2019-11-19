@@ -178,7 +178,6 @@ list_res <- clustify_lists(
 # View as heatmap, or plot_best_call
 plot_cor_heatmap(
   cor_mat = list_res,              # matrix of correlation coefficients from clustify_lists()
-  col = not_pretty_palette,        # colors to use for heatmap
   cluster_rows = FALSE,            # cluster by row?
   cluster_columns = FALSE,         # cluster by column?
   legend_title = "% expressed"     # title of heatmap legend

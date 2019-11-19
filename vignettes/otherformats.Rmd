@@ -33,7 +33,7 @@ res <- clustify(
   input = s_small,
   cluster_col = "res.1",
   ref_mat = cbmc_ref,
-  seurat_out = T
+  seurat_out = TRUE
 )
 
 # or return a correlation matrix, if seurat_out is set to F
