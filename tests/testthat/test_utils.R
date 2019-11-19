@@ -1264,6 +1264,42 @@ test_that("find_rank_bias filters out unassigned", {
   )
   expect_true(length(unique(pbmc_meta2$type)) > ncol(b))
 })
+
+test_that("repeated insertionn of types into metdadata renames correctly", {
+  res <- clustify(
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    ref_mat = cbmc_ref,
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified"
+  )
+  call1 <- cor_to_call(
+    res,
+    metadata = pbmc_meta,
+    cluster_col = "classified",
+    collapse_to_cluster = FALSE,
+    threshold = 0.8
+  )
+  pbmc_meta2 <- call_to_metadata(
+    call1,
+    pbmc_meta,
+    "classified"
+  )
+  call2 <- cor_to_call(
+    res,
+    metadata = pbmc_meta,
+    cluster_col = "classified",
+    collapse_to_cluster = FALSE,
+    threshold = 0
+  )
+  pbmc_meta2 <- call_to_metadata(
+    call2,
+    pbmc_meta2,
+    "classified",
+    rename_prefix = "a"
+  )
+  expect_true(colnames(pbmc_meta2)[10] == "type")
+})
 #
 # test_that("object_ref with sce", {
 #   avg <- object_ref(sce_small,
