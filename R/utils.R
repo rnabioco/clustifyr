@@ -1554,7 +1554,7 @@ plot_pathway_gsea <- function(mat,
 #' @param na.rm logical. Should missing values (including NaN) be omitted from the calculations?
 #' @return vector of numeric values
 #' @examples
-#' pbmc_small_rowvar <- RowVar(as.matrix(pbmc_matrix_small))
+#' pbmc_small_rowvar <- clustifyr:::RowVar(as.matrix(pbmc_matrix_small))
 RowVar <- function(x, na.rm = TRUE) {
   rowSums((x - rowMeans(x, na.rm = na.rm))^2, na.rm = na.rm) / (dim(x)[2] - 1)
 }
