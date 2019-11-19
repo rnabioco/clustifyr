@@ -9,15 +9,16 @@ home:
     href: http://github.com/rnabioco/clustifyrdata
 
 reference:
+
 - title: Main functions
   desc:  Classify cell clusters by transcriptome profiles or gene lists, and building references
   contents:
-  - clustify
-  - clustify_lists
+  - starts_with("clustify")
   - average_clusters
   - matrixize_markers
-  - cor_to_call
+  - starts_with("cor_to_call")
   - call_to_metadata
+
 - title: Object wrappers
   desc:  Retrieving metadata and reference building from supported object types
   contents:
@@ -25,7 +26,17 @@ reference:
   - seurat_ref
   - object_ref
   - object_loc_lookup
-- title: All functions
+
+- title: Plotting
   contents:
-  - matches(".*")
+  - starts_with("plot")
+
+- title: Data sets
+  contents:
+  - has_concept("data")
+
+- title: Utilities
+  contents:
+  - run_gsea
+  - starts_with("get")
 
