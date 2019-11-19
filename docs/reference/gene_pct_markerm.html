@@ -189,12 +189,41 @@ provide the cluster_col parameters.</p></td>
     <p>matrix of numeric values, clusters from mat as row names, cell types from marker_m as column names</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>gene_pct_markerm</span>(
+    <pre class="examples"><div class='input'><span class='fu'>gene_pct_markerm</span>(
   <span class='kw'>matrix</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
   <span class='kw'>marker_m</span> <span class='kw'>=</span> <span class='no'>cbmc_m</span>,
   <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
   <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>
-)</div></pre>
+)</div><div class='output co'>#&gt;                   CD4 T       CD8 T Memory CD4 T CD14+ Mono Naive CD4 T
+#&gt; Memory CD4 T 0.27122153 0.016563147            0  0.2795031           0
+#&gt; B            0.02906977 0.005813953            0  0.2102713           0
+#&gt; CD14+ Mono   0.01666667 0.006250000            0  0.9902778           0
+#&gt; NK           0.07096774 0.193548387            0  0.2150538           0
+#&gt; CD8 T        0.15498155 0.018450185            0  0.2127921           0
+#&gt; Naive CD4 T  0.18220947 0.045911047            0  0.2333812           0
+#&gt; FCGR3A+ Mono 0.01234568 0.080246914            0  0.7860082           0
+#&gt; DC           0.09375000 0.000000000            0  0.6458333           0
+#&gt; Platelet     0.07142857 0.000000000            0  0.3571429           0
+#&gt;                      NK          B  CD16+ Mono CD34+ Eryth          Mk
+#&gt; Memory CD4 T 0.14906832 0.05900621 0.006211180     0     0 0.007591442
+#&gt; B            0.06782946 0.89534884 0.002906977     0     0 0.005813953
+#&gt; CD14+ Mono   0.11597222 0.04895833 0.004166667     0     0 0.015972222
+#&gt; NK           0.96989247 0.03870968 0.012903226     0     0 0.006451613
+#&gt; CD8 T        0.70233702 0.02952030 0.000000000     0     0 0.009840098
+#&gt; Naive CD4 T  0.09277857 0.03945481 0.004304161     0     0 0.010999522
+#&gt; FCGR3A+ Mono 0.17489712 0.06481481 0.370370370     0     0 0.034979424
+#&gt; DC           0.23958333 0.09375000 0.031250000     0     0 0.052083333
+#&gt; Platelet     0.09523810 0.07142857 0.000000000     0     0 0.904761905
+#&gt;                       DC         pDCs
+#&gt; Memory CD4 T 0.002070393 0.0013802622
+#&gt; B            0.000000000 0.0019379845
+#&gt; CD14+ Mono   0.005208333 0.0013888889
+#&gt; NK           0.000000000 0.0043010753
+#&gt; CD8 T        0.000000000 0.0024600246
+#&gt; Naive CD4 T  0.001434720 0.0004782401
+#&gt; FCGR3A+ Mono 0.012345679 0.0000000000
+#&gt; DC           0.250000000 0.1041666667
+#&gt; Platelet     0.000000000 0.0000000000</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

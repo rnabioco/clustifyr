@@ -24,7 +24,7 @@ matrix of numeric values
 compute similarity
 }
 \examples{
-calc_similarity(
+clustifyr:::calc_similarity(
   query_mat = pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)],
   ref_mat = cbmc_ref[c("PPBP", "LYZ", "S100A9"), 1:3],
   cluster_ids = colnames(pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)]),

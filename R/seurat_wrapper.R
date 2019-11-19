@@ -16,7 +16,7 @@ seurat_ref <- function(seurat_object, ...) {
 #' averaging will be done on unlogged data
 #' @param ... additional arguments
 #' @examples
-#' avg <- seurat_ref(
+#' seurat_ref(
 #'   seurat_object = s_small,
 #'   cluster_col = "res.1",
 #'   var_genes_only = TRUE
@@ -104,7 +104,7 @@ seurat_ref.Seurat <- function(seurat_object,
 #' @return dataframe of metadata, including dimension reduction plotting info
 #' @examples
 #' \dontrun{
-#' meta_data <- seurat_meta(s_small)
+#' seurat_meta(s_small)
 #' }
 #' @export
 seurat_meta <- function(seurat_object, ...) {

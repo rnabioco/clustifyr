@@ -26,5 +26,5 @@ pbmc_avg <- average_clusters(
   cluster_col = "classified"
 )
 
-pbmc_avgb <- binarize_expr(pbmc_avg)
+binarize_expr(pbmc_avg)
 }

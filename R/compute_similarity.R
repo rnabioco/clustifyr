@@ -9,7 +9,7 @@
 #' @param ... additional parameters not used yet
 #' @return matrix of numeric values, clusters from expr_mat as row names, cell types from ref_mat as column names
 #' @examples
-#' get_similarity(
+#' clustifyr:::get_similarity(
 #'   expr_mat = pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)],
 #'   ref_mat = cbmc_ref[c("PPBP", "LYZ", "S100A9"), 1:3],
 #'   cluster_ids = colnames(pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)]),
@@ -103,7 +103,7 @@ get_similarity <- function(expr_mat,
 #' @param ... additional parameters
 #' @return matrix of numeric values
 #' @examples
-#' permute_similarity(
+#' clustifyr:::permute_similarity(
 #'   expr_mat = pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)],
 #'   ref_mat = cbmc_ref[c("PPBP", "LYZ", "S100A9"), 1:3],
 #'   cluster_ids = colnames(pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)]),
@@ -188,7 +188,7 @@ permute_similarity <- function(expr_mat,
 #' @param sc_clust unique vector of cluster assignments
 #' @return matrix of average expression per cluster
 #' @examples
-#' compute_mean_expr(
+#' clustifyr:::compute_mean_expr(
 #'   expr_mat = pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)],
 #'   sc_assign = colnames(pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)]),
 #'   sc_clust = colnames(pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)])
@@ -209,7 +209,7 @@ compute_mean_expr <- function(expr_mat,
 #' @param ...  additional parameters
 #' @return matrix of numeric values
 #' @examples
-#' calc_similarity(
+#' clustifyr:::calc_similarity(
 #'   query_mat = pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)],
 #'   ref_mat = cbmc_ref[c("PPBP", "LYZ", "S100A9"), 1:3],
 #'   cluster_ids = colnames(pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)]),

@@ -193,14 +193,12 @@ to rownames if not supplied</p></td>
   <span class='st'>"ARF4"</span>
 )
 
-<span class='no'>plts</span> <span class='kw'>&lt;-</span> <span class='fu'>plot_gene</span>(
+<span class='fu'>plot_gene</span>(
   <span class='kw'>expr_mat</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
   <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw pkg'>tibble</span><span class='kw ns'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/rownames.html'>rownames_to_column</a></span>(<span class='no'>pbmc_meta</span>, <span class='st'>"rn"</span>),
   <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>,
   <span class='kw'>cell_col</span> <span class='kw'>=</span> <span class='st'>"rn"</span>
-)
-
-<span class='no'>plts</span></div><div class='output co'>#&gt; [[1]]</div><div class='img'><img src='plot_gene-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
+)</div><div class='output co'>#&gt; [[1]]</div><div class='img'><img src='plot_gene-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
 #&gt; [[2]]</div><div class='img'><img src='plot_gene-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

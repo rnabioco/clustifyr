@@ -33,7 +33,7 @@ downsample matrix by cluster or completely random
 }
 \examples{
 set.seed(42)
-mat1 <- downsample_matrix(
+downsample_matrix(
   mat = pbmc_matrix_small,
   metadata = pbmc_meta$classified,
   n = 10,

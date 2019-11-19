@@ -221,16 +221,14 @@ two-element numeric vector can also be passed to supply custom values i.e. c(0, 
   <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>
 )
 
-<span class='no'>plts</span> <span class='kw'>&lt;-</span> <span class='fu'>plot_cor</span>(
+<span class='fu'>plot_cor</span>(
   <span class='kw'>cor_mat</span> <span class='kw'>=</span> <span class='no'>res</span>,
   <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
   <span class='kw'>data_to_plot</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>res</span>)[<span class='fl'>1</span>:<span class='fl'>2</span>],
   <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
   <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"UMAP_1"</span>,
   <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"UMAP_2"</span>
-)
-
-<span class='no'>plts</span></div><div class='output co'>#&gt; [[1]]</div><div class='img'><img src='plot_cor-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
+)</div><div class='output co'>#&gt; [[1]]</div><div class='img'><img src='plot_cor-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
 #&gt; [[2]]</div><div class='img'><img src='plot_cor-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

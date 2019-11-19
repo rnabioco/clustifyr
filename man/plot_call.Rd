@@ -30,12 +30,10 @@ res <- clustify(
   cluster_col = "classified"
 )
 
-plts <- plot_call(
+clustifyr:::plot_call(
   cor_mat = res,
   metadata = pbmc_meta,
   data_to_plot = colnames(res)[1:2],
   cluster_col = "classified"
 )
-
-plts
 }

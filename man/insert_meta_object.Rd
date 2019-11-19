@@ -31,6 +31,6 @@ more flexible metadata update of single cell objects
 }
 \examples{
 \dontrun{
-clustifyr_obj <- insert_meta_object(s_small3, seurat_meta(s_small3, dr = "tsne"))
+insert_meta_object(s_small3, seurat_meta(s_small3, dr = "tsne"))
 }
 }

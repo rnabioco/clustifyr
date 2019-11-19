@@ -206,13 +206,34 @@
   <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>
 )
 
-<span class='no'>call1</span> <span class='kw'>&lt;-</span> <span class='fu'>cor_to_call_topn</span>(
+<span class='fu'>cor_to_call_topn</span>(
   <span class='kw'>cor_mat</span> <span class='kw'>=</span> <span class='no'>res</span>,
   <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
   <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
   <span class='kw'>collapse_to_cluster</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.5</span>
-)</div></pre>
+)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 18 x 3</span><span>
+#&gt; </span><span style='color: #555555;'># Groups:   classified [9]</span><span>
+#&gt;    classified   type                  r
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>             </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> B            B                 0.891
+#&gt; </span><span style='color: #555555;'> 2</span><span> B            CD4 T             0.781
+#&gt; </span><span style='color: #555555;'> 3</span><span> CD14+ Mono   CD14+ Mono        0.908
+#&gt; </span><span style='color: #555555;'> 4</span><span> CD14+ Mono   CD16+ Mono        0.885
+#&gt; </span><span style='color: #555555;'> 5</span><span> CD8 T        NK                0.866
+#&gt; </span><span style='color: #555555;'> 6</span><span> CD8 T        CD4 T             0.840
+#&gt; </span><span style='color: #555555;'> 7</span><span> DC           DC                0.833
+#&gt; </span><span style='color: #555555;'> 8</span><span> DC           CD16+ Mono        0.788
+#&gt; </span><span style='color: #555555;'> 9</span><span> FCGR3A+ Mono CD16+ Mono        0.906
+#&gt; </span><span style='color: #555555;'>10</span><span> FCGR3A+ Mono CD14+ Mono        0.850
+#&gt; </span><span style='color: #555555;'>11</span><span> Memory CD4 T CD4 T             0.895
+#&gt; </span><span style='color: #555555;'>12</span><span> Memory CD4 T CD8 T             0.870
+#&gt; </span><span style='color: #555555;'>13</span><span> Naive CD4 T  CD4 T             0.916
+#&gt; </span><span style='color: #555555;'>14</span><span> Naive CD4 T  CD8 T             0.894
+#&gt; </span><span style='color: #555555;'>15</span><span> NK           NK                0.896
+#&gt; </span><span style='color: #555555;'>16</span><span> NK           CD4 T             0.794
+#&gt; </span><span style='color: #555555;'>17</span><span> Platelet     Mk                0.630
+#&gt; </span><span style='color: #555555;'>18</span><span> Platelet     r&lt;0.5, unassigned 0.392</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

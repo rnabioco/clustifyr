@@ -171,7 +171,80 @@
     <p>matrix of gene names</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>m1</span> <span class='kw'>&lt;-</span> <span class='fu'>reverse_marker_matrix</span>(<span class='no'>cbmc_m</span>)</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>reverse_marker_matrix</span>(<span class='no'>cbmc_m</span>)</div><div class='output co'>#&gt;         CD4 T      CD8 T Memory CD4 T CD14+ Mono Naive CD4 T         NK
+#&gt; 1        CD8B      ITM2A        ITM2A      ITM2A       ITM2A      ITM2A
+#&gt; 2       ADCY2      ADCY2         CD8B       CD8B        CD8B       CD8B
+#&gt; 3      S100A8     S100A8       S100A8      ADCY2       ADCY2      ADCY2
+#&gt; 4       CDHR3      CDHR3        CDHR3      CDHR3      S100A8     S100A8
+#&gt; 5        GNLY       GNLY         GNLY       GNLY        GNLY      CDHR3
+#&gt; 6        IGHM       IGHM         IGHM       IGHM        IGHM       IGHM
+#&gt; 7      CDKN1C     CDKN1C       CDKN1C     CDKN1C      CDKN1C     CDKN1C
+#&gt; 8      SPINK2     SPINK2       SPINK2     SPINK2      SPINK2     SPINK2
+#&gt; 9         HBM        HBM          HBM        HBM         HBM        HBM
+#&gt; 10        PF4        PF4          PF4        PF4         PF4        PF4
+#&gt; 11       ENHO       ENHO         ENHO       ENHO        ENHO       ENHO
+#&gt; 12     LILRA4     LILRA4       LILRA4     LILRA4      LILRA4     LILRA4
+#&gt; 13       CD8A      TXNIP        TXNIP      TXNIP       TXNIP      TXNIP
+#&gt; 14     PTGDR2     PTGDR2         CD8A       CD8A        CD8A       CD8A
+#&gt; 15     S100A9     S100A9       S100A9     PTGDR2      PTGDR2     PTGDR2
+#&gt; 16 DICER1-AS1 DICER1-AS1   DICER1-AS1 DICER1-AS1      S100A9     S100A9
+#&gt; 17       NKG7       NKG7         NKG7       NKG7        NKG7 DICER1-AS1
+#&gt; 18      CD79A      CD79A        CD79A      CD79A       CD79A      CD79A
+#&gt; 19       HES4       HES4         HES4       HES4        HES4       HES4
+#&gt; 20    C1QTNF4    C1QTNF4      C1QTNF4    C1QTNF4     C1QTNF4    C1QTNF4
+#&gt; 21       AHSP       AHSP         AHSP       AHSP        AHSP       AHSP
+#&gt; 22       SDPR       SDPR         SDPR       SDPR        SDPR       SDPR
+#&gt; 23       CD1E       CD1E         CD1E       CD1E        CD1E       CD1E
+#&gt; 24       TPM2       TPM2         TPM2       TPM2        TPM2       TPM2
+#&gt; 25      S100B        AES          AES        AES         AES        AES
+#&gt; 26    CD200R1    CD200R1        S100B      S100B       S100B      S100B
+#&gt; 27        LYZ        LYZ          LYZ    CD200R1     CD200R1    CD200R1
+#&gt; 28      RAD9A      RAD9A        RAD9A      RAD9A         LYZ        LYZ
+#&gt; 29       CST7       CST7         CST7       CST7        CST7      RAD9A
+#&gt; 30      MS4A1      MS4A1        MS4A1      MS4A1       MS4A1      MS4A1
+#&gt; 31        CKB        CKB          CKB        CKB         CKB        CKB
+#&gt; 32   KIAA0125   KIAA0125     KIAA0125   KIAA0125    KIAA0125   KIAA0125
+#&gt; 33        CA1        CA1          CA1        CA1         CA1        CA1
+#&gt; 34      TUBB1      TUBB1        TUBB1      TUBB1       TUBB1      TUBB1
+#&gt; 35      NDRG2      NDRG2        NDRG2      NDRG2       NDRG2      NDRG2
+#&gt; 36        SCT        SCT          SCT        SCT         SCT        SCT
+#&gt;             B CD16+ Mono      CD34+      Eryth         Mk         DC       pDCs
+#&gt; 1       ITM2A      ITM2A      ITM2A      ITM2A      ITM2A      ITM2A      ITM2A
+#&gt; 2        CD8B       CD8B       CD8B       CD8B       CD8B       CD8B       CD8B
+#&gt; 3       ADCY2      ADCY2      ADCY2      ADCY2      ADCY2      ADCY2      ADCY2
+#&gt; 4      S100A8     S100A8     S100A8     S100A8     S100A8     S100A8     S100A8
+#&gt; 5       CDHR3      CDHR3      CDHR3      CDHR3      CDHR3      CDHR3      CDHR3
+#&gt; 6        GNLY       GNLY       GNLY       GNLY       GNLY       GNLY       GNLY
+#&gt; 7      CDKN1C       IGHM       IGHM       IGHM       IGHM       IGHM       IGHM
+#&gt; 8      SPINK2     SPINK2     CDKN1C     CDKN1C     CDKN1C     CDKN1C     CDKN1C
+#&gt; 9         HBM        HBM        HBM     SPINK2     SPINK2     SPINK2     SPINK2
+#&gt; 10        PF4        PF4        PF4        PF4        HBM        HBM        HBM
+#&gt; 11       ENHO       ENHO       ENHO       ENHO       ENHO        PF4        PF4
+#&gt; 12     LILRA4     LILRA4     LILRA4     LILRA4     LILRA4     LILRA4       ENHO
+#&gt; 13      TXNIP      TXNIP      TXNIP      TXNIP      TXNIP      TXNIP      TXNIP
+#&gt; 14       CD8A       CD8A       CD8A       CD8A       CD8A       CD8A       CD8A
+#&gt; 15     PTGDR2     PTGDR2     PTGDR2     PTGDR2     PTGDR2     PTGDR2     PTGDR2
+#&gt; 16     S100A9     S100A9     S100A9     S100A9     S100A9     S100A9     S100A9
+#&gt; 17 DICER1-AS1 DICER1-AS1 DICER1-AS1 DICER1-AS1 DICER1-AS1 DICER1-AS1 DICER1-AS1
+#&gt; 18       NKG7       NKG7       NKG7       NKG7       NKG7       NKG7       NKG7
+#&gt; 19       HES4      CD79A      CD79A      CD79A      CD79A      CD79A      CD79A
+#&gt; 20    C1QTNF4    C1QTNF4       HES4       HES4       HES4       HES4       HES4
+#&gt; 21       AHSP       AHSP       AHSP    C1QTNF4    C1QTNF4    C1QTNF4    C1QTNF4
+#&gt; 22       SDPR       SDPR       SDPR       SDPR       AHSP       AHSP       AHSP
+#&gt; 23       CD1E       CD1E       CD1E       CD1E       CD1E       SDPR       SDPR
+#&gt; 24       TPM2       TPM2       TPM2       TPM2       TPM2       TPM2       CD1E
+#&gt; 25        AES        AES        AES        AES        AES        AES        AES
+#&gt; 26      S100B      S100B      S100B      S100B      S100B      S100B      S100B
+#&gt; 27    CD200R1    CD200R1    CD200R1    CD200R1    CD200R1    CD200R1    CD200R1
+#&gt; 28        LYZ        LYZ        LYZ        LYZ        LYZ        LYZ        LYZ
+#&gt; 29      RAD9A      RAD9A      RAD9A      RAD9A      RAD9A      RAD9A      RAD9A
+#&gt; 30       CST7       CST7       CST7       CST7       CST7       CST7       CST7
+#&gt; 31        CKB      MS4A1      MS4A1      MS4A1      MS4A1      MS4A1      MS4A1
+#&gt; 32   KIAA0125   KIAA0125        CKB        CKB        CKB        CKB        CKB
+#&gt; 33        CA1        CA1        CA1   KIAA0125   KIAA0125   KIAA0125   KIAA0125
+#&gt; 34      TUBB1      TUBB1      TUBB1      TUBB1        CA1        CA1        CA1
+#&gt; 35      NDRG2      NDRG2      NDRG2      NDRG2      NDRG2      TUBB1      TUBB1
+#&gt; 36        SCT        SCT        SCT        SCT        SCT        SCT      NDRG2</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

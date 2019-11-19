@@ -30,7 +30,7 @@ new dataframe of metadata
 manually change idents as needed
 }
 \examples{
-pbmc_meta2 <- assign_ident(
+clustifyr:::assign_ident(
   metadata = pbmc_meta,
   cluster_col = "seurat_clusters",
   ident_col = "type",

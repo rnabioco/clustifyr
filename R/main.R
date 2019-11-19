@@ -47,7 +47,7 @@ clustify <- function(input, ...) {
 #' )
 #'
 #' # Annotate using a different method
-#' res <- clustify(
+#' clustify(
 #'   input = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
 #'   ref_mat = cbmc_ref,
@@ -67,7 +67,7 @@ clustify <- function(input, ...) {
 #' )
 #'
 #' # Annotate (and return) a Seurat object per-cell
-#' res <- clustify(
+#' clustify(
 #'   input = s_small,
 #'   ref_mat = cbmc_ref,
 #'   cluster_col = "res.1",

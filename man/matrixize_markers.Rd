@@ -44,5 +44,5 @@ matrix of unranked gene marker names, or matrix of ranked expression
 Convert candidate genes list into matrix
 }
 \examples{
-pbmc_mm <- matrixize_markers(pbmc_markers)
+matrixize_markers(pbmc_markers)
 }

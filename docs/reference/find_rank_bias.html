@@ -232,12 +232,13 @@
   <span class='no'>pbmc_meta</span>,
   <span class='st'>"classified"</span>
 )
-<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>find_rank_bias</span>(
+<span class='fu'>find_rank_bias</span>(
   <span class='no'>pbmc_matrix_small</span>,
   <span class='no'>pbmc_meta2</span>, <span class='st'>"type"</span>,
   <span class='no'>cbmc_ref</span>,
   <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='no'>pbmc_vargenes</span>
-)</div></pre>
+)</div><div class='output co'>#&gt;             B CD14+ Mono CD16+ Mono CD4 T     DC   NK
+#&gt; EIF1AY 1686.5       1098     1630.5  1324 1295.5 1187</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

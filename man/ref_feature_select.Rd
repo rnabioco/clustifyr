@@ -28,7 +28,7 @@ pbmc_avg <- average_clusters(
   cluster_col = "classified"
 )
 
-res <- ref_feature_select(
+ref_feature_select(
   mat = pbmc_avg[1:100, ],
   n = 5
 )

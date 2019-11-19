@@ -11,7 +11,7 @@
 #'   cluster_col = "classified"
 #' )
 #'
-#' pbmc_avgb <- binarize_expr(pbmc_avg)
+#' binarize_expr(pbmc_avg)
 #' @export
 binarize_expr <- function(mat,
                           n = 1000,
@@ -48,7 +48,7 @@ binarize_expr <- function(mat,
 #' @param remove_rp do not include rps, rpl, rp1-9 in markers
 #' @return matrix of unranked gene marker names, or matrix of ranked expression
 #' @examples
-#' pbmc_mm <- matrixize_markers(pbmc_markers)
+#' matrixize_markers(pbmc_markers)
 #' @export
 matrixize_markers <- function(marker_df,
                               ranked = FALSE,

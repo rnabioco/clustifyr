@@ -209,14 +209,23 @@ genes have ALREADY BEEN filtered</p></td>
     <p>matrix of numeric values</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>permute_similarity</span>(
+    <pre class="examples"><div class='input'><span class='kw pkg'>clustifyr</span><span class='kw ns'>:::</span><span class='fu'><a href='http://rnabioco.github.io/clustifyr/reference/permute_similarity.html'>permute_similarity</a></span>(
   <span class='kw'>expr_mat</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"PPBP"</span>, <span class='st'>"LYZ"</span>, <span class='st'>"S100A9"</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>7</span>, <span class='fl'>11</span>)],
   <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>cbmc_ref</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"PPBP"</span>, <span class='st'>"LYZ"</span>, <span class='st'>"S100A9"</span>), <span class='fl'>1</span>:<span class='fl'>3</span>],
   <span class='kw'>cluster_ids</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>pbmc_matrix_small</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"PPBP"</span>, <span class='st'>"LYZ"</span>, <span class='st'>"S100A9"</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>7</span>, <span class='fl'>11</span>)]),
   <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>2</span>,
   <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>
-)</div><div class='output co'>#&gt; <span class='error'>Error in permute_similarity(expr_mat = pbmc_matrix_small[c("PPBP", "LYZ",     "S100A9"), c(7, 11)], ref_mat = cbmc_ref[c("PPBP", "LYZ",     "S100A9"), 1:3], cluster_ids = colnames(pbmc_matrix_small[c("PPBP",     "LYZ", "S100A9"), c(7, 11)]), n_perm = 2, per_cell = TRUE,     compute_method = "spearman"): could not find function "permute_similarity"</span></div></pre>
+)</div><div class='output co'>#&gt; $score
+#&gt;                B CD14+ Mono CD16+ Mono
+#&gt; AAACGCTGACCAGT 0          0  0.8660254
+#&gt; AAACTTGAAAAACG 0          0  0.8660254
+#&gt; 
+#&gt; $p_val
+#&gt;                B CD14+ Mono CD16+ Mono
+#&gt; AAACGCTGACCAGT 0          0          0
+#&gt; AAACTTGAAAAACG 0          0          0
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

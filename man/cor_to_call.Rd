@@ -44,5 +44,5 @@ res <- clustify(
   ref_mat = cbmc_ref
 )
 
-res2 <- cor_to_call(res)
+cor_to_call(res)
 }

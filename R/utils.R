@@ -5,8 +5,7 @@
 #' @param power decides the number of clusters for kmeans
 #' @return new cluster_id list of more clusters
 #' @examples
-#' set.seed(42)
-#' pbmc_ids <- overcluster(
+#' overcluster(
 #'   mat = pbmc_matrix_small,
 #'   cluster_id = split(colnames(pbmc_matrix_small), pbmc_meta$classified)
 #' )
@@ -50,7 +49,7 @@ overcluster <- function(mat,
 #' @param cut_n set on a limit of genes as expressed, lower ranked genes are set to 0, considered unexpressed
 #' @return average expression matrix, with genes for row names, and clusters for column names
 #' @examples
-#' pbmc_avg <- average_clusters(
+#' average_clusters(
 #'   mat = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
 #'   cluster_col = "classified",
@@ -156,7 +155,7 @@ average_clusters <- function(mat,
 #' @param cut_num binary cutoff for detection
 #' @return matrix of numeric values, with genes for row names, and clusters for column names
 #' @examples
-#' pbmc_percentage <- percent_clusters(
+#' clustifyr:::percent_clusters(
 #'   mat = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
 #'   cluster_col = "classified"
@@ -180,7 +179,7 @@ percent_clusters <- function(mat,
 #' @param cor_mat correlation matrix
 #' @return matrix of 1s and 0s
 #' @examples
-#' cor_mat <- res <- clustify(
+#' cor_mat <- clustify(
 #'   input = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
 #'   cluster_col = "classified",
@@ -188,7 +187,7 @@ percent_clusters <- function(mat,
 #'   query_genes = pbmc_vargenes
 #' )
 #'
-#' best_mat <- get_best_match_matrix(cor_mat)
+#' clustifyr:::get_best_match_matrix(cor_mat)
 get_best_match_matrix <- function(cor_mat) {
   best_mat <-
     as.data.frame(t(apply(cor_mat, 1, function(x) {
@@ -208,7 +207,7 @@ get_best_match_matrix <- function(cor_mat) {
 #' @param carry_cor whether the correlation score gets reported
 #' @return string with ident call and possibly cor value
 #' @examples
-#' cor_mat <- res <- clustify(
+#' cor_mat <- clustify(
 #'   input = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
 #'   cluster_col = "classified",
@@ -216,9 +215,9 @@ get_best_match_matrix <- function(cor_mat) {
 #'   query_genes = pbmc_vargenes
 #' )
 #'
-#' best_mat <- get_best_match_matrix(cor_mat)
+#' best_mat <- clustifyr:::get_best_match_matrix(cor_mat)
 #'
-#' get_best_str(
+#' clustifyr:::get_best_str(
 #'   name = 1,
 #'   best_mat = best_mat,
 #'   cor_mat = cor_mat
@@ -257,7 +256,7 @@ get_best_str <- function(name,
 #' a <- rep(1:5)
 #' b <- rep(4:10)
 #' c <- rep(4:6)
-#' get_common_elements(a, b, c)
+#' clustifyr:::get_common_elements(a, b, c)
 get_common_elements <- function(...) {
   vecs <- list(...)
   # drop NULL elements of list
@@ -296,7 +295,7 @@ get_common_elements <- function(...) {
 #'   pbmc_meta2$classified[1320:2638]
 #' )
 #'
-#' res <- clustify_intra(
+#' clustifyr:::clustify_intra(
 #'   expr_mat = pbmc_matrix_small,
 #'   metadata = pbmc_meta2,
 #'   query_genes = pbmc_vargenes,
@@ -354,7 +353,7 @@ clustify_intra <- function(expr_mat,
 #' @param filter_value baseline minimum as background cutoff
 #' @return average expression matrix, with genes for row names, and clusters for column names
 #' @examples
-#' avg1 <- average_clusters_filter(
+#' average_clusters_filter(
 #'   mat = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
 #'   group_by = "classified",
@@ -416,7 +415,7 @@ average_clusters_filter <- function(mat,
 #'   filter_on = "nFeature_RNA"
 #' )
 #'
-#' pbmc_matrix_filtered <- remove_background(pbmc_matrix_small, avg1, 1)
+#' remove_background(pbmc_matrix_small, avg1, 1)
 #' @export
 remove_background <- function(mat, background, n = 0) {
   if (n == 0) {
@@ -497,7 +496,7 @@ calculate_pathway_gsea <- function(mat,
 #' @param idents new idents to assign, must be length of 1 or same as clusters
 #' @return new dataframe of metadata
 #' @examples
-#' pbmc_meta2 <- assign_ident(
+#' clustifyr:::assign_ident(
 #'   metadata = pbmc_meta,
 #'   cluster_col = "seurat_clusters",
 #'   ident_col = "type",
@@ -548,7 +547,7 @@ assign_ident <- function(metadata,
 #'   cluster_col = "classified"
 #' )
 #'
-#' call1 <- cor_to_call_topn(
+#' cor_to_call_topn(
 #'   cor_mat = res,
 #'   metadata = pbmc_meta,
 #'   col = "classified",
@@ -640,7 +639,7 @@ cor_to_call_topn <- function(cor_mat,
 #' @param returning whether to return mean, min, or max of the gene pct in the gene list
 #' @return vector of numeric values
 #' @examples
-#' res <- gene_pct(
+#' clustifyr:::gene_pct(
 #'   matrix = pbmc_matrix_small,
 #'   genelist = cbmc_m$B,
 #'   clusters = pbmc_meta$classified
@@ -692,7 +691,7 @@ gene_pct <- function(matrix,
 #' @param norm whether and how the results are normalized
 #' @return matrix of numeric values, clusters from mat as row names, cell types from marker_m as column names
 #' @examples
-#' res <- gene_pct_markerm(
+#' gene_pct_markerm(
 #'   matrix = pbmc_matrix_small,
 #'   marker_m = cbmc_m,
 #'   metadata = pbmc_meta,
@@ -754,7 +753,7 @@ gene_pct_markerm <- function(matrix,
 #'
 #' @examples
 #' # Seurat2
-#' res <- clustify_nudge(
+#' clustify_nudge(
 #'   input = s_small,
 #'   ref_mat = cbmc_ref,
 #'   marker = cbmc_m,
@@ -766,7 +765,7 @@ gene_pct_markerm <- function(matrix,
 #' )
 #'
 #' # Seurat3
-#' res <- clustify_nudge(
+#'  clustify_nudge(
 #'   input = s_small3,
 #'   ref_mat = cbmc_ref,
 #'   marker = cbmc_m,
@@ -778,7 +777,7 @@ gene_pct_markerm <- function(matrix,
 #' )
 #'
 #' # Matrix
-#' res <- clustify_nudge(
+#' clustify_nudge(
 #'   input = pbmc_matrix_small,
 #'   ref_mat = cbmc_ref,
 #'   metadata = pbmc_meta,
@@ -1153,7 +1152,7 @@ clustify_nudge.Seurat <- function(input,
 #' @param lookuptable if not supplied, will look in built-in table for object parsing
 #' @return list of expression, metadata, vargenes, cluster_col info from object
 #' @examples
-#' clustifyr_obj <- parse_loc_object(s_small3)
+#' parse_loc_object(s_small3)
 #' @export
 parse_loc_object <- function(input,
                              type = class(input),
@@ -1214,7 +1213,7 @@ parse_loc_object <- function(input,
 #' @return new object with new metadata inserted
 #' @examples
 #' \dontrun{
-#' clustifyr_obj <- insert_meta_object(s_small3, seurat_meta(s_small3, dr = "tsne"))
+#' insert_meta_object(s_small3, seurat_meta(s_small3, dr = "tsne"))
 #' }
 #' @export
 insert_meta_object <- function(input,
@@ -1255,7 +1254,7 @@ insert_meta_object <- function(input,
 #' @return faceted ggplot object
 #' @examples
 #' set.seed(42)
-#' plt <- overcluster_test(
+#' overcluster_test(
 #'   expr = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
 #'   ref_mat = cbmc_ref,
@@ -1263,8 +1262,6 @@ insert_meta_object <- function(input,
 #'   x_col = "UMAP_1",
 #'   y_col = "UMAP_2"
 #' )
-#'
-#' plt
 #' @export
 overcluster_test <- function(expr,
                              metadata,
@@ -1374,7 +1371,7 @@ overcluster_test <- function(expr,
 #'   cluster_col = "classified"
 #' )
 #'
-#' res <- ref_feature_select(
+#' ref_feature_select(
 #'   mat = pbmc_avg[1:100, ],
 #'   n = 5
 #' )
@@ -1422,7 +1419,7 @@ ref_feature_select <- function(mat,
 #' @param if_log whether the data is already log transformed
 #' @return vector of genes
 #' @examples
-#' res <- feature_select_PCA(
+#' feature_select_PCA(
 #'   cbmc_ref,
 #'   if_log = FALSE
 #' )
@@ -1466,7 +1463,7 @@ feature_select_PCA <- function(mat = NULL,
 #'   package = "clustifyr"
 #' )
 #'
-#' gmt_list <- gmt_to_list(path = gmt_file)
+#' gmt_to_list(path = gmt_file)
 #' @export
 gmt_to_list <- function(path,
                         cutoff = 0,
@@ -1517,7 +1514,7 @@ gmt_to_list <- function(path,
 #'   cluster_col = "classified"
 #' )
 #'
-#' g <- plot_pathway_gsea(
+#' plot_pathway_gsea(
 #'   pbmc_avg,
 #'   gl,
 #'   5
@@ -1574,7 +1571,7 @@ RowVar <- function(x, na.rm = TRUE) {
 #' @return new smaller mat with less cell_id columns
 #' @examples
 #' set.seed(42)
-#' mat1 <- downsample_matrix(
+#' downsample_matrix(
 #'   mat = pbmc_matrix_small,
 #'   metadata = pbmc_meta$classified,
 #'   n = 10,
@@ -1627,7 +1624,7 @@ downsample_matrix <- function(mat,
 #' @param sep separator for name combinations
 #' @return expression matrix
 #' @examples
-#' ref2 <- make_comb_ref(
+#' make_comb_ref(
 #'   cbmc_ref,
 #'   sep = "_+_"
 #' )
@@ -1673,7 +1670,7 @@ make_comb_ref <- function(ref_mat,
 #' @param compto compare max expression to the value of next 1 or more
 #' @return dataframe, with gene, cluster, ratio columns
 #' @examples
-#' res1 <- ref_marker_select(
+#' ref_marker_select(
 #'   cbmc_ref,
 #'   cut = 2
 #' )
@@ -1720,7 +1717,7 @@ ref_marker_select <-
 #'   if_log = FALSE
 #' )
 #'
-#' marker_selected <- marker_select(
+#' marker_select(
 #'   row1 = pbmc_avg["PPBP", ],
 #'   cols = names(pbmc_avg["PPBP", ])
 #' )
@@ -1754,7 +1751,7 @@ marker_select <- function(row1,
 #'   row.names = c("CD74", "clustifyr0", "CD79A")
 #' )
 #'
-#' res <- pos_neg_select(
+#' pos_neg_select(
 #'   input = pbmc_matrix_small,
 #'   ref_mat = pn_ref,
 #'   metadata = pbmc_meta,
@@ -1808,7 +1805,7 @@ pos_neg_select <- function(input,
 #' @param mat matrix or dataframe of markers
 #' @return matrix of gene names
 #' @examples
-#' m1 <- reverse_marker_matrix(cbmc_m)
+#' reverse_marker_matrix(cbmc_m)
 #' @export
 reverse_marker_matrix <- function(mat) {
   full_vec <- as.vector(t(mat))
@@ -1860,7 +1857,7 @@ pos_neg_marker <- function(mat) {
 #'   package = "clustifyr"
 #' )
 #'
-#' markers <- file_marker_parse(marker_file)
+#' file_marker_parse(marker_file)
 #' @export
 file_marker_parse <- function(filename) {
   lines <- readLines(filename)
@@ -1896,7 +1893,7 @@ file_marker_parse <- function(filename) {
 #' @param id desired id if unique
 #' @return character
 #' @examples
-#' get_unique_column(
+#' clustifyr:::get_unique_column(
 #'   pbmc_meta,
 #'   "orig.ident"
 #' )
@@ -1946,7 +1943,7 @@ get_unique_column <- function(df, id = NULL) {
 #'   pbmc_meta,
 #'   "classified"
 #' )
-#' b <- find_rank_bias(
+#' find_rank_bias(
 #'   pbmc_matrix_small,
 #'   pbmc_meta2, "type",
 #'   cbmc_ref,

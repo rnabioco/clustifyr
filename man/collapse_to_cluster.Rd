@@ -32,7 +32,7 @@ res <- clustify(
 
 res2 <- cor_to_call(res)
 
-res3 <- collapse_to_cluster(
+collapse_to_cluster(
   res2,
   metadata = pbmc_meta,
   cluster_col = "classified",

@@ -263,7 +263,7 @@ pretty_palette_ramp_d <-
 #'   cluster_col = "classified"
 #' )
 #'
-#' plts <- plot_cor(
+#' plot_cor(
 #'   cor_mat = res,
 #'   metadata = pbmc_meta,
 #'   data_to_plot = colnames(res)[1:2],
@@ -271,8 +271,6 @@ pretty_palette_ramp_d <-
 #'   x = "UMAP_1",
 #'   y = "UMAP_2"
 #' )
-#'
-#' plts
 #' @export
 plot_cor <- function(cor_mat,
                      metadata,
@@ -369,14 +367,12 @@ plot_cor <- function(cor_mat,
 #'   "ARF4"
 #' )
 #'
-#' plts <- plot_gene(
+#' plot_gene(
 #'   expr_mat = pbmc_matrix_small,
 #'   metadata = tibble::rownames_to_column(pbmc_meta, "rn"),
 #'   genes = genes,
 #'   cell_col = "rn"
 #' )
-#'
-#' plts
 #' @export
 plot_gene <- function(expr_mat,
                       metadata,
@@ -443,14 +439,12 @@ plot_gene <- function(expr_mat,
 #'   cluster_col = "classified"
 #' )
 #'
-#' plts <- plot_call(
+#' clustifyr:::plot_call(
 #'   cor_mat = res,
 #'   metadata = pbmc_meta,
 #'   data_to_plot = colnames(res)[1:2],
 #'   cluster_col = "classified"
 #' )
-#'
-#' plts
 plot_call <- function(cor_mat,
                       metadata,
                       data_to_plot = colnames(cor_mat),
@@ -492,13 +486,11 @@ plot_call <- function(cor_mat,
 #'   cluster_col = "classified"
 #' )
 #'
-#' plts <- plot_best_call(
+#' plot_best_call(
 #'   cor_mat = res,
 #'   metadata = pbmc_meta,
 #'   cluster_col = "classified"
 #' )
-#'
-#' plts
 #' @export
 plot_best_call <- function(cor_mat,
                            metadata,
@@ -572,7 +564,7 @@ plot_best_call <- function(cor_mat,
 #' @param plot_col_ref metadata column to plot for reference
 #' @return ggplot scatterplot
 #' @examples
-#' plt <- plot_cols(
+#' plot_cols(
 #'   metadata = pbmc_meta,
 #'   cluster_col = "seurat_clusters",
 #'   cluster_col_called = "classified",
@@ -581,8 +573,6 @@ plot_best_call <- function(cor_mat,
 #'   cluster_col_ref = "classified",
 #'   plot_col_ref = "UMAP_1"
 #' )
-#'
-#' plt
 #' @export
 plot_cols <- function(metadata,
                       cluster_col,
@@ -663,9 +653,7 @@ plot_cols <- function(metadata,
 #'   per_cell = FALSE
 #' )
 #'
-#' plt <- plot_cor_heatmap(res)
-#'
-#' plt
+#' plot_cor_heatmap(res)
 #' @export
 plot_cor_heatmap <- function(cor_mat,
                              metadata = NULL,

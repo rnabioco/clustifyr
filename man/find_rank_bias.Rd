@@ -61,7 +61,7 @@ pbmc_meta2 <- call_to_metadata(
   pbmc_meta,
   "classified"
 )
-b <- find_rank_bias(
+find_rank_bias(
   pbmc_matrix_small,
   pbmc_meta2, "type",
   cbmc_ref,

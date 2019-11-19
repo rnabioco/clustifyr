@@ -209,13 +209,22 @@ column of metadata if not supplied. Not required if running correlation per cell
   <span class='kw'>row.names</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"CD74"</span>, <span class='st'>"clustifyr0"</span>, <span class='st'>"CD79A"</span>)
 )
 
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>pos_neg_select</span>(
+<span class='fu'>pos_neg_select</span>(
   <span class='kw'>input</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
   <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>pn_ref</span>,
   <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
   <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
   <span class='kw'>cutoff_score</span> <span class='kw'>=</span> <span class='fl'>0.8</span>
-)</div><div class='output co'>#&gt; <span class='message'>using # of genes: 3</span></div></pre>
+)</div><div class='output co'>#&gt; <span class='message'>using # of genes: 3</span></div><div class='output co'>#&gt;                Myeloid
+#&gt; Naive CD4 T  0.0000000
+#&gt; Memory CD4 T 0.7857143
+#&gt; CD14+ Mono   0.9208333
+#&gt; B            0.0000000
+#&gt; CD8 T        0.8210332
+#&gt; FCGR3A+ Mono 0.9629630
+#&gt; NK           0.8161290
+#&gt; DC           0.9218750
+#&gt; Platelet     0.0000000</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

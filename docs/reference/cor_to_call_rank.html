@@ -209,7 +209,21 @@
   <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
   <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>cbmc_ref</span>
 )</div><div class='output co'>#&gt; <span class='message'>var.features not found, using all genes instead</span></div><div class='input'>
-<span class='no'>res2</span> <span class='kw'>&lt;-</span> <span class='fu'>cor_to_call_rank</span>(<span class='no'>res</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"auto"</span>)</div><div class='output co'>#&gt; <span class='message'>using threshold of 0.69</span></div></pre>
+<span class='fu'>cor_to_call_rank</span>(<span class='no'>res</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"auto"</span>)</div><div class='output co'>#&gt; <span class='message'>using threshold of 0.69</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 117 x 4</span><span>
+#&gt; </span><span style='color: #555555;'># Groups:   cluster [9]</span><span>
+#&gt;    cluster      type           r  rank
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> B            B          0.891     1
+#&gt; </span><span style='color: #555555;'> 2</span><span> CD14+ Mono   B          0.699     5
+#&gt; </span><span style='color: #555555;'> 3</span><span> CD8 T        B          0.753     4
+#&gt; </span><span style='color: #555555;'> 4</span><span> DC           B          0.703     5
+#&gt; </span><span style='color: #555555;'> 5</span><span> FCGR3A+ Mono B          0.704     5
+#&gt; </span><span style='color: #555555;'> 6</span><span> Memory CD4 T B          0.776     4
+#&gt; </span><span style='color: #555555;'> 7</span><span> Naive CD4 T  B          0.787     4
+#&gt; </span><span style='color: #555555;'> 8</span><span> NK           B          0.719     4
+#&gt; </span><span style='color: #555555;'> 9</span><span> Platelet     B          0.316   100
+#&gt; </span><span style='color: #555555;'>10</span><span> B            CD14+ Mono 0.685   100
+#&gt; </span><span style='color: #555555;'># … with 107 more rows</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

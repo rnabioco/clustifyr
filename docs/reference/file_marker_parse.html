@@ -177,7 +177,35 @@
   <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"clustifyr"</span>
 )
 
-<span class='no'>markers</span> <span class='kw'>&lt;-</span> <span class='fu'>file_marker_parse</span>(<span class='no'>marker_file</span>)</div></pre>
+<span class='fu'>file_marker_parse</span>(<span class='no'>marker_file</span>)</div><div class='output co'>#&gt; $pos
+#&gt; $pos$`CD34+`
+#&gt; [1] "CD34"   "THY1"   "ENG"    "KIT"    "PROM1 "
+#&gt; 
+#&gt; $pos$`NK cells`
+#&gt; [1] "NCAM1"  "FCGR3A"
+#&gt; 
+#&gt; $pos$Monocytes
+#&gt; [1] "CD14"    "FCGR1A"  "CD68"    "S100A12"
+#&gt; 
+#&gt; $pos$`B cells`
+#&gt; [1] "CD19"  "MS4A1" "CD79A"
+#&gt; 
+#&gt; $pos$`T cells`
+#&gt; [1] "CD3D" "CD3E" "CD3G"
+#&gt; 
+#&gt; $pos$`CD4 T cells`
+#&gt; [1] "CD4"   "FOXP3" "IL2RA" "IL7R" 
+#&gt; 
+#&gt; $pos$`CD8 T cells`
+#&gt; [1] "CD8A" "CD8B"
+#&gt; 
+#&gt; $pos$`Dendritic cells`
+#&gt; [1] "\tIL3RA" "CD1C"    "BATF3"   "THBD"    "CD209 " 
+#&gt; 
+#&gt; 
+#&gt; $neg
+#&gt; NULL
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

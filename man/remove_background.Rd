@@ -26,5 +26,5 @@ avg1 <- average_clusters_filter(
   filter_on = "nFeature_RNA"
 )
 
-pbmc_matrix_filtered <- remove_background(pbmc_matrix_small, avg1, 1)
+remove_background(pbmc_matrix_small, avg1, 1)
 }

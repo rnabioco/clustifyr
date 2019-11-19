@@ -53,11 +53,9 @@ res <- clustify(
   cluster_col = "classified"
 )
 
-plts <- plot_best_call(
+plot_best_call(
   cor_mat = res,
   metadata = pbmc_meta,
   cluster_col = "classified"
 )
-
-plts
 }

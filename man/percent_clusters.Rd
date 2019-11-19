@@ -22,7 +22,7 @@ matrix of numeric values, with genes for row names, and clusters for column name
 Percentage detected per cluster
 }
 \examples{
-pbmc_percentage <- percent_clusters(
+clustifyr:::percent_clusters(
   mat = pbmc_matrix_small,
   metadata = pbmc_meta,
   cluster_col = "classified"

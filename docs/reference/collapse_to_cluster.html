@@ -192,12 +192,24 @@
 )</div><div class='output co'>#&gt; <span class='message'>var.features not found, using all genes instead</span></div><div class='input'>
 <span class='no'>res2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='cor_to_call.html'>cor_to_call</a></span>(<span class='no'>res</span>)
 
-<span class='no'>res3</span> <span class='kw'>&lt;-</span> <span class='fu'>collapse_to_cluster</span>(
+<span class='fu'>collapse_to_cluster</span>(
   <span class='no'>res2</span>,
   <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
   <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
   <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>
-)</div></pre>
+)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 9 x 4</span><span>
+#&gt; </span><span style='color: #555555;'># Groups:   classified [9]</span><span>
+#&gt;   classified   type    sum     n
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> Naive CD4 T  CD4 T 80.2    256
+#&gt; </span><span style='color: #555555;'>2</span><span> Memory CD4 T CD4 T 56.2    179
+#&gt; </span><span style='color: #555555;'>3</span><span> CD14+ Mono   CD4 T 54.8    177
+#&gt; </span><span style='color: #555555;'>4</span><span> B            CD4 T 31.4    101
+#&gt; </span><span style='color: #555555;'>5</span><span> CD8 T        CD4 T 27.5     88
+#&gt; </span><span style='color: #555555;'>6</span><span> FCGR3A+ Mono CD4 T 15.2     47
+#&gt; </span><span style='color: #555555;'>7</span><span> NK           CD4 T 15.6     48
+#&gt; </span><span style='color: #555555;'>8</span><span> DC           NK     2.84     9
+#&gt; </span><span style='color: #555555;'>9</span><span> Platelet     CD4 T  1.51     5</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

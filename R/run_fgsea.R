@@ -12,7 +12,7 @@
 #' @param no_warnings suppress warnings from gsea ties
 #' @return dataframe of gsea scores (pval, NES), with clusters as rownames
 #' @examples
-#' res <- run_gsea(
+#' run_gsea(
 #'   expr_mat = pbmc_matrix_small,
 #'   query_genes = pbmc_vargenes[1:100],
 #'   n_perm = 10,

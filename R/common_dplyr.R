@@ -17,7 +17,7 @@
 #'   ref_mat = cbmc_ref
 #' )
 #'
-#' res2 <- cor_to_call(res)
+#' cor_to_call(res)
 #' @export
 cor_to_call <- function(cor_mat,
                         metadata = NULL,
@@ -132,7 +132,7 @@ cor_to_call <- function(cor_mat,
 #'
 #' res2 <- cor_to_call(res, cluster_col = "classified")
 #'
-#' pbmc_meta2 <- call_to_metadata(
+#' call_to_metadata(
 #'   res = res2,
 #'   metadata = pbmc_meta,
 #'   cluster_col = "classified",
@@ -236,7 +236,7 @@ call_to_metadata <- function(res,
 #'
 #' res2 <- cor_to_call(res)
 #'
-#' res3 <- collapse_to_cluster(
+#' collapse_to_cluster(
 #'   res2,
 #'   metadata = pbmc_meta,
 #'   cluster_col = "classified",
@@ -289,7 +289,7 @@ collapse_to_cluster <- function(res,
 #'   ref_mat = cbmc_ref
 #' )
 #'
-#' res2 <- cor_to_call_rank(res, threshold = "auto")
+#' cor_to_call_rank(res, threshold = "auto")
 #' @export
 cor_to_call_rank <- function(cor_mat,
                              metadata = NULL,
@@ -346,7 +346,7 @@ cor_to_call_rank <- function(cor_mat,
 #'
 #' res2 <- cor_to_call_rank(res, threshold = "auto")
 #' res3 <- cor_to_call_rank(res)
-#' res4 <- call_consensus(list(res2, res3))
+#' call_consensus(list(res2, res3))
 #' @export
 call_consensus <- function(list_of_res) {
   # group_by(cluster, type) %>% summarize(m = mean(rank)) %>% top_n(-1, m)

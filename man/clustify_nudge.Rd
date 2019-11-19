@@ -119,7 +119,7 @@ Combined function to compare scRNA-seq data to bulk RNA-seq data and marker list
 }
 \examples{
 # Seurat2
-res <- clustify_nudge(
+clustify_nudge(
   input = s_small,
   ref_mat = cbmc_ref,
   marker = cbmc_m,
@@ -131,7 +131,7 @@ res <- clustify_nudge(
 )
 
 # Seurat3
-res <- clustify_nudge(
+ clustify_nudge(
   input = s_small3,
   ref_mat = cbmc_ref,
   marker = cbmc_m,
@@ -143,7 +143,7 @@ res <- clustify_nudge(
 )
 
 # Matrix
-res <- clustify_nudge(
+clustify_nudge(
   input = pbmc_matrix_small,
   ref_mat = cbmc_ref,
   metadata = pbmc_meta,

@@ -310,7 +310,7 @@ the expr_mat and ref_mat will be used for comparision.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Seurat2</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>clustify_nudge</span>(
+<span class='fu'>clustify_nudge</span>(
   <span class='kw'>input</span> <span class='kw'>=</span> <span class='no'>s_small</span>,
   <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>cbmc_ref</span>,
   <span class='kw'>marker</span> <span class='kw'>=</span> <span class='no'>cbmc_m</span>,
@@ -319,10 +319,23 @@ the expr_mat and ref_mat will be used for comparision.</p></td>
   <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"pct"</span>,
   <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>
-)
-
+)</div><div class='output co'>#&gt;              B   CD14+ Mono CD16+ Mono      CD34+       CD4 T      CD8 T
+#&gt; 0  0.522410963 -0.005572036  0.4119037  0.4172004  0.61062598  0.4431346
+#&gt; 1  0.396432770  0.725146450  0.6939952  0.4641469  0.42401600  0.1737119
+#&gt; 2  0.007020943  0.211394209  0.6094641  0.3178432  0.46805261  0.4812869
+#&gt; 3 -0.400393645 -0.243071872  0.1859978 -0.0854630 -0.08048411 -0.3731234
+#&gt;            DC     Eryth Memory CD4 T         Mk Naive CD4 T         NK
+#&gt; 0  0.36476066 0.1523530    0.7047302 -0.9967949   0.6398803 -0.2617596
+#&gt; 1  0.71146653 0.4359801    0.5349202 -0.7964748   0.4304222 -0.1248677
+#&gt; 2  0.67077257 0.4137920    0.6331816 -0.7115560   0.5864320  0.8099383
+#&gt; 3 -0.05333518 0.4352437    0.1083785  0.7453407  -0.1097800 -0.8598142
+#&gt;        pDCs
+#&gt; 0 0.3456669
+#&gt; 1 0.5116362
+#&gt; 2 0.2859966
+#&gt; 3 0.1901284</div><div class='input'>
 <span class='co'># Seurat3</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>clustify_nudge</span>(
+ <span class='fu'>clustify_nudge</span>(
   <span class='kw'>input</span> <span class='kw'>=</span> <span class='no'>s_small3</span>,
   <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>cbmc_ref</span>,
   <span class='kw'>marker</span> <span class='kw'>=</span> <span class='no'>cbmc_m</span>,
@@ -331,10 +344,16 @@ the expr_mat and ref_mat will be used for comparision.</p></td>
   <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"pct"</span>,
   <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>
-)
-
+)</div><div class='output co'>#&gt;            B CD14+ Mono CD16+ Mono      CD34+     CD4 T     CD8 T         DC
+#&gt; 0 -0.8386005 -0.8022027 -0.1290444 -0.1811809 0.3775856 0.4804364 -0.1773445
+#&gt; 1  0.1116745  0.7647078  0.7930478  0.3569654 0.4509427 0.2469878  0.6437572
+#&gt; 2  0.6997539 -0.2133902  0.5339625  0.3773183 0.2712622 0.1166450  0.6264979
+#&gt;        Eryth Memory CD4 T         Mk Naive CD4 T        NK      pDCs
+#&gt; 0  0.5092140    0.2683011  0.5851824  0.03142658 0.1767582 0.1596988
+#&gt; 1  0.2455553    0.5380182 -0.1502676  0.52633608 0.2681751 0.4804654
+#&gt; 2 -0.1592523    0.1233831 -0.5265590  0.31191120 0.1667222 0.4075066</div><div class='input'>
 <span class='co'># Matrix</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>clustify_nudge</span>(
+<span class='fu'>clustify_nudge</span>(
   <span class='kw'>input</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
   <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>cbmc_ref</span>,
   <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
@@ -345,7 +364,36 @@ the expr_mat and ref_mat will be used for comparision.</p></td>
   <span class='kw'>call</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>marker_inmatrix</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"pct"</span>
-)</div></pre>
+)</div><div class='output co'>#&gt;                        B  CD14+ Mono CD16+ Mono     CD34+      CD4 T      CD8 T
+#&gt; B             0.89129128 -0.09482820 0.36430264 0.7317217 0.53933823 0.57819315
+#&gt; CD14+ Mono   -0.14739603  0.90814717 0.51856965 0.6710434 0.41250211 0.46484177
+#&gt; CD8 T        -0.11323147 -0.11229570 0.34225996 0.7136651 0.72384293 0.66175171
+#&gt; DC           -0.09890316  0.43792394 0.44916939 0.6814873 0.48842105 0.45893484
+#&gt; FCGR3A+ Mono -0.12660135  0.64538033 0.90590926 0.6726128 0.41690109 0.54635896
+#&gt; Memory CD4 T -0.06044487 -0.02870830 0.36003221 0.7427243 0.89489774 0.69324349
+#&gt; Naive CD4 T  -0.06874533 -0.07764912 0.35150020 0.7548765 0.82685564 0.74596560
+#&gt; NK           -0.13741949 -0.12259625 0.33838687 0.7067672 0.59374826 0.79378254
+#&gt; Platelet     -0.50747063 -0.25075312 0.02147571 0.3271915 0.08603668 0.08622349
+#&gt;                      DC     Eryth Memory CD4 T         Mk Naive CD4 T
+#&gt; B            0.47539346 0.6300171    0.5959394 -0.3538824   0.5953671
+#&gt; CD14+ Mono   0.56732763 0.6055132    0.5708809 -0.2338858   0.5384300
+#&gt; CD8 T        0.43400786 0.6525508    0.6542797 -0.3276053   0.6121911
+#&gt; DC           0.83270918 0.6049950    0.5657932 -0.2778113   0.5260392
+#&gt; FCGR3A+ Mono 0.54084520 0.6097144    0.5710313 -0.2341562   0.5300822
+#&gt; Memory CD4 T 0.44862102 0.6643080    0.6860640 -0.3457256   0.6554955
+#&gt; Naive CD4 T  0.44731357 0.6677468    0.6913118 -0.3406683   0.6622109
+#&gt; NK           0.42414982 0.6420863    0.6259194 -0.3341079   0.5880876
+#&gt; Platelet     0.09763352 0.3599792    0.2945712  0.6304742   0.2899873
+#&gt;                        NK      pDCs
+#&gt; B            -0.154620036 0.5866840
+#&gt; CD14+ Mono   -0.096549233 0.5377967
+#&gt; CD8 T         0.598665387 0.5300752
+#&gt; DC           -0.011303596 0.7012226
+#&gt; FCGR3A+ Mono -0.039743952 0.5332615
+#&gt; Memory CD4 T -0.002563329 0.5406439
+#&gt; Naive CD4 T  -0.069020452 0.5415440
+#&gt; NK            0.896029075 0.5264843
+#&gt; Platelet     -0.534417903 0.2308274</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

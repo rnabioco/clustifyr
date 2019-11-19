@@ -16,5 +16,5 @@ matrix of gene names
 generate negative markers from a list of exclusive positive markers
 }
 \examples{
-m1 <- reverse_marker_matrix(cbmc_m)
+reverse_marker_matrix(cbmc_m)
 }

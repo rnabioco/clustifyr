@@ -30,12 +30,10 @@ genes <- c(
   "ARF4"
 )
 
-plts <- plot_gene(
+plot_gene(
   expr_mat = pbmc_matrix_small,
   metadata = tibble::rownames_to_column(pbmc_meta, "rn"),
   genes = genes,
   cell_col = "rn"
 )
-
-plts
 }

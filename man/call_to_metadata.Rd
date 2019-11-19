@@ -40,7 +40,7 @@ res <- clustify(
 
 res2 <- cor_to_call(res, cluster_col = "classified")
 
-pbmc_meta2 <- call_to_metadata(
+call_to_metadata(
   res = res2,
   metadata = pbmc_meta,
   cluster_col = "classified",
