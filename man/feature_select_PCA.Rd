@@ -37,7 +37,7 @@ loadings of principal components
 formed from the bulk expression data set
 }
 \examples{
-res <- feature_select_PCA(
+feature_select_PCA(
   cbmc_ref,
   if_log = FALSE
 )

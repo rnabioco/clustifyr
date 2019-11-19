@@ -55,7 +55,7 @@ compare clustering parameters and classification outcomes
 }
 \examples{
 set.seed(42)
-plt <- overcluster_test(
+overcluster_test(
   expr = pbmc_matrix_small,
   metadata = pbmc_meta,
   ref_mat = cbmc_ref,
@@ -63,6 +63,4 @@ plt <- overcluster_test(
   x_col = "UMAP_1",
   y_col = "UMAP_2"
 )
-
-plt
 }

@@ -20,5 +20,5 @@ is NULL or NA, then it will be excluded from the comparision.
 a <- rep(1:5)
 b <- rep(4:10)
 c <- rep(4:6)
-get_common_elements(a, b, c)
+clustifyr:::get_common_elements(a, b, c)
 }

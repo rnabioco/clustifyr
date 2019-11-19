@@ -25,5 +25,5 @@ res <- clustify(
 
 res2 <- cor_to_call_rank(res, threshold = "auto")
 res3 <- cor_to_call_rank(res)
-res4 <- call_consensus(list(res2, res3))
+call_consensus(list(res2, res3))
 }

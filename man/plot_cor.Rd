@@ -52,7 +52,7 @@ res <- clustify(
   cluster_col = "classified"
 )
 
-plts <- plot_cor(
+plot_cor(
   cor_mat = res,
   metadata = pbmc_meta,
   data_to_plot = colnames(res)[1:2],
@@ -60,6 +60,4 @@ plts <- plot_cor(
   x = "UMAP_1",
   y = "UMAP_2"
 )
-
-plts
 }

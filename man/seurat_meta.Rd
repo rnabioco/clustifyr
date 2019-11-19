@@ -27,6 +27,6 @@ Function to convert labelled seurat object to fully prepared metadata#'
 }
 \examples{
 \dontrun{
-meta_data <- seurat_meta(s_small)
+seurat_meta(s_small)
 }
 }

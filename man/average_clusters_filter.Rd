@@ -39,7 +39,7 @@ average expression matrix, with genes for row names, and clusters for column nam
 Average expression values per cluster, filtered by set parameter, defaults to calculating background
 }
 \examples{
-avg1 <- average_clusters_filter(
+average_clusters_filter(
   mat = pbmc_matrix_small,
   metadata = pbmc_meta,
   group_by = "classified",

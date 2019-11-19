@@ -29,7 +29,7 @@ pbmc_avg <- average_clusters(
   if_log = FALSE
 )
 
-marker_selected <- marker_select(
+marker_select(
   row1 = pbmc_avg["PPBP", ],
   cols = names(pbmc_avg["PPBP", ])
 )

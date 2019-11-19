@@ -22,7 +22,7 @@ vector of numeric values
 pct of cells in each cluster that express genelist
 }
 \examples{
-res <- gene_pct(
+clustifyr:::gene_pct(
   matrix = pbmc_matrix_small,
   genelist = cbmc_m$B,
   clusters = pbmc_meta$classified

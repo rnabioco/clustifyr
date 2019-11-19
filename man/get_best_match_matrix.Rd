@@ -16,7 +16,7 @@ matrix of 1s and 0s
 Function to make best call from correlation matrix
 }
 \examples{
-cor_mat <- res <- clustify(
+cor_mat <- clustify(
   input = pbmc_matrix_small,
   metadata = pbmc_meta,
   cluster_col = "classified",
@@ -24,5 +24,5 @@ cor_mat <- res <- clustify(
   query_genes = pbmc_vargenes
 )
 
-best_mat <- get_best_match_matrix(cor_mat)
+clustifyr:::get_best_match_matrix(cor_mat)
 }

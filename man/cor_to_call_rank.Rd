@@ -43,5 +43,5 @@ res <- clustify(
   ref_mat = cbmc_ref
 )
 
-res2 <- cor_to_call_rank(res, threshold = "auto")
+cor_to_call_rank(res, threshold = "auto")
 }

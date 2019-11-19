@@ -43,7 +43,5 @@ res <- clustify(
   per_cell = FALSE
 )
 
-plt <- plot_cor_heatmap(res)
-
-plt
+plot_cor_heatmap(res)
 }

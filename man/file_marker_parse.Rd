@@ -22,5 +22,5 @@ marker_file <- system.file(
   package = "clustifyr"
 )
 
-markers <- file_marker_parse(marker_file)
+file_marker_parse(marker_file)
 }

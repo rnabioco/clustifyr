@@ -41,7 +41,7 @@ res <- clustify(
   cluster_col = "classified"
 )
 
-call1 <- cor_to_call_topn(
+cor_to_call_topn(
   cor_mat = res,
   metadata = pbmc_meta,
   col = "classified",

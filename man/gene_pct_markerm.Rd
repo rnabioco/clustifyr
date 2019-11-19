@@ -26,7 +26,7 @@ matrix of numeric values, clusters from mat as row names, cell types from marker
 pct of cells in every cluster that express a series of genelists
 }
 \examples{
-res <- gene_pct_markerm(
+gene_pct_markerm(
   matrix = pbmc_matrix_small,
   marker_m = cbmc_m,
   metadata = pbmc_meta,

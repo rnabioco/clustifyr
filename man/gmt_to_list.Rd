@@ -30,5 +30,5 @@ gmt_file <- system.file(
   package = "clustifyr"
 )
 
-gmt_list <- gmt_to_list(path = gmt_file)
+gmt_to_list(path = gmt_file)
 }
