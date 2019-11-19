@@ -15,9 +15,11 @@ reference:
   contents:
   - starts_with("clustify")
   - average_clusters
+  - average_clusters_filter
   - matrixize_markers
   - starts_with("cor_to_call")
   - call_to_metadata
+  - call_consensus
 
 - title: Object wrappers
   desc:  Retrieving metadata and reference building from supported object types
@@ -38,5 +40,23 @@ reference:
 - title: Utilities
   contents:
   - run_gsea
+  - calculate_pathway_gsea
   - starts_with("get")
+  - binarize_expr
+  - downsample_matrix
+  - feature_select_PCA
+  - file_marker_parse
+  - find_rank_bias
+  - gmt_to_list
+  - make_comb_ref
+  - marker_select
+  - overcluster_test
+  - parse_loc_object
+  - pos_neg_marker
+  - pos_neg_select
+  - ref_feature_select
+  - ref_marker_select
+  - remove_background
+  - reverse_marker_matrix
+
 
