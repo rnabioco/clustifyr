@@ -106,7 +106,8 @@ test_that("average_clusters works when one cluster contains only 1 cell", {
   pbmc_meta2[1, "classified"] <- 15
   pbmc_avg2 <- average_clusters(pbmc_matrix_small,
     pbmc_meta2,
-    cluster_col = "classified"
+    cluster_col = "classified",
+    low_threshold = 0
   )
   expect_equal(ncol(pbmc_avg2), 9 + 1)
 })

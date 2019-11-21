@@ -29,6 +29,7 @@ clustify <- function(input, ...) {
 #' @param obj_out whether to output object instead of cor matrix
 #' @param rename_prefix prefix to add to type and r column names
 #' @param threshold identity calling minimum correlation score threshold, only used when obj_out = TRUE
+#' @param low_threshold_cell option to remove clusters with too few cells
 #' @param exclude_genes a vector of gene names to throw out of query
 #' @param ... additional arguments to pass to compute_method function
 #'
@@ -91,6 +92,7 @@ clustify.default <- function(input,
                              seurat_out = FALSE,
                              rename_prefix = NULL,
                              threshold = "auto",
+                             low_threshold_cell = 10,
                              exclude_genes = rownames(ref_mat)[stringr::str_detect(rownames(ref_mat), "RP[0-9,L,S]|Rp[0-9,l,s]")],
                              ...) {
   if (!compute_method %in% clustifyr_methods) {
@@ -511,6 +513,7 @@ clustify_lists <- function(input, ...) {
 #' @param obj_out whether to output object instead of cor matrix
 #' @param rename_prefix prefix to add to type and r column names
 #' @param threshold identity calling minimum correlation score threshold, only used when obj_out = T
+#' @param low_threshold_cell option to remove clusters with too few cells
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
 #' @param ... passed to matrixize_markers
@@ -553,6 +556,7 @@ clustify_lists.default <- function(input,
                                    seurat_out = FALSE,
                                    rename_prefix = NULL,
                                    threshold = 0,
+                                   low_threshold_cell = 10,
                                    ...) {
   orig_input <- input
   if (!inherits(input, c("matrix", "Matrix", "data.frame"))) {
@@ -583,7 +587,8 @@ clustify_lists.default <- function(input,
     input <- average_clusters(input,
       cluster_info,
       if_log = if_log,
-      cluster_col = cluster_col
+      cluster_col = cluster_col,
+      low_threshold = low_threshold_cell
     )
   }
 

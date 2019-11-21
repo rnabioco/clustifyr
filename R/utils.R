@@ -133,7 +133,7 @@ average_clusters <- function(mat,
 
   out <- do.call(cbind, out)
   if (low_threshold > 0) {
-    fil <- sapply(cluster_ids, FUN = length) > low_threshold
+    fil <- sapply(cluster_ids, FUN = length) >= low_threshold
     out <- out[, as.vector(fil)]
   }
   if (!(is.null(cut_n))) {

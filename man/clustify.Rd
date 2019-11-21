@@ -26,6 +26,7 @@ clustify(input, ...)
   seurat_out = FALSE,
   rename_prefix = NULL,
   threshold = "auto",
+  low_threshold_cell = 10,
   exclude_genes = rownames(ref_mat)[stringr::str_detect(rownames(ref_mat),
     "RP[0-9,L,S]|Rp[0-9,l,s]")],
   ...
@@ -128,6 +129,8 @@ common genes between the expr_mat and ref_mat will be used for comparision.}
 \item{rename_prefix}{prefix to add to type and r column names}
 
 \item{threshold}{identity calling minimum correlation score threshold, only used when obj_out = TRUE}
+
+\item{low_threshold_cell}{option to remove clusters with too few cells}
 
 \item{exclude_genes}{a vector of gene names to throw out of query}
 

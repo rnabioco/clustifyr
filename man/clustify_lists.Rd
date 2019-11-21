@@ -28,6 +28,7 @@ clustify_lists(input, ...)
   seurat_out = FALSE,
   rename_prefix = NULL,
   threshold = 0,
+  low_threshold_cell = 10,
   ...
 )
 
@@ -133,6 +134,8 @@ if running correlation per cell.}
 \item{rename_prefix}{prefix to add to type and r column names}
 
 \item{threshold}{identity calling minimum correlation score threshold, only used when obj_out = T}
+
+\item{low_threshold_cell}{option to remove clusters with too few cells}
 
 \item{dr}{stored dimension reduction}
 }
