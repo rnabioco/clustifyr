@@ -150,7 +150,7 @@ test_that("clustify_lists inserts seurat metadata correctly", {
     dr = "tsne"
   )
   if ("Seurat" %in% loadedNamespaces()) {
-    expect_true(class(res) == "seurat")
+    expect_true(class(res) %in% c("seurat"))
   } else {
     expect_true(is.matrix(res))
   }
@@ -212,7 +212,7 @@ test_that("clustify_lists inserts seurat3 metadata correctly", {
     dr = "tsne"
   )
   if ("Seurat" %in% loadedNamespaces()) {
-    expect_true(class(res) == "Seurat")
+    expect_true(class(res) %in% c("Seurat"))
   } else {
     expect_true(is.matrix(res))
   }
