@@ -149,7 +149,11 @@ test_that("clustify_lists inserts seurat metadata correctly", {
     seurat_out = TRUE,
     dr = "tsne"
   )
-  expect_true(class(res) %in% c("matrix", "seurat"))
+  if ("Seurat" %in% loadedNamespaces()) {
+    expect_true(class(res) == "seurat")
+  } else {
+    expect_true(is.matrix(res))
+  }
 })
 
 test_that("seurat3 object clustify_lists-ing", {
@@ -207,7 +211,11 @@ test_that("clustify_lists inserts seurat3 metadata correctly", {
     seurat_out = TRUE,
     dr = "tsne"
   )
-  expect_true(class(res) %in% c("matrix", "Seurat"))
+  if ("Seurat" %in% loadedNamespaces()) {
+    expect_true(class(res) == "Seurat")
+  } else {
+    expect_true(is.matrix(res))
+  }
 })
 
 test_that("run all gene list functions and then use consensus_call", {

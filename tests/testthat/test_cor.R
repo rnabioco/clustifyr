@@ -157,14 +157,17 @@ test_that("clustify reinserts seurat metadata correctly", {
     per_cell = TRUE,
     dr = "tsne"
   )
-
   res2 <- clustify(s_small,
     cbmc_ref,
     cluster_col = "res.1",
     seurat_out = TRUE,
     dr = "tsne"
   )
-  expect_true(class(res) %in% c("matrix", "seurat"))
+  if ("Seurat" %in% loadedNamespaces()) {
+    expect_true(class(res) == "seurat")
+  } else {
+    expect_true(is.matrix(res))
+  }
 })
 
 test_that("seurat3 object clustifying", {
@@ -211,7 +214,11 @@ test_that("clustify reinserts seurat3 metadata correctly", {
     seurat_out = TRUE,
     dr = "tsne"
   )
-  expect_true(class(res) %in% c("matrix", "Seurat"))
+  if ("Seurat" %in% loadedNamespaces()) {
+    expect_true(class(res) == "Seurat")
+  } else {
+    expect_true(is.matrix(res))
+  }
 })
 
 test_that("get_similarity handles NA entries", {
