@@ -48,10 +48,11 @@ average expression matrix, with genes for row names, and clusters for column nam
 Average expression values per cluster
 }
 \examples{
-average_clusters(
+mat <- average_clusters(
   mat = pbmc_matrix_small,
   metadata = pbmc_meta,
   cluster_col = "classified",
   if_log = FALSE
 )
+mat[1:3, 1:3]
 }
