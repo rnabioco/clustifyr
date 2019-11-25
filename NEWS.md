@@ -1,3 +1,3 @@
-# clustifyr 0.1.0 
+# clustifyr 0.99.0 
 
 - Initial release
