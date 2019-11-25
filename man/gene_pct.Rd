@@ -21,10 +21,3 @@ vector of numeric values
 \description{
 pct of cells in each cluster that express genelist
 }
-\examples{
-clustifyr:::gene_pct(
-  matrix = pbmc_matrix_small,
-  genelist = cbmc_m$B,
-  clusters = pbmc_meta$classified
-)
-}

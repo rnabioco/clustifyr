@@ -23,11 +23,3 @@ matrix of numeric values
 \description{
 compute similarity
 }
-\examples{
-clustifyr:::calc_similarity(
-  query_mat = pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)],
-  ref_mat = cbmc_ref[c("PPBP", "LYZ", "S100A9"), 1:3],
-  cluster_ids = colnames(pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)]),
-  compute_method = "spearman"
-)
-}

@@ -16,9 +16,3 @@ vector of shared elements
 return entries found in all supplied vectors. If the vector supplied
 is NULL or NA, then it will be excluded from the comparision.
 }
-\examples{
-a <- rep(1:5)
-b <- rep(4:10)
-c <- rep(4:6)
-clustifyr:::get_common_elements(a, b, c)
-}

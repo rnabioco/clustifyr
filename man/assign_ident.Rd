@@ -29,16 +29,3 @@ new dataframe of metadata
 \description{
 manually change idents as needed
 }
-\examples{
-clustifyr:::assign_ident(
-  metadata = pbmc_meta,
-  cluster_col = "seurat_clusters",
-  ident_col = "type",
-  clusters = c(1, 2, 5),
-  idents = c(
-    "primary human T cells",
-    "primary human monocytes",
-    "primary human myeloid DC"
-  )
-)
-}
