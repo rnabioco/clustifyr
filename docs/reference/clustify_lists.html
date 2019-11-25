@@ -176,6 +176,7 @@
   <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>low_threshold_cell</span> <span class='kw'>=</span> <span class='fl'>10</span>,
   <span class='no'>...</span>
 )
 
@@ -322,6 +323,10 @@ if running correlation per cell.</p></td>
     <tr>
       <th>threshold</th>
       <td><p>identity calling minimum correlation score threshold, only used when obj_out = T</p></td>
+    </tr>
+    <tr>
+      <th>low_threshold_cell</th>
+      <td><p>option to remove clusters with too few cells</p></td>
     </tr>
     <tr>
       <th>dr</th>

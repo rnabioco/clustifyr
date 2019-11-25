@@ -109,7 +109,7 @@
     <div class="page-header toc-ignore">
       <h1>Benchmarking clustifyr</h1>
             
-            <h4 class="date">2019-11-19</h4>
+            <h4 class="date">2019-11-25</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyr/blob/master/vignettes/benchmark.Rmd"><code>vignettes/benchmark.Rmd</code></a></small>
       <div class="hidden name"><code>benchmark.Rmd</code></div>
@@ -155,7 +155,7 @@
 <span id="cb1-32"><a href="#cb1-32"></a><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(res_allgenes) &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"MCA annotation"</span>, <span class="st">"clustifyr call"</span>, <span class="st">"r"</span>)</span>
 <span id="cb1-33"><a href="#cb1-33"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(end <span class="op">-</span><span class="st"> </span>start)</span>
 <span id="cb1-34"><a href="#cb1-34"></a><span class="co">#&gt;    user  system elapsed </span></span>
-<span id="cb1-35"><a href="#cb1-35"></a><span class="co">#&gt;   1.184   0.442   1.628</span></span>
+<span id="cb1-35"><a href="#cb1-35"></a><span class="co">#&gt;   1.285   0.452   1.814</span></span>
 <span id="cb1-36"><a href="#cb1-36"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(res_allgenes, <span class="dt">n =</span> <span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(res_allgenes))</span>
 <span id="cb1-37"><a href="#cb1-37"></a><span class="co">#&gt; # A tibble: 32 x 3</span></span>
 <span id="cb1-38"><a href="#cb1-38"></a><span class="co">#&gt; # Groups:   Annotation [32]</span></span>
@@ -218,7 +218,7 @@
 <span id="cb2-19"><a href="#cb2-19"></a><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(res2) &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"manual annotation"</span>, <span class="st">"clustifyr call"</span>, <span class="st">"r"</span>)</span>
 <span id="cb2-20"><a href="#cb2-20"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(end <span class="op">-</span><span class="st"> </span>start)</span>
 <span id="cb2-21"><a href="#cb2-21"></a><span class="co">#&gt;    user  system elapsed </span></span>
-<span id="cb2-22"><a href="#cb2-22"></a><span class="co">#&gt;   0.037   0.003   0.041</span></span>
+<span id="cb2-22"><a href="#cb2-22"></a><span class="co">#&gt;   0.041   0.005   0.047</span></span>
 <span id="cb2-23"><a href="#cb2-23"></a><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(res2, <span class="dt">n =</span> <span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(res2))</span>
 <span id="cb2-24"><a href="#cb2-24"></a><span class="co">#&gt; # A tibble: 9 x 3</span></span>
 <span id="cb2-25"><a href="#cb2-25"></a><span class="co">#&gt; # Groups:   cluster [9]</span></span>
