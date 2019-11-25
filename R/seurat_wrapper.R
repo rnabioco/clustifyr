@@ -16,11 +16,12 @@ seurat_ref <- function(seurat_object, ...) {
 #' averaging will be done on unlogged data
 #' @param ... additional arguments
 #' @examples
-#' seurat_ref(
+#' ref <- seurat_ref(
 #'   seurat_object = s_small,
 #'   cluster_col = "res.1",
 #'   var_genes_only = TRUE
 #' )
+#' ref[1:3, 1:3]
 #' @export
 seurat_ref.seurat <- function(seurat_object,
                               cluster_col = "classified",

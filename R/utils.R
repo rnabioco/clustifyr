@@ -5,10 +5,11 @@
 #' @param power decides the number of clusters for kmeans
 #' @return new cluster_id list of more clusters
 #' @examples
-#' overcluster(
+#' res <- overcluster(
 #'   mat = pbmc_matrix_small,
 #'   cluster_id = split(colnames(pbmc_matrix_small), pbmc_meta$classified)
 #' )
+#' dim(res)
 #' @export
 overcluster <- function(mat,
                         cluster_id,
@@ -49,12 +50,13 @@ overcluster <- function(mat,
 #' @param cut_n set on a limit of genes as expressed, lower ranked genes are set to 0, considered unexpressed
 #' @return average expression matrix, with genes for row names, and clusters for column names
 #' @examples
-#' average_clusters(
+#' mat <- average_clusters(
 #'   mat = pbmc_matrix_small,
 #'   metadata = pbmc_meta,
 #'   cluster_col = "classified",
 #'   if_log = FALSE
 #' )
+#' mat[1:3, 1:3]
 #' @export
 average_clusters <- function(mat,
                              metadata,
