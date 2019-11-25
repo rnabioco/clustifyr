@@ -17,9 +17,3 @@ character
 \description{
 Generate a unique column id for a dataframe
 }
-\examples{
-clustifyr:::get_unique_column(
-  pbmc_meta,
-  "orig.ident"
-)
-}

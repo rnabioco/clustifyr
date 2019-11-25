@@ -39,13 +39,3 @@ matrix of numeric values
 \description{
 Permute cluster labels to calculate empirical p-value
 }
-\examples{
-clustifyr:::permute_similarity(
-  expr_mat = pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)],
-  ref_mat = cbmc_ref[c("PPBP", "LYZ", "S100A9"), 1:3],
-  cluster_ids = colnames(pbmc_matrix_small[c("PPBP", "LYZ", "S100A9"), c(7, 11)]),
-  n_perm = 2,
-  per_cell = TRUE,
-  compute_method = "spearman"
-)
-}

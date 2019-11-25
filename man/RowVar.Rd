@@ -17,6 +17,3 @@ vector of numeric values
 \description{
 get var per row for matrix
 }
-\examples{
-pbmc_small_rowvar <- clustifyr:::RowVar(as.matrix(pbmc_matrix_small))
-}

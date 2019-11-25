@@ -214,27 +214,19 @@ plot_dims <- function(data,
 
 #' Color palette for plotting continous variables
 #' @return vector of colors
-#' @examples
-#' clustifyr:::pretty_palette
 pretty_palette <- rev(scales::brewer_pal(palette = "RdGy")(6))
 
 #' Color palette for plotting continous variables, starting at gray
 #' @return vector of colors
-#' @examples
-#' clustifyr:::pretty_palette2
 pretty_palette2 <- scales::brewer_pal(palette = "Reds")(9)
 
 #' black and white palette for plotting continous variables
 #' @return vector of colors
-#' @examples
-#' clustifyr:::not_pretty_palette
 not_pretty_palette <- scales::brewer_pal(palette = "Greys")(9)
 
 #' Expanded color palette ramp for plotting discrete variables
 #' @param n number of colors to use
 #' @return color ramp
-#' @examples
-#' clustifyr:::pretty_palette_ramp_d
 pretty_palette_ramp_d <-
   grDevices::colorRampPalette(scales::brewer_pal(palette = "Paired")(12))
 
@@ -430,21 +422,6 @@ plot_gene <- function(expr_mat,
 #' @param data_to_plot colname of data to plot, defaults to all
 #' @param ... passed to plot_dims
 #' @return list of ggplot object, cells projected by dr, colored by cell type classification
-#' @examples
-#' res <- clustify(
-#'   input = pbmc_matrix_small,
-#'   metadata = pbmc_meta,
-#'   ref_mat = cbmc_ref,
-#'   query_genes = pbmc_vargenes,
-#'   cluster_col = "classified"
-#' )
-#'
-#' clustifyr:::plot_call(
-#'   cor_mat = res,
-#'   metadata = pbmc_meta,
-#'   data_to_plot = colnames(res)[1:2],
-#'   cluster_col = "classified"
-#' )
 plot_call <- function(cor_mat,
                       metadata,
                       data_to_plot = colnames(cor_mat),

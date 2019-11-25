@@ -154,12 +154,6 @@ average_clusters <- function(mat,
 #' @param cluster_col column in metadata with cluster number
 #' @param cut_num binary cutoff for detection
 #' @return matrix of numeric values, with genes for row names, and clusters for column names
-#' @examples
-#' clustifyr:::percent_clusters(
-#'   mat = pbmc_matrix_small,
-#'   metadata = pbmc_meta,
-#'   cluster_col = "classified"
-#' )
 percent_clusters <- function(mat,
                              metadata,
                              cluster_col = "cluster",
@@ -178,16 +172,6 @@ percent_clusters <- function(mat,
 #'
 #' @param cor_mat correlation matrix
 #' @return matrix of 1s and 0s
-#' @examples
-#' cor_mat <- clustify(
-#'   input = pbmc_matrix_small,
-#'   metadata = pbmc_meta,
-#'   cluster_col = "classified",
-#'   ref_mat = cbmc_ref,
-#'   query_genes = pbmc_vargenes
-#' )
-#'
-#' clustifyr:::get_best_match_matrix(cor_mat)
 get_best_match_matrix <- function(cor_mat) {
   best_mat <-
     as.data.frame(t(apply(cor_mat, 1, function(x) {
@@ -206,22 +190,6 @@ get_best_match_matrix <- function(cor_mat) {
 #' @param cor_mat correlation matrix
 #' @param carry_cor whether the correlation score gets reported
 #' @return string with ident call and possibly cor value
-#' @examples
-#' cor_mat <- clustify(
-#'   input = pbmc_matrix_small,
-#'   metadata = pbmc_meta,
-#'   cluster_col = "classified",
-#'   ref_mat = cbmc_ref,
-#'   query_genes = pbmc_vargenes
-#' )
-#'
-#' best_mat <- clustifyr:::get_best_match_matrix(cor_mat)
-#'
-#' clustifyr:::get_best_str(
-#'   name = 1,
-#'   best_mat = best_mat,
-#'   cor_mat = cor_mat
-#' )
 get_best_str <- function(name,
                          best_mat,
                          cor_mat,
@@ -252,11 +220,6 @@ get_best_str <- function(name,
 #' is NULL or NA, then it will be excluded from the comparision.
 #' @param ... vectors
 #' @return vector of shared elements
-#' @examples
-#' a <- rep(1:5)
-#' b <- rep(4:10)
-#' c <- rep(4:6)
-#' clustifyr:::get_common_elements(a, b, c)
 get_common_elements <- function(...) {
   vecs <- list(...)
   # drop NULL elements of list
@@ -282,27 +245,6 @@ get_common_elements <- function(...) {
 #' @param compute_method method(s) for computing similarity scores
 #' @param ... additional arguments to pass to compute_method function
 #' @return matrix of correlation values, clusters as row names and column names
-#' @examples
-#' pbmc_meta2 <- pbmc_meta
-#'
-#' pbmc_meta2$sample <- c(
-#'   rep("A", 1319),
-#'   rep("B", 1319)
-#' )
-#'
-#' pbmc_meta2$classified <- c(
-#'   pbmc_meta2$classified[1:1319],
-#'   pbmc_meta2$classified[1320:2638]
-#' )
-#'
-#' clustifyr:::clustify_intra(
-#'   expr_mat = pbmc_matrix_small,
-#'   metadata = pbmc_meta2,
-#'   query_genes = pbmc_vargenes,
-#'   cluster_col = "classified",
-#'   sample_col = "sample",
-#'   sample_id = "A"
-#' )
 clustify_intra <- function(expr_mat,
                            metadata,
                            query_genes,
@@ -495,18 +437,6 @@ calculate_pathway_gsea <- function(mat,
 #' @param clusters names of clusters to change, string or vector of strings
 #' @param idents new idents to assign, must be length of 1 or same as clusters
 #' @return new dataframe of metadata
-#' @examples
-#' clustifyr:::assign_ident(
-#'   metadata = pbmc_meta,
-#'   cluster_col = "seurat_clusters",
-#'   ident_col = "type",
-#'   clusters = c(1, 2, 5),
-#'   idents = c(
-#'     "primary human T cells",
-#'     "primary human monocytes",
-#'     "primary human myeloid DC"
-#'   )
-#' )
 assign_ident <- function(metadata,
                          cluster_col = "cluster",
                          ident_col = "type",
@@ -638,12 +568,6 @@ cor_to_call_topn <- function(cor_mat,
 #' @param clusters vector of cluster identities
 #' @param returning whether to return mean, min, or max of the gene pct in the gene list
 #' @return vector of numeric values
-#' @examples
-#' clustifyr:::gene_pct(
-#'   matrix = pbmc_matrix_small,
-#'   genelist = cbmc_m$B,
-#'   clusters = pbmc_meta$classified
-#' )
 gene_pct <- function(matrix,
                      genelist,
                      clusters,
@@ -1553,8 +1477,6 @@ plot_pathway_gsea <- function(mat,
 #' @param x expression matrix
 #' @param na.rm logical. Should missing values (including NaN) be omitted from the calculations?
 #' @return vector of numeric values
-#' @examples
-#' pbmc_small_rowvar <- clustifyr:::RowVar(as.matrix(pbmc_matrix_small))
 RowVar <- function(x, na.rm = TRUE) {
   rowSums((x - rowMeans(x, na.rm = na.rm))^2, na.rm = na.rm) / (dim(x)[2] - 1)
 }
@@ -1892,11 +1814,6 @@ file_marker_parse <- function(filename) {
 #' @param df dataframe with column names
 #' @param id desired id if unique
 #' @return character
-#' @examples
-#' clustifyr:::get_unique_column(
-#'   pbmc_meta,
-#'   "orig.ident"
-#' )
 get_unique_column <- function(df, id = NULL) {
   if (!is.null(id)) {
     out_id <- id

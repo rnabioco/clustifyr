@@ -21,20 +21,3 @@ string with ident call and possibly cor value
 \description{
 Function to make call and attach score
 }
-\examples{
-cor_mat <- clustify(
-  input = pbmc_matrix_small,
-  metadata = pbmc_meta,
-  cluster_col = "classified",
-  ref_mat = cbmc_ref,
-  query_genes = pbmc_vargenes
-)
-
-best_mat <- clustifyr:::get_best_match_matrix(cor_mat)
-
-clustifyr:::get_best_str(
-  name = 1,
-  best_mat = best_mat,
-  cor_mat = cor_mat
-)
-}

@@ -21,10 +21,3 @@ matrix of numeric values, with genes for row names, and clusters for column name
 \description{
 Percentage detected per cluster
 }
-\examples{
-clustifyr:::percent_clusters(
-  mat = pbmc_matrix_small,
-  metadata = pbmc_meta,
-  cluster_col = "classified"
-)
-}

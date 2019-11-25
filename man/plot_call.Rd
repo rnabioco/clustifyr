@@ -21,19 +21,3 @@ list of ggplot object, cells projected by dr, colored by cell type classificatio
 \description{
 Plot called clusters on a tSNE or umap, for each reference cluster given
 }
-\examples{
-res <- clustify(
-  input = pbmc_matrix_small,
-  metadata = pbmc_meta,
-  ref_mat = cbmc_ref,
-  query_genes = pbmc_vargenes,
-  cluster_col = "classified"
-)
-
-clustifyr:::plot_call(
-  cor_mat = res,
-  metadata = pbmc_meta,
-  data_to_plot = colnames(res)[1:2],
-  cluster_col = "classified"
-)
-}
