@@ -11,7 +11,8 @@
 #'   cluster_col = "classified"
 #' )
 #'
-#' binarize_expr(pbmc_avg)
+#' mat <- binarize_expr(pbmc_avg)
+#' mat[1:3, 1:3]
 #' @export
 binarize_expr <- function(mat,
                           n = 1000,

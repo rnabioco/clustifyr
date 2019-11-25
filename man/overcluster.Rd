@@ -24,5 +24,5 @@ res <- overcluster(
   mat = pbmc_matrix_small,
   cluster_id = split(colnames(pbmc_matrix_small), pbmc_meta$classified)
 )
-dim(res)
+length(res)
 }

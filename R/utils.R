@@ -9,7 +9,7 @@
 #'   mat = pbmc_matrix_small,
 #'   cluster_id = split(colnames(pbmc_matrix_small), pbmc_meta$classified)
 #' )
-#' dim(res)
+#' length(res)
 #' @export
 overcluster <- function(mat,
                         cluster_id,
@@ -359,7 +359,8 @@ average_clusters_filter <- function(mat,
 #'   filter_on = "nFeature_RNA"
 #' )
 #'
-#' remove_background(pbmc_matrix_small, avg1, 1)
+#' mat <- remove_background(pbmc_matrix_small, avg1, 1)
+#' mat[1:3, 1:3]
 #' @export
 remove_background <- function(mat, background, n = 0) {
   if (n == 0) {
@@ -1078,7 +1079,8 @@ clustify_nudge.Seurat <- function(input,
 #' @param lookuptable if not supplied, will look in built-in table for object parsing
 #' @return list of expression, metadata, vargenes, cluster_col info from object
 #' @examples
-#' parse_loc_object(s_small3)
+#' obj <- parse_loc_object(s_small3)
+#' length(obj)
 #' @export
 parse_loc_object <- function(input,
                              type = class(input),
@@ -1389,7 +1391,8 @@ feature_select_PCA <- function(mat = NULL,
 #'   package = "clustifyr"
 #' )
 #'
-#' gmt_to_list(path = gmt_file)
+#' gl <- gmt_to_list(path = gmt_file)
+#' length(gl)
 #' @export
 gmt_to_list <- function(path,
                         cutoff = 0,
@@ -1495,12 +1498,13 @@ RowVar <- function(x, na.rm = TRUE) {
 #' @return new smaller mat with less cell_id columns
 #' @examples
 #' set.seed(42)
-#' downsample_matrix(
+#' mat <- downsample_matrix(
 #'   mat = pbmc_matrix_small,
 #'   metadata = pbmc_meta$classified,
 #'   n = 10,
 #'   keep_cluster_proportions = TRUE
 #' )
+#' mat[1:3, 1:3]
 #' @export
 downsample_matrix <- function(mat,
                               n = 1,
@@ -1548,10 +1552,11 @@ downsample_matrix <- function(mat,
 #' @param sep separator for name combinations
 #' @return expression matrix
 #' @examples
-#' make_comb_ref(
+#' ref <- make_comb_ref(
 #'   cbmc_ref,
 #'   sep = "_+_"
 #' )
+#' ref[1:3, 1:3]
 #' @export
 make_comb_ref <- function(ref_mat,
                           if_log = TRUE,

@@ -20,8 +20,9 @@ expression matrix
 make combination ref matrix to assess intermixing
 }
 \examples{
-make_comb_ref(
+ref <- make_comb_ref(
   cbmc_ref,
   sep = "_+_"
 )
+ref[1:3, 1:3]
 }

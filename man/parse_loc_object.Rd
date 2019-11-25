@@ -36,5 +36,6 @@ list of expression, metadata, vargenes, cluster_col info from object
 more flexible parsing of single cell objects
 }
 \examples{
-parse_loc_object(s_small3)
+obj <- parse_loc_object(s_small3)
+length(obj)
 }
