@@ -25,8 +25,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -100,25 +100,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/benchmark.html">Benchmarking clustifyr</a>
-    </li>
-    <li>
       <a href="../articles/clustifyR.html">Introduction to clustifyr</a>
-    </li>
-    <li>
-      <a href="../articles/download_refs.html">Prebuilt references for clustifyr</a>
-    </li>
-    <li>
-      <a href="../articles/otherformats.html">Support for various single cell object formats</a>
-    </li>
-    <li>
-      <a href="../articles/othertools.html">Other considerations w/ clustifyr</a>
-    </li>
-    <li>
-      <a href="../articles/references.html">Reference building for clustifyr</a>
-    </li>
-    <li>
-      <a href="../articles/visualizations.html">Visualization of clustifyr results</a>
     </li>
   </ul>
 </li>
@@ -224,42 +206,15 @@ averaging will be done on unlogged data</p></td>
     <p>reference expression matrix, with genes as row names, and cell types as column names</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>seurat_ref</span>(
+    <pre class="examples"><div class='input'><span class='no'>ref</span> <span class='kw'>&lt;-</span> <span class='fu'>seurat_ref</span>(
   <span class='kw'>seurat_object</span> <span class='kw'>=</span> <span class='no'>s_small</span>,
   <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"res.1"</span>,
   <span class='kw'>var_genes_only</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</div><div class='output co'>#&gt;                  0         1        2        3
-#&gt; LTB       6.119387 3.9159822 3.431685 1.939084
-#&gt; EAF2      3.085469 2.1703741 0.000000 0.000000
-#&gt; CD19      2.792883 2.0038355 0.000000 0.000000
-#&gt; KIAA0125  2.698022 1.5003163 0.000000 0.000000
-#&gt; CYB561A3  2.833872 1.1159757 0.000000 0.000000
-#&gt; IGLL5     4.758081 0.0000000 0.000000 0.000000
-#&gt; PIK3IP1   4.329896 1.1159757 0.000000 0.000000
-#&gt; KHDRBS1   4.438790 1.4270326 2.973455 0.000000
-#&gt; CCR7      3.739084 0.0000000 0.000000 0.000000
-#&gt; ACSM3     2.774644 0.0000000 0.000000 0.000000
-#&gt; SRSF7     5.371431 3.5019565 4.441386 0.000000
-#&gt; S1PR4     2.870074 2.5697443 5.235794 0.000000
-#&gt; LYAR      5.145304 0.3963286 3.538994 1.939084
-#&gt; SATB1     4.038537 1.2943402 0.000000 0.000000
-#&gt; IL17RA    0.000000 2.1803515 0.000000 0.000000
-#&gt; POP7      1.909471 3.4883857 1.939775 0.000000
-#&gt; ZNF330    0.000000 3.5973897 0.000000 0.000000
-#&gt; COPS6     3.788431 1.8578164 3.128351 1.666167
-#&gt; PPBP      1.912341 0.5566216 0.000000 7.622806
-#&gt; PF4       0.000000 0.7910408 0.000000 6.540004
-#&gt; HIST1H2AC 1.268152 0.0000000 0.000000 5.384321
-#&gt; TALDO1    3.133005 3.8405285 2.615882 5.555471
-#&gt; CA2       0.000000 0.7184755 0.000000 5.159115
-#&gt; ACRBP     1.779368 0.0000000 0.000000 4.490595
-#&gt; TSC22D1   0.000000 0.0000000 0.000000 4.605714
-#&gt; VDAC3     4.201333 1.7834147 2.725469 5.588632
-#&gt; GNLY      3.484767 3.2404708 6.662497 0.000000
-#&gt; PTGDR     1.212486 1.3859195 5.041770 1.063860
-#&gt; ARHGDIA   1.620733 3.4249584 4.587289 1.063860
-#&gt; PCMT1     2.064618 2.6002143 5.673756 0.000000
-#&gt; S100B     0.000000 0.0000000 4.136361 0.000000</div></pre>
+)
+<span class='no'>ref</span>[<span class='fl'>1</span>:<span class='fl'>3</span>, <span class='fl'>1</span>:<span class='fl'>3</span>]</div><div class='output co'>#&gt;             0        1        2
+#&gt; LTB  6.119387 3.915982 3.431685
+#&gt; EAF2 3.085469 2.170374 0.000000
+#&gt; CD19 2.792883 2.003836 0.000000</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -279,7 +234,7 @@ averaging will be done on unlogged data</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

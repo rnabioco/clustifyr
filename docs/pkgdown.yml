@@ -1,14 +1,8 @@
-pandoc: 2.7.3
-pkgdown: 1.4.1.9000
-pkgdown_sha: d0b233e7966dc86c2b315f880deead3c7f9a5a02
+pandoc: 2.3.1
+pkgdown: 1.4.1
+pkgdown_sha: ~
 articles:
-  benchmark: benchmark.html
   clustifyR: clustifyR.html
-  download_refs: download_refs.html
-  otherformats: otherformats.html
-  othertools: othertools.html
-  references: references.html
-  visualizations: visualizations.html
 urls:
   reference: http://rnabioco.github.io/clustifyr/reference
   article: http://rnabioco.github.io/clustifyr/articles

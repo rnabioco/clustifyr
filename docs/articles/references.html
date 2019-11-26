@@ -13,8 +13,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Reference building for clustifyr">
 <meta property="og:description" content="">
@@ -109,7 +109,7 @@
     <div class="page-header toc-ignore">
       <h1>Reference building for clustifyr</h1>
             
-            <h4 class="date">2019-11-25</h4>
+            <h4 class="date">2019-11-26</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyr/blob/master/vignettes/references.Rmd"><code>vignettes/references.Rmd</code></a></small>
       <div class="hidden name"><code>references.Rmd</code></div>
@@ -122,72 +122,72 @@
 <h2 class="hasAnchor">
 <a href="#building-reference-matrix-from-single-cell-expression-matrix" class="anchor"></a>Building reference matrix from single cell expression matrix</h2>
 <p>In its simplest form, a reference matrix is built by averaging expression (also includes an option to take the median) of a single cell RNA-seq expression matrix by cluster. Both log transformed or raw count matrices are supported.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(clustifyr)</span>
-<span id="cb1-2"><a href="#cb1-2"></a>full_pbmc_matrix &lt;-<span class="st"> </span>clustifyrdata<span class="op">::</span>pbmc_matrix</span>
-<span id="cb1-3"><a href="#cb1-3"></a>full_pbmc_meta &lt;-<span class="st"> </span>clustifyrdata<span class="op">::</span>pbmc_meta</span>
-<span id="cb1-4"><a href="#cb1-4"></a>new_ref_matrix &lt;-<span class="st"> </span><span class="kw"><a href="../reference/average_clusters.html">average_clusters</a></span>(</span>
-<span id="cb1-5"><a href="#cb1-5"></a>  <span class="dt">mat =</span> full_pbmc_matrix,</span>
-<span id="cb1-6"><a href="#cb1-6"></a>  <span class="dt">metadata =</span> full_pbmc_meta<span class="op">$</span>classified, <span class="co"># or use metadata = full_pbmc_meta, cluster_col = "classified"</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a>  <span class="dt">if_log =</span> <span class="ot">TRUE</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a>)</span>
-<span id="cb1-9"><a href="#cb1-9"></a></span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(new_ref_matrix)</span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="co">#&gt;                        B CD14+ Mono      CD8 T        DC FCGR3A+ Mono</span></span>
-<span id="cb1-12"><a href="#cb1-12"></a><span class="co">#&gt; AL627309.1    0.00000000 0.04740195 0.02033764 0.0000000   0.00000000</span></span>
-<span id="cb1-13"><a href="#cb1-13"></a><span class="co">#&gt; AP006222.2    0.00000000 0.01082590 0.01184445 0.0000000   0.00000000</span></span>
-<span id="cb1-14"><a href="#cb1-14"></a><span class="co">#&gt; RP11-206L10.2 0.02043998 0.00000000 0.00000000 0.0812375   0.00000000</span></span>
-<span id="cb1-15"><a href="#cb1-15"></a><span class="co">#&gt; RP11-206L10.9 0.00000000 0.01044641 0.00000000 0.0000000   0.01192865</span></span>
-<span id="cb1-16"><a href="#cb1-16"></a><span class="co">#&gt; LINC00115     0.03814842 0.03685000 0.01929541 0.0000000   0.01458683</span></span>
-<span id="cb1-17"><a href="#cb1-17"></a><span class="co">#&gt; NOC2L         0.46155233 0.24101294 0.44279234 0.2841343   0.40564359</span></span>
-<span id="cb1-18"><a href="#cb1-18"></a><span class="co">#&gt;               Memory CD4 T Naive CD4 T        NK Platelet</span></span>
-<span id="cb1-19"><a href="#cb1-19"></a><span class="co">#&gt; AL627309.1     0.005909767 0.006109960 0.0000000        0</span></span>
-<span id="cb1-20"><a href="#cb1-20"></a><span class="co">#&gt; AP006222.2     0.008172591 0.000000000 0.0000000        0</span></span>
-<span id="cb1-21"><a href="#cb1-21"></a><span class="co">#&gt; RP11-206L10.2  0.000000000 0.007425455 0.0000000        0</span></span>
-<span id="cb1-22"><a href="#cb1-22"></a><span class="co">#&gt; RP11-206L10.9  0.000000000 0.000000000 0.0000000        0</span></span>
-<span id="cb1-23"><a href="#cb1-23"></a><span class="co">#&gt; LINC00115      0.024390599 0.018938463 0.0569015        0</span></span>
-<span id="cb1-24"><a href="#cb1-24"></a><span class="co">#&gt; NOC2L          0.307346059 0.403772470 0.5311082        0</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(clustifyr)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">full_pbmc_matrix &lt;-<span class="st"> </span>clustifyrdata<span class="op">::</span>pbmc_matrix</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">full_pbmc_meta &lt;-<span class="st"> </span>clustifyrdata<span class="op">::</span>pbmc_meta</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">new_ref_matrix &lt;-<span class="st"> </span><span class="kw"><a href="../reference/average_clusters.html">average_clusters</a></span>(</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">  <span class="dt">mat =</span> full_pbmc_matrix,</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">  <span class="dt">metadata =</span> full_pbmc_meta<span class="op">$</span>classified, <span class="co"># or use metadata = full_pbmc_meta, cluster_col = "classified"</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">  <span class="dt">if_log =</span> <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">)</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(new_ref_matrix)</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co">#&gt;                        B CD14+ Mono      CD8 T        DC FCGR3A+ Mono</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">#&gt; AL627309.1    0.00000000 0.04740195 0.02033764 0.0000000   0.00000000</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">#&gt; AP006222.2    0.00000000 0.01082590 0.01184445 0.0000000   0.00000000</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co">#&gt; RP11-206L10.2 0.02043998 0.00000000 0.00000000 0.0812375   0.00000000</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="co">#&gt; RP11-206L10.9 0.00000000 0.01044641 0.00000000 0.0000000   0.01192865</span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co">#&gt; LINC00115     0.03814842 0.03685000 0.01929541 0.0000000   0.01458683</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">#&gt; NOC2L         0.46155233 0.24101294 0.44279234 0.2841343   0.40564359</span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="co">#&gt;               Memory CD4 T Naive CD4 T        NK Platelet</span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="co">#&gt; AL627309.1     0.005909767 0.006109960 0.0000000        0</span></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co">#&gt; AP006222.2     0.008172591 0.000000000 0.0000000        0</span></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21"><span class="co">#&gt; RP11-206L10.2  0.000000000 0.007425455 0.0000000        0</span></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co">#&gt; RP11-206L10.9  0.000000000 0.000000000 0.0000000        0</span></a>
+<a class="sourceLine" id="cb1-23" data-line-number="23"><span class="co">#&gt; LINC00115      0.024390599 0.018938463 0.0569015        0</span></a>
+<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="co">#&gt; NOC2L          0.307346059 0.403772470 0.5311082        0</span></a></code></pre></div>
 </div>
 <div id="building-reference-matrix-from-seurat-object" class="section level2">
 <h2 class="hasAnchor">
 <a href="#building-reference-matrix-from-seurat-object" class="anchor"></a>Building reference matrix from <code>seurat</code> object</h2>
 <p>For further convenience, a shortcut function for generating reference matrix from <code>seurat</code> object is used here.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>new_ref_matrix_v2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/seurat_ref.html">seurat_ref</a></span>(</span>
-<span id="cb2-2"><a href="#cb2-2"></a>  <span class="dt">seurat_object =</span> s_small,</span>
-<span id="cb2-3"><a href="#cb2-3"></a>  <span class="dt">cluster_col =</span> <span class="st">"res.1"</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a>)</span>
-<span id="cb2-5"><a href="#cb2-5"></a></span>
-<span id="cb2-6"><a href="#cb2-6"></a>new_ref_matrix_v3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/seurat_ref.html">seurat_ref</a></span>(</span>
-<span id="cb2-7"><a href="#cb2-7"></a>  <span class="dt">seurat_object =</span> s_small3,</span>
-<span id="cb2-8"><a href="#cb2-8"></a>  <span class="dt">cluster_col =</span> <span class="st">"RNA_snn_res.1"</span></span>
-<span id="cb2-9"><a href="#cb2-9"></a>)</span>
-<span id="cb2-10"><a href="#cb2-10"></a></span>
-<span id="cb2-11"><a href="#cb2-11"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">tail</a></span>(new_ref_matrix_v3)</span>
-<span id="cb2-12"><a href="#cb2-12"></a><span class="co">#&gt;                 0         1        2</span></span>
-<span id="cb2-13"><a href="#cb2-13"></a><span class="co">#&gt; C12orf75 3.223784 0.4297757 2.305767</span></span>
-<span id="cb2-14"><a href="#cb2-14"></a><span class="co">#&gt; RARRES3  4.341699 1.7550597 3.794566</span></span>
-<span id="cb2-15"><a href="#cb2-15"></a><span class="co">#&gt; PCMT1    4.576310 2.8893691 2.223141</span></span>
-<span id="cb2-16"><a href="#cb2-16"></a><span class="co">#&gt; LAMP1    3.919129 0.9441022 1.565788</span></span>
-<span id="cb2-17"><a href="#cb2-17"></a><span class="co">#&gt; SPON2    3.670497 1.3182933 3.200796</span></span>
-<span id="cb2-18"><a href="#cb2-18"></a><span class="co">#&gt; S100B    3.069210 0.0000000 0.000000</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">new_ref_matrix_v2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/seurat_ref.html">seurat_ref</a></span>(</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="dt">seurat_object =</span> s_small,</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="dt">cluster_col =</span> <span class="st">"res.1"</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">)</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">new_ref_matrix_v3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/seurat_ref.html">seurat_ref</a></span>(</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">  <span class="dt">seurat_object =</span> s_small3,</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">  <span class="dt">cluster_col =</span> <span class="st">"RNA_snn_res.1"</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">)</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">tail</a></span>(new_ref_matrix_v3)</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt;                 0         1        2</span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt; C12orf75 3.223784 0.4297757 2.305767</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt; RARRES3  4.341699 1.7550597 3.794566</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt; PCMT1    4.576310 2.8893691 2.223141</span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; LAMP1    3.919129 0.9441022 1.565788</span></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; SPON2    3.670497 1.3182933 3.200796</span></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt; S100B    3.069210 0.0000000 0.000000</span></a></code></pre></div>
 <p>If given additional <code>assay_name</code>, output ref will include features from the designated slots (such as for CITE-seq data).</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>new_ref_matrix_v2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/seurat_ref.html">seurat_ref</a></span>(</span>
-<span id="cb3-2"><a href="#cb3-2"></a>  <span class="dt">seurat_object =</span> s_small,</span>
-<span id="cb3-3"><a href="#cb3-3"></a>  <span class="dt">cluster_col =</span> <span class="st">"res.1"</span>,</span>
-<span id="cb3-4"><a href="#cb3-4"></a>  <span class="dt">assay_name =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"ADT"</span>, <span class="st">"ADT2"</span>)</span>
-<span id="cb3-5"><a href="#cb3-5"></a>)</span>
-<span id="cb3-6"><a href="#cb3-6"></a></span>
-<span id="cb3-7"><a href="#cb3-7"></a>new_ref_matrix_v3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/seurat_ref.html">seurat_ref</a></span>(</span>
-<span id="cb3-8"><a href="#cb3-8"></a>  <span class="dt">seurat_object =</span> s_small3,</span>
-<span id="cb3-9"><a href="#cb3-9"></a>  <span class="dt">cluster_col =</span> <span class="st">"RNA_snn_res.1"</span>,</span>
-<span id="cb3-10"><a href="#cb3-10"></a>  <span class="dt">assay_name =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"ADT"</span>, <span class="st">"ADT2"</span>)</span>
-<span id="cb3-11"><a href="#cb3-11"></a>)</span>
-<span id="cb3-12"><a href="#cb3-12"></a></span>
-<span id="cb3-13"><a href="#cb3-13"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">tail</a></span>(new_ref_matrix_v3)</span>
-<span id="cb3-14"><a href="#cb3-14"></a><span class="co">#&gt;   0 1 2</span></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="co">#&gt; A 1 1 1</span></span>
-<span id="cb3-16"><a href="#cb3-16"></a><span class="co">#&gt; B 1 1 1</span></span>
-<span id="cb3-17"><a href="#cb3-17"></a><span class="co">#&gt; C 1 1 1</span></span>
-<span id="cb3-18"><a href="#cb3-18"></a><span class="co">#&gt; D 1 1 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">new_ref_matrix_v2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/seurat_ref.html">seurat_ref</a></span>(</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="dt">seurat_object =</span> s_small,</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="dt">cluster_col =</span> <span class="st">"res.1"</span>,</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">  <span class="dt">assay_name =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"ADT"</span>, <span class="st">"ADT2"</span>)</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">)</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">new_ref_matrix_v3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/seurat_ref.html">seurat_ref</a></span>(</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">  <span class="dt">seurat_object =</span> s_small3,</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">  <span class="dt">cluster_col =</span> <span class="st">"RNA_snn_res.1"</span>,</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">  <span class="dt">assay_name =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"ADT"</span>, <span class="st">"ADT2"</span>)</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">)</a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">tail</a></span>(new_ref_matrix_v3)</a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt;   0 1 2</span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt; A 1 1 1</span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt; B 1 1 1</span></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">#&gt; C 1 1 1</span></a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">#&gt; D 1 1 1</span></a></code></pre></div>
 </div>
 <div id="building-reference-matrix-from-recount2" class="section level2">
 <h2 class="hasAnchor">
@@ -207,114 +207,103 @@
 <p>out_matrix &lt;- tidyr::gather(out_df, library, expr, -symbols) %&gt;% group_by(symbols, library) %&gt;% summarize(expr = sum(expr)) %&gt;% tidyr::spread(library, expr) %&gt;% as.data.frame() %&gt;% tibble::column_to_rownames(“symbols”) %&gt;% as.matrix()</p>
 <p>list( read_counts = out_matrix, meta_data = mdata ) }</p>
 <p>gtex_data &lt;- dl_recount(“SRP012682”)</p>
-<p>gtex_data<span class="math inline">\(read_counts[1:5, 1:5] gtex_data\)</span>meta_data[1:5, ]</p>
-<pre><code>
-## Building reference matrix from microarray data
-
-`clustifyr` works with microarray data-derived gene expression matrix as well (see Benchmark page). An example of generating a matrix for sorted immune cell type can be found below. The matrix can be found at `clustifyrdata::hema_microarray_matrix`
-
-```{"microarray example"}
-library(tidyverse)
-# read series matrix for column names
-GSE24759 &lt;- read_tsv("GSE24759/GSE24759_series_matrix.txt", skip = 25, n_max = 1)
-
-# read series matrix for full dataset; apply column names
-GSE24759 &lt;- read_tsv("GSE24759//GSE24759_series_matrix.txt", skip = 57, col_names = colnames(GSE24759)) %&gt;% rename(ID = `!Sample_title`)
-
-# read array metadata table, remove control probes and missing gene symbols
-GPL4685 &lt;- read_tsv("/Users/rf/microarray/GSE24759/GPL4685-15513.txt", skip = 14) %&gt;%
-  filter(!is.na(`Gene Symbol`), `Sequence Type` != "Control sequence") %&gt;%
-  separate(`Gene Symbol`, into = "gene_symbol", sep = " ") %&gt;%
-  select(ID, gene_symbol)
-
-# join data and metadata, collapse gene symbols
-GSE24759 &lt;- inner_join(GSE24759, GPL4685) %&gt;%
-  select(-ID) %&gt;%
-  group_by(gene_symbol) %&gt;%
-  mutate_at(.vars = vars(-gene_symbol), .funs = list(~ log2(mean(2^.))))
-
-# convert to matrix, add rownames
-GSE24759_mat &lt;- ungroup(GSE24759) %&gt;%
-  select(-gene_symbol) %&gt;%
-  as.matrix()
-row.names(GSE24759_mat) &lt;- GSE24759$gene_symbol
-
-# merge samples
-ref_hema_microarray &lt;- GSE24759_mat %&gt;%
-  t() %&gt;%
-  as.data.frame() %&gt;%
-  rownames_to_column("sample") %&gt;%
-  mutate(sample = str_remove(sample, ", .*")) %&gt;%
-  group_by(sample) %&gt;%
-  summarise_all(.funs = list(~ log2(mean(2^.)))) %&gt;%
-  column_to_rownames("sample") %&gt;%
-  t()</code></pre>
-<p>Essentially, any data in matrix form is accepted by <code>clustifyR</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>clustifyrdata<span class="op">::</span>ref_hema_microarray[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="co">#&gt;        Basophils CD4+ Central Memory CD4+ Effector Memory CD8+ Central Memory</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="co">#&gt; DDR1    6.084244            5.967502             5.933039            6.005278</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#&gt; RFC2    6.280044            6.028615             6.047005            5.992979</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="co">#&gt; HSPA6   6.535444            5.811475             5.746326            5.928349</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="co">#&gt; PAX8    6.669153            5.896401             6.118577            6.270870</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="co">#&gt; GUCA1A  5.239230            5.232116             5.206960            5.227415</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="co">#&gt;        CD8+ Effector Memory</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt; DDR1               5.895926</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt; RFC2               5.942426</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="co">#&gt; HSPA6              5.942670</span></span>
-<span id="cb5-12"><a href="#cb5-12"></a><span class="co">#&gt; PAX8               6.323922</span></span>
-<span id="cb5-13"><a href="#cb5-13"></a><span class="co">#&gt; GUCA1A             5.090882</span></span></code></pre></div>
+<p>gtex_data<span class="math inline">\(read_counts[1:5, 1:5] gtex_data\)</span>meta_data[1:5, ] ```</p>
 </div>
+<div id="building-reference-matrix-from-microarray-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#building-reference-matrix-from-microarray-data" class="anchor"></a>Building reference matrix from microarray data</h2>
+<p><code>clustifyr</code> works with microarray data-derived gene expression matrix as well (see Benchmark page). An example of generating a matrix for sorted immune cell type can be found below. The matrix can be found at <code>clustifyrdata::hema_microarray_matrix</code></p>
+<p>```{“microarray example”} library(tidyverse) # read series matrix for column names GSE24759 &lt;- read_tsv(“GSE24759/GSE24759_series_matrix.txt”, skip = 25, n_max = 1)</p>
+</div>
+<div id="read-series-matrix-for-full-dataset-apply-column-names" class="section level1">
+<h1 class="hasAnchor">
+<a href="#read-series-matrix-for-full-dataset-apply-column-names" class="anchor"></a>read series matrix for full dataset; apply column names</h1>
+<p>GSE24759 &lt;- read_tsv(“GSE24759//GSE24759_series_matrix.txt”, skip = 57, col_names = colnames(GSE24759)) %&gt;% rename(ID = <code>!Sample_title</code>)</p>
+</div>
+<div id="read-array-metadata-table-remove-control-probes-and-missing-gene-symbols" class="section level1">
+<h1 class="hasAnchor">
+<a href="#read-array-metadata-table-remove-control-probes-and-missing-gene-symbols" class="anchor"></a>read array metadata table, remove control probes and missing gene symbols</h1>
+<p>GPL4685 &lt;- read_tsv(“/Users/rf/microarray/GSE24759/GPL4685-15513.txt”, skip = 14) %&gt;% filter(!is.na(<code>Gene Symbol</code>), <code>Sequence Type</code> != “Control sequence”) %&gt;% separate(<code>Gene Symbol</code>, into = “gene_symbol”, sep = " ") %&gt;% select(ID, gene_symbol)</p>
+</div>
+<div id="join-data-and-metadata-collapse-gene-symbols" class="section level1">
+<h1 class="hasAnchor">
+<a href="#join-data-and-metadata-collapse-gene-symbols" class="anchor"></a>join data and metadata, collapse gene symbols</h1>
+<p>GSE24759 &lt;- inner_join(GSE24759, GPL4685) %&gt;% select(-ID) %&gt;% group_by(gene_symbol) %&gt;% mutate_at(.vars = vars(-gene_symbol), .funs = list(~ log2(mean(2^.))))</p>
+</div>
+<div id="convert-to-matrix-add-rownames" class="section level1">
+<h1 class="hasAnchor">
+<a href="#convert-to-matrix-add-rownames" class="anchor"></a>convert to matrix, add rownames</h1>
+<p>GSE24759_mat &lt;- ungroup(GSE24759) %&gt;% select(-gene_symbol) %&gt;% as.matrix() row.names(GSE24759_mat) &lt;- GSE24759$gene_symbol</p>
+</div>
+<div id="merge-samples" class="section level1">
+<h1 class="hasAnchor">
+<a href="#merge-samples" class="anchor"></a>merge samples</h1>
+<p>ref_hema_microarray &lt;- GSE24759_mat %&gt;% t() %&gt;% as.data.frame() %&gt;% rownames_to_column(“sample”) %&gt;% mutate(sample = str_remove(sample, ", .*“)) %&gt;% group_by(sample) %&gt;% summarise_all(.funs = list(~ log2(mean(2^.)))) %&gt;% column_to_rownames(”sample") %&gt;% t() ```</p>
+<p>Essentially, any data in matrix form is accepted by <code>clustifyR</code>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">clustifyrdata<span class="op">::</span>ref_hema_microarray[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt;        Basophils CD4+ Central Memory CD4+ Effector Memory CD8+ Central Memory</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; DDR1    6.084244            5.967502             5.933039            6.005278</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt; RFC2    6.280044            6.028615             6.047005            5.992979</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; HSPA6   6.535444            5.811475             5.746326            5.928349</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; PAX8    6.669153            5.896401             6.118577            6.270870</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; GUCA1A  5.239230            5.232116             5.206960            5.227415</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt;        CD8+ Effector Memory</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; DDR1               5.895926</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; RFC2               5.942426</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; HSPA6              5.942670</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; PAX8               6.323922</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt; GUCA1A             5.090882</span></a></code></pre></div>
 <div id="building-reference-gene-list" class="section level2">
 <h2 class="hasAnchor">
 <a href="#building-reference-gene-list" class="anchor"></a>Building reference gene list</h2>
 <p><code>clustify_lists</code> and <code>clustify_nudge</code> uses dataframe or matrix of candidate genes for classification. Example formatting are shown below.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># directly from seurat function</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(pbmc_markers)</span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="co">#&gt;               p_val avg_logFC pct.1 pct.2     p_val_adj cluster  gene</span></span>
-<span id="cb6-4"><a href="#cb6-4"></a><span class="co">#&gt; RPS12 2.008629e-140 0.5029988 1.000 0.991 2.754633e-136       0 RPS12</span></span>
-<span id="cb6-5"><a href="#cb6-5"></a><span class="co">#&gt; RPS27 2.624075e-140 0.5020359 0.999 0.992 3.598656e-136       0 RPS27</span></span>
-<span id="cb6-6"><a href="#cb6-6"></a><span class="co">#&gt; RPS6  1.280169e-138 0.4673635 1.000 0.995 1.755623e-134       0  RPS6</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="co">#&gt; RPL32 4.358823e-135 0.4242773 0.999 0.995 5.977689e-131       0 RPL32</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a><span class="co">#&gt; RPS14 3.618793e-128 0.4283480 1.000 0.994 4.962812e-124       0 RPS14</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a><span class="co">#&gt; RPS25 5.612007e-124 0.5203411 0.997 0.975 7.696306e-120       0 RPS25</span></span>
-<span id="cb6-10"><a href="#cb6-10"></a></span>
-<span id="cb6-11"><a href="#cb6-11"></a><span class="co"># manually enter into dataframe format</span></span>
-<span id="cb6-12"><a href="#cb6-12"></a>betam &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"INS"</span>, <span class="st">"IGF2"</span>, <span class="st">"IAPP"</span>, <span class="st">"MAFA"</span>, <span class="st">"NPTX2"</span>)</span>
-<span id="cb6-13"><a href="#cb6-13"></a>alpham &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"GCG"</span>, <span class="st">"PDK4"</span>, <span class="st">"LOXL2"</span>, <span class="st">"IRX2"</span>, <span class="st">"GC"</span>)</span>
-<span id="cb6-14"><a href="#cb6-14"></a>deltam &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"SST"</span>, <span class="st">"RBP4"</span>, <span class="st">"HHEX"</span>, <span class="st">"PCSK1"</span>, <span class="st">"LEPR"</span>)</span>
-<span id="cb6-15"><a href="#cb6-15"></a><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(alpham, betam, deltam)</span>
-<span id="cb6-16"><a href="#cb6-16"></a><span class="co">#&gt;   alpham betam deltam</span></span>
-<span id="cb6-17"><a href="#cb6-17"></a><span class="co">#&gt; 1    GCG   INS    SST</span></span>
-<span id="cb6-18"><a href="#cb6-18"></a><span class="co">#&gt; 2   PDK4  IGF2   RBP4</span></span>
-<span id="cb6-19"><a href="#cb6-19"></a><span class="co">#&gt; 3  LOXL2  IAPP   HHEX</span></span>
-<span id="cb6-20"><a href="#cb6-20"></a><span class="co">#&gt; 4   IRX2  MAFA  PCSK1</span></span>
-<span id="cb6-21"><a href="#cb6-21"></a><span class="co">#&gt; 5     GC NPTX2   LEPR</span></span>
-<span id="cb6-22"><a href="#cb6-22"></a></span>
-<span id="cb6-23"><a href="#cb6-23"></a><span class="co"># use matrixize_markers function to convert</span></span>
-<span id="cb6-24"><a href="#cb6-24"></a>mm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/matrixize_markers.html">matrixize_markers</a></span>(</span>
-<span id="cb6-25"><a href="#cb6-25"></a>  <span class="dt">marker_df =</span> pbmc_markers,</span>
-<span id="cb6-26"><a href="#cb6-26"></a>  <span class="dt">remove_rp =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb6-27"><a href="#cb6-27"></a>  <span class="dt">unique =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb6-28"><a href="#cb6-28"></a>  <span class="dt">n =</span> <span class="dv">10</span></span>
-<span id="cb6-29"><a href="#cb6-29"></a>)</span>
-<span id="cb6-30"><a href="#cb6-30"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(mm)</span>
-<span id="cb6-31"><a href="#cb6-31"></a><span class="co">#&gt;           0        1      2         3      4      5      6        7          8</span></span>
-<span id="cb6-32"><a href="#cb6-32"></a><span class="co">#&gt; 1    EEF1A1     AQP3 S100A9     CD79A   GZMK CDKN1C  SPON2   FCER1A        GP9</span></span>
-<span id="cb6-33"><a href="#cb6-33"></a><span class="co">#&gt; 2      CCR7   CD40LG S100A8     MS4A1   CD8A   HES4 AKR1C3 SERPINF1     ITGA2B</span></span>
-<span id="cb6-34"><a href="#cb6-34"></a><span class="co">#&gt; 3      NPM1    TRADD   CD14     CD79B   CD8B    CKB   XCL2  CLEC10A     TMEM40</span></span>
-<span id="cb6-35"><a href="#cb6-35"></a><span class="co">#&gt; 4 PRKCQ-AS1   TTC39C  CSF3R LINC00926  DUSP2 LILRA3  CLIC3     ENHO AP001189.4</span></span>
-<span id="cb6-36"><a href="#cb6-36"></a><span class="co">#&gt; 5   GLTSCR2      JUN  ASGR1     TCL1A MT-CYB MS4A4A  KLRD1    CLIC2     LY6G6F</span></span>
-<span id="cb6-37"><a href="#cb6-37"></a><span class="co">#&gt; 6      BTG1 ARHGAP15  FOLR3    VPREB3   DDX5 LILRB1  TTC38     CD1C      SEPT5</span></span>
-<span id="cb6-38"><a href="#cb6-38"></a></span>
-<span id="cb6-39"><a href="#cb6-39"></a><span class="co"># get markers from ref_matrix, and then matrixize_markers</span></span>
-<span id="cb6-40"><a href="#cb6-40"></a>cbmc_m &lt;-<span class="st"> </span><span class="kw"><a href="../reference/matrixize_markers.html">matrixize_markers</a></span>(</span>
-<span id="cb6-41"><a href="#cb6-41"></a>  <span class="dt">marker_df =</span> <span class="kw"><a href="../reference/ref_marker_select.html">ref_marker_select</a></span>(cbmc_ref),</span>
-<span id="cb6-42"><a href="#cb6-42"></a>  <span class="dt">remove_rp =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb6-43"><a href="#cb6-43"></a>  <span class="dt">unique =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb6-44"><a href="#cb6-44"></a>  <span class="dt">n =</span> <span class="dv">3</span></span>
-<span id="cb6-45"><a href="#cb6-45"></a>)</span>
-<span id="cb6-46"><a href="#cb6-46"></a></span>
-<span id="cb6-47"><a href="#cb6-47"></a><span class="co"># parse `garnett` marker files, see function `file_marker_parse`</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># directly from seurat function</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(pbmc_markers)</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt;               p_val avg_logFC pct.1 pct.2     p_val_adj cluster  gene</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; RPS12 2.008629e-140 0.5029988 1.000 0.991 2.754633e-136       0 RPS12</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt; RPS27 2.624075e-140 0.5020359 0.999 0.992 3.598656e-136       0 RPS27</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt; RPS6  1.280169e-138 0.4673635 1.000 0.995 1.755623e-134       0  RPS6</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt; RPL32 4.358823e-135 0.4242773 0.999 0.995 5.977689e-131       0 RPL32</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt; RPS14 3.618793e-128 0.4283480 1.000 0.994 4.962812e-124       0 RPS14</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt; RPS25 5.612007e-124 0.5203411 0.997 0.975 7.696306e-120       0 RPS25</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co"># manually enter into dataframe format</span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12">betam &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"INS"</span>, <span class="st">"IGF2"</span>, <span class="st">"IAPP"</span>, <span class="st">"MAFA"</span>, <span class="st">"NPTX2"</span>)</a>
+<a class="sourceLine" id="cb5-13" data-line-number="13">alpham &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"GCG"</span>, <span class="st">"PDK4"</span>, <span class="st">"LOXL2"</span>, <span class="st">"IRX2"</span>, <span class="st">"GC"</span>)</a>
+<a class="sourceLine" id="cb5-14" data-line-number="14">deltam &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"SST"</span>, <span class="st">"RBP4"</span>, <span class="st">"HHEX"</span>, <span class="st">"PCSK1"</span>, <span class="st">"LEPR"</span>)</a>
+<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(alpham, betam, deltam)</a>
+<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">#&gt;   alpham betam deltam</span></a>
+<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="co">#&gt; 1    GCG   INS    SST</span></a>
+<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="co">#&gt; 2   PDK4  IGF2   RBP4</span></a>
+<a class="sourceLine" id="cb5-19" data-line-number="19"><span class="co">#&gt; 3  LOXL2  IAPP   HHEX</span></a>
+<a class="sourceLine" id="cb5-20" data-line-number="20"><span class="co">#&gt; 4   IRX2  MAFA  PCSK1</span></a>
+<a class="sourceLine" id="cb5-21" data-line-number="21"><span class="co">#&gt; 5     GC NPTX2   LEPR</span></a>
+<a class="sourceLine" id="cb5-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb5-23" data-line-number="23"><span class="co"># use matrixize_markers function to convert</span></a>
+<a class="sourceLine" id="cb5-24" data-line-number="24">mm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/matrixize_markers.html">matrixize_markers</a></span>(</a>
+<a class="sourceLine" id="cb5-25" data-line-number="25">  <span class="dt">marker_df =</span> pbmc_markers,</a>
+<a class="sourceLine" id="cb5-26" data-line-number="26">  <span class="dt">remove_rp =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb5-27" data-line-number="27">  <span class="dt">unique =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb5-28" data-line-number="28">  <span class="dt">n =</span> <span class="dv">10</span></a>
+<a class="sourceLine" id="cb5-29" data-line-number="29">)</a>
+<a class="sourceLine" id="cb5-30" data-line-number="30"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(mm)</a>
+<a class="sourceLine" id="cb5-31" data-line-number="31"><span class="co">#&gt;           0        1      2         3      4      5      6        7          8</span></a>
+<a class="sourceLine" id="cb5-32" data-line-number="32"><span class="co">#&gt; 1    EEF1A1     AQP3 S100A9     CD79A   GZMK CDKN1C  SPON2   FCER1A        GP9</span></a>
+<a class="sourceLine" id="cb5-33" data-line-number="33"><span class="co">#&gt; 2      CCR7   CD40LG S100A8     MS4A1   CD8A   HES4 AKR1C3 SERPINF1     ITGA2B</span></a>
+<a class="sourceLine" id="cb5-34" data-line-number="34"><span class="co">#&gt; 3      NPM1    TRADD   CD14     CD79B   CD8B    CKB   XCL2  CLEC10A     TMEM40</span></a>
+<a class="sourceLine" id="cb5-35" data-line-number="35"><span class="co">#&gt; 4 PRKCQ-AS1   TTC39C  CSF3R LINC00926  DUSP2 LILRA3  CLIC3     ENHO AP001189.4</span></a>
+<a class="sourceLine" id="cb5-36" data-line-number="36"><span class="co">#&gt; 5   GLTSCR2      JUN  ASGR1     TCL1A MT-CYB MS4A4A  KLRD1    CLIC2     LY6G6F</span></a>
+<a class="sourceLine" id="cb5-37" data-line-number="37"><span class="co">#&gt; 6      BTG1 ARHGAP15  FOLR3    VPREB3   DDX5 LILRB1  TTC38     CD1C      SEPT5</span></a>
+<a class="sourceLine" id="cb5-38" data-line-number="38"></a>
+<a class="sourceLine" id="cb5-39" data-line-number="39"><span class="co"># get markers from ref_matrix, and then matrixize_markers</span></a>
+<a class="sourceLine" id="cb5-40" data-line-number="40">cbmc_m &lt;-<span class="st"> </span><span class="kw"><a href="../reference/matrixize_markers.html">matrixize_markers</a></span>(</a>
+<a class="sourceLine" id="cb5-41" data-line-number="41">  <span class="dt">marker_df =</span> <span class="kw"><a href="../reference/ref_marker_select.html">ref_marker_select</a></span>(cbmc_ref),</a>
+<a class="sourceLine" id="cb5-42" data-line-number="42">  <span class="dt">remove_rp =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb5-43" data-line-number="43">  <span class="dt">unique =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb5-44" data-line-number="44">  <span class="dt">n =</span> <span class="dv">3</span></a>
+<a class="sourceLine" id="cb5-45" data-line-number="45">)</a>
+<a class="sourceLine" id="cb5-46" data-line-number="46"></a>
+<a class="sourceLine" id="cb5-47" data-line-number="47"><span class="co"># parse `garnett` marker files, see function `file_marker_parse`</span></a></code></pre></div>
 </div>
 <div id="prebuilt-references-in-clustifyr" class="section level2">
 <h2 class="hasAnchor">
@@ -329,6 +318,7 @@ ref_hema_microarray &lt;- GSE24759_mat %&gt;%
 <pre class='{"installation"}'><code><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html"># install.packages("devtools")
 devtools::install_github("rnabioco/clustifyrdata")</a></code></pre>
 </div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -340,9 +330,18 @@ devtools::install_github("rnabioco/clustifyrdata")</a></code></pre>
 <li><a href="#building-reference-matrix-from-single-cell-expression-matrix">Building reference matrix from single cell expression matrix</a></li>
       <li><a href="#building-reference-matrix-from-seurat-object">Building reference matrix from <code>seurat</code> object</a></li>
       <li><a href="#building-reference-matrix-from-recount2">Building reference matrix from Recount2</a></li>
-      <li><a href="#building-reference-gene-list">Building reference gene list</a></li>
+      <li><a href="#building-reference-matrix-from-microarray-data">Building reference matrix from microarray data</a></li>
+      <li><a href="#read-series-matrix-for-full-dataset-apply-column-names">read series matrix for full dataset; apply column names</a></li>
+      <li><a href="#read-array-metadata-table-remove-control-probes-and-missing-gene-symbols">read array metadata table, remove control probes and missing gene symbols</a></li>
+      <li><a href="#join-data-and-metadata-collapse-gene-symbols">join data and metadata, collapse gene symbols</a></li>
+      <li><a href="#convert-to-matrix-add-rownames">convert to matrix, add rownames</a></li>
+      <li>
+<a href="#merge-samples">merge samples</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#building-reference-gene-list">Building reference gene list</a></li>
       <li><a href="#prebuilt-references-in-clustifyr">Prebuilt references, in clustifyr</a></li>
       <li><a href="#prebuilt-references-in-clustifyrdata">Prebuilt references, in clustifyrdata</a></li>
+      </ul>
+</li>
       </ul>
 </div>
       </div>
@@ -356,7 +355,7 @@ devtools::install_github("rnabioco/clustifyrdata")</a></code></pre>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

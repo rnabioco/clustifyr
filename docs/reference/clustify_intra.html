@@ -25,8 +25,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -100,25 +100,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/benchmark.html">Benchmarking clustifyr</a>
-    </li>
-    <li>
       <a href="../articles/clustifyR.html">Introduction to clustifyr</a>
-    </li>
-    <li>
-      <a href="../articles/download_refs.html">Prebuilt references for clustifyr</a>
-    </li>
-    <li>
-      <a href="../articles/otherformats.html">Support for various single cell object formats</a>
-    </li>
-    <li>
-      <a href="../articles/othertools.html">Other considerations w/ clustifyr</a>
-    </li>
-    <li>
-      <a href="../articles/references.html">Reference building for clustifyr</a>
-    </li>
-    <li>
-      <a href="../articles/visualizations.html">Visualization of clustifyr results</a>
     </li>
   </ul>
 </li>
@@ -215,53 +197,12 @@ column of metadata if not supplied. Not required if running correlation per cell
 
     <p>matrix of correlation values, clusters as row names and column names</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>pbmc_meta2</span> <span class='kw'>&lt;-</span> <span class='no'>pbmc_meta</span>
-
-<span class='no'>pbmc_meta2</span>$<span class='no'>sample</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
-  <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"A"</span>, <span class='fl'>1319</span>),
-  <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"B"</span>, <span class='fl'>1319</span>)
-)
-
-<span class='no'>pbmc_meta2</span>$<span class='no'>classified</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
-  <span class='no'>pbmc_meta2</span>$<span class='no'>classified</span>[<span class='fl'>1</span>:<span class='fl'>1319</span>],
-  <span class='no'>pbmc_meta2</span>$<span class='no'>classified</span>[<span class='fl'>1320</span>:<span class='fl'>2638</span>]
-)
-
-<span class='kw pkg'>clustifyr</span><span class='kw ns'>:::</span><span class='fu'><a href='http://rnabioco.github.io/clustifyr/reference/clustify_intra.html'>clustify_intra</a></span>(
-  <span class='kw'>expr_mat</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
-  <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta2</span>,
-  <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='no'>pbmc_vargenes</span>,
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
-  <span class='kw'>sample_col</span> <span class='kw'>=</span> <span class='st'>"sample"</span>,
-  <span class='kw'>sample_id</span> <span class='kw'>=</span> <span class='st'>"A"</span>
-)</div><div class='output co'>#&gt;           1         2         3         4         5         6         7
-#&gt; 1 0.9574940 0.9475983 0.7210505 0.8251283 0.8873533 0.7298152 0.8321270
-#&gt; 2 0.9456815 0.9593361 0.7356102 0.8243191 0.9043648 0.7440613 0.8420865
-#&gt; 3 0.7365517 0.7382609 0.9530506 0.7182269 0.7163077 0.8935265 0.6970985
-#&gt; 4 0.8255245 0.8224424 0.7162096 0.9259347 0.7911204 0.7297956 0.7470754
-#&gt; 5 0.8801811 0.9006052 0.7152451 0.7894511 0.9245908 0.7277810 0.8826444
-#&gt; 6 0.7408189 0.7465362 0.8891718 0.7295636 0.7263193 0.9173182 0.7185174
-#&gt; 7 0.8174665 0.8331968 0.6889290 0.7389091 0.8718186 0.6938891 0.8967009
-#&gt; 8 0.6997867 0.6999857 0.7959896 0.7099084 0.6856017 0.7620898 0.6622569
-#&gt; 9 0.2378634 0.2326185 0.2417584 0.2208088 0.2359454 0.2490974 0.2102504
-#&gt;           8         9
-#&gt; 1 0.6753732 0.3028736
-#&gt; 2 0.6861530 0.3073887
-#&gt; 3 0.7878587 0.4133891
-#&gt; 4 0.6821127 0.2969781
-#&gt; 5 0.6653066 0.3025126
-#&gt; 6 0.7486907 0.4226407
-#&gt; 7 0.6356578 0.2957713
-#&gt; 8 0.7855859 0.3522194
-#&gt; 9 0.2404788 0.4926492</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
@@ -274,7 +215,7 @@ column of metadata if not supplied. Not required if running correlation per cell
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

@@ -25,8 +25,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -100,25 +100,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/benchmark.html">Benchmarking clustifyr</a>
-    </li>
-    <li>
       <a href="../articles/clustifyR.html">Introduction to clustifyr</a>
-    </li>
-    <li>
-      <a href="../articles/download_refs.html">Prebuilt references for clustifyr</a>
-    </li>
-    <li>
-      <a href="../articles/otherformats.html">Support for various single cell object formats</a>
-    </li>
-    <li>
-      <a href="../articles/othertools.html">Other considerations w/ clustifyr</a>
-    </li>
-    <li>
-      <a href="../articles/references.html">Reference building for clustifyr</a>
-    </li>
-    <li>
-      <a href="../articles/visualizations.html">Visualization of clustifyr results</a>
     </li>
   </ul>
 </li>
@@ -170,42 +152,12 @@
 
     <p>matrix of 1s and 0s</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>cor_mat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span>(
-  <span class='kw'>input</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
-  <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
-  <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>cbmc_ref</span>,
-  <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='no'>pbmc_vargenes</span>
-)
-
-<span class='kw pkg'>clustifyr</span><span class='kw ns'>:::</span><span class='fu'><a href='http://rnabioco.github.io/clustifyr/reference/get_best_match_matrix.html'>get_best_match_matrix</a></span>(<span class='no'>cor_mat</span>)</div><div class='output co'>#&gt;              B CD14+ Mono CD16+ Mono CD34+ CD4 T CD8 T DC Eryth Memory CD4 T Mk
-#&gt; B            1          0          0     0     0     0  0     0            0  0
-#&gt; CD14+ Mono   0          1          0     0     0     0  0     0            0  0
-#&gt; CD8 T        0          0          0     0     0     0  0     0            0  0
-#&gt; DC           0          0          0     0     0     0  1     0            0  0
-#&gt; FCGR3A+ Mono 0          0          1     0     0     0  0     0            0  0
-#&gt; Memory CD4 T 0          0          0     0     1     0  0     0            0  0
-#&gt; Naive CD4 T  0          0          0     0     1     0  0     0            0  0
-#&gt; NK           0          0          0     0     0     0  0     0            0  0
-#&gt; Platelet     0          0          0     0     0     0  0     0            0  1
-#&gt;              Naive CD4 T NK pDCs
-#&gt; B                      0  0    0
-#&gt; CD14+ Mono             0  0    0
-#&gt; CD8 T                  0  1    0
-#&gt; DC                     0  0    0
-#&gt; FCGR3A+ Mono           0  0    0
-#&gt; Memory CD4 T           0  0    0
-#&gt; Naive CD4 T            0  0    0
-#&gt; NK                     0  1    0
-#&gt; Platelet               0  0    0</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
@@ -218,7 +170,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>
