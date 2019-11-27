@@ -34,8 +34,6 @@ Authors@R:
              email = "michelle.daya@ucdenver.edu"))
 License: MIT + file LICENSE
 LazyData: true
-Depends:
-    R (>= 3.6.0)
 Imports: 
     cowplot,
     dplyr,
