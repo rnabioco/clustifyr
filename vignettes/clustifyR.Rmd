@@ -193,8 +193,7 @@ pbmc_meta3 <- call_to_metadata(
 
 `clustifyr` can also use a `Seurat` object as input and return a new `Seurat` object with the cell types added as a column in the meta.data. 
 
-```{r}
-library(Seurat)
+``` r
 res <- clustify(
   input = s_small,       # a Seurat object
   ref_mat = cbmc_ref,    # matrix of RNA-seq expression data for each cell type
@@ -203,6 +202,17 @@ res <- clustify(
 )
 
 res@meta.data[1:10, ]
+#>                nGene nUMI    orig.ident res.0.8 res.1         type         r
+#> ATGCCAGAACGACT    47   70 SeuratProject       0     0 Memory CD4 T 0.7047302
+#> CATGGCCTGTGCAT    52   85 SeuratProject       0     0 Memory CD4 T 0.7047302
+#> GAACCTGATGAACC    50   87 SeuratProject       0     0 Memory CD4 T 0.7047302
+#> TGACTGGATTCTCA    56  127 SeuratProject       0     0 Memory CD4 T 0.7047302
+#> AGTCAGACTGCACA    53  173 SeuratProject       0     0 Memory CD4 T 0.7047302
+#> TCTGATACACGTGT    48   70 SeuratProject       0     0 Memory CD4 T 0.7047302
+#> TGGTATCTAAACAG    36   64 SeuratProject       0     0 Memory CD4 T 0.7047302
+#> GCAGCTCTGTTTCT    45   72 SeuratProject       0     0 Memory CD4 T 0.7047302
+#> GATATAACACGCAT    36   52 SeuratProject       0     0 Memory CD4 T 0.7047302
+#> AATGTTGACAGTCA    41  100 SeuratProject       0     0 Memory CD4 T 0.7047302
 ```
 
 ## Building reference matrix from single cell expression matrix
