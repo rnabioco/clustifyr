@@ -1,9 +1,0 @@
-pandoc: 2.3.1
-pkgdown: 1.4.1
-pkgdown_sha: ~
-articles:
-  clustifyR: clustifyR.html
-urls:
-  reference: http://rnabioco.github.io/clustifyr/reference
-  article: http://rnabioco.github.io/clustifyr/articles
-
