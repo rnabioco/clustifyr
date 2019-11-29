@@ -6,7 +6,7 @@
 \title{Matrix of single-cell RNA-seq PBMCs.}
 \format{A sparseMatrix with genes as rows and cells as columns.}
 \source{
-(https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html)
+\url{https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html}
 }
 \usage{
 pbmc_matrix_small
@@ -25,7 +25,8 @@ Other data:
 \code{\link{pbmc_meta}},
 \code{\link{pbmc_vargenes}},
 \code{\link{s_small3}},
-\code{\link{s_small}}
+\code{\link{s_small}},
+\code{\link{sce_small}}
 }
 \concept{data}
 \keyword{datasets}

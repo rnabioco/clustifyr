@@ -25,7 +25,8 @@ Other data:
 \code{\link{pbmc_matrix_small}},
 \code{\link{pbmc_meta}},
 \code{\link{pbmc_vargenes}},
-\code{\link{s_small}}
+\code{\link{s_small}},
+\code{\link{sce_small}}
 }
 \concept{data}
 \keyword{datasets}

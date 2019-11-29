@@ -50,7 +50,8 @@ Imports:
     tibble,
     tidyr,
     stats,
-    methods
+    methods,
+    SingleCellExperiment
 Suggests:
     ComplexHeatmap,
     covr,
@@ -58,7 +59,7 @@ Suggests:
     rmarkdown,
     testthat,
     ggrepel
-biocViews: SingleCell, Annotation, Sequencing
+biocViews: SingleCell, Annotation, Sequencing, Microarray
 BugReports: https://github.com/rnabioco/clustifyr/issues
 URL: http://github.com/rnabioco/clustifyr#readme,
     https://rnabioco.github.io/clustifyr/

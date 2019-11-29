@@ -674,6 +674,13 @@ test_that("object_ref with seurat3", {
   expect_true(ncol(avg) == 3)
 })
 
+test_that("object_ref with SingleCellExperiment", {
+  sce <- sce_small
+  avg <- object_ref(sce)
+  expect_equal(dim(avg), c(200, 13))
+})
+
+
 test_that("object_ref gets correct averages", {
   s3 <- s_small3
   class(s3) <- "ser3"

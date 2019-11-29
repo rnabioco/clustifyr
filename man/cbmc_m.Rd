@@ -6,7 +6,7 @@
 \title{reference marker matrix from seurat citeseq CBMC tutorial}
 \format{An object of class \code{data.frame} with 3 rows and 13 columns.}
 \source{
-(https://satijalab.org/seurat/v3.0/multimodal_vignette.html#identify-differentially-expressed-proteins-between-clusters)
+\url{https://satijalab.org/seurat/v3.0/multimodal_vignette.html#identify-differentially-expressed-proteins-between-clusters}
 }
 \usage{
 cbmc_m
@@ -25,7 +25,8 @@ Other data:
 \code{\link{pbmc_meta}},
 \code{\link{pbmc_vargenes}},
 \code{\link{s_small3}},
-\code{\link{s_small}}
+\code{\link{s_small}},
+\code{\link{sce_small}}
 }
 \concept{data}
 \keyword{datasets}

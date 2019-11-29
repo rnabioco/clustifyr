@@ -438,26 +438,27 @@ test_that("clustify takes factor for metadata", {
 
   expect_true(res[1, 1] != res2[1, 1])
 })
-# test_that("sce object clustifying", {
-#   res <- clustify(sce_small,
-#                   cbmc_ref,
-#                   cluster_col = "cell_type1",
-#                   obj_out = F
-#   )
-#   expect_true(nrow(res) == 13)
-# })
-#
-# test_that("sce object clustify_lists", {
-#   other <- c("TAF12", "SNHG3")
-#   delta <- c("PCSK1","LEPR")
-#   panm <- data.frame(other, delta)
-#
-#   res <- clustify_lists(sce_small,
-#                   marker = panm,
-#                   cluster_col = "cell_type1",
-#                   obj_out = F,
-#                   n = 100,
-#                   metric = "pct"
-#   )
-#   expect_true(nrow(res) == 13)
-# })
+
+test_that("sce object clustifying", {
+  res <- clustify(sce_small,
+                  cbmc_ref,
+                  cluster_col = "cell_type1",
+                  obj_out = F)
+  expect_true(nrow(res) == 13)
+})
+
+test_that("sce object clustify_lists", {
+  other <- c("TAF12", "SNHG3")
+  delta <- c("PCSK1", "LEPR")
+  panm <- data.frame(other, delta)
+
+  res <- clustify_lists(
+    sce_small,
+    marker = panm,
+    cluster_col = "cell_type1",
+    obj_out = F,
+    n = 100,
+    metric = "pct"
+  )
+  expect_true(nrow(res) == 13)
+})
