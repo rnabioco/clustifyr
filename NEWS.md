@@ -1,20 +1,21 @@
-Changes in version 0.99.0 (11-06-19)
-+ update to tutorials
-+ bug fixes
-+ cleanup for bioc
-
-Changes in version 0.0.3 (09-06-19)
-+ support of SingleCellExperiment objects and more
-+ bug fixes
-
-Changes in version 0.0.2 (05-29-19)
-+ Updated discussions, benchmark, and visualization example pages
-+ reorganized `clustifyrdata` data package
-
-Changes in version 0.0.1 (02-01-19)
+Changes in version 0.0.1 (2019-02-01)
 + Added direct support for `seurat` and other object classes
 + Updated readme and tutorial pages
 + Moved some larger reference data to `clustifyrdata`
 
-Changes in version 0.0.0.9000
-+ Added a `NEWS.md` file to track changes to the package.
+Changes in version 0.0.2 (2019-05-29)
++ Updated discussions, benchmark, and visualization example pages
++ reorganized `clustifyrdata` data package
+
+Changes in version 0.0.3 (2019-09-06)
++ support of SingleCellExperiment objects and more
++ bug fixes
+
+Changes in version 0.99.0 (2019-11-06)
++ update to tutorials
++ bug fixes
++ cleanup for bioc
+
+
+
+
