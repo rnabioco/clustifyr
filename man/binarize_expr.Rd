@@ -21,9 +21,9 @@ Binarize scRNAseq data
 }
 \examples{
 pbmc_avg <- average_clusters(
-  mat = pbmc_matrix_small,
-  metadata = pbmc_meta,
-  cluster_col = "classified"
+    mat = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    cluster_col = "classified"
 )
 
 mat <- binarize_expr(pbmc_avg)

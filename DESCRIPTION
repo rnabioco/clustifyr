@@ -33,7 +33,6 @@ Authors@R:
              role = "ctb",
              email = "michelle.daya@ucdenver.edu"))
 License: MIT + file LICENSE
-LazyData: true
 Depends:
     R (>= 3.6.0)
 Imports: 
@@ -59,7 +58,8 @@ Suggests:
     knitr,
     rmarkdown,
     testthat,
-    ggrepel
+    ggrepel,
+    BiocStyle
 biocViews: SingleCell, Annotation, Sequencing, Microarray
 BugReports: https://github.com/rnabioco/clustifyr/issues
 URL: http://github.com/rnabioco/clustifyr#readme,
@@ -70,3 +70,4 @@ ByteCompile: true
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.0.2
+LazyData: true

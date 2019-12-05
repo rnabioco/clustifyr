@@ -56,9 +56,9 @@ Function to convert labelled seurat object to avg expression matrix
 }
 \examples{
 ref <- seurat_ref(
-  seurat_object = s_small,
-  cluster_col = "res.1",
-  var_genes_only = TRUE
+    seurat_object = s_small,
+    cluster_col = "res.1",
+    var_genes_only = TRUE
 )
 ref[1:3, 1:3]
 }

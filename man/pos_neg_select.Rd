@@ -38,15 +38,15 @@ adapt clustify to tweak score for pos and neg markers
 }
 \examples{
 pn_ref <- data.frame(
-  "Myeloid" = c(1, 0.01, 0),
-  row.names = c("CD74", "clustifyr0", "CD79A")
+    "Myeloid" = c(1, 0.01, 0),
+    row.names = c("CD74", "clustifyr0", "CD79A")
 )
 
 pos_neg_select(
-  input = pbmc_matrix_small,
-  ref_mat = pn_ref,
-  metadata = pbmc_meta,
-  cluster_col = "classified",
-  cutoff_score = 0.8
+    input = pbmc_matrix_small,
+    ref_mat = pn_ref,
+    metadata = pbmc_meta,
+    cluster_col = "classified",
+    cutoff_score = 0.8
 )
 }

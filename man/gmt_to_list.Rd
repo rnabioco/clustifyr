@@ -25,9 +25,9 @@ convert gmt format of pathways to list of vectors
 }
 \examples{
 gmt_file <- system.file(
-  "extdata",
-  "c2.cp.reactome.v6.2.symbols.gmt",
-  package = "clustifyr"
+    "extdata",
+    "c2.cp.reactome.v6.2.symbols.gmt",
+    package = "clustifyr"
 )
 
 gl <- gmt_to_list(path = gmt_file)

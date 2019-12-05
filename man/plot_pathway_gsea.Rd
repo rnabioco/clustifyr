@@ -34,19 +34,19 @@ plot GSEA pathway scores as heatmap, returns a list containing results and plot.
 }
 \examples{
 gl <- list(
-  "n" = c("PPBP", "LYZ", "S100A9"),
-  "a" = c("IGLL5", "GNLY", "FTL")
+    "n" = c("PPBP", "LYZ", "S100A9"),
+    "a" = c("IGLL5", "GNLY", "FTL")
 )
 
 pbmc_avg <- average_clusters(
-  mat = pbmc_matrix_small,
-  metadata = pbmc_meta,
-  cluster_col = "classified"
+    mat = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    cluster_col = "classified"
 )
 
 plot_pathway_gsea(
-  pbmc_avg,
-  gl,
-  5
+    pbmc_avg,
+    gl,
+    5
 )
 }

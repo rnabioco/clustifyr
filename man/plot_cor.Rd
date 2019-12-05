@@ -45,19 +45,19 @@ Plot similarity measures on a tSNE or umap
 }
 \examples{
 res <- clustify(
-  input = pbmc_matrix_small,
-  metadata = pbmc_meta,
-  ref_mat = cbmc_ref,
-  query_genes = pbmc_vargenes,
-  cluster_col = "classified"
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    ref_mat = cbmc_ref,
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified"
 )
 
 plot_cor(
-  cor_mat = res,
-  metadata = pbmc_meta,
-  data_to_plot = colnames(res)[1:2],
-  cluster_col = "classified",
-  x = "UMAP_1",
-  y = "UMAP_2"
+    cor_mat = res,
+    metadata = pbmc_meta,
+    data_to_plot = colnames(res)[1:2],
+    cluster_col = "classified",
+    x = "UMAP_1",
+    y = "UMAP_2"
 )
 }

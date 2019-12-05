@@ -37,10 +37,10 @@ get ranked calls for each cluster
 }
 \examples{
 res <- clustify(
-  input = pbmc_matrix_small,
-  metadata = pbmc_meta,
-  cluster_col = "classified",
-  ref_mat = cbmc_ref
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    cluster_col = "classified",
+    ref_mat = cbmc_ref
 )
 
 cor_to_call_rank(res, threshold = "auto")

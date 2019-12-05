@@ -21,8 +21,8 @@ make combination ref matrix to assess intermixing
 }
 \examples{
 ref <- make_comb_ref(
-  cbmc_ref,
-  sep = "_+_"
+    cbmc_ref,
+    sep = "_+_"
 )
 ref[1:3, 1:3]
 }

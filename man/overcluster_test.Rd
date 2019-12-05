@@ -56,11 +56,11 @@ compare clustering parameters and classification outcomes
 \examples{
 set.seed(42)
 overcluster_test(
-  expr = pbmc_matrix_small,
-  metadata = pbmc_meta,
-  ref_mat = cbmc_ref,
-  cluster_col = "classified",
-  x_col = "UMAP_1",
-  y_col = "UMAP_2"
+    expr = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    ref_mat = cbmc_ref,
+    cluster_col = "classified",
+    x_col = "UMAP_1",
+    y_col = "UMAP_2"
 )
 }

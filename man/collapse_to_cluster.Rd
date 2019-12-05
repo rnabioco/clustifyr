@@ -23,19 +23,19 @@ From per-cell calls, take highest freq call in each cluster
 }
 \examples{
 res <- clustify(
-  input = pbmc_matrix_small,
-  metadata = pbmc_meta,
-  cluster_col = "classified",
-  ref_mat = cbmc_ref,
-  per_cell = TRUE
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    cluster_col = "classified",
+    ref_mat = cbmc_ref,
+    per_cell = TRUE
 )
 
 res2 <- cor_to_call(res)
 
 collapse_to_cluster(
-  res2,
-  metadata = pbmc_meta,
-  cluster_col = "classified",
-  threshold = 0
+    res2,
+    metadata = pbmc_meta,
+    cluster_col = "classified",
+    threshold = 0
 )
 }

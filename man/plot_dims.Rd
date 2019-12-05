@@ -61,7 +61,7 @@ Plot a tSNE or umap colored by feature.
 }
 \examples{
 plot_dims(
-  pbmc_meta,
-  feature = "classified"
+    pbmc_meta,
+    feature = "classified"
 )
 }

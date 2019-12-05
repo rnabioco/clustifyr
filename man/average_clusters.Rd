@@ -49,10 +49,10 @@ Average expression values per cluster
 }
 \examples{
 mat <- average_clusters(
-  mat = pbmc_matrix_small,
-  metadata = pbmc_meta,
-  cluster_col = "classified",
-  if_log = FALSE
+    mat = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    cluster_col = "classified",
+    if_log = FALSE
 )
 mat[1:3, 1:3]
 }

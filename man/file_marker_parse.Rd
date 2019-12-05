@@ -17,9 +17,9 @@ takes files with positive and negative markers, as described in garnett, and ret
 }
 \examples{
 marker_file <- system.file(
-  "extdata",
-  "hsPBMC_markers.txt",
-  package = "clustifyr"
+    "extdata",
+    "hsPBMC_markers.txt",
+    package = "clustifyr"
 )
 
 file_marker_parse(marker_file)

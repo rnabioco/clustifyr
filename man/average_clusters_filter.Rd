@@ -40,11 +40,11 @@ Average expression values per cluster, filtered by set parameter, defaults to ca
 }
 \examples{
 average_clusters_filter(
-  mat = pbmc_matrix_small,
-  metadata = pbmc_meta,
-  group_by = "classified",
-  filter_on = "seurat_clusters",
-  filter_method = "==",
-  filter_value = "1"
+    mat = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    group_by = "classified",
+    filter_on = "seurat_clusters",
+    filter_method = "==",
+    filter_value = "1"
 )
 }
