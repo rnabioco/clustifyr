@@ -23,7 +23,7 @@ marker selection from reference matrix
 }
 \examples{
 ref_marker_select(
-  cbmc_ref,
-  cut = 2
+    cbmc_ref,
+    cut = 2
 )
 }

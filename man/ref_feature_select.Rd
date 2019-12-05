@@ -23,13 +23,13 @@ feature select from reference matrix
 }
 \examples{
 pbmc_avg <- average_clusters(
-  mat = pbmc_matrix_small,
-  metadata = pbmc_meta,
-  cluster_col = "classified"
+    mat = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    cluster_col = "classified"
 )
 
 ref_feature_select(
-  mat = pbmc_avg[1:100, ],
-  n = 5
+    mat = pbmc_avg[1:100, ],
+    n = 5
 )
 }

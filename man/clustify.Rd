@@ -149,41 +149,41 @@ Compare scRNA-seq data to reference data.
 \examples{
 # Annotate a matrix and metadata
 clustify(
-  input = pbmc_matrix_small,
-  metadata = pbmc_meta,
-  ref_mat = cbmc_ref,
-  query_genes = pbmc_vargenes,
-  cluster_col = "classified",
-  verbose = TRUE
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    ref_mat = cbmc_ref,
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified",
+    verbose = TRUE
 )
 
 # Annotate using a different method
 clustify(
-  input = pbmc_matrix_small,
-  metadata = pbmc_meta,
-  ref_mat = cbmc_ref,
-  query_genes = pbmc_vargenes,
-  cluster_col = "classified",
-  compute_method = "cosine"
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    ref_mat = cbmc_ref,
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified",
+    compute_method = "cosine"
 )
 
 # Annotate a Seurat object
 clustify(
-  s_small,
-  cbmc_ref,
-  cluster_col = "res.1",
-  obj_out = TRUE,
-  per_cell = FALSE,
-  dr = "tsne"
+    s_small,
+    cbmc_ref,
+    cluster_col = "res.1",
+    obj_out = TRUE,
+    per_cell = FALSE,
+    dr = "tsne"
 )
 
 # Annotate (and return) a Seurat object per-cell
 clustify(
-  input = s_small,
-  ref_mat = cbmc_ref,
-  cluster_col = "res.1",
-  obj_out = TRUE,
-  per_cell = TRUE,
-  dr = "tsne"
+    input = s_small,
+    ref_mat = cbmc_ref,
+    cluster_col = "res.1",
+    obj_out = TRUE,
+    per_cell = TRUE,
+    dr = "tsne"
 )
 }

@@ -120,39 +120,39 @@ Combined function to compare scRNA-seq data to bulk RNA-seq data and marker list
 \examples{
 # Seurat2
 clustify_nudge(
-  input = s_small,
-  ref_mat = cbmc_ref,
-  marker = cbmc_m,
-  cluster_col = "res.1",
-  threshold = 0.8,
-  seurat_out = FALSE,
-  mode = "pct",
-  dr = "tsne"
+    input = s_small,
+    ref_mat = cbmc_ref,
+    marker = cbmc_m,
+    cluster_col = "res.1",
+    threshold = 0.8,
+    seurat_out = FALSE,
+    mode = "pct",
+    dr = "tsne"
 )
 
 # Seurat3
- clustify_nudge(
-  input = s_small3,
-  ref_mat = cbmc_ref,
-  marker = cbmc_m,
-  cluster_col = "RNA_snn_res.1",
-  threshold = 0.8,
-  seurat_out = FALSE,
-  mode = "pct",
-  dr = "tsne"
+clustify_nudge(
+    input = s_small3,
+    ref_mat = cbmc_ref,
+    marker = cbmc_m,
+    cluster_col = "RNA_snn_res.1",
+    threshold = 0.8,
+    seurat_out = FALSE,
+    mode = "pct",
+    dr = "tsne"
 )
 
 # Matrix
 clustify_nudge(
-  input = pbmc_matrix_small,
-  ref_mat = cbmc_ref,
-  metadata = pbmc_meta,
-  marker = as.matrix(cbmc_m),
-  query_genes = pbmc_vargenes,
-  cluster_col = "classified",
-  threshold = 0.8,
-  call = FALSE,
-  marker_inmatrix = FALSE,
-  mode = "pct"
+    input = pbmc_matrix_small,
+    ref_mat = cbmc_ref,
+    metadata = pbmc_meta,
+    marker = as.matrix(cbmc_m),
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified",
+    threshold = 0.8,
+    call = FALSE,
+    marker_inmatrix = FALSE,
+    mode = "pct"
 )
 }

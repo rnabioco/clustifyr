@@ -26,14 +26,14 @@ Plot gene expression on to tSNE or umap
 }
 \examples{
 genes <- c(
-  "RP11-314N13.3",
-  "ARF4"
+    "RP11-314N13.3",
+    "ARF4"
 )
 
 plot_gene(
-  expr_mat = pbmc_matrix_small,
-  metadata = tibble::rownames_to_column(pbmc_meta, "rn"),
-  genes = genes,
-  cell_col = "rn"
+    expr_mat = pbmc_matrix_small,
+    metadata = tibble::rownames_to_column(pbmc_meta, "rn"),
+    genes = genes,
+    cell_col = "rn"
 )
 }

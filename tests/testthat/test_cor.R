@@ -443,7 +443,7 @@ test_that("sce object clustifying", {
     res <- clustify(sce_small,
         cbmc_ref,
         cluster_col = "cell_type1",
-        obj_out = F
+        obj_out = FALSE
     )
     expect_true(nrow(res) == 13)
 })
@@ -457,7 +457,7 @@ test_that("sce object clustify_lists", {
         sce_small,
         marker = panm,
         cluster_col = "cell_type1",
-        obj_out = F,
+        obj_out = FALSE,
         n = 100,
         metric = "pct"
     )

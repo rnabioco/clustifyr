@@ -21,9 +21,9 @@ Remove high background expression genes from matrix
 }
 \examples{
 avg1 <- average_clusters_filter(
-  mat = pbmc_matrix_small,
-  metadata = pbmc_meta,
-  filter_on = "nFeature_RNA"
+    mat = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    filter_on = "nFeature_RNA"
 )
 
 mat <- remove_background(pbmc_matrix_small, avg1, 1)

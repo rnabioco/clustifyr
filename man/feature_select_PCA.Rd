@@ -38,7 +38,7 @@ formed from the bulk expression data set
 }
 \examples{
 feature_select_PCA(
-  cbmc_ref,
-  if_log = FALSE
+    cbmc_ref,
+    if_log = FALSE
 )
 }

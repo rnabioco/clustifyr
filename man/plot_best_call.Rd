@@ -46,16 +46,16 @@ Plot best calls for each cluster on a tSNE or umap
 }
 \examples{
 res <- clustify(
-  input = pbmc_matrix_small,
-  metadata = pbmc_meta,
-  ref_mat = cbmc_ref,
-  query_genes = pbmc_vargenes,
-  cluster_col = "classified"
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    ref_mat = cbmc_ref,
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified"
 )
 
 plot_best_call(
-  cor_mat = res,
-  metadata = pbmc_meta,
-  cluster_col = "classified"
+    cor_mat = res,
+    metadata = pbmc_meta,
+    cluster_col = "classified"
 )
 }

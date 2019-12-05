@@ -21,8 +21,8 @@ Overcluster by kmeans per cluster
 }
 \examples{
 res <- overcluster(
-  mat = pbmc_matrix_small,
-  cluster_id = split(colnames(pbmc_matrix_small), pbmc_meta$classified)
+    mat = pbmc_matrix_small,
+    cluster_id = split(colnames(pbmc_matrix_small), pbmc_meta$classified)
 )
 length(res)
 }

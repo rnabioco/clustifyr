@@ -32,19 +32,19 @@ Insert called ident results into metadata
 \examples{
 \donttest{
 res <- clustify(
-  input = pbmc_matrix_small,
-  metadata = pbmc_meta,
-  cluster_col = "classified",
-  ref_mat = cbmc_ref
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    cluster_col = "classified",
+    ref_mat = cbmc_ref
 )
 
 res2 <- cor_to_call(res, cluster_col = "classified")
 
 call_to_metadata(
-  res = res2,
-  metadata = pbmc_meta,
-  cluster_col = "classified",
-  rename_prefix = "assigned"
+    res = res2,
+    metadata = pbmc_meta,
+    cluster_col = "classified",
+    rename_prefix = "assigned"
 )
 }
 }

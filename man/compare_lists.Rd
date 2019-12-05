@@ -36,16 +36,16 @@ or jaccard index
 pbmc_mm <- matrixize_markers(pbmc_markers)
 
 pbmc_avg <- average_clusters(
-  pbmc_matrix_small,
-  pbmc_meta,
-  cluster_col = "classified"
+    pbmc_matrix_small,
+    pbmc_meta,
+    cluster_col = "classified"
 )
 
 pbmc_avgb <- binarize_expr(pbmc_avg)
 
 compare_lists(
-  pbmc_avgb,
-  pbmc_mm,
-  metric = "spearman"
+    pbmc_avgb,
+    pbmc_mm,
+    metric = "spearman"
 )
 }

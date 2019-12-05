@@ -174,9 +174,9 @@ permute_similarity <- function(expr_mat,
 compute_mean_expr <- function(expr_mat,
                               sc_assign,
                               sc_clust) {
-    sapply(sc_clust, function(x) {
+    vapply(sc_clust, function(x) {
         Matrix::rowMeans(expr_mat[, sc_assign == x, drop = FALSE])
-    })
+    }, FUN.VALUE = numeric(nrow(expr_mat)))
 }
 
 #' compute similarity

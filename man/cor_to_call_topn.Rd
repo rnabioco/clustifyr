@@ -34,18 +34,18 @@ get top calls for each cluster
 }
 \examples{
 res <- clustify(
-  input = pbmc_matrix_small,
-  metadata = pbmc_meta,
-  ref_mat = cbmc_ref,
-  query_genes = pbmc_vargenes,
-  cluster_col = "classified"
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    ref_mat = cbmc_ref,
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified"
 )
 
 cor_to_call_topn(
-  cor_mat = res,
-  metadata = pbmc_meta,
-  col = "classified",
-  collapse_to_cluster = FALSE,
-  threshold = 0.5
+    cor_mat = res,
+    metadata = pbmc_meta,
+    col = "classified",
+    collapse_to_cluster = FALSE,
+    threshold = 0.5
 )
 }

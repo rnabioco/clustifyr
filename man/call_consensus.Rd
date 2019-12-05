@@ -17,10 +17,10 @@ get concensus calls for a list of cor calls
 }
 \examples{
 res <- clustify(
-  input = pbmc_matrix_small,
-  metadata = pbmc_meta,
-  cluster_col = "classified",
-  ref_mat = cbmc_ref
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    cluster_col = "classified",
+    ref_mat = cbmc_ref
 )
 
 res2 <- cor_to_call_rank(res, threshold = "auto")

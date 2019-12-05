@@ -34,10 +34,10 @@ downsample matrix by cluster or completely random
 \examples{
 set.seed(42)
 mat <- downsample_matrix(
-  mat = pbmc_matrix_small,
-  metadata = pbmc_meta$classified,
-  n = 10,
-  keep_cluster_proportions = TRUE
+    mat = pbmc_matrix_small,
+    metadata = pbmc_meta$classified,
+    n = 10,
+    keep_cluster_proportions = TRUE
 )
 mat[1:3, 1:3]
 }

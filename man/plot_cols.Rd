@@ -37,12 +37,12 @@ Plot variable median per cluster from reference metadata vs new assigned metadat
 }
 \examples{
 plot_cols(
-  metadata = pbmc_meta,
-  cluster_col = "seurat_clusters",
-  cluster_col_called = "classified",
-  plot_col = "UMAP_1",
-  metadata_ref = pbmc_meta,
-  cluster_col_ref = "classified",
-  plot_col_ref = "UMAP_1"
+    metadata = pbmc_meta,
+    cluster_col = "seurat_clusters",
+    cluster_col_called = "classified",
+    plot_col = "UMAP_1",
+    metadata_ref = pbmc_meta,
+    cluster_col_ref = "classified",
+    plot_col_ref = "UMAP_1"
 )
 }

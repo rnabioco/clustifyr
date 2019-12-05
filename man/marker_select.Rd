@@ -23,14 +23,14 @@ decide for one gene whether it is a marker for a certain cell type
 }
 \examples{
 pbmc_avg <- average_clusters(
-  mat = pbmc_matrix_small,
-  metadata = pbmc_meta,
-  cluster_col = "classified",
-  if_log = FALSE
+    mat = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    cluster_col = "classified",
+    if_log = FALSE
 )
 
 marker_select(
-  row1 = pbmc_avg["PPBP", ],
-  cols = names(pbmc_avg["PPBP", ])
+    row1 = pbmc_avg["PPBP", ],
+    cols = names(pbmc_avg["PPBP", ])
 )
 }

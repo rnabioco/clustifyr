@@ -135,7 +135,7 @@ average_clusters <- function(mat,
 
     out <- do.call(cbind, out)
     if (low_threshold > 0) {
-        fil <- sapply(cluster_ids, FUN = length) >= low_threshold
+        fil <- vapply(cluster_ids, FUN = length, FUN.VALUE = numeric(1)) >= low_threshold
         out <- out[, as.vector(fil)]
     }
     if (!(is.null(cut_n))) {
@@ -225,7 +225,7 @@ get_best_str <- function(name,
 get_common_elements <- function(...) {
     vecs <- list(...)
     # drop NULL elements of list
-    vecs <- vecs[!sapply(vecs, is.null)]
+    vecs <- vecs[!vapply(vecs, is.null, FUN.VALUE = logical(1))]
     # drop NA elements of list (NA values OK in a vector)
     vecs <- vecs[!is.na(vecs)]
 
@@ -584,26 +584,26 @@ gene_pct <- function(matrix,
     unique_clusters <- unique(clusters)
 
     if (returning == "mean") {
-        sapply(unique_clusters, function(x) {
+        vapply(unique_clusters, function(x) {
             celllist <- clusters == x
             tmp <- matrix[genelist, celllist, drop = FALSE]
             tmp[tmp > 0] <- 1
             mean(Matrix::rowSums(tmp) / ncol(tmp))
-        })
+        }, FUN.VALUE = numeric(1))
     } else if (returning == "min") {
-        sapply(unique_clusters, function(x) {
+        vapply(unique_clusters, function(x) {
             celllist <- clusters == x
             tmp <- matrix[genelist, celllist, drop = FALSE]
             tmp[tmp > 0] <- 1
             min(Matrix::rowSums(tmp) / ncol(tmp))
-        })
+        }, FUN.VALUE = numeric(1))
     } else if (returning == "max") {
-        sapply(unique_clusters, function(x) {
+        vapply(unique_clusters, function(x) {
             celllist <- clusters == x
             tmp <- matrix[genelist, celllist, drop = FALSE]
             tmp[tmp > 0] <- 1
             max(Matrix::rowSums(tmp) / ncol(tmp))
-        })
+        }, FUN.VALUE = numeric(1))
     }
 }
 
@@ -651,13 +651,13 @@ gene_pct_markerm <- function(matrix,
         marker_m <- as.data.frame(marker_m)
     }
 
-    out <- sapply(colnames(marker_m), function(x) {
+    out <- vapply(colnames(marker_m), function(x) {
         gene_pct(
             matrix,
             marker_m[[x]],
             cluster_info
         )
-    })
+    }, FUN.VALUE = numeric(length(unique(cluster_info))))
 
     if (!(is.null(norm))) {
         if (norm == "divide") {
@@ -1414,9 +1414,9 @@ gmt_to_list <- function(path,
         ""
     )
     if (cutoff > 0) {
-        ids <- sapply(pathways, function(i) {
+        ids <- vapply(pathways, function(i) {
             length(i) < cutoff
-        })
+        }, FUN.VALUE = logical(1))
         pathways <- pathways[!ids]
     }
     return(pathways)
@@ -1534,9 +1534,9 @@ downsample_matrix <- function(mat,
             )
         }
         if (n < 1) {
-            n2 <- sapply(cluster_ids, function(x) {
+            n2 <- vapply(cluster_ids, function(x) {
                 as.integer(length(x) * n)
-            })
+            }, FUN.VALUE = numeric(1))
             n <- n2
         }
         cluster_ids_new <-
@@ -1571,18 +1571,18 @@ make_comb_ref <- function(ref_mat,
             simplify = FALSE
         )
     comb_mat <-
-        sapply(
+        vapply(
             combs,
             FUN = function(x) {
                 Matrix::rowMeans(ref_mat[, unlist(x)])
-            }
+            }, FUN.VALUE = numeric(nrow(ref_mat))
         )
     colnames(comb_mat) <-
-        sapply(
+        vapply(
             combs,
             FUN = function(x) {
                 stringr::str_c(unlist(x), collapse = sep)
-            }
+            }, FUN.VALUE = character(1)
         )
     new_mat <- cbind(ref_mat, comb_mat)
     if (if_log == TRUE) {
@@ -1615,7 +1615,7 @@ ref_marker_select <-
         res <-
             apply(mat, 1, marker_select, ref_cols, cut, compto = compto)
         if (is.list(res)) {
-            res <- res[!sapply(res, is.null)]
+            res <- res[!vapply(res, is.null, FUN.VALUE = logical(1))]
         }
         resdf <- t(as.data.frame(res, stringsAsFactors = FALSE))
         resdf <-
@@ -1762,12 +1762,12 @@ pos_neg_marker <- function(mat) {
     }
     genelist <- mat
     typenames <- names(genelist)
+    # vapply
     g2 <- sapply(
         typenames,
         FUN = function(x) {
             data.frame(type = x, gene = genelist[[x]])
-        },
-        simplify = FALSE
+        }, simplify = FALSE
     )
     g2 <- do.call("rbind", g2)
     g2 <- dplyr::mutate(g2, expression = 1)

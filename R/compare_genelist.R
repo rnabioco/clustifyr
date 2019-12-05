@@ -222,7 +222,7 @@ compare_lists <- function(bin_mat,
                 do.call(cbind, as.list(p.adjust(per_col)))
             }
         )
-        if (any(sapply(out, is.na))) {
+        if (any(vapply(out, is.na, FUN.VALUE = logical(length(out[[1]]))))) {
             error("NaN produced, possibly due to wrong n")
         }
     } else if (metric == "jaccard") {
@@ -259,11 +259,11 @@ compare_lists <- function(bin_mat,
                         v2 <- list_top[list_top %in% v1]
                         v1 <- v1
                         v2 <- v2
-                        sum(sapply(seq_along(v1), function(i) {
+                        sum(vapply(seq_along(v1), function(i) {
                             abs(i - (
                                 which(v2 == v1[i])
                             ))
-                        }))
+                        }, FUN.VALUE = numeric(1)))
                     }
                 )
                 do.call(cbind, per_col)

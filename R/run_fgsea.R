@@ -60,7 +60,7 @@ run_gsea <- function(expr_mat,
                 geneset_list,
                 avg_mat[, i],
                 minSize = 1,
-                maxSize = max(sapply(geneset_list, length)),
+                maxSize = max(vapply(geneset_list, length, FUN.VALUE = numeric(1))),
                 nproc = 1,
                 nperm = n_perm
             )
@@ -70,7 +70,7 @@ run_gsea <- function(expr_mat,
                     geneset_list,
                     avg_mat[, i],
                     minSize = 1,
-                    maxSize = max(sapply(geneset_list, length)),
+                    maxSize = max(vapply(geneset_list, length, FUN.VALUE = numeric(1))),
                     nproc = 1,
                     nperm = n_perm
                 )

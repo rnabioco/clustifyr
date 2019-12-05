@@ -99,7 +99,7 @@ test_that("plot_gene can handle strange and normal genenames", {
     )
 
     expect_true(is.list(plts))
-    expect_true(all(sapply(plts, ggplot2::is.ggplot)))
+    expect_true(all(vapply(plts, ggplot2::is.ggplot, FUN.VALUE = logical(1))))
 })
 
 test_that("plot_gene automatically plots all cells", {
@@ -118,7 +118,7 @@ test_that("plot_gene automatically plots all cells", {
         genes = genes
     )
 
-    expect_true(all(sapply(plts, ggplot2::is.ggplot)))
+    expect_true(all(vapply(plts, ggplot2::is.ggplot, FUN.VALUE = logical(1))))
 })
 
 test_that("plot_best_call threshold works as intended, on per cell and collapsing", {
