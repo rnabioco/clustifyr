@@ -200,7 +200,7 @@ get_best_str <- function(name,
         best.names <- colnames(best_mat)[which(best_mat[name, ] == 1)]
         best.cor <-
             round(cor_mat[name, which(best_mat[name, ] == 1)], 2)
-        for (i in 1:length(best.cor)) {
+        for (i in seq_len(length(best.cor))) {
             if (i == 1) {
                 str <- paste0(best.names[i], " (", best.cor[i], ")")
             } else {
@@ -370,9 +370,9 @@ remove_background <- function(mat, background, n = 0) {
     if (!is.vector(background)) {
         background <-
             background[order(background[, 1], decreasing = TRUE), , drop = FALSE]
-        background <- rownames(background)[1:n]
+        background <- rownames(background)[seq_len(n)]
     } else if (!is.null(names(background))) {
-        background <- names(sort(background, decreasing = TRUE)[1:n])
+        background <- names(sort(background, decreasing = TRUE)[seq_len(n)])
     }
 
     mat[!(rownames(mat) %in% background), ]
@@ -455,7 +455,7 @@ assign_ident <- function(metadata,
         }
     }
 
-    for (n in 1:length(clusters)) {
+    for (n in seq_len(length(clusters))) {
         mindex <- metadata[[cluster_col]] == clusters[n]
         metadata[mindex, ident_col] <- idents[n]
     }
@@ -536,7 +536,7 @@ cor_to_call_topn <- function(cor_mat,
                 df_temp_full2,
                 !!dplyr::sym("type") != paste0("r<", threshold, ", unassigned")
             )
-        df_temp_full2 <- dplyr::slice(df_temp_full2, 1:topn)
+        df_temp_full2 <- dplyr::slice(df_temp_full2, seq_len(topn))
         df_temp_full2 <-
             dplyr::right_join(
                 df_temp_full2,
@@ -1310,7 +1310,7 @@ ref_feature_select <- function(mat,
                                rm.lowvar = TRUE) {
     if (rm.lowvar == TRUE) {
         v <- RowVar(mat)
-        v2 <- v[order(-v)][1:(length(v) / 2)]
+        v2 <- v[order(-v)][seq_len(length(v) / 2)]
         mat <- mat[names(v2)[!is.na(names(v2))], ]
     }
 
@@ -1320,9 +1320,9 @@ ref_feature_select <- function(mat,
         cor_mat <- abs(cor_mat)
         score <- apply(cor_mat, 1, max, na.rm = TRUE)
         score <- score[order(-score)]
-        cor_genes <- names(score[1:n])
+        cor_genes <- names(score[seq_len(n)])
     } else if (mode == "var") {
-        cor_genes <- names(v2[1:n])
+        cor_genes <- names(v2[seq_len(n)])
     } else if (mode == "hybrid") {
 
     }
@@ -1370,7 +1370,7 @@ feature_select_PCA <- function(mat = NULL,
 
     # For the given number PCs, select the genes with the largest loadings
     genes <- c()
-    for (i in 1:n_pcs) {
+    for (i in seq_len(n_pcs)) {
         cutoff <- quantile(abs(pca[, i]), probs = percentile)
         genes <- c(genes, rownames(pca[abs(pca[, i]) >= cutoff, ]))
     }

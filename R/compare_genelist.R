@@ -100,7 +100,7 @@ matrixize_markers <- function(marker_df,
 
     marker_temp <- dplyr::select(marker_df, gene, cluster)
     marker_temp <- dplyr::group_by(marker_temp, cluster)
-    marker_temp <- dplyr::slice(marker_temp, 1:cut_num)
+    marker_temp <- dplyr::slice(marker_temp, seq_len(cut_num))
     if (ranked) {
         marker_temp <-
             dplyr::mutate(
@@ -118,7 +118,7 @@ matrixize_markers <- function(marker_df,
         rownames(marker_temp2) <- marker_temp2$gene
         marker_temp2 <- dplyr::select(marker_temp2, -gene)
     } else {
-        marker_temp <- dplyr::mutate(marker_temp, n = 1:cut_num)
+        marker_temp <- dplyr::mutate(marker_temp, n = seq_len(cut_num))
         marker_temp2 <-
             tidyr::spread(marker_temp, key = "cluster", value = "gene")
         marker_temp2 <- as.data.frame(dplyr::select(marker_temp2, -n))
@@ -216,7 +216,7 @@ compare_lists <- function(bin_mat,
                         t <- length(intersect(list_top, marker_list))
                         a <- max(length(list_top), length(marker_list))
                         b <- min(length(list_top), length(marker_list))
-                        sum(dhyper(t:b, a, n - a, b))
+                        sum(dhyper(seq(t,b), a, n - a, b))
                     }
                 )
                 do.call(cbind, as.list(p.adjust(per_col)))
@@ -282,7 +282,7 @@ compare_lists <- function(bin_mat,
         )
         res <- do.call(cbind, out)
         n <- ncol(res)
-        res2 <- res[, 3 * c(1:(ncol(res) / 3)) - 1, drop = FALSE]
+        res2 <- res[, 3 * seq_len((ncol(res) / 3)) - 1, drop = FALSE]
         rownames(res2) <- rownames(res)
         colnames(res2) <- colnames(marker_mat)
         res <- res2

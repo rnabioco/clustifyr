@@ -128,7 +128,7 @@ permute_similarity <- function(expr_mat,
     sig_counts <-
         matrix(0L, nrow = length(sc_clust), ncol = length(ref_clust))
 
-    for (i in 1:n_perm) {
+    for (i in seq_len(n_perm)) {
         resampled <- sample(cluster_ids,
             length(cluster_ids),
             replace = FALSE
