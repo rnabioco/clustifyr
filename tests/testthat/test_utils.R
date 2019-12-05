@@ -674,6 +674,13 @@ test_that("object_ref with seurat3", {
   expect_true(ncol(avg) == 3)
 })
 
+test_that("object_ref with SingleCellExperiment", {
+  sce <- sce_small
+  avg <- object_ref(sce)
+  expect_equal(dim(avg), c(200, 13))
+})
+
+
 test_that("object_ref gets correct averages", {
   s3 <- s_small3
   class(s3) <- "ser3"
@@ -762,14 +769,16 @@ test_that("object parsing works for custom object", {
 
   res2 <- clustify(s3,
     cbmc_ref,
-    lookuptable = object_loc_lookup2
+    lookuptable = object_loc_lookup2,
+    obj_out = FALSE
   )
 
   res <- clustify_lists(
     s3,
     marker = pbmc_markers,
     marker_inmatrix = FALSE,
-    lookuptable = object_loc_lookup2
+    lookuptable = object_loc_lookup2,
+    obj_out = FALSE
   )
 
   expect_true(nrow(res) == nrow(res2))
@@ -1301,10 +1310,10 @@ test_that("repeated insertionn of types into metdadata renames correctly", {
   )
   expect_true(colnames(pbmc_meta2)[10] == "type")
 })
-#
-# test_that("object_ref with sce", {
-#   avg <- object_ref(sce_small,
-#                     cluster_col = "cell_type1"
-#   )
-#   expect_true(ncol(avg) == 13)
-# })
+
+test_that("object_ref with sce", {
+  avg <- object_ref(sce_small,
+                    cluster_col = "cell_type1"
+  )
+  expect_true(ncol(avg) == 13)
+})
