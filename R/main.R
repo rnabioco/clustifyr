@@ -22,7 +22,7 @@ clustify <- function(input, ...) {
 #' @param use_var_genes if providing a seurat object, use the variable genes
 #'   (stored in seurat_object@var.genes) as the query_genes.
 #' @param dr stored dimension reduction
-#' @param seurat_out output cor matrix or called seurat object
+#' @param seurat_out output cor matrix or called seurat object (deprecated, use obj_out instead)
 #' @param verbose whether to report certain variables chosen
 #' @param lookuptable if not supplied, will look in built-in table for object parsing
 #' @param rm0 consider 0 as missing data, recommended for per_cell
@@ -62,7 +62,7 @@ clustify <- function(input, ...) {
 #'   s_small,
 #'   cbmc_ref,
 #'   cluster_col = "res.1",
-#'   seurat_out = TRUE,
+#'   obj_out = TRUE,
 #'   per_cell = FALSE,
 #'   dr = "tsne"
 #' )
@@ -72,7 +72,7 @@ clustify <- function(input, ...) {
 #'   input = s_small,
 #'   ref_mat = cbmc_ref,
 #'   cluster_col = "res.1",
-#'   seurat_out = TRUE,
+#'   obj_out = TRUE,
 #'   per_cell = TRUE,
 #'   dr = "tsne"
 #' )
@@ -88,8 +88,8 @@ clustify.default <- function(input,
                              verbose = FALSE,
                              lookuptable = NULL,
                              rm0 = FALSE,
-                             obj_out = FALSE,
-                             seurat_out = FALSE,
+                             obj_out = TRUE,
+                             seurat_out = TRUE,
                              rename_prefix = NULL,
                              threshold = "auto",
                              low_threshold_cell = 10,
@@ -101,8 +101,8 @@ clustify.default <- function(input,
     )
   }
 
-  if (!inherits(input, c("matrix", "Matrix", "data.frame"))) {
-    input_original <- input
+  input_original <- input
+  if (!inherits(input_original, c("matrix", "Matrix", "data.frame"))) {
     temp <- parse_loc_object(
       input,
       type = class(input),
@@ -143,7 +143,7 @@ clustify.default <- function(input,
   }
 
   expr_mat <- input
-
+  
   # select gene subsets
   gene_constraints <- get_common_elements(
     rownames(expr_mat),
@@ -215,7 +215,7 @@ clustify.default <- function(input,
     )
   }
 
-  if ((obj_out ||
+  if ((obj_out &&
     seurat_out) &&
     !inherits(input_original, c("matrix", "Matrix", "data.frame"))) {
     df_temp <- cor_to_call(
@@ -256,7 +256,7 @@ clustify.seurat <- function(input,
                             use_var_genes = TRUE,
                             dr = "umap",
                             seurat_out = TRUE,
-                            obj_out = FALSE,
+                            obj_out = TRUE,
                             threshold = "auto",
                             verbose = FALSE,
                             rm0 = FALSE,
@@ -291,7 +291,7 @@ clustify.seurat <- function(input,
     res <- -log(res$p_val + .01, 10)
   }
 
-  if (!(seurat_out || obj_out)) {
+  if (!(seurat_out && obj_out)) {
     res
   } else {
     df_temp <- cor_to_call(
@@ -332,7 +332,7 @@ clustify.Seurat <- function(input,
                             use_var_genes = TRUE,
                             dr = "umap",
                             seurat_out = TRUE,
-                            obj_out = FALSE,
+                            obj_out = TRUE,
                             threshold = "auto",
                             verbose = FALSE,
                             rm0 = FALSE,
@@ -367,7 +367,7 @@ clustify.Seurat <- function(input,
     res <- -log(res$p_val + .01, 10)
   }
 
-  if (!(seurat_out || obj_out)) {
+  if (!(seurat_out && obj_out)) {
     res
   } else {
     df_temp <- cor_to_call(
@@ -397,6 +397,8 @@ clustify.Seurat <- function(input,
 }
 
 #' @rdname clustify
+#' @importFrom SingleCellExperiment logcounts colData
+#' @importFrom SummarizedExperiment `colData<-` 
 #' @export
 clustify.SingleCellExperiment <- function(input,
                                           ref_mat,
@@ -416,9 +418,8 @@ clustify.SingleCellExperiment <- function(input,
                                           exclude_genes = c(),
                                           ...) {
   s_object <- input
-  # expr_mat <- s_object@assays$data$logcounts
-  expr_mat <- s_object@assays@.xData[["data"]][["logcounts"]]
-  metadata <- as.data.frame(s_object@colData)
+  expr_mat <- SingleCellExperiment::logcounts(s_object)
+  metadata <- as.data.frame(SingleCellExperiment::colData(s_object))
 
   res <- clustify(
     expr_mat,
@@ -465,8 +466,10 @@ clustify.SingleCellExperiment <- function(input,
         col_type <- "type"
         col_r <- "r"
       }
-      s_object@colData[[col_type]] <- df_temp_full[[col_type]]
-      s_object@colData[[col_r]] <- df_temp_full[[col_r]]
+      colDatatemp <- SingleCellExperiment::colData(s_object)
+      colDatatemp[[col_type]] <- df_temp_full[[col_type]]
+      colDatatemp[[col_r]] <- df_temp_full[[col_r]]
+      colData(s_object) <- colDatatemp
       return(s_object)
     } else {
       message("SingleCellExperiment not loaded, returning cor_mat instead")
@@ -515,7 +518,7 @@ clustify_lists <- function(input, ...) {
 #' @param threshold identity calling minimum correlation score threshold, only used when obj_out = T
 #' @param low_threshold_cell option to remove clusters with too few cells
 #' @param dr stored dimension reduction
-#' @param seurat_out output cor matrix or called seurat object
+#' @param seurat_out output cor matrix or called seurat object (deprecated, use obj_out instead)
 #' @param ... passed to matrixize_markers
 #' @examples
 #' # Annotate a matrix and metadata
@@ -552,15 +555,14 @@ clustify_lists.default <- function(input,
                                    metric = "hyper",
                                    output_high = TRUE,
                                    lookuptable = NULL,
-                                   obj_out = FALSE,
-                                   seurat_out = FALSE,
+                                   obj_out = TRUE,
+                                   seurat_out = TRUE,
                                    rename_prefix = NULL,
                                    threshold = 0,
                                    low_threshold_cell = 10,
                                    ...) {
-  orig_input <- input
+  input_original <- input
   if (!inherits(input, c("matrix", "Matrix", "data.frame"))) {
-    input_original <- input
     temp <- parse_loc_object(
       input,
       type = class(input),
@@ -606,7 +608,7 @@ clustify_lists.default <- function(input,
       c("hyper", "jaccard", "pct", "posneg"),
       function(x) {
         clustify_lists(
-          orig_input,
+          input_original,
           marker,
           metadata = cluster_info,
           cluster_col = cluster_col,
@@ -653,9 +655,9 @@ clustify_lists.default <- function(input,
     )
   }
 
-  if ((obj_out ||
-    seurat_out) &&
-    !inherits(input_original, c("matrix", "Matrix", "data.frame"))) {
+  if ((!inherits(input_original, c("matrix", "Matrix", "data.frame")) &&
+       obj_out &&
+       seurat_out)) {
     if (metric != "consensus") {
       df_temp <- cor_to_call(
         res,
@@ -702,7 +704,7 @@ clustify_lists.seurat <- function(input,
                                   output_high = TRUE,
                                   dr = "umap",
                                   seurat_out = TRUE,
-                                  obj_out = FALSE,
+                                  obj_out = TRUE,
                                   threshold = 0,
                                   rename_prefix = NULL,
                                   ...) {
@@ -732,7 +734,7 @@ clustify_lists.seurat <- function(input,
     ...
   )
 
-  if (!(seurat_out || obj_out)) {
+  if (!(seurat_out && obj_out)) {
     res
   } else {
     if (metric != "consensus") {
@@ -781,7 +783,7 @@ clustify_lists.Seurat <- function(input,
                                   output_high = TRUE,
                                   dr = "umap",
                                   seurat_out = TRUE,
-                                  obj_out = FALSE,
+                                  obj_out = TRUE,
                                   threshold = 0,
                                   rename_prefix = NULL,
                                   ...) {
@@ -811,7 +813,7 @@ clustify_lists.Seurat <- function(input,
     ...
   )
 
-  if (!(seurat_out || obj_out)) {
+  if (!(seurat_out && obj_out)) {
     res
   } else {
     if (metric != "consensus") {
@@ -846,6 +848,8 @@ clustify_lists.Seurat <- function(input,
 }
 
 #' @rdname clustify_lists
+#' @importFrom SingleCellExperiment logcounts colData
+#' @importFrom SummarizedExperiment `colData<-` 
 #' @export
 clustify_lists.SingleCellExperiment <- function(input,
                                                 metadata = NULL,
@@ -866,9 +870,9 @@ clustify_lists.SingleCellExperiment <- function(input,
                                                 rename_prefix = NULL,
                                                 ...) {
   s_object <- input
-  expr_mat <- s_object@assays@.xData[["data"]][["logcounts"]]
+  expr_mat <- SingleCellExperiment::logcounts(s_object)
   if (is.null(metadata)) {
-    metadata <- as.data.frame(s_object@colData)
+    metadata <- as.data.frame(SingleCellExperiment::colData(s_object))
   }
 
   res <- clustify_lists(
@@ -913,8 +917,8 @@ clustify_lists.SingleCellExperiment <- function(input,
         col_type <- "type"
         col_r <- "r"
       }
-      s_object@colData[[col_type]] <- df_temp_full[[col_type]]
-      s_object@colData[[col_r]] <- df_temp_full[[col_r]]
+      SingleCellExperiment::colData(s_object)[[col_type]] <- df_temp_full[[col_type]]
+      SingleCellExperiment::colData(s_object)[[col_r]] <- df_temp_full[[col_r]]
       return(s_object)
     } else {
       message("SingleCellExperiment not loaded, returning cor_mat instead")

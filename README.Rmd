@@ -59,7 +59,7 @@ plot_best_call(
 )
 ```
 
-`clustify()` can also take a clustered `seurat` object (both v2 and v3) and assign identities.
+`clustify()` can also take a clustered `SingleCellExperiment` or `seurat` object (both v2 and v3) and assign identities.
 
 ```{r example_seurat, warning=F, message=F}
 library(Seurat)
@@ -81,7 +81,7 @@ clustify(
 )
 ```
 
-New reference matrix can be made directly from `seurat` object as well. Other scRNAseq experiment object types are supported as well.
+New reference matrix can be made directly from `SingleCellExperiment` and `seurat` objects as well. Other scRNAseq experiment object types are supported as well.
 
 ```{r example_ref_matrix}
 # make reference from seurat objects
