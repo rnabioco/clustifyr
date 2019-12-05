@@ -24,8 +24,8 @@ clustify_lists(input, ...)
   metric = "hyper",
   output_high = TRUE,
   lookuptable = NULL,
-  obj_out = FALSE,
-  seurat_out = FALSE,
+  obj_out = TRUE,
+  seurat_out = TRUE,
   rename_prefix = NULL,
   threshold = 0,
   low_threshold_cell = 10,
@@ -47,7 +47,7 @@ clustify_lists(input, ...)
   output_high = TRUE,
   dr = "umap",
   seurat_out = TRUE,
-  obj_out = FALSE,
+  obj_out = TRUE,
   threshold = 0,
   rename_prefix = NULL,
   ...
@@ -68,7 +68,7 @@ clustify_lists(input, ...)
   output_high = TRUE,
   dr = "umap",
   seurat_out = TRUE,
-  obj_out = FALSE,
+  obj_out = TRUE,
   threshold = 0,
   rename_prefix = NULL,
   ...
@@ -129,7 +129,7 @@ if running correlation per cell.}
 
 \item{obj_out}{whether to output object instead of cor matrix}
 
-\item{seurat_out}{output cor matrix or called seurat object}
+\item{seurat_out}{output cor matrix or called seurat object (deprecated, use obj_out instead)}
 
 \item{rename_prefix}{prefix to add to type and r column names}
 

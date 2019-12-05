@@ -58,7 +58,7 @@ pbmc_meta <- clustifyr::pbmc_meta
 
 To identify cell types, the `clustifyr()` function requires several inputs:
 
-* `input`: a Seurat object or a matrix of normalized single-cell RNA-seq counts
+* `input`: an SingleCellExperiment or Seurat object or a matrix of normalized single-cell RNA-seq counts
 * `metadata`: a meta.data table containing the cluster assignments for each cell (not required if a Seurat object is given)
 * `ref_mat`: a reference matrix containing RNA-seq expression data for each cell type of interest
 * `query_genes`: a list of genes to use for comparison (optional but recommended)
@@ -70,7 +70,7 @@ When using a matrix of scRNA-seq counts `clustifyr()` will return a matrix of co
 vargenes <- pbmc_vargenes[1:500]
 
 res <- clustify(
-  input = pbmc_matrix, # matrix of normalized scRNA-seq counts (or a Seurat object)
+  input = pbmc_matrix, # matrix of normalized scRNA-seq counts (or SCE/Seurat object)
   metadata = pbmc_meta, # meta.data table containing cell clusters
   cluster_col = "seurat_clusters", # name of column in meta.data containing cell clusters
   ref_mat = cbmc_ref, # matrix of RNA-seq expression data for each cell type
@@ -189,6 +189,33 @@ pbmc_meta3 <- call_to_metadata(
 )
 ```
 
+## Direct handling of `SingleCellExperiment` objects
+`clustifyr` can also use a `SingleCellExperiment` object as input and return a new `SingleCellExperiment` object with the cell types added as a column in the colData. 
+
+``` r
+res <- clustify(
+  input = sce_small,       # an SCE object
+  ref_mat = cbmc_ref,    # matrix of RNA-seq expression data for each cell type
+  cluster_col = "cell_type1", # name of column in meta.data containing cell clusters
+  obj_out = TRUE      # output SCE object with cell type inserted as "type" column
+)
+
+SingleCellExperiment::colData(res)[1:10,c("type", "r")]
+#> DataFrame with 10 rows and 2 columns
+#>               type                 r
+#>        <character>         <numeric>
+#> AZ_A1        CD34+ 0.557678024919381
+#> AZ_A10       CD34+ 0.624777701661225
+#> AZ_A11       CD4 T 0.695067885340303
+#> AZ_A12       CD34+ 0.624777701661225
+#> AZ_A2        CD4 T 0.602804908958642
+#> AZ_A3        CD34+ 0.557678024919381
+#> AZ_A4        CD34+ 0.557678024919381
+#> AZ_A5        CD34+ 0.645378073051508
+#> AZ_A6        CD4 T 0.695067885340303
+#> AZ_A7        CD34+ 0.671644883893203
+```
+
 ## Direct handling of `seurat` v2 and v3 objects
 
 `clustifyr` can also use a `Seurat` object as input and return a new `Seurat` object with the cell types added as a column in the meta.data. 
@@ -198,7 +225,7 @@ res <- clustify(
   input = s_small,       # a Seurat object
   ref_mat = cbmc_ref,    # matrix of RNA-seq expression data for each cell type
   cluster_col = "res.1", # name of column in meta.data containing cell clusters
-  seurat_out = TRUE      # output Seurat object with cell type inserted as "type" column
+  obj_out = TRUE      # output Seurat object with cell type inserted as "type" column
 )
 
 res@meta.data[1:10, ]
@@ -228,7 +255,12 @@ new_ref_matrix <- average_clusters(
 
 head(new_ref_matrix)
 
-# For further convenience, a shortcut function for generating reference matrix from  `seurat` object is used.
+# For further convenience, a shortcut function for generating reference matrix from `SingleCellExperiment` or `seurat` object is used.
+new_ref_matrix_sce <- object_ref(
+  input = sce_small,                       # SCE object
+  cluster_col = "cell_type1"       # name of column in colData containing cell identities
+)
+
 new_ref_matrix_v2 <- seurat_ref(
   seurat_object = s_small,         # seuratv2 object
   cluster_col = "res.1"            # name of column in meta.data containing cell identities
@@ -242,9 +274,12 @@ new_ref_matrix_v3 <- seurat_ref(
 tail(new_ref_matrix_v3)
 ```
 
-More reference data, including tabula muris, and code used to generate them are available at https://github.com/rnabioco/clustifyrdata.
+More reference data, including tabula muris, and code used to generate them are available at https://github.com/rnabioco/clustifyrdata
 
 Also see list for individual downloads at https://rnabioco.github.io/clustifyr/articles/download_refs.html
+
+Additional tutorials at
+https://rnabioco.github.io/clustifyrdata/articles/otherformats.html
 
 ## Session info
 

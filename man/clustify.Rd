@@ -22,8 +22,8 @@ clustify(input, ...)
   verbose = FALSE,
   lookuptable = NULL,
   rm0 = FALSE,
-  obj_out = FALSE,
-  seurat_out = FALSE,
+  obj_out = TRUE,
+  seurat_out = TRUE,
   rename_prefix = NULL,
   threshold = "auto",
   low_threshold_cell = 10,
@@ -43,7 +43,7 @@ clustify(input, ...)
   use_var_genes = TRUE,
   dr = "umap",
   seurat_out = TRUE,
-  obj_out = FALSE,
+  obj_out = TRUE,
   threshold = "auto",
   verbose = FALSE,
   rm0 = FALSE,
@@ -63,7 +63,7 @@ clustify(input, ...)
   use_var_genes = TRUE,
   dr = "umap",
   seurat_out = TRUE,
-  obj_out = FALSE,
+  obj_out = TRUE,
   threshold = "auto",
   verbose = FALSE,
   rm0 = FALSE,
@@ -124,7 +124,7 @@ common genes between the expr_mat and ref_mat will be used for comparision.}
 
 \item{obj_out}{whether to output object instead of cor matrix}
 
-\item{seurat_out}{output cor matrix or called seurat object}
+\item{seurat_out}{output cor matrix or called seurat object (deprecated, use obj_out instead)}
 
 \item{rename_prefix}{prefix to add to type and r column names}
 
@@ -172,7 +172,7 @@ clustify(
   s_small,
   cbmc_ref,
   cluster_col = "res.1",
-  seurat_out = TRUE,
+  obj_out = TRUE,
   per_cell = FALSE,
   dr = "tsne"
 )
@@ -182,7 +182,7 @@ clustify(
   input = s_small,
   ref_mat = cbmc_ref,
   cluster_col = "res.1",
-  seurat_out = TRUE,
+  obj_out = TRUE,
   per_cell = TRUE,
   dr = "tsne"
 )
