@@ -19,12 +19,12 @@ pbmc <- RunUMAP(pbmc, dims = 1:10)
 
 tm <- expm1(as.matrix(pbmc@assays$RNA@data))
 Normalized_data <- M3DropCleanData(tm,
-  labels = rownames(pbmc@assays$RNA@data),
-  is.counts = FALSE
+    labels = rownames(pbmc@assays$RNA@data),
+    is.counts = FALSE
 )
 fits <- M3DropDropoutModels(Normalized_data$data)
 pbmc_markers_M3Drop <- M3DropDifferentialExpression(Normalized_data$data,
-  mt_method = "fdr",
-  mt_threshold = 0.05
+    mt_method = "fdr",
+    mt_threshold = 0.05
 )
 usethis::use_data(pbmc_markers_M3Drop, compress = "xz", overwrite = TRUE)

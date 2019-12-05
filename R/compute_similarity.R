@@ -15,69 +15,69 @@ get_similarity <- function(expr_mat,
                            per_cell = FALSE,
                            rm0 = FALSE,
                            ...) {
-  if (nrow(expr_mat) == 0) {
-    stop("after subsetting to shared genes, query expression matrix has 0 rows",
-      call. = FALSE
+    if (nrow(expr_mat) == 0) {
+        stop("after subsetting to shared genes, query expression matrix has 0 rows",
+            call. = FALSE
+        )
+    }
+
+    if (ncol(expr_mat) == 0) {
+        stop("query expression matrix has 0 cols", call. = FALSE)
+    }
+
+    if (nrow(ref_mat) == 0) {
+        stop("after subsetting to shared genes, reference expression matrix has 0 rows",
+            call. = FALSE
+        )
+    }
+
+    if (ncol(ref_mat) == 0) {
+        stop("reference expression matrix has 0 cols", call. = FALSE)
+    }
+
+    ref_clust <- colnames(ref_mat)
+    if (ncol(expr_mat) != length(cluster_ids)) {
+        stop("number of cells in expression matrix not equal to metadata/cluster_col",
+            call. = FALSE
+        )
+    }
+
+    if (sum(is.na(cluster_ids)) > 0) {
+        message("reassigning NAs to unknown")
+        cluster_ids <- factor(cluster_ids)
+        cluster_ids <-
+            factor(
+                cluster_ids,
+                levels = c(levels(cluster_ids), NA),
+                labels = c(levels(cluster_ids), "unknown"),
+                exclude = NULL
+            )
+        cluster_ids <- as.character(cluster_ids)
+    }
+
+    if (!per_cell) {
+        sc_clust <- sort(unique(cluster_ids))
+        clust_avg <- compute_mean_expr(
+            expr_mat,
+            cluster_ids,
+            sc_clust
+        )
+    } else {
+        sc_clust <- cluster_ids
+        clust_avg <- expr_mat
+    }
+
+    assigned_score <- calc_similarity(clust_avg,
+        ref_mat,
+        compute_method,
+        rm0 = rm0,
+        ...
     )
-  }
 
-  if (ncol(expr_mat) == 0) {
-    stop("query expression matrix has 0 cols", call. = FALSE)
-  }
+    rownames(assigned_score) <- sc_clust
+    colnames(assigned_score) <- ref_clust
 
-  if (nrow(ref_mat) == 0) {
-    stop("after subsetting to shared genes, reference expression matrix has 0 rows",
-      call. = FALSE
-    )
-  }
-
-  if (ncol(ref_mat) == 0) {
-    stop("reference expression matrix has 0 cols", call. = FALSE)
-  }
-
-  ref_clust <- colnames(ref_mat)
-  if (ncol(expr_mat) != length(cluster_ids)) {
-    stop("number of cells in expression matrix not equal to metadata/cluster_col",
-      call. = FALSE
-    )
-  }
-
-  if (sum(is.na(cluster_ids)) > 0) {
-    message("reassigning NAs to unknown")
-    cluster_ids <- factor(cluster_ids)
-    cluster_ids <-
-      factor(
-        cluster_ids,
-        levels = c(levels(cluster_ids), NA),
-        labels = c(levels(cluster_ids), "unknown"),
-        exclude = NULL
-      )
-    cluster_ids <- as.character(cluster_ids)
-  }
-
-  if (!per_cell) {
-    sc_clust <- sort(unique(cluster_ids))
-    clust_avg <- compute_mean_expr(
-      expr_mat,
-      cluster_ids,
-      sc_clust
-    )
-  } else {
-    sc_clust <- cluster_ids
-    clust_avg <- expr_mat
-  }
-
-  assigned_score <- calc_similarity(clust_avg,
-    ref_mat,
-    compute_method,
-    rm0 = rm0,
-    ...
-  )
-
-  rownames(assigned_score) <- sc_clust
-  colnames(assigned_score) <- ref_clust
-
-  return(assigned_score)
+    return(assigned_score)
 }
 
 #' Compute a p-value for similarity using permutation
@@ -103,67 +103,67 @@ permute_similarity <- function(expr_mat,
                                compute_method,
                                rm0 = FALSE,
                                ...) {
-  ref_clust <- colnames(ref_mat)
-
-  if (!per_cell) {
-    sc_clust <- sort(unique(cluster_ids))
-    clust_avg <- compute_mean_expr(
-      expr_mat,
-      cluster_ids,
-      sc_clust
-    )
-  } else {
-    sc_clust <- colnames(expr_mat)
-    clust_avg <- expr_mat
-  }
-
-  assigned_score <- calc_similarity(clust_avg,
-    ref_mat,
-    compute_method,
-    rm0 = rm0,
-    ...
-  )
-
-  # perform permutation
-  sig_counts <-
-    matrix(0L, nrow = length(sc_clust), ncol = length(ref_clust))
-
-  for (i in 1:n_perm) {
-    resampled <- sample(cluster_ids,
-      length(cluster_ids),
-      replace = FALSE
-    )
+    ref_clust <- colnames(ref_mat)
 
     if (!per_cell) {
-      permuted_avg <- compute_mean_expr(
-        expr_mat,
-        resampled,
-        sc_clust
-      )
+        sc_clust <- sort(unique(cluster_ids))
+        clust_avg <- compute_mean_expr(
+            expr_mat,
+            cluster_ids,
+            sc_clust
+        )
     } else {
-      permuted_avg <- expr_mat[, resampled, drop = FALSE]
+        sc_clust <- colnames(expr_mat)
+        clust_avg <- expr_mat
     }
 
-    # permutate assignment
-    new_score <- calc_similarity(permuted_avg,
-      ref_mat,
-      compute_method,
-      rm0 = rm0,
-      ...
+    assigned_score <- calc_similarity(clust_avg,
+        ref_mat,
+        compute_method,
+        rm0 = rm0,
+        ...
     )
+
+    # perform permutation
     sig_counts <-
-      sig_counts + as.numeric(new_score > assigned_score)
-  }
+        matrix(0L, nrow = length(sc_clust), ncol = length(ref_clust))
 
-  rownames(assigned_score) <- sc_clust
-  colnames(assigned_score) <- ref_clust
-  rownames(sig_counts) <- sc_clust
-  colnames(sig_counts) <- ref_clust
+    for (i in 1:n_perm) {
+        resampled <- sample(cluster_ids,
+            length(cluster_ids),
+            replace = FALSE
+        )
 
-  return(list(
-    score = assigned_score,
-    p_val = sig_counts / n_perm
-  ))
+        if (!per_cell) {
+            permuted_avg <- compute_mean_expr(
+                expr_mat,
+                resampled,
+                sc_clust
+            )
+        } else {
+            permuted_avg <- expr_mat[, resampled, drop = FALSE]
+        }
+
+        # permutate assignment
+        new_score <- calc_similarity(permuted_avg,
+            ref_mat,
+            compute_method,
+            rm0 = rm0,
+            ...
+        )
+        sig_counts <-
+            sig_counts + as.numeric(new_score > assigned_score)
+    }
+
+    rownames(assigned_score) <- sc_clust
+    colnames(assigned_score) <- ref_clust
+    rownames(sig_counts) <- sc_clust
+    colnames(sig_counts) <- ref_clust
+
+    return(list(
+        score = assigned_score,
+        p_val = sig_counts / n_perm
+    ))
 }
 
 #' compute mean of clusters
@@ -174,9 +174,9 @@ permute_similarity <- function(expr_mat,
 compute_mean_expr <- function(expr_mat,
                               sc_assign,
                               sc_clust) {
-  sapply(sc_clust, function(x) {
-    Matrix::rowMeans(expr_mat[, sc_assign == x, drop = FALSE])
-  })
+    sapply(sc_clust, function(x) {
+        Matrix::rowMeans(expr_mat[, sc_assign == x, drop = FALSE])
+    })
 }
 
 #' compute similarity
@@ -191,45 +191,45 @@ calc_similarity <- function(query_mat,
                             compute_method,
                             rm0 = FALSE,
                             ...) {
-  # remove 0s ?
-  if (rm0) {
-    message("considering 0 as missing data")
-    query_mat[query_mat == 0] <- NA
-    similarity_score <- suppressWarnings(stats::cor(as.matrix(query_mat),
-      ref_mat,
-      method = compute_method,
-      use = "pairwise.complete.obs"
-    ))
-    return(similarity_score)
-  } else {
-    if (any(compute_method %in% c("pearson", "spearman", "kendall"))) {
-      similarity_score <- suppressWarnings(stats::cor(as.matrix(query_mat),
-        ref_mat,
-        method = compute_method
-      ))
-      return(similarity_score)
+    # remove 0s ?
+    if (rm0) {
+        message("considering 0 as missing data")
+        query_mat[query_mat == 0] <- NA
+        similarity_score <- suppressWarnings(stats::cor(as.matrix(query_mat),
+            ref_mat,
+            method = compute_method,
+            use = "pairwise.complete.obs"
+        ))
+        return(similarity_score)
+    } else {
+        if (any(compute_method %in% c("pearson", "spearman", "kendall"))) {
+            similarity_score <- suppressWarnings(stats::cor(as.matrix(query_mat),
+                ref_mat,
+                method = compute_method
+            ))
+            return(similarity_score)
+        }
     }
-  }
 
-  sc_clust <- colnames(query_mat)
-  ref_clust <- colnames(ref_mat)
-  features <- intersect(rownames(query_mat), rownames(ref_mat))
-  query_mat <- query_mat[features, ]
-  ref_mat <- ref_mat[features, ]
-  similarity_score <- matrix(NA,
-    nrow = length(sc_clust),
-    ncol = length(ref_clust)
-  )
-  for (i in seq_along(sc_clust)) {
-    for (j in seq_along(ref_clust)) {
-      similarity_score[i, j] <- vector_similarity(
-        query_mat[, sc_clust[i]],
-        ref_mat[, ref_clust[j]],
-        compute_method, ...
-      )
+    sc_clust <- colnames(query_mat)
+    ref_clust <- colnames(ref_mat)
+    features <- intersect(rownames(query_mat), rownames(ref_mat))
+    query_mat <- query_mat[features, ]
+    ref_mat <- ref_mat[features, ]
+    similarity_score <- matrix(NA,
+        nrow = length(sc_clust),
+        ncol = length(ref_clust)
+    )
+    for (i in seq_along(sc_clust)) {
+        for (j in seq_along(ref_clust)) {
+            similarity_score[i, j] <- vector_similarity(
+                query_mat[, sc_clust[i]],
+                ref_mat[, ref_clust[j]],
+                compute_method, ...
+            )
+        }
     }
-  }
-  return(similarity_score)
+    return(similarity_score)
 }
 
 #' Compute similarity between two vectors
@@ -248,26 +248,26 @@ calc_similarity <- function(query_mat,
 #' @param ... arguments to pass to compute_method function
 #' @return numeric value of desired correlation or distance measurement
 vector_similarity <- function(vec1, vec2, compute_method, ...) {
-  # examine whether two vectors are of the same size
-  if (!is.numeric(vec1) ||
-    !is.numeric(vec2) || length(vec1) != length(vec2)) {
-    stop(
-      "compute_similarity: two input vectors are not numeric or of different sizes.",
-      call. = FALSE
-    )
-  }
+    # examine whether two vectors are of the same size
+    if (!is.numeric(vec1) ||
+        !is.numeric(vec2) || length(vec1) != length(vec2)) {
+        stop(
+            "compute_similarity: two input vectors are not numeric or of different sizes.",
+            call. = FALSE
+        )
+    }
 
-  if (!(compute_method %in% c("cosine", "kl_divergence"))) {
-    stop(paste(compute_method, "not implemented"), call. = FALSE)
-  }
+    if (!(compute_method %in% c("cosine", "kl_divergence"))) {
+        stop(paste(compute_method, "not implemented"), call. = FALSE)
+    }
 
-  if (compute_method == "kl_divergence") {
-    res <- kl_divergence(vec1, vec2, ...)
-  } else if (compute_method == "cosine") {
-    res <- cosine(vec1, vec2, ...)
-  }
-  # return the similarity score, must be
-  return(res)
+    if (compute_method == "kl_divergence") {
+        res <- kl_divergence(vec1, vec2, ...)
+    } else if (compute_method == "cosine") {
+        res <- cosine(vec1, vec2, ...)
+    }
+    # return the similarity score, must be
+    return(res)
 }
 
 #' Cosine distance
@@ -275,7 +275,7 @@ vector_similarity <- function(vec1, vec2, compute_method, ...) {
 #' @param vec2 reference vector
 #' @return numeric value of cosine distance between the vectors
 cosine <- function(vec1, vec2) {
-  sum(vec1 * vec2) / sqrt(sum(vec1^2) * sum(vec2^2))
+    sum(vec1 * vec2) / sqrt(sum(vec1^2) * sum(vec2^2))
 }
 #' KL divergence
 #'
@@ -301,15 +301,15 @@ kl_divergence <- function(vec1,
                           if_log = FALSE,
                           total_reads = 1000,
                           max_KL = 1) {
-  if (if_log) {
-    vec1 <- expm1(vec1)
-    vec2 <- expm1(vec2)
-  }
-  count1 <- round(vec1 * total_reads / sum(vec1))
-  count2 <- round(vec2 * total_reads / sum(vec2))
-  est_KL <- entropy::KL.shrink(count1, count2,
-    unit = "log",
-    verbose = FALSE
-  )
-  return((max_KL - est_KL) / max_KL * 2 - 1)
+    if (if_log) {
+        vec1 <- expm1(vec1)
+        vec2 <- expm1(vec2)
+    }
+    count1 <- round(vec1 * total_reads / sum(vec1))
+    count2 <- round(vec2 * total_reads / sum(vec2))
+    est_KL <- entropy::KL.shrink(count1, count2,
+        unit = "log",
+        verbose = FALSE
+    )
+    return((max_KL - est_KL) / max_KL * 2 - 1)
 }
