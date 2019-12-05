@@ -6,7 +6,7 @@
 #'
 #' @family data
 #'
-#' @source (https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html)
+#' @source \url{https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html}
 "pbmc_matrix_small"
 
 #' Meta-data for single-cell RNA-seq PBMCs.
@@ -55,16 +55,22 @@
 #' @source  `[pbmc_small]` processed by Seurat
 "s_small3"
 
+#' Small SingleCellExperiment object
+#'
+#' @family data
+#' @source \url{"https://scrnaseq-public-datasets.s3.amazonaws.com/scater-objects/segerstolpe.rds"}
+"sce_small"
+
 #' reference matrix from seurat citeseq CBMC tutorial
 #'
 #' @family data
-#' @source (https://satijalab.org/seurat/v3.0/multimodal_vignette.html#identify-differentially-expressed-proteins-between-clusters)
+#' @source \url{https://satijalab.org/seurat/v3.0/multimodal_vignette.html#identify-differentially-expressed-proteins-between-clusters}
 "cbmc_ref"
 
 #' reference marker matrix from seurat citeseq CBMC tutorial
 #'
 #' @family data
-#' @source (https://satijalab.org/seurat/v3.0/multimodal_vignette.html#identify-differentially-expressed-proteins-between-clusters)
+#' @source \url{https://satijalab.org/seurat/v3.0/multimodal_vignette.html#identify-differentially-expressed-proteins-between-clusters}
 "cbmc_m"
 
 #' lookup table for single cell object structures
