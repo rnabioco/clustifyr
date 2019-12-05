@@ -4,7 +4,7 @@
 \name{s_small3}
 \alias{s_small3}
 \title{Small clustered Seurat3 object}
-\format{An object of class \code{Seurat} of length 1.}
+\format{An object of class \code{Seurat} with 230 rows and 80 columns.}
 \source{
 \verb{[pbmc_small]} processed by Seurat
 }
@@ -25,7 +25,8 @@ Other data:
 \code{\link{pbmc_matrix_small}},
 \code{\link{pbmc_meta}},
 \code{\link{pbmc_vargenes}},
-\code{\link{s_small}}
+\code{\link{s_small}},
+\code{\link{sce_small}}
 }
 \concept{data}
 \keyword{datasets}
