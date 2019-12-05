@@ -51,7 +51,8 @@ Imports:
     tidyr,
     stats,
     methods,
-    SingleCellExperiment
+    SingleCellExperiment,
+    SummarizedExperiment
 Suggests:
     ComplexHeatmap,
     covr,

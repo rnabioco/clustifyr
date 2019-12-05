@@ -849,6 +849,7 @@ clustify_lists.Seurat <- function(input,
 
 #' @rdname clustify_lists
 #' @importFrom SingleCellExperiment logcounts colData
+#' @importFrom SummarizedExperiment `colData<-` 
 #' @export
 clustify_lists.SingleCellExperiment <- function(input,
                                                 metadata = NULL,
