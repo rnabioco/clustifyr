@@ -78,10 +78,29 @@ plot_best_call(
 
 ![](man/figures/readme_example-1.png)<!-- -->
 
-`clustify()` can also take a clustered `seurat` object (both v2 and v3)
-and assign identities.
+`clustify()` can also take a clustered `SingleCellExperiment` or
+`seurat` object (both v2 and v3) and assign identities.
 
 ``` r
+# for SingleCellExperiment
+clustify(
+  input = sce_small,          # an SCE object
+  ref_mat = cbmc_ref,         # matrix of RNA-seq expression data for each cell type
+  cluster_col = "cell_type1", # name of column in meta.data containing cell clusters
+  obj_out = TRUE              # output SCE object with cell type inserted as "type" column
+) 
+#> class: SingleCellExperiment 
+#> dim: 200 200 
+#> metadata(0):
+#> assays(2): counts logcounts
+#> rownames(200): SGIP1 AZIN2 ... TAF12 SNHG3
+#> rowData names(10): feature_symbol is_feature_control ... total_counts
+#>   log10_total_counts
+#> colnames(200): AZ_A1 AZ_A10 ... HP1502401_E18 HP1502401_E19
+#> colData names(35): cell_quality cell_type1 ... type r
+#> reducedDimNames(0):
+#> spikeNames(1): ERCC
+
 library(Seurat)
 
 # for seurat2
@@ -107,17 +126,25 @@ clustify(
 #>  2 dimensional reductions calculated: pca, tsne
 ```
 
-New reference matrix can be made directly from `seurat` object as well.
-Other scRNAseq experiment object types are supported as well.
+New reference matrix can be made directly from `SingleCellExperiment`
+and `seurat` objects as well. Other scRNAseq experiment object types are
+supported as well.
 
 ``` r
+# make reference from SingleCellExperiment objects
+sce_ref <- object_ref(
+  input = sce_small,               # SCE object
+  cluster_col = "cell_type1"       # name of column in colData containing cell identities
+)
+#> recognized object type - SingleCellExperiment
+
 # make reference from seurat objects
-ref <- seurat_ref(
+s_ref <- seurat_ref(
   seurat_object = s_small,
   cluster_col = "res.1"
 )
 
-head(ref)
+head(s_ref)
 #>                 0        1        2        3
 #> MS4A1    4.517255 3.204766 0.000000 0.000000
 #> CD79B    4.504191 3.549095 2.580662 0.000000
@@ -127,8 +154,8 @@ head(ref)
 #> HLA-DQB1 4.380289 4.325293 0.000000 1.666167
 ```
 
-`clustify_lists()` handles identity assignment of matrix or `seurat`
-object based on marker gene lists.
+`clustify_lists()` handles identity assignment of matrix or
+`SingleCellExperiment` and `seurat` objects based on marker gene lists.
 
 ``` r
 clustify_lists(
@@ -175,5 +202,8 @@ clustify_lists(
 More reference data (including tabula muris, immgen, etc) are available
 at <https://github.com/rnabioco/clustifyrdata>.
 
-Also see list for individual downloads at `vignette("download_refs",
-package = "clustifyr")`
+Also see list for individual downloads at
+<https://rnabioco.github.io/clustifyrdata/articles/download_refs.html>
+
+Additional tutorials at
+<https://rnabioco.github.io/clustifyrdata/articles/otherformats.html>

@@ -194,10 +194,10 @@ pbmc_meta3 <- call_to_metadata(
 
 ``` r
 res <- clustify(
-  input = sce_small,       # an SCE object
-  ref_mat = cbmc_ref,    # matrix of RNA-seq expression data for each cell type
+  input = sce_small,          # an SCE object
+  ref_mat = cbmc_ref,         # matrix of RNA-seq expression data for each cell type
   cluster_col = "cell_type1", # name of column in meta.data containing cell clusters
-  obj_out = TRUE      # output SCE object with cell type inserted as "type" column
+  obj_out = TRUE              # output SCE object with cell type inserted as "type" column
 )
 
 SingleCellExperiment::colData(res)[1:10,c("type", "r")]
@@ -257,7 +257,7 @@ head(new_ref_matrix)
 
 # For further convenience, a shortcut function for generating reference matrix from `SingleCellExperiment` or `seurat` object is used.
 new_ref_matrix_sce <- object_ref(
-  input = sce_small,                       # SCE object
+  input = sce_small,               # SCE object
   cluster_col = "cell_type1"       # name of column in colData containing cell identities
 )
 

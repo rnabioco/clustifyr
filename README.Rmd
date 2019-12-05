@@ -62,6 +62,14 @@ plot_best_call(
 `clustify()` can also take a clustered `SingleCellExperiment` or `seurat` object (both v2 and v3) and assign identities.
 
 ```{r example_seurat, warning=F, message=F}
+# for SingleCellExperiment
+clustify(
+  input = sce_small,          # an SCE object
+  ref_mat = cbmc_ref,         # matrix of RNA-seq expression data for each cell type
+  cluster_col = "cell_type1", # name of column in meta.data containing cell clusters
+  obj_out = TRUE              # output SCE object with cell type inserted as "type" column
+) 
+
 library(Seurat)
 
 # for seurat2
@@ -84,16 +92,22 @@ clustify(
 New reference matrix can be made directly from `SingleCellExperiment` and `seurat` objects as well. Other scRNAseq experiment object types are supported as well.
 
 ```{r example_ref_matrix}
+# make reference from SingleCellExperiment objects
+sce_ref <- object_ref(
+  input = sce_small,               # SCE object
+  cluster_col = "cell_type1"       # name of column in colData containing cell identities
+)
+
 # make reference from seurat objects
-ref <- seurat_ref(
+s_ref <- seurat_ref(
   seurat_object = s_small,
   cluster_col = "res.1"
 )
 
-head(ref)
+head(s_ref)
 ```
 
-`clustify_lists()` handles identity assignment of matrix or `seurat` object based on marker gene lists.
+`clustify_lists()` handles identity assignment of matrix or `SingleCellExperiment` and `seurat` objects based on marker gene lists.
 
 ```{r example_seurat2, warning=F, message=F}
 clustify_lists(
@@ -118,3 +132,6 @@ clustify_lists(
 More reference data (including tabula muris, immgen, etc) are available at https://github.com/rnabioco/clustifyrdata. 
 
 Also see list for individual downloads at https://rnabioco.github.io/clustifyrdata/articles/download_refs.html
+
+Additional tutorials at
+https://rnabioco.github.io/clustifyrdata/articles/otherformats.html
