@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
-Classify cells from single-cell RNA sequencing data
+Package designed to aid in classifying cells from single-cell RNA sequencing data
     using external reference data (e.g., bulk RNA-seq, scRNA-seq, microarray, gene lists).
 }
 \seealso{

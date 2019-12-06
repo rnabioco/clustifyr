@@ -51,7 +51,8 @@ Imports:
     stats,
     methods,
     SingleCellExperiment,
-    SummarizedExperiment
+    SummarizedExperiment,
+    matrixStats
 Suggests:
     ComplexHeatmap,
     covr,
