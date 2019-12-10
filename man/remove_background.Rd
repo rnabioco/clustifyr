@@ -9,7 +9,8 @@ remove_background(mat, background, n = 0)
 \arguments{
 \item{mat}{expression matrix}
 
-\item{background}{vector or dataframe or matrix of high expression genes in background}
+\item{background}{vector or dataframe or matrix of high
+expression genes in background}
 
 \item{n}{the number of top genes to exclude, 0 defaults to all}
 }

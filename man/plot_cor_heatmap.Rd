@@ -16,10 +16,11 @@ plot_cor_heatmap(
 \arguments{
 \item{cor_mat}{input similarity matrix}
 
-\item{metadata}{input metadata with per cell tsne or umap cooordinates and cluster ids}
+\item{metadata}{input metadata with per cell tsne
+or umap cooordinates and cluster ids}
 
-\item{cluster_col}{colname of clustering data in metadata, defaults to rownames of the
-metadata if not supplied.}
+\item{cluster_col}{colname of clustering data in metadata,
+defaults to rownames of the metadata if not supplied.}
 
 \item{col}{color ramp to use}
 

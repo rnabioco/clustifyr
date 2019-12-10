@@ -33,7 +33,8 @@ find_rank_bias(
 
 \item{expr_cut}{consider all lower expressing genes as off}
 
-\item{consensus_cut}{filter out if lower than number of types show large diff}
+\item{consensus_cut}{filter out if lower
+han number of types show large diff}
 }
 \value{
 matrix of rank diff values

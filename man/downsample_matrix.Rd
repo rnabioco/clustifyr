@@ -19,7 +19,8 @@ downsample_matrix(
 
 \item{keep_cluster_proportions}{whether to subsample}
 
-\item{metadata}{data.frame or vector containing cluster assignments per cell.
+\item{metadata}{data.frame or
+vector containing cluster assignments per cell.
 Order must match column order in supplied matrix. If a data.frame
 provide the cluster_col parameters.}
 

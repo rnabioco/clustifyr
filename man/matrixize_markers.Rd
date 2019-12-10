@@ -17,28 +17,34 @@ matrixize_markers(
 )
 }
 \arguments{
-\item{marker_df}{dataframe of candidate genes, must contain "gene" and "cluster" columns, or a matrix of gene names to convert to ranked}
+\item{marker_df}{dataframe of candidate genes, must contain
+"gene" and "cluster" columns, or a matrix of gene names to
+convert to ranked}
 
 \item{ranked}{unranked gene list feeds into hyperp, the ranked
 gene list feeds into regular corr_coef}
 
 \item{n}{number of genes to use}
 
-\item{step_weight}{ranked genes are tranformed into pseudo expression by descending weight}
+\item{step_weight}{ranked genes are tranformed into pseudo
+expression by descending weight}
 
-\item{background_weight}{ranked genes are tranformed into pseudo expression with
-added weight}
+\item{background_weight}{ranked genes are tranformed into pseudo
+expression with added weight}
 
 \item{unique}{whether to use only unique markers to 1 cluster}
 
-\item{metadata}{vector or dataframe of cluster names, should have column named cluster}
+\item{metadata}{vector or dataframe of cluster names, should
+have column named cluster}
 
-\item{cluster_col}{column for cluster names to replace original cluster, if metadata is dataframe}
+\item{cluster_col}{column for cluster names to replace original
+cluster, if metadata is dataframe}
 
 \item{remove_rp}{do not include rps, rpl, rp1-9 in markers}
 }
 \value{
-matrix of unranked gene marker names, or matrix of ranked expression
+matrix of unranked gene marker names, or matrix of
+ranked expression
 }
 \description{
 Convert candidate genes list into matrix

@@ -2,7 +2,8 @@
 % Please edit documentation in R/plot.R
 \name{plot_cols}
 \alias{plot_cols}
-\title{Plot variable median per cluster from reference metadata vs new assigned metadata, for visually evaluating classification}
+\title{Plot variable median per cluster from reference metadata
+vs new assigned metadata, for visually evaluating classification}
 \usage{
 plot_cols(
   metadata,
@@ -33,7 +34,8 @@ plot_cols(
 ggplot scatterplot
 }
 \description{
-Plot variable median per cluster from reference metadata vs new assigned metadata, for visually evaluating classification
+Plot variable median per cluster from reference metadata
+vs new assigned metadata, for visually evaluating classification
 }
 \examples{
 plot_cols(

@@ -18,12 +18,13 @@ plot_cor(
 \arguments{
 \item{cor_mat}{input similarity matrix}
 
-\item{metadata}{input metadata with per cell tsne or umap coordinates and cluster ids}
+\item{metadata}{input metadata with per cell tsne or
+umap coordinates and cluster ids}
 
 \item{data_to_plot}{colname of data to plot, defaults to all}
 
-\item{cluster_col}{colname of clustering data in metadata, defaults to rownames of the
-metadata if not supplied.}
+\item{cluster_col}{colname of clustering data in metadata, defaults
+to rownames of the metadata if not supplied.}
 
 \item{x}{metadata column name with 1st axis dimension.
 defaults to "UMAP_1".}
@@ -33,12 +34,14 @@ defaults to "UMAP_2".}
 
 \item{scale_legends}{if TRUE scale all legends to maximum values in entire
 correlation matrix. if FALSE scale legends to maximum for each plot. A
-two-element numeric vector can also be passed to supply custom values i.e. c(0, 1)}
+two-element numeric vector can also be passed to supply
+custom values i.e. c(0, 1)}
 
 \item{...}{passed to plot_dims}
 }
 \value{
-list of ggplot objects, cells projected by dr, colored by cor values
+list of ggplot objects, cells projected by dr,
+colored by cor values
 }
 \description{
 Plot similarity measures on a tSNE or umap

@@ -13,7 +13,8 @@ gene_pct(matrix, genelist, clusters, returning = "mean")
 
 \item{clusters}{vector of cluster identities}
 
-\item{returning}{whether to return mean, min, or max of the gene pct in the gene list}
+\item{returning}{whether to return mean, min,
+or max of the gene pct in the gene list}
 }
 \value{
 vector of numeric values

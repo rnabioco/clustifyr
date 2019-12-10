@@ -2,7 +2,8 @@
 % Please edit documentation in R/utils.R
 \name{calculate_pathway_gsea}
 \alias{calculate_pathway_gsea}
-\title{Convert expression matrix to GSEA pathway scores (would take a similar place in workflow before average_clusters/binarize)}
+\title{Convert expression matrix to GSEA pathway scores
+(would take a similar place in workflow before average_clusters/binarize)}
 \usage{
 calculate_pathway_gsea(
   mat,
@@ -15,19 +16,23 @@ calculate_pathway_gsea(
 \arguments{
 \item{mat}{expression matrix}
 
-\item{pathway_list}{a list of vectors, each named for a specific pathway, or dataframe}
+\item{pathway_list}{a list of vectors, each named for a specific pathway,
+or dataframe}
 
 \item{n_perm}{Number of permutation for fgsea function. Defaults to 1000.}
 
-\item{scale}{convert expr_mat into zscores prior to running GSEA?, default = FALSE}
+\item{scale}{convert expr_mat into zscores prior to running GSEA?,
+default = FALSE}
 
 \item{no_warnings}{suppress warnings from gsea ties}
 }
 \value{
-matrix of GSEA NES values, cell types as row names, pathways as column names
+matrix of GSEA NES values, cell types as row names,
+pathways as column names
 }
 \description{
-Convert expression matrix to GSEA pathway scores (would take a similar place in workflow before average_clusters/binarize)
+Convert expression matrix to GSEA pathway scores
+(would take a similar place in workflow before average_clusters/binarize)
 }
 \examples{
 gl <- list(

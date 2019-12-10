@@ -2,7 +2,8 @@
 % Please edit documentation in R/utils.R
 \name{pos_neg_marker}
 \alias{pos_neg_marker}
-\title{generate pos and negative marker expression matrix from a list/dataframe of positive markers}
+\title{generate pos and negative marker expression matrix from a
+list/dataframe of positive markers}
 \usage{
 pos_neg_marker(mat)
 }
@@ -13,7 +14,8 @@ pos_neg_marker(mat)
 matrix of gene expression
 }
 \description{
-generate pos and negative marker expression matrix from a list/dataframe of positive markers
+generate pos and negative marker expression matrix from a
+list/dataframe of positive markers
 }
 \examples{
 m1 <- pos_neg_marker(cbmc_m)

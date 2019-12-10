@@ -21,7 +21,8 @@ insert_meta_object(
 
 \item{meta_loc}{metadata location}
 
-\item{lookuptable}{if not supplied, will look in built-in table for object parsing}
+\item{lookuptable}{if not supplied,
+will look in built-in table for object parsing}
 }
 \value{
 new object with new metadata inserted

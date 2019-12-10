@@ -39,10 +39,12 @@ averaging will be done on unlogged data}
 
 \item{subclusterpower}{whether to get multiple averages per original cluster}
 
-\item{cut_n}{set on a limit of genes as expressed, lower ranked genes are set to 0, considered unexpressed}
+\item{cut_n}{set on a limit of genes as expressed, lower ranked genes
+are set to 0, considered unexpressed}
 }
 \value{
-average expression matrix, with genes for row names, and clusters for column names
+average expression matrix, with genes for row names, and clusters
+for column names
 }
 \description{
 Average expression values per cluster

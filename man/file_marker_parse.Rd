@@ -2,7 +2,8 @@
 % Please edit documentation in R/utils.R
 \name{file_marker_parse}
 \alias{file_marker_parse}
-\title{takes files with positive and negative markers, as described in garnett, and returns list of markers}
+\title{takes files with positive and negative markers, as described in garnett,
+and returns list of markers}
 \usage{
 file_marker_parse(filename)
 }
@@ -13,7 +14,8 @@ file_marker_parse(filename)
 list of positive and negative gene markers
 }
 \description{
-takes files with positive and negative markers, as described in garnett, and returns list of markers
+takes files with positive and negative markers, as described in garnett,
+and returns list of markers
 }
 \examples{
 marker_file <- system.file(

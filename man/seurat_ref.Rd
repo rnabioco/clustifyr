@@ -31,25 +31,31 @@ seurat_ref(seurat_object, ...)
 )
 }
 \arguments{
-\item{seurat_object}{seurat_object after tsne or umap projections and clustering}
+\item{seurat_object}{seurat_object after tsne or umap projections
+and clustering}
 
 \item{...}{additional arguments}
 
-\item{cluster_col}{column name where classified cluster names are stored in seurat meta data, cannot be "rn"}
+\item{cluster_col}{column name where classified cluster names
+are stored in  seurat meta data, cannot be "rn"}
 
-\item{var_genes_only}{whether to keep only var_genes in the final matrix output, could also look up genes used for PCA}
+\item{var_genes_only}{whether to keep only var_genes in the final
+matrix output, could also look up genes used for PCA}
 
-\item{assay_name}{any additional assay data, such as ADT, to include. If more than 1, pass a vector of names}
+\item{assay_name}{any additional assay data, such as ADT, to include.
+If more than 1, pass a vector of names}
 
 \item{method}{whether to take mean (default) or median}
 
-\item{subclusterpower}{whether to get multiple averages per original cluster}
+\item{subclusterpower}{whether to get multiple averages per
+original cluster}
 
 \item{if_log}{input data is natural log,
 averaging will be done on unlogged data}
 }
 \value{
-reference expression matrix, with genes as row names, and cell types as column names
+reference expression matrix, with genes as row names,
+and cell types as column names
 }
 \description{
 Function to convert labelled seurat object to avg expression matrix

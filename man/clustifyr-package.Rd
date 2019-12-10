@@ -9,7 +9,9 @@
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
 Package designed to aid in classifying cells from single-cell RNA sequencing data
-    using external reference data (e.g., bulk RNA-seq, scRNA-seq, microarray, gene lists).
+    using external reference data (e.g., bulk RNA-seq, scRNA-seq, microarray, gene lists). A 
+    variety of correlation based methods and gene list enrichment methods are provided to assist cell
+    type assignment.
 }
 \seealso{
 Useful links:

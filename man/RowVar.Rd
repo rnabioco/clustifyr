@@ -9,7 +9,8 @@ RowVar(x, na.rm = TRUE)
 \arguments{
 \item{x}{expression matrix}
 
-\item{na.rm}{logical. Should missing values (including NaN) be omitted from the calculations?}
+\item{na.rm}{logical.
+Should missing values (including NaN) be omitted from the calculations?}
 }
 \value{
 vector of numeric values

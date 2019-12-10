@@ -9,14 +9,16 @@ plot_call(cor_mat, metadata, data_to_plot = colnames(cor_mat), ...)
 \arguments{
 \item{cor_mat}{input similarity matrix}
 
-\item{metadata}{input metadata with tsne or umap coordinates and cluster ids}
+\item{metadata}{input metadata with tsne or
+umap coordinates and cluster ids}
 
 \item{data_to_plot}{colname of data to plot, defaults to all}
 
 \item{...}{passed to plot_dims}
 }
 \value{
-list of ggplot object, cells projected by dr, colored by cell type classification
+list of ggplot object, cells projected by dr,
+colored by cell type classification
 }
 \description{
 Plot called clusters on a tSNE or umap, for each reference cluster given

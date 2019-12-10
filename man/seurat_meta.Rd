@@ -4,7 +4,7 @@
 \alias{seurat_meta}
 \alias{seurat_meta.seurat}
 \alias{seurat_meta.Seurat}
-\title{Function to convert labelled seurat object to fully prepared metadata#'}
+\title{Function to convert labelled seurat object to fully prepared metadata}
 \usage{
 seurat_meta(seurat_object, ...)
 
@@ -13,7 +13,8 @@ seurat_meta(seurat_object, ...)
 \method{seurat_meta}{Seurat}(seurat_object, dr = "umap", ...)
 }
 \arguments{
-\item{seurat_object}{seurat_object after tsne or umap projections and clustering}
+\item{seurat_object}{seurat_object after tsne or
+umap projections and clustering}
 
 \item{...}{additional arguments}
 
@@ -23,7 +24,7 @@ seurat_meta(seurat_object, ...)
 dataframe of metadata, including dimension reduction plotting info
 }
 \description{
-Function to convert labelled seurat object to fully prepared metadata#'
+Function to convert labelled seurat object to fully prepared metadata
 }
 \examples{
 \dontrun{

@@ -16,22 +16,30 @@ pos_neg_select(
 \arguments{
 \item{input}{single-cell expression matrix}
 
-\item{ref_mat}{reference expression matrix with positive and negative markers(set expression at 0)}
+\item{ref_mat}{reference expression matrix with positive and
+negative markers(set expression at 0)}
 
-\item{metadata}{cell cluster assignments, supplied as a vector or data.frame. If
-data.frame is supplied then \code{cluster_col} needs to be set. Not required if running correlation per cell.}
+\item{metadata}{cell cluster assignments,
+supplied as a vector or data.frame. If
+data.frame is supplied then \code{cluster_col} needs to be set.
+Not required if running correlation per cell.}
 
-\item{cluster_col}{column in metadata that contains cluster ids per cell. Will default to first
-column of metadata if not supplied. Not required if running correlation per cell.}
+\item{cluster_col}{column in metadata that contains cluster ids per cell.
+Will default to first
+column of metadata if not supplied.
+Not required if running correlation per cell.}
 
-\item{cutoff_n}{expression cutoff where genes ranked below n are considered non-expressing}
+\item{cutoff_n}{expression cutoff where genes ranked below n are
+considered non-expressing}
 
-\item{cutoff_score}{positive score lower than this cutoff will be considered as 0 to not influence scores}
+\item{cutoff_score}{positive score lower than this cutoff will be
+considered as 0 to not influence scores}
 
 \item{...}{additional arguments to pass to compute_method function}
 }
 \value{
-matrix of numeric values, clusters from input as row names, cell types from ref_mat as column names
+matrix of numeric values, clusters from input as row names,
+cell types from ref_mat as column names
 }
 \description{
 adapt clustify to tweak score for pos and neg markers

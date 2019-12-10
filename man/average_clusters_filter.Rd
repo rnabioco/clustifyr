@@ -2,7 +2,8 @@
 % Please edit documentation in R/utils.R
 \name{average_clusters_filter}
 \alias{average_clusters_filter}
-\title{Average expression values per cluster, filtered by set parameter, defaults to calculating background}
+\title{Average expression values per cluster, filtered by set parameter,
+defaults to calculating background}
 \usage{
 average_clusters_filter(
   mat,
@@ -17,7 +18,8 @@ average_clusters_filter(
 \arguments{
 \item{mat}{expression matrix}
 
-\item{metadata}{data.frame or vector containing cluster assignments per cell, and attribute to filter on.
+\item{metadata}{data.frame or vector containing
+cluster assignments per cell, and attribute to filter on.
 Order must match column order in supplied matrix. If a data.frame
 provide the cluster_col parameters.}
 
@@ -33,10 +35,12 @@ averaging will be done on unlogged data}
 \item{filter_value}{baseline minimum as background cutoff}
 }
 \value{
-average expression matrix, with genes for row names, and clusters for column names
+average expression matrix, with genes for row names,
+and clusters for column names
 }
 \description{
-Average expression values per cluster, filtered by set parameter, defaults to calculating background
+Average expression values per cluster, filtered by set parameter,
+defaults to calculating background
 }
 \examples{
 average_clusters_filter(

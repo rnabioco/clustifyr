@@ -19,7 +19,8 @@ raw count should be computed before computing KL-divergence.}
 \item{max_KL}{Maximal allowed value of KL-divergence.}
 }
 \value{
-numeric value, with additional attributes, of kl divergence between the vectors
+numeric value, with additional attributes, of kl divergence
+between the vectors
 }
 \description{
 Use package entropy to compute Kullback-Leibler divergence.

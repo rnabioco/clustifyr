@@ -16,7 +16,8 @@ percent_clusters(mat, metadata, cluster_col = "cluster", cut_num = 0.5)
 \item{cut_num}{binary cutoff for detection}
 }
 \value{
-matrix of numeric values, with genes for row names, and clusters for column names
+matrix of numeric values, with genes for row names,
+and clusters for column names
 }
 \description{
 Percentage detected per cluster

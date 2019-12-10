@@ -23,7 +23,8 @@ overcluster_test(
 \arguments{
 \item{expr}{expression matrix}
 
-\item{metadata}{metadata including cluster info and dimension reduction plotting}
+\item{metadata}{metadata including cluster info and
+dimension reduction plotting}
 
 \item{ref_mat}{reference matrix}
 
@@ -35,7 +36,8 @@ overcluster_test(
 
 \item{n}{expand n-fold for over/under clustering}
 
-\item{ngenes}{number of genes to use for feature selection, use all genes if NULL}
+\item{ngenes}{number of genes to use for feature selection,
+use all genes if NULL}
 
 \item{query_genes}{vector, otherwise genes with be recalculated}
 
@@ -45,7 +47,8 @@ overcluster_test(
 
 \item{do_legend}{whether to draw legend}
 
-\item{newclustering}{use kmeans if NULL on dr or col name for second column of clustering}
+\item{newclustering}{use kmeans if NULL on dr
+or col name for second column of clustering}
 }
 \value{
 faceted ggplot object

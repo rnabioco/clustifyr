@@ -2,7 +2,8 @@
 % Please edit documentation in R/run_fgsea.R
 \name{run_gsea}
 \alias{run_gsea}
-\title{Run GSEA to compare a gene list(s) to per cell or per cluster expression data}
+\title{Run GSEA to compare a gene list(s) to per cell or
+per cluster expression data}
 \usage{
 run_gsea(
   expr_mat,
@@ -17,17 +18,20 @@ run_gsea(
 \arguments{
 \item{expr_mat}{single-cell expression matrix or Seurat object}
 
-\item{query_genes}{A vector or named list of vectors of genesets of interest to compare via GSEA. If
-supplying a named list, then the gene set names will appear in the output.}
+\item{query_genes}{A vector or named list of vectors of genesets of interest
+to compare via GSEA. If supplying a named list, then the gene set names
+will appear in the output.}
 
-\item{cluster_ids}{vector of cell cluster assignments, supplied as a vector with order that
+\item{cluster_ids}{vector of cell cluster assignments, supplied as a
+vector with order that
 matches columns in \code{expr_mat}. Not required if running per cell.}
 
 \item{n_perm}{Number of permutation for fgsea function. Defaults to 1000.}
 
 \item{per_cell}{if true run per cell, otherwise per cluster.}
 
-\item{scale}{convert expr_mat into zscores prior to running GSEA?, default = FALSE}
+\item{scale}{convert expr_mat into zscores prior to running GSEA?,
+default = FALSE}
 
 \item{no_warnings}{suppress warnings from gsea ties}
 }
@@ -35,7 +39,8 @@ matches columns in \code{expr_mat}. Not required if running per cell.}
 dataframe of gsea scores (pval, NES), with clusters as rownames
 }
 \description{
-Use fgsea algorithm to compute normalized enrichment scores and pvalues for gene
+Use fgsea algorithm to compute normalized enrichment
+scores and pvalues for gene
 set ovelap
 }
 \examples{

@@ -30,7 +30,8 @@ get_similarity(
 \item{...}{additional parameters not used yet}
 }
 \value{
-matrix of numeric values, clusters from expr_mat as row names, cell types from ref_mat as column names
+matrix of numeric values, clusters from expr_mat as row names,
+cell types from ref_mat as column names
 }
 \description{
 Compute similarity of matrices

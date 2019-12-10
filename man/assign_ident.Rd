@@ -19,9 +19,11 @@ assign_ident(
 
 \item{ident_col}{column in metadata containing identity assignment}
 
-\item{clusters}{names of clusters to change, string or vector of strings}
+\item{clusters}{names of clusters to change, string or
+vector of strings}
 
-\item{idents}{new idents to assign, must be length of 1 or same as clusters}
+\item{idents}{new idents to assign, must be length of 1 or
+same as clusters}
 }
 \value{
 new dataframe of metadata

@@ -19,7 +19,8 @@ to rownames if not supplied}
 \item{...}{additional arguments passed to \verb{[clustifyr::plot_dims()]}}
 }
 \value{
-list of ggplot object, cells projected by dr, colored by gene expression
+list of ggplot object, cells projected by dr,
+colored by gene expression
 }
 \description{
 Plot gene expression on to tSNE or umap

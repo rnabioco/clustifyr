@@ -17,21 +17,26 @@ object_ref(
 \arguments{
 \item{input}{object after tsne or umap projections and clustering}
 
-\item{cluster_col}{column name where classified cluster names are stored in seurat meta data, cannot be "rn"}
+\item{cluster_col}{column name where classified cluster names
+are stored in seurat meta data, cannot be "rn"}
 
-\item{var_genes_only}{whether to keep only var.genes in the final matrix output, could also look up genes used for PCA}
+\item{var_genes_only}{whether to keep only var.genes in the
+final matrix output, could also look up genes used for PCA}
 
-\item{assay_name}{any additional assay data, such as ADT, to include. If more than 1, pass a vector of names}
+\item{assay_name}{any additional assay data, such as ADT, to include.
+If more than 1, pass a vector of names}
 
 \item{method}{whether to take mean (default) or median}
 
-\item{lookuptable}{if not supplied, will look in built-in table for object parsing}
+\item{lookuptable}{if not supplied, will look
+in built-in table for object parsing}
 
 \item{if_log}{input data is natural log,
 averaging will be done on unlogged data}
 }
 \value{
-reference expression matrix, with genes as row names, and cell types as column names
+reference expression matrix, with genes as row names,
+and cell types as column names
 }
 \description{
 Function to convert labelled object to avg expression matrix

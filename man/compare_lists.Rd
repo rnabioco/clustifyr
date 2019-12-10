@@ -14,7 +14,8 @@ compare_lists(
 )
 }
 \arguments{
-\item{bin_mat}{binarized single-cell expression matrix, feed in by_cluster mat, if desired}
+\item{bin_mat}{binarized single-cell expression matrix,
+feed in by_cluster mat, if desired}
 
 \item{marker_mat}{matrix or dataframe of candidate genes for each cluster}
 
@@ -26,7 +27,8 @@ compare_lists(
 -log10 transform p-value}
 }
 \value{
-matrix of numeric values, clusters from expr_mat as row names, cell types from marker_mat as column names
+matrix of numeric values, clusters from expr_mat as row names,
+cell types from marker_mat as column names
 }
 \description{
 Calculate adjusted p-values for hypergeometric test of gene lists

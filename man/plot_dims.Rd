@@ -42,7 +42,8 @@ defaults to RColorBrewer paired palette}
 
 \item{alpha_col}{whether to refer to data column for alpha values}
 
-\item{group_col}{group by another column instead of feature, useful for labels}
+\item{group_col}{group by another column instead of feature,
+useful for labels}
 
 \item{scale_limits}{defaults to min = 0, max = max(data$x),
 otherwise a two-element numeric vector indicating min and max to plot}

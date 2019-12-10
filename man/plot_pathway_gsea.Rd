@@ -2,7 +2,8 @@
 % Please edit documentation in R/utils.R
 \name{plot_pathway_gsea}
 \alias{plot_pathway_gsea}
-\title{plot GSEA pathway scores as heatmap, returns a list containing results and plot.}
+\title{plot GSEA pathway scores as heatmap,
+returns a list containing results and plot.}
 \usage{
 plot_pathway_gsea(
   mat,
@@ -16,21 +17,25 @@ plot_pathway_gsea(
 \arguments{
 \item{mat}{expression matrix}
 
-\item{pathway_list}{a list of vectors, each named for a specific pathway, or dataframe}
+\item{pathway_list}{a list of vectors, each named for a specific pathway,
+or dataframe}
 
 \item{n_perm}{Number of permutation for fgsea function. Defaults to 1000.}
 
-\item{scale}{convert expr_mat into zscores prior to running GSEA?, default = TRUE}
+\item{scale}{convert expr_mat into zscores prior to running GSEA?,
+default = TRUE}
 
 \item{topn}{number of top pathways to plot}
 
 \item{returning}{to return "both" list and plot, or either one}
 }
 \value{
-list of matrix and plot, or just plot, matrix of GSEA NES values, cell types as row names, pathways as column names
+list of matrix and plot, or just plot, matrix of GSEA NES values,
+cell types as row names, pathways as column names
 }
 \description{
-plot GSEA pathway scores as heatmap, returns a list containing results and plot.
+plot GSEA pathway scores as heatmap,
+returns a list containing results and plot.
 }
 \examples{
 gl <- list(

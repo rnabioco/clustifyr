@@ -19,14 +19,18 @@ clustify_intra(
 \arguments{
 \item{expr_mat}{single-cell expression matrix or Seurat object}
 
-\item{metadata}{cell cluster assignments, supplied as a vector or data.frame. If
-data.frame is supplied then \code{cluster_col} needs to be set. Not required if running correlation per cell.}
+\item{metadata}{cell cluster assignments, supplied as a
+vector or data.frame. If data.frame is supplied then \code{cluster_col}
+needs to be set. Not required if running correlation per cell.}
 
-\item{query_genes}{A vector of genes of interest to compare. If NULL, then common genes between
+\item{query_genes}{A vector of genes of interest to compare. If NULL,
+then common genes between
 the expr_mat and ref_mat will be used for comparision.}
 
-\item{cluster_col}{column in metadata that contains cluster ids per cell. Will default to first
-column of metadata if not supplied. Not required if running correlation per cell.}
+\item{cluster_col}{column in metadata that contains cluster ids per cell.
+Will default to first
+column of metadata if not supplied. Not required if
+running correlation per cell.}
 
 \item{sample_col}{column in metadata that contains sample/subset info}
 
@@ -39,7 +43,8 @@ column of metadata if not supplied. Not required if running correlation per cell
 \item{...}{additional arguments to pass to compute_method function}
 }
 \value{
-matrix of correlation values, clusters as row names and column names
+matrix of correlation values, clusters as row names
+and column names
 }
 \description{
 Intra-experiment cluster projection for one sample/set to the rest
