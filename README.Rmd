@@ -1,0 +1,137 @@
+---
+output: github_document
+---
+
+```{r, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/"
+)
+```
+
+# clustifyr <img src="man/figures/logo.png" align="right">
+
+[![Build Status](https://travis-ci.org/rnabioco/clustifyr.svg?branch=master)](https://travis-ci.org/rnabioco/clustifyr)
+[![Coverage status](https://codecov.io/gh/rnabioco/clustifyr/branch/master/graph/badge.svg)](https://codecov.io/github/rnabioco/clustifyr?branch=master)
+
+clustifyr classifies cells and clusters in single-cell RNA sequencing experiments using reference bulk RNA-seq data sets, sorted microarray expression data, single-cell gene signatures, or lists of marker genes. 
+
+Single cell transcriptomes are difficult to annotate without knowledge of the underlying biology. Even with this knowledge, accurate identification can be challenging due to the lack of detectable expression of common marker genes. clustifyr solves this problem by automatically annotating single cells or clusters of cells using single-cell RNA-seq, bulk RNA-seq data, microarray, or marker gene lists. Additional functions enable exploratory analysis of similarities between single cell RNA-seq datasets and reference data.
+
+## Installation
+
+``` r
+# install.packages("devtools")
+devtools::install_github("rnabioco/clustifyr")
+```
+ 
+## Example usage
+
+In this example we use the following built-in input data:
+
+- an expression matrix of single cell RNA-seq data (`pbmc_matrix_small`)
+- a metadata data.frame (`pbmc_meta`), with cluster information stored (`"classified"`)
+- a vector of variable genes (`pbmc_vargenes`)
+- a matrix of mean normalized scRNA-seq UMI counts by cell type (`cbmc_ref`):
+
+We then calculate correlation coefficients and plot them on a pre-calculated projection (stored in `pbmc_meta`).
+
+```{r readme_example, warning=F, message=F}
+library(clustifyr)
+
+# calculate correlation
+res <- clustify(
+  input = pbmc_matrix_small,
+  metadata = pbmc_meta$classified,
+  ref_mat = cbmc_ref,
+  query_genes = pbmc_vargenes
+)
+
+# print assignments
+cor_to_call(res)
+
+# plot assignments on a projection
+plot_best_call(
+  cor_mat = res,
+  metadata = pbmc_meta,
+  cluster_col = "classified"
+)
+```
+
+`clustify()` can also take a clustered `SingleCellExperiment` or `seurat` object (both v2 and v3) and assign identities.
+
+```{r example_seurat, warning=F, message=F}
+# for SingleCellExperiment
+clustify(
+  input = sce_small,          # an SCE object
+  ref_mat = cbmc_ref,         # matrix of RNA-seq expression data for each cell type
+  cluster_col = "cell_type1", # name of column in meta.data containing cell clusters
+  obj_out = TRUE              # output SCE object with cell type inserted as "type" column
+) 
+
+library(Seurat)
+
+# for seurat2
+clustify(
+  input = s_small,
+  cluster_col = "res.1",
+  ref_mat = cbmc_ref,
+  seurat_out = TRUE
+)
+
+# for Seurat3
+clustify(
+  input = s_small3,
+  cluster_col = "RNA_snn_res.1",
+  ref_mat = cbmc_ref,
+  seurat_out = TRUE
+)
+```
+
+New reference matrix can be made directly from `SingleCellExperiment` and `seurat` objects as well. Other scRNAseq experiment object types are supported as well.
+
+```{r example_ref_matrix}
+# make reference from SingleCellExperiment objects
+sce_ref <- object_ref(
+  input = sce_small,               # SCE object
+  cluster_col = "cell_type1"       # name of column in colData containing cell identities
+)
+
+# make reference from seurat objects
+s_ref <- seurat_ref(
+  seurat_object = s_small,
+  cluster_col = "res.1"
+)
+
+head(s_ref)
+```
+
+`clustify_lists()` handles identity assignment of matrix or `SingleCellExperiment` and `seurat` objects based on marker gene lists.
+ 
+```{r example_seurat2, warning=F, message=F}
+clustify_lists(
+  input = pbmc_matrix_small,
+  metadata = pbmc_meta,
+  cluster_col = "classified",
+  marker = pbmc_markers,
+  marker_inmatrix = FALSE
+)
+
+clustify_lists(
+  input = s_small,
+  marker = pbmc_markers,
+  marker_inmatrix = FALSE,
+  cluster_col = "res.1",
+  seurat_out = TRUE
+)
+```
+
+## Additional reference data
+
+More reference data (including tabula muris, immgen, etc) are available at https://github.com/rnabioco/clustifyrdata. 
+
+Also see list for individual downloads at https://rnabioco.github.io/clustifyrdata/articles/download_refs.html
+
+Additional tutorials at
+https://rnabioco.github.io/clustifyrdata/articles/otherformats.html
