@@ -12,10 +12,10 @@ r_check_args: '--as-cran --ignore-vignettes --no-manual'
 matrix:
   include:
   - r: bioc-release
+
+  - r: bioc-devel
     after_success:
     - Rscript -e 'covr::codecov()'
-  - r: bioc-devel
-
 
 before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
 deploy:
