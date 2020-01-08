@@ -23,7 +23,7 @@ between single cell RNA-seq datasets and reference data.
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("rnabioco/clustifyr")
+devtools::install_github("rnabioco/clustifyr", ref = "0.99.4")
 ```
 
 ## Example usage
@@ -58,15 +58,15 @@ cor_to_call(res)
 #> # Groups:   cluster [9]
 #>   cluster      type           r
 #>   <chr>        <chr>      <dbl>
-#> 1 B            B          0.891
-#> 2 CD14+ Mono   CD14+ Mono 0.908
-#> 3 FCGR3A+ Mono CD16+ Mono 0.906
-#> 4 Memory CD4 T CD4 T      0.895
-#> 5 Naive CD4 T  CD4 T      0.916
-#> 6 DC           DC         0.833
-#> 7 Platelet     Mk         0.630
-#> 8 CD8 T        NK         0.866
-#> 9 NK           NK         0.896
+#> 1 B            B          0.909
+#> 2 CD14+ Mono   CD14+ Mono 0.915
+#> 3 FCGR3A+ Mono CD16+ Mono 0.929
+#> 4 Memory CD4 T CD4 T      0.861
+#> 5 Naive CD4 T  CD4 T      0.889
+#> 6 DC           DC         0.849
+#> 7 Platelet     Mk         0.732
+#> 8 CD8 T        NK         0.826
+#> 9 NK           NK         0.894
 
 # plot assignments on a projection
 plot_best_call(
@@ -100,6 +100,7 @@ clustify(
 #> colData names(35): cell_quality cell_type1 ... type r
 #> reducedDimNames(0):
 #> spikeNames(1): ERCC
+#> altExpNames(0):
 
 library(Seurat)
 
@@ -174,7 +175,7 @@ clustify_lists(
 #> FCGR3A+ Mono 0.6564777 13.63321 72.43684 17.899569  9.726346 56.48245 14.61025
 #> NK           0.6564777 14.61025 31.82210  7.757206 31.822099 22.71234 45.05072
 #> DC           0.6564777 15.80598 63.34978 19.069308 13.758144 40.56298 17.97875
-#> Platelet     0.7403358 13.71477 57.86117 13.714774 12.933078 47.83999 18.20599
+#> Platelet     0.5428889 13.34769 59.94938 14.215244 15.158755 46.92861 19.49246
 #>                      7          8
 #> Naive CD4 T   6.165348  0.6055118
 #> Memory CD4 T  6.165348  0.9575077
@@ -184,7 +185,7 @@ clustify_lists(
 #> FCGR3A+ Mono 21.409177  0.3309153
 #> NK            5.358651  0.3309153
 #> DC           45.101877  0.1401901
-#> Platelet     19.334716 64.9077516
+#> Platelet     19.492465 59.9493793
 
 clustify_lists(
   input = s_small,

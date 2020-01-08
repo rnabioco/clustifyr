@@ -13,7 +13,6 @@ install:
 cache:
   - C:\RLibrary
 
-
 # Adapt as necessary starting from here
 
 build_script:
@@ -48,6 +47,9 @@ artifacts:
 environment:
   global:
     #either seems to be the temp fix
-    #USE_RTOOLS: true
-    PKGTYPE: win.binary
+    USE_RTOOLS: true
   CRAN: https://cran.rstudio.com/
+
+  matrix:
+  - R_VERSION: devel
+    PKGTYPE: source

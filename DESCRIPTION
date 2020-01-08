@@ -36,7 +36,7 @@ Authors@R:
              email = "michelle.daya@ucdenver.edu"))
 License: MIT + file LICENSE
 Depends:
-    R (>= 3.6.0)
+    R (>= 4.0)
 Imports: 
     cowplot,
     dplyr,
