@@ -47,8 +47,7 @@ artifacts:
 environment:
   global:
     #either seems to be the temp fix
-    #USE_RTOOLS: true
-    PKGTYPE: win.binary
+    USE_RTOOLS: true
   CRAN: https://cran.rstudio.com/
 
   matrix:
