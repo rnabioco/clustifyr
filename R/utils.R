@@ -819,9 +819,10 @@ clustify_nudge.seurat <- function(input,
     )
 
     if (mode == "pct") {
-        resb <- gene_pct_markerm(input@data,
+        resb <- gene_pct_markerm(
+            object_data(input, "data"),
             marker,
-            input@meta.data,
+            object_data(input, "meta.data"),
             cluster_col = cluster_col,
             norm = norm
         )
@@ -830,9 +831,9 @@ clustify_nudge.seurat <- function(input,
             marker <- pos_neg_marker(marker)
         }
         resb <- pos_neg_select(
-            input@data,
+            object_data(input, "data"),
             marker,
-            metadata = input@meta.data,
+            metadata = object_data(input, "meta.data"),
             cluster_col = cluster_col,
             cutoff_score = NULL
         )
@@ -855,21 +856,21 @@ clustify_nudge.seurat <- function(input,
     } else {
         df_temp <- cor_to_call(
             res,
-            metadata = input@meta.data,
+            object_data(input, "meta.data"),
             cluster_col = cluster_col,
             threshold = threshold
         )
 
         df_temp_full <- call_to_metadata(
             df_temp,
-            metadata = input@meta.data,
+            object_data(input, "meta.data"),
             cluster_col = cluster_col,
             per_cell = FALSE,
             rename_prefix = rename_prefix
         )
 
         if ("Seurat" %in% loadedNamespaces()) {
-            input@meta.data <- df_temp_full
+            input <- write_meta(input, df_temp_full)
             return(input)
         } else {
             message("seurat not loaded, returning cor_mat instead")
@@ -915,9 +916,9 @@ clustify_nudge.Seurat <- function(input,
 
     if (mode == "pct") {
         resb <- gene_pct_markerm(
-            input@assays$RNA@data,
+            object_data(input, "data"),
             marker,
-            input@meta.data,
+            object_data(input, "meta.data"),
             cluster_col = cluster_col,
             norm = norm
         )
@@ -926,9 +927,9 @@ clustify_nudge.Seurat <- function(input,
             marker <- pos_neg_marker(marker)
         }
         resb <- pos_neg_select(
-            input@assays$RNA@data,
+            object_data(input, "data"),
             marker,
-            metadata = input@meta.data,
+            object_data(input, "meta.data"),
             cluster_col = cluster_col,
             cutoff_score = NULL
         )
@@ -951,21 +952,21 @@ clustify_nudge.Seurat <- function(input,
     } else {
         df_temp <- cor_to_call(
             res,
-            metadata = input@meta.data,
+            metadata = object_data(input, "meta.data"),
             cluster_col = cluster_col,
             threshold = threshold
         )
 
         df_temp_full <- call_to_metadata(
             df_temp,
-            metadata = input@meta.data,
+            metadata = object_data(input, "meta.data"),
             cluster_col = cluster_col,
             per_cell = FALSE,
             rename_prefix = rename_prefix
         )
 
         if ("Seurat" %in% loadedNamespaces()) {
-            input@meta.data <- df_temp_full
+            input <- write_meta(input, df_temp_full)
             return(input)
         } else {
             message("seurat not loaded, returning cor_mat instead")

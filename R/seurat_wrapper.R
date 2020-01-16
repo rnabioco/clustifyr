@@ -1,3 +1,98 @@
+#' Function to access object data
+#' @return expression matrix, with genes as row names,
+#' and cell types as column names
+#' @export
+object_data <- function(object, ...) {
+    UseMethod("object_data", object)
+}
+
+#' @rdname object_data
+#' @param object object after tsne or umap projections
+#'  and clustering
+#' @param slot data to access
+#' @examples
+#' mat <- object_data(
+#'     seurat_object = s_small,
+#'     slot = "data"
+#' )
+#' ref[1:3, 1:3]
+#' @export
+object_data.seurat <- function(object,
+                               slot) {
+    if (slot == "data") {
+        return(object@data)
+    } else if (slot == "meta.data") {
+        return(object@meta.data)
+    } else if (slot == "var.genes") {
+        return(object@var.genes)
+    }
+}
+
+#' @rdname object_data
+#' @param object object after tsne or umap projections
+#'  and clustering
+#' @param slot data to access
+#' @examples
+#' mat <- object_data(
+#'     seurat_object = s_small3,
+#'     slot = "data"
+#' )
+#' ref[1:3, 1:3]
+#' @export
+object_data.Seurat <- function(object,
+                               slot) {
+    if (slot == "data") {
+        return(object@assays$RNA@data)
+    } else if (slot == "meta.data") {
+        return(object@meta.data)
+    } else if (slot == "var.genes") {
+        return(object@assays$RNA@var.features)
+    }
+}
+
+#' Function to write metadata to object
+#' @return object with newly inserted metadata columns
+#' @export
+write_meta <- function(object, ...) {
+    UseMethod("write_meta", object)
+}
+
+#' @rdname write_meta 
+#' @param object object after tsne or umap projections
+#'  and clustering
+#' @param meta new metadata dataframe
+#' @examples
+#' obj <- write_meta(
+#'     object = s_small,
+#'     meta = seurat_meta(s_small)
+#' )
+#' ref[1:3, 1:3]
+#' @export
+write_meta.seurat <- function(object,
+                               meta) {
+    object_new <- object
+    object_new@meta.data <- meta
+    return(object_new)
+}
+
+#' @rdname write_meta 
+#' @param object object after tsne or umap projections
+#'  and clustering
+#' @param meta new metadata dataframe
+#' @examples
+#' obj <- write_meta(
+#'     object = s_small,
+#'     meta = seurat_meta(s_small)
+#' )
+#' ref[1:3, 1:3]
+#' @export
+write_meta.Seurat <- function(object,
+                              meta) {
+    object_new <- object
+    object_new@meta.data <- meta
+    return(object_new)
+}
+
 #' Function to convert labelled seurat object to avg expression matrix
 #' @return reference expression matrix, with genes as row names,
 #' and cell types as column names

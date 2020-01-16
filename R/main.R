@@ -274,11 +274,11 @@ clustify.seurat <- function(input,
                             ...) {
     s_object <- input
     # for seurat < 3.0
-    expr_mat <- s_object@data
+    expr_mat <- object_data(s_object, "data")
     metadata <- seurat_meta(s_object, dr = dr)
 
     if (use_var_genes && is.null(query_genes)) {
-        query_genes <- s_object@var.genes
+        query_genes <- object_data(s_object, "var.genes")
     }
 
     res <- clustify(
@@ -319,7 +319,7 @@ clustify.seurat <- function(input,
         )
 
         if ("Seurat" %in% loadedNamespaces()) {
-            s_object@meta.data <- df_temp_full
+            s_object <- write_meta(s_object, df_temp_full)
             return(s_object)
         } else {
             message("seurat not loaded, returning cor_mat instead")
@@ -350,11 +350,11 @@ clustify.Seurat <- function(input,
                             ...) {
     s_object <- input
     # for seurat 3.0 +
-    expr_mat <- s_object@assays$RNA@data
+    expr_mat <- object_data(s_object, "data")
     metadata <- seurat_meta(s_object, dr = dr)
 
     if (use_var_genes && is.null(query_genes)) {
-        query_genes <- s_object@assays$RNA@var.features
+        query_genes <- object_data(s_object, "var.genes")
     }
 
     res <- clustify(
@@ -395,7 +395,7 @@ clustify.Seurat <- function(input,
         )
 
         if ("Seurat" %in% loadedNamespaces()) {
-            s_object@meta.data <- df_temp_full
+            s_object <- write_meta(s_object, df_temp_full)
             return(s_object)
         } else {
             message("seurat not loaded, returning cor_mat instead")
@@ -726,7 +726,7 @@ clustify_lists.seurat <- function(input,
                                   ...) {
     s_object <- input
     # for seurat < 3.0
-    input <- s_object@data
+    input <- object_data(s_object, "data")
     if (is.null(metadata)) {
         cluster_info <- as.data.frame(seurat_meta(s_object, dr = dr))
         metadata <- cluster_info
@@ -773,7 +773,7 @@ clustify_lists.seurat <- function(input,
         )
 
         if ("Seurat" %in% loadedNamespaces()) {
-            s_object@meta.data <- df_temp_full
+            s_object <- write_meta(s_object, df_temp_full)
             return(s_object)
         } else {
             message("seurat not loaded, returning cor_mat instead")
@@ -805,7 +805,7 @@ clustify_lists.Seurat <- function(input,
                                   ...) {
     s_object <- input
     # for seurat 3.0 +
-    input <- s_object@assays$RNA@data
+    input <- object_data(s_object, "data")
     if (is.null(metadata)) {
         cluster_info <- as.data.frame(seurat_meta(s_object, dr = dr))
         metadata <- cluster_info
@@ -853,7 +853,7 @@ clustify_lists.Seurat <- function(input,
         )
 
         if ("Seurat" %in% loadedNamespaces()) {
-            s_object@meta.data <- df_temp_full
+            s_object <- write_meta(s_object, df_temp_full)
             return(s_object)
         } else {
             message("seurat not loaded, returning cor_mat instead")
