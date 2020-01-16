@@ -120,7 +120,7 @@ clustify.default <- function(input,
         )
 
         if (!(is.null(temp[["expr"]]))) {
-            message(paste0("recognized object type - ", class(input)))
+            message("recognized object type - ", class(input))
         }
 
         input <- temp[["expr"]]
@@ -162,7 +162,7 @@ clustify.default <- function(input,
     }
 
     if (verbose) {
-        message(paste0("using # of genes: ", length(gene_constraints)))
+        message("using # of genes: ", length(gene_constraints))
         if (length(gene_constraints) >= 10000) {
             message(
                 "using a high number genes to calculate correlation ",

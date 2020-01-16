@@ -29,7 +29,7 @@ cor_to_call <- function(cor_mat,
     correlation_matrix <- cor_mat
     if (threshold == "auto") {
         threshold <- round(0.75 * max(correlation_matrix), 2)
-        message(paste0("using threshold of ", threshold))
+        message("using threshold of ", threshold)
     }
     correlation_matrix[is.na(correlation_matrix)] <- 0
     df_temp <-
@@ -320,7 +320,7 @@ cor_to_call_rank <- function(cor_mat,
     correlation_matrix <- cor_mat
     if (threshold == "auto") {
         threshold <- round(0.75 * max(correlation_matrix), 2)
-        message(paste0("using threshold of ", threshold))
+        message("using threshold of ", threshold)
     }
     df_temp <- tibble::as_tibble(correlation_matrix,
         rownames = cluster_col

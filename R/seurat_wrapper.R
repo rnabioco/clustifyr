@@ -217,8 +217,7 @@ object_ref <- function(input,
             lookuptable = lookuptable
         )
         if (!(is.null(temp[["expr"]]))) {
-            message(paste0("recognized object type - ",
-                           class(input)))
+            message("recognized object type - ", class(input))
         }
         input <- temp[["expr"]]
         metadata <- temp[["meta"]]

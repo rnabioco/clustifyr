@@ -388,10 +388,9 @@ plot_gene <- function(expr_mat,
     genes_missing <- setdiff(genes, genes_to_plot)
 
     if (length(genes_missing) != 0) {
-        warning(paste0(
-            "the following genes were not present in the input matrix ",
-            paste(genes_missing, collapse = ",")
-        ))
+        message("the following genes were not present in the input matrix ",
+                paste(genes_missing, collapse = ",")
+        )
     }
 
     if (length(genes_to_plot) == 0) {
