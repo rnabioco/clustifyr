@@ -75,9 +75,13 @@ write_meta <- function(object, ...) {
 write_meta.seurat <- function(object,
                               meta,
                               ...) {
-    object_new <- object
-    object_new@meta.data <- meta
-    return(object_new)
+    if ("Seurat" %in% loadedNamespaces()) {
+        object_new <- object
+        object_new@meta.data <- meta
+        return(object_new)
+    } else {
+        message("Seurat not loaded")
+    }
 }
 
 #' @rdname write_meta 
@@ -94,9 +98,13 @@ write_meta.seurat <- function(object,
 write_meta.Seurat <- function(object,
                               meta,
                               ...) {
-    object_new <- object
-    object_new@meta.data <- meta
-    return(object_new)
+    if ("Seurat" %in% loadedNamespaces()) {
+        object_new <- object
+        object_new@meta.data <- meta
+        return(object_new)
+    } else {
+        message("Seurat not loaded")
+    }
 }
 
 #' Function to convert labelled seurat object to avg expression matrix
