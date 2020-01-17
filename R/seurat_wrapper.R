@@ -10,15 +10,17 @@ object_data <- function(object, ...) {
 #' @param object object after tsne or umap projections
 #'  and clustering
 #' @param slot data to access
+#' @param ... additional arguments
 #' @examples
 #' mat <- object_data(
-#'     seurat_object = s_small,
+#'     object = s_small,
 #'     slot = "data"
 #' )
 #' ref[1:3, 1:3]
 #' @export
 object_data.seurat <- function(object,
-                               slot) {
+                               slot,
+                               ...) {
     if (slot == "data") {
         return(object@data)
     } else if (slot == "meta.data") {
@@ -32,15 +34,17 @@ object_data.seurat <- function(object,
 #' @param object object after tsne or umap projections
 #'  and clustering
 #' @param slot data to access
+#' @param ... additional arguments
 #' @examples
 #' mat <- object_data(
-#'     seurat_object = s_small3,
+#'     object = s_small3,
 #'     slot = "data"
 #' )
 #' ref[1:3, 1:3]
 #' @export
 object_data.Seurat <- function(object,
-                               slot) {
+                               slot,
+                               ...) {
     if (slot == "data") {
         return(object@assays$RNA@data)
     } else if (slot == "meta.data") {
@@ -61,6 +65,7 @@ write_meta <- function(object, ...) {
 #' @param object object after tsne or umap projections
 #'  and clustering
 #' @param meta new metadata dataframe
+#' @param ... additional arguments
 #' @examples
 #' obj <- write_meta(
 #'     object = s_small,
@@ -69,7 +74,8 @@ write_meta <- function(object, ...) {
 #' ref[1:3, 1:3]
 #' @export
 write_meta.seurat <- function(object,
-                               meta) {
+                              meta,
+                              ...) {
     object_new <- object
     object_new@meta.data <- meta
     return(object_new)
@@ -79,15 +85,17 @@ write_meta.seurat <- function(object,
 #' @param object object after tsne or umap projections
 #'  and clustering
 #' @param meta new metadata dataframe
+#' @param ... additional arguments
 #' @examples
 #' obj <- write_meta(
-#'     object = s_small,
-#'     meta = seurat_meta(s_small)
+#'     object = s_small3,
+#'     meta = seurat_meta(s_small3)
 #' )
 #' ref[1:3, 1:3]
 #' @export
 write_meta.Seurat <- function(object,
-                              meta) {
+                              meta,
+                              ...) {
     object_new <- object
     object_new@meta.data <- meta
     return(object_new)

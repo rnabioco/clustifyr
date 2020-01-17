@@ -8,13 +8,15 @@
 \usage{
 object_data(object, ...)
 
-\method{object_data}{seurat}(object, slot)
+\method{object_data}{seurat}(object, slot, ...)
 
-\method{object_data}{Seurat}(object, slot)
+\method{object_data}{Seurat}(object, slot, ...)
 }
 \arguments{
 \item{object}{object after tsne or umap projections
 and clustering}
+
+\item{...}{additional arguments}
 
 \item{slot}{data to access}
 }
@@ -27,12 +29,12 @@ Function to access object data
 }
 \examples{
 mat <- object_data(
-    seurat_object = s_small,
+    object = s_small,
     slot = "data"
 )
 ref[1:3, 1:3]
 mat <- object_data(
-    seurat_object = s_small3,
+    object = s_small3,
     slot = "data"
 )
 ref[1:3, 1:3]

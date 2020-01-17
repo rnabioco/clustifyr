@@ -8,13 +8,15 @@
 \usage{
 write_meta(object, ...)
 
-\method{write_meta}{seurat}(object, meta)
+\method{write_meta}{seurat}(object, meta, ...)
 
-\method{write_meta}{Seurat}(object, meta)
+\method{write_meta}{Seurat}(object, meta, ...)
 }
 \arguments{
 \item{object}{object after tsne or umap projections
 and clustering}
+
+\item{...}{additional arguments}
 
 \item{meta}{new metadata dataframe}
 }
@@ -31,8 +33,8 @@ obj <- write_meta(
 )
 ref[1:3, 1:3]
 obj <- write_meta(
-    object = s_small,
-    meta = seurat_meta(s_small)
+    object = s_small3,
+    meta = seurat_meta(s_small3)
 )
 ref[1:3, 1:3]
 }
