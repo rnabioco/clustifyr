@@ -32,10 +32,10 @@ mat <- object_data(
     object = s_small,
     slot = "data"
 )
-ref[1:3, 1:3]
+mat[1:3, 1:3]
 mat <- object_data(
     object = s_small3,
     slot = "data"
 )
-ref[1:3, 1:3]
+mat[1:3, 1:3]
 }

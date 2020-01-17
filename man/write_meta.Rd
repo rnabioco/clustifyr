@@ -31,10 +31,8 @@ obj <- write_meta(
     object = s_small,
     meta = seurat_meta(s_small)
 )
-ref[1:3, 1:3]
 obj <- write_meta(
     object = s_small3,
     meta = seurat_meta(s_small3)
 )
-ref[1:3, 1:3]
 }
