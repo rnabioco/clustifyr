@@ -4,6 +4,7 @@
 \alias{object_data}
 \alias{object_data.seurat}
 \alias{object_data.Seurat}
+\alias{object_data.SingleCellExperiment}
 \title{Function to access object data}
 \usage{
 object_data(object, ...)
@@ -11,6 +12,8 @@ object_data(object, ...)
 \method{object_data}{seurat}(object, slot, ...)
 
 \method{object_data}{Seurat}(object, slot, ...)
+
+\method{object_data}{SingleCellExperiment}(object, slot, ...)
 }
 \arguments{
 \item{object}{object after tsne or umap projections
@@ -35,6 +38,11 @@ mat <- object_data(
 mat[1:3, 1:3]
 mat <- object_data(
     object = s_small3,
+    slot = "data"
+)
+mat[1:3, 1:3]
+mat <- object_data(
+    object = sce_small,
     slot = "data"
 )
 mat[1:3, 1:3]

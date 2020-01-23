@@ -4,6 +4,7 @@
 \alias{write_meta}
 \alias{write_meta.seurat}
 \alias{write_meta.Seurat}
+\alias{write_meta.SingleCellExperiment}
 \title{Function to write metadata to object}
 \usage{
 write_meta(object, ...)
@@ -11,6 +12,8 @@ write_meta(object, ...)
 \method{write_meta}{seurat}(object, meta, ...)
 
 \method{write_meta}{Seurat}(object, meta, ...)
+
+\method{write_meta}{SingleCellExperiment}(object, meta, ...)
 }
 \arguments{
 \item{object}{object after tsne or umap projections
@@ -34,5 +37,9 @@ obj <- write_meta(
 obj <- write_meta(
     object = s_small3,
     meta = seurat_meta(s_small3)
+)
+obj <- write_meta(
+    object = sce_small,
+    meta = object_data(sce_small, "meta.data")
 )
 }

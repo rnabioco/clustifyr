@@ -1247,3 +1247,27 @@ test_that("object_ref with sce", {
     )
     expect_true(ncol(avg) == 13)
 })
+
+test_that("object_data works with sce", {
+    mat <- object_data(
+        object = sce_small,
+        slot = "data"
+    )
+    expect_true(ncol(mat) == 200)
+})
+
+test_that("object_data works with seuratv2", {
+    mat <- object_data(
+        object = s_small,
+        slot = "data"
+    )
+    expect_true(ncol(mat) == 80)
+})
+
+test_that("object_data works with Seuratv3", {
+    mat <- object_data(
+        object = s_small3,
+        slot = "data"
+    )
+    expect_true(ncol(mat) == 80)
+})

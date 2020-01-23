@@ -54,6 +54,29 @@ object_data.Seurat <- function(object,
     }
 }
 
+#' @rdname object_data
+#' @param object object after tsne or umap projections
+#'  and clustering
+#' @param slot data to access
+#' @param ... additional arguments
+#' @importFrom SingleCellExperiment logcounts colData
+#' @examples
+#' mat <- object_data(
+#'     object = sce_small,
+#'     slot = "data"
+#' )
+#' mat[1:3, 1:3]
+#' @export
+object_data.SingleCellExperiment <- function(object,
+                                             slot,
+                                             ...) {
+    if (slot == "data") {
+        return(SingleCellExperiment::logcounts(object))
+    } else if (slot == "meta.data") {
+        return(as.data.frame(SingleCellExperiment::colData(object)))
+    }
+}
+
 #' Function to write metadata to object
 #' @return object with newly inserted metadata columns
 #' @export
@@ -104,6 +127,30 @@ write_meta.Seurat <- function(object,
         return(object_new)
     } else {
         message("Seurat not loaded")
+    }
+}
+
+#' @rdname write_meta 
+#' @param object object after tsne or umap projections
+#'  and clustering
+#' @param meta new metadata dataframe
+#' @param ... additional arguments
+#' @importFrom SingleCellExperiment logcounts colData
+#' @importFrom SummarizedExperiment `colData<-`
+#' @examples
+#' obj <- write_meta(
+#'     object = sce_small,
+#'     meta = object_data(sce_small, "meta.data")
+#' )
+#' @export
+write_meta.SingleCellExperiment <- function(object,
+                                            meta,
+                                            ...) {
+    if ("SingleCellExperiment" %in% loadedNamespaces()) {
+        colData(object) <- meta
+        return(object)
+    } else {
+        message("SingleCellExperiment not loaded")
     }
 }
 

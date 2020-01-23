@@ -406,8 +406,6 @@ clustify.Seurat <- function(input,
 }
 
 #' @rdname clustify
-#' @importFrom SingleCellExperiment logcounts colData
-#' @importFrom SummarizedExperiment `colData<-`
 #' @export
 clustify.SingleCellExperiment <- function(input,
                                           ref_mat,
@@ -427,8 +425,8 @@ clustify.SingleCellExperiment <- function(input,
                                           exclude_genes = c(),
                                           ...) {
     s_object <- input
-    expr_mat <- SingleCellExperiment::logcounts(s_object)
-    metadata <- as.data.frame(SingleCellExperiment::colData(s_object))
+    expr_mat <- object_data(s_object, "data")
+    metadata <- object_data(s_object, "meta.data")
 
     res <- clustify(
         expr_mat,
@@ -475,10 +473,10 @@ clustify.SingleCellExperiment <- function(input,
                 col_type <- "type"
                 col_r <- "r"
             }
-            colDatatemp <- SingleCellExperiment::colData(s_object)
+            colDatatemp <- metadata
             colDatatemp[[col_type]] <- df_temp_full[[col_type]]
             colDatatemp[[col_r]] <- df_temp_full[[col_r]]
-            colData(s_object) <- colDatatemp
+            s_object <- write_meta(s_object, colDatatemp)
             return(s_object)
         } else {
             message("SingleCellExperiment not loaded, returning cor_mat instead")
@@ -864,8 +862,6 @@ clustify_lists.Seurat <- function(input,
 }
 
 #' @rdname clustify_lists
-#' @importFrom SingleCellExperiment logcounts colData
-#' @importFrom SummarizedExperiment `colData<-`
 #' @export
 clustify_lists.SingleCellExperiment <- function(input,
                                                 metadata = NULL,
@@ -886,9 +882,9 @@ clustify_lists.SingleCellExperiment <- function(input,
                                                 rename_prefix = NULL,
                                                 ...) {
     s_object <- input
-    expr_mat <- SingleCellExperiment::logcounts(s_object)
+    expr_mat <- object_data(s_object, "data")
     if (is.null(metadata)) {
-        metadata <- as.data.frame(SingleCellExperiment::colData(s_object))
+        metadata <- object_data(s_object, "meta.data")
     }
 
     res <- clustify_lists(
@@ -933,12 +929,10 @@ clustify_lists.SingleCellExperiment <- function(input,
                 col_type <- "type"
                 col_r <- "r"
             }
-            SingleCellExperiment::colData(s_object)[[col_type]] <-
-                df_temp_full[[col_type]]
-
-            SingleCellExperiment::colData(s_object)[[col_r]] <-
-                df_temp_full[[col_r]]
-
+            colDatatemp <- metadata
+            colDatatemp[[col_type]] <- df_temp_full[[col_type]]
+            colDatatemp[[col_r]] <- df_temp_full[[col_r]]
+            s_object <- write_meta(s_object, colDatatemp)
             return(s_object)
         } else {
             message("SingleCellExperiment not loaded, returning cor_mat instead")
