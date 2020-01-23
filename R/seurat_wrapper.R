@@ -135,7 +135,8 @@ write_meta.Seurat <- function(object,
 #'  and clustering
 #' @param meta new metadata dataframe
 #' @param ... additional arguments
-#' @importFrom SingleCellExperiment logcounts colData
+#' @importFrom SingleCellExperiment colData
+#' @importFrom S4Vectors DataFrame
 #' @importFrom SummarizedExperiment `colData<-`
 #' @examples
 #' obj <- write_meta(
