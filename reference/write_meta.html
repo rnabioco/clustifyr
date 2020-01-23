@@ -140,6 +140,9 @@
 <span class='fu'>write_meta</span>(<span class='no'>object</span>, <span class='no'>meta</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for Seurat</span>
+<span class='fu'>write_meta</span>(<span class='no'>object</span>, <span class='no'>meta</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for SingleCellExperiment</span>
 <span class='fu'>write_meta</span>(<span class='no'>object</span>, <span class='no'>meta</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -171,7 +174,10 @@ and clustering</p></td>
 )</div><div class='output co'>#&gt; <span class='message'>Seurat not loaded</span></div><div class='input'><span class='no'>obj</span> <span class='kw'>&lt;-</span> <span class='fu'>write_meta</span>(
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>s_small3</span>,
     <span class='kw'>meta</span> <span class='kw'>=</span> <span class='fu'><a href='seurat_meta.html'>seurat_meta</a></span>(<span class='no'>s_small3</span>)
-)</div><div class='output co'>#&gt; <span class='message'>Seurat not loaded</span></div></pre>
+)</div><div class='output co'>#&gt; <span class='message'>Seurat not loaded</span></div><div class='input'><span class='no'>obj</span> <span class='kw'>&lt;-</span> <span class='fu'>write_meta</span>(
+    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>sce_small</span>,
+    <span class='kw'>meta</span> <span class='kw'>=</span> <span class='fu'><a href='object_data.html'>object_data</a></span>(<span class='no'>sce_small</span>, <span class='st'>"meta.data"</span>)
+)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
