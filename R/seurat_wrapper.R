@@ -147,7 +147,7 @@ write_meta.SingleCellExperiment <- function(object,
                                             meta,
                                             ...) {
     if ("SingleCellExperiment" %in% loadedNamespaces()) {
-        colData(object) <- meta
+        colData(object) <- S4Vectors::DataFrame(meta)
         return(object)
     } else {
         message("SingleCellExperiment not loaded")
