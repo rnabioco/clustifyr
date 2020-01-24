@@ -54,7 +54,8 @@ Imports:
     methods,
     SingleCellExperiment,
     SummarizedExperiment,
-    matrixStats
+    matrixStats,
+    S4Vectors
 Suggests:
     ComplexHeatmap,
     covr,
