@@ -6,8 +6,7 @@ sudo: false
 cache: packages
 cran: https://cran.rstudio.com/
 warnings_are_errors: false
-r_build_args: '--no-build-vignettes'
-r_check_args: '--as-cran --ignore-vignettes --no-manual'
+r_check_args: '--as-cran'
 
 matrix:
   include:
