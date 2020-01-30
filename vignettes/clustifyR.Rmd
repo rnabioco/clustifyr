@@ -35,7 +35,8 @@ knitr::opts_chunk$set(
   warning = FALSE,
   collapse = TRUE,
   fig.align = "center",
-  comment = "#>"
+  comment = "#>",
+  crop = NULL
 )
 ```
 
