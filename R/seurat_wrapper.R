@@ -27,6 +27,8 @@ object_data.seurat <- function(object,
         return(object@meta.data)
     } else if (slot == "var.genes") {
         return(object@var.genes)
+    } else if (slot == "pca") {
+        return(object@dr$pca@gene.loadings)
     }
 }
 
@@ -51,6 +53,8 @@ object_data.Seurat <- function(object,
         return(object@meta.data)
     } else if (slot == "var.genes") {
         return(object@assays$RNA@var.features)
+    } else if (slot == "pca") {
+        return(object@reductions$pca@feature.loadings)
     }
 }
 
@@ -194,11 +198,11 @@ seurat_ref.seurat <- function(seurat_object,
                               subclusterpower = 0,
                               if_log = TRUE,
                               ...) {
-    temp_mat <- seurat_object@data
+    temp_mat <- object_data(seurat_object, "data")
     if (is.logical(var_genes_only) && var_genes_only) {
-        temp_mat <- temp_mat[seurat_object@var.genes, ]
+        temp_mat <- temp_mat[object_data(seurat_object, "var.genes"), ]
     } else if (var_genes_only == "PCA") {
-        temp_mat <- temp_mat[rownames(seurat_object@dr$pca@gene.loadings), ]
+        temp_mat <- temp_mat[rownames(object_data(seurat_object, "pca")), ]
     }
 
     if (!is.null(assay_name)) {
@@ -211,7 +215,7 @@ seurat_ref.seurat <- function(seurat_object,
 
     temp_res <- average_clusters(
         temp_mat,
-        seurat_object@meta.data,
+        object_data(seurat_object, "meta.data"),
         cluster_col = cluster_col,
         method = method,
         subclusterpower = subclusterpower,
@@ -232,13 +236,13 @@ seurat_ref.Seurat <- function(seurat_object,
                               if_log = TRUE,
                               ...) {
     if (is(seurat_object, "Seurat")) {
-        temp_mat <- seurat_object@assays$RNA@data
+        temp_mat <- object_data(seurat_object, "data")
 
         if (is.logical(var_genes_only) && var_genes_only) {
-            temp_mat <- temp_mat[seurat_object@assays$RNA@var.features, ]
+            temp_mat <- temp_mat[object_data(seurat_object, "var.genes"), ]
         } else if (var_genes_only == "PCA") {
             temp_mat <-
-              temp_mat[rownames(seurat_object@reductions$pca@feature.loadings),
+              temp_mat[rownames(object_data(seurat_object, "pca")),
                        ]
         }
 
@@ -255,7 +259,7 @@ seurat_ref.Seurat <- function(seurat_object,
 
     temp_res <- average_clusters(
         temp_mat,
-        seurat_object@meta.data,
+        object_data(seurat_object, "meta.data"),
         cluster_col = cluster_col,
         method = method,
         subclusterpower = subclusterpower,
@@ -295,11 +299,11 @@ seurat_meta.seurat <- function(seurat_object,
             }
         )
     if (!is.data.frame(temp_dr)) {
-        return(seurat_object@meta.data)
+        return(object_data(seurat_object, "meta.data"))
     } else {
         temp_dr <- tibble::rownames_to_column(temp_dr, "rn")
         temp_meta <-
-            tibble::rownames_to_column(seurat_object@meta.data, "rn")
+            tibble::rownames_to_column(object_data(seurat_object, "meta.data"), "rn")
         temp <- dplyr::left_join(temp_meta, temp_dr, by = "rn")
         return(tibble::column_to_rownames(temp, "rn"))
     }
@@ -312,7 +316,7 @@ seurat_meta.Seurat <- function(seurat_object,
                                ...) {
     dr2 <- dr
 
-    mdata <- seurat_object@meta.data
+    mdata <- object_data(seurat_object, "meta.data")
     temp_col_id <- get_unique_column(mdata, "rn")
 
     temp_dr <-
