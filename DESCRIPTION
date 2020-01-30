@@ -63,7 +63,8 @@ Suggests:
     rmarkdown,
     testthat,
     ggrepel,
-    BiocStyle
+    BiocStyle,
+    magick
 biocViews: SingleCell, Annotation, Sequencing, Microarray
 BugReports: https://github.com/rnabioco/clustifyr/issues
 URL: http://github.com/rnabioco/clustifyr#readme,
