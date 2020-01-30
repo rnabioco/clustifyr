@@ -444,7 +444,6 @@ plot_call <- function(cor_mat,
     cor_matrix <- cor_mat
     df_temp <-
       as.data.frame(cor_matrix - matrixStats::rowMaxs(as.matrix(cor_matrix)))
-    names(df_temp) <- rownames(cor_matrix)
     df_temp[df_temp == 0] <- "1"
     df_temp[df_temp != "1"] <- "0"
     plot_cor(
