@@ -48,9 +48,9 @@ environment:
   global:
     #either seems to be the temp fix
     USE_RTOOLS: true
+    R_REMOTES_STANDALONE: true
   CRAN: https://cran.rstudio.com/
 
   matrix:
   - R_VERSION: devel
-    PKGTYPE: source
-    bioc_packages: RCurl
+    PKGTYPE: both
