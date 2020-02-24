@@ -17,5 +17,7 @@
 #' @importFrom cowplot theme_cowplot
 #' @importFrom fgsea fgsea
 #' @importFrom methods is
+#' @importClassesFrom SummarizedExperiment SummarizedExperiment
+#' @importClassesFrom SingleCellExperiment SingleCellExperiment
 ## usethis namespace: end
 NULL
