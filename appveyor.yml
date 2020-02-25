@@ -51,3 +51,4 @@ environment:
 
   matrix:
   - R_VERSION: devel
+    PKGTYPE: both
