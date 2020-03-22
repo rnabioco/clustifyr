@@ -1,0 +1,16 @@
+bibentry(bibtype = "Article",
+         title   = "clustifyr: An R package for automated single-cell RNA sequencing cluster classification",
+         year    = 2019,
+         author  = c(
+             person('Rui', 'Fu', role = c('aut', 'cre'), email = 'rui.fu@cuanschutz.edu'),
+             person('Austin', 'Gillen', role = c('ctb')),
+             person(c('Ryan', 'M.'), 'Sheridan', role = c('ctb')),
+             person('Chengzhe', 'Tian', role = c('ctb')),
+             person('Michelle', 'Daya', role = c('ctb')),
+             person('Yue', 'Hao', role = c('ctb')),
+             person(c('Jay', 'R.'), 'Hesselberth', role = c('aut', 'cre')),
+             person(c('Kent', 'A.'), 'Riemondy', role = c('aut'), email = 'kent.riemondy@gmail.com')
+         ),
+         journal = 'bioRxiv',
+         doi = '10.1101/855064'
+)
