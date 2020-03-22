@@ -1,7 +1,7 @@
 url: http://rnabioco.github.io/clustifyr
 
 development:
-  mode: unreleased
+  mode: auto
 
 home:
   links:
