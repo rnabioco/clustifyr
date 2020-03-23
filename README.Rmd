@@ -11,9 +11,10 @@ knitr::opts_chunk$set(
 ```
 
 # clustifyr <img src="man/figures/logo.png" align="right">
-
-[![Build Status](https://travis-ci.org/rnabioco/clustifyr.svg?branch=master)](https://travis-ci.org/rnabioco/clustifyr)
-[![Coverage status](https://codecov.io/gh/rnabioco/clustifyr/branch/master/graph/badge.svg)](https://codecov.io/github/rnabioco/clustifyr?branch=master)
+<!-- badges: start -->
+[![R build status](https://github.com/rnabioco/clustifyr/workflows/R-CMD-check/badge.svg)](https://github.com/rnabioco/clustifyr/actions)
+[![codecov](https://codecov.io/gh/rnabioco/clustifyr/branch/master/graph/badge.svg)](https://codecov.io/gh/rnabioco/clustifyr)
+<!-- badges: end -->
 
 clustifyr classifies cells and clusters in single-cell RNA sequencing experiments using reference bulk RNA-seq data sets, sorted microarray expression data, single-cell gene signatures, or lists of marker genes. 
 
