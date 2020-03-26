@@ -11,6 +11,7 @@ get_similarity(
   compute_method,
   per_cell = FALSE,
   rm0 = FALSE,
+  if_log = TRUE,
   ...
 )
 }
@@ -26,6 +27,9 @@ get_similarity(
 \item{per_cell}{run per cell?}
 
 \item{rm0}{consider 0 as missing data, recommended for per_cell}
+
+\item{if_log}{input data is natural log,
+averaging will be done on unlogged data}
 
 \item{...}{additional parameters not used yet}
 }

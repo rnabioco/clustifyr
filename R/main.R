@@ -36,6 +36,8 @@ clustify <- function(input, ...) {
 #'  only used when obj_out = TRUE
 #' @param low_threshold_cell option to remove clusters with too few cells
 #' @param exclude_genes a vector of gene names to throw out of query
+#' @param if_log input data is natural log,
+#' averaging will be done on unlogged data
 #' @param ... additional arguments to pass to compute_method function
 #'
 #' @return single cell object with identity assigned in metadata,
@@ -100,6 +102,7 @@ clustify.default <- function(input,
                              threshold = "auto",
                              low_threshold_cell = 10,
                              exclude_genes = c(),
+                             if_log = TRUE,
                              ...) {
     if (!compute_method %in% clustifyr_methods) {
         stop(paste(compute_method, "correlation method not implemented"),
@@ -206,6 +209,7 @@ clustify.default <- function(input,
             per_cell = per_cell,
             compute_method = compute_method,
             rm0 = rm0,
+            if_log = if_log,
             ...
         )
     } else {
@@ -271,6 +275,7 @@ clustify.seurat <- function(input,
                             rm0 = FALSE,
                             rename_prefix = NULL,
                             exclude_genes = c(),
+                            if_log = TRUE,
                             ...) {
     s_object <- input
     # for seurat < 3.0
@@ -293,6 +298,7 @@ clustify.seurat <- function(input,
         verbose = verbose,
         rm0 = rm0,
         exclude_genes = exclude_genes,
+        if_log = if_log,
         ...
     )
 
@@ -347,6 +353,7 @@ clustify.Seurat <- function(input,
                             rm0 = FALSE,
                             rename_prefix = NULL,
                             exclude_genes = c(),
+                            if_log = TRUE,
                             ...) {
     s_object <- input
     # for seurat 3.0 +
@@ -369,6 +376,7 @@ clustify.Seurat <- function(input,
         verbose = verbose,
         rm0 = rm0,
         exclude_genes = exclude_genes,
+        if_log = if_log,
         ...
     )
 
@@ -423,6 +431,7 @@ clustify.SingleCellExperiment <- function(input,
                                           rm0 = FALSE,
                                           rename_prefix = NULL,
                                           exclude_genes = c(),
+                                          if_log = TRUE,
                                           ...) {
     s_object <- input
     expr_mat <- object_data(s_object, "data")
@@ -440,6 +449,7 @@ clustify.SingleCellExperiment <- function(input,
         verbose = verbose,
         rm0 = rm0,
         exclude_genes = exclude_genes,
+        if_log = if_log,
         ...
     )
 
