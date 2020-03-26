@@ -1188,11 +1188,11 @@ overcluster_test <- function(expr,
         x = x_col,
         y = y_col
     )
-    g <- cowplot::plot_grid(o1, o2, p1, p2,
+    g <- suppressWarnings(cowplot::plot_grid(o1, o2, p1, p2,
         labels = c(
             length(unique(metadata[[cluster_col]])),
             n * length(unique(metadata[[cluster_col]]))
-        )
+        ))
     )
     return(g)
 }
