@@ -3,6 +3,12 @@ url: http://rnabioco.github.io/clustifyr
 development:
   mode: auto
 
+authors:
+  Jay Hesselberth:
+    href: https://hesselberthlab.org
+  RNA Bioscience Initiative:
+    href: https://rockyrna.org
+
 home:
   links:
   - text: External data sets
