@@ -64,7 +64,6 @@ jobs:
           remotes::install_cran("rcmdcheck")
 
           remotes::install_cran("BiocManager")
-
           BiocManager::install(version='devel')
           BiocManager::install(c('SummarizedExperiment', 'SingleCellExperiment',
                                  'S4Vectors', 'ComplexHeatmap', 'BiocStyle'))

@@ -28,8 +28,8 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: macOS-r-3.6-${{ hashFiles('depends.Rds') }}
-          restore-keys: macOS-r-3.6-
+          key: macOS-r-devel-${{ hashFiles('depends.Rds') }}
+          restore-keys: macOS-r-devel-
 
       - name: Install dependencies
         run: |
@@ -37,7 +37,9 @@ jobs:
           remotes::install_deps(dependencies = TRUE)
 
           remotes::install_cran("BiocManager")
-          BiocManager::install(c('SummarizedExperiment', 'SingleCellExperiment', 'S4Vectors', 'ComplexHeatmap', 'BiocStyle'))
+          BiocManager::install(version='devel')
+          BiocManager::install(c('SummarizedExperiment', 'SingleCellExperiment',
+                                 'S4Vectors', 'ComplexHeatmap', 'BiocStyle'))
 
           remotes::install_cran("covr")
         shell: Rscript {0}
