@@ -4,7 +4,9 @@
 \name{pretty_palette}
 \alias{pretty_palette}
 \title{Color palette for plotting continous variables}
-\format{An object of class \code{character} of length 6.}
+\format{
+An object of class \code{character} of length 6.
+}
 \usage{
 pretty_palette
 }

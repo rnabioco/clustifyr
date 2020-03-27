@@ -4,7 +4,9 @@
 \name{pbmc_vargenes}
 \alias{pbmc_vargenes}
 \title{Variable genes identified by Seurat from single-cell RNA-seq PBMCs.}
-\format{An object of class \code{character} of length 2000.}
+\format{
+An object of class \code{character} of length 2000.
+}
 \source{
 \verb{[pbmc_matrix]} processed by Seurat
 }

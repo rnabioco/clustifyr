@@ -4,7 +4,9 @@
 \name{sce_small}
 \alias{sce_small}
 \title{Small SingleCellExperiment object}
-\format{An object of class \code{SingleCellExperiment} with 200 rows and 200 columns.}
+\format{
+An object of class \code{SingleCellExperiment} with 200 rows and 200 columns.
+}
 \source{
 \url{"https://scrnaseq-public-datasets.s3.amazonaws.com/scater-objects/segerstolpe.rds"}
 }

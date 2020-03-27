@@ -4,7 +4,9 @@
 \name{pbmc_matrix_small}
 \alias{pbmc_matrix_small}
 \title{Matrix of single-cell RNA-seq PBMCs.}
-\format{A sparseMatrix with genes as rows and cells as columns.}
+\format{
+A sparseMatrix with genes as rows and cells as columns.
+}
 \source{
 \url{https://satijalab.org/seurat/v3.0/pbmc3k_tutorial.html}
 }

@@ -4,7 +4,9 @@
 \name{downrefs}
 \alias{downrefs}
 \title{table of references stored in clustifyrdata}
-\format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 9 rows and 6 columns.}
+\format{
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 9 rows and 6 columns.
+}
 \source{
 various packages
 }

@@ -1547,7 +1547,6 @@ marker_select <- function(row1,
 #'  considered non-expressing
 #' @param cutoff_score positive score lower than this cutoff will be
 #' considered as 0 to not influence scores
-#' @param ... additional arguments to pass to compute_method function
 #' @return matrix of numeric values, clusters from input as row names,
 #'  cell types from ref_mat as column names
 #' @examples

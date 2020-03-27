@@ -4,7 +4,9 @@
 \name{not_pretty_palette}
 \alias{not_pretty_palette}
 \title{black and white palette for plotting continous variables}
-\format{An object of class \code{character} of length 9.}
+\format{
+An object of class \code{character} of length 9.
+}
 \usage{
 not_pretty_palette
 }

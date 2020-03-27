@@ -4,7 +4,9 @@
 \name{pbmc_meta}
 \alias{pbmc_meta}
 \title{Meta-data for single-cell RNA-seq PBMCs.}
-\format{An object of class \code{data.frame} with 2638 rows and 9 columns.}
+\format{
+An object of class \code{data.frame} with 2638 rows and 9 columns.
+}
 \source{
 \verb{[pbmc_matrix]} processed by Seurat
 }
