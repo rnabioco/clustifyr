@@ -4,7 +4,9 @@
 \name{cbmc_ref}
 \alias{cbmc_ref}
 \title{reference matrix from seurat citeseq CBMC tutorial}
-\format{An object of class \code{matrix} with 2000 rows and 13 columns.}
+\format{
+An object of class \code{matrix} with 2000 rows and 13 columns.
+}
 \source{
 \url{https://satijalab.org/seurat/v3.0/multimodal_vignette.html#identify-differentially-expressed-proteins-between-clusters}
 }

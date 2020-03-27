@@ -4,7 +4,9 @@
 \name{s_small}
 \alias{s_small}
 \title{Small clustered Seurat2 object}
-\format{An object of class \code{seurat} of length 1.}
+\format{
+An object of class \code{seurat} of length 1.
+}
 \source{
 \verb{[pbmc_small]} processed by seurat
 }

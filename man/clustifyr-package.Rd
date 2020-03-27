@@ -28,13 +28,14 @@ Useful links:
 Authors:
 \itemize{
   \item Kent Riemondy \email{kent.riemondy@ucdenver.edu}
-  \item Austin Gillen \email{austin.gillen@ucdenver.edu}
-  \item Chengzhe Tian \email{Chengzhe.Tian@colorado.edu}
-  \item Jay Hesselberth \email{jay.hesselberth@gmail.com}
 }
 
 Other contributors:
 \itemize{
+  \item RNA Bioscience Initiative [funder]
+  \item Austin Gillen \email{austin.gillen@ucdenver.edu} [contributor]
+  \item Chengzhe Tian \email{Chengzhe.Tian@colorado.edu} [contributor]
+  \item Jay Hesselberth \email{jay.hesselberth@gmail.com} [contributor]
   \item Yue Hao \email{haoyuethink@gmail.com} [contributor]
   \item Michelle Daya \email{michelle.daya@ucdenver.edu} [contributor]
 }

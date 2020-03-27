@@ -4,7 +4,9 @@
 \name{pbmc_markers}
 \alias{pbmc_markers}
 \title{Marker genes identified by Seurat from single-cell RNA-seq PBMCs.}
-\format{An object of class \code{data.frame} with 2304 rows and 7 columns.}
+\format{
+An object of class \code{data.frame} with 2304 rows and 7 columns.
+}
 \source{
 \verb{[pbmc_matrix]} processed by Seurat
 }

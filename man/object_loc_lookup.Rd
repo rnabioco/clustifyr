@@ -4,7 +4,9 @@
 \name{object_loc_lookup}
 \alias{object_loc_lookup}
 \title{lookup table for single cell object structures}
-\format{An object of class \code{data.frame} with 4 rows and 6 columns.}
+\format{
+An object of class \code{data.frame} with 4 rows and 6 columns.
+}
 \source{
 various packages
 }

@@ -4,7 +4,9 @@
 \name{pretty_palette2}
 \alias{pretty_palette2}
 \title{Color palette for plotting continous variables, starting at gray}
-\format{An object of class \code{character} of length 9.}
+\format{
+An object of class \code{character} of length 9.
+}
 \usage{
 pretty_palette2
 }

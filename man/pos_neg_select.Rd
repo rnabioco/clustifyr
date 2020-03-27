@@ -34,8 +34,6 @@ considered non-expressing}
 
 \item{cutoff_score}{positive score lower than this cutoff will be
 considered as 0 to not influence scores}
-
-\item{...}{additional arguments to pass to compute_method function}
 }
 \value{
 matrix of numeric values, clusters from input as row names,
