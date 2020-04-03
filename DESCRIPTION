@@ -1,6 +1,6 @@
 Package: clustifyr
 Title: Classifier for Single-cell RNA-seq Using Cell Clusters
-Version: 0.99.7
+Version: 0.99.8
 Description: Package designed to aid in classifying cells from single-cell RNA sequencing data
     using external reference data (e.g., bulk RNA-seq, scRNA-seq, microarray, gene lists). A 
     variety of correlation based methods and gene list enrichment methods are provided to assist cell
