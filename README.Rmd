@@ -22,8 +22,8 @@ Single cell transcriptomes are difficult to annotate without knowledge of the un
 ## Installation
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("rnabioco/clustifyr", ref = "0.99.4")
+# install.packages("remotes")
+remotes::install_github("rnabioco/clustifyr")
 ```
  
 ## Example usage

@@ -22,8 +22,8 @@ between single cell RNA-seq datasets and reference data.
 ## Installation
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("rnabioco/clustifyr", ref = "0.99.4")
+# install.packages("remotes")
+remotes::install_github("rnabioco/clustifyr")
 ```
 
 ## Example usage
@@ -100,7 +100,6 @@ clustify(
 #> colData names(35): cell_quality cell_type1 ... type r
 #> reducedDimNames(0):
 #> spikeNames(1): ERCC
-#> altExpNames(0):
 
 library(Seurat)
 
