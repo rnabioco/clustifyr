@@ -1483,8 +1483,12 @@ ref_marker_select <-
             res <- res[!vapply(res, is.null, FUN.VALUE = logical(1))]
         }
         resdf <- t(as.data.frame(res, stringsAsFactors = FALSE))
-        resdf <-tibble::rownames_to_column(as.data.frame(resdf,
-                                           stringsAsFactors = FALSE),
+        if (tibble::has_rownames(as.data.frame(resdf,
+                                               stringsAsFactors = FALSE))) {
+            resdf <- tibble::remove_rownames(as.data.frame(resdf,
+                                                           stringsAsFactors = FALSE))
+        }
+        resdf <- tibble::rownames_to_column(resdf,
                                            "gene")
         colnames(resdf) <- c("gene", "cluster", "ratio")
         resdf <-
@@ -1648,6 +1652,9 @@ pos_neg_marker <- function(mat) {
     g2 <- dplyr::bind_rows(g2, .id = "type")
     g2 <- dplyr::mutate(g2, expression = 1)
     g2 <- tidyr::spread(g2, key = "type", value = "expression")
+    if (tibble::has_rownames(g2)) {
+        g2 <- tibble::remove_rownames(g2)
+    }
     g2 <- tibble::column_to_rownames(g2, "gene")
     g2[is.na(g2)] <- 0
     g2

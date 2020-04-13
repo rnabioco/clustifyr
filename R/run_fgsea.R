@@ -93,6 +93,9 @@ run_gsea <- function(expr_mat,
     gsea_res <- dplyr::bind_rows(res)
     gsea_res <-
         as.data.frame(dplyr::mutate(gsea_res, cell = colnames(avg_mat)))
+    if (tibble::has_rownames(gsea_res)) {
+        gsea_res <- tibble::remove_rownames(gsea_res)
+    }
     gsea_res <- tibble::column_to_rownames(gsea_res, "cell")
 
     gsea_res

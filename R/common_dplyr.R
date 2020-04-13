@@ -195,7 +195,9 @@ call_to_metadata <- function(res,
                     suffix = c("", ".clustify")
                 )
             )
-
+        if (tibble::has_rownames(df_temp_full)) {
+            df_temp_full <- tibble::remove_rownames(df_temp_full)
+        }
         df_temp_full <- tibble::column_to_rownames(
             df_temp_full,
             temp_col_id
@@ -216,7 +218,9 @@ call_to_metadata <- function(res,
                     suffix = c("", ".clustify")
                 )
             )
-
+        if (tibble::has_rownames(df_temp_full)) {
+            df_temp_full <- tibble::remove_rownames(df_temp_full)
+        }
         df_temp_full <-
             tibble::column_to_rownames(df_temp_full,
                                        temp_col_id)

@@ -305,6 +305,9 @@ seurat_meta.seurat <- function(seurat_object,
         temp_meta <-
             tibble::rownames_to_column(object_data(seurat_object, "meta.data"), "rn")
         temp <- dplyr::left_join(temp_meta, temp_dr, by = "rn")
+        if (tibble::has_rownames(temp)) {
+            temp <- tibble::remove_rownames(temp)
+        }
         return(tibble::column_to_rownames(temp, "rn"))
     }
 }
@@ -333,6 +336,9 @@ seurat_meta.Seurat <- function(seurat_object,
         temp_dr <- tibble::rownames_to_column(temp_dr, temp_col_id)
         temp_meta <- tibble::rownames_to_column(mdata, temp_col_id)
         temp <- dplyr::left_join(temp_meta, temp_dr, by = temp_col_id)
+        if (tibble::has_rownames(temp)) {
+            temp <- tibble::remove_rownames(temp)
+        }
         return(tibble::column_to_rownames(temp, temp_col_id))
     }
 }
