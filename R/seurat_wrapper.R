@@ -344,7 +344,14 @@ seurat_meta.Seurat <- function(seurat_object,
 }
 
 #' Function to convert labelled object to avg expression matrix
-#'
+#' @return reference expression matrix, with genes as row names,
+#'  and cell types as column names
+#' @export
+object_ref <- function(object, ...) {
+    UseMethod("object_ref", object)
+}
+
+#' @rdname object_ref
 #' @param input object after tsne or umap projections and clustering
 #' @param cluster_col column name where classified cluster names
 #' are stored in seurat meta data, cannot be "rn"
@@ -357,21 +364,19 @@ seurat_meta.Seurat <- function(seurat_object,
 #' in built-in table for object parsing
 #' @param if_log input data is natural log,
 #' averaging will be done on unlogged data
-#' @return reference expression matrix, with genes as row names,
-#'  and cell types as column names
 #' @examples
 #' object_ref(
 #'     s_small3,
 #'     cluster_col = "RNA_snn_res.1"
 #' )
 #' @export
-object_ref <- function(input,
-                       cluster_col = NULL,
-                       var_genes_only = FALSE,
-                       assay_name = NULL,
-                       method = "mean",
-                       lookuptable = NULL,
-                       if_log = TRUE) {
+object_ref.default <- function(input,
+                              cluster_col = NULL,
+                              var_genes_only = FALSE,
+                              assay_name = NULL,
+                              method = "mean",
+                              lookuptable = NULL,
+                              if_log = TRUE) {
     if (!is(input, "seurat")) {
         input_original <- input
         temp <- parse_loc_object(
@@ -409,3 +414,96 @@ object_ref <- function(input,
 
     temp_res
 }
+
+#' @rdname object_ref
+#' @export
+object_ref.Seurat <- function(input,
+                               cluster_col = NULL,
+                               var_genes_only = FALSE,
+                               assay_name = NULL,
+                               method = "mean",
+                               lookuptable = NULL,
+                               if_log = TRUE) {
+    temp_mat <- object_data(input, "data")
+    metadata <- object_data(input, "meta.data")
+    query_genes <- object_data(input, "var.genes")
+    if (is.null(cluster_col)) {
+        message("please indicate metadata column containing cell identities")
+    }
+    
+    if (is.logical(var_genes_only) && var_genes_only) {
+        temp_mat <- temp_mat[query_genes, ]
+    }
+    
+    temp_res <- average_clusters(
+        temp_mat,
+        metadata,
+        cluster_col = cluster_col,
+        method = method,
+        if_log = if_log
+    )
+    
+    temp_res
+}
+
+#' @rdname object_ref
+#' @export
+object_ref.seurat <- function(input,
+                              cluster_col = NULL,
+                              var_genes_only = FALSE,
+                              assay_name = NULL,
+                              method = "mean",
+                              lookuptable = NULL,
+                              if_log = TRUE) {
+    temp_mat <- object_data(input, "data")
+    metadata <- object_data(input, "meta.data")
+    query_genes <- object_data(input, "var.genes")
+    if (is.null(cluster_col)) {
+        message("please indicate metadata column containing cell identities")
+    }
+    
+    if (is.logical(var_genes_only) && var_genes_only) {
+        temp_mat <- temp_mat[query_genes, ]
+    }
+    
+    temp_res <- average_clusters(
+        temp_mat,
+        metadata,
+        cluster_col = cluster_col,
+        method = method,
+        if_log = if_log
+    )
+    
+    temp_res
+}
+
+#' @rdname object_ref
+#' @export
+object_ref.SingleCellExperiment <- function(input,
+                                            cluster_col = NULL,
+                                            var_genes_only = FALSE,
+                                            assay_name = NULL,
+                                            method = "mean",
+                                            lookuptable = NULL,
+                                            if_log = TRUE) {
+    temp_mat <- object_data(input, "data")
+    metadata <- object_data(input, "meta.data")
+    if (is.null(cluster_col)) {
+        message("please indicate metadata column containing cell identities")
+    }
+    
+    if (is.logical(var_genes_only) && var_genes_only) {
+        temp_mat <- temp_mat[query_genes, ]
+    }
+    
+    temp_res <- average_clusters(
+        temp_mat,
+        metadata,
+        cluster_col = cluster_col,
+        method = method,
+        if_log = if_log
+    )
+    
+    temp_res
+}
+

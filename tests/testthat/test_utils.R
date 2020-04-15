@@ -623,14 +623,16 @@ test_that("seurat_ref gets correct averages", {
 test_that("object_ref with seurat3", {
     s3 <- s_small3
     avg <- object_ref(s3,
-        var_genes_only = TRUE
+        var_genes_only = TRUE,
+        cluster_col = "RNA_snn_res.1"
     )
     expect_true(ncol(avg) == 3)
 })
 
 test_that("object_ref with SingleCellExperiment", {
     sce <- sce_small
-    avg <- object_ref(sce)
+    avg <- object_ref(sce,
+                      cluster_col = "cell_type1")
     expect_equal(dim(avg), c(200, 13))
 })
 
