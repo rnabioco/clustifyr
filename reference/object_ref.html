@@ -137,7 +137,43 @@
     <p>Function to convert labelled object to avg expression matrix</p>
     </div>
 
-    <pre class="usage"><span class='fu'>object_ref</span>(
+    <pre class="usage"><span class='fu'>object_ref</span>(<span class='no'>input</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for default</span>
+<span class='fu'>object_ref</span>(
+  <span class='no'>input</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>var_genes_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>assay_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
+  <span class='kw'>lookuptable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)
+
+<span class='co'># S3 method for Seurat</span>
+<span class='fu'>object_ref</span>(
+  <span class='no'>input</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>var_genes_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>assay_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
+  <span class='kw'>lookuptable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)
+
+<span class='co'># S3 method for seurat</span>
+<span class='fu'>object_ref</span>(
+  <span class='no'>input</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>var_genes_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>assay_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
+  <span class='kw'>lookuptable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)
+
+<span class='co'># S3 method for SingleCellExperiment</span>
+<span class='fu'>object_ref</span>(
   <span class='no'>input</span>,
   <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>var_genes_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -194,7 +230,7 @@ and cell types as column names</p>
     <pre class="examples"><div class='input'><span class='fu'>object_ref</span>(
     <span class='no'>s_small3</span>,
     <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"RNA_snn_res.1"</span>
-)</div><div class='output co'>#&gt; <span class='message'>recognized object type - Seurat</span></div><div class='output co'>#&gt;                       0         1         2
+)</div><div class='output co'>#&gt;                       0         1         2
 #&gt; MS4A1         0.0000000 1.1260469 5.1510649
 #&gt; CD79B         2.4693409 2.9204074 5.0313160
 #&gt; CD79A         0.0000000 2.5351508 5.3756805
