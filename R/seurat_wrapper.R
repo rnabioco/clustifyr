@@ -347,8 +347,8 @@ seurat_meta.Seurat <- function(seurat_object,
 #' @return reference expression matrix, with genes as row names,
 #'  and cell types as column names
 #' @export
-object_ref <- function(object, ...) {
-    UseMethod("object_ref", object)
+object_ref <- function(input, ...) {
+    UseMethod("object_ref", input)
 }
 
 #' @rdname object_ref

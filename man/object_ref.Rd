@@ -8,7 +8,7 @@
 \alias{object_ref.SingleCellExperiment}
 \title{Function to convert labelled object to avg expression matrix}
 \usage{
-object_ref(object, ...)
+object_ref(input, ...)
 
 \method{object_ref}{default}(
   input,
