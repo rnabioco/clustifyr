@@ -364,6 +364,7 @@ object_ref <- function(input, ...) {
 #' in built-in table for object parsing
 #' @param if_log input data is natural log,
 #' averaging will be done on unlogged data
+#' @param ... additional arguments
 #' @examples
 #' object_ref(
 #'     s_small3,
@@ -376,7 +377,8 @@ object_ref.default <- function(input,
                               assay_name = NULL,
                               method = "mean",
                               lookuptable = NULL,
-                              if_log = TRUE) {
+                              if_log = TRUE,
+                              ...) {
     if (!is(input, "seurat")) {
         input_original <- input
         temp <- parse_loc_object(
@@ -423,7 +425,8 @@ object_ref.Seurat <- function(input,
                                assay_name = NULL,
                                method = "mean",
                                lookuptable = NULL,
-                               if_log = TRUE) {
+                               if_log = TRUE,
+                               ...) {
     temp_mat <- object_data(input, "data")
     metadata <- object_data(input, "meta.data")
     query_genes <- object_data(input, "var.genes")
@@ -454,7 +457,8 @@ object_ref.seurat <- function(input,
                               assay_name = NULL,
                               method = "mean",
                               lookuptable = NULL,
-                              if_log = TRUE) {
+                              if_log = TRUE,
+                              ...) {
     temp_mat <- object_data(input, "data")
     metadata <- object_data(input, "meta.data")
     query_genes <- object_data(input, "var.genes")
@@ -485,15 +489,12 @@ object_ref.SingleCellExperiment <- function(input,
                                             assay_name = NULL,
                                             method = "mean",
                                             lookuptable = NULL,
-                                            if_log = TRUE) {
+                                            if_log = TRUE,
+                                            ...) {
     temp_mat <- object_data(input, "data")
     metadata <- object_data(input, "meta.data")
     if (is.null(cluster_col)) {
         message("please indicate metadata column containing cell identities")
-    }
-    
-    if (is.logical(var_genes_only) && var_genes_only) {
-        temp_mat <- temp_mat[query_genes, ]
     }
     
     temp_res <- average_clusters(

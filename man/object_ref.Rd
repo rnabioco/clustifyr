@@ -17,7 +17,8 @@ object_ref(input, ...)
   assay_name = NULL,
   method = "mean",
   lookuptable = NULL,
-  if_log = TRUE
+  if_log = TRUE,
+  ...
 )
 
 \method{object_ref}{Seurat}(
@@ -27,7 +28,8 @@ object_ref(input, ...)
   assay_name = NULL,
   method = "mean",
   lookuptable = NULL,
-  if_log = TRUE
+  if_log = TRUE,
+  ...
 )
 
 \method{object_ref}{seurat}(
@@ -37,7 +39,8 @@ object_ref(input, ...)
   assay_name = NULL,
   method = "mean",
   lookuptable = NULL,
-  if_log = TRUE
+  if_log = TRUE,
+  ...
 )
 
 \method{object_ref}{SingleCellExperiment}(
@@ -47,11 +50,14 @@ object_ref(input, ...)
   assay_name = NULL,
   method = "mean",
   lookuptable = NULL,
-  if_log = TRUE
+  if_log = TRUE,
+  ...
 )
 }
 \arguments{
 \item{input}{object after tsne or umap projections and clustering}
+
+\item{...}{additional arguments}
 
 \item{cluster_col}{column name where classified cluster names
 are stored in seurat meta data, cannot be "rn"}
