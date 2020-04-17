@@ -147,7 +147,8 @@
   <span class='kw'>assay_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
   <span class='kw'>lookuptable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>
 )
 
 <span class='co'># S3 method for Seurat</span>
@@ -158,7 +159,8 @@
   <span class='kw'>assay_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
   <span class='kw'>lookuptable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>
 )
 
 <span class='co'># S3 method for seurat</span>
@@ -169,7 +171,8 @@
   <span class='kw'>assay_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
   <span class='kw'>lookuptable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>
 )
 
 <span class='co'># S3 method for SingleCellExperiment</span>
@@ -180,7 +183,8 @@
   <span class='kw'>assay_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
   <span class='kw'>lookuptable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -189,6 +193,10 @@
     <tr>
       <th>input</th>
       <td><p>object after tsne or umap projections and clustering</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>additional arguments</p></td>
     </tr>
     <tr>
       <th>cluster_col</th>
