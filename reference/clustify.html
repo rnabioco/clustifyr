@@ -159,7 +159,7 @@
   <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
-  <span class='kw'>low_threshold_cell</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+  <span class='kw'>low_threshold_cell</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>exclude_genes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(),
   <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='no'>...</span>
@@ -347,7 +347,7 @@ types from ref_mat as column names</p>
     <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='no'>pbmc_vargenes</span>,
     <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
     <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</div><div class='output co'>#&gt; <span class='message'>using # of genes: 599</span></div><div class='output co'>#&gt;                      B CD14+ Mono CD16+ Mono     CD34+     CD4 T     CD8 T
+)</div><div class='output co'>#&gt; <span class='message'>using # of genes: 599</span></div><div class='output co'>#&gt; <span class='message'>The following clusters have less than 10 cells for this analysis: . Classification is likely inaccurate.</span></div><div class='output co'>#&gt;                      B CD14+ Mono CD16+ Mono     CD34+     CD4 T     CD8 T
 #&gt; B            0.9093577  0.5347126  0.5908755 0.6248639 0.6411407 0.6269530
 #&gt; CD14+ Mono   0.5279272  0.9145428  0.8919954 0.5103056 0.4636934 0.4381450
 #&gt; CD8 T        0.5791953  0.4853982  0.5498177 0.5663773 0.7657468 0.7692801
@@ -385,7 +385,7 @@ types from ref_mat as column names</p>
     <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='no'>pbmc_vargenes</span>,
     <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
     <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"cosine"</span>
-)</div><div class='output co'>#&gt;                      B CD14+ Mono CD16+ Mono     CD34+     CD4 T     CD8 T
+)</div><div class='output co'>#&gt; <span class='message'>The following clusters have less than 10 cells for this analysis: . Classification is likely inaccurate.</span></div><div class='output co'>#&gt;                      B CD14+ Mono CD16+ Mono     CD34+     CD4 T     CD8 T
 #&gt; B            0.9669867  0.7149343  0.7720125 0.8004738 0.7635724 0.7657181
 #&gt; CD14+ Mono   0.7527223  0.9627275  0.9460084 0.7577338 0.7096110 0.7061112
 #&gt; CD8 T        0.7510063  0.7070527  0.7467587 0.7677927 0.8562280 0.8674614
@@ -423,7 +423,7 @@ types from ref_mat as column names</p>
     <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
     <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
     <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>
-)</div><div class='output co'>#&gt; <span class='message'>using threshold of 0.59</span></div><div class='output co'>#&gt; <span class='message'>seurat not loaded, returning cor_mat instead</span></div><div class='output co'>#&gt;             B CD14+ Mono CD16+ Mono      CD34+       CD4 T      CD8 T        DC
+)</div><div class='output co'>#&gt; <span class='message'>The following clusters have less than 10 cells for this analysis: . Classification is likely inaccurate.</span></div><div class='output co'>#&gt; <span class='message'>using threshold of 0.59</span></div><div class='output co'>#&gt; <span class='message'>seurat not loaded, returning cor_mat instead</span></div><div class='output co'>#&gt;             B CD14+ Mono CD16+ Mono      CD34+       CD4 T      CD8 T        DC
 #&gt; 0  0.66641984  0.4000028  0.3435278 0.24453004  0.53962648  0.4400031 0.3605451
 #&gt; 1  0.49928480  0.5282509  0.4731645 0.52825094  0.34835596  0.2873746 0.4992739
 #&gt; 2  0.04411189  0.3881846  0.4854133 0.27172921  0.41288725  0.4446478 0.5601817

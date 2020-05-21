@@ -168,8 +168,7 @@
     <span class='kw'>mat</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
     <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
     <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>
-)
-
+)</div><div class='output co'>#&gt; <span class='message'>The following clusters have less than 10 cells for this analysis: . Classification is likely inaccurate.</span></div><div class='input'>
 <span class='no'>mat</span> <span class='kw'>&lt;-</span> <span class='fu'>binarize_expr</span>(<span class='no'>pbmc_avg</span>)
 <span class='no'>mat</span>[<span class='fl'>1</span>:<span class='fl'>3</span>, <span class='fl'>1</span>:<span class='fl'>3</span>]</div><div class='output co'>#&gt;        Naive CD4 T Memory CD4 T CD14+ Mono
 #&gt; PPBP             0            0          1

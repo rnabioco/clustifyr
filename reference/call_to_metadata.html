@@ -184,7 +184,7 @@
     <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
     <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
     <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>cbmc_ref</span>
-)</div><div class='output co'>#&gt; <span class='message'>var.features not found, using all genes instead</span></div><div class='input'>
+)</div><div class='output co'>#&gt; <span class='message'>var.features not found, using all genes instead</span></div><div class='output co'>#&gt; <span class='message'>The following clusters have less than 10 cells for this analysis: . Classification is likely inaccurate.</span></div><div class='input'>
 <span class='no'>res2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='cor_to_call.html'>cor_to_call</a></span>(<span class='no'>res</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>)
 
 <span class='fu'>call_to_metadata</span>(

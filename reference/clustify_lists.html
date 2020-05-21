@@ -161,7 +161,7 @@
   <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>low_threshold_cell</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+  <span class='kw'>low_threshold_cell</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='no'>...</span>
 )
 
@@ -338,7 +338,7 @@ cell types from marker_mat as column names</p>
     <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
     <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
     <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</div><div class='output co'>#&gt;                   CD4 T      CD8 T Memory CD4 T CD14+ Mono Naive CD4 T
+)</div><div class='output co'>#&gt; <span class='message'>The following clusters have less than 10 cells for this analysis: . Classification is likely inaccurate.</span></div><div class='output co'>#&gt;                   CD4 T      CD8 T Memory CD4 T CD14+ Mono Naive CD4 T
 #&gt; Naive CD4 T  0.06713589 0.06713589            0   3.609737           0
 #&gt; Memory CD4 T 0.06713589 0.00000000            0   3.609737           0
 #&gt; CD14+ Mono   0.00000000 0.00000000            0   3.609737           0
@@ -376,7 +376,7 @@ cell types from marker_mat as column names</p>
     <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
     <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
     <span class='kw'>metric</span> <span class='kw'>=</span> <span class='st'>"jaccard"</span>
-)</div><div class='output co'>#&gt;                    CD4 T       CD8 T Memory CD4 T  CD14+ Mono Naive CD4 T
+)</div><div class='output co'>#&gt; <span class='message'>The following clusters have less than 10 cells for this analysis: . Classification is likely inaccurate.</span></div><div class='output co'>#&gt;                    CD4 T       CD8 T Memory CD4 T  CD14+ Mono Naive CD4 T
 #&gt; Naive CD4 T  0.001246883 0.001246883            0 0.003750000           0
 #&gt; Memory CD4 T 0.001246883 0.000000000            0 0.003750000           0
 #&gt; CD14+ Mono   0.000000000 0.000000000            0 0.003750000           0

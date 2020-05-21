@@ -148,6 +148,7 @@
   <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>rm0</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>low_threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='no'>...</span>
 )</pre>
 
@@ -182,6 +183,10 @@
       <th>if_log</th>
       <td><p>input data is natural log,
 averaging will be done on unlogged data</p></td>
+    </tr>
+    <tr>
+      <th>low_threshold</th>
+      <td><p>option to remove clusters with too few cells</p></td>
     </tr>
     <tr>
       <th>...</th>

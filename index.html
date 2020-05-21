@@ -104,6 +104,13 @@
 <div class="sourceCode" id="cb1"><pre class="r"><span class="co"># install.packages("remotes")</span>
 <span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"rnabioco/clustifyr"</span>)</pre></div>
 </div>
+<div id="additional-info" class="section level2">
+<h2 class="hasAnchor">
+<a href="#additional-info" class="anchor"></a>Additional info</h2>
+<p>Additional tutorials at <a href="https://rnabioco.github.io/clustifyrdata/articles/otherformats.html" class="uri">https://rnabioco.github.io/clustifyrdata/articles/otherformats.html</a></p>
+<p><a href="https://github.com/rnabioco/clustifyrdata/blob/master/inst/run_clustifyr.R">Script</a> for benchmarking, compatible with <a href="https://github.com/tabdelaal/scRNAseq_Benchmark"><code>scRNAseq_Benchmark</code></a></p>
+<p>More reference data (including tabula muris, immgen, etc) are available at supplement package <a href="https://github.com/rnabioco/clustifyrdata"><code>clustifyrdata</code></a>. Also see <a href="https://rnabioco.github.io/clustifyrdata/articles/download_refs.html">list</a> for individual downloads.</p>
+</div>
 <div id="example-usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example-usage" class="anchor"></a>Example usage</h2>
@@ -166,7 +173,7 @@
 <span class="co">#&gt; colnames(200): AZ_A1 AZ_A10 ... HP1502401_E18 HP1502401_E19</span>
 <span class="co">#&gt; colData names(35): cell_quality cell_type1 ... type r</span>
 <span class="co">#&gt; reducedDimNames(0):</span>
-<span class="co">#&gt; spikeNames(1): ERCC</span>
+<span class="co">#&gt; altExpNames(0):</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">Seurat</span>)
 
@@ -189,7 +196,7 @@
 )
 <span class="co">#&gt; An object of class Seurat </span>
 <span class="co">#&gt; 230 features across 80 samples within 1 assay </span>
-<span class="co">#&gt; Active assay: RNA (230 features)</span>
+<span class="co">#&gt; Active assay: RNA (230 features, 20 variable features)</span>
 <span class="co">#&gt;  2 dimensional reductions calculated: pca, tsne</span></pre></div>
 <p>New reference matrix can be made directly from <code>SingleCellExperiment</code> and <code>seurat</code> objects as well. Other scRNAseq experiment object types are supported as well.</p>
 <div class="sourceCode" id="cb4"><pre class="r"><span class="co"># make reference from SingleCellExperiment objects</span>
@@ -197,7 +204,6 @@
   <span class="kw">input</span> <span class="kw">=</span> <span class="no">sce_small</span>,               <span class="co"># SCE object</span>
   <span class="kw">cluster_col</span> <span class="kw">=</span> <span class="st">"cell_type1"</span>       <span class="co"># name of column in colData containing cell identities</span>
 )
-<span class="co">#&gt; recognized object type - SingleCellExperiment</span>
 
 <span class="co"># make reference from seurat objects</span>
 <span class="no">s_ref</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/seurat_ref.html">seurat_ref</a></span>(
@@ -251,13 +257,6 @@
 )
 <span class="co">#&gt; An old seurat object</span>
 <span class="co">#&gt;  230 genes across 80 samples</span></pre></div>
-</div>
-<div id="additional-reference-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#additional-reference-data" class="anchor"></a>Additional reference data</h2>
-<p>More reference data (including tabula muris, immgen, etc) are available at <a href="https://github.com/rnabioco/clustifyrdata" class="uri">https://github.com/rnabioco/clustifyrdata</a>.</p>
-<p>Also see list for individual downloads at <a href="https://rnabioco.github.io/clustifyrdata/articles/download_refs.html" class="uri">https://rnabioco.github.io/clustifyrdata/articles/download_refs.html</a></p>
-<p>Additional tutorials at <a href="https://rnabioco.github.io/clustifyrdata/articles/otherformats.html" class="uri">https://rnabioco.github.io/clustifyrdata/articles/otherformats.html</a></p>
 </div>
 </div>
   </div>
