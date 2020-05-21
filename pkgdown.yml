@@ -3,7 +3,8 @@ pkgdown: 1.5.0.9000
 pkgdown_sha: 2bdebb7e4010d1b936558c79ad0b7ebf1e23f420
 articles:
   clustifyR: clustifyR.html
-last_built: 2020-04-17T03:02Z
+  geo-annotations: geo-annotations.html
+last_built: 2020-05-21T18:05Z
 urls:
   reference: http://rnabioco.github.io/clustifyr/reference
   article: http://rnabioco.github.io/clustifyr/articles
