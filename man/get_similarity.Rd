@@ -12,6 +12,7 @@ get_similarity(
   per_cell = FALSE,
   rm0 = FALSE,
   if_log = TRUE,
+  low_threshold = 0,
   ...
 )
 }
@@ -30,6 +31,8 @@ get_similarity(
 
 \item{if_log}{input data is natural log,
 averaging will be done on unlogged data}
+
+\item{low_threshold}{option to remove clusters with too few cells}
 
 \item{...}{additional parameters not used yet}
 }
