@@ -5,15 +5,19 @@ Changes in version 0.0.1 (2019-02-01)
 
 Changes in version 0.0.2 (2019-05-29)
 + Updated discussions, benchmark, and visualization example pages
-+ reorganized `clustifyrdata` data package
++ Reorganized `clustifyrdata` data package
 
 Changes in version 0.0.3 (2019-09-06)
-+ support of SingleCellExperiment objects and more
-+ bug fixes
++ Support of SingleCellExperiment objects and more
++ Bug fixes
 
 Changes in version 0.99.0 (2019-11-06)
 + Update to tutorials
-+ bug fixes
-+ cleanup for bioc
++ Refactor arguments
++ Bug fixes
++ Cleanup for bioc
 
+Changes in version 1.1.0 (2019-05-21)
++ Bioc release
++ Bug fixes
 
