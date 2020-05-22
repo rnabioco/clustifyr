@@ -5,7 +5,7 @@
 \alias{s_small3}
 \title{Small clustered Seurat3 object}
 \format{
-An object of class \code{Seurat} of length 1.
+An object of class \code{Seurat} with 230 rows and 80 columns.
 }
 \source{
 \verb{[pbmc_small]} processed by Seurat

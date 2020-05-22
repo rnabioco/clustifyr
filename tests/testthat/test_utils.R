@@ -123,6 +123,17 @@ test_that("average_clusters works when low cell number clusters should be remove
     expect_equal(ncol(pbmc_avg2), 9)
 })
 
+test_that("average_clusters works when low cell number clusters is kept but issues warning", {
+    pbmc_meta2 <- pbmc_meta %>% mutate(classified = as.character(classified))
+    pbmc_meta2[1, "classified"] <- 15
+    pbmc_avg2 <- average_clusters(pbmc_matrix_small,
+                                  pbmc_meta2,
+                                  low_threshold = 0,
+                                  cluster_col = "classified"
+    )
+    expect_equal(ncol(pbmc_avg2), 10)
+})
+
 test_that("average_clusters works with cutoff gene number", {
     pbmc_avg2 <- average_clusters(
         pbmc_matrix_small,

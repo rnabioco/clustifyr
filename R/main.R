@@ -100,7 +100,7 @@ clustify.default <- function(input,
                              seurat_out = TRUE,
                              rename_prefix = NULL,
                              threshold = "auto",
-                             low_threshold_cell = 10,
+                             low_threshold_cell = 0,
                              exclude_genes = c(),
                              if_log = TRUE,
                              ...) {
@@ -210,6 +210,7 @@ clustify.default <- function(input,
             compute_method = compute_method,
             rm0 = rm0,
             if_log = if_log,
+            low_threshold = low_threshold_cell,
             ...
         )
     } else {
@@ -583,7 +584,7 @@ clustify_lists.default <- function(input,
                                    seurat_out = TRUE,
                                    rename_prefix = NULL,
                                    threshold = 0,
-                                   low_threshold_cell = 10,
+                                   low_threshold_cell = 0,
                                    ...) {
     input_original <- input
     if (!inherits(input, c("matrix", "Matrix", "data.frame"))) {
@@ -620,7 +621,7 @@ clustify_lists.default <- function(input,
 
     bin_input <- binarize_expr(input, n = topn, cut = cut)
 
-    if (marker_inmatrix != TRUE) {
+    if (marker_inmatrix != TRUE & metric != "posneg") {
         marker <- matrixize_markers(
             marker,
             ...
@@ -668,7 +669,10 @@ clustify_lists.default <- function(input,
             output_high = output_high
         )
     } else {
-        if (length(marker) > 1) {
+        if (is.data.frame(marker)) {
+            marker <- as.matrix(marker)
+        }
+        if (!is.numeric(marker)) {
             marker <- pos_neg_marker(marker)
         }
         res <- pos_neg_select(input,

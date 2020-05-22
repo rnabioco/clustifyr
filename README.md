@@ -26,6 +26,21 @@ between single cell RNA-seq datasets and reference data.
 remotes::install_github("rnabioco/clustifyr")
 ```
 
+## Additional info
+
+Additional tutorials at
+<https://rnabioco.github.io/clustifyrdata/articles/otherformats.html>
+
+[Script](https://github.com/rnabioco/clustifyrdata/blob/master/inst/run_clustifyr.R)
+for benchmarking, compatible with
+[`scRNAseq_Benchmark`](https://github.com/tabdelaal/scRNAseq_Benchmark)
+
+More reference data (including tabula muris, immgen, etc) are available
+at supplement package
+[`clustifyrdata`](https://github.com/rnabioco/clustifyrdata). Also see
+[list](https://rnabioco.github.io/clustifyrdata/articles/download_refs.html)
+for individual downloads.
+
 ## Example usage
 
 In this example we use the following built-in input data:
@@ -99,7 +114,7 @@ clustify(
 #> colnames(200): AZ_A1 AZ_A10 ... HP1502401_E18 HP1502401_E19
 #> colData names(35): cell_quality cell_type1 ... type r
 #> reducedDimNames(0):
-#> spikeNames(1): ERCC
+#> altExpNames(0):
 
 library(Seurat)
 
@@ -122,7 +137,7 @@ clustify(
 )
 #> An object of class Seurat 
 #> 230 features across 80 samples within 1 assay 
-#> Active assay: RNA (230 features)
+#> Active assay: RNA (230 features, 20 variable features)
 #>  2 dimensional reductions calculated: pca, tsne
 ```
 
@@ -136,7 +151,6 @@ sce_ref <- object_ref(
   input = sce_small,               # SCE object
   cluster_col = "cell_type1"       # name of column in colData containing cell identities
 )
-#> recognized object type - SingleCellExperiment
 
 # make reference from seurat objects
 s_ref <- seurat_ref(
@@ -196,14 +210,3 @@ clustify_lists(
 #> An old seurat object
 #>  230 genes across 80 samples
 ```
-
-## Additional reference data
-
-More reference data (including tabula muris, immgen, etc) are available
-at <https://github.com/rnabioco/clustifyrdata>.
-
-Also see list for individual downloads at
-<https://rnabioco.github.io/clustifyrdata/articles/download_refs.html>
-
-Additional tutorials at
-<https://rnabioco.github.io/clustifyrdata/articles/otherformats.html>

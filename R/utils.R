@@ -146,7 +146,17 @@ average_clusters <- function(mat,
         fil <- vapply(cluster_ids,
                       FUN = length,
                       FUN.VALUE = numeric(1)) >= low_threshold
+        message("The following clusters have less than ", low_threshold, " cells for this analysis: ", 
+                paste(colnames(out)[!as.vector(fil)], sep = ", "),
+                ". They are excluded.")
         out <- out[, as.vector(fil)]
+    } else {
+        fil <- vapply(cluster_ids,
+                      FUN = length,
+                      FUN.VALUE = numeric(1)) >= 10
+        message("The following clusters have less than ", 10, " cells for this analysis: ", 
+                paste(colnames(out)[!as.vector(fil)], sep = ", "),
+                ". Classification is likely inaccurate.")
     }
     if (!(is.null(cut_n))) {
         expr_mat <- out
@@ -1585,6 +1595,7 @@ pos_neg_select <- function(input,
         )
     )
     res[is.na(res)] <- 0
+    
     suppressWarnings(
         res2 <- average_clusters(
             t(res),
