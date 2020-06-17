@@ -187,7 +187,7 @@ plot_dims <- function(data,
                         x = !!dplyr::sym("t1"),
                         y = !!dplyr::sym("t2"),
                         alpha = !!dplyr::sym("a"),
-                        label = alldata[[feature]]
+                        label = .data[[feature]]
                     ),
                     point.padding = 0.5,
                     box.padding = 0.5,
