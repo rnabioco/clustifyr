@@ -146,7 +146,7 @@ average_clusters <- function(mat,
         fil <- vapply(cluster_ids,
                       FUN = length,
                       FUN.VALUE = numeric(1)) >= low_threshold
-        message("The following clusters have less than ", low_threshold, " cells for this analysis: ", 
+        message("The following clusters have less than ", low_threshold, " cells for this analysis: ",
                 paste(colnames(out)[!as.vector(fil)], sep = ", "),
                 ". They are excluded.")
         out <- out[, as.vector(fil)]
@@ -154,7 +154,7 @@ average_clusters <- function(mat,
         fil <- vapply(cluster_ids,
                       FUN = length,
                       FUN.VALUE = numeric(1)) >= 10
-        message("The following clusters have less than ", 10, " cells for this analysis: ", 
+        message("The following clusters have less than ", 10, " cells for this analysis: ",
                 paste(colnames(out)[!as.vector(fil)], sep = ", "),
                 ". Classification is likely inaccurate.")
     }
@@ -1101,6 +1101,8 @@ insert_meta_object <- function(input,
 #' @param newclustering use kmeans if NULL on dr
 #' or col name for second column of clustering
 #' @param threshold type calling threshold
+#' @param combine if TRUE return a single plot with combined panels, if
+#' FALSE return list of plots (default: TRUE)
 #' @return faceted ggplot object
 #' @examples
 #' set.seed(42)
@@ -1125,7 +1127,8 @@ overcluster_test <- function(expr,
                              threshold = 0,
                              do_label = TRUE,
                              do_legend = FALSE,
-                             newclustering = NULL) {
+                             newclustering = NULL,
+                             combine = TRUE) {
     if (is.null(newclustering)) {
         metadata$new_clusters <-
             as.character(stats::kmeans(metadata[, c(x_col, y_col)],
@@ -1198,12 +1201,23 @@ overcluster_test <- function(expr,
         x = x_col,
         y = y_col
     )
-    g <- suppressWarnings(cowplot::plot_grid(o1, o2, p1, p2,
-        labels = c(
-            length(unique(metadata[[cluster_col]])),
-            n * length(unique(metadata[[cluster_col]]))
-        ))
-    )
+    n_orig_clusters <- length(unique(metadata[[cluster_col]]))
+    n_new_clusters <- n * length(unique(metadata[[cluster_col]]))
+
+    if(combine){
+        g <- suppressWarnings(cowplot::plot_grid(o1, o2, p1, p2,
+                                                 labels = c(
+                                                     n_orig_clusters,
+                                                     n_new_clusters
+                                                 ))
+        )
+    } else {
+        g <- list(original_clusters = o1,
+                  new_clusters = o2,
+                  original_cell_types = p1,
+                  new_cell_types = p2)
+    }
+
     return(g)
 }
 
@@ -1595,7 +1609,7 @@ pos_neg_select <- function(input,
         )
     )
     res[is.na(res)] <- 0
-    
+
     suppressWarnings(
         res2 <- average_clusters(
             t(res),

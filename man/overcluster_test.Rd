@@ -17,7 +17,8 @@ overcluster_test(
   threshold = 0,
   do_label = TRUE,
   do_legend = FALSE,
-  newclustering = NULL
+  newclustering = NULL,
+  combine = TRUE
 )
 }
 \arguments{
@@ -49,6 +50,9 @@ use all genes if NULL}
 
 \item{newclustering}{use kmeans if NULL on dr
 or col name for second column of clustering}
+
+\item{combine}{if TRUE return a single plot with combined panels, if
+FALSE return list of plots (default: TRUE)}
 }
 \value{
 faceted ggplot object
