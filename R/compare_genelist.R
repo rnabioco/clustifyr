@@ -69,6 +69,16 @@ matrixize_markers <- function(marker_df,
     # equal number of marker genes per known cluster
     marker_df <- dplyr::as_tibble(marker_df)
 
+    # if "feature" and "group" are present, 
+    # assume the dataframe is output from presto
+    if (("feature" %in% colnames(marker_df)) & ("group" %in% colnames(marker_df))) {
+        marker_df <- marker_df %>% dplyr::rename(gene = "feature",
+                                                 cluster = "group") %>%
+            dplyr::group_by(cluster) %>% 
+            dplyr::arrange(padj, .by_group = TRUE) %>% 
+            ungroup()
+    }
+    
     # if "gene" not present in column names,
     # assume df is a matrix to be converted to ranked
     if (!("gene" %in% colnames(marker_df))) {
