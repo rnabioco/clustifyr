@@ -153,7 +153,8 @@
   <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>do_label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>do_legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>newclustering</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+  <span class='kw'>newclustering</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>combine</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -213,6 +214,11 @@ use all genes if NULL</p></td>
       <th>newclustering</th>
       <td><p>use kmeans if NULL on dr
 or col name for second column of clustering</p></td>
+    </tr>
+    <tr>
+      <th>combine</th>
+      <td><p>if TRUE return a single plot with combined panels, if
+FALSE return list of plots (default: TRUE)</p></td>
     </tr>
     </table>
 
