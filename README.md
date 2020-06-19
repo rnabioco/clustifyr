@@ -28,8 +28,11 @@ remotes::install_github("rnabioco/clustifyr")
 
 ## Additional info
 
-Additional tutorials at
-<https://rnabioco.github.io/clustifyrdata/articles/otherformats.html>
+[Intro](https://rnabioco.github.io/clustifyr/articles/clustifyR.html)
+tutorial
+
+[Additional](https://rnabioco.github.io/clustifyrdata/articles/otherformats.html)
+tutorials
 
 [Script](https://github.com/rnabioco/clustifyrdata/blob/master/inst/run_clustifyr.R)
 for benchmarking, compatible with
@@ -151,6 +154,7 @@ sce_ref <- object_ref(
   input = sce_small,               # SCE object
   cluster_col = "cell_type1"       # name of column in colData containing cell identities
 )
+#> The following clusters have less than 10 cells for this analysis: co-expressionductalendothelialepsilonMHC class IIPSC. Classification is likely inaccurate.
 
 # make reference from seurat objects
 s_ref <- seurat_ref(
