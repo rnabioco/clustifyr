@@ -1,4 +1,4 @@
 globalVariables(c(
     ".", "important", "gene", "cluster", "classified",
-    "bulk_cluster", "error"
+    "bulk_cluster", "error", "padj"
 ))
