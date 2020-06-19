@@ -205,7 +205,8 @@ han number of types show large diff</p></td>
     <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>cbmc_ref</span>,
     <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='no'>pbmc_vargenes</span>,
     <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>
-)</div><div class='output co'>#&gt; <span class='message'>The following clusters have less than 10 cells for this analysis: . Classification is likely inaccurate.</span></div><div class='input'><span class='no'>call1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='cor_to_call.html'>cor_to_call</a></span>(
+)
+<span class='no'>call1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='cor_to_call.html'>cor_to_call</a></span>(
     <span class='no'>res</span>,
     <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
     <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
@@ -222,7 +223,7 @@ han number of types show large diff</p></td>
     <span class='no'>pbmc_meta2</span>, <span class='st'>"type"</span>,
     <span class='no'>cbmc_ref</span>,
     <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='no'>pbmc_vargenes</span>
-)</div><div class='output co'>#&gt; <span class='message'>The following clusters have less than 10 cells for this analysis: . Classification is likely inaccurate.</span></div><div class='output co'>#&gt;      B CD14+ Mono CD16+ Mono CD4 T DC NK</div></pre>
+)</div><div class='output co'>#&gt;      B CD14+ Mono CD16+ Mono CD4 T DC NK</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

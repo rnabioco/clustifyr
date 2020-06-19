@@ -107,7 +107,8 @@
 <div id="additional-info" class="section level2">
 <h2 class="hasAnchor">
 <a href="#additional-info" class="anchor"></a>Additional info</h2>
-<p>Additional tutorials at <a href="https://rnabioco.github.io/clustifyrdata/articles/otherformats.html" class="uri">https://rnabioco.github.io/clustifyrdata/articles/otherformats.html</a></p>
+<p><a href="https://rnabioco.github.io/clustifyr/articles/clustifyR.html">Intro</a> tutorial</p>
+<p><a href="https://rnabioco.github.io/clustifyrdata/articles/otherformats.html">Additional</a> tutorials</p>
 <p><a href="https://github.com/rnabioco/clustifyrdata/blob/master/inst/run_clustifyr.R">Script</a> for benchmarking, compatible with <a href="https://github.com/tabdelaal/scRNAseq_Benchmark"><code>scRNAseq_Benchmark</code></a></p>
 <p>More reference data (including tabula muris, immgen, etc) are available at supplement package <a href="https://github.com/rnabioco/clustifyrdata"><code>clustifyrdata</code></a>. Also see <a href="https://rnabioco.github.io/clustifyrdata/articles/download_refs.html">list</a> for individual downloads.</p>
 </div>
@@ -204,6 +205,7 @@
   <span class="kw">input</span> <span class="kw">=</span> <span class="no">sce_small</span>,               <span class="co"># SCE object</span>
   <span class="kw">cluster_col</span> <span class="kw">=</span> <span class="st">"cell_type1"</span>       <span class="co"># name of column in colData containing cell identities</span>
 )
+<span class="co">#&gt; The following clusters have less than 10 cells for this analysis: co-expressionductalendothelialepsilonMHC class IIPSC. Classification is likely inaccurate.</span>
 
 <span class="co"># make reference from seurat objects</span>
 <span class="no">s_ref</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/seurat_ref.html">seurat_ref</a></span>(
