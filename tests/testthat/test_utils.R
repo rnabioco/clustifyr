@@ -51,6 +51,15 @@ test_that("average_clusters works as intended", {
     expect_equal(nrow(pbmc_avg2), 2000)
 })
 
+test_that("average_clusters reports error when supplied cluster vector doesn't match number of cols", {
+    expect_error(
+        pbmc_avg2 <- average_clusters(pbmc_matrix_small,
+                                      pbmc_meta$classified[1:2],
+                                      if_log = FALSE
+        )
+    )
+})
+
 test_that("average_clusters works with disordered data", {
     pbmc_meta2 <- rbind(pbmc_meta[1320:2638, ], pbmc_meta[1:1319, ])
     pbmc_avg2 <- average_clusters(

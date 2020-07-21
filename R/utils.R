@@ -80,6 +80,10 @@ average_clusters <- function(mat,
         }
     }
     if (is.vector(cluster_info)) {
+        if (ncol(mat) != length(cluster_info)) {
+            stop("vector of cluster assignments does not match the number of columns in the matrix",
+                 call. = FALSE)
+        }
         cluster_ids <- split(colnames(mat), cluster_info)
     } else if (is.data.frame(cluster_info) & !is.null(cluster_col)) {
         cluster_info_temp <- cluster_info[[cluster_col]]
@@ -89,6 +93,10 @@ average_clusters <- function(mat,
         cluster_ids <- split(colnames(mat), cluster_info_temp)
     } else if (is.factor(cluster_info)) {
         cluster_info <- as.character(cluster_info)
+        if (ncol(mat) != length(cluster_info)) {
+            stop("vector of cluster assignments does not match the number of columns in the matrix",
+                 call. = FALSE)
+        }
         cluster_ids <- split(colnames(mat), cluster_info)
     } else {
         stop("metadata not formatted correctly,
@@ -148,7 +156,7 @@ average_clusters <- function(mat,
                       FUN.VALUE = numeric(1)) >= low_threshold
         if (!all(as.vector(fil))) {
             message("The following clusters have less than ", low_threshold, " cells for this analysis: ",
-                    paste(colnames(out)[!as.vector(fil)], sep = ", "),
+                    paste(colnames(out)[!as.vector(fil)], collapse = ", "),
                     ". They are excluded.")
         }
         out <- out[, as.vector(fil)]
@@ -158,7 +166,7 @@ average_clusters <- function(mat,
                       FUN.VALUE = numeric(1)) >= 10
         if (!all(as.vector(fil))) {
             message("The following clusters have less than ", 10, " cells for this analysis: ",
-                    paste(colnames(out)[!as.vector(fil)], sep = ", "),
+                    paste(colnames(out)[!as.vector(fil)], collapse = ", "),
                     ". Classification is likely inaccurate.")
         }
     }
@@ -194,7 +202,7 @@ percent_clusters <- function(mat,
 
     average_clusters(mat, cluster_info,
         if_log = FALSE,
-        metadata = cluster_col
+        cluster_col = cluster_col
     )
 }
 
