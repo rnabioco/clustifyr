@@ -1868,23 +1868,23 @@ find_rank_bias <- function(mat,
 #' @param geneVector char vector with gene names
 #' @param GSEMatrix Reference matrix containing cell types vs. gene expression values
 #' @return Reference matrix with union of all genes
-append_Genes <- function(gene_Vector, GSEMatrix)
+append_Genes <- function(gene_Vector, GSE_Matrix)
 {
-    rownamesGSEMatrix <- rownames(GSEMatrix) #Get rownames from GSEMatrix (new GSE file)
+    rownamesGSEMatrix <- rownames(GSE_Matrix) #Get rownames from GSEMatrix (new GSE file)
     
-    rowCountHumanGenes <- nrow(geneVector) #Calculate number of rows from list of full human genes
-    rowCountNewGSEFile <- nrow(GSEMatrix) #Calculate number of rows of GSE matrix
+    rowCountHumanGenes <- nrow(gene_Vector) #Calculate number of rows from list of full human genes
+    rowCountNewGSEFile <- nrow(GSE_Matrix) #Calculate number of rows of GSE matrix
     
-    missing_rows <- setdiff(geneVector, rownamesGSEMatrix) #Use setdiff function to figure out rows which are different/missing from GSE matrix
+    missing_rows <- setdiff(gene_Vector, rownamesGSEMatrix) #Use setdiff function to figure out rows which are different/missing from GSE matrix
     
-    zeroExpressionMatrix <- matrix(0, nrow = length(missing_rows), ncol = ncol(GSEMatrix)) #Create a placeholder matrix with zeroes and missing_rows length as row length
+    zeroExpressionMatrix <- matrix(0, nrow = length(missing_rows), ncol = ncol(GSE_Matrix)) #Create a placeholder matrix with zeroes and missing_rows length as row length
     
     rownames(zeroExpressionMatrix) <- missing_rows #Assign row names
-    colnames(zeroExpressionMatrix) <- colnames(GSEMatrix) #Assign column names
+    colnames(zeroExpressionMatrix) <- colnames(GSE_Matrix) #Assign column names
     
-    fullMatrix <- rbind(GSEMatrix, zeroExpressionMatrix) #Bind GSEMatrix and zeroExpressionMatrix together
+    fullMatrix <- rbind(GSE_Matrix, zeroExpressionMatrix) #Bind GSEMatrix and zeroExpressionMatrix together
     
     #Reorder matrix
-    fullMatrix <- fullMatrix[geneVector, ] #Reorder fullMatrix to preserve gene order
-    return(fullMatrix) #Return fullMatrix
+    full_Matrix <- full_Matrix[gene_Vector, ] #Reorder fullMatrix to preserve gene order
+    return(full_Matrix) #Return fullMatrix
 }
