@@ -1870,17 +1870,17 @@ find_rank_bias <- function(mat,
 #' @param ref_matrix Reference matrix containing cell types vs. 
 #' gene expression values
 #' @return Reference matrix with union of all genes
-append_genes <- function(gene_Vector, ref_matrix)
+append_genes <- function(gene_vector, ref_matrix)
 {
     rownamesGSEMatrix <- rownames(ref_matrix) 
     #Get rownames from GSEMatrix (new GSE file)
     
-    rowCountHumanGenes <- nrow(gene_Vector) 
+    rowCountHumanGenes <- nrow(gene_vector) 
     #Calculate number of rows from list of full human genes
     rowCountNewGSEFile <- nrow(ref_matrix) 
     #Calculate number of rows of GSE matrix
     
-    missing_rows <- setdiff(gene_Vector, rownamesGSEMatrix) 
+    missing_rows <- setdiff(gene_vector, rownamesGSEMatrix) 
     #Use setdiff function to figure out rows which are different/missing 
     #from GSE matrix
     
@@ -1899,7 +1899,7 @@ append_genes <- function(gene_Vector, ref_matrix)
     #Bind GSEMatrix and zeroExpressionMatrix together
     
     #Reorder matrix
-    full_matrix <- full_matrix[gene_Vector, ] 
+    full_matrix <- full_matrix[gene_vector, ] 
     #Reorder fullMatrix to preserve gene order
     return(full_matrix) 
     #Return fullMatrix
