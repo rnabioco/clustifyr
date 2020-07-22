@@ -1293,3 +1293,18 @@ test_that("object_data works with Seuratv3", {
     )
     expect_true(ncol(mat) == 80)
 })
+
+test_that("append_genes creates a union reference matrix", {
+    mat <- append_genes(
+        gene_vector = ,
+        ref_matrix = 
+    )
+})
+
+test_that("check raw counts of matrices", {
+    mat <- check_raw_counts(
+        counts_matrix = , 
+        max_log_value = 50 
+    )
+})
+
