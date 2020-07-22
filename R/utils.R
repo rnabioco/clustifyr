@@ -1868,7 +1868,7 @@ find_rank_bias <- function(mat,
 #' @param geneVector char vector with gene names
 #' @param GSEMatrix Reference matrix containing cell types vs. gene expression values
 #' @return Reference matrix with union of all genes
-append_Genes <- function(gene_Vector, GSE_Matrix)
+append_genes <- function(gene_Vector, GSE_Matrix)
 {
     rownamesGSEMatrix <- rownames(GSE_Matrix) #Get rownames from GSEMatrix (new GSE file)
     
@@ -1893,7 +1893,9 @@ append_Genes <- function(gene_Vector, GSE_Matrix)
 #' @param GSE_Matrix Count matrix containing scRNA-seq read data
 #' @param max_log_value Static value to determine if a matrix is normalized
 #' @return String either raw counts, log-normalized or normalized
-check_Raw_Counts <- function(GSE_Matrix, max_log_value = 50)
+#' @example 
+#' @export
+check_raw_counts <- function(GSE_Matrix, max_log_value = 50)
 {
     if(!is.matrix(GSE_Matrix))
     {
@@ -1936,6 +1938,9 @@ check_Raw_Counts <- function(GSE_Matrix, max_log_value = 50)
 #' in the output matrix
 #' @param output_fn output filename for .rds file. If NULL the matrix will be returned instead of
 #' saving
+#' @example
+#' 
+#' @export
 build_atlas <- function(matrix_fns,
                         genes_fn,
                         output_fn = NULL){
