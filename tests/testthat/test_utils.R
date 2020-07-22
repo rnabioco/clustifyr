@@ -1299,13 +1299,13 @@ test_that("append_genes creates a union reference matrix", {
         gene_vector = human_genes_10x,
         ref_matrix = cbmc_ref 
     )
-    expect_true(nrows(mat) == 33388)
+    expect_true(nrow(mat) == 33388)
 })
 
 test_that("check raw counts of matrices", {
     mat <- check_raw_counts(
-        counts_matrix = pbmc_markers, 
-        max_log_value = 50 
+        counts_matrix = pbmc_matrix_small, 
+        max_log_value = 50
     )
     expect_true(mat == "raw counts")
 })
