@@ -1980,7 +1980,7 @@ build_atlas <- function(matrix_fns,
     new_mats <- list()
     for(i in seq_along(ref_mats)){
         # standardize genes in matrix
-        mat <- append_Genes(geneVector = genesVector,
+        mat <- append_genes(geneVector = genesVector,
                            GSEMatrix = as.matrix(ref_mats[[i]]))
         # get study name
         mat_name <- names(ref_mats)[i]
