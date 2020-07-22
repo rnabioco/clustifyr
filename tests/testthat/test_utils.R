@@ -1303,6 +1303,9 @@ test_that("append_genes creates a union reference matrix", {
 })
 
 test_that("check raw counts of matrices", {
+    if (is(pbmc_matrix_small, 'sparseMatrix')) {
+        pbmc_matrix_small <- as.matrix(pbmc_matrix_small)
+    }
     mat <- check_raw_counts(
         counts_matrix = pbmc_matrix_small, 
         max_log_value = 50
