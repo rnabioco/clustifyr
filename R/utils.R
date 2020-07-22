@@ -1919,7 +1919,7 @@ append_genes <- function(gene_vector, ref_matrix)
 check_raw_counts <- function(counts_matrix, max_log_value = 50)
 {
     if (is(counts_matrix, 'sparseMatrix')) {
-        counts_matrix <- as.matrix(pbmc_matrix_small)
+        counts_matrix <- as.matrix(counts_matrix)
     }
     if(!is.matrix(counts_matrix))
     {
