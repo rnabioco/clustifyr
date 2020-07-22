@@ -20,6 +20,8 @@ reference matrix from seurat citeseq CBMC tutorial
 Other data: 
 \code{\link{cbmc_m}},
 \code{\link{downrefs}},
+\code{\link{human_genes_10x}},
+\code{\link{mouse_genes_10x}},
 \code{\link{object_loc_lookup}},
 \code{\link{pbmc_markers_M3Drop}},
 \code{\link{pbmc_markers}},
