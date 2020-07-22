@@ -1888,3 +1888,42 @@ append_Genes <- function(gene_Vector, GSE_Matrix)
     full_Matrix <- full_Matrix[gene_Vector, ] #Reorder fullMatrix to preserve gene order
     return(full_Matrix) #Return fullMatrix
 }
+
+#' Given a count matrix, determine if the matrix has been either log-normalized, normalized, or contains raw counts
+#' @param GSE_Matrix Count matrix containing scRNA-seq read data
+#' @param max_log_value Static value to determine if a matrix is normalized
+#' @return String either raw counts, log-normalized or normalized
+check_Raw_Counts <- function(GSE_Matrix, max_log_value = 50)
+{
+    if(!is.matrix(GSE_Matrix))
+    {
+        GSEMatrix <- as.matrix(GSE_Matrix)
+    }
+    if (is.integer(GSE_Matrix))
+    {
+        return("raw counts")
+    }
+    else if (is.double(GSE_Matrix))
+    {
+        if (all(GSE_Matrix == floor(GSE_Matrix)))
+        {
+            return("raw counts")
+        }
+        if(max(GSE_Matrix) > max_log_value)
+        {
+            return("normalized")
+        }
+        else if (min(GSE_Matrix) < 0)
+        {
+            stop("negative values detected, likely scaled data")
+        }
+        else
+        {
+            return("log-normalized")
+        }
+    }
+    else
+    {
+        stop("unknown matrix format: ", typeof(GSE_Matrix))
+    }
+}
