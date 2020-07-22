@@ -1307,6 +1307,6 @@ test_that("check raw counts of matrices", {
         counts_matrix = pbmc_matrix_small, 
         max_log_value = 50
     )
-    expect_true(mat == "raw counts")
+    expect_true(mat == "log-normalized")
 })
 
