@@ -1980,7 +1980,7 @@ build_atlas <- function(matrix_fns,
     new_mats <- list()
     for(i in seq_along(ref_mats)){
         # standardize genes in matrix
-        mat <- clustifyr:::append_genes(gene_vector = genesVector,
+        mat <- append_genes(gene_vector = genesVector,
                            ref_matrix = as.matrix(ref_mats[[i]]))
         # get study name
         mat_name <- names(ref_mats)[i]
