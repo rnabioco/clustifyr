@@ -84,3 +84,15 @@
 #' @family data
 #' @source  various packages
 "downrefs"
+
+#' Vector of human genes for 10x cellranger pipeline
+#'
+#' @family data
+#' @source \url{https://support.10xgenomics.com/single-cell-gene-expression/software/downloads/latest}
+"human_genes_10x"
+
+#' Vector of mouse genes for 10x cellranger pipeline
+#'
+#' @family data
+#' @source \url{https://support.10xgenomics.com/single-cell-gene-expression/software/downloads/latest}
+"mouse_genes_10x"
