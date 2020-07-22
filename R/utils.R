@@ -1967,7 +1967,7 @@ build_atlas <- function(matrix_fns,
     ref_mats <- lapply(matrix_fns, readRDS)
     
     if(is.null(names(matrix_fns))){
-        names(ref_mats) <- basename(ref_matrices_fns) %>% str_remove(".rds$")
+        names(ref_mats) <- basename(matrices_fns) %>% str_remove(".rds$")
     } else {
         names(ref_mats) <- names(matrix_fns)
     }
