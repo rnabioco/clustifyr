@@ -1299,7 +1299,7 @@ test_that("append_genes creates a union reference matrix", {
         gene_vector = human_genes_10x,
         ref_matrix = cbmc_ref 
     )
-    expect_true(nrow(mat) == 33388)
+    expect_true(nrow(mat) == 33514)
 })
 
 test_that("check raw counts of matrices", {

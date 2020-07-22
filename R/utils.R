@@ -1875,7 +1875,7 @@ append_genes <- function(gene_vector, ref_matrix)
     rownamesGSEMatrix <- rownames(ref_matrix) 
     #Get rownames from GSEMatrix (new GSE file)
     
-    rowCountHumanGenes <- nrow(gene_vector) 
+    rowCountHumanGenes <- length(gene_vector) 
     #Calculate number of rows from list of full human genes
     rowCountNewGSEFile <- nrow(ref_matrix) 
     #Calculate number of rows of GSE matrix
