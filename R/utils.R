@@ -1966,12 +1966,12 @@ build_atlas <- function(matrix_fns,
                         genes_fn,
                         output_fn = NULL){
     
-    genesVector <- read_lines(genes_fn)
+    genesVector <- readr::read_lines(genes_fn)
     
     ref_mats <- lapply(matrix_fns, readRDS)
     
     if(is.null(names(matrix_fns))){
-        names(ref_mats) <- basename(matrix_fns) %>% str_remove(".rds$")
+        names(ref_mats) <- basename(matrix_fns) %>% stringr::str_remove(".rds$")
     } else {
         names(ref_mats) <- names(matrix_fns)
     }
@@ -1980,7 +1980,7 @@ build_atlas <- function(matrix_fns,
     new_mats <- list()
     for(i in seq_along(ref_mats)){
         # standardize genes in matrix
-        mat <- append_genes(geneVector = genesVector,
+        mat <- clustifyr:::appendGenes(geneVector = genesVector,
                            GSEMatrix = as.matrix(ref_mats[[i]]))
         # get study name
         mat_name <- names(ref_mats)[i]
