@@ -1296,15 +1296,17 @@ test_that("object_data works with Seuratv3", {
 
 test_that("append_genes creates a union reference matrix", {
     mat <- append_genes(
-        gene_vector = ,
-        ref_matrix = 
+        gene_vector = human_genes_10x,
+        ref_matrix = cbmc_ref 
     )
+    expect_true(nrows(mat) == 33388)
 })
 
 test_that("check raw counts of matrices", {
     mat <- check_raw_counts(
-        counts_matrix = , 
+        counts_matrix = pbmc_markers, 
         max_log_value = 50 
     )
+    expect_true(mat == "raw counts")
 })
 

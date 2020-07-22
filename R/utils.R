@@ -1863,33 +1863,50 @@ find_rank_bias <- function(mat,
     }
 }
 
-#' Given a reference matrix and a list of genes, take the union of all genes in vector and 
-#' genes in reference matrix and insert zero counts for all remaining genes. 
+#' Given a reference matrix and a list of genes, take the union of 
+#' all genes in vector and genes in reference matrix 
+#' and insert zero counts for all remaining genes. 
 #' @param geneVector char vector with gene names
-#' @param ref_matrix Reference matrix containing cell types vs. gene expression values
+#' @param ref_matrix Reference matrix containing cell types vs. 
+#' gene expression values
 #' @return Reference matrix with union of all genes
 append_genes <- function(gene_Vector, ref_matrix)
 {
-    rownamesGSEMatrix <- rownames(ref_matrix) #Get rownames from GSEMatrix (new GSE file)
+    rownamesGSEMatrix <- rownames(ref_matrix) 
+    #Get rownames from GSEMatrix (new GSE file)
     
-    rowCountHumanGenes <- nrow(gene_Vector) #Calculate number of rows from list of full human genes
-    rowCountNewGSEFile <- nrow(ref_matrix) #Calculate number of rows of GSE matrix
+    rowCountHumanGenes <- nrow(gene_Vector) 
+    #Calculate number of rows from list of full human genes
+    rowCountNewGSEFile <- nrow(ref_matrix) 
+    #Calculate number of rows of GSE matrix
     
-    missing_rows <- setdiff(gene_Vector, rownamesGSEMatrix) #Use setdiff function to figure out rows which are different/missing from GSE matrix
+    missing_rows <- setdiff(gene_Vector, rownamesGSEMatrix) 
+    #Use setdiff function to figure out rows which are different/missing 
+    #from GSE matrix
     
-    zeroExpressionMatrix <- matrix(0, nrow = length(missing_rows), ncol = ncol(ref_matrix)) #Create a placeholder matrix with zeroes and missing_rows length as row length
+    zeroExpressionMatrix <- matrix(
+        0, 
+        nrow = length(missing_rows), 
+        ncol = ncol(ref_matrix)) 
+    #Create a placeholder matrix with zeroes and missing_rows length
     
-    rownames(zeroExpressionMatrix) <- missing_rows #Assign row names
-    colnames(zeroExpressionMatrix) <- colnames(ref_matrix) #Assign column names
+    rownames(zeroExpressionMatrix) <- missing_rows 
+    #Assign row names
+    colnames(zeroExpressionMatrix) <- colnames(ref_matrix) 
+    #Assign column names
     
-    full_matrix <- rbind(ref_matrix, zeroExpressionMatrix) #Bind GSEMatrix and zeroExpressionMatrix together
+    full_matrix <- rbind(ref_matrix, zeroExpressionMatrix) 
+    #Bind GSEMatrix and zeroExpressionMatrix together
     
     #Reorder matrix
-    full_matrix <- full_matrix[gene_Vector, ] #Reorder fullMatrix to preserve gene order
-    return(full_matrix) #Return fullMatrix
+    full_matrix <- full_matrix[gene_Vector, ] 
+    #Reorder fullMatrix to preserve gene order
+    return(full_matrix) 
+    #Return fullMatrix
 }
 
-#' Given a count matrix, determine if the matrix has been either log-normalized, normalized, or contains raw counts
+#' Given a count matrix, determine if the matrix has been either 
+#' log-normalized, normalized, or contains raw counts
 #' @param counts_matrix Count matrix containing scRNA-seq read data
 #' @param max_log_value Static value to determine if a matrix is normalized
 #' @return String either raw counts, log-normalized or normalized
