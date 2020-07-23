@@ -9,10 +9,10 @@ and insert zero counts for all remaining genes.}
 append_genes(gene_vector, ref_matrix)
 }
 \arguments{
+\item{gene_vector}{char vector with gene names}
+
 \item{ref_matrix}{Reference matrix containing cell types vs.
 gene expression values}
-
-\item{geneVector}{char vector with gene names}
 }
 \value{
 Reference matrix with union of all genes
@@ -21,4 +21,10 @@ Reference matrix with union of all genes
 Given a reference matrix and a list of genes, take the union of
 all genes in vector and genes in reference matrix
 and insert zero counts for all remaining genes.
+}
+\examples{
+#' mat <- append_genes(
+gene_vector = human_genes_10x,
+ref_matrix = cbmc_ref 
+) 
 }

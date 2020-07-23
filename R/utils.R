@@ -1866,10 +1866,16 @@ find_rank_bias <- function(mat,
 #' Given a reference matrix and a list of genes, take the union of 
 #' all genes in vector and genes in reference matrix 
 #' and insert zero counts for all remaining genes. 
-#' @param geneVector char vector with gene names
+#' @param gene_vector char vector with gene names
 #' @param ref_matrix Reference matrix containing cell types vs. 
 #' gene expression values
 #' @return Reference matrix with union of all genes
+#' @examples
+#' #' mat <- append_genes(
+#' gene_vector = human_genes_10x,
+#' ref_matrix = cbmc_ref 
+#' ) 
+#' @export
 append_genes <- function(gene_vector, ref_matrix)
 {
     rownamesGSEMatrix <- rownames(ref_matrix) 
@@ -1911,10 +1917,7 @@ append_genes <- function(gene_vector, ref_matrix)
 #' @param max_log_value Static value to determine if a matrix is normalized
 #' @return String either raw counts, log-normalized or normalized
 #' @examples
-#' mat <- append_genes(
-#' gene_vector = human_genes_10x,
-#' ref_matrix = cbmc_ref 
-#' ) 
+#' check_raw_counts(pbmc_matrix_small)
 #' @export
 check_raw_counts <- function(counts_matrix, max_log_value = 50)
 {
