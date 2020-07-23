@@ -1871,7 +1871,7 @@ find_rank_bias <- function(mat,
 #' gene expression values
 #' @return Reference matrix with union of all genes
 #' @examples
-#' #' mat <- append_genes(
+#' mat <- append_genes(
 #' gene_vector = human_genes_10x,
 #' ref_matrix = cbmc_ref 
 #' ) 

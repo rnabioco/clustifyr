@@ -23,7 +23,7 @@ all genes in vector and genes in reference matrix
 and insert zero counts for all remaining genes.
 }
 \examples{
-#' mat <- append_genes(
+mat <- append_genes(
 gene_vector = human_genes_10x,
 ref_matrix = cbmc_ref 
 ) 
