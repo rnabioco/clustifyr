@@ -1866,7 +1866,7 @@ find_rank_bias <- function(mat,
 #' Given a reference matrix and a list of genes, take the union of 
 #' all genes in vector and genes in reference matrix 
 #' and insert zero counts for all remaining genes. 
-#' @param geneVector char vector with gene names
+#' @param gene_vector char vector with gene names
 #' @param ref_matrix Reference matrix containing cell types vs. 
 #' gene expression values
 #' @return Reference matrix with union of all genes
@@ -1962,7 +1962,10 @@ check_raw_counts <- function(counts_matrix, max_log_value = 50)
 #' in the output matrix
 #' @param output_fn output filename for .rds file. If NULL the matrix will be returned instead of
 #' saving
+<<<<<<< HEAD
 #' @example
+=======
+>>>>>>> 1e8617fe5030280b3008a371a49f16afcc95a867
 #' 
 #' @export
 build_atlas <- function(matrix_fns,
