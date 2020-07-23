@@ -1910,7 +1910,7 @@ append_genes <- function(gene_vector, ref_matrix)
 #' @param counts_matrix Count matrix containing scRNA-seq read data
 #' @param max_log_value Static value to determine if a matrix is normalized
 #' @return String either raw counts, log-normalized or normalized
-#' @example
+#' @examples
 #' mat <- append_genes(
 #' gene_vector = human_genes_10x,
 #' ref_matrix = cbmc_ref 
@@ -1962,7 +1962,6 @@ check_raw_counts <- function(counts_matrix, max_log_value = 50)
 #' in the output matrix
 #' @param output_fn output filename for .rds file. If NULL the matrix will be returned instead of
 #' saving
-#' @example
 #' 
 #' @export
 build_atlas <- function(matrix_fns,
