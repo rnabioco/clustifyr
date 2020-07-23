@@ -20,8 +20,5 @@ Given a count matrix, determine if the matrix has been either
 log-normalized, normalized, or contains raw counts
 }
 \examples{
-mat <- append_genes(
-gene_vector = human_genes_10x,
-ref_matrix = cbmc_ref 
-) 
+check_raw_counts(pbmc_matrix_small)
 }
