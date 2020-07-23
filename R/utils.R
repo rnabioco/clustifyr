@@ -1862,3 +1862,150 @@ find_rank_bias <- function(mat,
         return(rdiff)
     }
 }
+
+#' Given a reference matrix and a list of genes, take the union of 
+#' all genes in vector and genes in reference matrix 
+#' and insert zero counts for all remaining genes. 
+#' @param geneVector char vector with gene names
+#' @param ref_matrix Reference matrix containing cell types vs. 
+#' gene expression values
+#' @return Reference matrix with union of all genes
+append_genes <- function(gene_vector, ref_matrix)
+{
+    rownamesGSEMatrix <- rownames(ref_matrix) 
+    #Get rownames from GSEMatrix (new GSE file)
+    
+    rowCountHumanGenes <- length(gene_vector) 
+    #Calculate number of rows from list of full human genes
+    rowCountNewGSEFile <- nrow(ref_matrix) 
+    #Calculate number of rows of GSE matrix
+    
+    missing_rows <- setdiff(gene_vector, rownamesGSEMatrix) 
+    #Use setdiff function to figure out rows which are different/missing 
+    #from GSE matrix
+    
+    zeroExpressionMatrix <- matrix(
+        0, 
+        nrow = length(missing_rows), 
+        ncol = ncol(ref_matrix)) 
+    #Create a placeholder matrix with zeroes and missing_rows length
+    
+    rownames(zeroExpressionMatrix) <- missing_rows 
+    #Assign row names
+    colnames(zeroExpressionMatrix) <- colnames(ref_matrix) 
+    #Assign column names
+    
+    full_matrix <- rbind(ref_matrix, zeroExpressionMatrix) 
+    #Bind GSEMatrix and zeroExpressionMatrix together
+    
+    #Reorder matrix
+    full_matrix <- full_matrix[gene_vector, ] 
+    #Reorder fullMatrix to preserve gene order
+    return(full_matrix) 
+    #Return fullMatrix
+}
+
+#' Given a count matrix, determine if the matrix has been either 
+#' log-normalized, normalized, or contains raw counts
+#' @param counts_matrix Count matrix containing scRNA-seq read data
+#' @param max_log_value Static value to determine if a matrix is normalized
+#' @return String either raw counts, log-normalized or normalized
+#' @example
+#' mat <- append_genes(
+#' gene_vector = human_genes_10x,
+#' ref_matrix = cbmc_ref 
+#' ) 
+#' @export
+check_raw_counts <- function(counts_matrix, max_log_value = 50)
+{
+    if (is(counts_matrix, 'sparseMatrix')) {
+        counts_matrix <- as.matrix(counts_matrix)
+    }
+    if(!is.matrix(counts_matrix))
+    {
+        counts_matrix <- as.matrix(counts_matrix)
+    }
+    if (is.integer(counts_matrix))
+    {
+        return("raw counts")
+    }
+    else if (is.double(counts_matrix))
+    {
+        if (all(counts_matrix == floor(counts_matrix)))
+        {
+            return("raw counts")
+        }
+        if(max(counts_matrix) > max_log_value)
+        {
+            return("normalized")
+        }
+        else if (min(counts_matrix) < 0)
+        {
+            stop("negative values detected, likely scaled data")
+        }
+        else
+        {
+            return("log-normalized")
+        }
+    }
+    else
+    {
+        stop("unknown matrix format: ", typeof(counts_matrix))
+    }
+}
+
+#' Function to combine records into single atlas
+#' @param matrix_fns character vector of paths to study matrices stored as .rds files.
+#' If a named character vector, then the name will be added as a suffix to the cell type
+#' name in the final matrix. If it is not named, then the filename will be used (without .rds)
+#' @param genes_fn text file with a single column containing genes and the ordering desired
+#' in the output matrix
+#' @param output_fn output filename for .rds file. If NULL the matrix will be returned instead of
+#' saving
+#' @example
+#' 
+#' @export
+build_atlas <- function(matrix_fns,
+                        genes_fn,
+                        output_fn = NULL){
+    
+    genesVector <- readr::read_lines(genes_fn)
+    
+    ref_mats <- lapply(matrix_fns, readRDS)
+    
+    if(is.null(names(matrix_fns))){
+        names(ref_mats) <- basename(matrix_fns) %>% stringr::str_remove(".rds$")
+    } else {
+        names(ref_mats) <- names(matrix_fns)
+    }
+    
+    # iterate over list and get new matrices
+    new_mats <- list()
+    for(i in seq_along(ref_mats)){
+        # standardize genes in matrix
+        mat <- append_genes(gene_vector = genesVector,
+                           ref_matrix = as.matrix(ref_mats[[i]]))
+        # get study name
+        mat_name <- names(ref_mats)[i]
+        
+        # append study name to cell type names
+        new_cols <- paste0(colnames(mat),
+                           " (",
+                           mat_name,
+                           ")")
+        colnames(mat) <- new_cols
+        
+        # assign to list
+        new_mats[[i]] <- mat
+    }
+    
+    # cbind a list of matrices
+    atlas <- do.call(cbind, new_mats)
+    
+    if(!is.null(output_fn)){
+        saveRDS(atlas, output_fn)
+    } else {
+        return(atlas)
+    }
+    
+}

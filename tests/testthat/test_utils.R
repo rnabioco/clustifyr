@@ -1293,3 +1293,51 @@ test_that("object_data works with Seuratv3", {
     )
     expect_true(ncol(mat) == 80)
 })
+
+test_that("append_genes creates a union reference matrix", {
+    mat <- append_genes(
+        gene_vector = human_genes_10x,
+        ref_matrix = cbmc_ref 
+    )
+    expect_true(nrow(mat) == 33514)
+})
+
+test_that("append_genes creates a union reference matrix", {
+    mat <- append_genes(
+        gene_vector = human_genes_10x,
+        ref_matrix = pbmc_matrix_small
+    )
+    expect_true(nrow(mat) == 33514)
+})
+
+test_that("append_genes creates a union reference matrix", {
+    mat <- append_genes(
+        gene_vector = human_genes_10x,
+        ref_matrix = s_small3@assays$RNA@counts
+    )
+    expect_true(nrow(mat) == 33514)
+})
+
+test_that("check raw counts of matrices", {
+    mat <- check_raw_counts(
+        counts_matrix = pbmc_matrix_small, 
+        max_log_value = 50
+    )
+    expect_true(mat == "log-normalized")
+})
+
+test_that("check raw counts of matrices", {
+    mat <- check_raw_counts(
+        counts_matrix = s_small3@assays$RNA@counts, 
+        max_log_value = 50
+    )
+    expect_true(mat == "raw counts")
+})
+
+test_that("check raw counts of matrices", {
+    mat <- check_raw_counts(
+        counts_matrix = s_small3@assays$RNA@data, 
+        max_log_value = 50
+    )
+    expect_true(mat == "log-normalized")
+})
