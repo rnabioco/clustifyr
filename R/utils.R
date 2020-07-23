@@ -1961,11 +1961,7 @@ check_raw_counts <- function(counts_matrix, max_log_value = 50)
 #' @param genes_fn text file with a single column containing genes and the ordering desired
 #' in the output matrix
 #' @param output_fn output filename for .rds file. If NULL the matrix will be returned instead of
-#' saving
-<<<<<<< HEAD
 #' @example
-=======
->>>>>>> 1e8617fe5030280b3008a371a49f16afcc95a867
 #' 
 #' @export
 build_atlas <- function(matrix_fns,
