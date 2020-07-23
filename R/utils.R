@@ -1910,7 +1910,7 @@ append_genes <- function(gene_vector, ref_matrix)
 #' @param counts_matrix Count matrix containing scRNA-seq read data
 #' @param max_log_value Static value to determine if a matrix is normalized
 #' @return String either raw counts, log-normalized or normalized
-#' @example
+#' @examples
 #' mat <- append_genes(
 #' gene_vector = human_genes_10x,
 #' ref_matrix = cbmc_ref 
