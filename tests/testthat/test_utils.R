@@ -1302,6 +1302,21 @@ test_that("append_genes creates a union reference matrix", {
     expect_true(nrow(mat) == 33514)
 })
 
+test_that("append_genes creates a union reference matrix", {
+    mat <- append_genes(
+        gene_vector = human_genes_10x,
+        ref_matrix = pbmc_matrix_small
+    )
+    expect_true(nrow(mat) == 33514)
+})
+
+test_that("append_genes creates a union reference matrix", {
+    mat <- append_genes(
+        gene_vector = human_genes_10x,
+        ref_matrix = s_small3@assays$RNA@counts
+    )
+})
+
 test_that("check raw counts of matrices", {
     mat <- check_raw_counts(
         counts_matrix = pbmc_matrix_small, 
@@ -1310,3 +1325,18 @@ test_that("check raw counts of matrices", {
     expect_true(mat == "log-normalized")
 })
 
+test_that("check raw counts of matrices", {
+    mat <- check_raw_counts(
+        counts_matrix = s_small3@assays$RNA@counts, 
+        max_log_value = 50
+    )
+    expect_true(mat == "raw counts")
+})
+
+test_that("check raw counts of matrices", {
+    mat <- check_raw_counts(
+        counts_matrix = cbmc_m, 
+        max_log_value = 50
+    )
+    expect_true(mat == "raw counts")
+})
