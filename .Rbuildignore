@@ -10,3 +10,4 @@
 ^data-raw$
 ^inst/manuscript$
 ^\.github$
+^CODE_OF_CONDUCT\.md$

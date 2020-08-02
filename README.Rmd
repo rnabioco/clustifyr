@@ -22,6 +22,18 @@ Single cell transcriptomes are difficult to annotate without knowledge of the un
 
 ## Installation
 
+Install the Bioconductor version with:
+
+``` r
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("clustifyr")
+
+```
+
+Install the development version with:
+
 ``` r
 # install.packages("remotes")
 remotes::install_github("rnabioco/clustifyr")
@@ -83,7 +95,6 @@ clustify(
 ) 
 
 library(Seurat)
-
 # for seurat2
 clustify(
   input = s_small,
@@ -139,3 +150,6 @@ clustify_lists(
 )
 ```
 
+## Code of Conduct
+
+Please note that the clustifyr project is released with a [Contributor Code of Conduct](http://rnabioco.github.io/clustifyr/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.

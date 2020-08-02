@@ -23,6 +23,17 @@ between single cell RNA-seq datasets and reference data.
 
 ## Installation
 
+Install the Bioconductor version with:
+
+``` r
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("clustifyr")
+```
+
+Install the development version with:
+
 ``` r
 # install.packages("remotes")
 remotes::install_github("rnabioco/clustifyr")
@@ -122,7 +133,6 @@ clustify(
 #> altExpNames(0):
 
 library(Seurat)
-
 # for seurat2
 clustify(
   input = s_small,
@@ -156,7 +166,6 @@ sce_ref <- object_ref(
   input = sce_small,               # SCE object
   cluster_col = "cell_type1"       # name of column in colData containing cell identities
 )
-#> The following clusters have less than 10 cells for this analysis: co-expressionductalendothelialepsilonMHC class IIPSC. Classification is likely inaccurate.
 
 # make reference from seurat objects
 s_ref <- seurat_ref(
@@ -216,3 +225,10 @@ clustify_lists(
 #> An old seurat object
 #>  230 genes across 80 samples
 ```
+
+## Code of Conduct
+
+Please note that the clustifyr project is released with a [Contributor
+Code of
+Conduct](http://rnabioco.github.io/clustifyr/CODE_OF_CONDUCT.html). By
+contributing to this project, you agree to abide by its terms.
