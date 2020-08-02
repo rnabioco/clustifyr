@@ -6,6 +6,9 @@
 #' @param compute_method method(s) for computing similarity scores
 #' @param per_cell run per cell?
 #' @param rm0 consider 0 as missing data, recommended for per_cell
+#' @param if_log input data is natural log,
+#' averaging will be done on unlogged data
+#' @param low_threshold option to remove clusters with too few cells
 #' @param ... additional parameters not used yet
 #' @return matrix of numeric values, clusters from expr_mat as row names,
 #'  cell types from ref_mat as column names
@@ -15,6 +18,8 @@ get_similarity <- function(expr_mat,
                            compute_method,
                            per_cell = FALSE,
                            rm0 = FALSE,
+                           if_log = TRUE,
+                           low_threshold = 0,
                            ...) {
     if (nrow(expr_mat) == 0) {
         stop("after subsetting to shared genes",
@@ -65,7 +70,9 @@ get_similarity <- function(expr_mat,
         sc_clust <- sort(unique(cluster_ids))
         clust_avg <- average_clusters(
             expr_mat,
-            cluster_ids
+            cluster_ids,
+            if_log = if_log,
+            low_threshold = low_threshold
         )
     } else {
         sc_clust <- cluster_ids
@@ -80,8 +87,10 @@ get_similarity <- function(expr_mat,
         ...
     )
 
-    rownames(assigned_score) <- sc_clust
-    colnames(assigned_score) <- ref_clust
+    if (low_threshold == 0) {
+        rownames(assigned_score) <- sc_clust
+        colnames(assigned_score) <- ref_clust
+    }
 
     return(assigned_score)
 }

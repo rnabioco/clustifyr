@@ -28,7 +28,7 @@ clustify_lists(input, ...)
   seurat_out = TRUE,
   rename_prefix = NULL,
   threshold = 0,
-  low_threshold_cell = 10,
+  low_threshold_cell = 0,
   ...
 )
 

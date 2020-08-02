@@ -2,20 +2,62 @@
 % Please edit documentation in R/seurat_wrapper.R
 \name{object_ref}
 \alias{object_ref}
+\alias{object_ref.default}
+\alias{object_ref.Seurat}
+\alias{object_ref.seurat}
+\alias{object_ref.SingleCellExperiment}
 \title{Function to convert labelled object to avg expression matrix}
 \usage{
-object_ref(
+object_ref(input, ...)
+
+\method{object_ref}{default}(
   input,
   cluster_col = NULL,
   var_genes_only = FALSE,
   assay_name = NULL,
   method = "mean",
   lookuptable = NULL,
-  if_log = TRUE
+  if_log = TRUE,
+  ...
+)
+
+\method{object_ref}{Seurat}(
+  input,
+  cluster_col = NULL,
+  var_genes_only = FALSE,
+  assay_name = NULL,
+  method = "mean",
+  lookuptable = NULL,
+  if_log = TRUE,
+  ...
+)
+
+\method{object_ref}{seurat}(
+  input,
+  cluster_col = NULL,
+  var_genes_only = FALSE,
+  assay_name = NULL,
+  method = "mean",
+  lookuptable = NULL,
+  if_log = TRUE,
+  ...
+)
+
+\method{object_ref}{SingleCellExperiment}(
+  input,
+  cluster_col = NULL,
+  var_genes_only = FALSE,
+  assay_name = NULL,
+  method = "mean",
+  lookuptable = NULL,
+  if_log = TRUE,
+  ...
 )
 }
 \arguments{
 \item{input}{object after tsne or umap projections and clustering}
+
+\item{...}{additional arguments}
 
 \item{cluster_col}{column name where classified cluster names
 are stored in seurat meta data, cannot be "rn"}

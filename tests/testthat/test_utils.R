@@ -51,6 +51,15 @@ test_that("average_clusters works as intended", {
     expect_equal(nrow(pbmc_avg2), 2000)
 })
 
+test_that("average_clusters reports error when supplied cluster vector doesn't match number of cols", {
+    expect_error(
+        pbmc_avg2 <- average_clusters(pbmc_matrix_small,
+                                      pbmc_meta$classified[1:2],
+                                      if_log = FALSE
+        )
+    )
+})
+
 test_that("average_clusters works with disordered data", {
     pbmc_meta2 <- rbind(pbmc_meta[1320:2638, ], pbmc_meta[1:1319, ])
     pbmc_avg2 <- average_clusters(
@@ -121,6 +130,17 @@ test_that("average_clusters works when low cell number clusters should be remove
         cluster_col = "classified"
     )
     expect_equal(ncol(pbmc_avg2), 9)
+})
+
+test_that("average_clusters works when low cell number clusters is kept but issues warning", {
+    pbmc_meta2 <- pbmc_meta %>% mutate(classified = as.character(classified))
+    pbmc_meta2[1, "classified"] <- 15
+    pbmc_avg2 <- average_clusters(pbmc_matrix_small,
+                                  pbmc_meta2,
+                                  low_threshold = 0,
+                                  cluster_col = "classified"
+    )
+    expect_equal(ncol(pbmc_avg2), 10)
 })
 
 test_that("average_clusters works with cutoff gene number", {
@@ -623,14 +643,16 @@ test_that("seurat_ref gets correct averages", {
 test_that("object_ref with seurat3", {
     s3 <- s_small3
     avg <- object_ref(s3,
-        var_genes_only = TRUE
+        var_genes_only = TRUE,
+        cluster_col = "RNA_snn_res.1"
     )
     expect_true(ncol(avg) == 3)
 })
 
 test_that("object_ref with SingleCellExperiment", {
     sce <- sce_small
-    avg <- object_ref(sce)
+    avg <- object_ref(sce,
+                      cluster_col = "cell_type1")
     expect_equal(dim(avg), c(200, 13))
 })
 
@@ -1270,4 +1292,52 @@ test_that("object_data works with Seuratv3", {
         slot = "data"
     )
     expect_true(ncol(mat) == 80)
+})
+
+test_that("append_genes creates a union reference matrix", {
+    mat <- append_genes(
+        gene_vector = human_genes_10x,
+        ref_matrix = cbmc_ref 
+    )
+    expect_true(nrow(mat) == 33514)
+})
+
+test_that("append_genes creates a union reference matrix", {
+    mat <- append_genes(
+        gene_vector = human_genes_10x,
+        ref_matrix = pbmc_matrix_small
+    )
+    expect_true(nrow(mat) == 33514)
+})
+
+test_that("append_genes creates a union reference matrix", {
+    mat <- append_genes(
+        gene_vector = human_genes_10x,
+        ref_matrix = s_small3@assays$RNA@counts
+    )
+    expect_true(nrow(mat) == 33514)
+})
+
+test_that("check raw counts of matrices", {
+    mat <- check_raw_counts(
+        counts_matrix = pbmc_matrix_small, 
+        max_log_value = 50
+    )
+    expect_true(mat == "log-normalized")
+})
+
+test_that("check raw counts of matrices", {
+    mat <- check_raw_counts(
+        counts_matrix = s_small3@assays$RNA@counts, 
+        max_log_value = 50
+    )
+    expect_true(mat == "raw counts")
+})
+
+test_that("check raw counts of matrices", {
+    mat <- check_raw_counts(
+        counts_matrix = s_small3@assays$RNA@data, 
+        max_log_value = 50
+    )
+    expect_true(mat == "log-normalized")
 })

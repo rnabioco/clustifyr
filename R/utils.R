@@ -80,6 +80,10 @@ average_clusters <- function(mat,
         }
     }
     if (is.vector(cluster_info)) {
+        if (ncol(mat) != length(cluster_info)) {
+            stop("vector of cluster assignments does not match the number of columns in the matrix",
+                 call. = FALSE)
+        }
         cluster_ids <- split(colnames(mat), cluster_info)
     } else if (is.data.frame(cluster_info) & !is.null(cluster_col)) {
         cluster_info_temp <- cluster_info[[cluster_col]]
@@ -89,6 +93,10 @@ average_clusters <- function(mat,
         cluster_ids <- split(colnames(mat), cluster_info_temp)
     } else if (is.factor(cluster_info)) {
         cluster_info <- as.character(cluster_info)
+        if (ncol(mat) != length(cluster_info)) {
+            stop("vector of cluster assignments does not match the number of columns in the matrix",
+                 call. = FALSE)
+        }
         cluster_ids <- split(colnames(mat), cluster_info)
     } else {
         stop("metadata not formatted correctly,
@@ -146,7 +154,21 @@ average_clusters <- function(mat,
         fil <- vapply(cluster_ids,
                       FUN = length,
                       FUN.VALUE = numeric(1)) >= low_threshold
+        if (!all(as.vector(fil))) {
+            message("The following clusters have less than ", low_threshold, " cells for this analysis: ",
+                    paste(colnames(out)[!as.vector(fil)], collapse = ", "),
+                    ". They are excluded.")
+        }
         out <- out[, as.vector(fil)]
+    } else {
+        fil <- vapply(cluster_ids,
+                      FUN = length,
+                      FUN.VALUE = numeric(1)) >= 10
+        if (!all(as.vector(fil))) {
+            message("The following clusters have less than ", 10, " cells for this analysis: ",
+                    paste(colnames(out)[!as.vector(fil)], collapse = ", "),
+                    ". Classification is likely inaccurate.")
+        }
     }
     if (!(is.null(cut_n))) {
         expr_mat <- out
@@ -180,7 +202,7 @@ percent_clusters <- function(mat,
 
     average_clusters(mat, cluster_info,
         if_log = FALSE,
-        metadata = cluster_col
+        cluster_col = cluster_col
     )
 }
 
@@ -1091,6 +1113,8 @@ insert_meta_object <- function(input,
 #' @param newclustering use kmeans if NULL on dr
 #' or col name for second column of clustering
 #' @param threshold type calling threshold
+#' @param combine if TRUE return a single plot with combined panels, if
+#' FALSE return list of plots (default: TRUE)
 #' @return faceted ggplot object
 #' @examples
 #' set.seed(42)
@@ -1115,7 +1139,8 @@ overcluster_test <- function(expr,
                              threshold = 0,
                              do_label = TRUE,
                              do_legend = FALSE,
-                             newclustering = NULL) {
+                             newclustering = NULL,
+                             combine = TRUE) {
     if (is.null(newclustering)) {
         metadata$new_clusters <-
             as.character(stats::kmeans(metadata[, c(x_col, y_col)],
@@ -1188,12 +1213,23 @@ overcluster_test <- function(expr,
         x = x_col,
         y = y_col
     )
-    g <- cowplot::plot_grid(o1, o2, p1, p2,
-        labels = c(
-            length(unique(metadata[[cluster_col]])),
-            n * length(unique(metadata[[cluster_col]]))
+    n_orig_clusters <- length(unique(metadata[[cluster_col]]))
+    n_new_clusters <- n * length(unique(metadata[[cluster_col]]))
+
+    if(combine){
+        g <- suppressWarnings(cowplot::plot_grid(o1, o2, p1, p2,
+                                                 labels = c(
+                                                     n_orig_clusters,
+                                                     n_new_clusters
+                                                 ))
         )
-    )
+    } else {
+        g <- list(original_clusters = o1,
+                  new_clusters = o2,
+                  original_cell_types = p1,
+                  new_cell_types = p2)
+    }
+
     return(g)
 }
 
@@ -1483,8 +1519,12 @@ ref_marker_select <-
             res <- res[!vapply(res, is.null, FUN.VALUE = logical(1))]
         }
         resdf <- t(as.data.frame(res, stringsAsFactors = FALSE))
-        resdf <-tibble::rownames_to_column(as.data.frame(resdf,
-                                           stringsAsFactors = FALSE),
+        if (tibble::has_rownames(as.data.frame(resdf,
+                                               stringsAsFactors = FALSE))) {
+            resdf <- tibble::remove_rownames(as.data.frame(resdf,
+                                                           stringsAsFactors = FALSE))
+        }
+        resdf <- tibble::rownames_to_column(resdf,
                                            "gene")
         colnames(resdf) <- c("gene", "cluster", "ratio")
         resdf <-
@@ -1581,6 +1621,7 @@ pos_neg_select <- function(input,
         )
     )
     res[is.na(res)] <- 0
+
     suppressWarnings(
         res2 <- average_clusters(
             t(res),
@@ -1648,6 +1689,9 @@ pos_neg_marker <- function(mat) {
     g2 <- dplyr::bind_rows(g2, .id = "type")
     g2 <- dplyr::mutate(g2, expression = 1)
     g2 <- tidyr::spread(g2, key = "type", value = "expression")
+    if (tibble::has_rownames(g2)) {
+        g2 <- tibble::remove_rownames(g2)
+    }
     g2 <- tibble::column_to_rownames(g2, "gene")
     g2[is.na(g2)] <- 0
     g2
@@ -1817,4 +1861,153 @@ find_rank_bias <- function(mat,
     } else {
         return(rdiff)
     }
+}
+
+#' Given a reference matrix and a list of genes, take the union of 
+#' all genes in vector and genes in reference matrix 
+#' and insert zero counts for all remaining genes. 
+#' @param gene_vector char vector with gene names
+#' @param ref_matrix Reference matrix containing cell types vs. 
+#' gene expression values
+#' @return Reference matrix with union of all genes
+#' @examples
+#' mat <- append_genes(
+#' gene_vector = human_genes_10x,
+#' ref_matrix = cbmc_ref 
+#' ) 
+#' @export
+append_genes <- function(gene_vector, ref_matrix)
+{
+    rownamesGSEMatrix <- rownames(ref_matrix) 
+    #Get rownames from GSEMatrix (new GSE file)
+    
+    rowCountHumanGenes <- length(gene_vector) 
+    #Calculate number of rows from list of full human genes
+    rowCountNewGSEFile <- nrow(ref_matrix) 
+    #Calculate number of rows of GSE matrix
+    
+    missing_rows <- setdiff(gene_vector, rownamesGSEMatrix) 
+    #Use setdiff function to figure out rows which are different/missing 
+    #from GSE matrix
+    
+    zeroExpressionMatrix <- matrix(
+        0, 
+        nrow = length(missing_rows), 
+        ncol = ncol(ref_matrix)) 
+    #Create a placeholder matrix with zeroes and missing_rows length
+    
+    rownames(zeroExpressionMatrix) <- missing_rows 
+    #Assign row names
+    colnames(zeroExpressionMatrix) <- colnames(ref_matrix) 
+    #Assign column names
+    
+    full_matrix <- rbind(ref_matrix, zeroExpressionMatrix) 
+    #Bind GSEMatrix and zeroExpressionMatrix together
+    
+    #Reorder matrix
+    full_matrix <- full_matrix[gene_vector, ] 
+    #Reorder fullMatrix to preserve gene order
+    return(full_matrix) 
+    #Return fullMatrix
+}
+
+#' Given a count matrix, determine if the matrix has been either 
+#' log-normalized, normalized, or contains raw counts
+#' @param counts_matrix Count matrix containing scRNA-seq read data
+#' @param max_log_value Static value to determine if a matrix is normalized
+#' @return String either raw counts, log-normalized or normalized
+#' @examples
+#' check_raw_counts(pbmc_matrix_small)
+#' @export
+check_raw_counts <- function(counts_matrix, max_log_value = 50)
+{
+    if (is(counts_matrix, 'sparseMatrix')) {
+        counts_matrix <- as.matrix(counts_matrix)
+    }
+    if(!is.matrix(counts_matrix))
+    {
+        counts_matrix <- as.matrix(counts_matrix)
+    }
+    if (is.integer(counts_matrix))
+    {
+        return("raw counts")
+    }
+    else if (is.double(counts_matrix))
+    {
+        if (all(counts_matrix == floor(counts_matrix)))
+        {
+            return("raw counts")
+        }
+        if(max(counts_matrix) > max_log_value)
+        {
+            return("normalized")
+        }
+        else if (min(counts_matrix) < 0)
+        {
+            stop("negative values detected, likely scaled data")
+        }
+        else
+        {
+            return("log-normalized")
+        }
+    }
+    else
+    {
+        stop("unknown matrix format: ", typeof(counts_matrix))
+    }
+}
+
+#' Function to combine records into single atlas
+#' @param matrix_fns character vector of paths to study matrices stored as .rds files.
+#' If a named character vector, then the name will be added as a suffix to the cell type
+#' name in the final matrix. If it is not named, then the filename will be used (without .rds)
+#' @param genes_fn text file with a single column containing genes and the ordering desired
+#' in the output matrix
+#' @param output_fn output filename for .rds file. If NULL the matrix will be returned instead of
+#' saving
+#' 
+#' @export
+build_atlas <- function(matrix_fns,
+                        genes_fn,
+                        output_fn = NULL){
+    
+    genesVector <- readr::read_lines(genes_fn)
+    
+    ref_mats <- lapply(matrix_fns, readRDS)
+    
+    if(is.null(names(matrix_fns))){
+        names(ref_mats) <- basename(matrix_fns) %>% stringr::str_remove(".rds$")
+    } else {
+        names(ref_mats) <- names(matrix_fns)
+    }
+    
+    # iterate over list and get new matrices
+    new_mats <- list()
+    for(i in seq_along(ref_mats)){
+        # standardize genes in matrix
+        mat <- append_genes(gene_vector = genesVector,
+                           ref_matrix = as.matrix(ref_mats[[i]]))
+        # get study name
+        mat_name <- names(ref_mats)[i]
+        
+        # append study name to cell type names
+        new_cols <- paste0(colnames(mat),
+                           " (",
+                           mat_name,
+                           ")")
+        colnames(mat) <- new_cols
+        
+        # assign to list
+        new_mats[[i]] <- mat
+    }
+    
+    # cbind a list of matrices
+    atlas <- do.call(cbind, new_mats)
+    
+    if(!is.null(output_fn)){
+        saveRDS(atlas, output_fn)
+    } else {
+        return(atlas)
+    }
+    
 }

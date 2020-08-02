@@ -393,6 +393,32 @@ test_that("clustify_lists works with pos_neg_select and Seurat3 object", {
     expect_true(nrow(res) == 3)
 })
 
+test_that("clustify_lists works with pos_neg_select, Seurat3 object, and lists of genes", {
+    res <- clustify_lists(
+        s_small3,
+        marker = as.list(cbmc_m),
+        marker_inmatrix = FALSE,
+        cluster_col = "RNA_snn_res.1",
+        dr = "tsne",
+        metric = "posneg",
+        seurat_out = FALSE
+    )
+    expect_true(nrow(res) == 3)
+})
+
+test_that("clustify_lists works with pos_neg_select, Seurat3 object, and matrix preprocessed by pos_neg_marker", {
+    res <- clustify_lists(
+        s_small3,
+        marker = pos_neg_marker(as.list(cbmc_m)),
+        marker_inmatrix = FALSE,
+        cluster_col = "RNA_snn_res.1",
+        dr = "tsne",
+        metric = "posneg",
+        seurat_out = FALSE
+    )
+    expect_true(nrow(res) == 3)
+})
+
 test_that("clustify_lists works with pct and Seurat3 object", {
     res <- clustify_lists(
         s_small3,
@@ -462,4 +488,33 @@ test_that("sce object clustify_lists", {
         metric = "pct"
     )
     expect_true(nrow(res) == 13)
+})
+
+test_that("clustify filters low cell number clusters", {
+    pbmc_meta2 <- pbmc_meta %>% mutate(classified = as.character(classified))
+    pbmc_meta2[1, "classified"] <- 15
+    res <- clustify(
+        input = pbmc_matrix_small,
+        metadata = pbmc_meta2$classified,
+        ref_mat = cbmc_ref,
+        query_genes = pbmc_vargenes,
+        dr = "tsne",
+        low_threshold_cell = 2,
+        seurat_out = FALSE
+    )
+    expect_true(nrow(res) == 9)
+})
+
+test_that("clustify_lists filters low cell number clusters", {
+    pbmc_meta2 <- pbmc_meta %>% mutate(classified = as.character(classified))
+    pbmc_meta2[1, "classified"] <- 15
+    res <- clustify_lists(
+        input = pbmc_matrix_small,
+        metadata = pbmc_meta2$classified,
+        marker = cbmc_m,
+        dr = "tsne",
+        low_threshold_cell = 2,
+        seurat_out = FALSE
+    )
+    expect_true(nrow(res) == 9)
 })

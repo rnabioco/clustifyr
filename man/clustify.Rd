@@ -26,7 +26,7 @@ clustify(input, ...)
   seurat_out = TRUE,
   rename_prefix = NULL,
   threshold = "auto",
-  low_threshold_cell = 10,
+  low_threshold_cell = 0,
   exclude_genes = c(),
   ...
 )

@@ -23,10 +23,21 @@ Single cell transcriptomes are difficult to annotate without knowledge of the un
 ## Installation
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("rnabioco/clustifyr", ref = "0.99.4")
+# install.packages("remotes")
+remotes::install_github("rnabioco/clustifyr")
 ```
  
+
+## Additional info
+
+[Intro](https://rnabioco.github.io/clustifyr/articles/clustifyR.html) tutorial
+
+[Additional](https://rnabioco.github.io/clustifyrdata/articles/otherformats.html) tutorials
+
+[Script](https://github.com/rnabioco/clustifyrdata/blob/master/inst/run_clustifyr.R) for benchmarking, compatible with [`scRNAseq_Benchmark`](https://github.com/tabdelaal/scRNAseq_Benchmark)
+
+More reference data (including tabula muris, immgen, etc) are available at supplement package [`clustifyrdata`](https://github.com/rnabioco/clustifyrdata). Also see [list](https://rnabioco.github.io/clustifyrdata/articles/download_refs.html) for individual downloads. 
+
 ## Example usage
 
 In this example we use the following built-in input data:
@@ -128,11 +139,3 @@ clustify_lists(
 )
 ```
 
-## Additional reference data
-
-More reference data (including tabula muris, immgen, etc) are available at https://github.com/rnabioco/clustifyrdata. 
-
-Also see list for individual downloads at https://rnabioco.github.io/clustifyrdata/articles/download_refs.html
-
-Additional tutorials at
-https://rnabioco.github.io/clustifyrdata/articles/otherformats.html
