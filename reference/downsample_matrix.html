@@ -141,11 +141,11 @@
     </div>
 
     <pre class="usage"><span class='fu'>downsample_matrix</span>(
-  <span class='no'>mat</span>,
-  <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>keep_cluster_proportions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>
+  <span class='kw'>mat</span>,
+  n = <span class='fl'>1</span>,
+  keep_cluster_proportions = <span class='fl'>TRUE</span>,
+  metadata = <span class='kw'>NULL</span>,
+  cluster_col = <span class='st'>"cluster"</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -182,13 +182,13 @@ provide the cluster_col parameters.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>42</span>)
-<span class='no'>mat</span> <span class='kw'>&lt;-</span> <span class='fu'>downsample_matrix</span>(
-    <span class='kw'>mat</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
-    <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>$<span class='no'>classified</span>,
-    <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-    <span class='kw'>keep_cluster_proportions</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+<span class='kw'>mat</span> <span class='op'>&lt;-</span> <span class='fu'>downsample_matrix</span>(
+    mat = <span class='kw'>pbmc_matrix_small</span>,
+    metadata = <span class='kw'>pbmc_meta</span><span class='op'>$</span><span class='kw'>classified</span>,
+    n = <span class='fl'>10</span>,
+    keep_cluster_proportions = <span class='fl'>TRUE</span>
 )
-<span class='no'>mat</span>[<span class='fl'>1</span>:<span class='fl'>3</span>, <span class='fl'>1</span>:<span class='fl'>3</span>]</div><div class='output co'>#&gt; 3 x 3 sparse Matrix of class "dgCMatrix"
+<span class='kw'>mat</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>]</div><div class='output co'>#&gt; 3 x 3 sparse Matrix of class "dgCMatrix"
 #&gt;        ACGTCGCTTCTCAT TTACCATGTTGTGG CCTGACTGTGTCTT
 #&gt; PPBP                .       .              .       
 #&gt; LYZ                 .       2.633919       2.592335
@@ -208,7 +208,7 @@ provide the cluster_col parameters.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>
