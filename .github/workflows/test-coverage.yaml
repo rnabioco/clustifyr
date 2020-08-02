@@ -34,13 +34,13 @@ jobs:
       - name: Install dependencies
         run: |
 
-          install.packages("Rcpp", repos="https://rcppcore.github.io/drat")
+          install.packages("Rcpp", repos = "https://rcppcore.github.io/drat")
 
           install.packages(c("remotes"))
           remotes::install_deps(dependencies = TRUE)
 
           remotes::install_cran("BiocManager")
-          BiocManager::install(version='devel')
+          BiocManager::install(version = 'devel', ask = FALSE)
           BiocManager::install(c('SummarizedExperiment', 'SingleCellExperiment',
                                  'S4Vectors', 'ComplexHeatmap', 'BiocStyle'))
 
