@@ -11,11 +11,12 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 ## Pull Request Process
 
-1. Ensure the updated code passes GitHub Action build and checks. Please let the developers know if you need help.
-2. Update the README.md and DESCRIPTION as needed.
-3. Increase the version numbers in the README.md and DESCRIPTION to the new version that this
+1. Please follow Bioconductor style [guide](https://bioconductor.org/developers/how-to/coding-style/). Use [`testthat`](https://github.com/r-lib/testthat) tests if possible.
+2. Ensure the updated code passes GitHub Action build and checks. Please let the developers know if you need help.
+3. Update the README.md and DESCRIPTION as needed.
+4. Increase the version numbers in the README.md and DESCRIPTION to the new version that this
    Pull Request would represent. Please follow [Bioconductor](https://bioconductor.org/developers/how-to/version-numbering/) versioning schemes .
-4. Please request code review for Pull Requests. Once you have the sign-off of two other developers, you may then merge the updated code.
+5. Please request code review for Pull Requests. Once you have the sign-off of two other developers, you may then merge the updated code.
 
 ## Code of Conduct
 
