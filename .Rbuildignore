@@ -9,3 +9,4 @@
 ^README\.Rmd$
 ^data-raw$
 ^inst/manuscript$
+^\.github$

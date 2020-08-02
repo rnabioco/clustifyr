@@ -14,7 +14,6 @@ Authors@R:
              family = "Riemondy",
              role = "aut",
              email = "kent.riemondy@ucdenver.edu"),
-      person("RNA Bioscience Initiative", role = c("fnd")),
       person(given = "Austin",
              family = "Gillen",
              role = "ctb",
