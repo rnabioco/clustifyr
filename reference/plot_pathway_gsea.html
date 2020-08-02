@@ -146,12 +146,12 @@ returns a list containing results and plot.</p>
     </div>
 
     <pre class="usage"><span class='fu'>plot_pathway_gsea</span>(
-  <span class='kw'>mat</span>,
-  <span class='kw'>pathway_list</span>,
-  n_perm = <span class='fl'>1000</span>,
-  scale = <span class='fl'>TRUE</span>,
-  topn = <span class='fl'>5</span>,
-  returning = <span class='st'>"both"</span>
+  <span class='no'>mat</span>,
+  <span class='no'>pathway_list</span>,
+  <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
+  <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>topn</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>returning</span> <span class='kw'>=</span> <span class='st'>"both"</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -191,20 +191,20 @@ default = TRUE</p></td>
 cell types as row names, pathways as column names</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>gl</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-    <span class='st'>"n"</span> = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"PPBP"</span>, <span class='st'>"LYZ"</span>, <span class='st'>"S100A9"</span>),
-    <span class='st'>"a"</span> = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"IGLL5"</span>, <span class='st'>"GNLY"</span>, <span class='st'>"FTL"</span>)
+    <pre class="examples"><div class='input'><span class='no'>gl</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
+    <span class='st'>"n"</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"PPBP"</span>, <span class='st'>"LYZ"</span>, <span class='st'>"S100A9"</span>),
+    <span class='st'>"a"</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"IGLL5"</span>, <span class='st'>"GNLY"</span>, <span class='st'>"FTL"</span>)
 )
 
-<span class='kw'>pbmc_avg</span> <span class='op'>&lt;-</span> <span class='fu'><a href='average_clusters.html'>average_clusters</a></span>(
-    mat = <span class='kw'>pbmc_matrix_small</span>,
-    metadata = <span class='kw'>pbmc_meta</span>,
-    cluster_col = <span class='st'>"classified"</span>
+<span class='no'>pbmc_avg</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='average_clusters.html'>average_clusters</a></span>(
+    <span class='kw'>mat</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
+    <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
+    <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>
 )
 
 <span class='fu'>plot_pathway_gsea</span>(
-    <span class='kw'>pbmc_avg</span>,
-    <span class='kw'>gl</span>,
+    <span class='no'>pbmc_avg</span>,
+    <span class='no'>gl</span>,
     <span class='fl'>5</span>
 )</div><div class='output co'>#&gt; [[1]]
 #&gt;                       n          a
@@ -234,7 +234,7 @@ cell types as row names, pathways as column names</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

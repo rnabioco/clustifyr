@@ -141,13 +141,13 @@
     </div>
 
     <pre class="usage"><span class='fu'>cor_to_call_rank</span>(
-  <span class='kw'>cor_mat</span>,
-  metadata = <span class='kw'>NULL</span>,
-  cluster_col = <span class='st'>"cluster"</span>,
-  collapse_to_cluster = <span class='fl'>FALSE</span>,
-  threshold = <span class='fl'>0</span>,
-  rename_prefix = <span class='kw'>NULL</span>,
-  top_n = <span class='kw'>NULL</span>
+  <span class='no'>cor_mat</span>,
+  <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>,
+  <span class='kw'>collapse_to_cluster</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>top_n</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -190,27 +190,27 @@ frequent call of entire cluster to color in plot</p></td>
     <p>dataframe of cluster, new ident, and r info</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span>(
-    input = <span class='kw'>pbmc_matrix_small</span>,
-    metadata = <span class='kw'>pbmc_meta</span>,
-    cluster_col = <span class='st'>"classified"</span>,
-    ref_mat = <span class='kw'>cbmc_ref</span>
+    <pre class="examples"><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span>(
+    <span class='kw'>input</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
+    <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
+    <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
+    <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>cbmc_ref</span>
 )</div><div class='output co'>#&gt; <span class='message'>var.features not found, using all genes instead</span></div><div class='input'>
-<span class='fu'>cor_to_call_rank</span>(<span class='kw'>res</span>, threshold = <span class='st'>"auto"</span>)</div><div class='output co'>#&gt; <span class='message'>using threshold of 0.7</span></div><div class='output co'>#&gt; # A tibble: 117 x 4
-#&gt; # Groups:   cluster [9]
+<span class='fu'>cor_to_call_rank</span>(<span class='no'>res</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"auto"</span>)</div><div class='output co'>#&gt; <span class='message'>using threshold of 0.7</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 117 x 4</span><span>
+#&gt; </span><span style='color: #555555;'># Groups:   cluster [9]</span><span>
 #&gt;    cluster      type           r  rank
-#&gt;    &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;
-#&gt;  1 B            B          0.909     1
-#&gt;  2 CD14+ Mono   B          0.528   100
-#&gt;  3 CD8 T        B          0.579   100
-#&gt;  4 DC           B          0.609   100
-#&gt;  5 FCGR3A+ Mono B          0.538   100
-#&gt;  6 Memory CD4 T B          0.627   100
-#&gt;  7 Naive CD4 T  B          0.644   100
-#&gt;  8 NK           B          0.504   100
-#&gt;  9 Platelet     B          0.146   100
-#&gt; 10 B            CD14+ Mono 0.535   100
-#&gt; # … with 107 more rows</div></pre>
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> B            B          0.909     1
+#&gt; </span><span style='color: #555555;'> 2</span><span> CD14+ Mono   B          0.528   100
+#&gt; </span><span style='color: #555555;'> 3</span><span> CD8 T        B          0.579   100
+#&gt; </span><span style='color: #555555;'> 4</span><span> DC           B          0.609   100
+#&gt; </span><span style='color: #555555;'> 5</span><span> FCGR3A+ Mono B          0.538   100
+#&gt; </span><span style='color: #555555;'> 6</span><span> Memory CD4 T B          0.627   100
+#&gt; </span><span style='color: #555555;'> 7</span><span> Naive CD4 T  B          0.644   100
+#&gt; </span><span style='color: #555555;'> 8</span><span> NK           B          0.504   100
+#&gt; </span><span style='color: #555555;'> 9</span><span> Platelet     B          0.146   100
+#&gt; </span><span style='color: #555555;'>10</span><span> B            CD14+ Mono 0.535   100
+#&gt; </span><span style='color: #555555;'># … with 107 more rows</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -226,7 +226,7 @@ frequent call of entire cluster to color in plot</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

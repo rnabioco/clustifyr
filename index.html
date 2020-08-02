@@ -102,10 +102,14 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="co"># install.packages("remotes")</span>
-<span class="kw">remotes</span>::<span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"rnabioco/clustifyr"</span>)
-</pre></div>
+<p>Install the Bioconductor version with:</p>
+<div class="sourceCode" id="cb1"><pre class="r"><span class="kw">if</span> (!<span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span>(<span class="st">"BiocManager"</span>, <span class="kw">quietly</span> <span class="kw">=</span> <span class="fl">TRUE</span>))
+    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"BiocManager"</span>)
+
+<span class="kw pkg">BiocManager</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span>(<span class="st">"clustifyr"</span>)</pre></div>
+<p>Install the development version with:</p>
+<div class="sourceCode" id="cb2"><pre class="r"><span class="co"># install.packages("remotes")</span>
+<span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"rnabioco/clustifyr"</span>)</pre></div>
 </div>
 <div id="additional-info" class="section level2">
 <h2 class="hasAnchor">
@@ -126,19 +130,18 @@
 <li>a matrix of mean normalized scRNA-seq UMI counts by cell type (<code>cbmc_ref</code>):</li>
 </ul>
 <p>We then calculate correlation coefficients and plot them on a pre-calculated projection (stored in <code>pbmc_meta</code>).</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://github.com/rnabioco/clustifyr#readme">clustifyr</a></span>)
+<div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">clustifyr</span>)
 
 <span class="co"># calculate correlation</span>
-<span class="kw">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clustify.html">clustify</a></span>(
-  input = <span class="kw">pbmc_matrix_small</span>,
-  metadata = <span class="kw">pbmc_meta</span><span class="op">$</span><span class="kw">classified</span>,
-  ref_mat = <span class="kw">cbmc_ref</span>,
-  query_genes = <span class="kw">pbmc_vargenes</span>
+<span class="no">res</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/clustify.html">clustify</a></span>(
+  <span class="kw">input</span> <span class="kw">=</span> <span class="no">pbmc_matrix_small</span>,
+  <span class="kw">metadata</span> <span class="kw">=</span> <span class="no">pbmc_meta</span>$<span class="no">classified</span>,
+  <span class="kw">ref_mat</span> <span class="kw">=</span> <span class="no">cbmc_ref</span>,
+  <span class="kw">query_genes</span> <span class="kw">=</span> <span class="no">pbmc_vargenes</span>
 )
 
 <span class="co"># print assignments</span>
-<span class="fu"><a href="reference/cor_to_call.html">cor_to_call</a></span>(<span class="kw">res</span>)
+<span class="fu"><a href="reference/cor_to_call.html">cor_to_call</a></span>(<span class="no">res</span>)
 <span class="co">#&gt; # A tibble: 9 x 3</span>
 <span class="co">#&gt; # Groups:   cluster [9]</span>
 <span class="co">#&gt;   cluster      type           r</span>
@@ -155,21 +158,19 @@
 
 <span class="co"># plot assignments on a projection</span>
 <span class="fu"><a href="reference/plot_best_call.html">plot_best_call</a></span>(
-  cor_mat = <span class="kw">res</span>,
-  metadata = <span class="kw">pbmc_meta</span>,
-  cluster_col = <span class="st">"classified"</span>
-)
-</pre></div>
+  <span class="kw">cor_mat</span> <span class="kw">=</span> <span class="no">res</span>,
+  <span class="kw">metadata</span> <span class="kw">=</span> <span class="no">pbmc_meta</span>,
+  <span class="kw">cluster_col</span> <span class="kw">=</span> <span class="st">"classified"</span>
+)</pre></div>
 <p><img src="reference/figures/readme_example-1.png"><!-- --></p>
 <p><code><a href="reference/clustify.html">clustify()</a></code> can also take a clustered <code>SingleCellExperiment</code> or <code>seurat</code> object (both v2 and v3) and assign identities.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="co"># for SingleCellExperiment</span>
+<div class="sourceCode" id="cb4"><pre class="r"><span class="co"># for SingleCellExperiment</span>
 <span class="fu"><a href="reference/clustify.html">clustify</a></span>(
-  input = <span class="kw">sce_small</span>,          <span class="co"># an SCE object</span>
-  ref_mat = <span class="kw">cbmc_ref</span>,         <span class="co"># matrix of RNA-seq expression data for each cell type</span>
-  cluster_col = <span class="st">"cell_type1"</span>, <span class="co"># name of column in meta.data containing cell clusters</span>
-  obj_out = <span class="fl">TRUE</span>              <span class="co"># output SCE object with cell type inserted as "type" column</span>
-) 
+  <span class="kw">input</span> <span class="kw">=</span> <span class="no">sce_small</span>,          <span class="co"># an SCE object</span>
+  <span class="kw">ref_mat</span> <span class="kw">=</span> <span class="no">cbmc_ref</span>,         <span class="co"># matrix of RNA-seq expression data for each cell type</span>
+  <span class="kw">cluster_col</span> <span class="kw">=</span> <span class="st">"cell_type1"</span>, <span class="co"># name of column in meta.data containing cell clusters</span>
+  <span class="kw">obj_out</span> <span class="kw">=</span> <span class="fl">TRUE</span>              <span class="co"># output SCE object with cell type inserted as "type" column</span>
+)
 <span class="co">#&gt; class: SingleCellExperiment </span>
 <span class="co">#&gt; dim: 200 200 </span>
 <span class="co">#&gt; metadata(0):</span>
@@ -182,62 +183,56 @@
 <span class="co">#&gt; reducedDimNames(0):</span>
 <span class="co">#&gt; altExpNames(0):</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">Seurat</span>)
-
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">Seurat</span>)
 <span class="co"># for seurat2</span>
 <span class="fu"><a href="reference/clustify.html">clustify</a></span>(
-  input = <span class="kw">s_small</span>,
-  cluster_col = <span class="st">"res.1"</span>,
-  ref_mat = <span class="kw">cbmc_ref</span>,
-  seurat_out = <span class="fl">TRUE</span>
+  <span class="kw">input</span> <span class="kw">=</span> <span class="no">s_small</span>,
+  <span class="kw">cluster_col</span> <span class="kw">=</span> <span class="st">"res.1"</span>,
+  <span class="kw">ref_mat</span> <span class="kw">=</span> <span class="no">cbmc_ref</span>,
+  <span class="kw">seurat_out</span> <span class="kw">=</span> <span class="fl">TRUE</span>
 )
 <span class="co">#&gt; An old seurat object</span>
 <span class="co">#&gt;  230 genes across 80 samples</span>
 
 <span class="co"># for Seurat3</span>
 <span class="fu"><a href="reference/clustify.html">clustify</a></span>(
-  input = <span class="kw">s_small3</span>,
-  cluster_col = <span class="st">"RNA_snn_res.1"</span>,
-  ref_mat = <span class="kw">cbmc_ref</span>,
-  seurat_out = <span class="fl">TRUE</span>
+  <span class="kw">input</span> <span class="kw">=</span> <span class="no">s_small3</span>,
+  <span class="kw">cluster_col</span> <span class="kw">=</span> <span class="st">"RNA_snn_res.1"</span>,
+  <span class="kw">ref_mat</span> <span class="kw">=</span> <span class="no">cbmc_ref</span>,
+  <span class="kw">seurat_out</span> <span class="kw">=</span> <span class="fl">TRUE</span>
 )
 <span class="co">#&gt; An object of class Seurat </span>
 <span class="co">#&gt; 230 features across 80 samples within 1 assay </span>
 <span class="co">#&gt; Active assay: RNA (230 features, 20 variable features)</span>
-<span class="co">#&gt;  2 dimensional reductions calculated: pca, tsne</span>
-</pre></div>
+<span class="co">#&gt;  2 dimensional reductions calculated: pca, tsne</span></pre></div>
 <p>New reference matrix can be made directly from <code>SingleCellExperiment</code> and <code>seurat</code> objects as well. Other scRNAseq experiment object types are supported as well.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="co"># make reference from SingleCellExperiment objects</span>
-<span class="kw">sce_ref</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/object_ref.html">object_ref</a></span>(
-  input = <span class="kw">sce_small</span>,               <span class="co"># SCE object</span>
-  cluster_col = <span class="st">"cell_type1"</span>       <span class="co"># name of column in colData containing cell identities</span>
+<div class="sourceCode" id="cb5"><pre class="r"><span class="co"># make reference from SingleCellExperiment objects</span>
+<span class="no">sce_ref</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/object_ref.html">object_ref</a></span>(
+  <span class="kw">input</span> <span class="kw">=</span> <span class="no">sce_small</span>,               <span class="co"># SCE object</span>
+  <span class="kw">cluster_col</span> <span class="kw">=</span> <span class="st">"cell_type1"</span>       <span class="co"># name of column in colData containing cell identities</span>
 )
-<span class="co">#&gt; The following clusters have less than 10 cells for this analysis: co-expressionductalendothelialepsilonMHC class IIPSC. Classification is likely inaccurate.</span>
 
 <span class="co"># make reference from seurat objects</span>
-<span class="kw">s_ref</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/seurat_ref.html">seurat_ref</a></span>(
-  seurat_object = <span class="kw">s_small</span>,
-  cluster_col = <span class="st">"res.1"</span>
+<span class="no">s_ref</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/seurat_ref.html">seurat_ref</a></span>(
+  <span class="kw">seurat_object</span> <span class="kw">=</span> <span class="no">s_small</span>,
+  <span class="kw">cluster_col</span> <span class="kw">=</span> <span class="st">"res.1"</span>
 )
 
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">s_ref</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">s_ref</span>)
 <span class="co">#&gt;                 0        1        2        3</span>
 <span class="co">#&gt; MS4A1    4.517255 3.204766 0.000000 0.000000</span>
 <span class="co">#&gt; CD79B    4.504191 3.549095 2.580662 0.000000</span>
 <span class="co">#&gt; CD79A    4.457349 4.199849 0.000000 0.000000</span>
 <span class="co">#&gt; HLA-DRA  6.211779 6.430463 3.659590 4.169965</span>
 <span class="co">#&gt; TCL1A    4.394310 2.837922 0.000000 0.000000</span>
-<span class="co">#&gt; HLA-DQB1 4.380289 4.325293 0.000000 1.666167</span>
-</pre></div>
+<span class="co">#&gt; HLA-DQB1 4.380289 4.325293 0.000000 1.666167</span></pre></div>
 <p><code><a href="reference/clustify_lists.html">clustify_lists()</a></code> handles identity assignment of matrix or <code>SingleCellExperiment</code> and <code>seurat</code> objects based on marker gene lists.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="reference/clustify_lists.html">clustify_lists</a></span>(
-  input = <span class="kw">pbmc_matrix_small</span>,
-  metadata = <span class="kw">pbmc_meta</span>,
-  cluster_col = <span class="st">"classified"</span>,
-  marker = <span class="kw">pbmc_markers</span>,
-  marker_inmatrix = <span class="fl">FALSE</span>
+<div class="sourceCode" id="cb6"><pre class="r"><span class="fu"><a href="reference/clustify_lists.html">clustify_lists</a></span>(
+  <span class="kw">input</span> <span class="kw">=</span> <span class="no">pbmc_matrix_small</span>,
+  <span class="kw">metadata</span> <span class="kw">=</span> <span class="no">pbmc_meta</span>,
+  <span class="kw">cluster_col</span> <span class="kw">=</span> <span class="st">"classified"</span>,
+  <span class="kw">marker</span> <span class="kw">=</span> <span class="no">pbmc_markers</span>,
+  <span class="kw">marker_inmatrix</span> <span class="kw">=</span> <span class="fl">FALSE</span>
 )
 <span class="co">#&gt;                      0        1        2         3         4        5        6</span>
 <span class="co">#&gt; Naive CD4 T  1.5639055 20.19469 31.77095  8.664074 23.844992 19.06931 19.06931</span>
@@ -261,15 +256,19 @@
 <span class="co">#&gt; Platelet     19.492465 59.9493793</span>
 
 <span class="fu"><a href="reference/clustify_lists.html">clustify_lists</a></span>(
-  input = <span class="kw">s_small</span>,
-  marker = <span class="kw">pbmc_markers</span>,
-  marker_inmatrix = <span class="fl">FALSE</span>,
-  cluster_col = <span class="st">"res.1"</span>,
-  seurat_out = <span class="fl">TRUE</span>
+  <span class="kw">input</span> <span class="kw">=</span> <span class="no">s_small</span>,
+  <span class="kw">marker</span> <span class="kw">=</span> <span class="no">pbmc_markers</span>,
+  <span class="kw">marker_inmatrix</span> <span class="kw">=</span> <span class="fl">FALSE</span>,
+  <span class="kw">cluster_col</span> <span class="kw">=</span> <span class="st">"res.1"</span>,
+  <span class="kw">seurat_out</span> <span class="kw">=</span> <span class="fl">TRUE</span>
 )
 <span class="co">#&gt; An old seurat object</span>
-<span class="co">#&gt;  230 genes across 80 samples</span>
-</pre></div>
+<span class="co">#&gt;  230 genes across 80 samples</span></pre></div>
+</div>
+<div id="code-of-conduct" class="section level2">
+<h2 class="hasAnchor">
+<a href="#code-of-conduct" class="anchor"></a>Code of Conduct</h2>
+<p>Please note that the clustifyr project is released with a <a href="http://rnabioco.github.io/clustifyr/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>
 </div>
   </div>
@@ -294,6 +293,13 @@
 <li>
 <a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
 </li>
+</ul>
+</div>
+<div class="community">
+<h2>Community</h2>
+<ul class="list-unstyled">
+<li><a href="CONTRIBUTING.html">Contributing guide</a></li>
+<li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
 </ul>
 </div>
 <div class="citation">
@@ -327,7 +333,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
