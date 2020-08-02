@@ -1965,7 +1965,7 @@ check_raw_counts <- function(counts_matrix, max_log_value = 50)
 #' in the output matrix
 #' @param output_fn output filename for .rds file. If NULL the matrix will be returned instead of
 #' saving
-#' 
+#' @return Combined matrix with all genes given
 #' @export
 build_atlas <- function(matrix_fns,
                         genes_fn,

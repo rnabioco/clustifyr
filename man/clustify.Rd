@@ -28,6 +28,7 @@ clustify(input, ...)
   threshold = "auto",
   low_threshold_cell = 0,
   exclude_genes = c(),
+  if_log = TRUE,
   ...
 )
 
@@ -137,6 +138,9 @@ only used when obj_out = TRUE}
 \item{low_threshold_cell}{option to remove clusters with too few cells}
 
 \item{exclude_genes}{a vector of gene names to throw out of query}
+
+\item{if_log}{input data is natural log,
+averaging will be done on unlogged data}
 
 \item{use_var_genes}{if providing a seurat object, use the variable genes
 (stored in seurat_object@var.genes) as the query_genes.}

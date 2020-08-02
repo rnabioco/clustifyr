@@ -32,7 +32,6 @@ Authors:
 
 Other contributors:
 \itemize{
-  \item RNA Bioscience Initiative [funder]
   \item Austin Gillen \email{austin.gillen@ucdenver.edu} [contributor]
   \item Chengzhe Tian \email{Chengzhe.Tian@colorado.edu} [contributor]
   \item Jay Hesselberth \email{jay.hesselberth@gmail.com} [contributor]

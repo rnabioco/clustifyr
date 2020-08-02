@@ -36,6 +36,8 @@ clustify <- function(input, ...) {
 #'  only used when obj_out = TRUE
 #' @param low_threshold_cell option to remove clusters with too few cells
 #' @param exclude_genes a vector of gene names to throw out of query
+#' @param if_log input data is natural log,
+#' averaging will be done on unlogged data
 #' @param ... additional arguments to pass to compute_method function
 #'
 #' @return single cell object with identity assigned in metadata,
@@ -100,6 +102,7 @@ clustify.default <- function(input,
                              threshold = "auto",
                              low_threshold_cell = 0,
                              exclude_genes = c(),
+                             if_log = TRUE,
                              ...) {
     if (!compute_method %in% clustifyr_methods) {
         stop(paste(compute_method, "correlation method not implemented"),
