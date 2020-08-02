@@ -140,54 +140,54 @@
     <p>Function to convert labelled object to avg expression matrix</p>
     </div>
 
-    <pre class="usage"><span class='fu'>object_ref</span>(<span class='no'>input</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>object_ref</span>(<span class='kw'>input</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>object_ref</span>(
-  <span class='no'>input</span>,
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>var_genes_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>assay_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
-  <span class='kw'>lookuptable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
+  <span class='kw'>input</span>,
+  cluster_col = <span class='kw'>NULL</span>,
+  var_genes_only = <span class='fl'>FALSE</span>,
+  assay_name = <span class='kw'>NULL</span>,
+  method = <span class='st'>"mean"</span>,
+  lookuptable = <span class='kw'>NULL</span>,
+  if_log = <span class='fl'>TRUE</span>,
+  <span class='kw'>...</span>
 )
 
 <span class='co'># S3 method for Seurat</span>
 <span class='fu'>object_ref</span>(
-  <span class='no'>input</span>,
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>var_genes_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>assay_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
-  <span class='kw'>lookuptable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
+  <span class='kw'>input</span>,
+  cluster_col = <span class='kw'>NULL</span>,
+  var_genes_only = <span class='fl'>FALSE</span>,
+  assay_name = <span class='kw'>NULL</span>,
+  method = <span class='st'>"mean"</span>,
+  lookuptable = <span class='kw'>NULL</span>,
+  if_log = <span class='fl'>TRUE</span>,
+  <span class='kw'>...</span>
 )
 
 <span class='co'># S3 method for seurat</span>
 <span class='fu'>object_ref</span>(
-  <span class='no'>input</span>,
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>var_genes_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>assay_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
-  <span class='kw'>lookuptable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
+  <span class='kw'>input</span>,
+  cluster_col = <span class='kw'>NULL</span>,
+  var_genes_only = <span class='fl'>FALSE</span>,
+  assay_name = <span class='kw'>NULL</span>,
+  method = <span class='st'>"mean"</span>,
+  lookuptable = <span class='kw'>NULL</span>,
+  if_log = <span class='fl'>TRUE</span>,
+  <span class='kw'>...</span>
 )
 
 <span class='co'># S3 method for SingleCellExperiment</span>
 <span class='fu'>object_ref</span>(
-  <span class='no'>input</span>,
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>var_genes_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>assay_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
-  <span class='kw'>lookuptable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
+  <span class='kw'>input</span>,
+  cluster_col = <span class='kw'>NULL</span>,
+  var_genes_only = <span class='fl'>FALSE</span>,
+  assay_name = <span class='kw'>NULL</span>,
+  method = <span class='st'>"mean"</span>,
+  lookuptable = <span class='kw'>NULL</span>,
+  if_log = <span class='fl'>TRUE</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -239,8 +239,8 @@ and cell types as column names</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>object_ref</span>(
-    <span class='no'>s_small3</span>,
-    <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"RNA_snn_res.1"</span>
+    <span class='kw'>s_small3</span>,
+    cluster_col = <span class='st'>"RNA_snn_res.1"</span>
 )</div><div class='output co'>#&gt;                       0         1         2
 #&gt; MS4A1         0.0000000 1.1260469 5.1510649
 #&gt; CD79B         2.4693409 2.9204074 5.0313160
@@ -483,11 +483,11 @@ and cell types as column names</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Rui Fu, Kent Riemondy, <a href='https://rockyrna.org'>RNA Bioscience Initiative</a>.</p>
+  <p>Developed by Rui Fu, Kent Riemondy.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

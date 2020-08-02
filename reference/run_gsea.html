@@ -148,13 +148,13 @@ set ovelap</p>
     </div>
 
     <pre class="usage"><span class='fu'>run_gsea</span>(
-  <span class='no'>expr_mat</span>,
-  <span class='no'>query_genes</span>,
-  <span class='kw'>cluster_ids</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>no_warnings</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>expr_mat</span>,
+  <span class='kw'>query_genes</span>,
+  cluster_ids = <span class='kw'>NULL</span>,
+  n_perm = <span class='fl'>1000</span>,
+  per_cell = <span class='fl'>FALSE</span>,
+  scale = <span class='fl'>FALSE</span>,
+  no_warnings = <span class='fl'>TRUE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -201,11 +201,11 @@ default = FALSE</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>run_gsea</span>(
-    <span class='kw'>expr_mat</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
-    <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='no'>pbmc_vargenes</span>[<span class='fl'>1</span>:<span class='fl'>100</span>],
-    <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-    <span class='kw'>cluster_ids</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>$<span class='no'>classified</span>,
-    <span class='kw'>no_warnings</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+    expr_mat = <span class='kw'>pbmc_matrix_small</span>,
+    query_genes = <span class='kw'>pbmc_vargenes</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>100</span>],
+    n_perm = <span class='fl'>10</span>,
+    cluster_ids = <span class='kw'>pbmc_meta</span><span class='op'>$</span><span class='kw'>classified</span>,
+    no_warnings = <span class='fl'>TRUE</span>
 )</div><div class='output co'>#&gt;                  pathway       pval      NES
 #&gt; B            query_genes 0.09090909 1.376519
 #&gt; CD14+ Mono   query_genes 0.09090909 1.380002
@@ -227,11 +227,11 @@ default = FALSE</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Rui Fu, Kent Riemondy, <a href='https://rockyrna.org'>RNA Bioscience Initiative</a>.</p>
+  <p>Developed by Rui Fu, Kent Riemondy.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

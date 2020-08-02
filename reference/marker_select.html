@@ -140,7 +140,7 @@
     <p>decide for one gene whether it is a marker for a certain cell type</p>
     </div>
 
-    <pre class="usage"><span class='fu'>marker_select</span>(<span class='no'>row1</span>, <span class='no'>cols</span>, <span class='kw'>cut</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>compto</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+    <pre class="usage"><span class='fu'>marker_select</span>(<span class='kw'>row1</span>, <span class='kw'>cols</span>, cut = <span class='fl'>1</span>, compto = <span class='fl'>1</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,16 +168,16 @@
     <p>vector of cluster name and ratio value</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>pbmc_avg</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='average_clusters.html'>average_clusters</a></span>(
-    <span class='kw'>mat</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
-    <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
-    <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
-    <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+    <pre class="examples"><div class='input'><span class='kw'>pbmc_avg</span> <span class='op'>&lt;-</span> <span class='fu'><a href='average_clusters.html'>average_clusters</a></span>(
+    mat = <span class='kw'>pbmc_matrix_small</span>,
+    metadata = <span class='kw'>pbmc_meta</span>,
+    cluster_col = <span class='st'>"classified"</span>,
+    if_log = <span class='fl'>FALSE</span>
 )
 
 <span class='fu'>marker_select</span>(
-    <span class='kw'>row1</span> <span class='kw'>=</span> <span class='no'>pbmc_avg</span>[<span class='st'>"PPBP"</span>, ],
-    <span class='kw'>cols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>pbmc_avg</span>[<span class='st'>"PPBP"</span>, ])
+    row1 = <span class='kw'>pbmc_avg</span>[<span class='st'>"PPBP"</span>, ],
+    cols = <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>pbmc_avg</span>[<span class='st'>"PPBP"</span>, ])
 )</div><div class='output co'>#&gt; [1] "Platelet"          "0.050236218204724"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -190,11 +190,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Rui Fu, Kent Riemondy, <a href='https://rockyrna.org'>RNA Bioscience Initiative</a>.</p>
+  <p>Developed by Rui Fu, Kent Riemondy.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>
