@@ -33,7 +33,11 @@ Authors@R:
       person(given = "Michelle",
              family = "Daya",
              role = "ctb",
-             email = "michelle.daya@ucdenver.edu"))
+             email = "michelle.daya@ucdenver.edu"),
+      person(given = "Sidhant",
+             family = "Puntambekar",
+             role = "ctb",
+             email = "sidhantnp@yahoo.com"))
 License: MIT + file LICENSE
 Depends:
     R (>= 4.0)

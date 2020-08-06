@@ -37,6 +37,7 @@ Other contributors:
   \item Jay Hesselberth \email{jay.hesselberth@gmail.com} [contributor]
   \item Yue Hao \email{haoyuethink@gmail.com} [contributor]
   \item Michelle Daya \email{michelle.daya@ucdenver.edu} [contributor]
+  \item Sidhant Puntambekar \email{sidhantnp@yahoo.com} [contributor]
 }
 
 }
