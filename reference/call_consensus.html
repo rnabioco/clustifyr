@@ -140,7 +140,7 @@
     <p>get concensus calls for a list of cor calls</p>
     </div>
 
-    <pre class="usage"><span class='fu'>call_consensus</span>(<span class='kw'>list_of_res</span>)</pre>
+    <pre class="usage"><span class='fu'>call_consensus</span>(<span class='no'>list_of_res</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -156,14 +156,14 @@
     <p>dataframe of cluster, new ident, and mean rank</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span>(
-    input = <span class='kw'>pbmc_matrix_small</span>,
-    metadata = <span class='kw'>pbmc_meta</span>,
-    cluster_col = <span class='st'>"classified"</span>,
-    ref_mat = <span class='kw'>cbmc_ref</span>
+    <pre class="examples"><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span>(
+    <span class='kw'>input</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
+    <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
+    <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
+    <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>cbmc_ref</span>
 )</div><div class='output co'>#&gt; <span class='message'>var.features not found, using all genes instead</span></div><div class='input'>
-<span class='kw'>res2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cor_to_call_rank.html'>cor_to_call_rank</a></span>(<span class='kw'>res</span>, threshold = <span class='st'>"auto"</span>)</div><div class='output co'>#&gt; <span class='message'>using threshold of 0.7</span></div><div class='input'><span class='kw'>res3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cor_to_call_rank.html'>cor_to_call_rank</a></span>(<span class='kw'>res</span>)
-<span class='fu'>call_consensus</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>res2</span>, <span class='kw'>res3</span>))</div><div class='output co'>#&gt; <span class='message'>Selecting by rank</span></div></pre>
+<span class='no'>res2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='cor_to_call_rank.html'>cor_to_call_rank</a></span>(<span class='no'>res</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"auto"</span>)</div><div class='output co'>#&gt; <span class='message'>using threshold of 0.7</span></div><div class='input'><span class='no'>res3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='cor_to_call_rank.html'>cor_to_call_rank</a></span>(<span class='no'>res</span>)
+<span class='fu'>call_consensus</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>res2</span>, <span class='no'>res3</span>))</div><div class='output co'>#&gt; <span class='message'>Selecting by rank</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -179,7 +179,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
