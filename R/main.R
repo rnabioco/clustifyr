@@ -276,7 +276,6 @@ clustify.seurat <- function(input,
                             rm0 = FALSE,
                             rename_prefix = NULL,
                             exclude_genes = c(),
-                            if_log = TRUE,
                             ...) {
     s_object <- input
     # for seurat < 3.0
@@ -299,7 +298,6 @@ clustify.seurat <- function(input,
         verbose = verbose,
         rm0 = rm0,
         exclude_genes = exclude_genes,
-        if_log = if_log,
         ...
     )
 
@@ -354,7 +352,6 @@ clustify.Seurat <- function(input,
                             rm0 = FALSE,
                             rename_prefix = NULL,
                             exclude_genes = c(),
-                            if_log = TRUE,
                             ...) {
     s_object <- input
     # for seurat 3.0 +
@@ -377,7 +374,6 @@ clustify.Seurat <- function(input,
         verbose = verbose,
         rm0 = rm0,
         exclude_genes = exclude_genes,
-        if_log = if_log,
         ...
     )
 
@@ -432,7 +428,6 @@ clustify.SingleCellExperiment <- function(input,
                                           rm0 = FALSE,
                                           rename_prefix = NULL,
                                           exclude_genes = c(),
-                                          if_log = TRUE,
                                           ...) {
     s_object <- input
     expr_mat <- object_data(s_object, "data")
@@ -450,7 +445,6 @@ clustify.SingleCellExperiment <- function(input,
         verbose = verbose,
         rm0 = rm0,
         exclude_genes = exclude_genes,
-        if_log = if_log,
         ...
     )
 

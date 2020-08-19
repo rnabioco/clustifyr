@@ -17,6 +17,9 @@ in the output matrix}
 \item{output_fn}{output filename for .rds file. If NULL the matrix will be returned instead of
 saving}
 }
+\value{
+Combined matrix with all genes given
+}
 \description{
 Function to combine records into single atlas
 }

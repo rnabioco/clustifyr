@@ -32,12 +32,12 @@ Authors:
 
 Other contributors:
 \itemize{
-  \item RNA Bioscience Initiative [funder]
   \item Austin Gillen \email{austin.gillen@ucdenver.edu} [contributor]
   \item Chengzhe Tian \email{Chengzhe.Tian@colorado.edu} [contributor]
   \item Jay Hesselberth \email{jay.hesselberth@gmail.com} [contributor]
   \item Yue Hao \email{haoyuethink@gmail.com} [contributor]
   \item Michelle Daya \email{michelle.daya@ucdenver.edu} [contributor]
+  \item Sidhant Puntambekar \email{sidhantnp@yahoo.com} [contributor]
 }
 
 }

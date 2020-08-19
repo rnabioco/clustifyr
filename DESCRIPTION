@@ -14,7 +14,6 @@ Authors@R:
              family = "Riemondy",
              role = "aut",
              email = "kent.riemondy@ucdenver.edu"),
-      person("RNA Bioscience Initiative", role = c("fnd")),
       person(given = "Austin",
              family = "Gillen",
              role = "ctb",
@@ -34,7 +33,11 @@ Authors@R:
       person(given = "Michelle",
              family = "Daya",
              role = "ctb",
-             email = "michelle.daya@ucdenver.edu"))
+             email = "michelle.daya@ucdenver.edu"),
+      person(given = "Sidhant",
+             family = "Puntambekar",
+             role = "ctb",
+             email = "sidhantnp@yahoo.com"))
 License: MIT + file LICENSE
 Depends:
     R (>= 4.0)

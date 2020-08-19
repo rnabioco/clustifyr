@@ -49,7 +49,6 @@ clustify(input, ...)
   rm0 = FALSE,
   rename_prefix = NULL,
   exclude_genes = c(),
-  if_log = TRUE,
   ...
 )
 
@@ -70,7 +69,6 @@ clustify(input, ...)
   rm0 = FALSE,
   rename_prefix = NULL,
   exclude_genes = c(),
-  if_log = TRUE,
   ...
 )
 
@@ -91,7 +89,6 @@ clustify(input, ...)
   rm0 = FALSE,
   rename_prefix = NULL,
   exclude_genes = c(),
-  if_log = TRUE,
   ...
 )
 }
