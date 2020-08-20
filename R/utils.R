@@ -1975,7 +1975,7 @@ build_atlas <- function(matrix_fns = NULL,
                         output_fn = NULL)
 {
   genesVector <- readr::read_lines(genes_fn)
-  if(is.null(matrix_obs) && !is.null(matrix_fns))
+  if(is.null(matrix_objs) && !is.null(matrix_fns))
   {
     ref_mats <- lapply(matrix_fns, readRDS)
     if(is.null(names(matrix_fns)))
@@ -1987,16 +1987,16 @@ build_atlas <- function(matrix_fns = NULL,
       names(ref_mats) <- names(matrix_fns)
     }
   } 
-  else if(!is.null(matrix_obs)) 
+  else if(!is.null(matrix_objs)) 
   {
-    ref_mats <- matrix_obs
-    if(is.null(names(matrix_obs)))
+    ref_mats <- matrix_objs
+    if(is.null(names(matrix_objs)))
     {
       names(ref_mats) <- basename(ref_matrices_fns) %>% stringr::str_remove(".rds$")
     } 
     else 
     {
-      names(ref_mats) <- names(matrix_obs)
+      names(ref_mats) <- names(matrix_objs)
     }
   }
   new_mats <- list()
