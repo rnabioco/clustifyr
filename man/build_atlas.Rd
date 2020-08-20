@@ -4,7 +4,7 @@
 \alias{build_atlas}
 \title{Function to combine records into single atlas}
 \usage{
-build_atlas(matrix_fns, genes_fn, output_fn = NULL)
+build_atlas(matrix_fns = NULL, genes_fn, matrix_objs = NULL, output_fn = NULL)
 }
 \arguments{
 \item{matrix_fns}{character vector of paths to study matrices stored as .rds files.
@@ -13,6 +13,8 @@ name in the final matrix. If it is not named, then the filename will be used (wi
 
 \item{genes_fn}{text file with a single column containing genes and the ordering desired
 in the output matrix}
+
+\item{matrix_objs}{Checks to see whether .rds files will be read or R objects in a local environment}
 
 \item{output_fn}{output filename for .rds file. If NULL the matrix will be returned instead of
 saving}
