@@ -1974,13 +1974,13 @@ build_atlas <- function(matrix_fns = NULL,
                         matrix_objs = NULL,
                         output_fn = NULL)
 {
-  genesVector <- read_lines(genes_fn)
+  genesVector <- readr::read_lines(genes_fn)
   if(is.null(matrix_obs) && !is.null(matrix_fns))
   {
     ref_mats <- lapply(matrix_fns, readRDS)
     if(is.null(names(matrix_fns)))
     {
-      names(ref_mats) <- basename(ref_matrices_fns) %>% str_remove(".rds$")
+      names(ref_mats) <- basename(ref_matrices_fns) %>% stringr::str_remove(".rds$")
     } 
     else 
     {
