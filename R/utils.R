@@ -1992,7 +1992,7 @@ build_atlas <- function(matrix_fns = NULL,
     ref_mats <- matrix_obs
     if(is.null(names(matrix_obs)))
     {
-      names(ref_mats) <- basename(ref_matrices_fns) %>% str_remove(".rds$")
+      names(ref_mats) <- basename(ref_matrices_fns) %>% stringr::str_remove(".rds$")
     } 
     else 
     {
