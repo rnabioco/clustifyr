@@ -1341,3 +1341,16 @@ test_that("check raw counts of matrices", {
     )
     expect_true(mat == "log-normalized")
 })
+
+test_that("check atlas successfully built", {
+  pbmc_ref_matrix <- average_clusters(
+    mat = pbmc_matrix_small,
+    metadata = pbmc_meta, 
+    cluster_col = "classified", 
+    if_log = TRUE                    # whether the expression matrix is already log transformed
+  )
+  gene_List <- load(human_genes_10x)
+  references_to_combine <- list(pbmc_ref_matrix, cbmc_ref)
+  atlas <- build_atlas(NULL, genes_fn = gene_list, matrix_objs = references_to_combine, NULL)
+  expect_true(nrow(atlas) == 33514 && ncol(atlas) == 22)
+})
