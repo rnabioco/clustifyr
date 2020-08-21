@@ -14,7 +14,9 @@ name in the final matrix. If it is not named, then the filename will be used (wi
 \item{genes_fn}{text file with a single column containing genes and the ordering desired
 in the output matrix}
 
-\item{matrix_objs}{Checks to see whether .rds files will be read or R objects in a local environment}
+\item{matrix_objs}{Checks to see whether .rds files will be read or R objects in a
+local environment. A list of environmental objects can be passed to
+matrx_objs, and that names will be used, otherwise defaults to numbers}
 
 \item{output_fn}{output filename for .rds file. If NULL the matrix will be returned instead of
 saving}
