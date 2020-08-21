@@ -1992,12 +1992,8 @@ build_atlas <- function(matrix_fns = NULL,
     ref_mats <- matrix_objs
     if(is.null(names(matrix_objs)))
     {
-      names(ref_mats) <- stringr::str_remove(basename(matrix_fns) , ".rds$")
+      names(ref_mats) <- seq_along(1:length(matrix_objs))
     } 
-    else 
-    {
-      names(ref_mats) <- names(matrix_objs)
-    }
   }
   new_mats <- list()
   for(i in seq_along(ref_mats))
