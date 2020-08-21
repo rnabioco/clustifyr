@@ -26,12 +26,12 @@
 #' )
 #' @export
 run_gsea <- function(expr_mat,
-                     query_genes,
-                     cluster_ids = NULL,
-                     n_perm = 1000,
-                     per_cell = FALSE,
-                     scale = FALSE,
-                     no_warnings = TRUE) {
+    query_genes,
+    cluster_ids = NULL,
+    n_perm = 1000,
+    per_cell = FALSE,
+    scale = FALSE,
+    no_warnings = TRUE) {
     if (!is.list(query_genes)) {
         geneset_list <- list("query_genes" = query_genes)
     } else {
@@ -40,14 +40,16 @@ run_gsea <- function(expr_mat,
 
     if (!per_cell & (ncol(expr_mat) != length(cluster_ids))) {
         stop("cluster_ids do not match number of cells (columns) ",
-          "in expr_mat",
+            "in expr_mat",
             call. = FALSE
         )
     }
 
     if (n_perm > 1e4 & per_cell) {
-        warning("run_gsea() take a long time if running many ",
-                "permutations and running per cell")
+        warning(
+            "run_gsea() take a long time if running many ",
+            "permutations and running per cell"
+        )
     }
 
     if (scale) {
@@ -56,7 +58,8 @@ run_gsea <- function(expr_mat,
 
     if (!per_cell) {
         avg_mat <- average_clusters(expr_mat,
-                                    metadata = cluster_ids)
+            metadata = cluster_ids
+        )
     } else {
         avg_mat <- expr_mat
     }
@@ -69,8 +72,9 @@ run_gsea <- function(expr_mat,
                 avg_mat[, i],
                 minSize = 1,
                 maxSize = max(vapply(geneset_list,
-                                     length,
-                                     FUN.VALUE = numeric(1))),
+                    length,
+                    FUN.VALUE = numeric(1)
+                )),
                 nproc = 1,
                 nperm = n_perm
             )
@@ -81,8 +85,9 @@ run_gsea <- function(expr_mat,
                     avg_mat[, i],
                     minSize = 1,
                     maxSize = max(vapply(geneset_list,
-                                         length,
-                                         FUN.VALUE = numeric(1))),
+                        length,
+                        FUN.VALUE = numeric(1)
+                    )),
                     nproc = 1,
                     nperm = n_perm
                 )

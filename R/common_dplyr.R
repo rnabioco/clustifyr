@@ -20,12 +20,12 @@
 #' cor_to_call(res)
 #' @export
 cor_to_call <- function(cor_mat,
-                        metadata = NULL,
-                        cluster_col = "cluster",
-                        collapse_to_cluster = FALSE,
-                        threshold = 0,
-                        rename_prefix = NULL,
-                        carry_r = FALSE) {
+    metadata = NULL,
+    cluster_col = "cluster",
+    collapse_to_cluster = FALSE,
+    threshold = 0,
+    rename_prefix = NULL,
+    carry_r = FALSE) {
     correlation_matrix <- cor_mat
     if (threshold == "auto") {
         threshold <- round(0.75 * max(correlation_matrix), 2)
@@ -68,8 +68,9 @@ cor_to_call <- function(cor_mat,
         df_temp2 <- df_temp
         df_temp_full <-
             dplyr::distinct_at(df_temp,
-                               vars(-!!dplyr::sym("type")),
-                               .keep_all = TRUE)
+                vars(-!!dplyr::sym("type")),
+                .keep_all = TRUE
+            )
     } else {
         df_temp_full <- df_temp
     }
@@ -143,10 +144,10 @@ cor_to_call <- function(cor_mat,
 #' }
 #' @export
 call_to_metadata <- function(res,
-                             metadata,
-                             cluster_col,
-                             per_cell = FALSE,
-                             rename_prefix = NULL) {
+    metadata,
+    cluster_col,
+    per_cell = FALSE,
+    rename_prefix = NULL) {
     temp_col_id <- get_unique_column(metadata, "rn")
 
     df_temp <- res
@@ -165,18 +166,19 @@ call_to_metadata <- function(res,
     if (per_cell == FALSE) {
         if (!(cluster_col %in% colnames(metadata))) {
             stop("cluster_col is not a column of metadata",
-                 call. = FALSE)
+                call. = FALSE
+            )
         }
 
         if (!(cluster_col %in% colnames(res))) {
             stop("cluster_col is not a column ",
-                 "of called cell type dataframe",
+                "of called cell type dataframe",
                 call. = FALSE
             )
         }
 
         if (!(all(unique(df_temp[[cluster_col]]) %in%
-                  unique(metadata[[cluster_col]])))) {
+            unique(metadata[[cluster_col]])))) {
             stop("cluster_col from clustify step and",
                 "joining to metadata step are not the same",
                 call. = FALSE
@@ -222,8 +224,10 @@ call_to_metadata <- function(res,
             df_temp_full <- tibble::remove_rownames(df_temp_full)
         }
         df_temp_full <-
-            tibble::column_to_rownames(df_temp_full,
-                                       temp_col_id)
+            tibble::column_to_rownames(
+                df_temp_full,
+                temp_col_id
+            )
     }
     df_temp_full
 }
@@ -254,42 +258,57 @@ call_to_metadata <- function(res,
 #' )
 #' @export
 collapse_to_cluster <- function(res,
-                                metadata,
-                                cluster_col,
-                                threshold = 0) {
+    metadata,
+    cluster_col,
+    threshold = 0) {
     res_temp <- res
     colnames(res_temp)[1] <- "rn"
     df_temp_full <- as.data.frame(res_temp)
     df_temp_full <-
         dplyr::mutate(df_temp_full,
-                      cluster = metadata[[cluster_col]])
+            cluster = metadata[[cluster_col]]
+        )
     df_temp_full2 <-
-        dplyr::group_by(df_temp_full,
-                        !!dplyr::sym("type"),
-                        !!dplyr::sym("cluster"))
+        dplyr::group_by(
+            df_temp_full,
+            !!dplyr::sym("type"),
+            !!dplyr::sym("cluster")
+        )
     df_temp_full2 <-
         dplyr::summarize(df_temp_full2,
             sum = sum(!!dplyr::sym("r")),
             n = n()
         )
     df_temp_full2 <-
-        dplyr::group_by(df_temp_full2,
-                        !!dplyr::sym("cluster"))
+        dplyr::group_by(
+            df_temp_full2,
+            !!dplyr::sym("cluster")
+        )
     df_temp_full2 <-
-        dplyr::arrange(df_temp_full2,
-                       desc(n),
-                       desc(sum))
+        dplyr::arrange(
+            df_temp_full2,
+            desc(n),
+            desc(sum)
+        )
     df_temp_full2 <-
-        dplyr::filter(df_temp_full2,
-                      !!dplyr::sym("type") != paste0("r<",
-                                                     threshold,
-                                                     ", unassigned"))
+        dplyr::filter(
+            df_temp_full2,
+            !!dplyr::sym("type") != paste0(
+                "r<",
+                threshold,
+                ", unassigned"
+            )
+        )
     df_temp_full2 <- dplyr::slice(df_temp_full2, 1)
     df_temp_full2 <-
-        dplyr::rename(df_temp_full2,
-                      !!cluster_col := cluster)
-    dplyr::select(df_temp_full2, 2, 1,
-                  tidyr::everything())
+        dplyr::rename(
+            df_temp_full2,
+            !!cluster_col := cluster
+        )
+    dplyr::select(
+        df_temp_full2, 2, 1,
+        tidyr::everything()
+    )
 }
 
 #' get ranked calls for each cluster
@@ -315,12 +334,12 @@ collapse_to_cluster <- function(res,
 #' cor_to_call_rank(res, threshold = "auto")
 #' @export
 cor_to_call_rank <- function(cor_mat,
-                             metadata = NULL,
-                             cluster_col = "cluster",
-                             collapse_to_cluster = FALSE,
-                             threshold = 0,
-                             rename_prefix = NULL,
-                             top_n = NULL) {
+    metadata = NULL,
+    cluster_col = "cluster",
+    collapse_to_cluster = FALSE,
+    threshold = 0,
+    rename_prefix = NULL,
+    top_n = NULL) {
     correlation_matrix <- cor_mat
     if (threshold == "auto") {
         threshold <- round(0.75 * max(correlation_matrix), 2)
@@ -337,7 +356,8 @@ cor_to_call_rank <- function(cor_mat,
         )
     df_temp <-
         dplyr::mutate(dplyr::group_by_at(df_temp, 1),
-                      rank = dplyr::dense_rank(desc(!!dplyr::sym("r"))))
+            rank = dplyr::dense_rank(desc(!!dplyr::sym("r")))
+        )
     df_temp[["rank"]][df_temp$r < threshold] <- 100
     if (!(is.null(top_n))) {
         df_temp <- dplyr::filter(df_temp, rank <= top_n)
@@ -374,7 +394,6 @@ cor_to_call_rank <- function(cor_mat,
 #' call_consensus(list(res2, res3))
 #' @export
 call_consensus <- function(list_of_res) {
-
     res <- do.call("rbind", list_of_res)
     df_temp <- dplyr::group_by_at(res, c(1, 2))
     df_temp <- dplyr::summarize_at(df_temp, 2, mean)

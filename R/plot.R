@@ -26,19 +26,19 @@
 #' )
 #' @export
 plot_dims <- function(data,
-                      x = "UMAP_1",
-                      y = "UMAP_2",
-                      feature = NULL,
-                      legend_name = "",
-                      c_cols = pretty_palette2,
-                      d_cols = NULL,
-                      pt_size = 0.25,
-                      alpha_col = NULL,
-                      group_col = NULL,
-                      scale_limits = NULL,
-                      do_label = FALSE,
-                      do_legend = TRUE,
-                      do_repel = TRUE) {
+    x = "UMAP_1",
+    y = "UMAP_2",
+    feature = NULL,
+    legend_name = "",
+    c_cols = pretty_palette2,
+    d_cols = NULL,
+    pt_size = 0.25,
+    alpha_col = NULL,
+    group_col = NULL,
+    scale_limits = NULL,
+    do_label = FALSE,
+    do_legend = TRUE,
+    do_repel = TRUE) {
     # add backticks to allow special characters in column names
     x_col <- paste0("`", x, "`")
     y_col <- paste0("`", y, "`")
@@ -85,13 +85,16 @@ plot_dims <- function(data,
                 alpha = paste0("`", alpha_col, "`")
             ), # backticks protect special character gene names
             size = pt_size
-            ) + scale_alpha_continuous(range = c(0, 1))
+            ) +
+            scale_alpha_continuous(range = c(0, 1))
     } else {
         p <- ggplot2::ggplot(data, ggplot2::aes_string(x_col, y_col)) +
-            geom_point(ggplot2::aes_string(color = paste0("`",
-                                                          feature,
-                                                          "`")),
-                size = pt_size
+            geom_point(ggplot2::aes_string(color = paste0(
+                "`",
+                feature,
+                "`"
+            )),
+            size = pt_size
             )
     }
 
@@ -163,10 +166,12 @@ plot_dims <- function(data,
         }
 
         if (do_repel) {
-            alldata <- dplyr::select(data,
-                                     !!dplyr::sym(feature),
-                                     !!dplyr::sym(x),
-                                     !!dplyr::sym(y))
+            alldata <- dplyr::select(
+                data,
+                !!dplyr::sym(feature),
+                !!dplyr::sym(x),
+                !!dplyr::sym(y)
+            )
             alldata[[1]] <- ""
             alldata$a <- 0
             colnames(alldata) <- colnames(centers)
@@ -274,13 +279,13 @@ pretty_palette_ramp_d <-
 #' )
 #' @export
 plot_cor <- function(cor_mat,
-                     metadata,
-                     data_to_plot = colnames(cor_mat),
-                     cluster_col = NULL,
-                     x = "UMAP_1",
-                     y = "UMAP_2",
-                     scale_legends = FALSE,
-                     ...) {
+    metadata,
+    data_to_plot = colnames(cor_mat),
+    cluster_col = NULL,
+    x = "UMAP_1",
+    y = "UMAP_2",
+    scale_legends = FALSE,
+    ...) {
     cor_matrix <- cor_mat
     if (!any(data_to_plot %in% colnames(cor_matrix))) {
         stop("cluster ids not shared between metadata and correlation matrix",
@@ -339,8 +344,10 @@ plot_cor <- function(cor_mat,
     plts <- vector("list", length(data_to_plot))
 
     for (i in seq_along(data_to_plot)) {
-        tmp_data <- dplyr::filter(plt_data,
-            !!dplyr::sym("ref_cluster") == data_to_plot[i])
+        tmp_data <- dplyr::filter(
+            plt_data,
+            !!dplyr::sym("ref_cluster") == data_to_plot[i]
+        )
 
         plts[[i]] <- plot_dims(
             data = tmp_data,
@@ -380,16 +387,17 @@ plot_cor <- function(cor_mat,
 #' )
 #' @export
 plot_gene <- function(expr_mat,
-                      metadata,
-                      genes,
-                      cell_col = NULL,
-                      ...) {
+    metadata,
+    genes,
+    cell_col = NULL,
+    ...) {
     genes_to_plot <- genes[genes %in% rownames(expr_mat)]
     genes_missing <- setdiff(genes, genes_to_plot)
 
     if (length(genes_missing) != 0) {
-        message("the following genes were not present in the input matrix ",
-                paste(genes_missing, collapse = ",")
+        message(
+            "the following genes were not present in the input matrix ",
+            paste(genes_missing, collapse = ",")
         )
     }
 
@@ -409,7 +417,8 @@ plot_gene <- function(expr_mat,
 
     if (!cell_col %in% colnames(mdata)) {
         stop("please supply a cell_col that is present in metadata",
-             call. = FALSE)
+            call. = FALSE
+        )
     }
 
     plt_dat <- dplyr::left_join(expr_dat, mdata,
@@ -438,12 +447,12 @@ plot_gene <- function(expr_mat,
 #' @return list of ggplot object, cells projected by dr,
 #' colored by cell type classification
 plot_call <- function(cor_mat,
-                      metadata,
-                      data_to_plot = colnames(cor_mat),
-                      ...) {
+    metadata,
+    data_to_plot = colnames(cor_mat),
+    ...) {
     cor_matrix <- cor_mat
     df_temp <-
-      as.data.frame(cor_matrix - matrixStats::rowMaxs(as.matrix(cor_matrix)))
+        as.data.frame(cor_matrix - matrixStats::rowMaxs(as.matrix(cor_matrix)))
     df_temp[df_temp == 0] <- "1"
     df_temp[df_temp != "1"] <- "0"
     plot_cor(
@@ -486,15 +495,15 @@ plot_call <- function(cor_mat,
 #' )
 #' @export
 plot_best_call <- function(cor_mat,
-                           metadata,
-                           cluster_col = "cluster",
-                           collapse_to_cluster = FALSE,
-                           threshold = 0,
-                           x = "UMAP_1",
-                           y = "UMAP_2",
-                           plot_r = FALSE,
-                           per_cell = FALSE,
-                           ...) {
+    metadata,
+    cluster_col = "cluster",
+    collapse_to_cluster = FALSE,
+    threshold = 0,
+    x = "UMAP_1",
+    y = "UMAP_2",
+    plot_r = FALSE,
+    per_cell = FALSE,
+    ...) {
     cor_matrix <- cor_mat
     col_meta <- colnames(metadata)
     if ("type" %in% col_meta | "type2" %in% col_meta) {
@@ -570,11 +579,11 @@ plot_best_call <- function(cor_mat,
 #' plot_cor_heatmap(res)
 #' @export
 plot_cor_heatmap <- function(cor_mat,
-                             metadata = NULL,
-                             cluster_col = NULL,
-                             col = not_pretty_palette,
-                             legend_title = NULL,
-                             ...) {
+    metadata = NULL,
+    cluster_col = NULL,
+    col = not_pretty_palette,
+    legend_title = NULL,
+    ...) {
     cor_matrix <- cor_mat
     ComplexHeatmap::Heatmap(
         cor_matrix,

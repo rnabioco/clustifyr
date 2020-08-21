@@ -15,13 +15,14 @@
 #' mat[1:3, 1:3]
 #' @export
 binarize_expr <- function(mat,
-                          n = 1000,
-                          cut = 0) {
+    n = 1000,
+    cut = 0) {
     expr_mat <- mat
     if (n < nrow(expr_mat)) {
-        expr_df <-as.matrix(expr_mat)
+        expr_df <- as.matrix(expr_mat)
         filterout <- t(matrixStats::colRanks(-expr_df,
-                                             ties.method = "average")) > n
+            ties.method = "average"
+        )) > n
         expr_df[filterout] <- 0
         expr_df[expr_df > cut] <- 1
         expr_df[expr_df < cut] <- 0
@@ -57,34 +58,38 @@ binarize_expr <- function(mat,
 #' matrixize_markers(pbmc_markers)
 #' @export
 matrixize_markers <- function(marker_df,
-                              ranked = FALSE,
-                              n = NULL,
-                              step_weight = 1,
-                              background_weight = 0,
-                              unique = FALSE,
-                              metadata = NULL,
-                              cluster_col = "classified",
-                              remove_rp = FALSE) {
+    ranked = FALSE,
+    n = NULL,
+    step_weight = 1,
+    background_weight = 0,
+    unique = FALSE,
+    metadata = NULL,
+    cluster_col = "classified",
+    remove_rp = FALSE) {
     # takes marker in dataframe form
     # equal number of marker genes per known cluster
     marker_df <- dplyr::as_tibble(marker_df)
 
-    # if "feature" and "group" are present, 
+    # if "feature" and "group" are present,
     # assume the dataframe is output from presto
     if (("feature" %in% colnames(marker_df)) & ("group" %in% colnames(marker_df))) {
-        marker_df <- marker_df %>% dplyr::rename(gene = "feature",
-                                                 cluster = "group") %>%
-            dplyr::group_by(cluster) %>% 
-            dplyr::arrange(padj, .by_group = TRUE) %>% 
+        marker_df <- marker_df %>%
+            dplyr::rename(
+                gene = "feature",
+                cluster = "group"
+            ) %>%
+            dplyr::group_by(cluster) %>%
+            dplyr::arrange(padj, .by_group = TRUE) %>%
             ungroup()
     }
-    
+
     # if "gene" not present in column names,
     # assume df is a matrix to be converted to ranked
     if (!("gene" %in% colnames(marker_df))) {
         marker_df <-
             data.frame(lapply(marker_df, as.character),
-                       stringsAsFactors = FALSE)
+                stringsAsFactors = FALSE
+            )
         marker_df <-
             tidyr::gather(marker_df,
                 factor_key = TRUE,
@@ -95,9 +100,13 @@ matrixize_markers <- function(marker_df,
 
     if (remove_rp) {
         marker_df <-
-            dplyr::filter(marker_df,
-                          !(stringr::str_detect(gene,
-                                                "^RP[0-9,L,S]|^Rp[0-9,l,s]")))
+            dplyr::filter(
+                marker_df,
+                !(stringr::str_detect(
+                    gene,
+                    "^RP[0-9,L,S]|^Rp[0-9,l,s]"
+                ))
+            )
     }
 
     if (unique) {
@@ -214,10 +223,10 @@ get_vargenes <- function(marker_mat) {
 #' )
 #' @export
 compare_lists <- function(bin_mat,
-                          marker_mat,
-                          n = 30000,
-                          metric = "hyper",
-                          output_high = TRUE) {
+    marker_mat,
+    n = 30000,
+    metric = "hyper",
+    output_high = TRUE) {
     # check if matrix is binarized
     if ((length(unique(bin_mat[, 1])) > 2) & (metric != "gsea")) {
         warning("non-binarized data, running spearman instead")
@@ -232,14 +241,15 @@ compare_lists <- function(bin_mat,
                     colnames(marker_mat),
                     function(y) {
                         marker_list <- unlist(marker_mat[, y],
-                                              use.names = FALSE)
+                            use.names = FALSE
+                        )
                         bin_temp <- bin_mat[, x][bin_mat[, x] == 1]
                         list_top <- names(bin_temp)
 
                         t <- length(intersect(list_top, marker_list))
                         a <- max(length(list_top), length(marker_list))
                         b <- min(length(list_top), length(marker_list))
-                        sum(dhyper(seq(t,b), a, n - a, b))
+                        sum(dhyper(seq(t, b), a, n - a, b))
                     }
                 )
                 do.call(cbind, as.list(p.adjust(per_col)))
@@ -256,7 +266,8 @@ compare_lists <- function(bin_mat,
                     colnames(marker_mat),
                     function(y) {
                         marker_list <- unlist(marker_mat[, y],
-                                              use.names = FALSE)
+                            use.names = FALSE
+                        )
                         bin_temp <- bin_mat[, x][bin_mat[, x] == 1]
                         list_top <- names(bin_temp)
 
@@ -275,13 +286,15 @@ compare_lists <- function(bin_mat,
                     colnames(marker_mat),
                     function(y) {
                         marker_list <- unlist(marker_mat[, y],
-                                              use.names = FALSE)
+                            use.names = FALSE
+                        )
                         v1 <- marker_list[marker_list %in%
-                                          names(as.matrix(bin_mat)[, x])]
+                            names(as.matrix(bin_mat)[, x])]
 
                         bin_temp <- as.matrix(bin_mat)[, x]
                         bin_temp <- bin_temp[order(bin_temp,
-                                                   decreasing = TRUE)]
+                            decreasing = TRUE
+                        )]
                         list_top <- names(bin_temp)
                         v2 <- list_top[list_top %in% v1]
                         v1 <- v1

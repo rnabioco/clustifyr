@@ -13,42 +13,44 @@
 #' @return matrix of numeric values, clusters from expr_mat as row names,
 #'  cell types from ref_mat as column names
 get_similarity <- function(expr_mat,
-                           ref_mat,
-                           cluster_ids,
-                           compute_method,
-                           per_cell = FALSE,
-                           rm0 = FALSE,
-                           if_log = TRUE,
-                           low_threshold = 0,
-                           ...) {
+    ref_mat,
+    cluster_ids,
+    compute_method,
+    per_cell = FALSE,
+    rm0 = FALSE,
+    if_log = TRUE,
+    low_threshold = 0,
+    ...) {
     if (nrow(expr_mat) == 0) {
         stop("after subsetting to shared genes",
-        "query expression matrix has 0 rows",
+            "query expression matrix has 0 rows",
             call. = FALSE
         )
     }
 
     if (ncol(expr_mat) == 0) {
         stop("query expression matrix has 0 cols",
-             call. = FALSE)
+            call. = FALSE
+        )
     }
 
     if (nrow(ref_mat) == 0) {
         stop("after subsetting to shared genes",
-             "reference expression matrix has 0 rows",
+            "reference expression matrix has 0 rows",
             call. = FALSE
         )
     }
 
     if (ncol(ref_mat) == 0) {
         stop("reference expression matrix has 0 cols",
-             call. = FALSE)
+            call. = FALSE
+        )
     }
 
     ref_clust <- colnames(ref_mat)
     if (ncol(expr_mat) != length(cluster_ids)) {
         stop("number of cells in expression matrix not equal",
-             "to metadata/cluster_col",
+            "to metadata/cluster_col",
             call. = FALSE
         )
     }
@@ -111,13 +113,13 @@ get_similarity <- function(expr_mat,
 #' @param ... additional parameters
 #' @return matrix of numeric values
 permute_similarity <- function(expr_mat,
-                               ref_mat,
-                               cluster_ids,
-                               n_perm,
-                               per_cell = FALSE,
-                               compute_method,
-                               rm0 = FALSE,
-                               ...) {
+    ref_mat,
+    cluster_ids,
+    n_perm,
+    per_cell = FALSE,
+    compute_method,
+    rm0 = FALSE,
+    ...) {
     ref_clust <- colnames(ref_mat)
 
     if (!per_cell) {
@@ -140,8 +142,10 @@ permute_similarity <- function(expr_mat,
 
     # perform permutation
     sig_counts <-
-        matrix(0L, nrow = length(sc_clust),
-               ncol = length(ref_clust))
+        matrix(0L,
+            nrow = length(sc_clust),
+            ncol = length(ref_clust)
+        )
 
     for (i in seq_len(n_perm)) {
         resampled <- sample(cluster_ids,
@@ -188,10 +192,10 @@ permute_similarity <- function(expr_mat,
 #' @param ...  additional parameters
 #' @return matrix of numeric values
 calc_similarity <- function(query_mat,
-                            ref_mat,
-                            compute_method,
-                            rm0 = FALSE,
-                            ...) {
+    ref_mat,
+    compute_method,
+    rm0 = FALSE,
+    ...) {
     # remove 0s ?
     if (rm0) {
         message("considering 0 as missing data")
@@ -203,14 +207,17 @@ calc_similarity <- function(query_mat,
         ))
         return(similarity_score)
     } else {
-        if (any(compute_method %in% c("pearson",
-                                      "spearman",
-                                      "kendall"))) {
+        if (any(compute_method %in% c(
+            "pearson",
+            "spearman",
+            "kendall"
+        ))) {
             similarity_score <- suppressWarnings(
                 stats::cor(as.matrix(query_mat),
-                ref_mat,
-                method = compute_method
-            ))
+                    ref_mat,
+                    method = compute_method
+                )
+            )
             return(similarity_score)
         }
     }
@@ -303,10 +310,10 @@ cosine <- function(vec1, vec2) {
 #' @return numeric value, with additional attributes, of kl divergence
 #'  between the vectors
 kl_divergence <- function(vec1,
-                          vec2,
-                          if_log = FALSE,
-                          total_reads = 1000,
-                          max_KL = 1) {
+    vec2,
+    if_log = FALSE,
+    total_reads = 1000,
+    max_KL = 1) {
     if (if_log) {
         vec1 <- expm1(vec1)
         vec2 <- expm1(vec2)

@@ -54,8 +54,8 @@ test_that("average_clusters works as intended", {
 test_that("average_clusters reports error when supplied cluster vector doesn't match number of cols", {
     expect_error(
         pbmc_avg2 <- average_clusters(pbmc_matrix_small,
-                                      pbmc_meta$classified[1:2],
-                                      if_log = FALSE
+            pbmc_meta$classified[1:2],
+            if_log = FALSE
         )
     )
 })
@@ -136,9 +136,9 @@ test_that("average_clusters works when low cell number clusters is kept but issu
     pbmc_meta2 <- pbmc_meta %>% mutate(classified = as.character(classified))
     pbmc_meta2[1, "classified"] <- 15
     pbmc_avg2 <- average_clusters(pbmc_matrix_small,
-                                  pbmc_meta2,
-                                  low_threshold = 0,
-                                  cluster_col = "classified"
+        pbmc_meta2,
+        low_threshold = 0,
+        cluster_col = "classified"
     )
     expect_equal(ncol(pbmc_avg2), 10)
 })
@@ -652,7 +652,8 @@ test_that("object_ref with seurat3", {
 test_that("object_ref with SingleCellExperiment", {
     sce <- sce_small
     avg <- object_ref(sce,
-                      cluster_col = "cell_type1")
+        cluster_col = "cell_type1"
+    )
     expect_equal(dim(avg), c(200, 13))
 })
 
@@ -1297,7 +1298,7 @@ test_that("object_data works with Seuratv3", {
 test_that("append_genes creates a union reference matrix", {
     mat <- append_genes(
         gene_vector = human_genes_10x,
-        ref_matrix = cbmc_ref 
+        ref_matrix = cbmc_ref
     )
     expect_true(nrow(mat) == 33514)
 })
@@ -1320,7 +1321,7 @@ test_that("append_genes creates a union reference matrix", {
 
 test_that("check raw counts of matrices", {
     mat <- check_raw_counts(
-        counts_matrix = pbmc_matrix_small, 
+        counts_matrix = pbmc_matrix_small,
         max_log_value = 50
     )
     expect_true(mat == "log-normalized")
@@ -1328,7 +1329,7 @@ test_that("check raw counts of matrices", {
 
 test_that("check raw counts of matrices", {
     mat <- check_raw_counts(
-        counts_matrix = s_small3@assays$RNA@counts, 
+        counts_matrix = s_small3@assays$RNA@counts,
         max_log_value = 50
     )
     expect_true(mat == "raw counts")
@@ -1336,20 +1337,20 @@ test_that("check raw counts of matrices", {
 
 test_that("check raw counts of matrices", {
     mat <- check_raw_counts(
-        counts_matrix = s_small3@assays$RNA@data, 
+        counts_matrix = s_small3@assays$RNA@data,
         max_log_value = 50
     )
     expect_true(mat == "log-normalized")
 })
 
 test_that("check atlas successfully built", {
-  pbmc_ref_matrix <- average_clusters(
-    mat = pbmc_matrix_small,
-    metadata = pbmc_meta, 
-    cluster_col = "classified", 
-    if_log = TRUE                    # whether the expression matrix is already log transformed
-  )
-  references_to_combine <- list(pbmc_ref_matrix, cbmc_ref)
-  atlas <- build_atlas(NULL, human_genes_10x, references_to_combine, NULL)
-  expect_true(nrow(atlas) == 33514 && ncol(atlas) == 22)
+    pbmc_ref_matrix <- average_clusters(
+        mat = pbmc_matrix_small,
+        metadata = pbmc_meta,
+        cluster_col = "classified",
+        if_log = TRUE # whether the expression matrix is already log transformed
+    )
+    references_to_combine <- list(pbmc_ref_matrix, cbmc_ref)
+    atlas <- build_atlas(NULL, human_genes_10x, references_to_combine, NULL)
+    expect_true(nrow(atlas) == 33514 && ncol(atlas) == 22)
 })
