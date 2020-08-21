@@ -59,7 +59,8 @@ Imports:
     SingleCellExperiment,
     SummarizedExperiment,
     matrixStats,
-    S4Vectors
+    S4Vectors,
+    proxy
 Suggests:
     ComplexHeatmap,
     covr,

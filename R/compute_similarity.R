@@ -220,6 +220,11 @@ calc_similarity <- function(query_mat,
             )
             return(similarity_score)
         }
+        if (compute_method == "cosine") {
+                res <- proxy::simil(as.matrix(query_mat),ref_mat, method = "cosine", by_rows = FALSE)
+                similarity_score <- matrix(res, nrow = nrow(res))
+            return(similarity_score)
+        }
     }
 
     sc_clust <- colnames(query_mat)

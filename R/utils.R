@@ -2028,7 +2028,7 @@ build_atlas <- function(matrix_fns = NULL,
     else if (is.null(matrix_fns) && !is.null(matrix_objs)) {
         ref_mats <- matrix_objs
         if (is.null(names(matrix_objs))) {
-            names(ref_mats) <- seq_along(1:length(matrix_objs))
+            names(ref_mats) <- seq_len(length(matrix_objs))
         }
     }
     new_mats <- list()
