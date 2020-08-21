@@ -140,7 +140,7 @@
     <p>Function to combine records into single atlas</p>
     </div>
 
-    <pre class="usage"><span class='fu'>build_atlas</span>(<span class='kw'>matrix_fns</span>, <span class='kw'>genes_fn</span>, output_fn = <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>build_atlas</span>(<span class='kw'>matrix_fns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>genes_fn</span>, <span class='kw'>matrix_objs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>output_fn</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -155,6 +155,12 @@ name in the final matrix. If it is not named, then the filename will be used (wi
       <th>genes_fn</th>
       <td><p>text file with a single column containing genes and the ordering desired
 in the output matrix</p></td>
+    </tr>
+    <tr>
+      <th>matrix_objs</th>
+      <td><p>Checks to see whether .rds files will be read or R objects in a
+local environment. A list of environmental objects can be passed to
+matrx_objs, and that names will be used, otherwise defaults to numbers</p></td>
     </tr>
     <tr>
       <th>output_fn</th>
@@ -182,7 +188,7 @@ saving</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
