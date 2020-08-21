@@ -141,12 +141,12 @@
     </div>
 
     <pre class="usage"><span class='fu'>pos_neg_select</span>(
-  <span class='no'>input</span>,
-  <span class='no'>ref_mat</span>,
-  <span class='no'>metadata</span>,
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>,
-  <span class='kw'>cutoff_n</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>cutoff_score</span> <span class='kw'>=</span> <span class='fl'>0.5</span>
+  <span class='kw'>input</span>,
+  <span class='kw'>ref_mat</span>,
+  <span class='kw'>metadata</span>,
+  cluster_col = <span class='st'>"cluster"</span>,
+  cutoff_n = <span class='fl'>0</span>,
+  cutoff_score = <span class='fl'>0.5</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -193,17 +193,17 @@ considered as 0 to not influence scores</p></td>
 cell types from ref_mat as column names</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>pn_ref</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
-    <span class='st'>"Myeloid"</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>0.01</span>, <span class='fl'>0</span>),
-    <span class='kw'>row.names</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"CD74"</span>, <span class='st'>"clustifyr0"</span>, <span class='st'>"CD79A"</span>)
+    <pre class="examples"><div class='input'><span class='kw'>pn_ref</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
+    <span class='st'>"Myeloid"</span> = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>0.01</span>, <span class='fl'>0</span>),
+    row.names = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"CD74"</span>, <span class='st'>"clustifyr0"</span>, <span class='st'>"CD79A"</span>)
 )
 
 <span class='fu'>pos_neg_select</span>(
-    <span class='kw'>input</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
-    <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>pn_ref</span>,
-    <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
-    <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
-    <span class='kw'>cutoff_score</span> <span class='kw'>=</span> <span class='fl'>0.8</span>
+    input = <span class='kw'>pbmc_matrix_small</span>,
+    ref_mat = <span class='kw'>pn_ref</span>,
+    metadata = <span class='kw'>pbmc_meta</span>,
+    cluster_col = <span class='st'>"classified"</span>,
+    cutoff_score = <span class='fl'>0.8</span>
 )</div><div class='output co'>#&gt; <span class='message'>using # of genes: 3</span></div><div class='output co'>#&gt;                Myeloid
 #&gt; Naive CD4 T  0.0000000
 #&gt; Memory CD4 T 0.7857143
@@ -229,7 +229,7 @@ cell types from ref_mat as column names</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>
