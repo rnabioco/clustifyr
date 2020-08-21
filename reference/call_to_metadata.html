@@ -141,11 +141,11 @@
     </div>
 
     <pre class="usage"><span class='fu'>call_to_metadata</span>(
-  <span class='no'>res</span>,
-  <span class='no'>metadata</span>,
-  <span class='no'>cluster_col</span>,
-  <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+  <span class='kw'>res</span>,
+  <span class='kw'>metadata</span>,
+  <span class='kw'>cluster_col</span>,
+  per_cell = <span class='fl'>FALSE</span>,
+  rename_prefix = <span class='kw'>NULL</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -179,19 +179,19 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span>(
-    <span class='kw'>input</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
-    <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
-    <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
-    <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>cbmc_ref</span>
+<span class='kw'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span>(
+    input = <span class='kw'>pbmc_matrix_small</span>,
+    metadata = <span class='kw'>pbmc_meta</span>,
+    cluster_col = <span class='st'>"classified"</span>,
+    ref_mat = <span class='kw'>cbmc_ref</span>
 )</div><div class='output co'>#&gt; <span class='message'>var.features not found, using all genes instead</span></div><div class='input'>
-<span class='no'>res2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='cor_to_call.html'>cor_to_call</a></span>(<span class='no'>res</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>)
+<span class='kw'>res2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cor_to_call.html'>cor_to_call</a></span>(<span class='kw'>res</span>, cluster_col = <span class='st'>"classified"</span>)
 
 <span class='fu'>call_to_metadata</span>(
-    <span class='kw'>res</span> <span class='kw'>=</span> <span class='no'>res2</span>,
-    <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
-    <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
-    <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='st'>"assigned"</span>
+    res = <span class='kw'>res2</span>,
+    metadata = <span class='kw'>pbmc_meta</span>,
+    cluster_col = <span class='st'>"classified"</span>,
+    rename_prefix = <span class='st'>"assigned"</span>
 )</div><div class='output co'>#&gt;                orig.ident nCount_RNA nFeature_RNA percent.mt RNA_snn_res.0.5
 #&gt; AAACATACAACCAC     pbmc3k       2419          779  3.0177759               1
 #&gt; AAACATTGAGCTAC     pbmc3k       4903         1352  3.7935958               3
@@ -8108,8 +8108,7 @@
 #&gt; TTTCTACTGAGGCA             B  0.9093577
 #&gt; TTTCTACTTCCTCG             B  0.9093577
 #&gt; TTTGCATGAGAGGC             B  0.9093577
-#&gt; TTTGCATGCCTCAC         CD4 T  0.8891488</div><div class='input'># }
-</div></pre>
+#&gt; TTTGCATGCCTCAC         CD4 T  0.8891488</div><div class='input'><span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -8125,7 +8124,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

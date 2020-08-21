@@ -141,20 +141,20 @@
     </div>
 
     <pre class="usage"><span class='fu'>overcluster_test</span>(
-  <span class='no'>expr</span>,
-  <span class='no'>metadata</span>,
-  <span class='no'>ref_mat</span>,
-  <span class='no'>cluster_col</span>,
-  <span class='kw'>x_col</span> <span class='kw'>=</span> <span class='st'>"UMAP_1"</span>,
-  <span class='kw'>y_col</span> <span class='kw'>=</span> <span class='st'>"UMAP_2"</span>,
-  <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>ngenes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>do_label</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>do_legend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>newclustering</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>combine</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>expr</span>,
+  <span class='kw'>metadata</span>,
+  <span class='kw'>ref_mat</span>,
+  <span class='kw'>cluster_col</span>,
+  x_col = <span class='st'>"UMAP_1"</span>,
+  y_col = <span class='st'>"UMAP_2"</span>,
+  n = <span class='fl'>5</span>,
+  ngenes = <span class='kw'>NULL</span>,
+  query_genes = <span class='kw'>NULL</span>,
+  threshold = <span class='fl'>0</span>,
+  do_label = <span class='fl'>TRUE</span>,
+  do_legend = <span class='fl'>FALSE</span>,
+  newclustering = <span class='kw'>NULL</span>,
+  combine = <span class='fl'>TRUE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -229,12 +229,12 @@ FALSE return list of plots (default: TRUE)</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>42</span>)
 <span class='fu'>overcluster_test</span>(
-    <span class='kw'>expr</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
-    <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
-    <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>cbmc_ref</span>,
-    <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
-    <span class='kw'>x_col</span> <span class='kw'>=</span> <span class='st'>"UMAP_1"</span>,
-    <span class='kw'>y_col</span> <span class='kw'>=</span> <span class='st'>"UMAP_2"</span>
+    expr = <span class='kw'>pbmc_matrix_small</span>,
+    metadata = <span class='kw'>pbmc_meta</span>,
+    ref_mat = <span class='kw'>cbmc_ref</span>,
+    cluster_col = <span class='st'>"classified"</span>,
+    x_col = <span class='st'>"UMAP_1"</span>,
+    y_col = <span class='st'>"UMAP_2"</span>
 )</div><div class='img'><img src='overcluster_test-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -251,7 +251,7 @@ FALSE return list of plots (default: TRUE)</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

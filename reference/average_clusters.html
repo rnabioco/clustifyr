@@ -141,16 +141,16 @@
     </div>
 
     <pre class="usage"><span class='fu'>average_clusters</span>(
-  <span class='no'>mat</span>,
-  <span class='no'>metadata</span>,
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>,
-  <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>cell_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>low_threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
-  <span class='kw'>output_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>subclusterpower</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>cut_n</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+  <span class='kw'>mat</span>,
+  <span class='kw'>metadata</span>,
+  cluster_col = <span class='st'>"cluster"</span>,
+  if_log = <span class='fl'>TRUE</span>,
+  cell_col = <span class='kw'>NULL</span>,
+  low_threshold = <span class='fl'>0</span>,
+  method = <span class='st'>"mean"</span>,
+  output_log = <span class='fl'>TRUE</span>,
+  subclusterpower = <span class='fl'>0</span>,
+  cut_n = <span class='kw'>NULL</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -208,13 +208,13 @@ are set to 0, considered unexpressed</p></td>
 for column names</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>mat</span> <span class='kw'>&lt;-</span> <span class='fu'>average_clusters</span>(
-    <span class='kw'>mat</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
-    <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
-    <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
-    <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+    <pre class="examples"><div class='input'><span class='kw'>mat</span> <span class='op'>&lt;-</span> <span class='fu'>average_clusters</span>(
+    mat = <span class='kw'>pbmc_matrix_small</span>,
+    metadata = <span class='kw'>pbmc_meta</span>,
+    cluster_col = <span class='st'>"classified"</span>,
+    if_log = <span class='fl'>FALSE</span>
 )
-<span class='no'>mat</span>[<span class='fl'>1</span>:<span class='fl'>3</span>, <span class='fl'>1</span>:<span class='fl'>3</span>]</div><div class='output co'>#&gt;        Naive CD4 T Memory CD4 T CD14+ Mono
+<span class='kw'>mat</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>]</div><div class='output co'>#&gt;        Naive CD4 T Memory CD4 T CD14+ Mono
 #&gt; PPBP    0.01892718   0.02607889 0.08947514
 #&gt; LYZ     0.65070360   0.67842980 1.80412017
 #&gt; S100A9  0.22047491   0.26729285 1.71088164</div></pre>
@@ -233,7 +233,7 @@ for column names</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>
