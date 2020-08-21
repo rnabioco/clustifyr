@@ -141,12 +141,12 @@
     </div>
 
     <pre class="usage"><span class='fu'>plot_cor_heatmap</span>(
-  <span class='kw'>cor_mat</span>,
-  metadata = <span class='kw'>NULL</span>,
-  cluster_col = <span class='kw'>NULL</span>,
-  col = <span class='kw'>not_pretty_palette</span>,
-  legend_title = <span class='kw'>NULL</span>,
-  <span class='kw'>...</span>
+  <span class='no'>cor_mat</span>,
+  <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>col</span> <span class='kw'>=</span> <span class='no'>not_pretty_palette</span>,
+  <span class='kw'>legend_title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -185,16 +185,16 @@ defaults to rownames of the metadata if not supplied.</p></td>
     <p>complexheatmap object</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span>(
-    input = <span class='kw'>pbmc_matrix_small</span>,
-    metadata = <span class='kw'>pbmc_meta</span>,
-    ref_mat = <span class='kw'>cbmc_ref</span>,
-    query_genes = <span class='kw'>pbmc_vargenes</span>,
-    cluster_col = <span class='st'>"classified"</span>,
-    per_cell = <span class='fl'>FALSE</span>
+    <pre class="examples"><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span>(
+    <span class='kw'>input</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
+    <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
+    <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>cbmc_ref</span>,
+    <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='no'>pbmc_vargenes</span>,
+    <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
+    <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )
 
-<span class='fu'>plot_cor_heatmap</span>(<span class='kw'>res</span>)</div><div class='img'><img src='plot_cor_heatmap-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>plot_cor_heatmap</span>(<span class='no'>res</span>)</div><div class='img'><img src='plot_cor_heatmap-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -210,7 +210,7 @@ defaults to rownames of the metadata if not supplied.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
