@@ -1974,25 +1974,25 @@ build_atlas <- function(matrix_fns = NULL,
                         matrix_objs = NULL,
                         output_fn = NULL)
 {
-  genesVector <- readr::read_lines(genes_fn)
+  genesVector <- genes_fn
   if(is.null(matrix_objs) && !is.null(matrix_fns))
   {
     ref_mats <- lapply(matrix_fns, readRDS)
     if(is.null(names(matrix_fns)))
     {
-      names(ref_mats) <- basename(ref_matrices_fns) %>% stringr::str_remove(".rds$")
+      names(ref_mats) <- stringr::str_remove(basename(matrix_fns) , ".rds$")
     } 
     else 
     {
       names(ref_mats) <- names(matrix_fns)
     }
   } 
-  else if(!is.null(matrix_objs)) 
+  else if(is.null(matrix_fns) && !is.null(matrix_objs)) 
   {
     ref_mats <- matrix_objs
     if(is.null(names(matrix_objs)))
     {
-      names(ref_mats) <- basename(ref_matrices_fns) %>% stringr::str_remove(".rds$")
+      names(ref_mats) <- stringr::str_remove(basename(matrix_fns) , ".rds$")
     } 
     else 
     {
@@ -2003,8 +2003,8 @@ build_atlas <- function(matrix_fns = NULL,
   for(i in seq_along(ref_mats))
   {
     # standardize genes in matrix
-    mat <- appendGenes(geneVector = genesVector,
-                       GSEMatrix = as.matrix(ref_mats[[i]]))
+    mat <- append_genes(gene_vector = genesVector,
+                       ref_matrix = as.matrix(ref_mats[[i]]))
     # get study name
     mat_name <- names(ref_mats)[i]
     

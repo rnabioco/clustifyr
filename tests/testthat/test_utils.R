@@ -1350,6 +1350,6 @@ test_that("check atlas successfully built", {
     if_log = TRUE                    # whether the expression matrix is already log transformed
   )
   references_to_combine <- list(pbmc_ref_matrix, cbmc_ref)
-  atlas <- build_atlas(NULL, genes_fn = human_genes_10x, matrix_objs = references_to_combine, NULL)
+  atlas <- build_atlas(NULL, human_genes_10x, references_to_combine, NULL)
   expect_true(nrow(atlas) == 33514 && ncol(atlas) == 22)
 })
