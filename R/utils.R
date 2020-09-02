@@ -83,11 +83,6 @@ average_clusters <- function(mat,
         }
     }
     
-    if (!is.null(cluster_col) &&
-        !(cluster_col %in% colnames(metadata))) {
-        stop("given `cluster_col` is not a column in `metadata`", call. = FALSE)
-    }
-    
     if (is.vector(cluster_info)) {
         if (ncol(mat) != length(cluster_info)) {
             stop("vector of cluster assignments does not match the number of columns in the matrix",
@@ -96,6 +91,11 @@ average_clusters <- function(mat,
         }
         cluster_ids <- split(colnames(mat), cluster_info)
     } else if (is.data.frame(cluster_info) & !is.null(cluster_col)) {
+        if (!is.null(cluster_col) &&
+            !(cluster_col %in% colnames(metadata))) {
+            stop("given `cluster_col` is not a column in `metadata`", call. = FALSE)
+        }
+        
         cluster_info_temp <- cluster_info[[cluster_col]]
         if (is.factor(cluster_info_temp)) {
             cluster_info_temp <- droplevels(cluster_info_temp)

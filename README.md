@@ -57,6 +57,9 @@ at supplement package
 [list](https://rnabioco.github.io/clustifyrdata/articles/download_refs.html)
 for individual downloads.
 
+[Publication](https://f1000research.com/articles/9-223/v2) with
+parameter and usage discussions has passed peer review on F1000Research.
+
 ## Example usage
 
 In this example we use the following built-in input data:
@@ -166,6 +169,7 @@ sce_ref <- object_ref(
   input = sce_small,               # SCE object
   cluster_col = "cell_type1"       # name of column in colData containing cell identities
 )
+#> The following clusters have less than 10 cells for this analysis: co-expression, ductal, endothelial, epsilon, MHC class II, PSC. Classification is likely inaccurate.
 
 # make reference from seurat objects
 s_ref <- seurat_ref(

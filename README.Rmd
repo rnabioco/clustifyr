@@ -50,6 +50,8 @@ remotes::install_github("rnabioco/clustifyr")
 
 More reference data (including tabula muris, immgen, etc) are available at supplement package [`clustifyrdata`](https://github.com/rnabioco/clustifyrdata). Also see [list](https://rnabioco.github.io/clustifyrdata/articles/download_refs.html) for individual downloads. 
 
+[Publication](https://f1000research.com/articles/9-223/v2) with parameter and usage discussions has passed peer review on F1000Research.
+
 ## Example usage
 
 In this example we use the following built-in input data:
