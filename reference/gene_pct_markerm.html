@@ -140,7 +140,7 @@
     <p>pct of cells in every cluster that express a series of genelists</p>
     </div>
 
-    <pre class="usage"><span class='fu'>gene_pct_markerm</span>(<span class='no'>matrix</span>, <span class='no'>marker_m</span>, <span class='no'>metadata</span>, <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>norm</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>gene_pct_markerm</span>(<span class='kw'>matrix</span>, <span class='kw'>marker_m</span>, <span class='kw'>metadata</span>, cluster_col = <span class='kw'>NULL</span>, norm = <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -177,11 +177,12 @@ cell types from marker_m as column names</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>gene_pct_markerm</span>(
-    <span class='kw'>matrix</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
-    <span class='kw'>marker_m</span> <span class='kw'>=</span> <span class='no'>cbmc_m</span>,
-    <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
-    <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>
-)</div><div class='output co'>#&gt;                   CD4 T       CD8 T Memory CD4 T CD14+ Mono Naive CD4 T
+    matrix = <span class='kw'>pbmc_matrix_small</span>,
+    marker_m = <span class='kw'>cbmc_m</span>,
+    metadata = <span class='kw'>pbmc_meta</span>,
+    cluster_col = <span class='st'>"classified"</span>
+)
+</div><div class='output co'>#&gt;                   CD4 T       CD8 T Memory CD4 T CD14+ Mono Naive CD4 T
 #&gt; Memory CD4 T 0.27122153 0.016563147            0  0.2795031           0
 #&gt; B            0.02906977 0.005813953            0  0.2102713           0
 #&gt; CD14+ Mono   0.01666667 0.006250000            0  0.9902778           0
@@ -226,7 +227,7 @@ cell types from marker_m as column names</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

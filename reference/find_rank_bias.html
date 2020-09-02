@@ -141,15 +141,15 @@
     </div>
 
     <pre class="usage"><span class='fu'>find_rank_bias</span>(
-  <span class='no'>mat</span>,
-  <span class='no'>metadata</span>,
-  <span class='no'>type_col</span>,
-  <span class='no'>ref_mat</span>,
-  <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>filter_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.33</span>,
-  <span class='kw'>expr_cut</span> <span class='kw'>=</span> <span class='fl'>3000</span>,
-  <span class='kw'>consensus_cut</span> <span class='kw'>=</span> <span class='fl'>1</span>
+  <span class='kw'>mat</span>,
+  <span class='kw'>metadata</span>,
+  <span class='kw'>type_col</span>,
+  <span class='kw'>ref_mat</span>,
+  query_genes = <span class='kw'>NULL</span>,
+  filter_out = <span class='fl'>TRUE</span>,
+  threshold = <span class='fl'>0.33</span>,
+  expr_cut = <span class='fl'>3000</span>,
+  consensus_cut = <span class='fl'>1</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -199,31 +199,32 @@ han number of types show large diff</p></td>
     <p>matrix of rank diff values</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span>(
-    <span class='kw'>input</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
-    <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
-    <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>cbmc_ref</span>,
-    <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='no'>pbmc_vargenes</span>,
-    <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>
+    <pre class="examples"><div class='input'><span class='kw'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span>(
+    input = <span class='kw'>pbmc_matrix_small</span>,
+    metadata = <span class='kw'>pbmc_meta</span>,
+    ref_mat = <span class='kw'>cbmc_ref</span>,
+    query_genes = <span class='kw'>pbmc_vargenes</span>,
+    cluster_col = <span class='st'>"classified"</span>
 )
-<span class='no'>call1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='cor_to_call.html'>cor_to_call</a></span>(
-    <span class='no'>res</span>,
-    <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
-    <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
-    <span class='kw'>collapse_to_cluster</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-    <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.8</span>
+<span class='kw'>call1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cor_to_call.html'>cor_to_call</a></span>(
+    <span class='kw'>res</span>,
+    metadata = <span class='kw'>pbmc_meta</span>,
+    cluster_col = <span class='st'>"classified"</span>,
+    collapse_to_cluster = <span class='fl'>FALSE</span>,
+    threshold = <span class='fl'>0.8</span>
 )
-<span class='no'>pbmc_meta2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='call_to_metadata.html'>call_to_metadata</a></span>(
-    <span class='no'>call1</span>,
-    <span class='no'>pbmc_meta</span>,
+<span class='kw'>pbmc_meta2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='call_to_metadata.html'>call_to_metadata</a></span>(
+    <span class='kw'>call1</span>,
+    <span class='kw'>pbmc_meta</span>,
     <span class='st'>"classified"</span>
 )
 <span class='fu'>find_rank_bias</span>(
-    <span class='no'>pbmc_matrix_small</span>,
-    <span class='no'>pbmc_meta2</span>, <span class='st'>"type"</span>,
-    <span class='no'>cbmc_ref</span>,
-    <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='no'>pbmc_vargenes</span>
-)</div><div class='output co'>#&gt;      B CD14+ Mono CD16+ Mono CD4 T DC NK</div></pre>
+    <span class='kw'>pbmc_matrix_small</span>,
+    <span class='kw'>pbmc_meta2</span>, <span class='st'>"type"</span>,
+    <span class='kw'>cbmc_ref</span>,
+    query_genes = <span class='kw'>pbmc_vargenes</span>
+)
+</div><div class='output co'>#&gt;      B CD14+ Mono CD16+ Mono CD4 T DC NK</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -239,7 +240,7 @@ han number of types show large diff</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

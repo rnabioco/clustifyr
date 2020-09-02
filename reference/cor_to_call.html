@@ -141,13 +141,13 @@
     </div>
 
     <pre class="usage"><span class='fu'>cor_to_call</span>(
-  <span class='no'>cor_mat</span>,
-  <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"cluster"</span>,
-  <span class='kw'>collapse_to_cluster</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>carry_r</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+  <span class='kw'>cor_mat</span>,
+  metadata = <span class='kw'>NULL</span>,
+  cluster_col = <span class='st'>"cluster"</span>,
+  collapse_to_cluster = <span class='fl'>FALSE</span>,
+  threshold = <span class='fl'>0</span>,
+  rename_prefix = <span class='kw'>NULL</span>,
+  carry_r = <span class='fl'>FALSE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -189,13 +189,15 @@ frequent call of entire cluster to color in plot</p></td>
     <p>dataframe of cluster, new ident, and r info</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span>(
-    <span class='kw'>input</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
-    <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
-    <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
-    <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>cbmc_ref</span>
-)</div><div class='output co'>#&gt; <span class='message'>var.features not found, using all genes instead</span></div><div class='input'>
-<span class='fu'>cor_to_call</span>(<span class='no'>res</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 9 x 3</span><span>
+    <pre class="examples"><div class='input'><span class='kw'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span>(
+    input = <span class='kw'>pbmc_matrix_small</span>,
+    metadata = <span class='kw'>pbmc_meta</span>,
+    cluster_col = <span class='st'>"classified"</span>,
+    ref_mat = <span class='kw'>cbmc_ref</span>
+)
+</div><div class='output co'>#&gt; <span class='message'>var.features not found, using all genes instead</span></div><div class='input'>
+<span class='fu'>cor_to_call</span>(<span class='kw'>res</span>)
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 9 x 3</span><span>
 #&gt; </span><span style='color: #555555;'># Groups:   cluster [9]</span><span>
 #&gt;   cluster      type           r
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -223,7 +225,7 @@ frequent call of entire cluster to color in plot</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

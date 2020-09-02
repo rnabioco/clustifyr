@@ -140,16 +140,16 @@
     <p>Function to access object data</p>
     </div>
 
-    <pre class="usage"><span class='fu'>object_data</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>object_data</span>(<span class='kw'>object</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for seurat</span>
-<span class='fu'>object_data</span>(<span class='no'>object</span>, <span class='no'>slot</span>, <span class='no'>...</span>)
+<span class='fu'>object_data</span>(<span class='kw'>object</span>, <span class='kw'>slot</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for Seurat</span>
-<span class='fu'>object_data</span>(<span class='no'>object</span>, <span class='no'>slot</span>, <span class='no'>...</span>)
+<span class='fu'>object_data</span>(<span class='kw'>object</span>, <span class='kw'>slot</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for SingleCellExperiment</span>
-<span class='fu'>object_data</span>(<span class='no'>object</span>, <span class='no'>slot</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>object_data</span>(<span class='kw'>object</span>, <span class='kw'>slot</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -175,27 +175,30 @@ and clustering</p></td>
 and cell types as column names</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>mat</span> <span class='kw'>&lt;-</span> <span class='fu'>object_data</span>(
-    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>s_small</span>,
-    <span class='kw'>slot</span> <span class='kw'>=</span> <span class='st'>"data"</span>
+    <pre class="examples"><div class='input'><span class='kw'>mat</span> <span class='op'>&lt;-</span> <span class='fu'>object_data</span>(
+    object = <span class='kw'>s_small</span>,
+    slot = <span class='st'>"data"</span>
 )
-<span class='no'>mat</span>[<span class='fl'>1</span>:<span class='fl'>3</span>, <span class='fl'>1</span>:<span class='fl'>3</span>]</div><div class='output co'>#&gt; 3 x 3 sparse Matrix of class "dgCMatrix"
+<span class='kw'>mat</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>]
+</div><div class='output co'>#&gt; 3 x 3 sparse Matrix of class "dgCMatrix"
 #&gt;       ATGCCAGAACGACT CATGGCCTGTGCAT GAACCTGATGAACC
 #&gt; MS4A1       .                     .              .
 #&gt; CD79B       4.968821              .              .
-#&gt; CD79A       .                     .              .</div><div class='input'><span class='no'>mat</span> <span class='kw'>&lt;-</span> <span class='fu'>object_data</span>(
-    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>s_small3</span>,
-    <span class='kw'>slot</span> <span class='kw'>=</span> <span class='st'>"data"</span>
+#&gt; CD79A       .                     .              .</div><div class='input'><span class='kw'>mat</span> <span class='op'>&lt;-</span> <span class='fu'>object_data</span>(
+    object = <span class='kw'>s_small3</span>,
+    slot = <span class='st'>"data"</span>
 )
-<span class='no'>mat</span>[<span class='fl'>1</span>:<span class='fl'>3</span>, <span class='fl'>1</span>:<span class='fl'>3</span>]</div><div class='output co'>#&gt; 3 x 3 sparse Matrix of class "dgCMatrix"
+<span class='kw'>mat</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>]
+</div><div class='output co'>#&gt; 3 x 3 sparse Matrix of class "dgCMatrix"
 #&gt;       ATGCCAGAACGACT CATGGCCTGTGCAT GAACCTGATGAACC
 #&gt; MS4A1       .                     .              .
 #&gt; CD79B       4.968821              .              .
-#&gt; CD79A       .                     .              .</div><div class='input'><span class='no'>mat</span> <span class='kw'>&lt;-</span> <span class='fu'>object_data</span>(
-    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>sce_small</span>,
-    <span class='kw'>slot</span> <span class='kw'>=</span> <span class='st'>"data"</span>
+#&gt; CD79A       .                     .              .</div><div class='input'><span class='kw'>mat</span> <span class='op'>&lt;-</span> <span class='fu'>object_data</span>(
+    object = <span class='kw'>sce_small</span>,
+    slot = <span class='st'>"data"</span>
 )
-<span class='no'>mat</span>[<span class='fl'>1</span>:<span class='fl'>3</span>, <span class='fl'>1</span>:<span class='fl'>3</span>]</div><div class='output co'>#&gt;       AZ_A1   AZ_A10 AZ_A11
+<span class='kw'>mat</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>]
+</div><div class='output co'>#&gt;       AZ_A1   AZ_A10 AZ_A11
 #&gt; SGIP1     0 0.000000      0
 #&gt; AZIN2     0 0.000000      0
 #&gt; CLIC4     0 1.064559      0</div></pre>
@@ -214,7 +217,7 @@ and cell types as column names</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

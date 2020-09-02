@@ -140,92 +140,92 @@
     <p>Compare scRNA-seq data to reference data.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>clustify</span>(<span class='no'>input</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>clustify</span>(<span class='kw'>input</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>clustify</span>(
-  <span class='no'>input</span>,
-  <span class='no'>ref_mat</span>,
-  <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>lookuptable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>rm0</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
-  <span class='kw'>low_threshold_cell</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>exclude_genes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(),
-  <span class='kw'>if_log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
+  <span class='kw'>input</span>,
+  <span class='kw'>ref_mat</span>,
+  metadata = <span class='kw'>NULL</span>,
+  cluster_col = <span class='kw'>NULL</span>,
+  query_genes = <span class='kw'>NULL</span>,
+  per_cell = <span class='fl'>FALSE</span>,
+  n_perm = <span class='fl'>0</span>,
+  compute_method = <span class='st'>"spearman"</span>,
+  verbose = <span class='fl'>FALSE</span>,
+  lookuptable = <span class='kw'>NULL</span>,
+  rm0 = <span class='fl'>FALSE</span>,
+  obj_out = <span class='fl'>TRUE</span>,
+  seurat_out = <span class='fl'>TRUE</span>,
+  rename_prefix = <span class='kw'>NULL</span>,
+  threshold = <span class='st'>"auto"</span>,
+  low_threshold_cell = <span class='fl'>0</span>,
+  exclude_genes = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(),
+  if_log = <span class='fl'>TRUE</span>,
+  <span class='kw'>...</span>
 )
 
 <span class='co'># S3 method for seurat</span>
 <span class='fu'>clustify</span>(
-  <span class='no'>input</span>,
-  <span class='no'>ref_mat</span>,
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>,
-  <span class='kw'>use_var_genes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"umap"</span>,
-  <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>rm0</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>exclude_genes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(),
-  <span class='no'>...</span>
+  <span class='kw'>input</span>,
+  <span class='kw'>ref_mat</span>,
+  cluster_col = <span class='kw'>NULL</span>,
+  query_genes = <span class='kw'>NULL</span>,
+  per_cell = <span class='fl'>FALSE</span>,
+  n_perm = <span class='fl'>0</span>,
+  compute_method = <span class='st'>"spearman"</span>,
+  use_var_genes = <span class='fl'>TRUE</span>,
+  dr = <span class='st'>"umap"</span>,
+  seurat_out = <span class='fl'>TRUE</span>,
+  obj_out = <span class='fl'>TRUE</span>,
+  threshold = <span class='st'>"auto"</span>,
+  verbose = <span class='fl'>FALSE</span>,
+  rm0 = <span class='fl'>FALSE</span>,
+  rename_prefix = <span class='kw'>NULL</span>,
+  exclude_genes = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(),
+  <span class='kw'>...</span>
 )
 
 <span class='co'># S3 method for Seurat</span>
 <span class='fu'>clustify</span>(
-  <span class='no'>input</span>,
-  <span class='no'>ref_mat</span>,
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>,
-  <span class='kw'>use_var_genes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"umap"</span>,
-  <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>rm0</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>exclude_genes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(),
-  <span class='no'>...</span>
+  <span class='kw'>input</span>,
+  <span class='kw'>ref_mat</span>,
+  cluster_col = <span class='kw'>NULL</span>,
+  query_genes = <span class='kw'>NULL</span>,
+  per_cell = <span class='fl'>FALSE</span>,
+  n_perm = <span class='fl'>0</span>,
+  compute_method = <span class='st'>"spearman"</span>,
+  use_var_genes = <span class='fl'>TRUE</span>,
+  dr = <span class='st'>"umap"</span>,
+  seurat_out = <span class='fl'>TRUE</span>,
+  obj_out = <span class='fl'>TRUE</span>,
+  threshold = <span class='st'>"auto"</span>,
+  verbose = <span class='fl'>FALSE</span>,
+  rm0 = <span class='fl'>FALSE</span>,
+  rename_prefix = <span class='kw'>NULL</span>,
+  exclude_genes = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(),
+  <span class='kw'>...</span>
 )
 
 <span class='co'># S3 method for SingleCellExperiment</span>
 <span class='fu'>clustify</span>(
-  <span class='no'>input</span>,
-  <span class='no'>ref_mat</span>,
-  <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>n_perm</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"spearman"</span>,
-  <span class='kw'>use_var_genes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"umap"</span>,
-  <span class='kw'>seurat_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>rm0</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>rename_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>exclude_genes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(),
-  <span class='no'>...</span>
+  <span class='kw'>input</span>,
+  <span class='kw'>ref_mat</span>,
+  cluster_col = <span class='kw'>NULL</span>,
+  query_genes = <span class='kw'>NULL</span>,
+  per_cell = <span class='fl'>FALSE</span>,
+  n_perm = <span class='fl'>0</span>,
+  compute_method = <span class='st'>"spearman"</span>,
+  use_var_genes = <span class='fl'>TRUE</span>,
+  dr = <span class='st'>"umap"</span>,
+  seurat_out = <span class='fl'>TRUE</span>,
+  obj_out = <span class='fl'>TRUE</span>,
+  threshold = <span class='st'>"auto"</span>,
+  verbose = <span class='fl'>FALSE</span>,
+  rm0 = <span class='fl'>FALSE</span>,
+  rename_prefix = <span class='kw'>NULL</span>,
+  exclude_genes = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(),
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -338,13 +338,14 @@ types from ref_mat as column names</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Annotate a matrix and metadata</span>
 <span class='fu'>clustify</span>(
-    <span class='kw'>input</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
-    <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
-    <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>cbmc_ref</span>,
-    <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='no'>pbmc_vargenes</span>,
-    <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
-    <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</div><div class='output co'>#&gt; <span class='message'>using # of genes: 599</span></div><div class='output co'>#&gt;                      B CD14+ Mono CD16+ Mono     CD34+     CD4 T     CD8 T
+    input = <span class='kw'>pbmc_matrix_small</span>,
+    metadata = <span class='kw'>pbmc_meta</span>,
+    ref_mat = <span class='kw'>cbmc_ref</span>,
+    query_genes = <span class='kw'>pbmc_vargenes</span>,
+    cluster_col = <span class='st'>"classified"</span>,
+    verbose = <span class='fl'>TRUE</span>
+)
+</div><div class='output co'>#&gt; <span class='message'>using # of genes: 599</span></div><div class='output co'>#&gt;                      B CD14+ Mono CD16+ Mono     CD34+     CD4 T     CD8 T
 #&gt; B            0.9093577  0.5347126  0.5908755 0.6248639 0.6411407 0.6269530
 #&gt; CD14+ Mono   0.5279272  0.9145428  0.8919954 0.5103056 0.4636934 0.4381450
 #&gt; CD8 T        0.5791953  0.4853982  0.5498177 0.5663773 0.7657468 0.7692801
@@ -376,13 +377,14 @@ types from ref_mat as column names</p>
 #&gt; Platelet     0.2152614</div><div class='input'>
 <span class='co'># Annotate using a different method</span>
 <span class='fu'>clustify</span>(
-    <span class='kw'>input</span> <span class='kw'>=</span> <span class='no'>pbmc_matrix_small</span>,
-    <span class='kw'>metadata</span> <span class='kw'>=</span> <span class='no'>pbmc_meta</span>,
-    <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>cbmc_ref</span>,
-    <span class='kw'>query_genes</span> <span class='kw'>=</span> <span class='no'>pbmc_vargenes</span>,
-    <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"classified"</span>,
-    <span class='kw'>compute_method</span> <span class='kw'>=</span> <span class='st'>"cosine"</span>
-)</div><div class='output co'>#&gt;                      B CD14+ Mono CD16+ Mono     CD34+     CD4 T     CD8 T
+    input = <span class='kw'>pbmc_matrix_small</span>,
+    metadata = <span class='kw'>pbmc_meta</span>,
+    ref_mat = <span class='kw'>cbmc_ref</span>,
+    query_genes = <span class='kw'>pbmc_vargenes</span>,
+    cluster_col = <span class='st'>"classified"</span>,
+    compute_method = <span class='st'>"cosine"</span>
+)
+</div><div class='output co'>#&gt;                      B CD14+ Mono CD16+ Mono     CD34+     CD4 T     CD8 T
 #&gt; B            0.9669867  0.7149343  0.7720125 0.8004738 0.7635724 0.7657181
 #&gt; CD14+ Mono   0.7527223  0.9627275  0.9460084 0.7577338 0.7096110 0.7061112
 #&gt; CD8 T        0.7510063  0.7070527  0.7467587 0.7677927 0.8562280 0.8674614
@@ -414,13 +416,14 @@ types from ref_mat as column names</p>
 #&gt; Platelet     0.5756617</div><div class='input'>
 <span class='co'># Annotate a Seurat object</span>
 <span class='fu'>clustify</span>(
-    <span class='no'>s_small</span>,
-    <span class='no'>cbmc_ref</span>,
-    <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"res.1"</span>,
-    <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-    <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-    <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>
-)</div><div class='output co'>#&gt; <span class='message'>using threshold of 0.59</span></div><div class='output co'>#&gt; <span class='message'>seurat not loaded, returning cor_mat instead</span></div><div class='output co'>#&gt;             B CD14+ Mono CD16+ Mono      CD34+       CD4 T      CD8 T        DC
+    <span class='kw'>s_small</span>,
+    <span class='kw'>cbmc_ref</span>,
+    cluster_col = <span class='st'>"res.1"</span>,
+    obj_out = <span class='fl'>TRUE</span>,
+    per_cell = <span class='fl'>FALSE</span>,
+    dr = <span class='st'>"tsne"</span>
+)
+</div><div class='output co'>#&gt; <span class='message'>using threshold of 0.59</span></div><div class='output co'>#&gt; <span class='message'>seurat not loaded, returning cor_mat instead</span></div><div class='output co'>#&gt;             B CD14+ Mono CD16+ Mono      CD34+       CD4 T      CD8 T        DC
 #&gt; 0  0.66641984  0.4000028  0.3435278 0.24453004  0.53962648  0.4400031 0.3605451
 #&gt; 1  0.49928480  0.5282509  0.4731645 0.52825094  0.34835596  0.2873746 0.4992739
 #&gt; 2  0.04411189  0.3881846  0.4854133 0.27172921  0.41288725  0.4446478 0.5601817
@@ -432,13 +435,14 @@ types from ref_mat as column names</p>
 #&gt; 3  0.53825246   0.07327631  0.78848121  -0.2140216 0.1261278 0.2326462</div><div class='input'>
 <span class='co'># Annotate (and return) a Seurat object per-cell</span>
 <span class='fu'>clustify</span>(
-    <span class='kw'>input</span> <span class='kw'>=</span> <span class='no'>s_small</span>,
-    <span class='kw'>ref_mat</span> <span class='kw'>=</span> <span class='no'>cbmc_ref</span>,
-    <span class='kw'>cluster_col</span> <span class='kw'>=</span> <span class='st'>"res.1"</span>,
-    <span class='kw'>obj_out</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-    <span class='kw'>per_cell</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-    <span class='kw'>dr</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>
-)</div><div class='output co'>#&gt; <span class='message'>using threshold of NA</span></div><div class='output co'>#&gt; <span class='message'>seurat not loaded, returning cor_mat instead</span></div><div class='output co'>#&gt;                          B   CD14+ Mono  CD16+ Mono       CD34+       CD4 T
+    input = <span class='kw'>s_small</span>,
+    ref_mat = <span class='kw'>cbmc_ref</span>,
+    cluster_col = <span class='st'>"res.1"</span>,
+    obj_out = <span class='fl'>TRUE</span>,
+    per_cell = <span class='fl'>TRUE</span>,
+    dr = <span class='st'>"tsne"</span>
+)
+</div><div class='output co'>#&gt; <span class='message'>using threshold of NA</span></div><div class='output co'>#&gt; <span class='message'>seurat not loaded, returning cor_mat instead</span></div><div class='output co'>#&gt;                          B   CD14+ Mono  CD16+ Mono       CD34+       CD4 T
 #&gt; ATGCCAGAACGACT  0.30783491  0.489737351  0.55991036  0.35949951  0.34335432
 #&gt; CATGGCCTGTGCAT  0.31929826  0.324136109  0.32909771  0.15239235  0.51039342
 #&gt; GAACCTGATGAACC  0.34846603  0.426142664  0.51264280  0.23302991  0.55344604
@@ -696,7 +700,7 @@ types from ref_mat as column names</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>
