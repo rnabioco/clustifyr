@@ -82,6 +82,12 @@ average_clusters <- function(mat,
             mat <- mat[, cluster_info[[cell_col]]]
         }
     }
+    
+    if (!is.null(cluster_col) &&
+        !(cluster_col %in% colnames(metadata))) {
+        stop("given `cluster_col` is not a column in `metadata`", call. = FALSE)
+    }
+    
     if (is.vector(cluster_info)) {
         if (ncol(mat) != length(cluster_info)) {
             stop("vector of cluster assignments does not match the number of columns in the matrix",
@@ -105,7 +111,7 @@ average_clusters <- function(mat,
         cluster_ids <- split(colnames(mat), cluster_info)
     } else {
         stop("metadata not formatted correctly,
-         supply either a  vector or a dataframe",
+         supply either a vector or a dataframe",
             call. = FALSE
         )
     }
