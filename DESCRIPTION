@@ -60,7 +60,8 @@ Imports:
     SummarizedExperiment,
     matrixStats,
     S4Vectors,
-    proxy
+    proxy,
+    httr
 Suggests:
     ComplexHeatmap,
     covr,
