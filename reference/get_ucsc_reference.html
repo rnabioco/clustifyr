@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function to make best call from correlation matrix — get_best_match_matrix • clustifyr</title>
+<title>Build reference atlases from external UCSC cellbrowsers — get_ucsc_reference • clustifyr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Function to make best call from correlation matrix — get_best_match_matrix" />
-<meta property="og:description" content="Function to make best call from correlation matrix" />
+<meta property="og:title" content="Build reference atlases from external UCSC cellbrowsers — get_ucsc_reference" />
+<meta property="og:description" content="Build reference atlases from external UCSC cellbrowsers" />
 <meta property="og:image" content="http://rnabioco.github.io/clustifyr/logo.svg" />
 
 
@@ -131,30 +131,44 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Function to make best call from correlation matrix</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rnabioco/clustifyr/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
-    <div class="hidden name"><code>get_best_match_matrix.Rd</code></div>
+    <h1>Build reference atlases from external UCSC cellbrowsers</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rnabioco/clustifyr/blob/master/R/cellbrowsers.R'><code>R/cellbrowsers.R</code></a></small>
+    <div class="hidden name"><code>get_ucsc_reference.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Function to make best call from correlation matrix</p>
+    <p>Build reference atlases from external UCSC cellbrowsers</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_best_match_matrix</span>(<span class='kw'>cor_mat</span>)</pre>
+    <pre class="usage"><span class='fu'>get_ucsc_reference</span>(<span class='kw'>cb_url</span>, <span class='kw'>cluster_col</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>cor_mat</th>
-      <td><p>correlation matrix</p></td>
+      <th>cb_url</th>
+      <td><p>URL of cellbrowser dataset (e.g. http://cells.ucsc.edu/?ds=cortex-dev).
+Note that the URL must contain the ds=dataset-name suffix.</p></td>
+    </tr>
+    <tr>
+      <th>cluster_col</th>
+      <td><p>annotation field for summarizing gene expression (e.g. clustering,
+cell-type name, samples, etc.)</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>additional args passed to average_clusters</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>matrix of 1s and 0s</p>
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='co'># \donttest{</span>
+<span class='fu'>get_ext_reference</span>(cb_url = <span class='st'>"http://cells.ucsc.edu/?ds=kidney-atlas%2FFetal_Immune"</span>,
+                 cluster_col = <span class='st'>"celltype"</span>)
+</div><div class='output co'>#&gt; <span class='error'>Error in get_ext_reference(cb_url = "http://cells.ucsc.edu/?ds=kidney-atlas%2FFetal_Immune",     cluster_col = "celltype"): could not find function "get_ext_reference"</span></div><div class='input'><span class='co'># }</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
