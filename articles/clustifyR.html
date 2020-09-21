@@ -38,12 +38,18 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">clustifyr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
+<li>
+  <a href="../index.html">
+    <span class="fas fa fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -433,67 +439,63 @@
 <a href="#session-info" class="anchor"></a>Session info</h2>
 <div class="sourceCode" id="cb13"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span>()
-<span class="co">#&gt; R version 4.0.2 Patched (2020-09-17 r79226)</span>
-<span class="co">#&gt; Platform: x86_64-pc-linux-gnu (64-bit)</span>
-<span class="co">#&gt; Running under: Ubuntu 20.04.1 LTS</span>
+<span class="co">#&gt; R version 4.0.2 (2020-06-22)</span>
+<span class="co">#&gt; Platform: x86_64-apple-darwin17.0 (64-bit)</span>
+<span class="co">#&gt; Running under: macOS Catalina 10.15.6</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Matrix products: default</span>
-<span class="co">#&gt; BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/openblas-openmp/libopenblasp-r0.3.8.so</span>
+<span class="co">#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib</span>
+<span class="co">#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; locale:</span>
-<span class="co">#&gt;  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span>
-<span class="co">#&gt;  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    </span>
-<span class="co">#&gt;  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=C             </span>
-<span class="co">#&gt;  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 </span>
-<span class="co">#&gt;  [9] LC_ADDRESS=C               LC_TELEPHONE=C            </span>
-<span class="co">#&gt; [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       </span>
+<span class="co">#&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; attached base packages:</span>
 <span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; other attached packages:</span>
-<span class="co">#&gt; [1] cowplot_1.1.0    ggplot2_3.3.2    clustifyr_1.1.1  BiocStyle_2.17.0</span>
+<span class="co">#&gt; [1] cowplot_1.1.0    ggplot2_3.3.2    clustifyr_1.1.2  BiocStyle_2.16.0</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; loaded via a namespace (and not attached):</span>
-<span class="co">#&gt;  [1] Biobase_2.49.1              httr_1.4.2                 </span>
+<span class="co">#&gt;  [1] Biobase_2.48.0              httr_1.4.2                 </span>
 <span class="co">#&gt;  [3] tidyr_1.1.2                 assertthat_0.2.1           </span>
 <span class="co">#&gt;  [5] BiocManager_1.30.10         stats4_4.0.2               </span>
 <span class="co">#&gt;  [7] GenomeInfoDbData_1.2.3      ggrepel_0.8.2              </span>
 <span class="co">#&gt;  [9] yaml_2.2.1                  pillar_1.4.6               </span>
 <span class="co">#&gt; [11] backports_1.1.10            lattice_0.20-41            </span>
 <span class="co">#&gt; [13] glue_1.4.2                  digest_0.6.25              </span>
-<span class="co">#&gt; [15] RColorBrewer_1.1-2          GenomicRanges_1.41.6       </span>
-<span class="co">#&gt; [17] XVector_0.29.3              colorspace_1.4-1           </span>
+<span class="co">#&gt; [15] RColorBrewer_1.1-2          GenomicRanges_1.40.0       </span>
+<span class="co">#&gt; [17] XVector_0.28.0              colorspace_1.4-1           </span>
 <span class="co">#&gt; [19] htmltools_0.5.0             Matrix_1.2-18              </span>
 <span class="co">#&gt; [21] pkgconfig_2.0.3             GetoptLong_1.0.2           </span>
-<span class="co">#&gt; [23] bookdown_0.20               zlibbioc_1.35.0            </span>
+<span class="co">#&gt; [23] bookdown_0.20               zlibbioc_1.34.0            </span>
 <span class="co">#&gt; [25] purrr_0.3.4                 scales_1.1.1               </span>
-<span class="co">#&gt; [27] cpp11_0.2.1                 BiocParallel_1.23.2        </span>
+<span class="co">#&gt; [27] cpp11_0.2.1                 BiocParallel_1.22.0        </span>
 <span class="co">#&gt; [29] tibble_3.0.3                farver_2.0.3               </span>
-<span class="co">#&gt; [31] generics_0.0.2              IRanges_2.23.10            </span>
+<span class="co">#&gt; [31] generics_0.0.2              IRanges_2.22.2             </span>
 <span class="co">#&gt; [33] ellipsis_0.3.1              withr_2.2.0                </span>
-<span class="co">#&gt; [35] SummarizedExperiment_1.19.6 BiocGenerics_0.35.4        </span>
+<span class="co">#&gt; [35] SummarizedExperiment_1.18.2 BiocGenerics_0.34.0        </span>
 <span class="co">#&gt; [37] cli_2.0.2                   magrittr_1.5               </span>
 <span class="co">#&gt; [39] crayon_1.3.4                memoise_1.1.0              </span>
 <span class="co">#&gt; [41] evaluate_0.14               fs_1.5.0                   </span>
 <span class="co">#&gt; [43] fansi_0.4.1                 tools_4.0.2                </span>
 <span class="co">#&gt; [45] data.table_1.13.0           GlobalOptions_0.1.2        </span>
 <span class="co">#&gt; [47] lifecycle_0.2.0             matrixStats_0.56.0         </span>
-<span class="co">#&gt; [49] ComplexHeatmap_2.5.5        stringr_1.4.0              </span>
-<span class="co">#&gt; [51] S4Vectors_0.27.13           munsell_0.5.0              </span>
-<span class="co">#&gt; [53] cluster_2.1.0               DelayedArray_0.15.8        </span>
+<span class="co">#&gt; [49] ComplexHeatmap_2.4.3        stringr_1.4.0              </span>
+<span class="co">#&gt; [51] S4Vectors_0.26.1            munsell_0.5.0              </span>
+<span class="co">#&gt; [53] cluster_2.1.0               DelayedArray_0.14.1        </span>
 <span class="co">#&gt; [55] entropy_1.2.1               compiler_4.0.2             </span>
-<span class="co">#&gt; [57] pkgdown_1.6.1.9000          GenomeInfoDb_1.25.11       </span>
+<span class="co">#&gt; [57] pkgdown_1.6.1               GenomeInfoDb_1.24.2        </span>
 <span class="co">#&gt; [59] systemfonts_0.3.1           rlang_0.4.7                </span>
 <span class="co">#&gt; [61] grid_4.0.2                  RCurl_1.98-1.2             </span>
 <span class="co">#&gt; [63] circlize_0.4.10             rjson_0.2.20               </span>
-<span class="co">#&gt; [65] SingleCellExperiment_1.11.7 labeling_0.3               </span>
+<span class="co">#&gt; [65] SingleCellExperiment_1.10.1 labeling_0.3               </span>
 <span class="co">#&gt; [67] bitops_1.0-6                rmarkdown_2.3              </span>
 <span class="co">#&gt; [69] gtable_0.3.0                R6_2.4.1                   </span>
 <span class="co">#&gt; [71] gridExtra_2.3               knitr_1.29                 </span>
 <span class="co">#&gt; [73] dplyr_1.0.2                 utf8_1.1.4                 </span>
 <span class="co">#&gt; [75] clue_0.3-57                 fastmatch_1.1-0            </span>
-<span class="co">#&gt; [77] fgsea_1.15.2                rprojroot_1.3-2            </span>
+<span class="co">#&gt; [77] fgsea_1.14.0                rprojroot_1.3-2            </span>
 <span class="co">#&gt; [79] ragg_0.3.1                  shape_1.4.5                </span>
 <span class="co">#&gt; [81] desc_1.2.0                  stringi_1.5.3              </span>
 <span class="co">#&gt; [83] parallel_4.0.2              Rcpp_1.0.5                 </span>
@@ -518,7 +520,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
