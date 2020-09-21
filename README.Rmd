@@ -152,6 +152,20 @@ clustify_lists(
 )
 ```
 
+## Frequently Asked Questions
+
+1. What types of data can be used as reference?
+`clustifyr` uses gene(row)-by-celltype(column) expression matrices. This means bulk RNA-seq and microarray data can be directly used. For scRNA-seq data, we have `average_clusters` to convert matrix data. For Seurat and SCE objects, we provide wrapper function `object_ref`. For reference-building from external UCSC cellbrowsers, see the newly provided `get_ucsc_reference`.
+
+2. How should I determine parameters?
+Please see our published [manuscript](https://f1000research.com/articles/9-223/v2) with parameter and usage discussions. In general default settings are satisfactory in our own internal usage. However, you might want to inspect the correlation matrix and call results, instead of just the final result (use `obj_out = FALSE` in `clustify`).
+
+3. I have "CLASH" in many of my final calls, why is that?
+"CLASH" indicates ties in the correlation values. In practice, this should be very rare unless the amount of query genes is very (dangerously) low (use `verbose = TRUE` in `clustify` for more information).
+
+4. I need help troubleshooting unknown errors in my reference building/clustifying.
+As we try to provide better error messaging, it is still important to note in general the most error-prone step is at designating the column in the metadata that contains clustering information. This is generally the `cluster_col` argument.
+
 ## Code of Conduct
 
 Please note that the clustifyr project is released with a [Contributor Code of Conduct](http://rnabioco.github.io/clustifyr/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
