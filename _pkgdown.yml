@@ -58,5 +58,27 @@ reference:
   - ref_marker_select
   - remove_background
   - reverse_marker_matrix
+  - append_genes
+  - assign_ident
+  - build_atlas
+  - calc_similarity
+  - check_raw_counts
+  - collapse_to_cluster
+  - compare_lists
+  - cosine
+  - gene_pct
+  - gene_pct_markerm
+  - insert_meta_object
+  - kl_divergence
+  - not_pretty_palette
+  - object_data
+  - overcluster
+  - percent_clusters
+  - permute_similarity
+  - pretty_palette
+  - pretty_palette2
+  - pretty_palette_ramp_d
+  - vector_similarity
+  - write_meta
 
 
