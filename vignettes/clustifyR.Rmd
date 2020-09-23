@@ -40,13 +40,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Introduction: Why use `clustifyr`?
+# Introduction: Why use `clustifyr`?
 
 Single cell transcriptomes are difficult to annotate without extensive knowledge of the underlying biology of the system in question. Even with this knowledge, accurate identification can be challenging due to the lack of detectable expression of common marker genes defined by bulk RNA-seq, flow cytometry, other single cell RNA-seq platforms, etc.
 
 `clustifyr` solves this problem by providing functions to automatically annotate single cells or clusters using bulk RNA-seq data or marker gene lists (ranked or unranked). Additional functions allow for exploratory analysis of calculated similarities between single cell RNA-seq datasets and reference data.
 
-## Installation
+# Installation
 
 To install `clustifyr` BiocManager must be installed.
 
@@ -56,7 +56,7 @@ install.packages("BiocManager")
 BiocManager::install("clustifyr")
 ```
 
-## A simple example: 10x Genomics PBMCs
+# A simple example: 10x Genomics PBMCs
 
 In this example, we take a 10x Genomics 3' scRNA-seq dataset from peripheral blood mononuclear cells (PBMCs) and annotate the cell clusters (identified using `Seurat`) using scRNA-seq cell clusters assigned from a CITE-seq experiment.
 
@@ -73,7 +73,7 @@ pbmc_matrix <- clustifyr::pbmc_matrix_small
 pbmc_meta <- clustifyr::pbmc_meta
 ```
 
-## Calculate correlation coefficients
+# Calculate correlation coefficients
 
 To identify cell types, the `clustifyr()` function requires several inputs:
 
@@ -121,7 +121,7 @@ To visualize the `clustifyr()` results we can use the `plot_cor_heatmap()` funct
 plot_cor_heatmap(cor_mat = res)
 ```
 
-## Plot cluster identities and correlation coefficients
+# Plot cluster identities and correlation coefficients
 
 `clustifyr` also provides functions to overlay correlation coefficients on pre-calculated tSNE embeddings (or those from any other dimensionality reduction method). 
 
@@ -167,7 +167,7 @@ known_types <- plot_dims(
 plot_grid(known_types, clustifyr_types)
 ```
 
-## Classify cells using known marker genes
+# Classify cells using known marker genes
 
 The `clustify_lists()` function allows cell types to be assigned based on known marker genes. This function requires a table containing markers for each cell type of interest. Cell types can be assigned using several statistical tests including, hypergeometric, Jaccard, Spearman, and GSEA.
 
@@ -208,7 +208,7 @@ pbmc_meta3 <- call_to_metadata(
 )
 ```
 
-## Direct handling of `SingleCellExperiment` objects
+# Direct handling of `SingleCellExperiment` objects
 `clustifyr` can also use a `SingleCellExperiment` object as input and return a new `SingleCellExperiment` object with the cell types added as a column in the colData. 
 
 ``` r
@@ -235,7 +235,7 @@ SingleCellExperiment::colData(res)[1:10,c("type", "r")]
 #> AZ_A7        CD34+ 0.671644883893203
 ```
 
-## Direct handling of `seurat` v2 and v3 objects
+# Direct handling of `seurat` v2 and v3 objects
 
 `clustifyr` can also use a `Seurat` object as input and return a new `Seurat` object with the cell types added as a column in the meta.data. 
 
@@ -261,11 +261,11 @@ res@meta.data[1:10, ]
 #> AATGTTGACAGTCA    41  100 SeuratProject       0     0 Memory CD4 T 0.7047302
 ```
 
-## Building reference matrix from single cell expression matrix
+# Building reference matrix from single cell expression matrix
 
 In its simplest form, a reference matrix is built by averaging expression (also includes an option to take the median) of a single cell RNA-seq expression matrix by cluster. Both log transformed or raw count matrices are supported.
 
-```{r average}
+```{r "average"}
 new_ref_matrix <- average_clusters(
   mat = pbmc_matrix,
   metadata = pbmc_meta$classified, # or use metadata = pbmc_meta, cluster_col = "classified"
@@ -293,7 +293,7 @@ new_ref_matrix_v3 <- seurat_ref(
 tail(new_ref_matrix_v3)
 ```
 
-```{r ucsc, eval = FALSE}
+```{r "ucsc", eval = FALSE}
 # There's also the option to pull UCSC cell browser data.
 get_ext_reference(cb_url = "http://cells.ucsc.edu/?ds=kidney-atlas%2FFetal_Immune",
                   cluster_col = "celltype")
@@ -307,7 +307,7 @@ Also see list for individual downloads at https://rnabioco.github.io/clustifyr/a
 Additional tutorials at
 https://rnabioco.github.io/clustifyrdata/articles/otherformats.html
 
-## Session info
+# Session info
 
 ```{r}
 sessionInfo()
