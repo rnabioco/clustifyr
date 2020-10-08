@@ -104,16 +104,14 @@
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Install the Bioconductor version with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="co">if</span> (<span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span>(<span class="st">"BiocManager"</span>, quietly = <span class="fl">TRUE</span>))
-    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"BiocManager"</span>)
+<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span>
 
-<span class="kw">BiocManager</span>::<span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span>(<span class="st">"clustifyr"</span>)
-</pre></div>
+<span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span><span class="op">(</span><span class="st">"clustifyr"</span><span class="op">)</span></pre></div>
 <p>Install the development version with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
 <span class="co"># install.packages("remotes")</span>
-<span class="kw">remotes</span>::<span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"rnabioco/clustifyr"</span>)
-</pre></div>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"rnabioco/clustifyr"</span><span class="op">)</span></pre></div>
 </div>
 <div id="additional-info" class="section level2">
 <h2 class="hasAnchor">
@@ -136,18 +134,18 @@
 </ul>
 <p>We then calculate correlation coefficients and plot them on a pre-calculated projection (stored in <code>pbmc_meta</code>).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://github.com/rnabioco/clustifyr#readme">clustifyr</a></span>)
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://github.com/rnabioco/clustifyr#readme">clustifyr</a></span><span class="op">)</span>
 
 <span class="co"># calculate correlation</span>
-<span class="kw">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clustify.html">clustify</a></span>(
-  input = <span class="kw">pbmc_matrix_small</span>,
-  metadata = <span class="kw">pbmc_meta</span><span class="op">$</span><span class="kw">classified</span>,
-  ref_mat = <span class="kw">cbmc_ref</span>,
-  query_genes = <span class="kw">pbmc_vargenes</span>
-)
+<span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clustify.html">clustify</a></span><span class="op">(</span>
+  input <span class="op">=</span> <span class="va">pbmc_matrix_small</span>,
+  metadata <span class="op">=</span> <span class="va">pbmc_meta</span><span class="op">$</span><span class="va">classified</span>,
+  ref_mat <span class="op">=</span> <span class="va">cbmc_ref</span>,
+  query_genes <span class="op">=</span> <span class="va">pbmc_vargenes</span>
+<span class="op">)</span>
 
 <span class="co"># print assignments</span>
-<span class="fu"><a href="reference/cor_to_call.html">cor_to_call</a></span>(<span class="kw">res</span>)
+<span class="fu"><a href="reference/cor_to_call.html">cor_to_call</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 9 x 3</span>
 <span class="co">#&gt; # Groups:   cluster [9]</span>
 <span class="co">#&gt;   cluster      type           r</span>
@@ -163,22 +161,21 @@
 <span class="co">#&gt; 9 NK           NK         0.894</span>
 
 <span class="co"># plot assignments on a projection</span>
-<span class="fu"><a href="reference/plot_best_call.html">plot_best_call</a></span>(
-  cor_mat = <span class="kw">res</span>,
-  metadata = <span class="kw">pbmc_meta</span>,
-  cluster_col = <span class="st">"classified"</span>
-)
-</pre></div>
+<span class="fu"><a href="reference/plot_best_call.html">plot_best_call</a></span><span class="op">(</span>
+  cor_mat <span class="op">=</span> <span class="va">res</span>,
+  metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,
+  cluster_col <span class="op">=</span> <span class="st">"classified"</span>
+<span class="op">)</span></pre></div>
 <p><img src="reference/figures/readme_example-1.png"><!-- --></p>
 <p><code><a href="reference/clustify.html">clustify()</a></code> can also take a clustered <code>SingleCellExperiment</code> or <code>seurat</code> object (both v2 and v3) and assign identities.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
 <span class="co"># for SingleCellExperiment</span>
-<span class="fu"><a href="reference/clustify.html">clustify</a></span>(
-  input = <span class="kw">sce_small</span>,          <span class="co"># an SCE object</span>
-  ref_mat = <span class="kw">cbmc_ref</span>,         <span class="co"># matrix of RNA-seq expression data for each cell type</span>
-  cluster_col = <span class="st">"cell_type1"</span>, <span class="co"># name of column in meta.data containing cell clusters</span>
-  obj_out = <span class="fl">TRUE</span>              <span class="co"># output SCE object with cell type inserted as "type" column</span>
-) 
+<span class="fu"><a href="reference/clustify.html">clustify</a></span><span class="op">(</span>
+  input <span class="op">=</span> <span class="va">sce_small</span>,          <span class="co"># an SCE object</span>
+  ref_mat <span class="op">=</span> <span class="va">cbmc_ref</span>,         <span class="co"># matrix of RNA-seq expression data for each cell type</span>
+  cluster_col <span class="op">=</span> <span class="st">"cell_type1"</span>, <span class="co"># name of column in meta.data containing cell clusters</span>
+  obj_out <span class="op">=</span> <span class="cn">TRUE</span>              <span class="co"># output SCE object with cell type inserted as "type" column</span>
+<span class="op">)</span> 
 <span class="co">#&gt; class: SingleCellExperiment </span>
 <span class="co">#&gt; dim: 200 200 </span>
 <span class="co">#&gt; metadata(0):</span>
@@ -191,62 +188,60 @@
 <span class="co">#&gt; reducedDimNames(0):</span>
 <span class="co">#&gt; altExpNames(0):</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">Seurat</span>)
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">Seurat</span><span class="op">)</span>
 <span class="co"># for seurat2</span>
-<span class="fu"><a href="reference/clustify.html">clustify</a></span>(
-  input = <span class="kw">s_small</span>,
-  cluster_col = <span class="st">"res.1"</span>,
-  ref_mat = <span class="kw">cbmc_ref</span>,
-  seurat_out = <span class="fl">TRUE</span>
-)
+<span class="fu"><a href="reference/clustify.html">clustify</a></span><span class="op">(</span>
+  input <span class="op">=</span> <span class="va">s_small</span>,
+  cluster_col <span class="op">=</span> <span class="st">"res.1"</span>,
+  ref_mat <span class="op">=</span> <span class="va">cbmc_ref</span>,
+  seurat_out <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span>
 <span class="co">#&gt; An old seurat object</span>
 <span class="co">#&gt;  230 genes across 80 samples</span>
 
 <span class="co"># for Seurat3</span>
-<span class="fu"><a href="reference/clustify.html">clustify</a></span>(
-  input = <span class="kw">s_small3</span>,
-  cluster_col = <span class="st">"RNA_snn_res.1"</span>,
-  ref_mat = <span class="kw">cbmc_ref</span>,
-  seurat_out = <span class="fl">TRUE</span>
-)
+<span class="fu"><a href="reference/clustify.html">clustify</a></span><span class="op">(</span>
+  input <span class="op">=</span> <span class="va">s_small3</span>,
+  cluster_col <span class="op">=</span> <span class="st">"RNA_snn_res.1"</span>,
+  ref_mat <span class="op">=</span> <span class="va">cbmc_ref</span>,
+  seurat_out <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span>
 <span class="co">#&gt; An object of class Seurat </span>
 <span class="co">#&gt; 230 features across 80 samples within 1 assay </span>
 <span class="co">#&gt; Active assay: RNA (230 features, 20 variable features)</span>
-<span class="co">#&gt;  2 dimensional reductions calculated: pca, tsne</span>
-</pre></div>
+<span class="co">#&gt;  2 dimensional reductions calculated: pca, tsne</span></pre></div>
 <p>New reference matrix can be made directly from <code>SingleCellExperiment</code> and <code>seurat</code> objects as well. Other scRNAseq experiment object types are supported as well.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
 <span class="co"># make reference from SingleCellExperiment objects</span>
-<span class="kw">sce_ref</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/object_ref.html">object_ref</a></span>(
-  input = <span class="kw">sce_small</span>,               <span class="co"># SCE object</span>
-  cluster_col = <span class="st">"cell_type1"</span>       <span class="co"># name of column in colData containing cell identities</span>
-)
+<span class="va">sce_ref</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/object_ref.html">object_ref</a></span><span class="op">(</span>
+  input <span class="op">=</span> <span class="va">sce_small</span>,               <span class="co"># SCE object</span>
+  cluster_col <span class="op">=</span> <span class="st">"cell_type1"</span>       <span class="co"># name of column in colData containing cell identities</span>
+<span class="op">)</span>
 <span class="co">#&gt; The following clusters have less than 10 cells for this analysis: co-expression, ductal, endothelial, epsilon, MHC class II, PSC. Classification is likely inaccurate.</span>
 
 <span class="co"># make reference from seurat objects</span>
-<span class="kw">s_ref</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/seurat_ref.html">seurat_ref</a></span>(
-  seurat_object = <span class="kw">s_small</span>,
-  cluster_col = <span class="st">"res.1"</span>
-)
+<span class="va">s_ref</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/seurat_ref.html">seurat_ref</a></span><span class="op">(</span>
+  seurat_object <span class="op">=</span> <span class="va">s_small</span>,
+  cluster_col <span class="op">=</span> <span class="st">"res.1"</span>
+<span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">s_ref</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">s_ref</span><span class="op">)</span>
 <span class="co">#&gt;                 0        1        2        3</span>
 <span class="co">#&gt; MS4A1    4.517255 3.204766 0.000000 0.000000</span>
 <span class="co">#&gt; CD79B    4.504191 3.549095 2.580662 0.000000</span>
 <span class="co">#&gt; CD79A    4.457349 4.199849 0.000000 0.000000</span>
 <span class="co">#&gt; HLA-DRA  6.211779 6.430463 3.659590 4.169965</span>
 <span class="co">#&gt; TCL1A    4.394310 2.837922 0.000000 0.000000</span>
-<span class="co">#&gt; HLA-DQB1 4.380289 4.325293 0.000000 1.666167</span>
-</pre></div>
+<span class="co">#&gt; HLA-DQB1 4.380289 4.325293 0.000000 1.666167</span></pre></div>
 <p><code><a href="reference/clustify_lists.html">clustify_lists()</a></code> handles identity assignment of matrix or <code>SingleCellExperiment</code> and <code>seurat</code> objects based on marker gene lists.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="fu"><a href="reference/clustify_lists.html">clustify_lists</a></span>(
-  input = <span class="kw">pbmc_matrix_small</span>,
-  metadata = <span class="kw">pbmc_meta</span>,
-  cluster_col = <span class="st">"classified"</span>,
-  marker = <span class="kw">pbmc_markers</span>,
-  marker_inmatrix = <span class="fl">FALSE</span>
-)
+<span class="fu"><a href="reference/clustify_lists.html">clustify_lists</a></span><span class="op">(</span>
+  input <span class="op">=</span> <span class="va">pbmc_matrix_small</span>,
+  metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,
+  cluster_col <span class="op">=</span> <span class="st">"classified"</span>,
+  marker <span class="op">=</span> <span class="va">pbmc_markers</span>,
+  marker_inmatrix <span class="op">=</span> <span class="cn">FALSE</span>
+<span class="op">)</span>
 <span class="co">#&gt;                      0        1        2         3         4        5        6</span>
 <span class="co">#&gt; Naive CD4 T  1.5639055 20.19469 31.77095  8.664074 23.844992 19.06931 19.06931</span>
 <span class="co">#&gt; Memory CD4 T 1.5639055 20.19469 31.77095 10.568007 23.844992 17.97875 19.06931</span>
@@ -268,16 +263,47 @@
 <span class="co">#&gt; DC           45.101877  0.1401901</span>
 <span class="co">#&gt; Platelet     19.492465 59.9493793</span>
 
-<span class="fu"><a href="reference/clustify_lists.html">clustify_lists</a></span>(
-  input = <span class="kw">s_small</span>,
-  marker = <span class="kw">pbmc_markers</span>,
-  marker_inmatrix = <span class="fl">FALSE</span>,
-  cluster_col = <span class="st">"res.1"</span>,
-  seurat_out = <span class="fl">TRUE</span>
-)
+<span class="fu"><a href="reference/clustify_lists.html">clustify_lists</a></span><span class="op">(</span>
+  input <span class="op">=</span> <span class="va">s_small</span>,
+  marker <span class="op">=</span> <span class="va">pbmc_markers</span>,
+  marker_inmatrix <span class="op">=</span> <span class="cn">FALSE</span>,
+  cluster_col <span class="op">=</span> <span class="st">"res.1"</span>,
+  seurat_out <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span>
 <span class="co">#&gt; An old seurat object</span>
-<span class="co">#&gt;  230 genes across 80 samples</span>
-</pre></div>
+<span class="co">#&gt;  230 genes across 80 samples</span></pre></div>
+</div>
+<div id="frequently-asked-questions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#frequently-asked-questions" class="anchor"></a>Frequently Asked Questions</h2>
+<ol>
+<li><p><strong>What types of data can be used as reference?</strong> <code>clustifyr</code> uses gene(row)-by-celltype(column) expression matrices. This means bulk RNA-seq and microarray data can be directly used. For scRNA-seq data, we have <code>average_clusters</code> to convert matrix data. For Seurat and SCE objects, we provide wrapper function <code>object_ref</code>. For reference-building from external UCSC cellbrowsers, see the newly provided <code>get_ucsc_reference</code>.</p></li>
+<li><p><strong>How should I determine parameters?</strong> Please see our published <a href="https://f1000research.com/articles/9-223/v2">manuscript</a> with parameter and usage discussions. In general default settings are satisfactory in our own internal usage. However, you might want to inspect the correlation matrix and call results, instead of just the final result (use <code>obj_out = FALSE</code> in <code>clustify</code>).</p></li>
+<li><p><strong>How many variable genes should I provide?</strong> While this of course greatly depends on the datasets in question, we generally have good results with ~500 variable genes. This is why we recommend running <code>M3Drop</code> for this step. It should be noted that Seurat V3 onwards automatically stores 2000 by default, which may be too many (if the result correlation matrix shows high and similar values for too many cell types).</p></li>
+<li><p><strong>I have “CLASH” in many of my final calls, why is that?</strong> “CLASH” indicates ties in the correlation values. In practice, this should be very rare unless the amount of query genes is very (dangerously) low (use <code>verbose = TRUE</code> in <code>clustify</code> for more information). Query genes take the intersection of provided gene list (or autodetected from Seurat objects) and genes in the reference.</p></li>
+<li><p><strong>I need help troubleshooting unknown errors in my reference building/clustifying.</strong> As we try to provide better error messaging, it is still important to note that, in general, the most error-prone step is at designating the column in the metadata that contains clustering information. This is generally the <code>cluster_col</code> argument.</p></li>
+<li><p><strong>What if I only have marker gene lists instead of full transcriptome references?</strong> Please see <code>clustify_lists</code>, which implements several simple methods. In particular, if both positive and negative markers are available, set argument <code>metric = "posneg"</code>.</p></li>
+<li><p><strong>Why is the default setting <code>per_cell = FALSE</code>?</strong> While doing classification on per cell level is available, it is slow and not very accurate. Default settings are also not optimized for per cell classification. <code>clustifyr</code> is mainly focused on leveraging results from clustering techniques.</p></li>
+<li><p><strong>How do I cite <code>clustifyr</code>?</strong></p></li>
+</ol>
+<!-- end list --><div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/citation.html">citation</a></span><span class="op">(</span><span class="st">"clustifyr"</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Fu R, Gillen A, Sheridan RM, Tian C, Daya M, Hao Y, Hesselberth JR,</span>
+<span class="co">#&gt; Riemondy KA (2019). "clustifyr: An R package for automated single-cell</span>
+<span class="co">#&gt; RNA sequencing cluster classification." _F1000 Research_. doi:</span>
+<span class="co">#&gt; 10.12688/f1000research.22969.1 (URL:</span>
+<span class="co">#&gt; https://doi.org/10.12688/f1000research.22969.1).</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; A BibTeX entry for LaTeX users is</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;   @Article{,</span>
+<span class="co">#&gt;     title = {clustifyr: An R package for automated single-cell RNA sequencing cluster classification},</span>
+<span class="co">#&gt;     year = {2019},</span>
+<span class="co">#&gt;     author = {Rui Fu and Austin Gillen and Ryan M. Sheridan and Chengzhe Tian and Michelle Daya and Yue Hao and Jay R. Hesselberth and Kent A. Riemondy},</span>
+<span class="co">#&gt;     journal = {F1000 Research},</span>
+<span class="co">#&gt;     doi = {10.12688/f1000research.22969.1},</span>
+<span class="co">#&gt;   }</span></pre></div>
 </div>
 <div id="code-of-conduct" class="section level2">
 <h2 class="hasAnchor">

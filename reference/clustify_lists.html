@@ -140,96 +140,96 @@
     <p>Main function to compare scRNA-seq data to gene lists.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>clustify_lists</span>(<span class='kw'>input</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>clustify_lists</span><span class='op'>(</span><span class='va'>input</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>clustify_lists</span>(
-  <span class='kw'>input</span>,
-  <span class='kw'>marker</span>,
-  marker_inmatrix = <span class='fl'>TRUE</span>,
-  metadata = <span class='kw'>NULL</span>,
-  cluster_col = <span class='kw'>NULL</span>,
-  if_log = <span class='fl'>TRUE</span>,
-  per_cell = <span class='fl'>FALSE</span>,
-  topn = <span class='fl'>800</span>,
-  cut = <span class='fl'>0</span>,
-  genome_n = <span class='fl'>30000</span>,
-  metric = <span class='st'>"hyper"</span>,
-  output_high = <span class='fl'>TRUE</span>,
-  lookuptable = <span class='kw'>NULL</span>,
-  obj_out = <span class='fl'>TRUE</span>,
-  seurat_out = <span class='fl'>TRUE</span>,
-  rename_prefix = <span class='kw'>NULL</span>,
-  threshold = <span class='fl'>0</span>,
-  low_threshold_cell = <span class='fl'>0</span>,
-  <span class='kw'>...</span>
-)
+<span class='fu'>clustify_lists</span><span class='op'>(</span>
+  <span class='va'>input</span>,
+  <span class='va'>marker</span>,
+  marker_inmatrix <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  metadata <span class='op'>=</span> <span class='cn'>NULL</span>,
+  cluster_col <span class='op'>=</span> <span class='cn'>NULL</span>,
+  if_log <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  per_cell <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  topn <span class='op'>=</span> <span class='fl'>800</span>,
+  cut <span class='op'>=</span> <span class='fl'>0</span>,
+  genome_n <span class='op'>=</span> <span class='fl'>30000</span>,
+  metric <span class='op'>=</span> <span class='st'>"hyper"</span>,
+  output_high <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  lookuptable <span class='op'>=</span> <span class='cn'>NULL</span>,
+  obj_out <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  seurat_out <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  rename_prefix <span class='op'>=</span> <span class='cn'>NULL</span>,
+  threshold <span class='op'>=</span> <span class='fl'>0</span>,
+  low_threshold_cell <span class='op'>=</span> <span class='fl'>0</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for seurat</span>
-<span class='fu'>clustify_lists</span>(
-  <span class='kw'>input</span>,
-  metadata = <span class='kw'>NULL</span>,
-  cluster_col = <span class='kw'>NULL</span>,
-  if_log = <span class='fl'>TRUE</span>,
-  per_cell = <span class='fl'>FALSE</span>,
-  topn = <span class='fl'>800</span>,
-  cut = <span class='fl'>0</span>,
-  <span class='kw'>marker</span>,
-  marker_inmatrix = <span class='fl'>TRUE</span>,
-  genome_n = <span class='fl'>30000</span>,
-  metric = <span class='st'>"hyper"</span>,
-  output_high = <span class='fl'>TRUE</span>,
-  dr = <span class='st'>"umap"</span>,
-  seurat_out = <span class='fl'>TRUE</span>,
-  obj_out = <span class='fl'>TRUE</span>,
-  threshold = <span class='fl'>0</span>,
-  rename_prefix = <span class='kw'>NULL</span>,
-  <span class='kw'>...</span>
-)
+<span class='fu'>clustify_lists</span><span class='op'>(</span>
+  <span class='va'>input</span>,
+  metadata <span class='op'>=</span> <span class='cn'>NULL</span>,
+  cluster_col <span class='op'>=</span> <span class='cn'>NULL</span>,
+  if_log <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  per_cell <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  topn <span class='op'>=</span> <span class='fl'>800</span>,
+  cut <span class='op'>=</span> <span class='fl'>0</span>,
+  <span class='va'>marker</span>,
+  marker_inmatrix <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  genome_n <span class='op'>=</span> <span class='fl'>30000</span>,
+  metric <span class='op'>=</span> <span class='st'>"hyper"</span>,
+  output_high <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  dr <span class='op'>=</span> <span class='st'>"umap"</span>,
+  seurat_out <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  obj_out <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  threshold <span class='op'>=</span> <span class='fl'>0</span>,
+  rename_prefix <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for Seurat</span>
-<span class='fu'>clustify_lists</span>(
-  <span class='kw'>input</span>,
-  metadata = <span class='kw'>NULL</span>,
-  cluster_col = <span class='kw'>NULL</span>,
-  if_log = <span class='fl'>TRUE</span>,
-  per_cell = <span class='fl'>FALSE</span>,
-  topn = <span class='fl'>800</span>,
-  cut = <span class='fl'>0</span>,
-  <span class='kw'>marker</span>,
-  marker_inmatrix = <span class='fl'>TRUE</span>,
-  genome_n = <span class='fl'>30000</span>,
-  metric = <span class='st'>"hyper"</span>,
-  output_high = <span class='fl'>TRUE</span>,
-  dr = <span class='st'>"umap"</span>,
-  seurat_out = <span class='fl'>TRUE</span>,
-  obj_out = <span class='fl'>TRUE</span>,
-  threshold = <span class='fl'>0</span>,
-  rename_prefix = <span class='kw'>NULL</span>,
-  <span class='kw'>...</span>
-)
+<span class='fu'>clustify_lists</span><span class='op'>(</span>
+  <span class='va'>input</span>,
+  metadata <span class='op'>=</span> <span class='cn'>NULL</span>,
+  cluster_col <span class='op'>=</span> <span class='cn'>NULL</span>,
+  if_log <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  per_cell <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  topn <span class='op'>=</span> <span class='fl'>800</span>,
+  cut <span class='op'>=</span> <span class='fl'>0</span>,
+  <span class='va'>marker</span>,
+  marker_inmatrix <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  genome_n <span class='op'>=</span> <span class='fl'>30000</span>,
+  metric <span class='op'>=</span> <span class='st'>"hyper"</span>,
+  output_high <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  dr <span class='op'>=</span> <span class='st'>"umap"</span>,
+  seurat_out <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  obj_out <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  threshold <span class='op'>=</span> <span class='fl'>0</span>,
+  rename_prefix <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for SingleCellExperiment</span>
-<span class='fu'>clustify_lists</span>(
-  <span class='kw'>input</span>,
-  metadata = <span class='kw'>NULL</span>,
-  cluster_col = <span class='kw'>NULL</span>,
-  if_log = <span class='fl'>TRUE</span>,
-  per_cell = <span class='fl'>FALSE</span>,
-  topn = <span class='fl'>800</span>,
-  cut = <span class='fl'>0</span>,
-  <span class='kw'>marker</span>,
-  marker_inmatrix = <span class='fl'>TRUE</span>,
-  genome_n = <span class='fl'>30000</span>,
-  metric = <span class='st'>"hyper"</span>,
-  output_high = <span class='fl'>TRUE</span>,
-  dr = <span class='st'>"umap"</span>,
-  seurat_out = <span class='fl'>TRUE</span>,
-  obj_out = <span class='fl'>TRUE</span>,
-  threshold = <span class='fl'>0</span>,
-  rename_prefix = <span class='kw'>NULL</span>,
-  <span class='kw'>...</span>
-)</pre>
+<span class='fu'>clustify_lists</span><span class='op'>(</span>
+  <span class='va'>input</span>,
+  metadata <span class='op'>=</span> <span class='cn'>NULL</span>,
+  cluster_col <span class='op'>=</span> <span class='cn'>NULL</span>,
+  if_log <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  per_cell <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  topn <span class='op'>=</span> <span class='fl'>800</span>,
+  cut <span class='op'>=</span> <span class='fl'>0</span>,
+  <span class='va'>marker</span>,
+  marker_inmatrix <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  genome_n <span class='op'>=</span> <span class='fl'>30000</span>,
+  metric <span class='op'>=</span> <span class='st'>"hyper"</span>,
+  output_high <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  dr <span class='op'>=</span> <span class='st'>"umap"</span>,
+  seurat_out <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  obj_out <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  threshold <span class='op'>=</span> <span class='fl'>0</span>,
+  rename_prefix <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -332,13 +332,13 @@ cell types from marker_mat as column names</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Annotate a matrix and metadata</span>
-<span class='fu'>clustify_lists</span>(
-    input = <span class='kw'>pbmc_matrix_small</span>,
-    marker = <span class='kw'>cbmc_m</span>,
-    metadata = <span class='kw'>pbmc_meta</span>,
-    cluster_col = <span class='st'>"classified"</span>,
-    verbose = <span class='fl'>TRUE</span>
-)
+<span class='fu'>clustify_lists</span><span class='op'>(</span>
+    input <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,
+    marker <span class='op'>=</span> <span class='va'>cbmc_m</span>,
+    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,
+    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,
+    verbose <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
 </div><div class='output co'>#&gt;                   CD4 T      CD8 T Memory CD4 T CD14+ Mono Naive CD4 T
 #&gt; Naive CD4 T  0.06713589 0.06713589            0   3.609737           0
 #&gt; Memory CD4 T 0.06713589 0.00000000            0   3.609737           0
@@ -370,14 +370,14 @@ cell types from marker_mat as column names</p>
 #&gt; DC           1.60006
 #&gt; Platelet     0.00000</div><div class='input'>
 <span class='co'># Annotate using a different method</span>
-<span class='fu'>clustify_lists</span>(
-    input = <span class='kw'>pbmc_matrix_small</span>,
-    marker = <span class='kw'>cbmc_m</span>,
-    metadata = <span class='kw'>pbmc_meta</span>,
-    cluster_col = <span class='st'>"classified"</span>,
-    verbose = <span class='fl'>TRUE</span>,
-    metric = <span class='st'>"jaccard"</span>
-)
+<span class='fu'>clustify_lists</span><span class='op'>(</span>
+    input <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,
+    marker <span class='op'>=</span> <span class='va'>cbmc_m</span>,
+    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,
+    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,
+    verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
+    metric <span class='op'>=</span> <span class='st'>"jaccard"</span>
+<span class='op'>)</span>
 </div><div class='output co'>#&gt;                    CD4 T       CD8 T Memory CD4 T  CD14+ Mono Naive CD4 T
 #&gt; Naive CD4 T  0.001246883 0.001246883            0 0.003750000           0
 #&gt; Memory CD4 T 0.001246883 0.000000000            0 0.003750000           0

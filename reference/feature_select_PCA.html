@@ -144,13 +144,13 @@ loadings of principal components
 formed from the bulk expression data set</p>
     </div>
 
-    <pre class="usage"><span class='fu'>feature_select_PCA</span>(
-  mat = <span class='kw'>NULL</span>,
-  pcs = <span class='kw'>NULL</span>,
-  n_pcs = <span class='fl'>10</span>,
-  percentile = <span class='fl'>0.99</span>,
-  if_log = <span class='fl'>TRUE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>feature_select_PCA</span><span class='op'>(</span>
+  mat <span class='op'>=</span> <span class='cn'>NULL</span>,
+  pcs <span class='op'>=</span> <span class='cn'>NULL</span>,
+  n_pcs <span class='op'>=</span> <span class='fl'>10</span>,
+  percentile <span class='op'>=</span> <span class='fl'>0.99</span>,
+  if_log <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -187,10 +187,10 @@ top point 1 percent of genes with the largest loadings.</p></td>
     <p>vector of genes</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>feature_select_PCA</span>(
-    <span class='kw'>cbmc_ref</span>,
-    if_log = <span class='fl'>FALSE</span>
-)
+    <pre class="examples"><div class='input'><span class='fu'>feature_select_PCA</span><span class='op'>(</span>
+    <span class='va'>cbmc_ref</span>,
+    if_log <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span>
 </div><div class='output co'>#&gt;   [1] "HLA-DRA"       "CST3"          "HLA-DPB1"      "HLA-DRB1"     
 #&gt;   [5] "HLA-DPA1"      "TYROBP"        "IL32"          "HLA-DQB1"     
 #&gt;   [9] "HLA-DRB5"      "IFI30"         "RP11-1143G9.4" "FCN1"         

@@ -140,14 +140,14 @@
     <p>get top calls for each cluster</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cor_to_call_topn</span>(
-  <span class='kw'>cor_mat</span>,
-  metadata = <span class='kw'>NULL</span>,
-  col = <span class='st'>"cluster"</span>,
-  collapse_to_cluster = <span class='fl'>FALSE</span>,
-  threshold = <span class='fl'>0</span>,
-  topn = <span class='fl'>2</span>
-)</pre>
+    <pre class="usage"><span class='fu'>cor_to_call_topn</span><span class='op'>(</span>
+  <span class='va'>cor_mat</span>,
+  metadata <span class='op'>=</span> <span class='cn'>NULL</span>,
+  col <span class='op'>=</span> <span class='st'>"cluster"</span>,
+  collapse_to_cluster <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  threshold <span class='op'>=</span> <span class='fl'>0</span>,
+  topn <span class='op'>=</span> <span class='fl'>2</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -185,21 +185,21 @@ takes the most frequent call of entire cluster to color in plot</p></td>
     <p>dataframe of cluster, new potential ident, and r info</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span>(
-    input = <span class='kw'>pbmc_matrix_small</span>,
-    metadata = <span class='kw'>pbmc_meta</span>,
-    ref_mat = <span class='kw'>cbmc_ref</span>,
-    query_genes = <span class='kw'>pbmc_vargenes</span>,
-    cluster_col = <span class='st'>"classified"</span>
-)
+    <pre class="examples"><div class='input'><span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span><span class='op'>(</span>
+    input <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,
+    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,
+    ref_mat <span class='op'>=</span> <span class='va'>cbmc_ref</span>,
+    query_genes <span class='op'>=</span> <span class='va'>pbmc_vargenes</span>,
+    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>
+<span class='op'>)</span>
 
-<span class='fu'>cor_to_call_topn</span>(
-    cor_mat = <span class='kw'>res</span>,
-    metadata = <span class='kw'>pbmc_meta</span>,
-    col = <span class='st'>"classified"</span>,
-    collapse_to_cluster = <span class='fl'>FALSE</span>,
-    threshold = <span class='fl'>0.5</span>
-)
+<span class='fu'>cor_to_call_topn</span><span class='op'>(</span>
+    cor_mat <span class='op'>=</span> <span class='va'>res</span>,
+    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,
+    col <span class='op'>=</span> <span class='st'>"classified"</span>,
+    collapse_to_cluster <span class='op'>=</span> <span class='cn'>FALSE</span>,
+    threshold <span class='op'>=</span> <span class='fl'>0.5</span>
+<span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 18 x 3</span><span>
 #&gt; </span><span style='color: #555555;'># Groups:   classified [9]</span><span>
 #&gt;    classified   type                  r

@@ -140,13 +140,13 @@
     <p>Insert called ident results into metadata</p>
     </div>
 
-    <pre class="usage"><span class='fu'>call_to_metadata</span>(
-  <span class='kw'>res</span>,
-  <span class='kw'>metadata</span>,
-  <span class='kw'>cluster_col</span>,
-  per_cell = <span class='fl'>FALSE</span>,
-  rename_prefix = <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>call_to_metadata</span><span class='op'>(</span>
+  <span class='va'>res</span>,
+  <span class='va'>metadata</span>,
+  <span class='va'>cluster_col</span>,
+  per_cell <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  rename_prefix <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -179,21 +179,21 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='kw'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span>(
-    input = <span class='kw'>pbmc_matrix_small</span>,
-    metadata = <span class='kw'>pbmc_meta</span>,
-    cluster_col = <span class='st'>"classified"</span>,
-    ref_mat = <span class='kw'>cbmc_ref</span>
-)
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span><span class='op'>(</span>
+    input <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,
+    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,
+    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,
+    ref_mat <span class='op'>=</span> <span class='va'>cbmc_ref</span>
+<span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>var.features not found, using all genes instead</span></div><div class='input'>
-<span class='kw'>res2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cor_to_call.html'>cor_to_call</a></span>(<span class='kw'>res</span>, cluster_col = <span class='st'>"classified"</span>)
+<span class='va'>res2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cor_to_call.html'>cor_to_call</a></span><span class='op'>(</span><span class='va'>res</span>, cluster_col <span class='op'>=</span> <span class='st'>"classified"</span><span class='op'>)</span>
 
-<span class='fu'>call_to_metadata</span>(
-    res = <span class='kw'>res2</span>,
-    metadata = <span class='kw'>pbmc_meta</span>,
-    cluster_col = <span class='st'>"classified"</span>,
-    rename_prefix = <span class='st'>"assigned"</span>
-)
+<span class='fu'>call_to_metadata</span><span class='op'>(</span>
+    res <span class='op'>=</span> <span class='va'>res2</span>,
+    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,
+    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,
+    rename_prefix <span class='op'>=</span> <span class='st'>"assigned"</span>
+<span class='op'>)</span>
 </div><div class='output co'>#&gt;                orig.ident nCount_RNA nFeature_RNA percent.mt RNA_snn_res.0.5
 #&gt; AAACATACAACCAC     pbmc3k       2419          779  3.0177759               1
 #&gt; AAACATTGAGCTAC     pbmc3k       4903         1352  3.7935958               3

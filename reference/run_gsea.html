@@ -147,15 +147,15 @@ scores and pvalues for gene
 set ovelap</p>
     </div>
 
-    <pre class="usage"><span class='fu'>run_gsea</span>(
-  <span class='kw'>expr_mat</span>,
-  <span class='kw'>query_genes</span>,
-  cluster_ids = <span class='kw'>NULL</span>,
-  n_perm = <span class='fl'>1000</span>,
-  per_cell = <span class='fl'>FALSE</span>,
-  scale = <span class='fl'>FALSE</span>,
-  no_warnings = <span class='fl'>TRUE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>run_gsea</span><span class='op'>(</span>
+  <span class='va'>expr_mat</span>,
+  <span class='va'>query_genes</span>,
+  cluster_ids <span class='op'>=</span> <span class='cn'>NULL</span>,
+  n_perm <span class='op'>=</span> <span class='fl'>1000</span>,
+  per_cell <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  scale <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  no_warnings <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -200,13 +200,13 @@ default = FALSE</p></td>
     <p>dataframe of gsea scores (pval, NES), with clusters as rownames</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>run_gsea</span>(
-    expr_mat = <span class='kw'>pbmc_matrix_small</span>,
-    query_genes = <span class='kw'>pbmc_vargenes</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>100</span>],
-    n_perm = <span class='fl'>10</span>,
-    cluster_ids = <span class='kw'>pbmc_meta</span><span class='op'>$</span><span class='kw'>classified</span>,
-    no_warnings = <span class='fl'>TRUE</span>
-)
+    <pre class="examples"><div class='input'><span class='fu'>run_gsea</span><span class='op'>(</span>
+    expr_mat <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,
+    query_genes <span class='op'>=</span> <span class='va'>pbmc_vargenes</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>100</span><span class='op'>]</span>,
+    n_perm <span class='op'>=</span> <span class='fl'>10</span>,
+    cluster_ids <span class='op'>=</span> <span class='va'>pbmc_meta</span><span class='op'>$</span><span class='va'>classified</span>,
+    no_warnings <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
 </div><div class='output co'>#&gt;                  pathway       pval      NES
 #&gt; B            query_genes 0.09090909 1.376519
 #&gt; CD14+ Mono   query_genes 0.09090909 1.380002

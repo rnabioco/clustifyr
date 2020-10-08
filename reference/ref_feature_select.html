@@ -140,7 +140,7 @@
     <p>feature select from reference matrix</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ref_feature_select</span>(<span class='kw'>mat</span>, n = <span class='fl'>3000</span>, mode = <span class='st'>"var"</span>, rm.lowvar = <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>ref_feature_select</span><span class='op'>(</span><span class='va'>mat</span>, n <span class='op'>=</span> <span class='fl'>3000</span>, mode <span class='op'>=</span> <span class='st'>"var"</span>, rm.lowvar <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,16 +168,16 @@
     <p>vector of genes</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>pbmc_avg</span> <span class='op'>&lt;-</span> <span class='fu'><a href='average_clusters.html'>average_clusters</a></span>(
-    mat = <span class='kw'>pbmc_matrix_small</span>,
-    metadata = <span class='kw'>pbmc_meta</span>,
-    cluster_col = <span class='st'>"classified"</span>
-)
+    <pre class="examples"><div class='input'><span class='va'>pbmc_avg</span> <span class='op'>&lt;-</span> <span class='fu'><a href='average_clusters.html'>average_clusters</a></span><span class='op'>(</span>
+    mat <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,
+    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,
+    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>
+<span class='op'>)</span>
 
-<span class='fu'>ref_feature_select</span>(
-    mat = <span class='kw'>pbmc_avg</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>100</span>, ],
-    n = <span class='fl'>5</span>
-)
+<span class='fu'>ref_feature_select</span><span class='op'>(</span>
+    mat <span class='op'>=</span> <span class='va'>pbmc_avg</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>100</span>, <span class='op'>]</span>,
+    n <span class='op'>=</span> <span class='fl'>5</span>
+<span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "PPBP"    "CST3"    "PF4"     "NKG7"    "HLA-DRA"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
