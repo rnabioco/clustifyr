@@ -240,14 +240,24 @@ clustify_lists(
     reference-building from external UCSC cellbrowsers, see the newly
     provided `get_ucsc_reference`.
 
-2.  **How should I determine parameters?** Please see our published
+2.  **Should the input/reference data be normalized?** The default
+    metric for `clustifyr` is ranked correlation, so it does tolerate
+    mixed raw/normalized expression fairly well. Still, we recommend
+    matching the input and ref matrices to the same normalization method
+    if possible. The object wrappers are taking log-normalized data for
+    downstream steps. It should be noted that data slot from SCtransform
+    obfuscates the original gene expression ranking, and is probably not
+    ideal for `clustifyr` - in this case we recommend going directly
+    from raw counts.
+
+3.  **How should I determine parameters?** Please see our published
     [manuscript](https://f1000research.com/articles/9-223/v2) with
     parameter and usage discussions. In general default settings are
     satisfactory in our own internal usage. However, you might want to
     inspect the correlation matrix and call results, instead of just the
     final result (use `obj_out = FALSE` in `clustify`).
 
-3.  **How many variable genes should I provide?** While this of course
+4.  **How many variable genes should I provide?** While this of course
     greatly depends on the datasets in question, we generally have good
     results with \~500 variable genes. This is why we recommend running
     `M3Drop` for this step. It should be noted that Seurat V3 onwards
@@ -255,33 +265,39 @@ clustify_lists(
     result correlation matrix shows high and similar values for too many
     cell types).
 
-4.  **I have “CLASH” in many of my final calls, why is that?** “CLASH”
+5.  **I have “CLASH” in many of my final calls, why is that?** “CLASH”
     indicates ties in the correlation values. In practice, this should
     be very rare unless the amount of query genes is very (dangerously)
     low (use `verbose = TRUE` in `clustify` for more information). Query
     genes take the intersection of provided gene list (or autodetected
     from Seurat objects) and genes in the reference.
 
-5.  **I need help troubleshooting unknown errors in my reference
+6.  **I need help troubleshooting unknown errors in my reference
     building/clustifying.** As we try to provide better error messaging,
     it is still important to note that, in general, the most error-prone
     step is at designating the column in the metadata that contains
     clustering information. This is generally the `cluster_col`
     argument.
 
-6.  **What if I only have marker gene lists instead of full
+7.  **What if I only have marker gene lists instead of full
     transcriptome references?** Please see `clustify_lists`, which
     implements several simple methods. In particular, if both positive
     and negative markers are available, set argument `metric =
     "posneg"`.
 
-7.  **Why is the default setting `per_cell = FALSE`?** While doing
+8.  **Why is the default setting `per_cell = FALSE`?** While doing
     classification on per cell level is available, it is slow and not
     very accurate. Default settings are also not optimized for per cell
     classification. `clustifyr` is mainly focused on leveraging results
     from clustering techniques.
 
-8.  **How do I cite `clustifyr`?**
+9.  **Does clustifyr work for spatial scRNA-seq data?** It works
+    decently on the Seurat tutorial data. See short
+    [example](https://github.com/rnabioco/clustifyr/issues/370). (Note,
+    as mentioned above, we recommend avoiding SCtransform data, and
+    opting for using raw data directly instead.)
+
+10. **How do I cite `clustifyr`?**
 
 <!-- end list -->
 
