@@ -278,11 +278,22 @@ clustify.seurat <- function(input,
     rm0 = FALSE,
     rename_prefix = NULL,
     exclude_genes = c(),
+    metadata = NULL,
     ...) {
     s_object <- input
     # for seurat < 3.0
     expr_mat <- object_data(s_object, "data")
-    metadata <- seurat_meta(s_object, dr = dr)
+    vec <- FALSE
+    if (!is.null(metadata)) {
+        if (is.vector(metadata)) {
+            vec <- TRUE
+        } else if (is.factor(metadata)) {
+            vec <- TRUE
+            metadata <- as.character(metadata)
+        }
+    } else {
+        metadata <- seurat_meta(s_object, dr = dr)
+    }
 
     if (use_var_genes && is.null(query_genes)) {
         query_genes <- object_data(s_object, "var.genes")
@@ -307,7 +318,7 @@ clustify.seurat <- function(input,
         res <- -log(res$p_val + .01, 10)
     }
 
-    if (!(seurat_out && obj_out)) {
+    if (!(seurat_out && obj_out) || vec) {
         res
     } else {
         df_temp <- cor_to_call(
@@ -354,11 +365,22 @@ clustify.Seurat <- function(input,
     rm0 = FALSE,
     rename_prefix = NULL,
     exclude_genes = c(),
+    metadata = NULL,
     ...) {
     s_object <- input
     # for seurat 3.0 +
     expr_mat <- object_data(s_object, "data")
-    metadata <- seurat_meta(s_object, dr = dr)
+    vec <- FALSE
+    if (!is.null(metadata)) {
+        if (is.vector(metadata)) {
+            vec <- TRUE
+        } else if (is.factor(metadata)) {
+            vec <- TRUE
+            metadata <- as.character(metadata)
+        }
+    } else {
+        metadata <- seurat_meta(s_object, dr = dr)
+    }
 
     if (use_var_genes && is.null(query_genes)) {
         query_genes <- object_data(s_object, "var.genes")
@@ -383,7 +405,7 @@ clustify.Seurat <- function(input,
         res <- -log(res$p_val + .01, 10)
     }
 
-    if (!(seurat_out && obj_out)) {
+    if (!(seurat_out && obj_out) || vec) {
         res
     } else {
         df_temp <- cor_to_call(
@@ -430,10 +452,21 @@ clustify.SingleCellExperiment <- function(input,
     rm0 = FALSE,
     rename_prefix = NULL,
     exclude_genes = c(),
+    metadata = NULL,
     ...) {
     s_object <- input
     expr_mat <- object_data(s_object, "data")
-    metadata <- object_data(s_object, "meta.data")
+    vec <- FALSE
+    if (!is.null(metadata)) {
+        if (is.vector(metadata)) {
+            vec <- TRUE
+        } else if (is.factor(metadata)) {
+            vec <- TRUE
+            metadata <- as.character(metadata)
+        }
+    } else {
+        metadata <- object_data(s_object, "meta.data")
+    }
 
     res <- clustify(
         expr_mat,

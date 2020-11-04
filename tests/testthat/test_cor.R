@@ -199,6 +199,36 @@ test_that("seurat3 object clustifying", {
     expect_true(ggplot2::is.ggplot(g[[1]]))
 })
 
+test_that("object with passing vector as metadata", {
+    res <- clustify(s_small3,
+                    cbmc_ref,
+                    metadata = s_small3@meta.data$RNA_snn_res.1,
+                    dr = "tsne"
+    )
+    res <- clustify_lists(
+        s_small3,
+        marker = cbmc_m,
+        metadata = s_small3@meta.data$RNA_snn_res.1,
+        dr = "tsne",
+        metric = "posneg",
+        seurat_out = FALSE
+    )
+    res <- clustify(s_small,
+                    cbmc_ref,
+                    metadata = s_small@meta.data$res.1,
+                    dr = "tsne"
+    )
+    res <- clustify_lists(
+        s_small,
+        marker = cbmc_m,
+        metadata = s_small@meta.data$res.1,
+        dr = "tsne",
+        metric = "posneg",
+        seurat_out = FALSE
+    )
+    expect_true(is.matrix(res))
+})
+
 test_that("clustify reinserts seurat3 metadata correctly", {
     res <- clustify(s_small3,
         cbmc_ref,
