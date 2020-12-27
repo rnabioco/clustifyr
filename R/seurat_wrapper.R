@@ -56,6 +56,10 @@ object_data.Seurat <- function(object,
         return(object@meta.data)
     } else if (slot == "var.genes") {
         vars <- object@assays$RNA@var.features
+        if (length(vars) == 0) {
+            message("found variable genes in SCT slot")
+            vars <- object@assays$SCT@var.features 
+        } 
         if ((length(vars) > n_genes) & (n_genes > 0)) {
             vars <- vars[1:n_genes]
         }

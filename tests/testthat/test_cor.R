@@ -565,3 +565,33 @@ test_that("clustify n_genes options limits number of variable genes", {
     )
     expect_true(res[1,1] != res2[1,1])
 })
+
+test_that("clustify n_genes options ignored if too large", {
+    res <- clustify(s_small3,
+                    cbmc_ref,
+                    cluster_col = "RNA_snn_res.1",
+                    dr = "tsne",
+                    obj_out = FALSE
+    )
+    res2 <- clustify(s_small3,
+                     cbmc_ref,
+                     n_genes = 20,
+                     cluster_col = "RNA_snn_res.1",
+                     dr = "tsne",
+                     obj_out = FALSE
+    )
+    expect_true(res[1,1] == res2[1,1])
+})
+
+# test_that("clustify finds SCT variable genes if needed", {
+#     s <- CreateSeuratObject(pbmc_matrix_small)
+#     s <- SCTransform(s)
+#     res <- clustify(s,
+#                     cbmc_ref,
+#                     per_cell = TRUE,
+#                     verbose = TRUE,
+#                     dr = "tsne",
+#                     obj_out = FALSE
+#     )
+#     expect_true(res[1,1] == res2[1,1])
+# })
