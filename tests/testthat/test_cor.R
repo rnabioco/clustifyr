@@ -548,3 +548,20 @@ test_that("clustify_lists filters low cell number clusters", {
     )
     expect_true(nrow(res) == 9)
 })
+
+test_that("clustify n_genes options limits number of variable genes", {
+    res <- clustify(s_small3,
+                    cbmc_ref,
+                    cluster_col = "RNA_snn_res.1",
+                    dr = "tsne",
+                    obj_out = FALSE
+    )
+    res2 <- clustify(s_small3,
+                     cbmc_ref,
+                     n_genes = 2,
+                     cluster_col = "RNA_snn_res.1",
+                     dr = "tsne",
+                     obj_out = FALSE
+    )
+    expect_true(res[1,1] != res2[1,1])
+})

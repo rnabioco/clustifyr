@@ -33,7 +33,7 @@ plot_dims(
 \item{legend_name}{legend name to display, defaults to no name}
 
 \item{c_cols}{character vector of colors to build color gradient
-for continuous values, defaults to \code{\link{pretty_palette}}}
+for continuous values, defaults to \code{\link[clustifyr:pretty_palette]{clustifyr::pretty_palette}}}
 
 \item{d_cols}{character vector of colors for discrete values.
 defaults to RColorBrewer paired palette}

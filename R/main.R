@@ -18,6 +18,8 @@ clustify <- function(input, ...) {
 #' @param query_genes A vector of genes of interest to compare. If NULL, then
 #'   common genes between the expr_mat and ref_mat
 #'   will be used for comparision.
+#' @param n_genes number of genes limit for Seurat variable genes, by default 1000,
+#'   set to 0 to use all variable genes (generally not recommended)
 #' @param per_cell if true run per cell, otherwise per cluster.
 #' @param n_perm number of permutations, set to 0 by default
 #' @param compute_method method(s) for computing similarity scores
@@ -90,6 +92,7 @@ clustify.default <- function(input,
     metadata = NULL,
     cluster_col = NULL,
     query_genes = NULL,
+    n_genes = 1000,
     per_cell = FALSE,
     n_perm = 0,
     compute_method = "spearman",
@@ -166,9 +169,9 @@ clustify.default <- function(input,
 
     if (verbose) {
         message("using # of genes: ", length(gene_constraints))
-        if (length(gene_constraints) >= 10000) {
+        if (length(gene_constraints) >= 2000) {
             message(
-                "using a high number genes to calculate correlation ",
+                "using a high number (>=2000) genes to calculate correlation ",
                 "please consider feature selection to improve performance"
             )
         }
@@ -266,6 +269,7 @@ clustify.seurat <- function(input,
     ref_mat,
     cluster_col = NULL,
     query_genes = NULL,
+    n_genes = 1000,
     per_cell = FALSE,
     n_perm = 0,
     compute_method = "spearman",
@@ -353,6 +357,7 @@ clustify.Seurat <- function(input,
     ref_mat,
     cluster_col = NULL,
     query_genes = NULL,
+    n_genes = 1000,
     per_cell = FALSE,
     n_perm = 0,
     compute_method = "spearman",
@@ -383,7 +388,7 @@ clustify.Seurat <- function(input,
     }
 
     if (use_var_genes && is.null(query_genes)) {
-        query_genes <- object_data(s_object, "var.genes")
+        query_genes <- object_data(s_object, "var.genes", n_genes)
     }
 
     res <- clustify(

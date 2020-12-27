@@ -11,7 +11,7 @@ object_data(object, ...)
 
 \method{object_data}{seurat}(object, slot, ...)
 
-\method{object_data}{Seurat}(object, slot, ...)
+\method{object_data}{Seurat}(object, slot, n_genes = 1000, ...)
 
 \method{object_data}{SingleCellExperiment}(object, slot, ...)
 }
@@ -22,6 +22,9 @@ and clustering}
 \item{...}{additional arguments}
 
 \item{slot}{data to access}
+
+\item{n_genes}{number of genes limit for Seurat variable genes, by default 1000,
+set to 0 to use all variable genes (generally not recommended)}
 }
 \value{
 expression matrix, with genes as row names,

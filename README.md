@@ -245,10 +245,10 @@ clustify_lists(
     mixed raw/normalized expression fairly well. Still, we recommend
     matching the input and ref matrices to the same normalization method
     if possible. The object wrappers are taking log-normalized data for
-    downstream steps. It should be noted that data slot from SCtransform
-    obfuscates the original gene expression ranking, and is probably not
-    ideal for `clustifyr` - in this case we recommend going directly
-    from raw counts.
+    downstream steps. It should be noted that **data slot from
+    SCtransform obfuscates the original gene expression ranking, and is
+    probably not ideal for `clustifyr`** - in this case we recommend
+    going directly from raw counts.
 
 3.  **How should I determine parameters?** Please see our published
     [manuscript](https://f1000research.com/articles/9-223/v2) with
@@ -259,11 +259,12 @@ clustify_lists(
 
 4.  **How many variable genes should I provide?** While this of course
     greatly depends on the datasets in question, we generally have good
-    results with \~500 variable genes. This is why we recommend running
-    `M3Drop` for this step. It should be noted that Seurat V3 onwards
-    automatically stores 2000 by default, which may be too many (if the
-    result correlation matrix shows high and similar values for too many
-    cell types).
+    results with \~500-1000 variable genes. This is why we recommend
+    running `M3Drop` for this step. It should be noted that Seurat V3
+    onwards automatically stores 2000 by default, which may be too many
+    (if the result correlation matrix shows high and similar values for
+    too many cell types). Currently, by default `clustify` on Seurat
+    objects will use top 1000 genes.
 
 5.  **I have “CLASH” in many of my final calls, why is that?** “CLASH”
     indicates ties in the correlation values. In practice, this should

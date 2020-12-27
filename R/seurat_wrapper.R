@@ -36,6 +36,8 @@ object_data.seurat <- function(object,
 #' @param object object after tsne or umap projections
 #'  and clustering
 #' @param slot data to access
+#' @param n_genes number of genes limit for Seurat variable genes, by default 1000,
+#'   set to 0 to use all variable genes (generally not recommended)
 #' @param ... additional arguments
 #' @examples
 #' mat <- object_data(
@@ -46,13 +48,18 @@ object_data.seurat <- function(object,
 #' @export
 object_data.Seurat <- function(object,
     slot,
+    n_genes = 1000,
     ...) {
     if (slot == "data") {
         return(object@assays$RNA@data)
     } else if (slot == "meta.data") {
         return(object@meta.data)
     } else if (slot == "var.genes") {
-        return(object@assays$RNA@var.features)
+        vars <- object@assays$RNA@var.features
+        if ((length(vars) > n_genes) & (n_genes > 0)) {
+            vars <- vars[1:n_genes]
+        }
+        return(vars)
     } else if (slot == "pca") {
         return(object@reductions$pca@feature.loadings)
     }

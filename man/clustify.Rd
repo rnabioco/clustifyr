@@ -16,6 +16,7 @@ clustify(input, ...)
   metadata = NULL,
   cluster_col = NULL,
   query_genes = NULL,
+  n_genes = 1000,
   per_cell = FALSE,
   n_perm = 0,
   compute_method = "spearman",
@@ -37,6 +38,7 @@ clustify(input, ...)
   ref_mat,
   cluster_col = NULL,
   query_genes = NULL,
+  n_genes = 1000,
   per_cell = FALSE,
   n_perm = 0,
   compute_method = "spearman",
@@ -58,6 +60,7 @@ clustify(input, ...)
   ref_mat,
   cluster_col = NULL,
   query_genes = NULL,
+  n_genes = 1000,
   per_cell = FALSE,
   n_perm = 0,
   compute_method = "spearman",
@@ -114,6 +117,9 @@ Not required if running correlation per cell.}
 \item{query_genes}{A vector of genes of interest to compare. If NULL, then
 common genes between the expr_mat and ref_mat
 will be used for comparision.}
+
+\item{n_genes}{number of genes limit for Seurat variable genes, by default 1000,
+set to 0 to use all variable genes (generally not recommended)}
 
 \item{per_cell}{if true run per cell, otherwise per cluster.}
 

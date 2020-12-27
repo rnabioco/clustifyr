@@ -158,13 +158,13 @@ clustify_lists(
 `clustifyr` uses gene(row)-by-celltype(column) expression matrices. This means bulk RNA-seq and microarray data can be directly used. For scRNA-seq data, we have `average_clusters` to convert matrix data. For Seurat and SCE objects, we provide wrapper function `object_ref`. For reference-building from external UCSC cellbrowsers, see the newly provided `get_ucsc_reference`.
 
 2. **Should the input/reference data be normalized?**
-The default metric for `clustifyr` is ranked correlation, so it does tolerate mixed raw/normalized expression fairly well. Still, we recommend matching the input and ref matrices to the same normalization method if possible. The object wrappers are taking log-normalized data for downstream steps. It should be noted that data slot from SCtransform obfuscates the original gene expression ranking, and is probably not ideal for `clustifyr` - in this case we recommend going directly from raw counts.
+The default metric for `clustifyr` is ranked correlation, so it does tolerate mixed raw/normalized expression fairly well. Still, we recommend matching the input and ref matrices to the same normalization method if possible. The object wrappers are taking log-normalized data for downstream steps. It should be noted that **data slot from SCtransform obfuscates the original gene expression ranking, and is probably not ideal for `clustifyr`** - in this case we recommend going directly from raw counts.
 
 3. **How should I determine parameters?** 
 Please see our published [manuscript](https://f1000research.com/articles/9-223/v2) with parameter and usage discussions. In general default settings are satisfactory in our own internal usage. However, you might want to inspect the correlation matrix and call results, instead of just the final result (use `obj_out = FALSE` in `clustify`).
 
 4. **How many variable genes should I provide?**
-While this of course greatly depends on the datasets in question, we generally have good results with ~500 variable genes. This is why we recommend running `M3Drop` for this step. It should be noted that Seurat V3 onwards automatically stores 2000 by default, which may be too many (if the result correlation matrix shows high and similar values for too many cell types).
+While this of course greatly depends on the datasets in question, we generally have good results with ~500-1000 variable genes. This is why we recommend running `M3Drop` for this step. It should be noted that Seurat V3 onwards automatically stores 2000 by default, which may be too many (if the result correlation matrix shows high and similar values for too many cell types). Currently, by default `clustify` on Seurat objects will use top 1000 genes.
 
 5. **I have "CLASH" in many of my final calls, why is that?**
 "CLASH" indicates ties in the correlation values. In practice, this should be very rare unless the amount of query genes is very (dangerously) low (use `verbose = TRUE` in `clustify` for more information). Query genes take the intersection of provided gene list (or autodetected from Seurat objects) and genes in the reference.
