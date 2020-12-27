@@ -108,7 +108,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/rnabioco/clustifyr/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -140,7 +140,7 @@
 <span class='fu'>object_data</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>slot</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for Seurat</span>
-<span class='fu'>object_data</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>slot</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>object_data</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>slot</span>, n_genes <span class='op'>=</span> <span class='fl'>1000</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for SingleCellExperiment</span>
 <span class='fu'>object_data</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>slot</span>, <span class='va'>...</span><span class='op'>)</span></pre>
@@ -160,6 +160,11 @@ and clustering</p></td>
     <tr>
       <th>slot</th>
       <td><p>data to access</p></td>
+    </tr>
+    <tr>
+      <th>n_genes</th>
+      <td><p>number of genes limit for Seurat variable genes, by default 1000,
+set to 0 to use all variable genes (generally not recommended)</p></td>
     </tr>
     </table>
 
