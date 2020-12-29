@@ -53,7 +53,8 @@ for benchmarking, compatible with
 
 More reference data (including tabula muris, immgen, etc) are available
 at supplement package
-[`clustifyrdata`](https://github.com/rnabioco/clustifyrdata). Also see
+[`clustifyrdatahub`](https://github.com/rnabioco/clustifyrdatahub). Also
+see
 [list](https://rnabioco.github.io/clustifyrdata/articles/download_refs.html)
 for individual downloads.
 
@@ -235,10 +236,10 @@ clustify_lists(
 1.  **What types of data can be used as reference?** `clustifyr` uses
     gene(row)-by-celltype(column) expression matrices. This means bulk
     RNA-seq and microarray data can be directly used. For scRNA-seq
-    data, we have `average_clusters` to convert matrix data. For Seurat
-    and SCE objects, we provide wrapper function `object_ref`. For
-    reference-building from external UCSC cellbrowsers, see the newly
-    provided `get_ucsc_reference`.
+    data, we have `average_clusters` to convert matrix data and
+    metadata. For Seurat and SCE objects, we provide wrapper function
+    `object_ref`. For reference-building from external UCSC
+    cellbrowsers, see the newly provided `get_ucsc_reference`.
 
 2.  **Should the input/reference data be normalized?** The default
     metric for `clustifyr` is ranked correlation, so it does tolerate
@@ -253,9 +254,9 @@ clustify_lists(
 3.  **How should I determine parameters?** Please see our published
     [manuscript](https://f1000research.com/articles/9-223/v2) with
     parameter and usage discussions. In general default settings are
-    satisfactory in our own internal usage. However, you might want to
-    inspect the correlation matrix and call results, instead of just the
-    final result (use `obj_out = FALSE` in `clustify`).
+    satisfactory in our own internal usage/testing. However, you might
+    want to inspect the correlation matrix and call results, instead of
+    just the final result (use `obj_out = FALSE` in `clustify`).
 
 4.  **How many variable genes should I provide?** While this of course
     greatly depends on the datasets in question, we generally have good
@@ -290,7 +291,12 @@ clustify_lists(
     classification on per cell level is available, it is slow and not
     very accurate. Default settings are also not optimized for per cell
     classification. `clustifyr` is mainly focused on leveraging results
-    from clustering techniques.
+    from clustering techniques. As other aspects of scRNA-seq analysis
+    is often focused on clusters, we have set our focus on this
+    resolution as well. This does mean that improper clustering of
+    either the query or ref datasets will lead to issues, as well as
+    cases of continuous cellular transitions where discrete clusters are
+    not present.
 
 9.  **Does clustifyr work for spatial scRNA-seq data?** It works
     decently on the Seurat tutorial data. See short
