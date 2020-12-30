@@ -281,7 +281,7 @@ set to 0 to use all variable genes (generally not recommended)</p></td>
     </tr>
     <tr>
       <th>verbose</th>
-      <td><p>whether to report certain variables chosen</p></td>
+      <td><p>whether to report certain variables chosen and steps</p></td>
     </tr>
     <tr>
       <th>lookuptable</th>
@@ -350,7 +350,7 @@ types from ref_mat as column names</p>
     cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,
     verbose <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>using # of genes: 599</span></div><div class='output co'>#&gt;                      B CD14+ Mono CD16+ Mono     CD34+     CD4 T     CD8 T
+</div><div class='output co'>#&gt; <span class='message'>using # of genes: 599</span></div><div class='output co'>#&gt; <span class='message'>similarity computation completed, matrix of 9 x 13, preparing output</span></div><div class='output co'>#&gt;                      B CD14+ Mono CD16+ Mono     CD34+     CD4 T     CD8 T
 #&gt; B            0.9093577  0.5347126  0.5908755 0.6248639 0.6411407 0.6269530
 #&gt; CD14+ Mono   0.5279272  0.9145428  0.8919954 0.5103056 0.4636934 0.4381450
 #&gt; CD8 T        0.5791953  0.4853982  0.5498177 0.5663773 0.7657468 0.7692801
@@ -389,7 +389,7 @@ types from ref_mat as column names</p>
     cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,
     compute_method <span class='op'>=</span> <span class='st'>"cosine"</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>using # of genes: 599</span></div><div class='output co'>#&gt;                      B CD14+ Mono CD16+ Mono     CD34+     CD4 T     CD8 T
+</div><div class='output co'>#&gt; <span class='message'>using # of genes: 599</span></div><div class='output co'>#&gt; <span class='message'>similarity computation completed, matrix of 9 x 13, preparing output</span></div><div class='output co'>#&gt;                      B CD14+ Mono CD16+ Mono     CD34+     CD4 T     CD8 T
 #&gt; B            0.9669867  0.7149343  0.7720125 0.8004738 0.7635724 0.7657181
 #&gt; CD14+ Mono   0.7527223  0.9627275  0.9460084 0.7577338 0.7096110 0.7061112
 #&gt; CD8 T        0.7510063  0.7070527  0.7467587 0.7677927 0.8562280 0.8674614
@@ -428,7 +428,7 @@ types from ref_mat as column names</p>
     per_cell <span class='op'>=</span> <span class='cn'>FALSE</span>,
     dr <span class='op'>=</span> <span class='st'>"tsne"</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>using # of genes: 20</span></div><div class='output co'>#&gt; <span class='message'>using threshold of 0.59</span></div><div class='output co'>#&gt; <span class='message'>seurat not loaded, returning cor_mat instead</span></div><div class='output co'>#&gt;             B CD14+ Mono CD16+ Mono      CD34+       CD4 T      CD8 T        DC
+</div><div class='output co'>#&gt; <span class='message'>object data retrieval complete, moving to similarity computation</span></div><div class='output co'>#&gt; <span class='message'>using # of genes: 20</span></div><div class='output co'>#&gt; <span class='message'>similarity computation completed, matrix of 4 x 13, preparing output</span></div><div class='output co'>#&gt; <span class='message'>using threshold of 0.59</span></div><div class='output co'>#&gt; <span class='message'>seurat not loaded, returning cor_mat instead</span></div><div class='output co'>#&gt;             B CD14+ Mono CD16+ Mono      CD34+       CD4 T      CD8 T        DC
 #&gt; 0  0.66641984  0.4000028  0.3435278 0.24453004  0.53962648  0.4400031 0.3605451
 #&gt; 1  0.49928480  0.5282509  0.4731645 0.52825094  0.34835596  0.2873746 0.4992739
 #&gt; 2  0.04411189  0.3881846  0.4854133 0.27172921  0.41288725  0.4446478 0.5601817
@@ -447,7 +447,7 @@ types from ref_mat as column names</p>
     per_cell <span class='op'>=</span> <span class='cn'>TRUE</span>,
     dr <span class='op'>=</span> <span class='st'>"tsne"</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>using # of genes: 20</span></div><div class='output co'>#&gt; <span class='message'>using threshold of NA</span></div><div class='output co'>#&gt; <span class='message'>seurat not loaded, returning cor_mat instead</span></div><div class='output co'>#&gt;                          B   CD14+ Mono  CD16+ Mono       CD34+       CD4 T
+</div><div class='output co'>#&gt; <span class='message'>object data retrieval complete, moving to similarity computation</span></div><div class='output co'>#&gt; <span class='message'>using # of genes: 20</span></div><div class='output co'>#&gt; <span class='message'>similarity computation completed, matrix of 80 x 13, preparing output</span></div><div class='output co'>#&gt; <span class='message'>using threshold of NA</span></div><div class='output co'>#&gt; <span class='message'>seurat not loaded, returning cor_mat instead</span></div><div class='output co'>#&gt;                          B   CD14+ Mono  CD16+ Mono       CD34+       CD4 T
 #&gt; ATGCCAGAACGACT  0.30783491  0.489737351  0.55991036  0.35949951  0.34335432
 #&gt; CATGGCCTGTGCAT  0.31929826  0.324136109  0.32909771  0.15239235  0.51039342
 #&gt; GAACCTGATGAACC  0.34846603  0.426142664  0.51264280  0.23302991  0.55344604
