@@ -28,7 +28,7 @@ clustify <- function(input, ...) {
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
 #'  (deprecated, use obj_out instead)
-#' @param verbose whether to report certain variables chosen
+#' @param verbose whether to report certain variables chosen and steps
 #' @param lookuptable if not supplied, will look in built-in table
 #'  for object parsing
 #' @param rm0 consider 0 as missing data, recommended for per_cell
@@ -229,7 +229,11 @@ clustify.default <- function(input,
             ...
         )
     }
-
+    
+    if (verbose) {
+        message("similarity computation completed, matrix of ", dim(res)[1], " x ", dim(res)[2], ", preparing output")
+    }
+    
     if ((obj_out &&
         seurat_out) &&
         !inherits(input_original, c(
@@ -303,6 +307,10 @@ clustify.seurat <- function(input,
         query_genes <- object_data(s_object, "var.genes")
     }
 
+    if (verbose) {
+        message("object data retrieval complete, moving to similarity computation")
+    }
+    
     res <- clustify(
         expr_mat,
         ref_mat,
@@ -391,6 +399,10 @@ clustify.Seurat <- function(input,
         query_genes <- object_data(s_object, "var.genes", n_genes)
     }
 
+    if (verbose) {
+        message("object data retrieval complete, moving to similarity computation")
+    }
+    
     res <- clustify(
         expr_mat,
         ref_mat,
@@ -473,6 +485,11 @@ clustify.SingleCellExperiment <- function(input,
         metadata <- object_data(s_object, "meta.data")
     }
 
+    
+    if (verbose) {
+        message("object data retrieval complete, moving to similarity computation")
+    }
+    
     res <- clustify(
         expr_mat,
         ref_mat,
@@ -577,6 +594,7 @@ clustify_lists <- function(input, ...) {
 #' @param dr stored dimension reduction
 #' @param seurat_out output cor matrix or called seurat object
 #'   (deprecated, use obj_out instead)
+#' @param verbose whether to report certain variables chosen and steps
 #' @param ... passed to matrixize_markers
 #' @examples
 #' # Annotate a matrix and metadata
@@ -619,6 +637,7 @@ clustify_lists.default <- function(input,
     rename_prefix = NULL,
     threshold = 0,
     low_threshold_cell = 0,
+    verbose = TRUE,
     ...) {
     input_original <- input
     if (!inherits(input, c("matrix", "Matrix", "data.frame"))) {
@@ -660,6 +679,9 @@ clustify_lists.default <- function(input,
             marker,
             ...
         )
+        if (verbose) {
+            message("number of total markers: ", nrow(marker))
+        }
     }
 
     if (metric == "consensus") {
@@ -717,6 +739,10 @@ clustify_lists.default <- function(input,
         )
     }
 
+    if (verbose) {
+        message("similarity computation completed, matrix of ", dim(res)[1], " x ", dim(res)[2], ", preparing output")
+    }
+    
     if ((!inherits(input_original, c("matrix", "Matrix", "data.frame")) &&
         obj_out &&
         seurat_out)) {
@@ -769,15 +795,27 @@ clustify_lists.seurat <- function(input,
     obj_out = TRUE,
     threshold = 0,
     rename_prefix = NULL,
+    verbose = TRUE,
     ...) {
     s_object <- input
     # for seurat < 3.0
     input <- object_data(s_object, "data")
-    if (is.null(metadata)) {
-        cluster_info <- as.data.frame(seurat_meta(s_object, dr = dr))
-        metadata <- cluster_info
+    vec <- FALSE
+    if (!is.null(metadata)) {
+        if (is.vector(metadata)) {
+            vec <- TRUE
+        } else if (is.factor(metadata)) {
+            vec <- TRUE
+            metadata <- as.character(metadata)
+        }
     } else {
-        cluster_info <- metadata
+        metadata <- object_data(s_object, "meta.data")
+    }
+    cluster_info <- metadata
+    
+    
+    if (verbose) {
+        message("object data retrieval complete, moving to similarity computation")
     }
 
     res <- clustify_lists(
@@ -793,10 +831,11 @@ clustify_lists.seurat <- function(input,
         genome_n = genome_n,
         metric = metric,
         output_high = output_high,
+        verbose = verbose,
         ...
     )
 
-    if (!(seurat_out && obj_out)) {
+    if (!(seurat_out && obj_out) || vec) {
         res
     } else {
         if (metric != "consensus") {
@@ -848,17 +887,28 @@ clustify_lists.Seurat <- function(input,
     obj_out = TRUE,
     threshold = 0,
     rename_prefix = NULL,
+    verbose = TRUE,
     ...) {
     s_object <- input
     # for seurat 3.0 +
     input <- object_data(s_object, "data")
-    if (is.null(metadata)) {
-        cluster_info <- as.data.frame(seurat_meta(s_object, dr = dr))
-        metadata <- cluster_info
+    vec <- FALSE
+    if (!is.null(metadata)) {
+        if (is.vector(metadata)) {
+            vec <- TRUE
+        } else if (is.factor(metadata)) {
+            vec <- TRUE
+            metadata <- as.character(metadata)
+        }
     } else {
-        cluster_info <- metadata
+        metadata <- object_data(s_object, "meta.data")
     }
-
+    cluster_info <- metadata
+    
+    if (verbose) {
+        message("object data retrieval complete, moving to similarity computation")
+    }
+    
     res <- clustify_lists(
         input,
         per_cell = per_cell,
@@ -872,10 +922,11 @@ clustify_lists.Seurat <- function(input,
         genome_n = genome_n,
         metric = metric,
         output_high = output_high,
+        verbose = verbose,
         ...
     )
 
-    if (!(seurat_out && obj_out)) {
+    if (!(seurat_out && obj_out) || vec) {
         res
     } else {
         if (metric != "consensus") {
@@ -928,11 +979,24 @@ clustify_lists.SingleCellExperiment <- function(input,
     obj_out = TRUE,
     threshold = 0,
     rename_prefix = NULL,
+    verbose = TRUE,
     ...) {
     s_object <- input
     expr_mat <- object_data(s_object, "data")
-    if (is.null(metadata)) {
+    vec <- FALSE
+    if (!is.null(metadata)) {
+        if (is.vector(metadata)) {
+            vec <- TRUE
+        } else if (is.factor(metadata)) {
+            vec <- TRUE
+            metadata <- as.character(metadata)
+        }
+    } else {
         metadata <- object_data(s_object, "meta.data")
+    }
+    
+    if (verbose) {
+        message("object data retrieval complete, moving to similarity computation")
     }
 
     res <- clustify_lists(
@@ -951,7 +1015,7 @@ clustify_lists.SingleCellExperiment <- function(input,
         ...
     )
 
-    if (!(seurat_out && obj_out)) {
+    if (!(seurat_out && obj_out) || vec) {
         res
     } else {
         df_temp <- cor_to_call(

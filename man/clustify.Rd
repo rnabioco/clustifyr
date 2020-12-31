@@ -127,7 +127,7 @@ set to 0 to use all variable genes (generally not recommended)}
 
 \item{compute_method}{method(s) for computing similarity scores}
 
-\item{verbose}{whether to report certain variables chosen}
+\item{verbose}{whether to report certain variables chosen and steps}
 
 \item{lookuptable}{if not supplied, will look in built-in table
 for object parsing}

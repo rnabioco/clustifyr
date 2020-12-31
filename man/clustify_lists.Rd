@@ -29,6 +29,7 @@ clustify_lists(input, ...)
   rename_prefix = NULL,
   threshold = 0,
   low_threshold_cell = 0,
+  verbose = TRUE,
   ...
 )
 
@@ -50,6 +51,7 @@ clustify_lists(input, ...)
   obj_out = TRUE,
   threshold = 0,
   rename_prefix = NULL,
+  verbose = TRUE,
   ...
 )
 
@@ -71,6 +73,7 @@ clustify_lists(input, ...)
   obj_out = TRUE,
   threshold = 0,
   rename_prefix = NULL,
+  verbose = TRUE,
   ...
 )
 
@@ -92,6 +95,7 @@ clustify_lists(input, ...)
   obj_out = TRUE,
   threshold = 0,
   rename_prefix = NULL,
+  verbose = TRUE,
   ...
 )
 }
@@ -142,6 +146,8 @@ for object parsing}
 only used when obj_out = T}
 
 \item{low_threshold_cell}{option to remove clusters with too few cells}
+
+\item{verbose}{whether to report certain variables chosen and steps}
 
 \item{dr}{stored dimension reduction}
 }
