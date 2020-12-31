@@ -48,7 +48,7 @@ remotes::install_github("rnabioco/clustifyr")
 
 [Script](https://github.com/rnabioco/clustifyrdata/blob/master/inst/run_clustifyr.R) for benchmarking, compatible with [`scRNAseq_Benchmark`](https://github.com/tabdelaal/scRNAseq_Benchmark)
 
-More reference data (including tabula muris, immgen, etc) are available at supplement package [`clustifyrdata`](https://github.com/rnabioco/clustifyrdata). Also see [list](https://rnabioco.github.io/clustifyrdata/articles/download_refs.html) for individual downloads. 
+More reference data (including tabula muris, immgen, etc) are available at supplement package [`clustifyrdatahub`](https://github.com/rnabioco/clustifyrdatahub). Also see [list](https://rnabioco.github.io/clustifyrdata/articles/download_refs.html) for individual downloads. 
 
 [Publication](https://f1000research.com/articles/9-223/v2) with parameter and usage discussions has passed peer review on F1000Research.
 
@@ -155,13 +155,13 @@ clustify_lists(
 ## Frequently Asked Questions
 
 1. **What types of data can be used as reference?**
-`clustifyr` uses gene(row)-by-celltype(column) expression matrices. This means bulk RNA-seq and microarray data can be directly used. For scRNA-seq data, we have `average_clusters` to convert matrix data. For Seurat and SCE objects, we provide wrapper function `object_ref`. For reference-building from external UCSC cellbrowsers, see the newly provided `get_ucsc_reference`.
+`clustifyr` uses gene(row)-by-celltype(column) expression matrices. This means bulk RNA-seq and microarray data can be directly used. For scRNA-seq data, we have `average_clusters` to convert matrix data and metadata. For Seurat and SCE objects, we provide wrapper function `object_ref`. For reference-building from external UCSC cellbrowsers, see the newly provided `get_ucsc_reference`.
 
 2. **Should the input/reference data be normalized?**
 The default metric for `clustifyr` is ranked correlation, so it does tolerate mixed raw/normalized expression fairly well. Still, we recommend matching the input and ref matrices to the same normalization method if possible. The object wrappers are taking log-normalized data for downstream steps. It should be noted that **data slot from SCtransform obfuscates the original gene expression ranking, and is probably not ideal for `clustifyr`** - in this case we recommend going directly from raw counts.
 
 3. **How should I determine parameters?** 
-Please see our published [manuscript](https://f1000research.com/articles/9-223/v2) with parameter and usage discussions. In general default settings are satisfactory in our own internal usage. However, you might want to inspect the correlation matrix and call results, instead of just the final result (use `obj_out = FALSE` in `clustify`).
+Please see our published [manuscript](https://f1000research.com/articles/9-223/v2) with parameter and usage discussions. In general default settings are satisfactory in our own internal usage/testing. However, you might want to inspect the correlation matrix and call results, instead of just the final result (use `obj_out = FALSE` in `clustify`).
 
 4. **How many variable genes should I provide?**
 While this of course greatly depends on the datasets in question, we generally have good results with ~500-1000 variable genes. This is why we recommend running `M3Drop` for this step. It should be noted that Seurat V3 onwards automatically stores 2000 by default, which may be too many (if the result correlation matrix shows high and similar values for too many cell types). Currently, by default `clustify` on Seurat objects will use top 1000 genes.
@@ -176,7 +176,7 @@ As we try to provide better error messaging, it is still important to note that,
 Please see `clustify_lists`, which implements several simple methods. In particular, if both positive and negative markers are available, set argument `metric = "posneg"`.
 
 8. **Why is the default setting `per_cell = FALSE`?**
-While doing classification on per cell level is available, it is slow and not very accurate. Default settings are also not optimized for per cell classification. `clustifyr` is mainly focused on leveraging results from clustering techniques. 
+While doing classification on per cell level is available, it is slow and not very accurate. Default settings are also not optimized for per cell classification. `clustifyr` is mainly focused on leveraging results from clustering techniques. As other aspects of scRNA-seq analysis is often focused on clusters, we have set our focus on this resolution as well. This does mean that improper clustering of either the query or ref datasets will lead to issues, as well as cases of continuous cellular transitions where discrete clusters are not present.
 
 9. **Does clustifyr work for spatial scRNA-seq data?**
 It works decently on the Seurat tutorial data. See short [example](https://github.com/rnabioco/clustifyr/issues/370). (Note, as mentioned above, we recommend avoiding SCtransform data, and opting for using raw data directly instead.)
