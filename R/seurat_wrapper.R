@@ -51,11 +51,19 @@ object_data.Seurat <- function(object,
     n_genes = 1000,
     ...) {
     if (slot == "data") {
-        return(object@assays$RNA@data)
+        temp <- tryCatch(object@assays$RNA@data,
+                         error = function(e) {
+                             message("detected spatial data, using raw counts")
+                             object@assays$Spatial@counts
+                             })
+        return(temp)
     } else if (slot == "meta.data") {
         return(object@meta.data)
     } else if (slot == "var.genes") {
-        vars <- object@assays$RNA@var.features
+        vars <- tryCatch(object@assays$RNA@var.features,
+                         error = function(e) {
+                             object@assays$SCT@var.features 
+                         })
         if (length(vars) == 0) {
             message("found variable genes in SCT slot")
             vars <- object@assays$SCT@var.features 
