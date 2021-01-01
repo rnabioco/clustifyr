@@ -1354,3 +1354,12 @@ test_that("check atlas successfully built", {
     atlas <- build_atlas(NULL, human_genes_10x, references_to_combine, NULL)
     expect_true(nrow(atlas) == 33514 && ncol(atlas) == 22)
 })
+
+test_that("make_comb_ref works as intended", {
+    ref <- make_comb_ref(
+        cbmc_ref,
+        sep = "_+_"
+        )
+
+    expect_true(nrow(ref) == 2000 && ncol(ref) == 91)
+})

@@ -2071,3 +2071,49 @@ build_atlas <- function(matrix_fns = NULL,
         return(atlas)
     }
 }
+
+#' make combination ref matrix to assess intermixing
+#'
+#' @param ref_mat reference expression matrix
+#' @param if_log whether input data is natural
+#' @param sep separator for name combinations
+#' @return expression matrix
+#' @examples
+#' ref <- make_comb_ref(
+#'     cbmc_ref,
+#'     sep = "_+_"
+#' )
+#' ref[1:3, 1:3]
+#' @export
+make_comb_ref <- function(ref_mat,
+                          if_log = TRUE,
+                          sep = "_and_") {
+    if (if_log == TRUE) {
+        ref_mat <- expm1(ref_mat)
+    }
+    combs <-
+        utils::combn(
+            x = colnames(ref_mat),
+            m = 2,
+            simplify = FALSE
+        )
+    comb_mat <-
+        vapply(
+            combs,
+            FUN = function(x) {
+                Matrix::rowMeans(ref_mat[, unlist(x)])
+            }, FUN.VALUE = numeric(nrow(ref_mat))
+        )
+    colnames(comb_mat) <-
+        vapply(
+            combs,
+            FUN = function(x) {
+                stringr::str_c(unlist(x), collapse = sep)
+            }, FUN.VALUE = character(1)
+        )
+    new_mat <- cbind(ref_mat, comb_mat)
+    if (if_log == TRUE) {
+        new_mat <- log1p(new_mat)
+    }
+    new_mat
+}
