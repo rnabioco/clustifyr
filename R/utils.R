@@ -1154,7 +1154,7 @@ insert_meta_object <- function(input,
 #' @return faceted ggplot object
 #' @examples
 #' set.seed(42)
-#' overcluster_test(
+#' g <- overcluster_test(
 #'     expr = pbmc_matrix_small,
 #'     metadata = pbmc_meta,
 #'     ref_mat = cbmc_ref,

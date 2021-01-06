@@ -64,6 +64,7 @@ Imports:
     httr
 Suggests:
     ComplexHeatmap,
+    Cairo,
     covr,
     knitr,
     rmarkdown,
