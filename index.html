@@ -29,6 +29,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -98,23 +100,23 @@
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Install the Bioconductor version with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
-    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span>
 
-<span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span><span class="op">(</span><span class="st">"clustifyr"</span><span class="op">)</span></code></pre></div>
+<span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"clustifyr"</span><span class="op">)</span></code></pre></div>
 <p>Install the development version with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("remotes")</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"rnabioco/clustifyr"</span><span class="op">)</span></code></pre></div>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"rnabioco/clustifyr"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="additional-info" class="section level2">
 <h2 class="hasAnchor">
 <a href="#additional-info" class="anchor"></a>Additional info</h2>
-<p><a href="https://rnabioco.github.io/clustifyr/articles/clustifyR.html">Intro</a> tutorial</p>
-<p><a href="https://rnabioco.github.io/clustifyrdata/articles/otherformats.html">Additional</a> tutorials</p>
-<p><a href="https://github.com/rnabioco/clustifyrdata/blob/master/inst/run_clustifyr.R">Script</a> for benchmarking, compatible with <a href="https://github.com/tabdelaal/scRNAseq_Benchmark"><code>scRNAseq_Benchmark</code></a></p>
-<p>More reference data (including tabula muris, immgen, etc) are available at supplement package <a href="https://github.com/rnabioco/clustifyrdatahub"><code>clustifyrdatahub</code></a>. Also see <a href="https://rnabioco.github.io/clustifyrdata/articles/download_refs.html">list</a> for individual downloads.</p>
-<p><a href="https://f1000research.com/articles/9-223/v2">Publication</a> with parameter and usage discussions has passed peer review on F1000Research.</p>
+<p><a href="https://rnabioco.github.io/clustifyr/articles/clustifyR.html" class="external-link">Intro</a> tutorial</p>
+<p><a href="https://rnabioco.github.io/clustifyrdata/articles/otherformats.html" class="external-link">Additional</a> tutorials</p>
+<p><a href="https://github.com/rnabioco/clustifyrdata/blob/master/inst/run_clustifyr.R" class="external-link">Script</a> for benchmarking, compatible with <a href="https://github.com/tabdelaal/scRNAseq_Benchmark" class="external-link"><code>scRNAseq_Benchmark</code></a></p>
+<p>More reference data (including tabula muris, immgen, etc) are available at supplement package <a href="https://github.com/rnabioco/clustifyrdatahub" class="external-link"><code>clustifyrdatahub</code></a>. Also see <a href="https://rnabioco.github.io/clustifyrdata/articles/download_refs.html" class="external-link">list</a> for individual downloads.</p>
+<p><a href="https://f1000research.com/articles/9-223/v2" class="external-link">Publication</a> with parameter and usage discussions has passed peer review on F1000Research.</p>
 </div>
 <div id="example-usage" class="section level2">
 <h2 class="hasAnchor">
@@ -128,7 +130,7 @@
 </ul>
 <p>We then calculate correlation coefficients and plot them on a pre-calculated projection (stored in <code>pbmc_meta</code>).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://github.com/rnabioco/clustifyr#readme">clustifyr</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://github.com/rnabioco/clustifyr#readme" class="external-link">clustifyr</a></span><span class="op">)</span>
 
 <span class="co"># calculate correlation</span>
 <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clustify.html">clustify</a></span><span class="op">(</span>
@@ -182,7 +184,7 @@
 <span class="co">#&gt; reducedDimNames(0):</span>
 <span class="co">#&gt; altExpNames(0):</span>
 
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">Seurat</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">Seurat</span><span class="op">)</span>
 <span class="co"># for seurat2</span>
 <span class="fu"><a href="reference/clustify.html">clustify</a></span><span class="op">(</span>
   input <span class="op">=</span> <span class="va">s_small</span>,
@@ -219,7 +221,7 @@
   cluster_col <span class="op">=</span> <span class="st">"res.1"</span>
 <span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">s_ref</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">s_ref</span><span class="op">)</span>
 <span class="co">#&gt;                 0        1        2        3</span>
 <span class="co">#&gt; MS4A1    4.517255 3.204766 0.000000 0.000000</span>
 <span class="co">#&gt; CD79B    4.504191 3.549095 2.580662 0.000000</span>
@@ -270,20 +272,20 @@
 <div id="frequently-asked-questions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#frequently-asked-questions" class="anchor"></a>Frequently Asked Questions</h2>
-<ol>
+<ol style="list-style-type: decimal">
 <li><p><strong>What types of data can be used as reference?</strong> <code>clustifyr</code> uses gene(row)-by-celltype(column) expression matrices. This means bulk RNA-seq and microarray data can be directly used. For scRNA-seq data, we have <code>average_clusters</code> to convert matrix data and metadata. For Seurat and SCE objects, we provide wrapper function <code>object_ref</code>. For reference-building from external UCSC cellbrowsers, see the newly provided <code>get_ucsc_reference</code>.</p></li>
 <li><p><strong>Should the input/reference data be normalized?</strong> The default metric for <code>clustifyr</code> is ranked correlation, so it does tolerate mixed raw/normalized expression fairly well. Still, we recommend matching the input and ref matrices to the same normalization method if possible. The object wrappers are taking log-normalized data for downstream steps. It should be noted that <strong>data slot from SCtransform obfuscates the original gene expression ranking, and is probably not ideal for <code>clustifyr</code></strong> - in this case we recommend going directly from raw counts.</p></li>
-<li><p><strong>How should I determine parameters?</strong> Please see our published <a href="https://f1000research.com/articles/9-223/v2">manuscript</a> with parameter and usage discussions. In general default settings are satisfactory in our own internal usage/testing. However, you might want to inspect the correlation matrix and call results, instead of just the final result (use <code>obj_out = FALSE</code> in <code>clustify</code>).</p></li>
+<li><p><strong>How should I determine parameters?</strong> Please see our published <a href="https://f1000research.com/articles/9-223/v2" class="external-link">manuscript</a> with parameter and usage discussions. In general default settings are satisfactory in our own internal usage/testing. However, you might want to inspect the correlation matrix and call results, instead of just the final result (use <code>obj_out = FALSE</code> in <code>clustify</code>).</p></li>
 <li><p><strong>How many variable genes should I provide?</strong> While this of course greatly depends on the datasets in question, we generally have good results with ~500-1000 variable genes. This is why we recommend running <code>M3Drop</code> for this step. It should be noted that Seurat V3 onwards automatically stores 2000 by default, which may be too many (if the result correlation matrix shows high and similar values for too many cell types). Currently, by default <code>clustify</code> on Seurat objects will use top 1000 genes.</p></li>
 <li><p><strong>I have “CLASH” in many of my final calls, why is that?</strong> “CLASH” indicates ties in the correlation values. In practice, this should be very rare unless the amount of query genes is very (dangerously) low (use <code>verbose = TRUE</code> in <code>clustify</code> for more information). Query genes take the intersection of provided gene list (or autodetected from Seurat objects) and genes in the reference.</p></li>
 <li><p><strong>I need help troubleshooting unknown errors in my reference building/clustifying.</strong> As we try to provide better error messaging, it is still important to note that, in general, the most error-prone step is at designating the column in the metadata that contains clustering information. This is generally the <code>cluster_col</code> argument.</p></li>
-<li><p><strong>What if I only have marker gene lists instead of full transcriptome references?</strong> Please see <code>clustify_lists</code>, which implements several simple methods. In particular, if both positive and negative markers are available, set argument <code>metric = "posneg"</code>.</p></li>
+<li><p><strong>What if I only have marker gene lists instead of full transcriptome references?</strong> Please see <code>clustify_lists</code>, which implements several simple methods. In particular, if both positive and negative markers are available, set argument <code>metric =     "posneg"</code>.</p></li>
 <li><p><strong>Why is the default setting <code>per_cell = FALSE</code>?</strong> While doing classification on per cell level is available, it is slow and not very accurate. Default settings are also not optimized for per cell classification. <code>clustifyr</code> is mainly focused on leveraging results from clustering techniques. As other aspects of scRNA-seq analysis is often focused on clusters, we have set our focus on this resolution as well. This does mean that improper clustering of either the query or ref datasets will lead to issues, as well as cases of continuous cellular transitions where discrete clusters are not present.</p></li>
-<li><p><strong>Does clustifyr work for spatial scRNA-seq data?</strong> It works decently on the Seurat tutorial data. See short <a href="https://github.com/rnabioco/clustifyr/issues/370">example</a>. (Note, as mentioned above, we recommend avoiding SCtransform data, and opting for using raw data directly instead.)</p></li>
+<li><p><strong>Does clustifyr work for spatial scRNA-seq data?</strong> It works decently on the Seurat tutorial data. See short <a href="https://github.com/rnabioco/clustifyr/issues/370" class="external-link">example</a>. (Note, as mentioned above, we recommend avoiding SCtransform data, and opting for using raw data directly instead. This can now be directly handled by Seurat wrapper, in the GitHub devel version.)</p></li>
 <li><p><strong>How do I cite <code>clustifyr</code>?</strong></p></li>
 </ol>
 <!-- end list --><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/citation.html">citation</a></span><span class="op">(</span><span class="st">"clustifyr"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"clustifyr"</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Fu R, Gillen A, Sheridan RM, Tian C, Daya M, Hao Y, Hesselberth JR,</span>
 <span class="co">#&gt; Riemondy KA (2019). "clustifyr: An R package for automated single-cell</span>
@@ -311,7 +313,7 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li>Download from BIOC at <br><a href="https://www.bioconductor.org/packages/clustifyr">https://​www.bioconductor.org/​packages/​clustifyr</a>
 </li>
@@ -323,29 +325,33 @@
 </li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>
 <a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
 </li>
 </ul>
 </div>
+
 <div class="community">
-<h2>Community</h2>
+<h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CONTRIBUTING.html">Contributing guide</a></li>
 <li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
 </ul>
 </div>
+
 <div class="citation">
-<h2>Citation</h2>
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
 <li><a href="authors.html">Citing clustifyr</a></li>
 </ul>
 </div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Rui Fu <br><small class="roles"> Author, maintainer </small>  </li>
 <li>Kent Riemondy <br><small class="roles"> Author </small>  </li>
@@ -353,23 +359,28 @@
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/rnabioco/clustifyr/actions"><img src="https://github.com/rnabioco/clustifyr/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-<li><a href="https://codecov.io/gh/rnabioco/clustifyr"><img src="https://codecov.io/gh/rnabioco/clustifyr/branch/master/graph/badge.svg" alt="codecov"></a></li>
+<li><a href="https://github.com/rnabioco/clustifyr/actions" class="external-link"><img src="https://github.com/rnabioco/clustifyr/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://codecov.io/gh/rnabioco/clustifyr" class="external-link"><img src="https://codecov.io/gh/rnabioco/clustifyr/branch/master/graph/badge.svg" alt="codecov"></a></li>
+<li><a href="https://bioconductor.org/packages/release/bioc/html/clustifyr.html" class="external-link"><img src="https://bioconductor.org/shields/availability/3.12/clustifyr.svg" alt="platforms"></a></li>
+<li><a href="https://bioconductor.org/packages/release/bioc/html/clustifyr.html" class="external-link"><img src="https://bioconductor.org/shields/years-in-bioc/clustifyr.svg" alt="bioc"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Rui Fu, Kent Riemondy.</p>
+  <p></p>
+<p>Developed by Rui Fu, Kent Riemondy.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
@@ -377,6 +388,8 @@
 
   
 
+
+  
 
   </body>
 </html>
