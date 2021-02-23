@@ -6,6 +6,8 @@
 [![R build
 status](https://github.com/rnabioco/clustifyr/workflows/R-CMD-check/badge.svg)](https://github.com/rnabioco/clustifyr/actions)
 [![codecov](https://codecov.io/gh/rnabioco/clustifyr/branch/master/graph/badge.svg)](https://codecov.io/gh/rnabioco/clustifyr)
+[![platforms](https://bioconductor.org/shields/availability/3.12/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
+[![bioc](https://bioconductor.org/shields/years-in-bioc/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
 <!-- badges: end -->
 
 clustifyr classifies cells and clusters in single-cell RNA sequencing
@@ -302,7 +304,8 @@ clustify_lists(
     decently on the Seurat tutorial data. See short
     [example](https://github.com/rnabioco/clustifyr/issues/370). (Note,
     as mentioned above, we recommend avoiding SCtransform data, and
-    opting for using raw data directly instead.)
+    opting for using raw data directly instead. This can now be directly
+    handled by Seurat wrapper, in the GitHub devel version.)
 
 10. **How do I cite `clustifyr`?**
 
