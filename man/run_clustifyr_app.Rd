@@ -8,7 +8,7 @@ run_clustifyr_app()
 }
 \value{
 instance of shiny app
-\donttest{
+\dontrun{
 run_clustifyr_app()
 }
 }

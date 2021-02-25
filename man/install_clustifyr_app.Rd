@@ -13,7 +13,7 @@ installation complete or error messages
 Install all packages needed for shiny app
 }
 \examples{
-\donttest{
+\dontrun{
 install_clustifyr_app()
 }
 }

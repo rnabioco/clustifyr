@@ -2,7 +2,7 @@
 #' 
 #' @examples
 #' @return instance of shiny app
-#'\donttest{
+#' \dontrun{
 #' run_clustifyr_app()
 #' }
 #' @export
@@ -16,7 +16,7 @@ run_clustifyr_app <- function() {
 #' @importFrom utils install.packages installed.packages read.csv
 #' @return installation complete or error messages
 #' @examples
-#'\donttest{
+#' \dontrun{
 #' install_clustifyr_app()
 #' }
 #' @export
