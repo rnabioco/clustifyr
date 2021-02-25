@@ -6,12 +6,12 @@
 \usage{
 run_clustifyr_app()
 }
-\description{
-Launch Shiny app version of clustifyr
-}
-\examples{
-
+\value{
+instance of shiny app
 \donttest{
 run_clustifyr_app()
 }
+}
+\description{
+Launch Shiny app version of clustifyr
 }

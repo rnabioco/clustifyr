@@ -15,13 +15,16 @@ cell-type name, samples, etc.)}
 
 \item{...}{additional args passed to average_clusters}
 }
+\value{
+reference matrix
+}
 \description{
 Build reference atlases from external UCSC cellbrowsers
 }
 \examples{
 
 \donttest{
-get_ext_reference(cb_url = "http://cells.ucsc.edu/?ds=kidney-atlas\%2FFetal_Immune",
-                 cluster_col = "celltype")
+get_ucsc_reference(cb_url = "http://cells.ucsc.edu/?ds=kidney-atlas\%2FFetal_Immune",
+                   cluster_col = "celltype")
 }
 }

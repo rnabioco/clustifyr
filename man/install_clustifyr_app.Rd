@@ -6,11 +6,13 @@
 \usage{
 install_clustifyr_app()
 }
+\value{
+installation complete or error messages
+}
 \description{
 Install all packages needed for shiny app
 }
 \examples{
-
 \donttest{
 install_clustifyr_app()
 }

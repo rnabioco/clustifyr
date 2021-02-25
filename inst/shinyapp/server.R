@@ -581,15 +581,15 @@ server <- function(input, output, session) {
 
     # if tar, read a file list
     if (str_detect(rv$links$link[as.numeric(row)], "/GSE[0-9]+_RAW.tar")) {
-      fullb <- F
+      fullb <- FALSE
       previewdata <- preview_link(get_tar(rv$links$link[as.numeric(row)]))
     } else {
-      fullb <- T
+      fullb <- TRUE
       previewdata <- preview_link(rv$links$link[as.numeric(row)])
     }
 
     if (is.null(previewdata)) {
-      fullb <- F
+      fullb <- FALSE
       previewdata <- data.frame(unreadable = rep("", 4))
     } else {
       cols <- ncol(previewdata)
@@ -597,7 +597,7 @@ server <- function(input, output, session) {
     }
 
     if (input[["activeTab"]] == "someta") {
-      fullb <- F
+      fullb <- FALSE
     }
     
     w7$hide()
