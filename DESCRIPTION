@@ -1,6 +1,6 @@
 Package: clustifyr
 Title: Classifier for Single-cell RNA-seq Using Cell Clusters
-Version: 1.3.1
+Version: 1.3.2
 Description: Package designed to aid in classifying cells from single-cell RNA sequencing data
     using external reference data (e.g., bulk RNA-seq, scRNA-seq, microarray, gene lists). A 
     variety of correlation based methods and gene list enrichment methods are provided to assist cell
@@ -61,7 +61,8 @@ Imports:
     matrixStats,
     S4Vectors,
     proxy,
-    httr
+    httr,
+    utils
 Suggests:
     ComplexHeatmap,
     covr,
@@ -69,8 +70,11 @@ Suggests:
     rmarkdown,
     testthat,
     ggrepel,
-    BiocStyle
-biocViews: SingleCell, Annotation, Sequencing, Microarray
+    BiocStyle,
+    BiocManager,
+    remotes,
+    shiny
+biocViews: SingleCell, Annotation, Sequencing, Microarray, GeneExpression
 BugReports: https://github.com/rnabioco/clustifyr/issues
 URL: http://github.com/rnabioco/clustifyr#readme,
     https://rnabioco.github.io/clustifyr/

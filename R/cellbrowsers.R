@@ -8,12 +8,11 @@
 #' @param ... additional args passed to average_clusters
 #'
 #' @importFrom httr http_error parse_url build_url
-#'
+#' @return reference matrix
 #' @examples
-#'
-#'\donttest{
-#' get_ext_reference(cb_url = "http://cells.ucsc.edu/?ds=kidney-atlas%2FFetal_Immune",
-#'                  cluster_col = "celltype")
+#' \dontrun{
+#' get_ucsc_reference(cb_url = "http://cells.ucsc.edu/?ds=kidney-atlas%2FFetal_Immune",
+#'                    cluster_col = "celltype")
 #' }
 #' @export
 get_ucsc_reference <- function(cb_url,
