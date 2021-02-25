@@ -10,7 +10,6 @@ run_clustifyr_app <- function() {
   shiny::runApp(appDir, display.mode = "normal")
 }
 
-
 #' Install all packages needed for shiny app
 #' @importFrom utils install.packages installed.packages read.csv
 #' @return installation complete or error messages

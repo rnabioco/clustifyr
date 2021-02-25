@@ -1,5 +1,7 @@
 ---
-output: github_document
+output: 
+  github_document:
+    toc: true
 ---
 
 ```{r, echo = FALSE, message = FALSE}
@@ -182,12 +184,15 @@ Please see `clustify_lists`, which implements several simple methods. In particu
 While doing classification on per cell level is available, it is slow and not very accurate. Default settings are also not optimized for per cell classification. `clustifyr` is mainly focused on leveraging results from clustering techniques. As other aspects of scRNA-seq analysis is often focused on clusters, we have set our focus on this resolution as well. This does mean that improper clustering of either the query or ref datasets will lead to issues, as well as cases of continuous cellular transitions where discrete clusters are not present.
 
 9. **Can I use multiple references in the same clustify run?**
-Yes, simply adding columns to a reference matrix works to expand it. We also provide `build_atlas`, which can be run like `build_atlas(matrix_objs = list(reference1, reference2, reference3, ...), genes_fn = clustifyr::human_genes_10x)`.
+Yes, simply adding columns to a reference matrix works to expand it. We also provide `build_atlas`, which can be run along the lines of `build_atlas(matrix_objs = list(reference1, reference2, reference3, ...), genes_fn = clustifyr::human_genes_10x)`.
 
 10. **Does clustifyr work for spatial scRNA-seq data?**
 It works decently on the Seurat tutorial data. See short [example](https://github.com/rnabioco/clustifyr/issues/370). (Note, as mentioned above, we recommend avoiding SCtransform data, and opting for using raw data directly instead. This can now be directly handled by Seurat wrapper, in the GitHub devel version.)
 
-11. **How do I cite `clustifyr`?**
+11. **Can I directly make references from online scRNA-seq datasets?**
+Yes, with the caveat that metadata containing cell type assignments must be available, which is frustratingly uncommon (see our quantification/monitoring of the issue [here](https://github.com/rnabioco/someta). We now have a Shiny app `run_clustifyr_app` that can directly preview and use GEO files, and `get_ucsc_reference` to build reference from a https://cells.ucsc.edu/ link.
+
+12. **How do I cite `clustifyr`?**
 ```{r}
 citation("clustifyr")
 ```

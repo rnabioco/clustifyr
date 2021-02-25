@@ -1,4 +1,6 @@
 
+
+
 # clustifyr <img src="man/figures/logo.png" align="right">
 
 <!-- badges: start -->
@@ -10,6 +12,13 @@ status](https://github.com/rnabioco/clustifyr/workflows/R-CMD-check/badge.svg)](
 [![bioc](https://bioconductor.org/shields/years-in-bioc/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
 <!-- badges: end -->
 
+  - [clustifyr](#clustifyr)
+      - [Installation](#installation)
+      - [Additional info](#additional-info)
+      - [Example usage](#example-usage)
+      - [Frequently Asked Questions](#frequently-asked-questions)
+      - [Code of Conduct](#code-of-conduct)
+      
 clustifyr classifies cells and clusters in single-cell RNA sequencing
 experiments using reference bulk RNA-seq data sets, sorted microarray
 expression data, single-cell gene signatures, or lists of marker genes.
@@ -300,14 +309,29 @@ clustify_lists(
     cases of continuous cellular transitions where discrete clusters are
     not present.
 
-9.  **Does clustifyr work for spatial scRNA-seq data?** It works
+9.  **Can I use multiple references in the same clustify run?** Yes,
+    simply adding columns to a reference matrix works to expand it. We
+    also provide `build_atlas`, which can be run along the lines of
+    `build_atlas(matrix_objs = list(reference1, reference2, reference3,
+    ...), genes_fn = clustifyr::human_genes_10x)`.
+
+10. **Does clustifyr work for spatial scRNA-seq data?** It works
     decently on the Seurat tutorial data. See short
     [example](https://github.com/rnabioco/clustifyr/issues/370). (Note,
     as mentioned above, we recommend avoiding SCtransform data, and
     opting for using raw data directly instead. This can now be directly
     handled by Seurat wrapper, in the GitHub devel version.)
 
-10. **How do I cite `clustifyr`?**
+11. **Can I directly make references from online scRNA-seq datasets?**
+    Yes, with the caveat that metadata containing cell type assignments
+    must be available, which is frustratingly uncommon (see our
+    quantification/monitoring of the issue
+    [here](https://github.com/rnabioco/someta). We now have a Shiny app
+    `run_clustifyr_app` that can directly preview and use GEO files, and
+    `get_ucsc_reference` to build reference from a
+    <https://cells.ucsc.edu/> link.
+
+12. **How do I cite `clustifyr`?**
 
 <!-- end list -->
 
