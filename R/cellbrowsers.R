@@ -10,7 +10,6 @@
 #' @importFrom httr http_error parse_url build_url
 #' @return reference matrix
 #' @examples
-#'
 #' \dontrun{
 #' get_ucsc_reference(cb_url = "http://cells.ucsc.edu/?ds=kidney-atlas%2FFetal_Immune",
 #'                    cluster_col = "celltype")

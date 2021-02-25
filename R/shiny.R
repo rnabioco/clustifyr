@@ -1,7 +1,6 @@
 #' Launch Shiny app version of clustifyr
-#' 
-#' @examples
 #' @return instance of shiny app
+#' @examples
 #' \dontrun{
 #' run_clustifyr_app()
 #' }

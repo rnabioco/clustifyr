@@ -8,10 +8,12 @@ run_clustifyr_app()
 }
 \value{
 instance of shiny app
-\dontrun{
-run_clustifyr_app()
-}
 }
 \description{
 Launch Shiny app version of clustifyr
+}
+\examples{
+\dontrun{
+run_clustifyr_app()
+}
 }
