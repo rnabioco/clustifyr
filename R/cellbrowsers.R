@@ -12,8 +12,8 @@
 #' @examples
 #'
 #'\donttest{
-#' get_ext_reference(cb_url = "http://cells.ucsc.edu/?ds=kidney-atlas%2FFetal_Immune",
-#'                  cluster_col = "celltype")
+#' get_ucsc_reference(cb_url = "http://cells.ucsc.edu/?ds=kidney-atlas%2FFetal_Immune",
+#'                    cluster_col = "celltype")
 #' }
 #' @export
 get_ucsc_reference <- function(cb_url,
