@@ -1,7 +1,7 @@
 #' Launch Shiny app version of clustifyr
 #' 
 #' @examples
-#'
+#' @return instance of shiny app
 #'\donttest{
 #' run_clustifyr_app()
 #' }
@@ -14,8 +14,8 @@ run_clustifyr_app <- function() {
 
 #' Install all packages needed for shiny app
 #' @importFrom utils install.packages installed.packages read.csv
+#' @return installation complete or error messages
 #' @examples
-#'
 #'\donttest{
 #' install_clustifyr_app()
 #' }

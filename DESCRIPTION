@@ -61,7 +61,8 @@ Imports:
     matrixStats,
     S4Vectors,
     proxy,
-    httr
+    httr,
+    utils
 Suggests:
     ComplexHeatmap,
     covr,
@@ -73,7 +74,7 @@ Suggests:
     BiocManager,
     remotes,
     shiny
-biocViews: SingleCell, Annotation, Sequencing, Microarray
+biocViews: SingleCell, Annotation, Sequencing, Microarray, GeneExpression
 BugReports: https://github.com/rnabioco/clustifyr/issues
 URL: http://github.com/rnabioco/clustifyr#readme,
     https://rnabioco.github.io/clustifyr/

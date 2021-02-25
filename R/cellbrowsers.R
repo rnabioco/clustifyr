@@ -8,7 +8,7 @@
 #' @param ... additional args passed to average_clusters
 #'
 #' @importFrom httr http_error parse_url build_url
-#'
+#' @return reference matrix
 #' @examples
 #'
 #'\donttest{

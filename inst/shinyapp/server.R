@@ -516,7 +516,7 @@ server <- function(input, output, session) {
       fade = FALSE,
       footer = NULL
     )),
-    ignoreInit = T
+    ignoreInit = TRUE
   )
 
   observeEvent(

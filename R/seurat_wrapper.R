@@ -69,7 +69,7 @@ object_data.Seurat <- function(object,
             vars <- object@assays$SCT@var.features 
         } 
         if ((length(vars) > n_genes) & (n_genes > 0)) {
-            vars <- vars[1:n_genes]
+            vars <- vars[seq_len(n_genes)]
         }
         return(vars)
     } else if (slot == "pca") {

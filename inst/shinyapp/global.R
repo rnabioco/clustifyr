@@ -97,8 +97,8 @@ list_geo <- function(id) {
   message("fetching info for all files available...")
   # look for files
   out <- tryCatch(suppressMessages(GEOquery::getGEOSuppFiles(id,
-                                                             makeDirectory = F,
-                                                             fetch_files = F))$fname,
+                                                             makeDirectory = FALSE,
+                                                             fetch_files = FALSE))$fname,
                   error = function(e) {
                     "error_get"
                   })
@@ -157,7 +157,7 @@ prep_email <- function(id) {
   }
 }
 
-preview_link <- function(link, n_row = 5, n_col = 50, verbose = T) {
+preview_link <- function(link, n_row = 5, n_col = 50, verbose = TRUE) {
   # make sure link works
   message(link)
   if (!str_starts(str_to_lower(link), "http")) {
