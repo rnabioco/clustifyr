@@ -1812,7 +1812,7 @@ get_unique_column <- function(df, id = NULL) {
 #' @param avg_mat average expression matrix
 #' @param ref_mat reference expression matrix
 #' @param query_genes original vector of genes used to clustify
-#' @return llist of matrix of rank diff values
+#' @return list of matrix of rank diff values
 #' @examples
 #' avg <- average_clusters(
 #'     mat = pbmc_matrix_small,
@@ -1861,8 +1861,6 @@ find_rank_bias <- function(
     rownames(r1) <- query_genes
     colnames(r1) <- colnames(ref_mat)
     
-    sdf <<- r1
-    dfa <<- r2
     # actual diff calculations
     rdiff <- lapply(rownames(r1), 
                     function(x) {res <- outer(r2[x, ], r1[x, ], FUN = "-")
@@ -1878,7 +1876,7 @@ find_rank_bias <- function(
 #' @param bias_list list of rank diff matrix between cluster and reference cell types
 #' @param id_mat name of cluster from average cluster matrix
 #' @param id_ref name of cell type in reference matrix
-#' @return llist of matrix of rank diff values
+#' @return data.frame rank diff values
 #' @examples
 #' avg <- average_clusters(
 #'     mat = pbmc_matrix_small,
@@ -1909,6 +1907,93 @@ query_rank_bias <- function(
     tibble::rownames_to_column(resdf, "gene")
 }
 
+#' Query rank bias results
+#' @param bias_df data.frame of rank diff matrix between cluster and reference cell types
+#' @param hsapiens organism name: human - 'hsapiens', mouse - 'mmusculus'
+#' @return ggplot object of distribution and annotated GO terms
+#' @examples
+#' avg <- average_clusters(
+#'     mat = pbmc_matrix_small,
+#'     metadata = pbmc_meta,
+#'     cluster_col = "classified",
+#'     if_log = FALSE
+#' )
+#' 
+#' rankdiff <- find_rank_bias(
+#'     avg,
+#'     cbmc_ref,
+#'     query_genes = pbmc_vargenes
+#' )
+#' 
+#' qres <- query_rank_bias(
+#'     rankdiff,
+#'     "CD14+ Mono",
+#'     "B"
+#' )
+#' 
+#' g <- plot_rank_bias(
+#'     qres
+#' )
+#' @export
+plot_rank_bias <- function(
+    bias_df,
+    organism = "hsapiens") {
+    genes_all <- setNames(bias_df[[2]], bias_df[[1]])
+    genes_high <- bias_df[genes_all >= (length(genes_all) * 0.33), ]
+    genes_low <- bias_df[genes_all <= -(length(genes_all) * 0.33), ]
+    if (nrow(genes_high) == 0) {
+        go_high <- ""
+    } else {
+        res_high <- gprofiler2::gost(query = genes_high$gene, 
+                                     organism = "hsapiens",
+                                     sources = "GO:BP", 
+                                     correction_method = "fdr",
+                                     evcodes = TRUE)
+        if (is.null(res_high)) {
+            go_high <- ""
+        } else {
+            go_high <- paste0(dplyr::slice(dplyr::filter(res_high[[1]], intersection_size > 1), seq_len(10))$term_name, 
+                              collapse = "\n")
+        }
+    }
+    if (nrow(genes_low) == 0) {
+        go_low <- ""
+    } else {
+        res_low <- gprofiler2::gost(query = genes_low$gene,
+                                    organism = "hsapiens",
+                                    sources = "GO:BP",
+                                    correction_method = "fdr",
+                                    evcodes = TRUE)
+        if (is.null(res_low)) {
+            go_low <- ""
+        } else {
+            go_low <- paste0(dplyr::slice(dplyr::filter(res_low[[1]], intersection_size > 1), seq_len(10))$term_name, 
+                              collapse = "\n")
+        }
+    }
+    
+    col <- colnames(bias_df)[2]
+    g <- ggplot2::ggplot(bias_df,  ggplot2::aes(!!dplyr::sym(col))) + 
+        ggplot2::geom_bar() +
+        ggplot2::geom_bar(data = genes_high, color = "red", fill = "red") +
+        ggplot2::geom_bar(data = genes_low, color = "blue", fill = "blue") +
+        cowplot::theme_cowplot() + 
+        ggplot2::theme(axis.line.y = ggplot2::element_blank(),
+                       axis.title.y = ggplot2::element_blank(),
+                       axis.text.y = ggplot2::element_blank(), 
+                       axis.ticks.y = ggplot2::element_blank()) +
+        ggplot2::annotate("text", 
+                          x = max(bias_df[[2]]) * 1.1, y = nrow(bias_df)/70, 
+                          label= go_high, color = "red", size = 2,
+                          hjust = 0) +
+        ggplot2::annotate("text",
+                          x = min(bias_df[[2]]) * 1.1, y = nrow(bias_df)/70,
+                          label= go_low, color = "blue", size = 2,
+                          hjust = 1) +
+        ggplot2::coord_cartesian(clip = "off", xlim = c(-max(abs(bias_df[[2]])) * 3,
+                                                        max(abs(bias_df[[2]])) * 3),
+                                 ylim = c(0, nrow(bias_df)/50))
+}
 #' Given a reference matrix and a list of genes, take the union of
 #' all genes in vector and genes in reference matrix
 #' and insert zero counts for all remaining genes.

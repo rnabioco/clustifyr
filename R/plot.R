@@ -46,7 +46,7 @@ plot_dims <- function(data,
     # If feature is not provided return unlabeled plot
     if (is.null(feature)) {
         p <- ggplot2::ggplot(data, ggplot2::aes_string(x_col, y_col)) +
-            geom_point(size = pt_size) +
+            ggplot2::geom_point(size = pt_size) +
             cowplot::theme_cowplot()
 
         if (!is.null(d_cols)) {
@@ -89,7 +89,7 @@ plot_dims <- function(data,
             scale_alpha_continuous(range = c(0, 1))
     } else {
         p <- ggplot2::ggplot(data, ggplot2::aes_string(x_col, y_col)) +
-            geom_point(ggplot2::aes_string(color = paste0(
+            ggplot2::geom_point(ggplot2::aes_string(color = paste0(
                 "`",
                 feature,
                 "`"
@@ -177,7 +177,7 @@ plot_dims <- function(data,
             colnames(alldata) <- colnames(centers)
             alldata <- rbind(alldata, centers)
             p <- p +
-                geom_point(
+                ggplot2::geom_point(
                     data = alldata,
                     mapping = aes(
                         x = !!dplyr::sym("t1"),
@@ -200,7 +200,7 @@ plot_dims <- function(data,
                 )
         } else {
             p <- p +
-                geom_text(
+                ggplot2::geom_text(
                     data = centers,
                     mapping = aes(
                         x = !!dplyr::sym("t1"),

@@ -4,67 +4,31 @@
 \alias{find_rank_bias}
 \title{Find rank bias}
 \usage{
-find_rank_bias(
-  mat,
-  metadata,
-  type_col,
-  ref_mat,
-  query_genes = NULL,
-  filter_out = TRUE,
-  threshold = 0.33,
-  expr_cut = 3000,
-  consensus_cut = 1
-)
+find_rank_bias(avg_mat, ref_mat, query_genes = NULL)
 }
 \arguments{
-\item{mat}{original query expression matrix}
-
-\item{metadata}{metadata after calling types}
-
-\item{type_col}{column name in metadata that contains ids}
+\item{avg_mat}{average expression matrix}
 
 \item{ref_mat}{reference expression matrix}
 
 \item{query_genes}{original vector of genes used to clustify}
-
-\item{filter_out}{whether to only report filtered results}
-
-\item{threshold}{diff threshold}
-
-\item{expr_cut}{consider all lower expressing genes as off}
-
-\item{consensus_cut}{filter out if lower
-han number of types show large diff}
 }
 \value{
-matrix of rank diff values
+list of matrix of rank diff values
 }
 \description{
 Find rank bias
 }
 \examples{
-res <- clustify(
-    input = pbmc_matrix_small,
-    metadata = pbmc_meta,
-    ref_mat = cbmc_ref,
-    query_genes = pbmc_vargenes,
-    cluster_col = "classified"
-)
-call1 <- cor_to_call(
-    res,
+avg <- average_clusters(
+    mat = pbmc_matrix_small,
     metadata = pbmc_meta,
     cluster_col = "classified",
-    collapse_to_cluster = FALSE,
-    threshold = 0.8
+    if_log = FALSE
 )
-pbmc_meta2 <- call_to_metadata(
-    call1,
-    pbmc_meta,
-    "classified"
-)
-find_rank_bias(
-    pbmc_matrix_small,
-    pbmc_meta2, "type",
+
+rankdiff <- find_rank_bias(
+    avg,
     cbmc_ref,
     query_genes = pbmc_vargenes
 )
