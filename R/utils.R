@@ -1809,113 +1809,104 @@ get_unique_column <- function(df, id = NULL) {
 }
 
 #' Find rank bias
-#' @param mat original query expression matrix
-#' @param metadata metadata after calling types
-#' @param type_col column name in metadata that contains ids
+#' @param avg_mat average expression matrix
 #' @param ref_mat reference expression matrix
 #' @param query_genes original vector of genes used to clustify
-#' @param filter_out whether to only report filtered results
-#' @param expr_cut consider all lower expressing genes as off
-#' @param threshold diff threshold
-#' @param consensus_cut filter out if lower
-#' han number of types show large diff
-#' @return matrix of rank diff values
+#' @return llist of matrix of rank diff values
 #' @examples
-#' res <- clustify(
-#'     input = pbmc_matrix_small,
-#'     metadata = pbmc_meta,
-#'     ref_mat = cbmc_ref,
-#'     query_genes = pbmc_vargenes,
-#'     cluster_col = "classified"
-#' )
-#' call1 <- cor_to_call(
-#'     res,
+#' avg <- average_clusters(
+#'     mat = pbmc_matrix_small,
 #'     metadata = pbmc_meta,
 #'     cluster_col = "classified",
-#'     collapse_to_cluster = FALSE,
-#'     threshold = 0.8
+#'     if_log = FALSE
 #' )
-#' pbmc_meta2 <- call_to_metadata(
-#'     call1,
-#'     pbmc_meta,
-#'     "classified"
-#' )
-#' find_rank_bias(
-#'     pbmc_matrix_small,
-#'     pbmc_meta2, "type",
+#' 
+#' rankdiff <- find_rank_bias(
+#'     avg,
 #'     cbmc_ref,
 #'     query_genes = pbmc_vargenes
 #' )
 #' @export
-find_rank_bias <- function(mat,
-    metadata,
-    type_col,
+find_rank_bias <- function(
+    avg_mat,
     ref_mat,
-    query_genes = NULL,
-    filter_out = TRUE,
-    threshold = 0.33,
-    expr_cut = 3000,
-    consensus_cut = 1) {
+    query_genes = NULL) {
+    # genes shared between matrix and ref
     if (is.null(query_genes)) {
         query_genes <- intersect(
-            rownames(mat),
+            rownames(avg_mat),
             rownames(ref_mat)
         )
     } else {
         query_genes <- intersect(
             query_genes,
             intersect(
-                rownames(mat),
+                rownames(avg_mat),
                 rownames(ref_mat)
             )
         )
     }
-    avg2 <- average_clusters(
-        mat[, rownames(metadata)],
-        metadata[[type_col]]
-    )
-    r2 <- t(matrixStats::colRanks(-avg2[query_genes, ],
+
+    # rank average expression matrix
+    r2 <- t(matrixStats::colRanks(-avg_mat[query_genes, ],
         ties.method = "average"
     ))
     rownames(r2) <- query_genes
-    colnames(r2) <- colnames(avg2)
-    r2 <- r2[, colnames(r2)[!stringr::str_detect(
-        colnames(r2),
-        "unassigned"
-    ),
-    drop = FALSE
-    ],
-    drop = FALSE
-    ]
+    colnames(r2) <- colnames(avg_mat)
 
+    # rank ref matrix
     r1 <- t(matrixStats::colRanks(-ref_mat[query_genes, ],
         ties.method = "average"
     ))
     rownames(r1) <- query_genes
     colnames(r1) <- colnames(ref_mat)
-    r1 <- r1[, colnames(r2), drop = FALSE]
+    
+    sdf <<- r1
+    dfa <<- r2
+    # actual diff calculations
+    rdiff <- lapply(rownames(r1), 
+                    function(x) {res <- outer(r2[x, ], r1[x, ], FUN = "-")
+                                 # rownames(res) <- colnames(r1)
+                                 # colnames(res) <- colnames(r2)
+                                 res})
+    names(rdiff) <- rownames(r1)
+    
+    rdiff
+}
 
-    if (!(is.null(expr_cut))) {
-        r1[r1 > expr_cut] <- expr_cut
-        r2[r2 > expr_cut] <- expr_cut
-        nthreshold <- expr_cut * threshold
-    } else {
-        nthreshold <- length(query_genes) * threshold
-    }
-    rdiff <- r1 - r2
-    if (filter_out) {
-        rp <- rdiff > nthreshold | rdiff < -nthreshold
-        rp[r1 > 0.9 * expr_cut & r2 > 0.9 * expr_cut] <- NA
-        v <- rowMeans(rp, na.rm = TRUE) == 1
-        v[is.na(v)] <- FALSE
-
-        v2 <- Matrix::rowSums(rp, na.rm = TRUE) == 1
-        prob <- rdiff[v & !v2, , drop = FALSE]
-
-        return(prob)
-    } else {
-        return(rdiff)
-    }
+#' Query rank bias results
+#' @param bias_list list of rank diff matrix between cluster and reference cell types
+#' @param id_mat name of cluster from average cluster matrix
+#' @param id_ref name of cell type in reference matrix
+#' @return llist of matrix of rank diff values
+#' @examples
+#' avg <- average_clusters(
+#'     mat = pbmc_matrix_small,
+#'     metadata = pbmc_meta,
+#'     cluster_col = "classified",
+#'     if_log = FALSE
+#' )
+#' 
+#' rankdiff <- find_rank_bias(
+#'     avg,
+#'     cbmc_ref,
+#'     query_genes = pbmc_vargenes
+#' )
+#' 
+#' qres <- query_rank_bias(
+#'     rankdiff,
+#'     "CD14+ Mono",
+#'     "FCGR3A+ Mono"
+#' )
+#' @export
+query_rank_bias <- function(
+    bias_list,
+    id_mat,
+    id_ref) {
+    res <- lapply(bias_list, function(x) {x[id_ref, id_mat]})
+    resdf <- data.frame(unlist(res))
+    colnames(resdf) <- paste0(id_mat, "_vs_ ", id_ref)
+    tibble::rownames_to_column(resdf, "gene")
 }
 
 #' Given a reference matrix and a list of genes, take the union of

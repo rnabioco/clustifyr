@@ -1200,32 +1200,24 @@ test_that("seurat_meta warns about not finding dr", {
     expect_true(all(rownames(m) == rownames(m2)))
 })
 
-test_that("find_rank_bias filters out unassigned", {
-    res <- clustify(
-        input = pbmc_matrix_small,
-        metadata = pbmc_meta,
-        ref_mat = cbmc_ref,
-        query_genes = pbmc_vargenes,
-        cluster_col = "classified"
-    )
-    call1 <- cor_to_call(
-        res,
+test_that("find_rank_bias and query_rank_bias run correctly", {
+    avg <- average_clusters(
+        mat = pbmc_matrix_small,
         metadata = pbmc_meta,
         cluster_col = "classified",
-        collapse_to_cluster = FALSE,
-        threshold = 0.8
+        if_log = FALSE
     )
-    pbmc_meta2 <- call_to_metadata(
-        call1,
-        pbmc_meta,
-        "classified"
-    )
-    b <- find_rank_bias(pbmc_matrix_small,
-        pbmc_meta2, "type",
+    rankdiff <- find_rank_bias(
+        avg,
         cbmc_ref,
         query_genes = pbmc_vargenes
     )
-    expect_true(length(unique(pbmc_meta2$type)) > ncol(b))
+    qres <- query_rank_bias(
+        rankdiff,
+        "CD14+ Mono",
+        "FCGR3A+ Mono"
+    )
+    expect_true(all(dim(qres) == c(599,2)))
 })
 
 test_that("repeated insertionn of types into metdadata renames correctly", {
