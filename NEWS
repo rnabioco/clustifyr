@@ -32,6 +32,9 @@ Changes in version 1.3.1 (2020-12-26)
 + Bug fixes
 
 Changes in version 1.3.2 (2021-02-25)
-+ Launch shiny app with `run_clustifyr_app()`
 + `build_atlas` for combining references
-+ Plot and GO terms for most divergent ranks in correlation of query vs reference
++ More Q&A
+
+Changes in version 1.3.3 (2021-02-28)
++ Launch shiny app with `run_clustifyr_app()`
++ Plot and GO for most divergent ranks in correlation of query vs reference
