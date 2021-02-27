@@ -73,7 +73,9 @@ Suggests:
     BiocStyle,
     BiocManager,
     remotes,
-    shiny
+    shiny,
+    gprofiler2,
+    purrr
 biocViews: SingleCell, Annotation, Sequencing, Microarray, GeneExpression
 BugReports: https://github.com/rnabioco/clustifyr/issues
 URL: http://github.com/rnabioco/clustifyr#readme,

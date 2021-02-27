@@ -40,6 +40,8 @@ clustify <- function(input, ...) {
 #' @param exclude_genes a vector of gene names to throw out of query
 #' @param if_log input data is natural log,
 #' averaging will be done on unlogged data
+#' @param organism for GO term analysis, organism name: human - 'hsapiens', mouse - 'mmusculus'
+#' @param plot_name name for saved pdf, if NULL then no file is written (default)
 #' @param ... additional arguments to pass to compute_method function
 #'
 #' @return single cell object with identity assigned in metadata,
@@ -106,6 +108,8 @@ clustify.default <- function(input,
     low_threshold_cell = 0,
     exclude_genes = c(),
     if_log = TRUE,
+    organism = "hsapiens",
+    plot_name = NULL,
     ...) {
     if (!compute_method %in% clustifyr_methods) {
         stop(paste(compute_method, "correlation method not implemented"),
@@ -261,6 +265,21 @@ clustify.default <- function(input,
             lookuptable = lookuptable
         )
 
+        if (!is.null(plot_name)) {
+            message("saving rank diff plot")
+            avg_mat <- average_clusters(
+                expr_mat,
+                cluster_ids
+            )
+            assess_rank_bias(
+                avg_mat = avg_mat,
+                ref_mat = ref_mat,
+                query_genes = query_genes,
+                res = df_temp,
+                organism = organism,
+                plot_name = plot_name
+            )
+        }
         return(out)
     } else {
         return(res)
@@ -287,6 +306,8 @@ clustify.seurat <- function(input,
     rename_prefix = NULL,
     exclude_genes = c(),
     metadata = NULL,
+    organism = "hsapiens",
+    plot_name = NULL,
     ...) {
     s_object <- input
     # for seurat < 3.0
@@ -348,6 +369,23 @@ clustify.seurat <- function(input,
             rename_prefix = rename_prefix
         )
 
+        if (!is.null(plot_name)) {
+            message("saving rank diff plot")
+            avg_mat <- average_clusters(
+                expr_mat,
+                metadata,
+                cluster_col
+            )
+            assess_rank_bias(
+                avg_mat = avg_mat,
+                ref_mat = ref_mat,
+                query_genes = query_genes,
+                res = df_temp,
+                organism = organism,
+                plot_name = plot_name
+            )
+        }
+        
         if ("Seurat" %in% loadedNamespaces()) {
             s_object <- write_meta(s_object, df_temp_full)
             return(s_object)
@@ -379,6 +417,8 @@ clustify.Seurat <- function(input,
     rename_prefix = NULL,
     exclude_genes = c(),
     metadata = NULL,
+    organism = "hsapiens",
+    plot_name = NULL,
     ...) {
     s_object <- input
     # for seurat 3.0 +
@@ -440,6 +480,23 @@ clustify.Seurat <- function(input,
             rename_prefix = rename_prefix
         )
 
+        if (!is.null(plot_name)) {
+            message("saving rank diff plot")
+            avg_mat <- average_clusters(
+                expr_mat,
+                metadata,
+                cluster_col
+            )
+            assess_rank_bias(
+                avg_mat = avg_mat,
+                ref_mat = ref_mat,
+                query_genes = query_genes,
+                res = df_temp,
+                organism = organism,
+                plot_name = plot_name
+            )
+        }
+        
         if ("Seurat" %in% loadedNamespaces()) {
             s_object <- write_meta(s_object, df_temp_full)
             return(s_object)
@@ -470,6 +527,8 @@ clustify.SingleCellExperiment <- function(input,
     rename_prefix = NULL,
     exclude_genes = c(),
     metadata = NULL,
+    organism = "hsapiens",
+    plot_name = NULL,
     ...) {
     s_object <- input
     expr_mat <- object_data(s_object, "data")
@@ -527,6 +586,23 @@ clustify.SingleCellExperiment <- function(input,
             rename_prefix = rename_prefix
         )
 
+        if (!is.null(plot_name)) {
+            message("saving rank diff plot")
+            avg_mat <- average_clusters(
+                expr_mat,
+                metadata,
+                cluster_col
+            )
+            assess_rank_bias(
+                avg_mat = avg_mat,
+                ref_mat = ref_mat,
+                query_genes = query_genes,
+                res = df_temp,
+                organism = organism,
+                plot_name = plot_name
+            )
+        }
+        
         if ("SingleCellExperiment" %in% loadedNamespaces()) {
             if (!(is.null(rename_prefix))) {
                 col_type <- stringr::str_c(rename_prefix, "_type")

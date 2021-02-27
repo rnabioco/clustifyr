@@ -1809,114 +1809,195 @@ get_unique_column <- function(df, id = NULL) {
 }
 
 #' Find rank bias
-#' @param mat original query expression matrix
-#' @param metadata metadata after calling types
-#' @param type_col column name in metadata that contains ids
+#' @param avg_mat average expression matrix
 #' @param ref_mat reference expression matrix
 #' @param query_genes original vector of genes used to clustify
-#' @param filter_out whether to only report filtered results
-#' @param expr_cut consider all lower expressing genes as off
-#' @param threshold diff threshold
-#' @param consensus_cut filter out if lower
-#' han number of types show large diff
-#' @return matrix of rank diff values
+#' @return list of matrix of rank diff values
 #' @examples
-#' res <- clustify(
-#'     input = pbmc_matrix_small,
-#'     metadata = pbmc_meta,
-#'     ref_mat = cbmc_ref,
-#'     query_genes = pbmc_vargenes,
-#'     cluster_col = "classified"
-#' )
-#' call1 <- cor_to_call(
-#'     res,
+#' avg <- average_clusters(
+#'     mat = pbmc_matrix_small,
 #'     metadata = pbmc_meta,
 #'     cluster_col = "classified",
-#'     collapse_to_cluster = FALSE,
-#'     threshold = 0.8
+#'     if_log = FALSE
 #' )
-#' pbmc_meta2 <- call_to_metadata(
-#'     call1,
-#'     pbmc_meta,
-#'     "classified"
-#' )
-#' find_rank_bias(
-#'     pbmc_matrix_small,
-#'     pbmc_meta2, "type",
+#' 
+#' rankdiff <- find_rank_bias(
+#'     avg,
 #'     cbmc_ref,
 #'     query_genes = pbmc_vargenes
 #' )
 #' @export
-find_rank_bias <- function(mat,
-    metadata,
-    type_col,
+find_rank_bias <- function(
+    avg_mat,
     ref_mat,
-    query_genes = NULL,
-    filter_out = TRUE,
-    threshold = 0.33,
-    expr_cut = 3000,
-    consensus_cut = 1) {
+    query_genes = NULL) {
+    # genes shared between matrix and ref
     if (is.null(query_genes)) {
         query_genes <- intersect(
-            rownames(mat),
+            rownames(avg_mat),
             rownames(ref_mat)
         )
     } else {
         query_genes <- intersect(
             query_genes,
             intersect(
-                rownames(mat),
+                rownames(avg_mat),
                 rownames(ref_mat)
             )
         )
     }
-    avg2 <- average_clusters(
-        mat[, rownames(metadata)],
-        metadata[[type_col]]
-    )
-    r2 <- t(matrixStats::colRanks(-avg2[query_genes, ],
+
+    # rank average expression matrix
+    r2 <- t(matrixStats::colRanks(-avg_mat[query_genes, ],
         ties.method = "average"
     ))
     rownames(r2) <- query_genes
-    colnames(r2) <- colnames(avg2)
-    r2 <- r2[, colnames(r2)[!stringr::str_detect(
-        colnames(r2),
-        "unassigned"
-    ),
-    drop = FALSE
-    ],
-    drop = FALSE
-    ]
+    colnames(r2) <- colnames(avg_mat)
 
+    # rank ref matrix
     r1 <- t(matrixStats::colRanks(-ref_mat[query_genes, ],
         ties.method = "average"
     ))
     rownames(r1) <- query_genes
     colnames(r1) <- colnames(ref_mat)
-    r1 <- r1[, colnames(r2), drop = FALSE]
-
-    if (!(is.null(expr_cut))) {
-        r1[r1 > expr_cut] <- expr_cut
-        r2[r2 > expr_cut] <- expr_cut
-        nthreshold <- expr_cut * threshold
-    } else {
-        nthreshold <- length(query_genes) * threshold
-    }
-    rdiff <- r1 - r2
-    if (filter_out) {
-        rp <- rdiff > nthreshold | rdiff < -nthreshold
-        rp[r1 > 0.9 * expr_cut & r2 > 0.9 * expr_cut] <- NA
-        v <- rowMeans(rp, na.rm = TRUE) == 1
-        v[is.na(v)] <- FALSE
-
-        v2 <- Matrix::rowSums(rp, na.rm = TRUE) == 1
-        prob <- rdiff[v & !v2, , drop = FALSE]
-
-        return(prob)
-    } else {
-        return(rdiff)
-    }
+    
+    # actual diff calculations
+    rdiff <- lapply(rownames(r1), 
+                    function(x) {res <- outer(r2[x, ], r1[x, ], FUN = "-")
+                                 # rownames(res) <- colnames(r1)
+                                 # colnames(res) <- colnames(r2)
+                                 res})
+    names(rdiff) <- rownames(r1)
+    
+    rdiff
 }
+
+#' Query rank bias results
+#' @param bias_list list of rank diff matrix between cluster and reference cell types
+#' @param id_mat name of cluster from average cluster matrix
+#' @param id_ref name of cell type in reference matrix
+#' @return data.frame rank diff values
+#' @examples
+#' avg <- average_clusters(
+#'     mat = pbmc_matrix_small,
+#'     metadata = pbmc_meta,
+#'     cluster_col = "classified",
+#'     if_log = FALSE
+#' )
+#' 
+#' rankdiff <- find_rank_bias(
+#'     avg,
+#'     cbmc_ref,
+#'     query_genes = pbmc_vargenes
+#' )
+#' 
+#' qres <- query_rank_bias(
+#'     rankdiff,
+#'     "CD14+ Mono",
+#'     "CD14+ Mono"
+#' )
+#' @export
+query_rank_bias <- function(
+    bias_list,
+    id_mat,
+    id_ref) {
+    res <- lapply(bias_list, function(x) {
+        x[id_mat, id_ref]})
+    resdf <- data.frame(unlist(res))
+    colnames(resdf) <- paste0(id_mat, "_vs_ ", id_ref)
+    tibble::rownames_to_column(resdf, "gene")
+}
+
+#' Query rank bias results
+#' @param bias_df data.frame of rank diff matrix between cluster and reference cell types
+#' @param organism for GO term analysis, organism name: human - 'hsapiens', mouse - 'mmusculus'
+#' @return ggplot object of distribution and annotated GO terms
+#' @examples
+#' \dontrun{
+#' avg <- average_clusters(
+#'     mat = pbmc_matrix_small,
+#'     metadata = pbmc_meta,
+#'     cluster_col = "classified",
+#'     if_log = FALSE
+#' )
+#' 
+#' rankdiff <- find_rank_bias(
+#'     avg,
+#'     cbmc_ref,
+#'     query_genes = pbmc_vargenes
+#' )
+#' 
+#' qres <- query_rank_bias(
+#'     rankdiff,
+#'     "CD14+ Mono",
+#'     "CD14+ Mono"
+#' )
+#' 
+#' g <- plot_rank_bias(
+#'     qres
+#' )
+#' }
+#' @export
+plot_rank_bias <- function(
+    bias_df,
+    organism = "hsapiens") {
+    genes_all <- stats::setNames(bias_df[[2]], bias_df[[1]])
+    genes_high <- bias_df[genes_all >= (length(genes_all) * 0.33), ]
+    genes_low <- bias_df[genes_all <= -(length(genes_all) * 0.33), ]
+    if (nrow(genes_high) == 0) {
+        go_high <- ""
+    } else {
+        res_high <- suppressMessages(gprofiler2::gost(query = genes_high$gene, 
+                                     organism = "hsapiens",
+                                     sources = "GO:BP", 
+                                     correction_method = "fdr",
+                                     evcodes = TRUE))
+        if (is.null(res_high)) {
+            go_high <- ""
+        } else {
+            go_high <- paste0(dplyr::slice(dplyr::filter(res_high[[1]], intersection_size > 1), seq_len(10))$term_name, 
+                              collapse = "\n")
+        }
+    }
+    if (nrow(genes_low) == 0) {
+        go_low <- ""
+    } else {
+        res_low <- suppressMessages(gprofiler2::gost(query = genes_low$gene,
+                                    organism = "hsapiens",
+                                    sources = "GO:BP",
+                                    correction_method = "fdr",
+                                    evcodes = TRUE))
+        if (is.null(res_low)) {
+            go_low <- ""
+        } else {
+            go_low <- paste0(dplyr::slice(dplyr::filter(res_low[[1]], intersection_size > 1), seq_len(10))$term_name, 
+                              collapse = "\n")
+        }
+    }
+    
+    col <- colnames(bias_df)[2]
+    g <- ggplot2::ggplot(bias_df,  ggplot2::aes(!!dplyr::sym(col))) + 
+        ggplot2::geom_bar() +
+        ggplot2::geom_bar(data = genes_high, color = "red", fill = "red") +
+        ggplot2::geom_bar(data = genes_low, color = "blue", fill = "blue") +
+        cowplot::theme_cowplot() + 
+        ggplot2::theme(axis.line.y = ggplot2::element_blank(),
+                       axis.title.y = ggplot2::element_blank(),
+                       axis.text.y = ggplot2::element_blank(), 
+                       axis.ticks.y = ggplot2::element_blank()) +
+        ggplot2::annotate("text", 
+                          x = max(bias_df[[2]]) * 1.1, y = nrow(bias_df)/70, 
+                          label= go_high, color = "red", size = 2,
+                          hjust = 0) +
+        ggplot2::annotate("text",
+                          x = min(bias_df[[2]]) * 1.1, y = nrow(bias_df)/70,
+                          label= go_low, color = "blue", size = 2,
+                          hjust = 1) +
+        ggplot2::coord_cartesian(clip = "off", xlim = c(-max(abs(bias_df[[2]])) * 3,
+                                                        max(abs(bias_df[[2]])) * 3),
+                                 ylim = c(0, nrow(bias_df)/50))
+}
+
 
 #' Given a reference matrix and a list of genes, take the union of
 #' all genes in vector and genes in reference matrix
@@ -2117,3 +2198,79 @@ make_comb_ref <- function(ref_mat,
     }
     new_mat
 }
+
+#' Find rank bias
+#' @param avg_mat average expression matrix
+#' @param ref_mat reference expression matrix
+#' @param query_genes original vector of genes used to clustify
+#' @param res dataframe of idents, such as output of cor_to_call
+#' @param organism for GO term analysis, organism name: human - 'hsapiens', mouse - 'mmusculus'
+#' @param plot_name name for saved pdf, if NULL then no file is written (default)
+#' @return pdf of ggplot object
+#' @examples
+#' \dontrun{
+#' avg2 <- average_clusters(
+#'     pbmc_matrix_small, 
+#'     pbmc_meta$seurat_clusters
+#' )
+#' res <- clustify(
+#'     input = pbmc_matrix_small,
+#'     metadata = pbmc_meta,
+#'     ref_mat = cbmc_ref,
+#'     query_genes = pbmc_vargenes,
+#'     cluster_col = "seurat_clusters"
+#' )
+#' call1 <- cor_to_call(
+#'     res,
+#'     metadata = pbmc_meta,
+#'     cluster_col = "seurat_clusters",
+#'     collapse_to_cluster = FALSE,
+#'     threshold = 0.8
+#' )
+#' res_rank <- assess_rank_bias(
+#'     avg2, 
+#'     cbmc_ref, 
+#'     res = call1
+#' )
+#' }
+#' @export
+assess_rank_bias <- function(
+    avg_mat,
+    ref_mat,
+    query_genes = NULL,
+    res,
+    organism,
+    plot_name = NULL) {
+    rankdiff <- find_rank_bias(
+        avg_mat,
+        ref_mat,
+        query_genes = query_genes
+    )
+    res2 <- purrr::map2(res[[1]], res[[2]], function(a, b) {
+        if (b == "unassigned") {
+            return(NULL)
+        } else {
+            qres <- query_rank_bias(
+                rankdiff,
+                a,
+                b
+            ) 
+        }
+    })
+    
+    message("Using gprofiler2 for GO analyses (internet connection required)")
+    g <- lapply(res2, function(x) {
+            if (is.null(x)) {
+                return(NULL)
+            } else {
+                plot_rank_bias(x, organism = organism)
+            }
+    })
+    g <- g[!unlist(lapply(g, function(x) is.null(x)))]
+    if (!(is.null(plot_name))) {
+        g2 <- cowplot::plot_grid(plotlist = g, ncol = 1)      
+        ggplot2::ggsave(paste0(plot_name, ".pdf"), g2, width = 6, height = 4 * length(g2))
+    }
+    g
+}
+    

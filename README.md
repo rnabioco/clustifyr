@@ -1,6 +1,3 @@
-
-
-
 # clustifyr <img src="man/figures/logo.png" align="right">
 
 <!-- badges: start -->
@@ -18,7 +15,7 @@ status](https://github.com/rnabioco/clustifyr/workflows/R-CMD-check/badge.svg)](
       - [Example usage](#example-usage)
       - [Frequently Asked Questions](#frequently-asked-questions)
       - [Code of Conduct](#code-of-conduct)
-      
+
 clustifyr classifies cells and clusters in single-cell RNA sequencing
 experiments using reference bulk RNA-seq data sets, sorted microarray
 expression data, single-cell gene signatures, or lists of marker genes.
@@ -331,7 +328,18 @@ clustify_lists(
     `get_ucsc_reference` to build reference from a
     <https://cells.ucsc.edu/> link.
 
-12. **How do I cite `clustifyr`?**
+12. **Can I pull out additional information on what gene signatures
+    don’t match the reference clusters?** Please add arguments
+    `organism = "hsapiens", plot_name = "rank_diffs"` to `clustify`.
+    This saves a “rank\_diffs.pdf”, comparing gene expression of the
+    queried clusters versus the assigned reference cell gene signature.
+    Highlighted in red are genes expressed (ranked) higher in query
+    data, and in blue gene expressed (ranked) lower than the reference.
+    Top 10 GO-BP terms are also included. See the function
+    `assess_rank_bias` for step-by-step generation of the plot outside
+    of the `clustify` wrapper.
+
+13. **How do I cite `clustifyr`?**
 
 <!-- end list -->
 
