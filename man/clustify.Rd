@@ -30,6 +30,8 @@ clustify(input, ...)
   low_threshold_cell = 0,
   exclude_genes = c(),
   if_log = TRUE,
+  organism = "hsapiens",
+  plot_name = NULL,
   ...
 )
 
@@ -52,6 +54,8 @@ clustify(input, ...)
   rename_prefix = NULL,
   exclude_genes = c(),
   metadata = NULL,
+  organism = "hsapiens",
+  plot_name = NULL,
   ...
 )
 
@@ -74,6 +78,8 @@ clustify(input, ...)
   rename_prefix = NULL,
   exclude_genes = c(),
   metadata = NULL,
+  organism = "hsapiens",
+  plot_name = NULL,
   ...
 )
 
@@ -95,6 +101,8 @@ clustify(input, ...)
   rename_prefix = NULL,
   exclude_genes = c(),
   metadata = NULL,
+  organism = "hsapiens",
+  plot_name = NULL,
   ...
 )
 }
@@ -150,6 +158,10 @@ only used when obj_out = TRUE}
 
 \item{if_log}{input data is natural log,
 averaging will be done on unlogged data}
+
+\item{organism}{for GO term analysis, organism name: human - 'hsapiens', mouse - 'mmusculus'}
+
+\item{plot_name}{name for saved pdf, if NULL then no file is written (default)}
 
 \item{use_var_genes}{if providing a seurat object, use the variable genes
 (stored in seurat_object@var.genes) as the query_genes.}

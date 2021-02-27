@@ -9,7 +9,7 @@ plot_rank_bias(bias_df, organism = "hsapiens")
 \arguments{
 \item{bias_df}{data.frame of rank diff matrix between cluster and reference cell types}
 
-\item{hsapiens}{organism name: human - 'hsapiens', mouse - 'mmusculus'}
+\item{organism}{for GO term analysis, organism name: human - 'hsapiens', mouse - 'mmusculus'}
 }
 \value{
 ggplot object of distribution and annotated GO terms
@@ -18,6 +18,7 @@ ggplot object of distribution and annotated GO terms
 Query rank bias results
 }
 \examples{
+\dontrun{
 avg <- average_clusters(
     mat = pbmc_matrix_small,
     metadata = pbmc_meta,
@@ -34,10 +35,11 @@ rankdiff <- find_rank_bias(
 qres <- query_rank_bias(
     rankdiff,
     "CD14+ Mono",
-    "B"
+    "CD14+ Mono"
 )
 
 g <- plot_rank_bias(
     qres
 )
+}
 }

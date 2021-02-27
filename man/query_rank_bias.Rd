@@ -36,6 +36,6 @@ rankdiff <- find_rank_bias(
 qres <- query_rank_bias(
     rankdiff,
     "CD14+ Mono",
-    "FCGR3A+ Mono"
+    "CD14+ Mono"
 )
 }

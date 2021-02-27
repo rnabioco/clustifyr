@@ -1215,10 +1215,37 @@ test_that("find_rank_bias and query_rank_bias run correctly", {
     qres <- query_rank_bias(
         rankdiff,
         "CD14+ Mono",
-        "FCGR3A+ Mono"
+        "CD14+ Mono"
     )
     expect_true(all(dim(qres) == c(599,2)))
 })
+
+# test_that("assess_rank_bias goes through all pairs except unassigned", {
+#     avg2 <- average_clusters(
+#         pbmc_matrix_small, 
+#         pbmc_meta$seurat_clusters
+#     )
+#     res <- clustify(
+#         input = pbmc_matrix_small,
+#         metadata = pbmc_meta,
+#         ref_mat = cbmc_ref,
+#         query_genes = pbmc_vargenes,
+#         cluster_col = "seurat_clusters"
+#     )
+#     call1 <- cor_to_call(
+#         res,
+#         metadata = pbmc_meta,
+#         cluster_col = "seurat_clusters",
+#         collapse_to_cluster = FALSE,
+#         threshold = 0.8
+#     )
+#     res_rank <- assess_rank_bias(
+#         avg2, 
+#         cbmc_ref, 
+#         res = call1
+#     )
+#     expect_true(length(res_rank) == 8)
+# })
 
 test_that("repeated insertionn of types into metdadata renames correctly", {
     res <- clustify(
