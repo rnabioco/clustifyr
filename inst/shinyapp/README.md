@@ -1,24 +1,29 @@
-# Clustifyr Web App <img src="logo.png" align="right">
-The purpose of the Clustifyr Web App is to enable quick benchmarking and clustering of cells in single-cell RNA sequencing experiments through an interactive web interface and application. Users can directly upload their matrix and metadata files generated from single-cell RNA sequencing data and produce useful clustering data tables and visualizations. Using a built in library of references compiled from reference bulk RNA-seq experiments, microarray expression data, single-cell gene signatures, and marker gene lists, users can also conduct analysis of similarities between their novel data and reference data. An additional purpose of the Clustifyr Web App is to make sure that investigators have accurate metadata as part of their NCBI Gene Expression Omnibus (GEO) records. If no metadata is present from a GEO record, the user can directly auto-email the investigator to supply the sufficient metadata.
+# Clustifyr Shiny App <img src="logo.png" align="right">
+
+The purpose of this app is to enable quick classification of single-cell RNA sequencing data through an interactive web interface. Users can directly upload their matrix and metadata files or Seurat/SCE objects generated from single-cell RNA sequencing analyses and produce useful cell identity inference and visualization,using a built-in library of references (clustifyrdatahub) compiled from reference bulk RNA-seq experiments, microarray expression data, and single-cell gene signatures. An additional purpose of the app is to enable quick browsing, preview, and reference building directly from NCBI Gene Expression Omnibus (GEO) records. Data reuse for this application and many other reanalysis/extension purposes require accurate metadata, which is frustratingly rare. We call on data repositories, journals, and investigators to work together towards ensuring proper cell-level annotation deposition. Please see [someta](https://github.com/rnabioco/someta) for further discussions.
+
+## Workflow
+
+1. Upload expression, either raw counts or normalized, matrix. Or Seurat/SCE object. You can also retrieve GEO data through accession #.
+2. Upload cell-level metadata in text formats. Or Seurat/SCE object. You can also retrieve GEO data through accession #.
+3. Choose (in dropdown menu or just click on the preview) the column in metadata that represent clustering information.
+4. Choose or upload reference dataset, a matrix containing average expression of each cell type. Mouse MCA is the default.
+5. Go to clustify step and look at results: correlation matrix, called cell-types, and heatmap. Results can be downloaded as xlsx.
 
 ## Clustifyr Background
-clustifyr classifies cells and clusters in single-cell RNA sequencing
-experiments using reference bulk RNA-seq data sets, sorted microarray
-expression data, single-cell gene signatures, or lists of marker genes.
 
 Single cell transcriptomes are difficult to annotate without knowledge
 of the underlying biology. Even with this knowledge, accurate
 identification can be challenging due to the lack of detectable
-expression of common marker genes. clustifyr solves this problem by
+expression of common marker genes. [clustifyr](https://github.com/rnabioco/clustifyr) aims to alleviate this problem by
 automatically annotating single cells or clusters of cells using
 single-cell RNA-seq, bulk RNA-seq data, microarray, or marker gene
 lists. Additional functions enable exploratory analysis of similarities
 between single cell RNA-seq datasets and reference data.
 
-## Atlas and Clustifyr Data Hub
-The reference bulk RNA-seq data sets, sorted microarray
-expression data, single-cell gene signatures, and lists of marker genes
-are located in the accompanying [Clustifyr Data Hub](https://github.com/rnabioco/clustifyrdatahub).
+## Clustifyr Data Hub
+
+Reference cell type gene signatures are located in the accompanying [Clustifyr Data Hub](https://github.com/rnabioco/clustifyrdatahub).
 Descriptions of each data set are present in the table below. 
 
 ## Available references include

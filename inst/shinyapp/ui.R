@@ -1,8 +1,16 @@
 # Define UI for data upload app ----
 ui <- dashboardPage(
+  title = "clustifyr app",
   skin = "green",
-  dashboardHeader(title = "clustifyr RShiny app"),
+  dashboardHeader(title = div(tags$a(href='https://github.com/rnabioco/clustifyr',
+                                 tags$img(src='logo.png', width="18%")),
+                                 "clustifyr Shiny app")),
   dashboardSidebar(
+    # tags$img(
+    #   src = 'logo.png',
+    #   width = "1000%",
+    #   style = 'position: fixed; bottom: 0;right: 0;'
+    # ),
     sidebarMenu(
       id = "tabs",
       menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
@@ -15,12 +23,13 @@ ui <- dashboardPage(
     )
   ),
   dashboardBody(
-    #shinyDashboardThemes(theme = "flat_red"),
+    shinyDashboardThemes(theme = "poor_mans_flatly"),
     tabItems(
       tabItem(
         tabName = "dashboard",
         # js stuff ----
         useShinyjs(),
+        use_bs_tooltip(),
         tags$head(
           tags$script(HTML(js2))
         ),
@@ -36,19 +45,19 @@ ui <- dashboardPage(
                            }")),
         tags$head(tags$style(HTML('
             .skin-green .sidebar .doneLink {
-                color: blue;
+                color: green;
             }'
         ))),
         tags$head(tags$style(HTML('
             .skin-green .sidebar .doneLink.active > a {
-                color: blue;
-                border-left-color: blue;
+                color: green;
+                border-left-color: green;
             }'
         ))),
         tags$head(tags$style(HTML('
             .skin-green .sidebar .doneLink:hover {
-                color: blue;
-                border-left-color: blue;
+                color: green;
+                border-left-color: green;
             }'
         ))),
 
@@ -57,9 +66,16 @@ ui <- dashboardPage(
 
         # load example data ----
         actionButton("example",
-                     "load example data",
+                     "Load example data",
                      icon = icon("space-shuttle")
-        ),
+        ) %>%
+          bs_embed_tooltip("Use example data from GSE113049 for walkthrough", placement = "right"),
+        
+        # Horizontal line ----
+        tags$hr(),
+        
+        # readme
+        includeMarkdown("README.md"),
         
         # Input: Checkbox if file has header ----
         checkboxInput("header", "Header", TRUE),
@@ -104,7 +120,7 @@ ui <- dashboardPage(
       ),
       tabItem(
         tabName = "matrixLoad",
-        h2("Load UMI Counts Matrix"),
+        h2("Load Counts (raw or normalized) Matrix"),
         # Input: Select a file ----
         fileInput("file1", "Choose Matrix File",
                   multiple = TRUE,
@@ -116,22 +132,27 @@ ui <- dashboardPage(
                     ".tsv",
                     ".rds",
                     ".rda",
-                    ".rdata"
+                    ".rdata",
+                    ".gz"
                   )
-        ),
+        ) %>% 
+          bs_embed_tooltip("Accepted file types: plain or gz text files, and rds/rda/rdata for Seurat/SCE",
+                           placement = "right"),
 
         # GEO id load ----
         actionButton("geo1",
-                     "from GEO id",
-                     icon = icon("search")),
+                     "or from GEO id",
+                     icon = icon("search")) %>% 
+          bs_embed_tooltip("Alternatively, load data directly from GEO with ID", placement = "right"),
 
         actionButton("matrixPopup", "Display UMI Matrix in popup"),
+        tags$hr(),
         DTOutput("contents1"), # UMI Count Matrix
         tags$hr()
       ),
       tabItem(
         tabName = "metadataLoad",
-        h2("Load Metadata table"),
+        h2("Load Metadata"),
         fileInput("file2", "Choose Metadata File",
                   multiple = FALSE,
                   accept = c(
@@ -142,21 +163,27 @@ ui <- dashboardPage(
                     ".tsv",
                     ".rds",
                     ".rda",
-                    ".rdata"
+                    ".rdata",
+                    ".gz"
                   )
-        ),
+        ) %>% 
+          bs_embed_tooltip("Accepted file types: plain or gz text files, and rds/rda/rdata for Seurat/SCE",
+                           placement = "right"),
 
         # GEO id load ----
         actionButton("geo2",
-                     "from GEO id",
-                     icon = icon("search")),
+                     "or from GEO id",
+                     icon = icon("search")) %>% 
+          bs_embed_tooltip("Alternatively, load data directly from GEO with ID", placement = "right"),
 
         actionButton("metadataPopup", "Display Metadata table in popup"),
-        h2("Choose column in metadata with cluster information"),
-        selectInput("metadataCellType", "Cell Type Metadata Column:",
+        h2("Choose column in metadata with cluster info"),
+        selectInput("metadataCellType", NULL,
                     choice = list("")
-        ),
-        fluidRow(column(12, DTOutput('contents2'))),
+        ) %>% 
+          bs_embed_tooltip("Select from dropdown, or click on preview column below", placement = "right"),
+        tags$hr(),
+        DTOutput('contents2'),
         #DT::dataTableOutput("contents2"), # Metadata table
         tags$hr(),
         uiOutput("colclicked")
@@ -171,10 +198,12 @@ ui <- dashboardPage(
                       "ref_cortex_dev", "ref_pan_indrop", "ref_pan_smartseq2",
                       "ref_mouse_atlas"
                     )
-        ),
+        ) %>% 
+          bs_embed_tooltip("Select from pre-built references in clustifyrdatahub", placement = "right"),
         actionButton("ref_linkgo",
                      label = "Go to original source",
-                     icon = icon("link")),
+                     icon = icon("link")) %>% 
+          bs_embed_tooltip("For more info on the reference datasets", placement = "right"),
         tags$hr(),
         h2("Or load reference table"),
         fileInput("file3", "Choose Reference Average Expression File",
@@ -183,14 +212,16 @@ ui <- dashboardPage(
                     "text/csv",
                     "text/comma-separated-values,text/plain",
                     ".csv",
-                    ".xlsx",
                     ".tsv",
-                    ".rds",
-                    ".rda"
+                    ".xlsx",
+                    ".gz"
                   )
-        ),
+        ) %>% 
+          bs_embed_tooltip("Alternatively, choose local file of average gene expression by cell type", placement = "right"),
+        tags$hr(),
+        uiOutput("ref_summary"),
         DTOutput("contents3", height = "300px"),
-        uiOutput("ref_summary")
+        tags$hr()
       ),
       tabItem(
         tabName = "clustifyres",
@@ -200,23 +231,31 @@ ui <- dashboardPage(
             solidHeader = TRUE,
             status = "info",
             title = "clustifyr messages",
-            htmlOutput("clustifym")),
-        downloadButton("downloadReference", "Download reference matrix"),
-        downloadButton("downloadClustify", "Download clustify matrix"),
+            htmlOutput("clustifym")) %>% 
+          bs_embed_tooltip("Console messages from run", "right"),
+        div(style="display:inline-block",
+          downloadButton("downloadReference", "Download average expression matrix") %>% 
+            bs_embed_tooltip("Note: this is the same file needed to use the current dataset as reference in the future", "bottom"),
+          downloadButton("downloadClustify", "Download clustify results matrices") %>% 
+            bs_embed_tooltip("Cell type inference as sheet1, correlation matrix as sheet2, of xlsx", "bottom")
+        ),
+        tags$hr(),
         # actionButton("uploadClustify", "Upload reference matrix"),
-        h2("average matrix"),
+        h2("Average Expression Matrix"),
         DT::dataTableOutput("reference", height = "300px"), # Reference Matrix
         tags$hr(),
-        h2("ranked correlation matrix"), 
+        h2("Ranked Correlation Matrix"), 
         DT::dataTableOutput("clustify", height = "300px"), # Clustify Matrix
         tags$hr(),
-        h2("cell type results"),
+        h2("Cell Type Inference Results"),
         DT::dataTableOutput("corToCall", height = "300px"),
         tags$hr(),
-        plotOutput("hmap", height = "900px")
+        plotOutput("hmap", height = "900px"),
+        tags$hr(),
       ),
       tabItem(
         tabName = "someta",
+        h2("GEO scRNA-seq records, hover to see truncated text, click to preview files"),
         DT::dataTableOutput("someta", height = "1000px")
       )
     )
