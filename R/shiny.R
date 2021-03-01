@@ -1,4 +1,5 @@
-#' Launch Shiny app version of clustifyr
+#' Launch Shiny app version of clustifyr, 
+#' may need to run install_clustifyr_app() at first time to install packages
 #' @return instance of shiny app
 #' @examples
 #' \dontrun{

@@ -2,7 +2,8 @@
 % Please edit documentation in R/shiny.R
 \name{run_clustifyr_app}
 \alias{run_clustifyr_app}
-\title{Launch Shiny app version of clustifyr}
+\title{Launch Shiny app version of clustifyr,
+may need to run install_clustifyr_app() at first time to install packages}
 \usage{
 run_clustifyr_app()
 }
@@ -10,7 +11,8 @@ run_clustifyr_app()
 instance of shiny app
 }
 \description{
-Launch Shiny app version of clustifyr
+Launch Shiny app version of clustifyr,
+may need to run install_clustifyr_app() at first time to install packages
 }
 \examples{
 \dontrun{
