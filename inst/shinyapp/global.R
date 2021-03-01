@@ -11,7 +11,8 @@ library(rsconnect)
 library(ExperimentHub)
 library(Seurat)
 library(shinydashboard)
-#library(dashboardthemes)
+library(bsplus)
+library(dashboardthemes)
 library(tidyverse)
 library(data.table)
 library(R.utils)
@@ -20,6 +21,7 @@ library(GEOquery)
 library(pheatmap)
 library(googlesheets4)
 library(openxlsx)
+library(httr)
 
 options(shiny.maxRequestSize = 1500 * 1024^2)
 options(repos = BiocManager::repositories())
@@ -80,7 +82,6 @@ get_tar <- function(link) {
     str_remove(link, "/GSE[0-9]+_RAW.tar"),
     "/filelist.txt"
   )
-  # str_c("https://ftp.ncbi.nlm.nih.gov/geo/series/", str_sub(id, 1, str_length(id) - 3), "nnn/", id, "/suppl/filelist.txt")
 }
 
 get_file_size <- function(url) {
