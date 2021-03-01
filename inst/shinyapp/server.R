@@ -845,7 +845,7 @@ server <- function(input, output, session) {
         links2 <- data.frame(rv$links)
       }
       
-      url <- str_c("https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=", input$geoid)
+      url <- str_c("https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=", rv$lastgeo)
       w9$hide()
       showModal(modalDialog(
         size = "l",
