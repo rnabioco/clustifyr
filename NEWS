@@ -15,7 +15,7 @@ Changes in version 0.99.0 (2019-11-06)
 + Update to tutorials
 + Refactor arguments
 + Bug fixes
-+ Cleanup for bioc
++ Cleanup for Bioconductor submission
 
 Changes in version 1.1.0 (2020-05-21)
 + Bioc release
@@ -32,7 +32,7 @@ Changes in version 1.3.1 (2020-12-26)
 + Bug fixes
 
 Changes in version 1.3.2 (2021-02-25)
-+ `build_atlas` for combining references
++ `build_atlas()` for combining references
 + More Q&A
 
 Changes in version 1.3.3 (2021-02-28)

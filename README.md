@@ -7,7 +7,7 @@ status](https://github.com/rnabioco/clustifyr/workflows/R-CMD-check/badge.svg)](
 [![codecov](https://codecov.io/gh/rnabioco/clustifyr/branch/master/graph/badge.svg)](https://codecov.io/gh/rnabioco/clustifyr)
 [![platforms](https://bioconductor.org/shields/availability/3.12/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
 [![bioc](https://bioconductor.org/shields/years-in-bioc/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
-[![\#downloads](https://img.shields.io/badge/%23%20downloads-1610-brightgreen)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
+[![\#downloads](https://img.shields.io/badge/%23%20downloads-1637-brightgreen)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
 
 <!-- badges: end -->
 
@@ -246,12 +246,20 @@ clustify_lists(
 1.  **What types of data can be used as reference?** `clustifyr` uses
     gene(row)-by-celltype(column) expression matrices. This means bulk
     RNA-seq and microarray data can be directly used. For scRNA-seq
-    data, we have `average_clusters` to convert matrix data and
+    data, we have `average_clusters()` to convert matrix data and
     metadata. For Seurat and SCE objects, we provide wrapper function
-    `object_ref`. For reference-building from external UCSC
-    cellbrowsers, see the newly provided `get_ucsc_reference`.
+    `object_ref()`.
 
-2.  **Should the input/reference data be normalized?** The default
+2.  **Can I directly make references from online scRNA-seq datasets?**
+    Yes, with the caveat that metadata containing cell type assignments
+    must be available, which is frustratingly uncommon (see our
+    quantification/monitoring of the issue
+    [here](https://github.com/rnabioco/someta). We now have a Shiny app
+    `run_clustifyr_app()` that can directly preview and use GEO files,
+    and `get_ucsc_reference()` to build reference from a
+    <https://cells.ucsc.edu/> link.
+
+3.  **Should the input/reference data be normalized?** The default
     metric for `clustifyr` is ranked correlation, so it does tolerate
     mixed raw/normalized expression fairly well. Still, we recommend
     matching the input and ref matrices to the same normalization method
@@ -261,85 +269,79 @@ clustify_lists(
     probably not ideal for `clustifyr`** - in this case we recommend
     going directly from raw counts.
 
-3.  **How should I determine parameters?** Please see our published
+4.  **How should I determine parameters?** Please see our published
     [manuscript](https://f1000research.com/articles/9-223/v2) with
     parameter and usage discussions. In general default settings are
     satisfactory in our own internal usage/testing. However, you might
     want to inspect the correlation matrix and call results, instead of
-    just the final result (use `obj_out = FALSE` in `clustify`).
+    just the final result (use `obj_out = FALSE` in `clustify()`).
 
-4.  **How many variable genes should I provide?** While this of course
+5.  **How many variable genes should I provide?** While this of course
     greatly depends on the datasets in question, we generally have good
     results with \~500-1000 variable genes. This is why we recommend
     running `M3Drop` for this step. It should be noted that Seurat V3
-    onwards automatically stores 2000 by default, which may be too many
-    (if the result correlation matrix shows high and similar values for
-    too many cell types). Currently, by default `clustify` on Seurat
-    objects will use top 1000 genes.
+    onwards automatically stores 2000 (and 3000 for Seurat V4) by
+    default, which may be too many (if the result correlation matrix
+    shows high and similar values for too many cell types). Currently,
+    by default `clustify()` on Seurat objects will use top 1000 genes.
 
-5.  **I have “CLASH” in many of my final calls, why is that?** “CLASH”
+6.  **I have “CLASH” in many of my final calls, why is that?** “CLASH”
     indicates ties in the correlation values. In practice, this should
     be very rare unless the amount of query genes is very (dangerously)
-    low (use `verbose = TRUE` in `clustify` for more information). Query
-    genes take the intersection of provided gene list (or autodetected
-    from Seurat objects) and genes in the reference.
+    low (use `verbose = TRUE` in `clustify()` for more information).
+    Query genes take the intersection of provided gene list (or
+    autodetected from Seurat objects) and genes in the reference.
 
-6.  **I need help troubleshooting unknown errors in my reference
+7.  **I need help troubleshooting unknown errors in my reference
     building/clustifying.** As we try to provide better error messaging,
     it is still important to note that, in general, the most error-prone
     step is at designating the column in the metadata that contains
     clustering information. This is generally the `cluster_col`
     argument.
 
-7.  **What if I only have marker gene lists instead of full
-    transcriptome references?** Please see `clustify_lists`, which
+8.  **What if I only have marker gene lists instead of full
+    transcriptome references?** Please see `clustify_lists()`, which
     implements several simple methods. In particular, if both positive
     and negative markers are available, set argument `metric =
     "posneg"`.
 
-8.  **Why is the default setting `per_cell = FALSE`?** While doing
+9.  **Why is the default setting `per_cell = FALSE`?** While doing
     classification on per cell level is available, it is slow and not
-    very accurate. Default settings are also not optimized for per cell
+    very accurate. Default settings are also not optimized for per-cell
     classification. `clustifyr` is mainly focused on leveraging results
     from clustering techniques. As other aspects of scRNA-seq analysis
     is often focused on clusters, we have set our focus on this
     resolution as well. This does mean that improper clustering of
     either the query or ref datasets will lead to issues, as well as
     cases of continuous cellular transitions where discrete clusters are
-    not present.
+    not present. From benchmarking, even 15 cells per cluster is still
+    performing well, and in our internal usage we would intentionally
+    overcluster the data and check if `clustify()` results are stable
+    (see also `overcluster_test()`).
 
-9.  **Can I use multiple references in the same clustify run?** Yes,
+10. **Can I use multiple references in the same clustify run?** Yes,
     simply adding columns to a reference matrix works to expand it. We
-    also provide `build_atlas`, which can be run along the lines of
+    also provide `build_atlas()`, which can be run along the lines of
     `build_atlas(matrix_objs = list(reference1, reference2, reference3,
     ...), genes_fn = clustifyr::human_genes_10x)`.
 
-10. **Does clustifyr work for spatial scRNA-seq data?** It works
+11. **Does clustifyr work for spatial scRNA-seq data?** It works
     decently on the Seurat tutorial data. See short
     [example](https://github.com/rnabioco/clustifyr/issues/370). (Note,
     as mentioned above, we recommend avoiding SCtransform data, and
     opting for using raw data directly instead. This can now be directly
     handled by Seurat wrapper, in the GitHub devel version.)
 
-11. **Can I directly make references from online scRNA-seq datasets?**
-    Yes, with the caveat that metadata containing cell type assignments
-    must be available, which is frustratingly uncommon (see our
-    quantification/monitoring of the issue
-    [here](https://github.com/rnabioco/someta). We now have a Shiny app
-    `run_clustifyr_app` that can directly preview and use GEO files, and
-    `get_ucsc_reference` to build reference from a
-    <https://cells.ucsc.edu/> link.
-
 12. **Can I pull out additional information on what gene signatures
     don’t match the reference clusters?** Please add arguments
-    `organism = "hsapiens", plot_name = "rank_diffs"` to `clustify`.
+    `organism = "hsapiens", plot_name = "rank_diffs"` to `clustify()`.
     This saves a “rank\_diffs.pdf”, comparing gene expression of the
     queried clusters versus the assigned reference cell gene signature.
     Highlighted in red are genes expressed (ranked) higher in query
     data, and in blue gene expressed (ranked) lower than the reference.
     Top 10 GO-BP terms are also included. See the function
-    `assess_rank_bias` for step-by-step generation of the plot outside
-    of the `clustify` wrapper.
+    `assess_rank_bias()` for step-by-step generation of the plot outside
+    of the `clustify()` wrapper.
 
 13. **How do I cite `clustifyr`?**
 
