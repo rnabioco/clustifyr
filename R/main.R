@@ -71,9 +71,9 @@ clustify <- function(input, ...) {
 #'
 #' # Annotate a Seurat object
 #' clustify(
-#'     s_small,
+#'     s_small3,
 #'     cbmc_ref,
-#'     cluster_col = "res.1",
+#'     cluster_col = "RNA_snn_res.1",
 #'     obj_out = TRUE,
 #'     per_cell = FALSE,
 #'     dr = "tsne"
@@ -81,9 +81,9 @@ clustify <- function(input, ...) {
 #'
 #' # Annotate (and return) a Seurat object per-cell
 #' clustify(
-#'     input = s_small,
+#'     input = s_small3,
 #'     ref_mat = cbmc_ref,
-#'     cluster_col = "res.1",
+#'     cluster_col = "RNA_snn_res.1",
 #'     obj_out = TRUE,
 #'     per_cell = TRUE,
 #'     dr = "tsne"

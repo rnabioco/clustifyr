@@ -9,6 +9,14 @@ seurat_meta(seurat_object, ...)
 
 \method{seurat_meta}{Seurat}(seurat_object, dr = "umap", ...)
 }
+\arguments{
+\item{seurat_object}{seurat_object after tsne or
+umap projections and clustering}
+
+\item{...}{additional arguments}
+
+\item{dr}{dimension reduction method}
+}
 \value{
 dataframe of metadata, including dimension reduction plotting info
 }
@@ -17,6 +25,6 @@ Function to convert labelled seurat object to fully prepared metadata
 }
 \examples{
 \dontrun{
-seurat_meta(s_small)
+seurat_meta(s_small3)
 }
 }

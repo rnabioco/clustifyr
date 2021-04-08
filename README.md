@@ -1,12 +1,14 @@
-# clustifyr <img src="man/figures/logo.png" align="right">
 
-  - [clustifyr](#clustifyr)
+  - [clustifyr
+    <img src="man/figures/logo.png" align="right">](#clustifyr)
       - [Installation](#installation)
       - [Additional info](#additional-info)
       - [Example usage](#example-usage)
       - [Frequently Asked Questions](#frequently-asked-questions)
       - [Code of Conduct](#code-of-conduct)
-      
+
+# clustifyr <img src="man/figures/logo.png" align="right">
+
 <!-- badges: start -->
 
 [![R build
@@ -147,17 +149,7 @@ clustify(
 #> altExpNames(0):
 
 library(Seurat)
-# for seurat2
-clustify(
-  input = s_small,
-  cluster_col = "res.1",
-  ref_mat = cbmc_ref,
-  seurat_out = TRUE
-)
-#> An old seurat object
-#>  230 genes across 80 samples
-
-# for Seurat3
+# for Seurat3/4
 clustify(
   input = s_small3,
   cluster_col = "RNA_snn_res.1",
@@ -184,18 +176,18 @@ sce_ref <- object_ref(
 
 # make reference from seurat objects
 s_ref <- seurat_ref(
-  seurat_object = s_small,
-  cluster_col = "res.1"
+  seurat_object = s_small3,
+  cluster_col = "RNA_snn_res.1"
 )
 
 head(s_ref)
-#>                 0        1        2        3
-#> MS4A1    4.517255 3.204766 0.000000 0.000000
-#> CD79B    4.504191 3.549095 2.580662 0.000000
-#> CD79A    4.457349 4.199849 0.000000 0.000000
-#> HLA-DRA  6.211779 6.430463 3.659590 4.169965
-#> TCL1A    4.394310 2.837922 0.000000 0.000000
-#> HLA-DQB1 4.380289 4.325293 0.000000 1.666167
+#>                 0        1        2
+#> MS4A1    0.000000 1.126047 5.151065
+#> CD79B    2.469341 2.920407 5.031316
+#> CD79A    0.000000 2.535151 5.375681
+#> HLA-DRA  3.640368 6.008446 7.055386
+#> TCL1A    0.000000 1.495867 4.963367
+#> HLA-DQB1 1.603068 3.836290 5.137422
 ```
 
 `clustify_lists()` handles identity assignment of matrix or
@@ -231,14 +223,16 @@ clustify_lists(
 #> Platelet     19.492465 59.9493793
 
 clustify_lists(
-  input = s_small,
+  input = s_small3,
   marker = pbmc_markers,
   marker_inmatrix = FALSE,
-  cluster_col = "res.1",
+  cluster_col = "RNA_snn_res.1",
   seurat_out = TRUE
 )
-#> An old seurat object
-#>  230 genes across 80 samples
+#> An object of class Seurat 
+#> 230 features across 80 samples within 1 assay 
+#> Active assay: RNA (230 features, 20 variable features)
+#>  2 dimensional reductions calculated: pca, tsne
 ```
 
 ## Frequently Asked Questions
