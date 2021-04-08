@@ -15,7 +15,6 @@ reference:
   contents:
   - starts_with("clustify")
   - average_clusters
-  - average_clusters_filter
   - matrixize_markers
   - starts_with("cor_to_call")
   - call_to_metadata
@@ -36,12 +35,18 @@ reference:
 - title: Data sets
   contents:
   - has_concept("data")
-
+  
+- title: Shiny
+  contents:
+  - install_clustifyr_app
+  - run_clustifyr_app
+  
 - title: Utilities
   contents:
   - run_gsea
   - calculate_pathway_gsea
   - starts_with("get")
+  - assess_rank_bias
   - binarize_expr
   - downsample_matrix
   - feature_select_PCA
@@ -54,9 +59,9 @@ reference:
   - parse_loc_object
   - pos_neg_marker
   - pos_neg_select
+  - query_rank_bias
   - ref_feature_select
   - ref_marker_select
-  - remove_background
   - reverse_marker_matrix
   - append_genes
   - assign_ident
