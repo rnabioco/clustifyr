@@ -7,6 +7,9 @@
     <loc>http://rnabioco.github.io/clustifyr/reference/append_genes.html</loc>
   </url>
   <url>
+    <loc>http://rnabioco.github.io/clustifyr/reference/assess_rank_bias.html</loc>
+  </url>
+  <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/assign_ident.html</loc>
   </url>
   <url>
@@ -124,6 +127,9 @@
     <loc>http://rnabioco.github.io/clustifyr/reference/insert_meta_object.html</loc>
   </url>
   <url>
+    <loc>http://rnabioco.github.io/clustifyr/reference/install_clustifyr_app.html</loc>
+  </url>
+  <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/kl_divergence.html</loc>
   </url>
   <url>
@@ -202,6 +208,9 @@
     <loc>http://rnabioco.github.io/clustifyr/reference/plot_pathway_gsea.html</loc>
   </url>
   <url>
+    <loc>http://rnabioco.github.io/clustifyr/reference/plot_rank_bias.html</loc>
+  </url>
+  <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/pos_neg_marker.html</loc>
   </url>
   <url>
@@ -217,6 +226,9 @@
     <loc>http://rnabioco.github.io/clustifyr/reference/pretty_palette_ramp_d.html</loc>
   </url>
   <url>
+    <loc>http://rnabioco.github.io/clustifyr/reference/query_rank_bias.html</loc>
+  </url>
+  <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/ref_feature_select.html</loc>
   </url>
   <url>
@@ -224,6 +236,9 @@
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/reverse_marker_matrix.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyr/reference/run_clustifyr_app.html</loc>
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/run_gsea.html</loc>

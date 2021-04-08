@@ -66,6 +66,9 @@
 
 
 
+<!-- dependencies from examples -->
+
+
   
 
   
@@ -88,7 +91,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">clustifyr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.3</span>
       </span>
     </div>
 
@@ -142,32 +145,14 @@
     <p>Find rank bias</p>
     </div>
 
-    <pre class="usage"><span class='fu'>find_rank_bias</span><span class='op'>(</span>
-  <span class='va'>mat</span>,
-  <span class='va'>metadata</span>,
-  <span class='va'>type_col</span>,
-  <span class='va'>ref_mat</span>,
-  query_genes <span class='op'>=</span> <span class='cn'>NULL</span>,
-  filter_out <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  threshold <span class='op'>=</span> <span class='fl'>0.33</span>,
-  expr_cut <span class='op'>=</span> <span class='fl'>3000</span>,
-  consensus_cut <span class='op'>=</span> <span class='fl'>1</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>find_rank_bias</span><span class='op'>(</span><span class='va'>avg_mat</span>, <span class='va'>ref_mat</span>, query_genes <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>mat</th>
-      <td><p>original query expression matrix</p></td>
-    </tr>
-    <tr>
-      <th>metadata</th>
-      <td><p>metadata after calling types</p></td>
-    </tr>
-    <tr>
-      <th>type_col</th>
-      <td><p>column name in metadata that contains ids</p></td>
+      <th>avg_mat</th>
+      <td><p>average expression matrix</p></td>
     </tr>
     <tr>
       <th>ref_mat</th>
@@ -177,56 +162,26 @@
       <th>query_genes</th>
       <td><p>original vector of genes used to clustify</p></td>
     </tr>
-    <tr>
-      <th>filter_out</th>
-      <td><p>whether to only report filtered results</p></td>
-    </tr>
-    <tr>
-      <th>threshold</th>
-      <td><p>diff threshold</p></td>
-    </tr>
-    <tr>
-      <th>expr_cut</th>
-      <td><p>consider all lower expressing genes as off</p></td>
-    </tr>
-    <tr>
-      <th>consensus_cut</th>
-      <td><p>filter out if lower
-han number of types show large diff</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>matrix of rank diff values</p>
+    <p>list of matrix of rank diff values</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span><span class='op'>(</span>
-    input <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,
-    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,
-    ref_mat <span class='op'>=</span> <span class='va'>cbmc_ref</span>,
-    query_genes <span class='op'>=</span> <span class='va'>pbmc_vargenes</span>,
-    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>
-<span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>using # of genes: 599</span></div><div class='output co'>#&gt; <span class='message'>similarity computation completed, matrix of 9 x 13, preparing output</span></div><div class='input'><span class='va'>call1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cor_to_call.html'>cor_to_call</a></span><span class='op'>(</span>
-    <span class='va'>res</span>,
+    <pre class="examples"><div class='input'><span class='va'>avg</span> <span class='op'>&lt;-</span> <span class='fu'><a href='average_clusters.html'>average_clusters</a></span><span class='op'>(</span>
+    mat <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,
     metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,
     cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,
-    collapse_to_cluster <span class='op'>=</span> <span class='cn'>FALSE</span>,
-    threshold <span class='op'>=</span> <span class='fl'>0.8</span>
+    if_log <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span>
-<span class='va'>pbmc_meta2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='call_to_metadata.html'>call_to_metadata</a></span><span class='op'>(</span>
-    <span class='va'>call1</span>,
-    <span class='va'>pbmc_meta</span>,
-    <span class='st'>"classified"</span>
-<span class='op'>)</span>
-<span class='fu'>find_rank_bias</span><span class='op'>(</span>
-    <span class='va'>pbmc_matrix_small</span>,
-    <span class='va'>pbmc_meta2</span>, <span class='st'>"type"</span>,
+
+<span class='va'>rankdiff</span> <span class='op'>&lt;-</span> <span class='fu'>find_rank_bias</span><span class='op'>(</span>
+    <span class='va'>avg</span>,
     <span class='va'>cbmc_ref</span>,
     query_genes <span class='op'>=</span> <span class='va'>pbmc_vargenes</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt;      B CD14+ Mono CD16+ Mono CD4 T DC NK</div></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -242,7 +197,7 @@ han number of types show large diff</p></td>
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p></p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>

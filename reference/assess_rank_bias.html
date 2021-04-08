@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>reference matrix from seurat citeseq CBMC tutorial — cbmc_ref • clustifyr</title>
+<title>Find rank bias — assess_rank_bias • clustifyr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="reference matrix from seurat citeseq CBMC tutorial — cbmc_ref" />
-<meta property="og:description" content="reference matrix from seurat citeseq CBMC tutorial" />
+<meta property="og:title" content="Find rank bias — assess_rank_bias" />
+<meta property="og:description" content="Find rank bias" />
 <meta property="og:image" content="http://rnabioco.github.io/clustifyr/logo.svg" />
 
 
@@ -65,6 +65,8 @@
 <![endif]-->
 
 
+
+<!-- dependencies from examples -->
 
 
   
@@ -134,41 +136,84 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>reference matrix from seurat citeseq CBMC tutorial</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rnabioco/clustifyr/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>cbmc_ref.Rd</code></div>
+    <h1>Find rank bias</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rnabioco/clustifyr/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
+    <div class="hidden name"><code>assess_rank_bias.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>reference matrix from seurat citeseq CBMC tutorial</p>
+    <p>Find rank bias</p>
     </div>
 
-    <pre class="usage"><span class='va'>cbmc_ref</span></pre>
+    <pre class="usage"><span class='fu'>assess_rank_bias</span><span class='op'>(</span>
+  <span class='va'>avg_mat</span>,
+  <span class='va'>ref_mat</span>,
+  query_genes <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>res</span>,
+  <span class='va'>organism</span>,
+  plot_name <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>avg_mat</th>
+      <td><p>average expression matrix</p></td>
+    </tr>
+    <tr>
+      <th>ref_mat</th>
+      <td><p>reference expression matrix</p></td>
+    </tr>
+    <tr>
+      <th>query_genes</th>
+      <td><p>original vector of genes used to clustify</p></td>
+    </tr>
+    <tr>
+      <th>res</th>
+      <td><p>dataframe of idents, such as output of cor_to_call</p></td>
+    </tr>
+    <tr>
+      <th>organism</th>
+      <td><p>for GO term analysis, organism name: human - 'hsapiens', mouse - 'mmusculus'</p></td>
+    </tr>
+    <tr>
+      <th>plot_name</th>
+      <td><p>name for saved pdf, if NULL then no file is written (default)</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of class <code>matrix</code> (inherits from <code>array</code>) with 2000 rows and 13 columns.</p>
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+    <p>pdf of ggplot object</p>
 
-    <p><a href='https://satijalab.org/seurat/v3.0/multimodal_vignette.html#identify-differentially-expressed-proteins-between-clusters'>https://satijalab.org/seurat/v3.0/multimodal_vignette.html#identify-differentially-expressed-proteins-between-clusters</a></p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other data: 
-<code><a href='cbmc_m.html'>cbmc_m</a></code>,
-<code><a href='downrefs.html'>downrefs</a></code>,
-<code><a href='human_genes_10x.html'>human_genes_10x</a></code>,
-<code><a href='mouse_genes_10x.html'>mouse_genes_10x</a></code>,
-<code><a href='object_loc_lookup.html'>object_loc_lookup</a></code>,
-<code><a href='pbmc_markers_M3Drop.html'>pbmc_markers_M3Drop</a></code>,
-<code><a href='pbmc_markers.html'>pbmc_markers</a></code>,
-<code><a href='pbmc_matrix_small.html'>pbmc_matrix_small</a></code>,
-<code><a href='pbmc_meta.html'>pbmc_meta</a></code>,
-<code><a href='pbmc_vargenes.html'>pbmc_vargenes</a></code>,
-<code><a href='s_small3.html'>s_small3</a></code>,
-<code><a href='s_small.html'>s_small</a></code>,
-<code><a href='sce_small.html'>sce_small</a></code></p></div>
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>avg2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='average_clusters.html'>average_clusters</a></span><span class='op'>(</span>
+    <span class='va'>pbmc_matrix_small</span>, 
+    <span class='va'>pbmc_meta</span><span class='op'>$</span><span class='va'>seurat_clusters</span>
+<span class='op'>)</span>
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span><span class='op'>(</span>
+    input <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,
+    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,
+    ref_mat <span class='op'>=</span> <span class='va'>cbmc_ref</span>,
+    query_genes <span class='op'>=</span> <span class='va'>pbmc_vargenes</span>,
+    cluster_col <span class='op'>=</span> <span class='st'>"seurat_clusters"</span>
+<span class='op'>)</span>
+<span class='va'>call1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cor_to_call.html'>cor_to_call</a></span><span class='op'>(</span>
+    <span class='va'>res</span>,
+    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,
+    cluster_col <span class='op'>=</span> <span class='st'>"seurat_clusters"</span>,
+    collapse_to_cluster <span class='op'>=</span> <span class='cn'>FALSE</span>,
+    threshold <span class='op'>=</span> <span class='fl'>0.8</span>
+<span class='op'>)</span>
+<span class='va'>res_rank</span> <span class='op'>&lt;-</span> <span class='fu'>assess_rank_bias</span><span class='op'>(</span>
+    <span class='va'>avg2</span>, 
+    <span class='va'>cbmc_ref</span>, 
+    res <span class='op'>=</span> <span class='va'>call1</span>
+<span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
