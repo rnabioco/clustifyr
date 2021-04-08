@@ -109,15 +109,7 @@ clustify(
 ) 
 
 library(Seurat)
-# for seurat2
-clustify(
-  input = s_small,
-  cluster_col = "res.1",
-  ref_mat = cbmc_ref,
-  seurat_out = TRUE
-)
-
-# for Seurat3
+# for Seurat3/4
 clustify(
   input = s_small3,
   cluster_col = "RNA_snn_res.1",
@@ -137,8 +129,8 @@ sce_ref <- object_ref(
 
 # make reference from seurat objects
 s_ref <- seurat_ref(
-  seurat_object = s_small,
-  cluster_col = "res.1"
+  seurat_object = s_small3,
+  cluster_col = "RNA_snn_res.1"
 )
 
 head(s_ref)
@@ -146,7 +138,7 @@ head(s_ref)
 
 `clustify_lists()` handles identity assignment of matrix or `SingleCellExperiment` and `seurat` objects based on marker gene lists.
  
-```{r example_seurat2, warning=F, message=F}
+```{r example_seurat3, warning=F, message=F}
 clustify_lists(
   input = pbmc_matrix_small,
   metadata = pbmc_meta,
@@ -156,10 +148,10 @@ clustify_lists(
 )
 
 clustify_lists(
-  input = s_small,
+  input = s_small3,
   marker = pbmc_markers,
   marker_inmatrix = FALSE,
-  cluster_col = "res.1",
+  cluster_col = "RNA_snn_res.1",
   seurat_out = TRUE
 )
 ```
