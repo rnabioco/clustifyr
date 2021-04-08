@@ -241,9 +241,9 @@ SingleCellExperiment::colData(res)[1:10,c("type", "r")]
 
 ``` r
 res <- clustify(
-  input = s_small,       # a Seurat object
+  input = s_small3,       # a Seurat object
   ref_mat = cbmc_ref,    # matrix of RNA-seq expression data for each cell type
-  cluster_col = "res.1", # name of column in meta.data containing cell clusters
+  cluster_col = "RNA_snn_res.1", # name of column in meta.data containing cell clusters
   obj_out = TRUE      # output Seurat object with cell type inserted as "type" column
 )
 
@@ -278,11 +278,6 @@ head(new_ref_matrix)
 new_ref_matrix_sce <- object_ref(
   input = sce_small,               # SCE object
   cluster_col = "cell_type1"       # name of column in colData containing cell identities
-)
-
-new_ref_matrix_v2 <- seurat_ref(
-  seurat_object = s_small,         # seuratv2 object
-  cluster_col = "res.1"            # name of column in meta.data containing cell identities
 )
 
 new_ref_matrix_v3 <- seurat_ref(
