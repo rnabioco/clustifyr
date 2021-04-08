@@ -2,22 +2,10 @@
 % Please edit documentation in R/seurat_wrapper.R
 \name{seurat_ref}
 \alias{seurat_ref}
-\alias{seurat_ref.seurat}
 \alias{seurat_ref.Seurat}
 \title{Function to convert labelled seurat object to avg expression matrix}
 \usage{
 seurat_ref(seurat_object, ...)
-
-\method{seurat_ref}{seurat}(
-  seurat_object,
-  cluster_col = "classified",
-  var_genes_only = FALSE,
-  assay_name = NULL,
-  method = "mean",
-  subclusterpower = 0,
-  if_log = TRUE,
-  ...
-)
 
 \method{seurat_ref}{Seurat}(
   seurat_object,
@@ -30,41 +18,10 @@ seurat_ref(seurat_object, ...)
   ...
 )
 }
-\arguments{
-\item{seurat_object}{seurat_object after tsne or umap projections
-and clustering}
-
-\item{...}{additional arguments}
-
-\item{cluster_col}{column name where classified cluster names
-are stored in  seurat meta data, cannot be "rn"}
-
-\item{var_genes_only}{whether to keep only var_genes in the final
-matrix output, could also look up genes used for PCA}
-
-\item{assay_name}{any additional assay data, such as ADT, to include.
-If more than 1, pass a vector of names}
-
-\item{method}{whether to take mean (default) or median}
-
-\item{subclusterpower}{whether to get multiple averages per
-original cluster}
-
-\item{if_log}{input data is natural log,
-averaging will be done on unlogged data}
-}
 \value{
 reference expression matrix, with genes as row names,
 and cell types as column names
 }
 \description{
 Function to convert labelled seurat object to avg expression matrix
-}
-\examples{
-ref <- seurat_ref(
-    seurat_object = s_small,
-    cluster_col = "res.1",
-    var_genes_only = TRUE
-)
-ref[1:3, 1:3]
 }

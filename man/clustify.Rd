@@ -3,7 +3,6 @@
 \name{clustify}
 \alias{clustify}
 \alias{clustify.default}
-\alias{clustify.seurat}
 \alias{clustify.Seurat}
 \alias{clustify.SingleCellExperiment}
 \title{Compare scRNA-seq data to reference data.}
@@ -30,30 +29,6 @@ clustify(input, ...)
   low_threshold_cell = 0,
   exclude_genes = c(),
   if_log = TRUE,
-  organism = "hsapiens",
-  plot_name = NULL,
-  ...
-)
-
-\method{clustify}{seurat}(
-  input,
-  ref_mat,
-  cluster_col = NULL,
-  query_genes = NULL,
-  n_genes = 1000,
-  per_cell = FALSE,
-  n_perm = 0,
-  compute_method = "spearman",
-  use_var_genes = TRUE,
-  dr = "umap",
-  seurat_out = TRUE,
-  obj_out = TRUE,
-  threshold = "auto",
-  verbose = TRUE,
-  rm0 = FALSE,
-  rename_prefix = NULL,
-  exclude_genes = c(),
-  metadata = NULL,
   organism = "hsapiens",
   plot_name = NULL,
   ...

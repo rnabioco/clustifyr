@@ -3,7 +3,6 @@
 \name{clustify_nudge}
 \alias{clustify_nudge}
 \alias{clustify_nudge.default}
-\alias{clustify_nudge.seurat}
 \alias{clustify_nudge.Seurat}
 \title{Combined function to compare scRNA-seq data to
 bulk RNA-seq data and marker list}
@@ -29,25 +28,6 @@ clustify_nudge(input, ...)
   obj_out = FALSE,
   rename_prefix = NULL,
   lookuptable = NULL,
-  ...
-)
-
-\method{clustify_nudge}{seurat}(
-  input,
-  ref_mat,
-  marker,
-  cluster_col = NULL,
-  query_genes = NULL,
-  compute_method = "spearman",
-  weight = 1,
-  seurat_out = TRUE,
-  obj_out = FALSE,
-  threshold = -Inf,
-  dr = "umap",
-  norm = "diff",
-  marker_inmatrix = TRUE,
-  mode = "rank",
-  rename_prefix = NULL,
   ...
 )
 

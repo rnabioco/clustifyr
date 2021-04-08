@@ -2,23 +2,12 @@
 % Please edit documentation in R/seurat_wrapper.R
 \name{seurat_meta}
 \alias{seurat_meta}
-\alias{seurat_meta.seurat}
 \alias{seurat_meta.Seurat}
 \title{Function to convert labelled seurat object to fully prepared metadata}
 \usage{
 seurat_meta(seurat_object, ...)
 
-\method{seurat_meta}{seurat}(seurat_object, dr = "umap", ...)
-
 \method{seurat_meta}{Seurat}(seurat_object, dr = "umap", ...)
-}
-\arguments{
-\item{seurat_object}{seurat_object after tsne or
-umap projections and clustering}
-
-\item{...}{additional arguments}
-
-\item{dr}{dimension reduction method}
 }
 \value{
 dataframe of metadata, including dimension reduction plotting info

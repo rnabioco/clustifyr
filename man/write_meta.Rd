@@ -2,14 +2,11 @@
 % Please edit documentation in R/seurat_wrapper.R
 \name{write_meta}
 \alias{write_meta}
-\alias{write_meta.seurat}
 \alias{write_meta.Seurat}
 \alias{write_meta.SingleCellExperiment}
 \title{Function to write metadata to object}
 \usage{
 write_meta(object, ...)
-
-\method{write_meta}{seurat}(object, meta, ...)
 
 \method{write_meta}{Seurat}(object, meta, ...)
 
@@ -30,10 +27,6 @@ object with newly inserted metadata columns
 Function to write metadata to object
 }
 \examples{
-obj <- write_meta(
-    object = s_small,
-    meta = seurat_meta(s_small)
-)
 obj <- write_meta(
     object = s_small3,
     meta = seurat_meta(s_small3)
