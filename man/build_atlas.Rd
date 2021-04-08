@@ -27,3 +27,13 @@ Combined matrix with all genes given
 \description{
 Function to combine records into single atlas
 }
+\examples{
+pbmc_ref_matrix <- average_clusters(
+mat = pbmc_matrix_small,
+metadata = pbmc_meta,
+cluster_col = "classified",
+if_log = TRUE # whether the expression matrix is already log transformed
+)
+references_to_combine <- list(pbmc_ref_matrix, cbmc_ref)
+atlas <- build_atlas(NULL, human_genes_10x, references_to_combine, NULL)
+}

@@ -1990,6 +1990,15 @@ check_raw_counts <- function(counts_matrix, max_log_value = 50) {
 #' @param output_fn output filename for .rds file. If NULL the matrix will be returned instead of
 #' saving
 #' @return Combined matrix with all genes given
+#' @examples
+#' pbmc_ref_matrix <- average_clusters(
+#' mat = pbmc_matrix_small,
+#' metadata = pbmc_meta,
+#' cluster_col = "classified",
+#' if_log = TRUE # whether the expression matrix is already log transformed
+#' )
+#' references_to_combine <- list(pbmc_ref_matrix, cbmc_ref)
+#' atlas <- build_atlas(NULL, human_genes_10x, references_to_combine, NULL)
 #' @export
 build_atlas <- function(matrix_fns = NULL,
     genes_fn,

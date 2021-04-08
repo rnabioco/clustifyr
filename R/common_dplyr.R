@@ -125,23 +125,21 @@ cor_to_call <- function(cor_mat,
 #' @param rename_prefix prefix to add to type and r column names
 #' @return new metadata with added columns
 #' @examples
-#' \donttest{
 #' res <- clustify(
 #'     input = pbmc_matrix_small,
 #'     metadata = pbmc_meta,
 #'     cluster_col = "classified",
 #'     ref_mat = cbmc_ref
 #' )
-#'
+#' 
 #' res2 <- cor_to_call(res, cluster_col = "classified")
-#'
+#' 
 #' call_to_metadata(
 #'     res = res2,
 #'     metadata = pbmc_meta,
 #'     cluster_col = "classified",
 #'     rename_prefix = "assigned"
 #' )
-#' }
 #' @export
 call_to_metadata <- function(res,
     metadata,

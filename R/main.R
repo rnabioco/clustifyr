@@ -514,6 +514,8 @@ clustify.SingleCellExperiment <- function(input,
 }
 
 #' Correlation functions available in clustifyr
+#' @examples
+#' clustifyr_methods
 #' @export
 clustifyr_methods <- c(
     "pearson",

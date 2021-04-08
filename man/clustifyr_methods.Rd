@@ -13,4 +13,7 @@ clustifyr_methods
 \description{
 Correlation functions available in clustifyr
 }
+\examples{
+clustifyr_methods
+}
 \keyword{datasets}

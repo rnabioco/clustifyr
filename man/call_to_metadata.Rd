@@ -30,7 +30,6 @@ new metadata with added columns
 Insert called ident results into metadata
 }
 \examples{
-\donttest{
 res <- clustify(
     input = pbmc_matrix_small,
     metadata = pbmc_meta,
@@ -46,5 +45,4 @@ call_to_metadata(
     cluster_col = "classified",
     rename_prefix = "assigned"
 )
-}
 }

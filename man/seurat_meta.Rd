@@ -24,7 +24,5 @@ dataframe of metadata, including dimension reduction plotting info
 Function to convert labelled seurat object to fully prepared metadata
 }
 \examples{
-\dontrun{
-seurat_meta(s_small3)
-}
+m <- seurat_meta(s_small3)
 }

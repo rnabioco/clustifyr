@@ -48,3 +48,6 @@ and cell types as column names
 \description{
 Function to convert labelled seurat object to avg expression matrix
 }
+\examples{
+ref <- seurat_ref(s_small3, cluster_col = "RNA_snn_res.1")
+}

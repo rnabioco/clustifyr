@@ -132,6 +132,8 @@ write_meta.SingleCellExperiment <- function(object,
 #' Function to convert labelled seurat object to avg expression matrix
 #' @return reference expression matrix, with genes as row names,
 #' and cell types as column names
+#' @examples 
+#' ref <- seurat_ref(s_small3, cluster_col = "RNA_snn_res.1")
 #' @export
 seurat_ref <- function(seurat_object, ...) {
     UseMethod("seurat_ref", seurat_object)
@@ -197,9 +199,7 @@ seurat_ref.Seurat <- function(seurat_object,
 #' Function to convert labelled seurat object to fully prepared metadata
 #' @return dataframe of metadata, including dimension reduction plotting info
 #' @examples
-#' \dontrun{
-#' seurat_meta(s_small3)
-#' }
+#' m <- seurat_meta(s_small3)
 #' @export
 seurat_meta <- function(seurat_object, ...) {
     UseMethod("seurat_meta", seurat_object)
