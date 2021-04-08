@@ -115,60 +115,60 @@ test_that("test permutation", {
     expect_true(all(res_full$p_val >= 0 | res_full$p_val <= 0))
 })
 
-test_that("seurat object clustifying", {
-    res <- clustify(s_small,
-        cbmc_ref,
-        cluster_col = "res.1",
-        dr = "tsne"
-    )
+# test_that("seurat object clustifying", {
+#     res <- clustify(s_small,
+#         cbmc_ref,
+#         cluster_col = "res.1",
+#         dr = "tsne"
+#     )
+# 
+#     res <- clustify(s_small,
+#         cbmc_ref,
+#         cluster_col = "res.1",
+#         seurat_out = FALSE,
+#         per_cell = TRUE,
+#         dr = "tsne"
+#     )
+# 
+#     res <- clustify(s_small,
+#         cbmc_ref,
+#         cluster_col = "res.1",
+#         seurat_out = FALSE,
+#         dr = "tsne"
+#     )
+#     g <- plot_best_call(
+#         res,
+#         seurat_meta(s_small,
+#             dr = "tsne"
+#         ),
+#         cluster_col = "res.1",
+#         plot_r = TRUE,
+#         x = "tSNE_1",
+#         y = "tSNE_2"
+#     )
+#     expect_true(ggplot2::is.ggplot(g[[1]]))
+# })
 
-    res <- clustify(s_small,
-        cbmc_ref,
-        cluster_col = "res.1",
-        seurat_out = FALSE,
-        per_cell = TRUE,
-        dr = "tsne"
-    )
-
-    res <- clustify(s_small,
-        cbmc_ref,
-        cluster_col = "res.1",
-        seurat_out = FALSE,
-        dr = "tsne"
-    )
-    g <- plot_best_call(
-        res,
-        seurat_meta(s_small,
-            dr = "tsne"
-        ),
-        cluster_col = "res.1",
-        plot_r = TRUE,
-        x = "tSNE_1",
-        y = "tSNE_2"
-    )
-    expect_true(ggplot2::is.ggplot(g[[1]]))
-})
-
-test_that("clustify reinserts seurat metadata correctly", {
-    res <- clustify(s_small,
-        cbmc_ref,
-        cluster_col = "res.1",
-        seurat_out = TRUE,
-        per_cell = TRUE,
-        dr = "tsne"
-    )
-    res2 <- clustify(s_small,
-        cbmc_ref,
-        cluster_col = "res.1",
-        seurat_out = TRUE,
-        dr = "tsne"
-    )
-    if ("Seurat" %in% loadedNamespaces()) {
-        expect_true(class(res) %in% c("seurat"))
-    } else {
-        expect_true(is.matrix(res))
-    }
-})
+# test_that("clustify reinserts seurat metadata correctly", {
+#     res <- clustify(s_small,
+#         cbmc_ref,
+#         cluster_col = "res.1",
+#         seurat_out = TRUE,
+#         per_cell = TRUE,
+#         dr = "tsne"
+#     )
+#     res2 <- clustify(s_small,
+#         cbmc_ref,
+#         cluster_col = "res.1",
+#         seurat_out = TRUE,
+#         dr = "tsne"
+#     )
+#     if ("Seurat" %in% loadedNamespaces()) {
+#         expect_true(class(res) %in% c("seurat"))
+#     } else {
+#         expect_true(is.matrix(res))
+#     }
+# })
 
 test_that("seurat3 object clustifying", {
     res <- clustify(s_small3,
@@ -213,19 +213,19 @@ test_that("object with passing vector as metadata", {
         metric = "posneg",
         seurat_out = FALSE
     )
-    res <- clustify(s_small,
-                    cbmc_ref,
-                    metadata = s_small@meta.data$res.1,
-                    dr = "tsne"
-    )
-    res <- clustify_lists(
-        s_small,
-        marker = cbmc_m,
-        metadata = s_small@meta.data$res.1,
-        dr = "tsne",
-        metric = "posneg",
-        seurat_out = FALSE
-    )
+    # res <- clustify(s_small,
+    #                 cbmc_ref,
+    #                 metadata = s_small@meta.data$res.1,
+    #                 dr = "tsne"
+    # )
+    # res <- clustify_lists(
+    #     s_small,
+    #     marker = cbmc_m,
+    #     metadata = s_small@meta.data$res.1,
+    #     dr = "tsne",
+    #     metric = "posneg",
+    #     seurat_out = FALSE
+    # )
     expect_true(is.matrix(res))
 })
 

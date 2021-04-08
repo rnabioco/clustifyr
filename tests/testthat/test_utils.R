@@ -331,31 +331,31 @@ test_that("gene_pct_markerm norm options work", {
     expect_true(nrow(res2) == 9)
 })
 
-test_that("clustify_nudge works with options and seruat2", {
-    res <- clustify_nudge(
-        input = s_small,
-        ref_mat = cbmc_ref,
-        marker = cbmc_m,
-        cluster_col = "res.1",
-        threshold = 0.8,
-        seurat_out = FALSE,
-        mode = "pct",
-        dr = "tsne"
-    )
-    expect_true(nrow(res) == 4)
-})
+# test_that("clustify_nudge works with options and seruat2", {
+#     res <- clustify_nudge(
+#         input = s_small,
+#         ref_mat = cbmc_ref,
+#         marker = cbmc_m,
+#         cluster_col = "res.1",
+#         threshold = 0.8,
+#         seurat_out = FALSE,
+#         mode = "pct",
+#         dr = "tsne"
+#     )
+#     expect_true(nrow(res) == 4)
+# })
 
 test_that("clustify_nudge works with seurat_out", {
-    res <- clustify_nudge(
-        input = s_small,
-        ref_mat = cbmc_ref,
-        marker = cbmc_m,
-        cluster_col = "res.1",
-        threshold = 0.8,
-        seurat_out = TRUE,
-        mode = "pct",
-        dr = "tsne"
-    )
+    # res <- clustify_nudge(
+    #     input = s_small,
+    #     ref_mat = cbmc_ref,
+    #     marker = cbmc_m,
+    #     cluster_col = "res.1",
+    #     threshold = 0.8,
+    #     seurat_out = TRUE,
+    #     mode = "pct",
+    #     dr = "tsne"
+    # )
 
     res <- clustify_nudge(
         input = s_small3,
@@ -370,19 +370,19 @@ test_that("clustify_nudge works with seurat_out", {
     expect_true(3 == 3)
 })
 
-test_that("clustify_nudge works with rank/posneg option", {
-    res <- clustify_nudge(
-        input = s_small,
-        ref_mat = cbmc_ref,
-        marker = cbmc_m,
-        cluster_col = "res.1",
-        threshold = 0.8,
-        seurat_out = FALSE,
-        mode = "rank",
-        dr = "tsne"
-    )
-    expect_true(nrow(res) == 4)
-})
+# test_that("clustify_nudge works with rank/posneg option", {
+#     res <- clustify_nudge(
+#         input = s_small,
+#         ref_mat = cbmc_ref,
+#         marker = cbmc_m,
+#         cluster_col = "res.1",
+#         threshold = 0.8,
+#         seurat_out = FALSE,
+#         mode = "rank",
+#         dr = "tsne"
+#     )
+#     expect_true(nrow(res) == 4)
+# })
 
 test_that("clustify_nudge works with options and seruat3", {
     res <- clustify_nudge(
@@ -398,20 +398,20 @@ test_that("clustify_nudge works with options and seruat3", {
     expect_true(nrow(res) == 3)
 })
 
-test_that("clustify_nudge works with seurat_out option", {
-    res <- clustify_nudge(
-        input = s_small,
-        ref_mat = cbmc_ref,
-        marker = cbmc_m,
-        cluster_col = "res.1",
-        threshold = 0.8,
-        seurat_out = FALSE,
-        marker_inmatrix = FALSE,
-        mode = "pct",
-        dr = "tsne"
-    )
-    expect_true(nrow(res) == 4)
-})
+# test_that("clustify_nudge works with seurat_out option", {
+#     res <- clustify_nudge(
+#         input = s_small,
+#         ref_mat = cbmc_ref,
+#         marker = cbmc_m,
+#         cluster_col = "res.1",
+#         threshold = 0.8,
+#         seurat_out = FALSE,
+#         marker_inmatrix = FALSE,
+#         mode = "pct",
+#         dr = "tsne"
+#     )
+#     expect_true(nrow(res) == 4)
+# })
 
 test_that("clustify_nudge.Seurat works with seurat_out option", {
     res <- clustify_nudge(
@@ -623,22 +623,22 @@ test_that("get_best_str finds correct values", {
     expect_equal(stringr::str_sub(a, 1, 2), stringr::str_sub(a2, 1, 2))
 })
 
-test_that("seurat_ref gets correct averages", {
-    avg <- seurat_ref(s_small,
-        cluster_col = "res.1",
-        var_genes_only = TRUE
-    )
-    avg3 <- seurat_ref(s_small,
-        cluster_col = "res.1",
-        var_genes_only = TRUE,
-        if_log = FALSE
-    )
-    avg2 <- seurat_ref(s_small,
-        cluster_col = "res.1",
-        var_genes_only = "PCA"
-    )
-    expect_true(ncol(avg) == 4)
-})
+# test_that("seurat_ref gets correct averages", {
+#     avg <- seurat_ref(s_small,
+#         cluster_col = "res.1",
+#         var_genes_only = TRUE
+#     )
+#     avg3 <- seurat_ref(s_small,
+#         cluster_col = "res.1",
+#         var_genes_only = TRUE,
+#         if_log = FALSE
+#     )
+#     avg2 <- seurat_ref(s_small,
+#         cluster_col = "res.1",
+#         var_genes_only = "PCA"
+#     )
+#     expect_true(ncol(avg) == 4)
+# })
 
 test_that("object_ref with seurat3", {
     s3 <- s_small3
@@ -677,21 +677,21 @@ test_that("object_ref gets correct averages", {
     expect_true(ncol(avg) == 3)
 })
 
-test_that("seurat_ref gets other assay slots", {
-    avg <- seurat_ref(
-        s_small,
-        cluster_col = "res.1",
-        assay_name = "ADT",
-        var_genes_only = TRUE
-    )
-    avg2 <- seurat_ref(
-        s_small,
-        cluster_col = "res.1",
-        assay_name = c("ADT", "ADT2"),
-        var_genes_only = TRUE
-    )
-    expect_true(nrow(avg2) - nrow(avg) == 2)
-})
+# test_that("seurat_ref gets other assay slots", {
+#     avg <- seurat_ref(
+#         s_small,
+#         cluster_col = "res.1",
+#         assay_name = "ADT",
+#         var_genes_only = TRUE
+#     )
+#     avg2 <- seurat_ref(
+#         s_small,
+#         cluster_col = "res.1",
+#         assay_name = c("ADT", "ADT2"),
+#         var_genes_only = TRUE
+#     )
+#     expect_true(nrow(avg2) - nrow(avg) == 2)
+# })
 
 test_that("seurat_ref gets correct averages with seurat3 object", {
     avg <- seurat_ref(
@@ -825,13 +825,13 @@ test_that("cor_to_call renaming with suffix input works as intended, per_cell or
 })
 
 test_that("renaming with suffix input works as intended with clusify wrapper", {
-    res <- clustify(
-        input = s_small,
-        ref_mat = cbmc_ref,
-        cluster_col = "res.1",
-        rename_suff = "a",
-        dr = "tsne"
-    )
+    # res <- clustify(
+    #     input = s_small,
+    #     ref_mat = cbmc_ref,
+    #     cluster_col = "res.1",
+    #     rename_suff = "a",
+    #     dr = "tsne"
+    # )
     res2 <- clustify(
         input = s_small3,
         ref_mat = cbmc_ref,
@@ -839,7 +839,7 @@ test_that("renaming with suffix input works as intended with clusify wrapper", {
         rename_suff = "a",
         dr = "tsne"
     )
-    expect_true(!is.null(res))
+    expect_true(!is.null(res2))
 })
 
 test_that("ref_marker_select works with cutoffs", {
@@ -998,23 +998,23 @@ test_that("paring gmt files works on included example", {
     expect_true(is.list(gmt_list))
 })
 
-test_that("clustify_nudge works with pos_neg_select and seurat2 object", {
-    pn_ref2 <- data.frame(
-        "CD8 T" = c(0, 0, 1),
-        row.names = c("CD4", "clustifyr0", "CD8B"),
-        check.names = FALSE
-    )
-    res <- clustify_nudge(
-        s_small,
-        cbmc_ref,
-        pn_ref2,
-        cluster_col = "res.1",
-        norm = 0.5,
-        dr = "tsne",
-        seurat_out = FALSE
-    )
-    expect_true(nrow(res) == 4)
-})
+# test_that("clustify_nudge works with pos_neg_select and seurat2 object", {
+#     pn_ref2 <- data.frame(
+#         "CD8 T" = c(0, 0, 1),
+#         row.names = c("CD4", "clustifyr0", "CD8B"),
+#         check.names = FALSE
+#     )
+#     res <- clustify_nudge(
+#         s_small,
+#         cbmc_ref,
+#         pn_ref2,
+#         cluster_col = "res.1",
+#         norm = 0.5,
+#         dr = "tsne",
+#         seurat_out = FALSE
+#     )
+#     expect_true(nrow(res) == 4)
+# })
 
 test_that("clustify_nudge works with pos_neg_select and Seurat3 object", {
     pn_ref2 <- data.frame(
@@ -1174,31 +1174,31 @@ test_that("cor_to_call can collapse_to_cluster", {
     expect_true(ncol(call1) == 4)
 })
 
-test_that("cor_to_call and collapse_to_cluster work on objects", {
-    res <- clustify(
-        input = s_small,
-        ref_mat = cbmc_ref,
-        query_genes = pbmc_vargenes,
-        cluster_col = "res.1",
-        dr = "tsne",
-        per_cell = TRUE,
-        collapse_to_cluster = TRUE
-    )
-    expect_true(is.matrix(res) | is(res, "seurat"))
-})
+# test_that("cor_to_call and collapse_to_cluster work on objects", {
+#     res <- clustify(
+#         input = s_small,
+#         ref_mat = cbmc_ref,
+#         query_genes = pbmc_vargenes,
+#         cluster_col = "res.1",
+#         dr = "tsne",
+#         per_cell = TRUE,
+#         collapse_to_cluster = TRUE
+#     )
+#     expect_true(is.matrix(res) | is(res, "seurat"))
+# })
 
-test_that("seurat_meta warns about not finding dr", {
-    m <- seurat_meta(s_small,
-        dr = "tsne"
-    )
-    m2 <- seurat_meta(s_small,
-        dr = "s"
-    )
-    m3 <- seurat_meta(s_small3,
-        dr = "s"
-    )
-    expect_true(all(rownames(m) == rownames(m2)))
-})
+# test_that("seurat_meta warns about not finding dr", {
+#     m <- seurat_meta(s_small,
+#         dr = "tsne"
+#     )
+#     m2 <- seurat_meta(s_small,
+#         dr = "s"
+#     )
+#     m3 <- seurat_meta(s_small3,
+#         dr = "s"
+#     )
+#     expect_true(all(rownames(m) == rownames(m2)))
+# })
 
 test_that("find_rank_bias and query_rank_bias run correctly", {
     avg <- average_clusters(
@@ -1298,13 +1298,13 @@ test_that("object_data works with sce", {
     expect_true(ncol(mat) == 200)
 })
 
-test_that("object_data works with seuratv2", {
-    mat <- object_data(
-        object = s_small,
-        slot = "data"
-    )
-    expect_true(ncol(mat) == 80)
-})
+# test_that("object_data works with seuratv2", {
+#     mat <- object_data(
+#         object = s_small,
+#         slot = "data"
+#     )
+#     expect_true(ncol(mat) == 80)
+# })
 
 test_that("object_data works with Seuratv3", {
     mat <- object_data(
