@@ -97,12 +97,12 @@
     
 <div id="code-and-full-report" class="section level2">
 <h2 class="hasAnchor">
-<a href="#code-and-full-report" class="anchor"></a>Code and full report</h2>
+<a href="#code-and-full-report" class="anchor" aria-hidden="true"></a>Code and full report</h2>
 <p><a href="https://github.com/rnabioco/someta" class="external-link uri">https://github.com/rnabioco/someta</a></p>
 </div>
 <div id="the-problem" class="section level2">
 <h2 class="hasAnchor">
-<a href="#the-problem" class="anchor"></a>The problem</h2>
+<a href="#the-problem" class="anchor" aria-hidden="true"></a>The problem</h2>
 <p>To improve reproducibility and usability, we suggest the Gene Expression Omnibus (GEO) improve its submission guidelines for processed data stemming from single-cell RNA sequencing.</p>
 <p>Current GEO guidelines require that a count matrix is included with a <a href="https://www.ncbi.nlm.nih.gov/geo/info/seq.html" class="external-link">submission</a>. But because the current GEO requirements surrounding supplemental files are vague, many studies do not include downstream analysis results (e.g., cluster assignments, UMAP/t-SNE projection coordinates, and cell type classification metadata), which vary due to algorithm parameter settings and non-deterministic steps in the processing pipeline.</p>
 <p>For single-cell RNA-seq, cell type assignments are not labeled by sample names, as would be the case in bulk RNA-seq data. Hence, a count matrix is simply an intermediate file format, similar to other intermediate formats for bulk RNA-seq experiments (BAM/SAM/BED), which also do not enable reproduction of conclusions. This is counter to GEO’s own stance on processed data, “defined as the data on which the conclusions in the related manuscript are based”. The lack of a clear GEO guideline leads to reproducibility issues, as studies that only provide count matrices require significant domain-specific expertise to associate per-cell mRNA counts with a cell type or phenotype.</p>
@@ -113,7 +113,7 @@
 </div>
 <div id="our-proposal" class="section level2">
 <h2 class="hasAnchor">
-<a href="#our-proposal" class="anchor"></a>Our proposal</h2>
+<a href="#our-proposal" class="anchor" aria-hidden="true"></a>Our proposal</h2>
 <p>Moving forward, we suggest two remedies to this issue:</p>
 <ol style="list-style-type: decimal">
 <li><p>Updating the GEO submission guidelines to require metadata file submissions. This would be done on <a href="https://www.ncbi.nlm.nih.gov/geo/info/seq.html" class="external-link uri">https://www.ncbi.nlm.nih.gov/geo/info/seq.html</a> by updating the “Processed data files” with a section specifically outlining required data types for single-cell mRNA-seq submissions.</p></li>
