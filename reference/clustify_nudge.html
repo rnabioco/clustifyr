@@ -69,8 +69,6 @@ bulk RNA-seq data and marker list" />
 
 
 
-<!-- dependencies from examples -->
-
 
   
 
@@ -94,7 +92,7 @@ bulk RNA-seq data and marker list" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">clustifyr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -150,7 +148,7 @@ bulk RNA-seq data and marker list</h1>
 bulk RNA-seq data and marker list</p>
     </div>
 
-    <pre class="usage"><span class='fu'>clustify_nudge</span><span class='op'>(</span><span class='va'>input</span>, <span class='va'>...</span><span class='op'>)</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>clustify_nudge</span><span class='op'>(</span><span class='va'>input</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>clustify_nudge</span><span class='op'>(</span>
@@ -193,7 +191,7 @@ bulk RNA-seq data and marker list</p>
   mode <span class='op'>=</span> <span class='st'>"rank"</span>,
   rename_prefix <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>...</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -293,69 +291,76 @@ table for object parsing</p></td>
 clusters from input as row names, cell types from ref_mat as column names</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'># Seurat3</span>
-<span class='fu'>clustify_nudge</span><span class='op'>(</span>
-    input <span class='op'>=</span> <span class='va'>s_small3</span>,
-    ref_mat <span class='op'>=</span> <span class='va'>cbmc_ref</span>,
-    marker <span class='op'>=</span> <span class='va'>cbmc_m</span>,
-    cluster_col <span class='op'>=</span> <span class='st'>"RNA_snn_res.1"</span>,
-    threshold <span class='op'>=</span> <span class='fl'>0.8</span>,
-    seurat_out <span class='op'>=</span> <span class='cn'>FALSE</span>,
-    mode <span class='op'>=</span> <span class='st'>"pct"</span>,
-    dr <span class='op'>=</span> <span class='st'>"tsne"</span>
-<span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>object data retrieval complete, moving to similarity computation</span></div><div class='output co'>#&gt; <span class='message'>using # of genes: 19</span></div><div class='output co'>#&gt; <span class='message'>similarity computation completed, matrix of 3 x 13, preparing output</span></div><div class='output co'>#&gt;             B CD14+ Mono CD16+ Mono      CD34+     CD4 T      CD8 T         DC
-#&gt; 0 -0.94493203 -0.9156671 -0.2220272 -0.2825193 0.2887232 0.37971905 -0.3168822
-#&gt; 1  0.04838758  0.7219124  0.7316084  0.3238704 0.3472936 0.19775419  0.5865428
-#&gt; 2  0.62480323 -0.2550175  0.4973646  0.3895667 0.1769981 0.01448416  0.5146717
-#&gt;        Eryth Memory CD4 T         Mk Naive CD4 T         NK      pDCs
-#&gt; 0  0.4203598    0.1987308  0.6204476 -0.08992247 0.08688022 0.1134067
-#&gt; 1  0.1736468    0.5311026 -0.2163932  0.51050337 0.25334722 0.4370882
-#&gt; 2 -0.1716881    0.1094072 -0.6697973  0.23853307 0.14695522 0.3758960</div><div class='input'>
-<span class='co'># Matrix</span>
-<span class='fu'>clustify_nudge</span><span class='op'>(</span>
-    input <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,
-    ref_mat <span class='op'>=</span> <span class='va'>cbmc_ref</span>,
-    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,
-    marker <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>cbmc_m</span><span class='op'>)</span>,
-    query_genes <span class='op'>=</span> <span class='va'>pbmc_vargenes</span>,
-    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,
-    threshold <span class='op'>=</span> <span class='fl'>0.8</span>,
-    call <span class='op'>=</span> <span class='cn'>FALSE</span>,
-    marker_inmatrix <span class='op'>=</span> <span class='cn'>FALSE</span>,
-    mode <span class='op'>=</span> <span class='st'>"pct"</span>
-<span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>using # of genes: 599</span></div><div class='output co'>#&gt; <span class='message'>similarity computation completed, matrix of 9 x 13, preparing output</span></div><div class='output co'>#&gt;                       B CD14+ Mono  CD16+ Mono     CD34+       CD4 T
-#&gt; B             0.9093577 -0.2452939  0.22341215 0.6248639  0.39898892
-#&gt; CD14+ Mono   -0.3184633  0.9145428  0.52579175 0.5103056  0.20913853
-#&gt; CD8 T        -0.2866333 -0.2920874  0.17944732 0.5663773  0.64950686
-#&gt; DC           -0.1927865  0.3971091  0.41292804 0.5694074  0.31768980
-#&gt; FCGR3A+ Mono -0.2924419  0.6387074  0.92949138 0.5331927  0.22686950
-#&gt; Memory CD4 T -0.2094668 -0.1734003  0.22245854 0.6265186  0.86108263
-#&gt; Naive CD4 T  -0.2115884 -0.2355533  0.19645924 0.6480900  0.80013677
-#&gt; NK           -0.3523479 -0.3353237  0.15173936 0.5350808  0.47524944
-#&gt; Platelet     -0.6782452 -0.3759687 -0.08362827 0.2455947 -0.05758481
-#&gt;                    CD8 T          DC     Eryth Memory CD4 T         Mk
-#&gt; B             0.43921857  0.35367232 0.4817829    0.4803367 -0.6748463
-#&gt; CD14+ Mono    0.25084659  0.51955311 0.4559350    0.4553454 -0.4660850
-#&gt; CD8 T         0.59418188  0.26878200 0.5007841    0.6323214 -0.5987391
-#&gt; DC            0.28543102  0.84933995 0.4470039    0.4764929 -0.5578229
-#&gt; FCGR3A+ Mono  0.35105547  0.48594006 0.4604308    0.4614474 -0.4760099
-#&gt; Memory CD4 T  0.65776299  0.30625770 0.5395170    0.7128879 -0.6336165
-#&gt; Naive CD4 T   0.72313292  0.29335212 0.5528441    0.7277404 -0.6269043
-#&gt; NK            0.69267415  0.23172856 0.4578726    0.5665250 -0.6199834
-#&gt; Platelet     -0.07272109 -0.06019224 0.3068445    0.1457308  0.7319575
-#&gt;              Naive CD4 T         NK      pDCs
-#&gt; B              0.5407149 -0.3536418 0.4801131
-#&gt; CD14+ Mono     0.4564707 -0.2621333 0.3710598
-#&gt; CD8 T          0.6036230  0.5582283 0.3519523
-#&gt; DC             0.4475783 -0.1659100 0.6825388
-#&gt; FCGR3A+ Mono   0.4574654 -0.1921798 0.3755701
-#&gt; Memory CD4 T   0.6871755 -0.1208282 0.3668161
-#&gt; Naive CD4 T    0.6967073 -0.1890644 0.3594580
-#&gt; NK             0.5505877  0.8940904 0.3186506
-#&gt; Platelet       0.1609963 -0.7349565 0.1110947</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'></span>
+<span class='r-in'><span class='co'># Seurat3</span></span>
+<span class='r-in'><span class='fu'>clustify_nudge</span><span class='op'>(</span></span>
+<span class='r-in'>    input <span class='op'>=</span> <span class='va'>s_small3</span>,</span>
+<span class='r-in'>    ref_mat <span class='op'>=</span> <span class='va'>cbmc_ref</span>,</span>
+<span class='r-in'>    marker <span class='op'>=</span> <span class='va'>cbmc_m</span>,</span>
+<span class='r-in'>    cluster_col <span class='op'>=</span> <span class='st'>"RNA_snn_res.1"</span>,</span>
+<span class='r-in'>    threshold <span class='op'>=</span> <span class='fl'>0.8</span>,</span>
+<span class='r-in'>    seurat_out <span class='op'>=</span> <span class='cn'>FALSE</span>,</span>
+<span class='r-in'>    mode <span class='op'>=</span> <span class='st'>"pct"</span>,</span>
+<span class='r-in'>    dr <span class='op'>=</span> <span class='st'>"tsne"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> object data retrieval complete, moving to similarity computation</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> using # of genes: 19</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> similarity computation completed, matrix of 3 x 13, preparing output</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>             B CD14+ Mono CD16+ Mono      CD34+     CD4 T      CD8 T         DC</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 0 -0.94493203 -0.9156671 -0.2220272 -0.2825193 0.2887232 0.37971905 -0.3168822</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  0.04838758  0.7219124  0.7316084  0.3238704 0.3472936 0.19775419  0.5865428</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  0.62480323 -0.2550175  0.4973646  0.3895667 0.1769981 0.01448416  0.5146717</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        Eryth Memory CD4 T         Mk Naive CD4 T         NK      pDCs</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 0  0.4203598    0.1987308  0.6204476 -0.08992247 0.08688022 0.1134067</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  0.1736468    0.5311026 -0.2163932  0.51050337 0.25334722 0.4370882</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 -0.1716881    0.1094072 -0.6697973  0.23853307 0.14695522 0.3758960</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Matrix</span></span>
+<span class='r-in'><span class='fu'>clustify_nudge</span><span class='op'>(</span></span>
+<span class='r-in'>    input <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,</span>
+<span class='r-in'>    ref_mat <span class='op'>=</span> <span class='va'>cbmc_ref</span>,</span>
+<span class='r-in'>    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,</span>
+<span class='r-in'>    marker <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>cbmc_m</span><span class='op'>)</span>,</span>
+<span class='r-in'>    query_genes <span class='op'>=</span> <span class='va'>pbmc_vargenes</span>,</span>
+<span class='r-in'>    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,</span>
+<span class='r-in'>    threshold <span class='op'>=</span> <span class='fl'>0.8</span>,</span>
+<span class='r-in'>    call <span class='op'>=</span> <span class='cn'>FALSE</span>,</span>
+<span class='r-in'>    marker_inmatrix <span class='op'>=</span> <span class='cn'>FALSE</span>,</span>
+<span class='r-in'>    mode <span class='op'>=</span> <span class='st'>"pct"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> using # of genes: 599</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> similarity computation completed, matrix of 9 x 13, preparing output</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                       B CD14+ Mono  CD16+ Mono     CD34+       CD4 T</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B             0.9093577 -0.2452939  0.22341215 0.6248639  0.39898892</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD14+ Mono   -0.3184633  0.9145428  0.52579175 0.5103056  0.20913853</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD8 T        -0.2866333 -0.2920874  0.17944732 0.5663773  0.64950686</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> DC           -0.1927865  0.3971091  0.41292804 0.5694074  0.31768980</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> FCGR3A+ Mono -0.2924419  0.6387074  0.92949138 0.5331927  0.22686950</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Memory CD4 T -0.2094668 -0.1734003  0.22245854 0.6265186  0.86108263</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Naive CD4 T  -0.2115884 -0.2355533  0.19645924 0.6480900  0.80013677</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NK           -0.3523479 -0.3353237  0.15173936 0.5350808  0.47524944</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Platelet     -0.6782452 -0.3759687 -0.08362827 0.2455947 -0.05758481</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                    CD8 T          DC     Eryth Memory CD4 T         Mk</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B             0.43921857  0.35367232 0.4817829    0.4803367 -0.6748463</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD14+ Mono    0.25084659  0.51955311 0.4559350    0.4553454 -0.4660850</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD8 T         0.59418188  0.26878200 0.5007841    0.6323214 -0.5987391</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> DC            0.28543102  0.84933995 0.4470039    0.4764929 -0.5578229</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> FCGR3A+ Mono  0.35105547  0.48594006 0.4604308    0.4614474 -0.4760099</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Memory CD4 T  0.65776299  0.30625770 0.5395170    0.7128879 -0.6336165</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Naive CD4 T   0.72313292  0.29335212 0.5528441    0.7277404 -0.6269043</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NK            0.69267415  0.23172856 0.4578726    0.5665250 -0.6199834</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Platelet     -0.07272109 -0.06019224 0.3068445    0.1457308  0.7319575</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>              Naive CD4 T         NK      pDCs</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B              0.5407149 -0.3536418 0.4801131</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD14+ Mono     0.4564707 -0.2621333 0.3710598</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD8 T          0.6036230  0.5582283 0.3519523</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> DC             0.4475783 -0.1659100 0.6825388</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> FCGR3A+ Mono   0.4574654 -0.1921798 0.3755701</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Memory CD4 T   0.6871755 -0.1208282 0.3668161</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Naive CD4 T    0.6967073 -0.1890644 0.3594580</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NK             0.5505877  0.8940904 0.3186506</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Platelet       0.1609963 -0.7349565 0.1110947</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

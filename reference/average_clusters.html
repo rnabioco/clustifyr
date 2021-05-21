@@ -66,8 +66,6 @@
 
 
 
-<!-- dependencies from examples -->
-
 
   
 
@@ -91,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">clustifyr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -145,7 +143,7 @@
     <p>Average expression values per cluster</p>
     </div>
 
-    <pre class="usage"><span class='fu'>average_clusters</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>average_clusters</span><span class='op'>(</span>
   <span class='va'>mat</span>,
   <span class='va'>metadata</span>,
   cluster_col <span class='op'>=</span> <span class='st'>"cluster"</span>,
@@ -156,7 +154,7 @@
   output_log <span class='op'>=</span> <span class='cn'>TRUE</span>,
   subclusterpower <span class='op'>=</span> <span class='fl'>0</span>,
   cut_n <span class='op'>=</span> <span class='cn'>NULL</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -213,17 +211,18 @@ are set to 0, considered unexpressed</p></td>
 for column names</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>mat</span> <span class='op'>&lt;-</span> <span class='fu'>average_clusters</span><span class='op'>(</span>
-    mat <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,
-    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,
-    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,
-    if_log <span class='op'>=</span> <span class='cn'>FALSE</span>
-<span class='op'>)</span>
-<span class='va'>mat</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>
-</div><div class='output co'>#&gt;        Naive CD4 T Memory CD4 T CD14+ Mono
-#&gt; PPBP    0.01892718   0.02607889 0.08947514
-#&gt; LYZ     0.65070360   0.67842980 1.80412017
-#&gt; S100A9  0.22047491   0.26729285 1.71088164</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='va'>mat</span> <span class='op'>&lt;-</span> <span class='fu'>average_clusters</span><span class='op'>(</span></span>
+<span class='r-in'>    mat <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,</span>
+<span class='r-in'>    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,</span>
+<span class='r-in'>    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,</span>
+<span class='r-in'>    if_log <span class='op'>=</span> <span class='cn'>FALSE</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mat</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        Naive CD4 T Memory CD4 T CD14+ Mono</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> PPBP    0.01892718   0.02607889 0.08947514</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> LYZ     0.65070360   0.67842980 1.80412017</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> S100A9  0.22047491   0.26729285 1.71088164</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

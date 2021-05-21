@@ -66,8 +66,6 @@
 
 
 
-<!-- dependencies from examples -->
-
 
   
 
@@ -91,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">clustifyr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -145,7 +143,7 @@
     <p>Compare scRNA-seq data to reference data.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>clustify</span><span class='op'>(</span><span class='va'>input</span>, <span class='va'>...</span><span class='op'>)</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>clustify</span><span class='op'>(</span><span class='va'>input</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>clustify</span><span class='op'>(</span>
@@ -220,7 +218,7 @@
   organism <span class='op'>=</span> <span class='st'>"hsapiens"</span>,
   plot_name <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>...</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -343,353 +341,371 @@ or matrix of correlation values, clusters from input as row names, cell
 types from ref_mat as column names</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Annotate a matrix and metadata</span>
-<span class='fu'>clustify</span><span class='op'>(</span>
-    input <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,
-    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,
-    ref_mat <span class='op'>=</span> <span class='va'>cbmc_ref</span>,
-    query_genes <span class='op'>=</span> <span class='va'>pbmc_vargenes</span>,
-    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,
-    verbose <span class='op'>=</span> <span class='cn'>TRUE</span>
-<span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>using # of genes: 599</span></div><div class='output co'>#&gt; <span class='message'>similarity computation completed, matrix of 9 x 13, preparing output</span></div><div class='output co'>#&gt;                      B CD14+ Mono CD16+ Mono     CD34+     CD4 T     CD8 T
-#&gt; B            0.9093577  0.5347126  0.5908755 0.6248639 0.6411407 0.6269530
-#&gt; CD14+ Mono   0.5279272  0.9145428  0.8919954 0.5103056 0.4636934 0.4381450
-#&gt; CD8 T        0.5791953  0.4853982  0.5498177 0.5663773 0.7657468 0.7692801
-#&gt; DC           0.6088123  0.7415535  0.7520484 0.5694074 0.4951613 0.4789794
-#&gt; FCGR3A+ Mono 0.5380921  0.8429769  0.9294914 0.5331927 0.4857454 0.4643569
-#&gt; Memory CD4 T 0.6268758  0.5373744  0.5866177 0.6265186 0.8610826 0.8347482
-#&gt; Naive CD4 T  0.6443057  0.5213433  0.5625255 0.6480900 0.8891488 0.8707703
-#&gt; NK           0.5042912  0.4399003  0.5092065 0.5350808 0.6755032 0.6926741
-#&gt; Platelet     0.1456751  0.2571662  0.2867421 0.2455947 0.1422081 0.1208273
-#&gt;                     DC     Eryth Memory CD4 T        Mk Naive CD4 T        NK
-#&gt; B            0.6036723 0.4817829    0.4803367 0.2241017   0.5407149 0.5484213
-#&gt; CD14+ Mono   0.7643448 0.4559350    0.4553454 0.4227047   0.4564707 0.5917870
-#&gt; CD8 T        0.5187820 0.5007841    0.6323214 0.2961827   0.6036230 0.8257838
-#&gt; DC           0.8493399 0.4470039    0.4764929 0.2948557   0.4475783 0.5643991
-#&gt; FCGR3A+ Mono 0.7235944 0.4604308    0.4614474 0.3937726   0.4574654 0.6028156
-#&gt; Memory CD4 T 0.5541873 0.5395170    0.7128879 0.2635539   0.6871755 0.6999959
-#&gt; Naive CD4 T  0.5419174 0.5528441    0.7277404 0.2668581   0.6967073 0.6880495
-#&gt; NK           0.4817286 0.4578726    0.5665250 0.2783269   0.5505877 0.8940904
-#&gt; Platelet     0.1898078 0.3068445    0.1457308 0.7319575   0.1609963 0.1396979
-#&gt;                   pDCs
-#&gt; B            0.5823418
-#&gt; CD14+ Mono   0.4738376
-#&gt; CD8 T        0.4536589
-#&gt; DC           0.6825388
-#&gt; FCGR3A+ Mono 0.4797367
-#&gt; Memory CD4 T 0.4696025
-#&gt; Naive CD4 T  0.4631464
-#&gt; NK           0.4185162
-#&gt; Platelet     0.2152614</div><div class='input'>
-<span class='co'># Annotate using a different method</span>
-<span class='fu'>clustify</span><span class='op'>(</span>
-    input <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,
-    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,
-    ref_mat <span class='op'>=</span> <span class='va'>cbmc_ref</span>,
-    query_genes <span class='op'>=</span> <span class='va'>pbmc_vargenes</span>,
-    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,
-    compute_method <span class='op'>=</span> <span class='st'>"cosine"</span>
-<span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>using # of genes: 599</span></div><div class='output co'>#&gt; <span class='message'>similarity computation completed, matrix of 9 x 13, preparing output</span></div><div class='output co'>#&gt;                      B CD14+ Mono CD16+ Mono     CD34+     CD4 T     CD8 T
-#&gt; B            0.9669867  0.7149343  0.7720125 0.8004738 0.7635724 0.7657181
-#&gt; CD14+ Mono   0.7527223  0.9627275  0.9460084 0.7577338 0.7096110 0.7061112
-#&gt; CD8 T        0.7510063  0.7070527  0.7467587 0.7677927 0.8562280 0.8674614
-#&gt; DC           0.8230905  0.8842235  0.9086642 0.8037140 0.7246647 0.7260570
-#&gt; FCGR3A+ Mono 0.7590829  0.9172636  0.9762851 0.7746692 0.7286717 0.7274581
-#&gt; Memory CD4 T 0.7865337  0.7486511  0.7797697 0.8075621 0.9318837 0.9235744
-#&gt; Naive CD4 T  0.7986227  0.7404425  0.7704809 0.8194404 0.9493149 0.9444251
-#&gt; NK           0.6784059  0.6671718  0.7107553 0.7238537 0.7777913 0.7973584
-#&gt; Platelet     0.5463488  0.5932935  0.6068613 0.5953661 0.5558004 0.5516889
-#&gt;                     DC     Eryth Memory CD4 T        Mk Naive CD4 T        NK
-#&gt; B            0.8062767 0.6514282    0.7123319 0.6594086   0.7494337 0.6957714
-#&gt; CD14+ Mono   0.8919577 0.6951238    0.7557225 0.7911713   0.7542713 0.7675894
-#&gt; CD8 T        0.7351337 0.6826181    0.8232194 0.7188642   0.8123971 0.9018633
-#&gt; DC           0.9560634 0.6874076    0.7519049 0.7448677   0.7491931 0.7595771
-#&gt; FCGR3A+ Mono 0.8800476 0.6880012    0.7601400 0.7722167   0.7561998 0.7776798
-#&gt; Memory CD4 T 0.7594695 0.7101214    0.8855087 0.7122113   0.8731255 0.8102022
-#&gt; Naive CD4 T  0.7508430 0.7181980    0.8877208 0.7125300   0.8847456 0.8097839
-#&gt; NK           0.6864934 0.6500106    0.7578212 0.6960715   0.7544227 0.9480188
-#&gt; Platelet     0.5730797 0.5898023    0.5655621 0.8775257   0.5455913 0.5569351
-#&gt;                   pDCs
-#&gt; B            0.7863873
-#&gt; CD14+ Mono   0.7495702
-#&gt; CD8 T        0.7085898
-#&gt; DC           0.8503681
-#&gt; FCGR3A+ Mono 0.7477358
-#&gt; Memory CD4 T 0.7241459
-#&gt; Naive CD4 T  0.7246787
-#&gt; NK           0.6812692
-#&gt; Platelet     0.5756617</div><div class='input'>
-<span class='co'># Annotate a Seurat object</span>
-<span class='fu'>clustify</span><span class='op'>(</span>
-    <span class='va'>s_small3</span>,
-    <span class='va'>cbmc_ref</span>,
-    cluster_col <span class='op'>=</span> <span class='st'>"RNA_snn_res.1"</span>,
-    obj_out <span class='op'>=</span> <span class='cn'>TRUE</span>,
-    per_cell <span class='op'>=</span> <span class='cn'>FALSE</span>,
-    dr <span class='op'>=</span> <span class='st'>"tsne"</span>
-<span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>object data retrieval complete, moving to similarity computation</span></div><div class='output co'>#&gt; <span class='message'>using # of genes: 19</span></div><div class='output co'>#&gt; <span class='message'>similarity computation completed, matrix of 3 x 13, preparing output</span></div><div class='output co'>#&gt; <span class='message'>using threshold of 0.55</span></div><div class='output co'>#&gt; <span class='message'>seurat not loaded, returning cor_mat instead</span></div><div class='output co'>#&gt;            B CD14+ Mono CD16+ Mono       CD34+     CD4 T      CD8 T         DC
-#&gt; 0 -0.4449320 -0.2097411 -0.2220272 -0.07199298 0.2887232 0.37971905 -0.3168822
-#&gt; 1  0.4283876  0.7219124  0.7316084  0.53439673 0.3472936 0.29497641  0.5865428
-#&gt; 2  0.6248032  0.4460352  0.4973646  0.38956668 0.1769981 0.03275902  0.5146717
-#&gt;        Eryth Memory CD4 T          Mk Naive CD4 T         NK      pDCs
-#&gt; 0  0.4203598    0.1987308  0.62044762 -0.08992247 0.08688022 0.1134067
-#&gt; 1  0.1736468    0.5311026  0.02027349  0.51050337 0.54297685 0.4370882
-#&gt; 2 -0.1716881    0.1094072 -0.45488507  0.23853307 0.32921643 0.3758960</div><div class='input'>
-<span class='co'># Annotate (and return) a Seurat object per-cell</span>
-<span class='fu'>clustify</span><span class='op'>(</span>
-    input <span class='op'>=</span> <span class='va'>s_small3</span>,
-    ref_mat <span class='op'>=</span> <span class='va'>cbmc_ref</span>,
-    cluster_col <span class='op'>=</span> <span class='st'>"RNA_snn_res.1"</span>,
-    obj_out <span class='op'>=</span> <span class='cn'>TRUE</span>,
-    per_cell <span class='op'>=</span> <span class='cn'>TRUE</span>,
-    dr <span class='op'>=</span> <span class='st'>"tsne"</span>
-<span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>object data retrieval complete, moving to similarity computation</span></div><div class='output co'>#&gt; <span class='message'>using # of genes: 19</span></div><div class='output co'>#&gt; <span class='message'>similarity computation completed, matrix of 80 x 13, preparing output</span></div><div class='output co'>#&gt; <span class='message'>using threshold of NA</span></div><div class='output co'>#&gt; <span class='message'>seurat not loaded, returning cor_mat instead</span></div><div class='output co'>#&gt;                          B  CD14+ Mono  CD16+ Mono         CD34+        CD4 T
-#&gt; ATGCCAGAACGACT          NA          NA          NA            NA           NA
-#&gt; CATGGCCTGTGCAT  0.03131121  0.09393364  0.03131121 -0.0156624783  0.156556073
-#&gt; GAACCTGATGAACC  0.02635231  0.44798934  0.44798934  0.0790916384  0.184466197
-#&gt; TGACTGGATTCTCA  0.28987545  0.31622777  0.31622777  0.4218220716  0.316227766
-#&gt; AGTCAGACTGCACA          NA          NA          NA            NA           NA
-#&gt; TCTGATACACGTGT          NA          NA          NA            NA           NA
-#&gt; TGGTATCTAAACAG  0.00000000  0.12909944  0.12909944  0.3013642443  0.258198890
-#&gt; GCAGCTCTGTTTCT  0.30123204  0.38729833  0.34426519  0.3444162792  0.387298335
-#&gt; GATATAACACGCAT          NA          NA          NA            NA           NA
-#&gt; AATGTTGACAGTCA  0.00000000  0.12909944  0.12909944  0.3013642443  0.258198890
-#&gt; AGGTCATGAGTGTC  0.44426166 -0.03619910  0.02961744  0.0888913276 -0.134923911
-#&gt; AGAGATGATCTCGC  0.43780788  0.38123720  0.45256545  0.4798314923  0.336964493
-#&gt; GGGTAACTCTAGTG  0.56817622  0.01244182  0.08709271  0.1203236639 -0.186627226
-#&gt; CATGAGACACGGGA  0.53311399  0.34882767  0.44426166  0.4148261957  0.102015640
-#&gt; TACGCCACTCCGAA  0.20732211  0.17112301  0.29617444  0.2963044255  0.190867972
-#&gt; CTAAACCTGTGCAT  0.53311399  0.34882767  0.44426166  0.4148261957  0.102015640
-#&gt; GTAAGCACTCATTC  0.53311399  0.34882767  0.44426166  0.4148261957  0.102015640
-#&gt; TTGGTACTGAATCC  0.16709137 -0.01519012  0.03452301 -0.1920321845 -0.451560984
-#&gt; CATCATACGGAGCA  0.38729833  0.30123204  0.38729833  0.3874683141  0.172132593
-#&gt; TACATCACGCTAAC  0.38569627  0.25298357  0.38569627  0.3609709916  0.141007237
-#&gt; TTACCATGAATCGC  0.54822542  0.56479646  0.50679780  0.4835342775  0.447418223
-#&gt; ATAGGAGAAACAGA  0.70897476  0.66220212  0.67081813  0.6501787611  0.476342419
-#&gt; GCGCACGACTTTAC  0.57170106  0.63522340  0.60070039  0.6009640307  0.564796461
-#&gt; ACTCGCACGAAAGT  0.57170106  0.63522340  0.60070039  0.6009640307  0.564796461
-#&gt; ATTACCTGCCTTAT  0.37910456  0.54527052  0.46895726  0.4900968692  0.670818135
-#&gt; CCCAACTGCAATCG  0.57232349  0.63038530  0.59720712  0.5974692276  0.555734405
-#&gt; AAATTCGAATCACG  0.38389588  0.49436952  0.41289521  0.4365623763  0.470893871
-#&gt; CCATCCGATTCGCC  0.57170106  0.63522340  0.60070039  0.6009640307  0.564796461
-#&gt; TCCACTCTGAGCTT  0.37877761  0.71328250  0.70098453  0.4847528410  0.391075580
-#&gt; CATCAGGATGCACA  0.52808777  0.79519008  0.79824850  0.6843675909  0.469977727
-#&gt; CTAAACCTCTGACA  0.38648971  0.45418696  0.43449321  0.5455098318  0.476342419
-#&gt; GATAGAGAAGGGTG  0.38729833  0.30123204  0.38729833  0.3874683141  0.172132593
-#&gt; CTAACGGAACCGAT  0.12909944  0.21516574  0.17213259  0.2152601745  0.301232038
-#&gt; AGATATACCCGTAA  0.30604692  0.43109835  0.36857264  0.4016571101  0.496914892
-#&gt; TACTCTGAATCGAC  0.30604692  0.43109835  0.36857264  0.4016571101  0.496914892
-#&gt; GCGCATCTTGCTCC  0.27642948  0.40148091  0.30933775  0.3423962250  0.467297448
-#&gt; GTTGACGATATCGG  0.25132752  0.43498994  0.38251496  0.5166909137  0.571701063
-#&gt; ACAGGTACTGGTGT  0.12909944  0.21516574  0.17213259  0.2152601745  0.301232038
-#&gt; GGCATATGCTTATC  0.12909944  0.21516574  0.17213259  0.2152601745  0.301232038
-#&gt; CATTACACCAACTG  0.01244182  0.17003814  0.19077450  0.3194800731  0.402285353
-#&gt; TAGGGACTGAACTC  0.09872481  0.25339369  0.22048542  0.3720266675  0.408062560
-#&gt; GCTCCATGAGAAGT  0.48523079  0.32763446  0.41057990  0.4107600939  0.091239977
-#&gt; TACAATGATGCTAG          NA          NA          NA            NA           NA
-#&gt; CTTCATGACCGAAT  0.12909944  0.21516574  0.17213259  0.2152601745  0.301232038
-#&gt; CTGCCAACAGGAGC  0.38729833  0.30123204  0.38729833  0.3874683141  0.172132593
-#&gt; TTGCATTGAGCTAC  0.38729833  0.30123204  0.38729833  0.3874683141  0.172132593
-#&gt; AAGCAAGAGCTTAG  0.12909944  0.21516574  0.17213259  0.2152601745  0.301232038
-#&gt; CGGCACGAACTCAG  0.12909944  0.21516574  0.17213259  0.2152601745  0.301232038
-#&gt; GGTGGAGATTACTC  0.09872481  0.25339369  0.22048542  0.3720266675  0.408062560
-#&gt; GGCCGATGTACTCT          NA          NA          NA            NA           NA
-#&gt; CGTAGCCTGTATGC  0.57998659  0.63246156  0.60898591  0.6092531897  0.553749097
-#&gt; TGAGCTGAATGCTG  0.39572399  0.75086091  0.80159476  0.5836952851  0.391665287
-#&gt; CCTATAACGAGACG  0.50349655  0.49691489  0.53311399  0.5333479659  0.398190079
-#&gt; ATAAGTTGGTACGT  0.46400662  0.47058828  0.46400662  0.4642102666  0.381735943
-#&gt; AAGCGACTTTGACG  0.30648388  0.70528219  0.70282047  0.4322211082  0.322485048
-#&gt; ACCAGTGAATACCG  0.60435175  0.51572991  0.56619512  0.5664436176  0.308945600
-#&gt; ATTGCACTTGCTTT  0.50952655  0.81225781  0.82078545  0.5865326293  0.413590591
-#&gt; CTAGGTGATGGTTG  0.49827856  0.74062313  0.76893441  0.5245550569  0.302364489
-#&gt; GCACTAGACCTTTA  0.23061371  0.55374910  0.58274843  0.3246587292  0.161567692
-#&gt; CATGCGCTAGTCAC  0.08492927  0.50095960  0.55880997  0.3829651415  0.193244857
-#&gt; TTGAGGACTACGCA  0.45637786  0.29556978  0.36464931  0.3489480724  0.096258358
-#&gt; ATACCACTCTAAGC  0.64687344  0.44518667  0.44026748  0.3494157534  0.108222173
-#&gt; CATATAGACTAAGC  0.59924986  0.49029534  0.48916040  0.4655308205  0.447167509
-#&gt; TTTAGCTGTACTCT  0.70897476  0.66220212  0.67081813  0.6501787611  0.476342419
-#&gt; GACATTCTCCACCT  0.64687344  0.44518667  0.44026748  0.3494157534  0.108222173
-#&gt; ACGTGATGCCATGA  0.74687208  0.64955238  0.61334040  0.5434180874  0.380225786
-#&gt; ATTGTAGATTCCCG  0.71266734  0.65112439  0.66589470  0.6427903661  0.452956098
-#&gt; GATAGAGATCACGA  0.58731304  0.56694381  0.58957629  0.5705889918  0.355330050
-#&gt; AATGCGTGGACGGA  0.70405133  0.66712556  0.66835642  0.6477159628  0.488651008
-#&gt; GCGTAAACACGGTT  0.42560359  0.29735504  0.31551413  0.3497158359  0.061286917
-#&gt; ATTCAGCTCATTGG -0.38390303 -0.36760526 -0.36851069 -0.2241926923  0.061569354
-#&gt; GGCATATGGGGAGT -0.23100622 -0.09966801 -0.12761231 -0.0009318855  0.287826301
-#&gt; ATCATCTGACACCA -0.54852438 -0.55232040 -0.54093235 -0.4941734325 -0.156585679
-#&gt; GTCATACTTCGCCT -0.54821729 -0.52963366 -0.52777529 -0.3950756052 -0.070617821
-#&gt; TTACGTACGTTCAG -0.60147674 -0.57730611 -0.57637647 -0.4557232615 -0.086456470
-#&gt; GAGTTGTGGTAGCT -0.40140656 -0.33636383 -0.35123074 -0.2323974148  0.109643459
-#&gt; GACGCTCTCTCTCG -0.43668863 -0.44158424 -0.48858212 -0.3599854390 -0.014686837
-#&gt; AGTCTTACTTCGGA -0.39931430 -0.31620828 -0.32026223 -0.2185025336 -0.004053952
-#&gt; GGAACACTTCAGAC -0.52492894 -0.44281715 -0.45259237 -0.4513240771 -0.055718715
-#&gt; CTTGATTGATCTTC  0.19190801  0.30548622  0.30059061  0.4114119302  0.488582124
-#&gt;                      CD8 T          DC        Eryth Memory CD4 T          Mk
-#&gt; ATGCCAGAACGACT          NA          NA           NA           NA          NA
-#&gt; CATGGCCTGTGCAT  0.21927470 -0.01572473  0.250489716  0.162793072  0.31311215
-#&gt; GAACCTGATGAACC  0.14500134 -0.02646866  0.105409255  0.548043144  0.23717082
-#&gt; TGACTGGATTCTCA  0.31636655  0.39702990  0.131761569  0.258798151 -0.21081851
-#&gt; AGTCAGACTGCACA          NA          NA           NA           NA          NA
-#&gt; TCTGATACACGTGT          NA          NA           NA           NA          NA
-#&gt; TGGTATCTAAACAG  0.25831221  0.12966942  0.258198890  0.348036386 -0.17213259
-#&gt; GCAGCTCTGTTTCT  0.38746831  0.30256199  0.344265186  0.397755870  0.25819889
-#&gt; GATATAACACGCAT          NA          NA           NA           NA          NA
-#&gt; AATGTTGACAGTCA  0.25831221  0.12966942  0.258198890  0.348036386 -0.17213259
-#&gt; AGGTCATGAGTGTC -0.12016791  0.07437051 -0.204031280 -0.252842573 -0.33237354
-#&gt; AGAGATGATCTCGC  0.33711238  0.42244764  0.113141363  0.166242832 -0.13527772
-#&gt; GGGTAACTCTAGTG -0.17218731  0.20619631 -0.356665365 -0.318645377 -0.48523079
-#&gt; CATGAGACACGGGA  0.10206041  0.53546771 -0.144796392 -0.252842573 -0.27313865
-#&gt; TACGCCACTCCGAA  0.13169086  0.35697847 -0.055944061 -0.252842573 -0.09543399
-#&gt; CTAAACCTGTGCAT  0.10206041  0.53546771 -0.144796392 -0.252842573 -0.27313865
-#&gt; GTAAGCACTCATTC  0.10206041  0.53546771 -0.144796392 -0.252842573 -0.27313865
-#&gt; TTGGTACTGAATCC -0.47248207 -0.12552506 -0.553749097 -0.114874767 -0.58551027
-#&gt; CATCATACGGAGCA  0.17220814  0.38900827  0.043033148 -0.174018193 -0.08606630
-#&gt; TACATCACGCTAAC  0.09128002  0.51236659 -0.194921769 -0.318645377 -0.25713084
-#&gt; TTACCATGAATCGC  0.44761459  0.52429252  0.327278145  0.445937465  0.19332886
-#&gt; ATAGGAGAAACAGA  0.47655148  0.69108792  0.286790138  0.251001602  0.09354528
-#&gt; GCGCACGACTTTAC  0.56504434  0.54787181  0.491607677  0.445937465  0.31070710
-#&gt; ACTCGCACGAAAGT  0.56504434  0.54787181  0.491607677  0.445937465  0.31070710
-#&gt; ATTACCTGCCTTAT  0.67111255  0.31401848  0.626507212  0.820554811  0.43941665
-#&gt; CCCAACTGCAATCG  0.55597831  0.54569124  0.485230787  0.431249382  0.30275083
-#&gt; AAATTCGAATCACG  0.33018484  0.35923747  0.562034620  0.445937465  0.28723145
-#&gt; CCATCCGATTCGCC  0.56504434  0.54787181  0.491607677  0.445937465  0.31070710
-#&gt; TCCACTCTGAGCTT  0.36171912  0.41503628  0.322206924  0.507253771  0.17217164
-#&gt; CATCAGGATGCACA  0.34779337  0.60516951  0.387400295  0.468205999 -0.05199320
-#&gt; CTAAACCTCTGACA  0.51841905  0.43641152  0.327408484  0.189851070  0.17847455
-#&gt; GATAGAGAAGGGTG  0.17220814  0.38900827  0.043033148 -0.174018193 -0.08606630
-#&gt; CTAACGGAACCGAT  0.30136424  0.17289256  0.215165741  0.248597419  0.12909944
-#&gt; AGATATACCCGTAA  0.49713298  0.34045169  0.401480906  0.463861562  0.27642948
-#&gt; TACTCTGAATCGAC  0.49713298  0.34045169  0.401480906  0.463861562  0.27642948
-#&gt; GCGCATCTTGCTCC  0.46750254  0.28095528  0.431098350  0.498080857  0.30604692
-#&gt; GTTGACGATATCGG  0.57195197  0.36062449  0.490226757  0.596710598  0.12290192
-#&gt; ACAGGTACTGGTGT  0.30136424  0.17289256  0.215165741  0.248597419  0.12909944
-#&gt; GGCATATGCTTATC  0.30136424  0.17289256  0.215165741  0.248597419  0.12909944
-#&gt; CATTACACCAACTG  0.35267281  0.24160376  0.219805399  0.268332949 -0.03732545
-#&gt; TAGGGACTGAACTC  0.40824165  0.22145887  0.342246018  0.429642266 -0.01974496
-#&gt; GCTCCATGAGAAGT -0.05808729  0.48737310 -0.020736358 -0.318645377 -0.30689810
-#&gt; TACAATGATGCTAG          NA          NA           NA           NA          NA
-#&gt; CTTCATGACCGAAT  0.30136424  0.17289256  0.215165741  0.248597419  0.12909944
-#&gt; CTGCCAACAGGAGC  0.17220814  0.38900827  0.043033148 -0.174018193 -0.08606630
-#&gt; TTGCATTGAGCTAC  0.17220814  0.38900827  0.043033148 -0.174018193 -0.08606630
-#&gt; AAGCAAGAGCTTAG  0.30136424  0.17289256  0.215165741  0.248597419  0.12909944
-#&gt; CGGCACGAACTCAG  0.30136424  0.17289256  0.215165741  0.248597419  0.12909944
-#&gt; GGTGGAGATTACTC  0.40824165  0.22145887  0.342246018  0.429642266 -0.01974496
-#&gt; GGCCGATGTACTCT          NA          NA           NA           NA          NA
-#&gt; CGTAGCCTGTATGC  0.55399213  0.55896795  0.469512950  0.406050393  0.28585053
-#&gt; TGAGCTGAATGCTG  0.32839204  0.56359368  0.158289598  0.429660319 -0.10146769
-#&gt; CCTATAACGAGACG  0.39836484  0.50571950  0.269847822  0.140679326  0.11188812
-#&gt; ATAAGTTGGTACGT  0.38190348  0.43300166  0.325791883  0.222425421  0.17112301
-#&gt; AAGCGACTTTGACG  0.28568461  0.36099763  0.253556946  0.497025834  0.11939332
-#&gt; ACCAGTGAATACCG  0.18347848  0.60701998  0.182167127 -0.051195794 -0.11570074
-#&gt; ATTGCACTTGCTTT  0.38177942  0.57601581  0.215322936  0.447063321  0.02984674
-#&gt; CTAGGTGATGGTTG  0.27190759  0.54483907  0.120039835  0.332989700 -0.03737089
-#&gt; GCACTAGACCTTTA  0.12640968  0.27601643  0.100807192  0.264052417 -0.01519012
-#&gt; CATGCGCTAGTCAC  0.15454060  0.24973124  0.076313256  0.307885817 -0.23632492
-#&gt; TTGAGGACTACGCA  0.03852024  0.64720966 -0.255933987 -0.215233028 -0.48129179
-#&gt; ATACCACTCTAAGC  0.08612360  0.67443395 -0.142656501 -0.093778008 -0.26563624
-#&gt; CATATAGACTAAGC  0.42806127  0.56313714  0.172511323  0.009834647  0.10895452
-#&gt; TTTAGCTGTACTCT  0.47655148  0.69108792  0.286790138  0.251001602  0.09354528
-#&gt; GACATTCTCCACCT  0.08612360  0.67443395 -0.142656501 -0.093778008 -0.26563624
-#&gt; ACGTGATGCCATGA  0.36341085  0.76267237  0.157295786  0.221613127 -0.01131624
-#&gt; ATTGTAGATTCCCG  0.45315489  0.69603310  0.251095228  0.216871072  0.06031209
-#&gt; GATAGAGATCACGA  0.40643144  0.61718494  0.446991623  0.254299429  0.05997609
-#&gt; AATGCGTGGACGGA  0.48886547  0.68614275  0.304022164  0.283710026  0.11323902
-#&gt; GCGTAAACACGGTT  0.09991881  0.60189557 -0.232663298 -0.101624685 -0.21904398
-#&gt; ATTCAGCTCATTGG  0.07246632 -0.39878470  0.164788566 -0.203469249  0.60573379
-#&gt; GGCATATGGGGAGT  0.24881343 -0.14501633  0.436862573  0.152821279  0.39960350
-#&gt; ATCATCTGACACCA -0.09684090 -0.56524404  0.074971325 -0.211067964  0.52005426
-#&gt; GTCATACTTCGCCT -0.05019784 -0.53757171 -0.007433455 -0.260873812  0.52777529
-#&gt; TTACGTACGTTCAG  0.05394275 -0.61020161  0.049270892 -0.146612397  0.54012053
-#&gt; GAGTTGTGGTAGCT  0.23239741 -0.35651457  0.241587282  0.001073555  0.57051766
-#&gt; GACGCTCTCTCTCG  0.03330478 -0.54138667 -0.025457185 -0.160638212  0.60509770
-#&gt; AGTCTTACTTCGGA  0.14195060 -0.32218518  0.228034815  0.037470726  0.36890966
-#&gt; GGAACACTTCAGAC  0.06552267 -0.46588170  0.155425888 -0.028235126  0.46432262
-#&gt; CTTGATTGATCTTC  0.55932431  0.18341256  0.361296200  0.535649250  0.52480966
-#&gt;                Naive CD4 T          NK        pDCs
-#&gt; ATGCCAGAACGACT          NA          NA          NA
-#&gt; CATGGCCTGTGCAT  0.13949369  0.06262243  0.21956404
-#&gt; GAACCTGATGAACC  0.19077734  0.36893239  0.15839201
-#&gt; TGACTGGATTCTCA  0.42558021  0.44798934  0.26398668
-#&gt; AGTCAGACTGCACA          NA          NA          NA
-#&gt; TCTGATACACGTGT          NA          NA          NA
-#&gt; TGGTATCTAAACAG  0.11982234  0.25819889  0.08621769
-#&gt; GCAGCTCTGTTTCT  0.38343149  0.30123204  0.34487075
-#&gt; GATATAACACGCAT          NA          NA          NA
-#&gt; AATGTTGACAGTCA  0.11982234  0.25819889  0.08621769
-#&gt; AGGTCATGAGTGTC  0.08796522 -0.10201564  0.14834771
-#&gt; AGAGATGATCTCGC  0.41776119  0.40829274  0.54945445
-#&gt; GGGTAACTCTAGTG  0.17552572 -0.08709271  0.25342857
-#&gt; CATGAGACACGGGA  0.38484782  0.22377624  0.50438220
-#&gt; TACGCCACTCCGAA  0.08796522  0.19415880  0.23735633
-#&gt; CTAAACCTGTGCAT  0.38484782  0.22377624  0.50438220
-#&gt; GTAAGCACTCATTC  0.38484782  0.22377624  0.50438220
-#&gt; TTGGTACTGAATCC -0.08766741 -0.13809204 -0.14940175
-#&gt; CATCATACGGAGCA  0.28757362  0.21516574  0.38797960
-#&gt; TACATCACGCTAAC  0.22171669  0.21980540  0.38637471
-#&gt; TTACCATGAATCGC  0.65212250  0.45984651  0.52843951
-#&gt; ATAGGAGAAACAGA  0.72657229  0.51696076  0.69295952
-#&gt; GCGCACGACTTTAC  0.67826892  0.53027345  0.57547339
-#&gt; ACTCGCACGAAAGT  0.67826892  0.53027345  0.57547339
-#&gt; ATTACCTGCCTTAT  0.60456298  0.59573574  0.50800591
-#&gt; CCCAACTGCAATCG  0.67900737  0.53085078  0.56917565
-#&gt; AAATTCGAATCACG  0.41680471  0.38941956  0.43437174
-#&gt; CCATCCGATTCGCC  0.67826892  0.53027345  0.57547339
-#&gt; TCCACTCTGAGCTT  0.54788352  0.55586843  0.38190780
-#&gt; CATCAGGATGCACA  0.59611538  0.63615206  0.58008007
-#&gt; CTAAACCTCTGACA  0.67859110  0.53419279  0.29099368
-#&gt; GATAGAGAAGGGTG  0.28757362  0.21516574  0.38797960
-#&gt; CTAACGGAACCGAT  0.33550255  0.38729833  0.04310884
-#&gt; AGATATACCCGTAA  0.52046087  0.50349655  0.27032249
-#&gt; TACTCTGAATCGAC  0.52046087  0.50349655  0.27032249
-#&gt; GCGCATCTTGCTCC  0.55344782  0.53311399  0.18131386
-#&gt; GTTGACGATATCGG  0.50831718  0.58274843  0.26975315
-#&gt; ACAGGTACTGGTGT  0.33550255  0.38729833  0.04310884
-#&gt; GGCATATGCTTATC  0.33550255  0.38729833  0.04310884
-#&gt; CATTACACCAACTG  0.18476391  0.43546353  0.02908197
-#&gt; TAGGGACTGAACTC  0.33903261  0.47387910  0.09230524
-#&gt; GCTCCATGAGAAGT  0.22171669  0.17003814  0.51101172
-#&gt; TACAATGATGCTAG          NA          NA          NA
-#&gt; CTTCATGACCGAAT  0.33550255  0.38729833  0.04310884
-#&gt; CTGCCAACAGGAGC  0.28757362  0.21516574  0.38797960
-#&gt; TTGCATTGAGCTAC  0.28757362  0.21516574  0.38797960
-#&gt; AAGCAAGAGCTTAG  0.33550255  0.38729833  0.04310884
-#&gt; CGGCACGAACTCAG  0.33550255  0.38729833  0.04310884
-#&gt; GGTGGAGATTACTC  0.33903261  0.47387910  0.09230524
-#&gt; GGCCGATGTACTCT          NA          NA          NA
-#&gt; CGTAGCCTGTATGC  0.66904077  0.52198793  0.58654019
-#&gt; TGAGCTGAATGCTG  0.52550324  0.63620242  0.42793039
-#&gt; CCTATAACGAGACG  0.48380869  0.37186346  0.53405175
-#&gt; ATAAGTTGGTACGT  0.52779130  0.41135339  0.43185666
-#&gt; AAGCGACTTTGACG  0.48118278  0.53542365  0.31318811
-#&gt; ACCAGTGAATACCG  0.42360536  0.32863934  0.65103671
-#&gt; ATTGCACTTGCTTT  0.68859139  0.68434319  0.46770961
-#&gt; CTAGGTGATGGTTG  0.58397625  0.53904680  0.48781061
-#&gt; GCACTAGACCTTTA  0.35220767  0.42532350  0.20473573
-#&gt; CATGCGCTAGTCAC  0.27280733  0.51696076  0.09001076
-#&gt; TTGAGGACTACGCA  0.18036415  0.17552995  0.22915754
-#&gt; ATACCACTCTAAGC  0.41639148  0.20906556  0.33755722
-#&gt; CATATAGACTAAGC  0.54354705  0.40971439  0.65374010
-#&gt; TTTAGCTGTACTCT  0.72657229  0.51696076  0.69295952
-#&gt; GACATTCTCCACCT  0.41639148  0.20906556  0.33755722
-#&gt; ACGTGATGCCATGA  0.63774561  0.40964802  0.52939816
-#&gt; ATTGTAGATTCCCG  0.71697605  0.50342132  0.69419255
-#&gt; GATAGAGATCACGA  0.64530781  0.39946340  0.52032924
-#&gt; AATGCGTGGACGGA  0.73205586  0.52188420  0.69049348
-#&gt; GCGTAAACACGGTT  0.28567822  0.19748007  0.26718074
-#&gt; ATTCAGCTCATTGG -0.32370946 -0.25261544  0.15600819
-#&gt; GGCATATGGGGAGT -0.16287946  0.05216270  0.23514503
-#&gt; ATCATCTGACACCA -0.53746937 -0.41376579 -0.05513906
-#&gt; GTCATACTTCGCCT -0.44914350 -0.37538947 -0.04840245
-#&gt; TTACGTACGTTCAG -0.41830262 -0.36162975 -0.10057767
-#&gt; GAGTTGTGGTAGCT -0.23699046 -0.13566055  0.04467918
-#&gt; GACGCTCTCTCTCG -0.32170196 -0.29079938  0.06767829
-#&gt; AGTCTTACTTCGGA -0.18625042 -0.23816970 -0.04771773
-#&gt; GGAACACTTCAGAC -0.38595542 -0.30791921 -0.02154330
-#&gt; CTTGATTGATCTTC  0.43457028  0.38283689  0.49630746</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># Annotate a matrix and metadata</span></span>
+<span class='r-in'><span class='fu'>clustify</span><span class='op'>(</span></span>
+<span class='r-in'>    input <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,</span>
+<span class='r-in'>    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,</span>
+<span class='r-in'>    ref_mat <span class='op'>=</span> <span class='va'>cbmc_ref</span>,</span>
+<span class='r-in'>    query_genes <span class='op'>=</span> <span class='va'>pbmc_vargenes</span>,</span>
+<span class='r-in'>    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,</span>
+<span class='r-in'>    verbose <span class='op'>=</span> <span class='cn'>TRUE</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> using # of genes: 599</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> similarity computation completed, matrix of 9 x 13, preparing output</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      B CD14+ Mono CD16+ Mono     CD34+     CD4 T     CD8 T</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B            0.9093577  0.5347126  0.5908755 0.6248639 0.6411407 0.6269530</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD14+ Mono   0.5279272  0.9145428  0.8919954 0.5103056 0.4636934 0.4381450</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD8 T        0.5791953  0.4853982  0.5498177 0.5663773 0.7657468 0.7692801</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> DC           0.6088123  0.7415535  0.7520484 0.5694074 0.4951613 0.4789794</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> FCGR3A+ Mono 0.5380921  0.8429769  0.9294914 0.5331927 0.4857454 0.4643569</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Memory CD4 T 0.6268758  0.5373744  0.5866177 0.6265186 0.8610826 0.8347482</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Naive CD4 T  0.6443057  0.5213433  0.5625255 0.6480900 0.8891488 0.8707703</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NK           0.5042912  0.4399003  0.5092065 0.5350808 0.6755032 0.6926741</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Platelet     0.1456751  0.2571662  0.2867421 0.2455947 0.1422081 0.1208273</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                     DC     Eryth Memory CD4 T        Mk Naive CD4 T        NK</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B            0.6036723 0.4817829    0.4803367 0.2241017   0.5407149 0.5484213</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD14+ Mono   0.7643448 0.4559350    0.4553454 0.4227047   0.4564707 0.5917870</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD8 T        0.5187820 0.5007841    0.6323214 0.2961827   0.6036230 0.8257838</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> DC           0.8493399 0.4470039    0.4764929 0.2948557   0.4475783 0.5643991</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> FCGR3A+ Mono 0.7235944 0.4604308    0.4614474 0.3937726   0.4574654 0.6028156</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Memory CD4 T 0.5541873 0.5395170    0.7128879 0.2635539   0.6871755 0.6999959</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Naive CD4 T  0.5419174 0.5528441    0.7277404 0.2668581   0.6967073 0.6880495</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NK           0.4817286 0.4578726    0.5665250 0.2783269   0.5505877 0.8940904</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Platelet     0.1898078 0.3068445    0.1457308 0.7319575   0.1609963 0.1396979</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                   pDCs</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B            0.5823418</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD14+ Mono   0.4738376</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD8 T        0.4536589</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> DC           0.6825388</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> FCGR3A+ Mono 0.4797367</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Memory CD4 T 0.4696025</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Naive CD4 T  0.4631464</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NK           0.4185162</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Platelet     0.2152614</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Annotate using a different method</span></span>
+<span class='r-in'><span class='fu'>clustify</span><span class='op'>(</span></span>
+<span class='r-in'>    input <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,</span>
+<span class='r-in'>    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,</span>
+<span class='r-in'>    ref_mat <span class='op'>=</span> <span class='va'>cbmc_ref</span>,</span>
+<span class='r-in'>    query_genes <span class='op'>=</span> <span class='va'>pbmc_vargenes</span>,</span>
+<span class='r-in'>    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,</span>
+<span class='r-in'>    compute_method <span class='op'>=</span> <span class='st'>"cosine"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> using # of genes: 599</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> similarity computation completed, matrix of 9 x 13, preparing output</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      B CD14+ Mono CD16+ Mono     CD34+     CD4 T     CD8 T</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B            0.9669867  0.7149343  0.7720125 0.8004738 0.7635724 0.7657181</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD14+ Mono   0.7527223  0.9627275  0.9460084 0.7577338 0.7096110 0.7061112</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD8 T        0.7510063  0.7070527  0.7467587 0.7677927 0.8562280 0.8674614</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> DC           0.8230905  0.8842235  0.9086642 0.8037140 0.7246647 0.7260570</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> FCGR3A+ Mono 0.7590829  0.9172636  0.9762851 0.7746692 0.7286717 0.7274581</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Memory CD4 T 0.7865337  0.7486511  0.7797697 0.8075621 0.9318837 0.9235744</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Naive CD4 T  0.7986227  0.7404425  0.7704809 0.8194404 0.9493149 0.9444251</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NK           0.6784059  0.6671718  0.7107553 0.7238537 0.7777913 0.7973584</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Platelet     0.5463488  0.5932935  0.6068613 0.5953661 0.5558004 0.5516889</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                     DC     Eryth Memory CD4 T        Mk Naive CD4 T        NK</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B            0.8062767 0.6514282    0.7123319 0.6594086   0.7494337 0.6957714</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD14+ Mono   0.8919577 0.6951238    0.7557225 0.7911713   0.7542713 0.7675894</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD8 T        0.7351337 0.6826181    0.8232194 0.7188642   0.8123971 0.9018633</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> DC           0.9560634 0.6874076    0.7519049 0.7448677   0.7491931 0.7595771</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> FCGR3A+ Mono 0.8800476 0.6880012    0.7601400 0.7722167   0.7561998 0.7776798</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Memory CD4 T 0.7594695 0.7101214    0.8855087 0.7122113   0.8731255 0.8102022</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Naive CD4 T  0.7508430 0.7181980    0.8877208 0.7125300   0.8847456 0.8097839</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NK           0.6864934 0.6500106    0.7578212 0.6960715   0.7544227 0.9480188</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Platelet     0.5730797 0.5898023    0.5655621 0.8775257   0.5455913 0.5569351</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                   pDCs</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B            0.7863873</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD14+ Mono   0.7495702</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD8 T        0.7085898</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> DC           0.8503681</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> FCGR3A+ Mono 0.7477358</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Memory CD4 T 0.7241459</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Naive CD4 T  0.7246787</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NK           0.6812692</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Platelet     0.5756617</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Annotate a Seurat object</span></span>
+<span class='r-in'><span class='fu'>clustify</span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='va'>s_small3</span>,</span>
+<span class='r-in'>    <span class='va'>cbmc_ref</span>,</span>
+<span class='r-in'>    cluster_col <span class='op'>=</span> <span class='st'>"RNA_snn_res.1"</span>,</span>
+<span class='r-in'>    obj_out <span class='op'>=</span> <span class='cn'>TRUE</span>,</span>
+<span class='r-in'>    per_cell <span class='op'>=</span> <span class='cn'>FALSE</span>,</span>
+<span class='r-in'>    dr <span class='op'>=</span> <span class='st'>"tsne"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> object data retrieval complete, moving to similarity computation</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> using # of genes: 19</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> similarity computation completed, matrix of 3 x 13, preparing output</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> using threshold of 0.55</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> seurat not loaded, returning cor_mat instead</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            B CD14+ Mono CD16+ Mono       CD34+     CD4 T      CD8 T         DC</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 0 -0.4449320 -0.2097411 -0.2220272 -0.07199298 0.2887232 0.37971905 -0.3168822</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  0.4283876  0.7219124  0.7316084  0.53439673 0.3472936 0.29497641  0.5865428</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  0.6248032  0.4460352  0.4973646  0.38956668 0.1769981 0.03275902  0.5146717</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        Eryth Memory CD4 T          Mk Naive CD4 T         NK      pDCs</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 0  0.4203598    0.1987308  0.62044762 -0.08992247 0.08688022 0.1134067</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  0.1736468    0.5311026  0.02027349  0.51050337 0.54297685 0.4370882</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 -0.1716881    0.1094072 -0.45488507  0.23853307 0.32921643 0.3758960</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Annotate (and return) a Seurat object per-cell</span></span>
+<span class='r-in'><span class='fu'>clustify</span><span class='op'>(</span></span>
+<span class='r-in'>    input <span class='op'>=</span> <span class='va'>s_small3</span>,</span>
+<span class='r-in'>    ref_mat <span class='op'>=</span> <span class='va'>cbmc_ref</span>,</span>
+<span class='r-in'>    cluster_col <span class='op'>=</span> <span class='st'>"RNA_snn_res.1"</span>,</span>
+<span class='r-in'>    obj_out <span class='op'>=</span> <span class='cn'>TRUE</span>,</span>
+<span class='r-in'>    per_cell <span class='op'>=</span> <span class='cn'>TRUE</span>,</span>
+<span class='r-in'>    dr <span class='op'>=</span> <span class='st'>"tsne"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> object data retrieval complete, moving to similarity computation</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> using # of genes: 19</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> similarity computation completed, matrix of 80 x 13, preparing output</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> using threshold of NA</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> seurat not loaded, returning cor_mat instead</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                          B  CD14+ Mono  CD16+ Mono         CD34+        CD4 T</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ATGCCAGAACGACT          NA          NA          NA            NA           NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CATGGCCTGTGCAT  0.03131121  0.09393364  0.03131121 -0.0156624783  0.156556073</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GAACCTGATGAACC  0.02635231  0.44798934  0.44798934  0.0790916384  0.184466197</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TGACTGGATTCTCA  0.28987545  0.31622777  0.31622777  0.4218220716  0.316227766</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AGTCAGACTGCACA          NA          NA          NA            NA           NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TCTGATACACGTGT          NA          NA          NA            NA           NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TGGTATCTAAACAG  0.00000000  0.12909944  0.12909944  0.3013642443  0.258198890</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GCAGCTCTGTTTCT  0.30123204  0.38729833  0.34426519  0.3444162792  0.387298335</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GATATAACACGCAT          NA          NA          NA            NA           NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AATGTTGACAGTCA  0.00000000  0.12909944  0.12909944  0.3013642443  0.258198890</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AGGTCATGAGTGTC  0.44426166 -0.03619910  0.02961744  0.0888913276 -0.134923911</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AGAGATGATCTCGC  0.43780788  0.38123720  0.45256545  0.4798314923  0.336964493</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GGGTAACTCTAGTG  0.56817622  0.01244182  0.08709271  0.1203236639 -0.186627226</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CATGAGACACGGGA  0.53311399  0.34882767  0.44426166  0.4148261957  0.102015640</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TACGCCACTCCGAA  0.20732211  0.17112301  0.29617444  0.2963044255  0.190867972</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CTAAACCTGTGCAT  0.53311399  0.34882767  0.44426166  0.4148261957  0.102015640</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GTAAGCACTCATTC  0.53311399  0.34882767  0.44426166  0.4148261957  0.102015640</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TTGGTACTGAATCC  0.16709137 -0.01519012  0.03452301 -0.1920321845 -0.451560984</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CATCATACGGAGCA  0.38729833  0.30123204  0.38729833  0.3874683141  0.172132593</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TACATCACGCTAAC  0.38569627  0.25298357  0.38569627  0.3609709916  0.141007237</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TTACCATGAATCGC  0.54822542  0.56479646  0.50679780  0.4835342775  0.447418223</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ATAGGAGAAACAGA  0.70897476  0.66220212  0.67081813  0.6501787611  0.476342419</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GCGCACGACTTTAC  0.57170106  0.63522340  0.60070039  0.6009640307  0.564796461</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ACTCGCACGAAAGT  0.57170106  0.63522340  0.60070039  0.6009640307  0.564796461</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ATTACCTGCCTTAT  0.37910456  0.54527052  0.46895726  0.4900968692  0.670818135</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CCCAACTGCAATCG  0.57232349  0.63038530  0.59720712  0.5974692276  0.555734405</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AAATTCGAATCACG  0.38389588  0.49436952  0.41289521  0.4365623763  0.470893871</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CCATCCGATTCGCC  0.57170106  0.63522340  0.60070039  0.6009640307  0.564796461</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TCCACTCTGAGCTT  0.37877761  0.71328250  0.70098453  0.4847528410  0.391075580</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CATCAGGATGCACA  0.52808777  0.79519008  0.79824850  0.6843675909  0.469977727</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CTAAACCTCTGACA  0.38648971  0.45418696  0.43449321  0.5455098318  0.476342419</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GATAGAGAAGGGTG  0.38729833  0.30123204  0.38729833  0.3874683141  0.172132593</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CTAACGGAACCGAT  0.12909944  0.21516574  0.17213259  0.2152601745  0.301232038</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AGATATACCCGTAA  0.30604692  0.43109835  0.36857264  0.4016571101  0.496914892</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TACTCTGAATCGAC  0.30604692  0.43109835  0.36857264  0.4016571101  0.496914892</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GCGCATCTTGCTCC  0.27642948  0.40148091  0.30933775  0.3423962250  0.467297448</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GTTGACGATATCGG  0.25132752  0.43498994  0.38251496  0.5166909137  0.571701063</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ACAGGTACTGGTGT  0.12909944  0.21516574  0.17213259  0.2152601745  0.301232038</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GGCATATGCTTATC  0.12909944  0.21516574  0.17213259  0.2152601745  0.301232038</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CATTACACCAACTG  0.01244182  0.17003814  0.19077450  0.3194800731  0.402285353</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TAGGGACTGAACTC  0.09872481  0.25339369  0.22048542  0.3720266675  0.408062560</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GCTCCATGAGAAGT  0.48523079  0.32763446  0.41057990  0.4107600939  0.091239977</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TACAATGATGCTAG          NA          NA          NA            NA           NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CTTCATGACCGAAT  0.12909944  0.21516574  0.17213259  0.2152601745  0.301232038</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CTGCCAACAGGAGC  0.38729833  0.30123204  0.38729833  0.3874683141  0.172132593</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TTGCATTGAGCTAC  0.38729833  0.30123204  0.38729833  0.3874683141  0.172132593</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AAGCAAGAGCTTAG  0.12909944  0.21516574  0.17213259  0.2152601745  0.301232038</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CGGCACGAACTCAG  0.12909944  0.21516574  0.17213259  0.2152601745  0.301232038</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GGTGGAGATTACTC  0.09872481  0.25339369  0.22048542  0.3720266675  0.408062560</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GGCCGATGTACTCT          NA          NA          NA            NA           NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CGTAGCCTGTATGC  0.57998659  0.63246156  0.60898591  0.6092531897  0.553749097</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TGAGCTGAATGCTG  0.39572399  0.75086091  0.80159476  0.5836952851  0.391665287</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CCTATAACGAGACG  0.50349655  0.49691489  0.53311399  0.5333479659  0.398190079</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ATAAGTTGGTACGT  0.46400662  0.47058828  0.46400662  0.4642102666  0.381735943</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AAGCGACTTTGACG  0.30648388  0.70528219  0.70282047  0.4322211082  0.322485048</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ACCAGTGAATACCG  0.60435175  0.51572991  0.56619512  0.5664436176  0.308945600</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ATTGCACTTGCTTT  0.50952655  0.81225781  0.82078545  0.5865326293  0.413590591</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CTAGGTGATGGTTG  0.49827856  0.74062313  0.76893441  0.5245550569  0.302364489</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GCACTAGACCTTTA  0.23061371  0.55374910  0.58274843  0.3246587292  0.161567692</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CATGCGCTAGTCAC  0.08492927  0.50095960  0.55880997  0.3829651415  0.193244857</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TTGAGGACTACGCA  0.45637786  0.29556978  0.36464931  0.3489480724  0.096258358</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ATACCACTCTAAGC  0.64687344  0.44518667  0.44026748  0.3494157534  0.108222173</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CATATAGACTAAGC  0.59924986  0.49029534  0.48916040  0.4655308205  0.447167509</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TTTAGCTGTACTCT  0.70897476  0.66220212  0.67081813  0.6501787611  0.476342419</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GACATTCTCCACCT  0.64687344  0.44518667  0.44026748  0.3494157534  0.108222173</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ACGTGATGCCATGA  0.74687208  0.64955238  0.61334040  0.5434180874  0.380225786</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ATTGTAGATTCCCG  0.71266734  0.65112439  0.66589470  0.6427903661  0.452956098</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GATAGAGATCACGA  0.58731304  0.56694381  0.58957629  0.5705889918  0.355330050</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AATGCGTGGACGGA  0.70405133  0.66712556  0.66835642  0.6477159628  0.488651008</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GCGTAAACACGGTT  0.42560359  0.29735504  0.31551413  0.3497158359  0.061286917</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ATTCAGCTCATTGG -0.38390303 -0.36760526 -0.36851069 -0.2241926923  0.061569354</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GGCATATGGGGAGT -0.23100622 -0.09966801 -0.12761231 -0.0009318855  0.287826301</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ATCATCTGACACCA -0.54852438 -0.55232040 -0.54093235 -0.4941734325 -0.156585679</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GTCATACTTCGCCT -0.54821729 -0.52963366 -0.52777529 -0.3950756052 -0.070617821</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TTACGTACGTTCAG -0.60147674 -0.57730611 -0.57637647 -0.4557232615 -0.086456470</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GAGTTGTGGTAGCT -0.40140656 -0.33636383 -0.35123074 -0.2323974148  0.109643459</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GACGCTCTCTCTCG -0.43668863 -0.44158424 -0.48858212 -0.3599854390 -0.014686837</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AGTCTTACTTCGGA -0.39931430 -0.31620828 -0.32026223 -0.2185025336 -0.004053952</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GGAACACTTCAGAC -0.52492894 -0.44281715 -0.45259237 -0.4513240771 -0.055718715</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CTTGATTGATCTTC  0.19190801  0.30548622  0.30059061  0.4114119302  0.488582124</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      CD8 T          DC        Eryth Memory CD4 T          Mk</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ATGCCAGAACGACT          NA          NA           NA           NA          NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CATGGCCTGTGCAT  0.21927470 -0.01572473  0.250489716  0.162793072  0.31311215</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GAACCTGATGAACC  0.14500134 -0.02646866  0.105409255  0.548043144  0.23717082</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TGACTGGATTCTCA  0.31636655  0.39702990  0.131761569  0.258798151 -0.21081851</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AGTCAGACTGCACA          NA          NA           NA           NA          NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TCTGATACACGTGT          NA          NA           NA           NA          NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TGGTATCTAAACAG  0.25831221  0.12966942  0.258198890  0.348036386 -0.17213259</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GCAGCTCTGTTTCT  0.38746831  0.30256199  0.344265186  0.397755870  0.25819889</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GATATAACACGCAT          NA          NA           NA           NA          NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AATGTTGACAGTCA  0.25831221  0.12966942  0.258198890  0.348036386 -0.17213259</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AGGTCATGAGTGTC -0.12016791  0.07437051 -0.204031280 -0.252842573 -0.33237354</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AGAGATGATCTCGC  0.33711238  0.42244764  0.113141363  0.166242832 -0.13527772</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GGGTAACTCTAGTG -0.17218731  0.20619631 -0.356665365 -0.318645377 -0.48523079</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CATGAGACACGGGA  0.10206041  0.53546771 -0.144796392 -0.252842573 -0.27313865</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TACGCCACTCCGAA  0.13169086  0.35697847 -0.055944061 -0.252842573 -0.09543399</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CTAAACCTGTGCAT  0.10206041  0.53546771 -0.144796392 -0.252842573 -0.27313865</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GTAAGCACTCATTC  0.10206041  0.53546771 -0.144796392 -0.252842573 -0.27313865</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TTGGTACTGAATCC -0.47248207 -0.12552506 -0.553749097 -0.114874767 -0.58551027</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CATCATACGGAGCA  0.17220814  0.38900827  0.043033148 -0.174018193 -0.08606630</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TACATCACGCTAAC  0.09128002  0.51236659 -0.194921769 -0.318645377 -0.25713084</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TTACCATGAATCGC  0.44761459  0.52429252  0.327278145  0.445937465  0.19332886</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ATAGGAGAAACAGA  0.47655148  0.69108792  0.286790138  0.251001602  0.09354528</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GCGCACGACTTTAC  0.56504434  0.54787181  0.491607677  0.445937465  0.31070710</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ACTCGCACGAAAGT  0.56504434  0.54787181  0.491607677  0.445937465  0.31070710</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ATTACCTGCCTTAT  0.67111255  0.31401848  0.626507212  0.820554811  0.43941665</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CCCAACTGCAATCG  0.55597831  0.54569124  0.485230787  0.431249382  0.30275083</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AAATTCGAATCACG  0.33018484  0.35923747  0.562034620  0.445937465  0.28723145</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CCATCCGATTCGCC  0.56504434  0.54787181  0.491607677  0.445937465  0.31070710</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TCCACTCTGAGCTT  0.36171912  0.41503628  0.322206924  0.507253771  0.17217164</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CATCAGGATGCACA  0.34779337  0.60516951  0.387400295  0.468205999 -0.05199320</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CTAAACCTCTGACA  0.51841905  0.43641152  0.327408484  0.189851070  0.17847455</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GATAGAGAAGGGTG  0.17220814  0.38900827  0.043033148 -0.174018193 -0.08606630</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CTAACGGAACCGAT  0.30136424  0.17289256  0.215165741  0.248597419  0.12909944</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AGATATACCCGTAA  0.49713298  0.34045169  0.401480906  0.463861562  0.27642948</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TACTCTGAATCGAC  0.49713298  0.34045169  0.401480906  0.463861562  0.27642948</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GCGCATCTTGCTCC  0.46750254  0.28095528  0.431098350  0.498080857  0.30604692</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GTTGACGATATCGG  0.57195197  0.36062449  0.490226757  0.596710598  0.12290192</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ACAGGTACTGGTGT  0.30136424  0.17289256  0.215165741  0.248597419  0.12909944</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GGCATATGCTTATC  0.30136424  0.17289256  0.215165741  0.248597419  0.12909944</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CATTACACCAACTG  0.35267281  0.24160376  0.219805399  0.268332949 -0.03732545</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TAGGGACTGAACTC  0.40824165  0.22145887  0.342246018  0.429642266 -0.01974496</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GCTCCATGAGAAGT -0.05808729  0.48737310 -0.020736358 -0.318645377 -0.30689810</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TACAATGATGCTAG          NA          NA           NA           NA          NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CTTCATGACCGAAT  0.30136424  0.17289256  0.215165741  0.248597419  0.12909944</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CTGCCAACAGGAGC  0.17220814  0.38900827  0.043033148 -0.174018193 -0.08606630</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TTGCATTGAGCTAC  0.17220814  0.38900827  0.043033148 -0.174018193 -0.08606630</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AAGCAAGAGCTTAG  0.30136424  0.17289256  0.215165741  0.248597419  0.12909944</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CGGCACGAACTCAG  0.30136424  0.17289256  0.215165741  0.248597419  0.12909944</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GGTGGAGATTACTC  0.40824165  0.22145887  0.342246018  0.429642266 -0.01974496</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GGCCGATGTACTCT          NA          NA           NA           NA          NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CGTAGCCTGTATGC  0.55399213  0.55896795  0.469512950  0.406050393  0.28585053</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TGAGCTGAATGCTG  0.32839204  0.56359368  0.158289598  0.429660319 -0.10146769</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CCTATAACGAGACG  0.39836484  0.50571950  0.269847822  0.140679326  0.11188812</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ATAAGTTGGTACGT  0.38190348  0.43300166  0.325791883  0.222425421  0.17112301</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AAGCGACTTTGACG  0.28568461  0.36099763  0.253556946  0.497025834  0.11939332</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ACCAGTGAATACCG  0.18347848  0.60701998  0.182167127 -0.051195794 -0.11570074</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ATTGCACTTGCTTT  0.38177942  0.57601581  0.215322936  0.447063321  0.02984674</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CTAGGTGATGGTTG  0.27190759  0.54483907  0.120039835  0.332989700 -0.03737089</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GCACTAGACCTTTA  0.12640968  0.27601643  0.100807192  0.264052417 -0.01519012</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CATGCGCTAGTCAC  0.15454060  0.24973124  0.076313256  0.307885817 -0.23632492</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TTGAGGACTACGCA  0.03852024  0.64720966 -0.255933987 -0.215233028 -0.48129179</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ATACCACTCTAAGC  0.08612360  0.67443395 -0.142656501 -0.093778008 -0.26563624</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CATATAGACTAAGC  0.42806127  0.56313714  0.172511323  0.009834647  0.10895452</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TTTAGCTGTACTCT  0.47655148  0.69108792  0.286790138  0.251001602  0.09354528</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GACATTCTCCACCT  0.08612360  0.67443395 -0.142656501 -0.093778008 -0.26563624</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ACGTGATGCCATGA  0.36341085  0.76267237  0.157295786  0.221613127 -0.01131624</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ATTGTAGATTCCCG  0.45315489  0.69603310  0.251095228  0.216871072  0.06031209</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GATAGAGATCACGA  0.40643144  0.61718494  0.446991623  0.254299429  0.05997609</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AATGCGTGGACGGA  0.48886547  0.68614275  0.304022164  0.283710026  0.11323902</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GCGTAAACACGGTT  0.09991881  0.60189557 -0.232663298 -0.101624685 -0.21904398</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ATTCAGCTCATTGG  0.07246632 -0.39878470  0.164788566 -0.203469249  0.60573379</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GGCATATGGGGAGT  0.24881343 -0.14501633  0.436862573  0.152821279  0.39960350</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ATCATCTGACACCA -0.09684090 -0.56524404  0.074971325 -0.211067964  0.52005426</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GTCATACTTCGCCT -0.05019784 -0.53757171 -0.007433455 -0.260873812  0.52777529</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TTACGTACGTTCAG  0.05394275 -0.61020161  0.049270892 -0.146612397  0.54012053</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GAGTTGTGGTAGCT  0.23239741 -0.35651457  0.241587282  0.001073555  0.57051766</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GACGCTCTCTCTCG  0.03330478 -0.54138667 -0.025457185 -0.160638212  0.60509770</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AGTCTTACTTCGGA  0.14195060 -0.32218518  0.228034815  0.037470726  0.36890966</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GGAACACTTCAGAC  0.06552267 -0.46588170  0.155425888 -0.028235126  0.46432262</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CTTGATTGATCTTC  0.55932431  0.18341256  0.361296200  0.535649250  0.52480966</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                Naive CD4 T          NK        pDCs</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ATGCCAGAACGACT          NA          NA          NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CATGGCCTGTGCAT  0.13949369  0.06262243  0.21956404</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GAACCTGATGAACC  0.19077734  0.36893239  0.15839201</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TGACTGGATTCTCA  0.42558021  0.44798934  0.26398668</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AGTCAGACTGCACA          NA          NA          NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TCTGATACACGTGT          NA          NA          NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TGGTATCTAAACAG  0.11982234  0.25819889  0.08621769</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GCAGCTCTGTTTCT  0.38343149  0.30123204  0.34487075</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GATATAACACGCAT          NA          NA          NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AATGTTGACAGTCA  0.11982234  0.25819889  0.08621769</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AGGTCATGAGTGTC  0.08796522 -0.10201564  0.14834771</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AGAGATGATCTCGC  0.41776119  0.40829274  0.54945445</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GGGTAACTCTAGTG  0.17552572 -0.08709271  0.25342857</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CATGAGACACGGGA  0.38484782  0.22377624  0.50438220</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TACGCCACTCCGAA  0.08796522  0.19415880  0.23735633</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CTAAACCTGTGCAT  0.38484782  0.22377624  0.50438220</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GTAAGCACTCATTC  0.38484782  0.22377624  0.50438220</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TTGGTACTGAATCC -0.08766741 -0.13809204 -0.14940175</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CATCATACGGAGCA  0.28757362  0.21516574  0.38797960</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TACATCACGCTAAC  0.22171669  0.21980540  0.38637471</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TTACCATGAATCGC  0.65212250  0.45984651  0.52843951</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ATAGGAGAAACAGA  0.72657229  0.51696076  0.69295952</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GCGCACGACTTTAC  0.67826892  0.53027345  0.57547339</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ACTCGCACGAAAGT  0.67826892  0.53027345  0.57547339</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ATTACCTGCCTTAT  0.60456298  0.59573574  0.50800591</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CCCAACTGCAATCG  0.67900737  0.53085078  0.56917565</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AAATTCGAATCACG  0.41680471  0.38941956  0.43437174</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CCATCCGATTCGCC  0.67826892  0.53027345  0.57547339</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TCCACTCTGAGCTT  0.54788352  0.55586843  0.38190780</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CATCAGGATGCACA  0.59611538  0.63615206  0.58008007</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CTAAACCTCTGACA  0.67859110  0.53419279  0.29099368</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GATAGAGAAGGGTG  0.28757362  0.21516574  0.38797960</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CTAACGGAACCGAT  0.33550255  0.38729833  0.04310884</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AGATATACCCGTAA  0.52046087  0.50349655  0.27032249</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TACTCTGAATCGAC  0.52046087  0.50349655  0.27032249</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GCGCATCTTGCTCC  0.55344782  0.53311399  0.18131386</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GTTGACGATATCGG  0.50831718  0.58274843  0.26975315</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ACAGGTACTGGTGT  0.33550255  0.38729833  0.04310884</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GGCATATGCTTATC  0.33550255  0.38729833  0.04310884</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CATTACACCAACTG  0.18476391  0.43546353  0.02908197</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TAGGGACTGAACTC  0.33903261  0.47387910  0.09230524</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GCTCCATGAGAAGT  0.22171669  0.17003814  0.51101172</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TACAATGATGCTAG          NA          NA          NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CTTCATGACCGAAT  0.33550255  0.38729833  0.04310884</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CTGCCAACAGGAGC  0.28757362  0.21516574  0.38797960</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TTGCATTGAGCTAC  0.28757362  0.21516574  0.38797960</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AAGCAAGAGCTTAG  0.33550255  0.38729833  0.04310884</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CGGCACGAACTCAG  0.33550255  0.38729833  0.04310884</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GGTGGAGATTACTC  0.33903261  0.47387910  0.09230524</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GGCCGATGTACTCT          NA          NA          NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CGTAGCCTGTATGC  0.66904077  0.52198793  0.58654019</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TGAGCTGAATGCTG  0.52550324  0.63620242  0.42793039</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CCTATAACGAGACG  0.48380869  0.37186346  0.53405175</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ATAAGTTGGTACGT  0.52779130  0.41135339  0.43185666</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AAGCGACTTTGACG  0.48118278  0.53542365  0.31318811</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ACCAGTGAATACCG  0.42360536  0.32863934  0.65103671</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ATTGCACTTGCTTT  0.68859139  0.68434319  0.46770961</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CTAGGTGATGGTTG  0.58397625  0.53904680  0.48781061</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GCACTAGACCTTTA  0.35220767  0.42532350  0.20473573</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CATGCGCTAGTCAC  0.27280733  0.51696076  0.09001076</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TTGAGGACTACGCA  0.18036415  0.17552995  0.22915754</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ATACCACTCTAAGC  0.41639148  0.20906556  0.33755722</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CATATAGACTAAGC  0.54354705  0.40971439  0.65374010</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TTTAGCTGTACTCT  0.72657229  0.51696076  0.69295952</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GACATTCTCCACCT  0.41639148  0.20906556  0.33755722</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ACGTGATGCCATGA  0.63774561  0.40964802  0.52939816</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ATTGTAGATTCCCG  0.71697605  0.50342132  0.69419255</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GATAGAGATCACGA  0.64530781  0.39946340  0.52032924</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AATGCGTGGACGGA  0.73205586  0.52188420  0.69049348</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GCGTAAACACGGTT  0.28567822  0.19748007  0.26718074</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ATTCAGCTCATTGG -0.32370946 -0.25261544  0.15600819</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GGCATATGGGGAGT -0.16287946  0.05216270  0.23514503</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ATCATCTGACACCA -0.53746937 -0.41376579 -0.05513906</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GTCATACTTCGCCT -0.44914350 -0.37538947 -0.04840245</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> TTACGTACGTTCAG -0.41830262 -0.36162975 -0.10057767</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GAGTTGTGGTAGCT -0.23699046 -0.13566055  0.04467918</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GACGCTCTCTCTCG -0.32170196 -0.29079938  0.06767829</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AGTCTTACTTCGGA -0.18625042 -0.23816970 -0.04771773</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> GGAACACTTCAGAC -0.38595542 -0.30791921 -0.02154330</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CTTGATTGATCTTC  0.43457028  0.38283689  0.49630746</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -72,8 +72,6 @@ and insert zero counts for all remaining genes." />
 
 
 
-<!-- dependencies from examples -->
-
 
   
 
@@ -97,7 +95,7 @@ and insert zero counts for all remaining genes." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">clustifyr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -155,7 +153,7 @@ all genes in vector and genes in reference matrix
 and insert zero counts for all remaining genes.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>append_genes</span><span class='op'>(</span><span class='va'>gene_vector</span>, <span class='va'>ref_matrix</span><span class='op'>)</span></pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>append_genes</span><span class='op'>(</span><span class='va'>gene_vector</span>, <span class='va'>ref_matrix</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -176,11 +174,11 @@ gene expression values</p></td>
     <p>Reference matrix with union of all genes</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>mat</span> <span class='op'>&lt;-</span> <span class='fu'>append_genes</span><span class='op'>(</span>
-    gene_vector <span class='op'>=</span> <span class='va'>human_genes_10x</span>,
-    ref_matrix <span class='op'>=</span> <span class='va'>cbmc_ref</span>
-<span class='op'>)</span>
-</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='va'>mat</span> <span class='op'>&lt;-</span> <span class='fu'>append_genes</span><span class='op'>(</span></span>
+<span class='r-in'>    gene_vector <span class='op'>=</span> <span class='va'>human_genes_10x</span>,</span>
+<span class='r-in'>    ref_matrix <span class='op'>=</span> <span class='va'>cbmc_ref</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

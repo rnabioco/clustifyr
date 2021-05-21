@@ -66,8 +66,6 @@
 
 
 
-<!-- dependencies from examples -->
-
 
   
 
@@ -91,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">clustifyr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -145,10 +143,10 @@
     <p>Function to convert labelled seurat object to fully prepared metadata</p>
     </div>
 
-    <pre class="usage"><span class='fu'>seurat_meta</span><span class='op'>(</span><span class='va'>seurat_object</span>, <span class='va'>...</span><span class='op'>)</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>seurat_meta</span><span class='op'>(</span><span class='va'>seurat_object</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for Seurat</span>
-<span class='fu'>seurat_meta</span><span class='op'>(</span><span class='va'>seurat_object</span>, dr <span class='op'>=</span> <span class='st'>"umap"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'>seurat_meta</span><span class='op'>(</span><span class='va'>seurat_object</span>, dr <span class='op'>=</span> <span class='st'>"umap"</span>, <span class='va'>...</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -173,8 +171,9 @@ umap projections and clustering</p></td>
     <p>dataframe of metadata, including dimension reduction plotting info</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'>seurat_meta</span><span class='op'>(</span><span class='va'>s_small3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>cannot find dr info</span></div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'>seurat_meta</span><span class='op'>(</span><span class='va'>s_small3</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> cannot find dr info</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

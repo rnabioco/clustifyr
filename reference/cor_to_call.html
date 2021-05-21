@@ -66,8 +66,6 @@
 
 
 
-<!-- dependencies from examples -->
-
 
   
 
@@ -91,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">clustifyr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -145,7 +143,7 @@
     <p>get best calls for each cluster</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cor_to_call</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>cor_to_call</span><span class='op'>(</span>
   <span class='va'>cor_mat</span>,
   metadata <span class='op'>=</span> <span class='cn'>NULL</span>,
   cluster_col <span class='op'>=</span> <span class='st'>"cluster"</span>,
@@ -153,7 +151,7 @@
   threshold <span class='op'>=</span> <span class='fl'>0</span>,
   rename_prefix <span class='op'>=</span> <span class='cn'>NULL</span>,
   carry_r <span class='op'>=</span> <span class='cn'>FALSE</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -194,27 +192,31 @@ frequent call of entire cluster to color in plot</p></td>
     <p>dataframe of cluster, new ident, and r info</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span><span class='op'>(</span>
-    input <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,
-    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,
-    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,
-    ref_mat <span class='op'>=</span> <span class='va'>cbmc_ref</span>
-<span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>var.features not found, using all genes instead</span></div><div class='output co'>#&gt; <span class='message'>using # of genes: 599</span></div><div class='output co'>#&gt; <span class='message'>similarity computation completed, matrix of 9 x 13, preparing output</span></div><div class='input'>
-<span class='fu'>cor_to_call</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 9 x 3</span><span>
-#&gt; </span><span style='color: #949494;'># Groups:   cluster [9]</span><span>
-#&gt;   cluster      type           r
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> B            B          0.909
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> CD14+ Mono   CD14+ Mono 0.915
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> FCGR3A+ Mono CD16+ Mono 0.929
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> Memory CD4 T CD4 T      0.861
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> Naive CD4 T  CD4 T      0.889
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> DC           DC         0.849
-#&gt; </span><span style='color: #BCBCBC;'>7</span><span> Platelet     Mk         0.732
-#&gt; </span><span style='color: #BCBCBC;'>8</span><span> CD8 T        NK         0.826
-#&gt; </span><span style='color: #BCBCBC;'>9</span><span> NK           NK         0.894</div></span></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span><span class='op'>(</span></span>
+<span class='r-in'>    input <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,</span>
+<span class='r-in'>    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,</span>
+<span class='r-in'>    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,</span>
+<span class='r-in'>    ref_mat <span class='op'>=</span> <span class='va'>cbmc_ref</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> var.features not found, using all genes instead</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> using # of genes: 599</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> similarity computation completed, matrix of 9 x 13, preparing output</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>cor_to_call</span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 9 x 3</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># Groups:   cluster [9]</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   cluster      type           r</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span><span> B            B          0.909</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span><span> CD14+ Mono   CD14+ Mono 0.915</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span><span> FCGR3A+ Mono CD16+ Mono 0.929</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span><span> Memory CD4 T CD4 T      0.861</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span><span> Naive CD4 T  CD4 T      0.889</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>6</span><span> DC           DC         0.849</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>7</span><span> Platelet     Mk         0.732</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>8</span><span> CD8 T        NK         0.826</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>9</span><span> NK           NK         0.894</span></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
