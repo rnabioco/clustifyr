@@ -69,7 +69,6 @@ bulk RNA-seq data and marker list" />
 
 
 
-
   
 
   
@@ -310,10 +309,10 @@ clusters from input as row names, cell types from ref_mat as column names</p>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 0 -0.94493203 -0.9156671 -0.2220272 -0.2825193 0.2887232 0.37971905 -0.3168822</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 1  0.04838758  0.7219124  0.7316084  0.3238704 0.3472936 0.19775419  0.5865428</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 2  0.62480323 -0.2550175  0.4973646  0.3895667 0.1769981 0.01448416  0.5146717</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>        Eryth Memory CD4 T         Mk Naive CD4 T         NK      pDCs</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 0  0.4203598    0.1987308  0.6204476 -0.08992247 0.08688022 0.1134067</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  0.1736468    0.5311026 -0.2163932  0.51050337 0.25334722 0.4370882</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 -0.1716881    0.1094072 -0.6697973  0.23853307 0.14695522 0.3758960</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        Eryth Memory CD4 T         Mk         NK Naive CD4 T      pDCs</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 0  0.4203598    0.1987308  0.6204476 0.08688022 -0.08992247 0.1134067</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  0.1736468    0.5311026 -0.2163932 0.25334722  0.51050337 0.4370882</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 -0.1716881    0.1094072 -0.6697973 0.14695522  0.23853307 0.3758960</span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># Matrix</span></span>
 <span class='r-in'><span class='fu'>clustify_nudge</span><span class='op'>(</span></span>
@@ -337,8 +336,8 @@ clusters from input as row names, cell types from ref_mat as column names</p>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> DC           -0.1927865  0.3971091  0.41292804 0.5694074  0.31768980</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> FCGR3A+ Mono -0.2924419  0.6387074  0.92949138 0.5331927  0.22686950</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Memory CD4 T -0.2094668 -0.1734003  0.22245854 0.6265186  0.86108263</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Naive CD4 T  -0.2115884 -0.2355533  0.19645924 0.6480900  0.80013677</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> NK           -0.3523479 -0.3353237  0.15173936 0.5350808  0.47524944</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Naive CD4 T  -0.2115884 -0.2355533  0.19645924 0.6480900  0.80013677</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Platelet     -0.6782452 -0.3759687 -0.08362827 0.2455947 -0.05758481</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>                    CD8 T          DC     Eryth Memory CD4 T         Mk</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> B             0.43921857  0.35367232 0.4817829    0.4803367 -0.6748463</span>
@@ -347,19 +346,19 @@ clusters from input as row names, cell types from ref_mat as column names</p>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> DC            0.28543102  0.84933995 0.4470039    0.4764929 -0.5578229</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> FCGR3A+ Mono  0.35105547  0.48594006 0.4604308    0.4614474 -0.4760099</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Memory CD4 T  0.65776299  0.30625770 0.5395170    0.7128879 -0.6336165</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Naive CD4 T   0.72313292  0.29335212 0.5528441    0.7277404 -0.6269043</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> NK            0.69267415  0.23172856 0.4578726    0.5665250 -0.6199834</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Naive CD4 T   0.72313292  0.29335212 0.5528441    0.7277404 -0.6269043</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Platelet     -0.07272109 -0.06019224 0.3068445    0.1457308  0.7319575</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>              Naive CD4 T         NK      pDCs</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> B              0.5407149 -0.3536418 0.4801131</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> CD14+ Mono     0.4564707 -0.2621333 0.3710598</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> CD8 T          0.6036230  0.5582283 0.3519523</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> DC             0.4475783 -0.1659100 0.6825388</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> FCGR3A+ Mono   0.4574654 -0.1921798 0.3755701</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Memory CD4 T   0.6871755 -0.1208282 0.3668161</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Naive CD4 T    0.6967073 -0.1890644 0.3594580</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> NK             0.5505877  0.8940904 0.3186506</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Platelet       0.1609963 -0.7349565 0.1110947</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      NK Naive CD4 T      pDCs</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B            -0.3536418   0.5407149 0.4801131</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD14+ Mono   -0.2621333   0.4564707 0.3710598</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD8 T         0.5582283   0.6036230 0.3519523</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> DC           -0.1659100   0.4475783 0.6825388</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> FCGR3A+ Mono -0.1921798   0.4574654 0.3755701</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Memory CD4 T -0.1208282   0.6871755 0.3668161</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NK            0.8940904   0.5505877 0.3186506</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Naive CD4 T  -0.1890644   0.6967073 0.3594580</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Platelet     -0.7349565   0.1609963 0.1110947</span>
 </code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
