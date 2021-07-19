@@ -7,15 +7,15 @@ status](https://github.com/rnabioco/clustifyr/workflows/R-CMD-check/badge.svg)](
 [![codecov](https://codecov.io/gh/rnabioco/clustifyr/branch/master/graph/badge.svg)](https://codecov.io/gh/rnabioco/clustifyr)
 [![platforms](https://bioconductor.org/shields/availability/release/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
 [![bioc](https://bioconductor.org/shields/years-in-bioc/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
-[![\#downloads](https://img.shields.io/badge/%23%20downloads-2457-brightgreen)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
+[![\#downloads](https://img.shields.io/badge/%23%20downloads-2532-brightgreen)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
 
 <!-- badges: end -->
 
--   [Installation](#installation)
--   [Additional info](#additional-info)
--   [Example usage](#example-usage)
--   [Frequently Asked Questions](#frequently-asked-questions)
--   [Code of Conduct](#code-of-conduct)
+    -   [Installation](#installation)
+    -   [Additional info](#additional-info)
+    -   [Example usage](#example-usage)
+    -   [Frequently Asked Questions](#frequently-asked-questions)
+    -   [Code of Conduct](#code-of-conduct)
     
 clustifyr classifies cells and clusters in single-cell RNA sequencing
 experiments using reference bulk RNA-seq data sets, sorted microarray

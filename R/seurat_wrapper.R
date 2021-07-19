@@ -39,12 +39,24 @@ object_data.Seurat <- function(object,
                              object@assays$SCT@var.features 
                          })
         if (length(vars) == 0) {
-            message("found variable genes in SCT slot")
+            message("trying to find variable genes in SCT assay")
             vars <- object@assays$SCT@var.features 
         } 
+        if (length(vars) == 0) {
+            message("trying to find variable genes in integrated assay")
+            vars <- object@assays$integrated@var.features 
+        }
+        if (length(vars) == 0) {
+            message("trying to find variable genes in Spatial assay")
+            vars <- object@assays$Spatial@var.features 
+        }
+        if (length(vars) == 0) {
+            message("variable genes not found, please manually specify with query_genes argument")
+        }
         if ((length(vars) > n_genes) & (n_genes > 0)) {
             vars <- vars[seq_len(n_genes)]
         }
+        
         return(vars)
     } else if (slot == "pca") {
         return(object@reductions$pca@feature.loadings)
