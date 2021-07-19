@@ -562,6 +562,7 @@ clustify_lists <- function(input, ...) {
 #' @param seurat_out output cor matrix or called seurat object
 #'   (deprecated, use obj_out instead)
 #' @param verbose whether to report certain variables chosen and steps
+#' @param input_markers whether input is marker data.frame of 0 and 1s (output of pos_neg_marker), and uses alternate enrichment mode
 #' @param ... passed to matrixize_markers
 #' @examples
 #' # Annotate a matrix and metadata
@@ -605,6 +606,7 @@ clustify_lists.default <- function(input,
     threshold = 0,
     low_threshold_cell = 0,
     verbose = TRUE,
+    input_markers = FALSE,
     ...) {
     input_original <- input
     if (!inherits(input, c("matrix", "Matrix", "data.frame"))) {
@@ -630,6 +632,9 @@ clustify_lists.default <- function(input,
     if (metric %in% c("posneg", "pct")) {
         per_cell <- TRUE
     }
+    if (input_markers) {
+        per_cell <- TRUE
+    }
     if (!(per_cell)) {
         input <- average_clusters(input,
             cluster_info,
@@ -639,7 +644,11 @@ clustify_lists.default <- function(input,
         )
     }
 
-    bin_input <- binarize_expr(input, n = topn, cut = cut)
+    if (!input_markers) {
+        bin_input <- binarize_expr(input, n = topn, cut = cut)
+    } else {
+        bin_input <- as.matrix(input_original)
+    }
 
     if (marker_inmatrix != TRUE & metric != "posneg") {
         marker <- matrixize_markers(

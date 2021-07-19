@@ -292,3 +292,19 @@ test_that("lists of genes will work with posneg", {
     )
     expect_true(ncol(res) == length(lst_of_markers))
 })
+
+test_that("clustify_lists input_markers mode", {
+    pbmc_mm <- matrixize_markers(pbmc_markers)
+    pbmc_input_mm <- pos_neg_marker(pbmc_mm[1:3,])
+    results <- lapply(
+        c("hyper", "spearman"),
+        function(x) {
+            clustify_lists(pbmc_input_mm,
+                          pbmc_mm,
+                          metric = x,
+                          input_markers = TRUE
+            )
+        }
+    )
+    expect_equal(2, length(results))
+})

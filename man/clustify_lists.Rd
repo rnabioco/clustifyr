@@ -29,6 +29,7 @@ clustify_lists(input, ...)
   threshold = 0,
   low_threshold_cell = 0,
   verbose = TRUE,
+  input_markers = FALSE,
   ...
 )
 
@@ -125,6 +126,8 @@ only used when obj_out = T}
 \item{low_threshold_cell}{option to remove clusters with too few cells}
 
 \item{verbose}{whether to report certain variables chosen and steps}
+
+\item{input_markers}{whether input is marker data.frame of 0 and 1s (output of pos_neg_marker), and uses alternate enrichment mode}
 
 \item{dr}{stored dimension reduction}
 }
