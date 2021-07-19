@@ -11,11 +11,11 @@ status](https://github.com/rnabioco/clustifyr/workflows/R-CMD-check/badge.svg)](
 
 <!-- badges: end -->
 
-    -   [Installation](#installation)
-    -   [Additional info](#additional-info)
-    -   [Example usage](#example-usage)
-    -   [Frequently Asked Questions](#frequently-asked-questions)
-    -   [Code of Conduct](#code-of-conduct)
+  -   [Installation](#installation)
+  -   [Additional info](#additional-info)
+  -   [Example usage](#example-usage)
+  -   [Frequently Asked Questions](#frequently-asked-questions)
+  -   [Code of Conduct](#code-of-conduct)
     
 clustifyr classifies cells and clusters in single-cell RNA sequencing
 experiments using reference bulk RNA-seq data sets, sorted microarray
