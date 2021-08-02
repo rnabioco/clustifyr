@@ -7,7 +7,7 @@ status](https://github.com/rnabioco/clustifyr/workflows/R-CMD-check/badge.svg)](
 [![codecov](https://codecov.io/gh/rnabioco/clustifyr/branch/master/graph/badge.svg)](https://codecov.io/gh/rnabioco/clustifyr)
 [![platforms](https://bioconductor.org/shields/availability/release/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
 [![bioc](https://bioconductor.org/shields/years-in-bioc/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
-[![\#downloads](https://img.shields.io/badge/%23%20downloads-2532-brightgreen)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
+[![\#downloads](https://img.shields.io/badge/%23%20downloads-2620-brightgreen)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
 
 <!-- badges: end -->
 
@@ -297,7 +297,30 @@ clustify_lists(
     and negative markers are available, set argument
     `metric = "posneg"`.
 
-9.  **Why is the default setting `per_cell = FALSE`?** While doing
+9.  **Do I need to have equal number of marker genes per cell type?**
+    Better support will be our next focus. Currently `metric = "posneg"`
+    works with uneven numbers of markers. An alternative workflow can be
+    used with argument `input_markers = TRUE`:
+
+``` r
+# pbmc_markers as FindAllMarkers output gene list
+pbmc_input <- matrixize_markers(pbmc_markers)
+# reference gene list that is uneven length
+pbmc_ref_mm <- pos_neg_marker(
+  list(B = c("CD79A", "CD79B", "MS4A1"), 
+       NK = c("GZMB", "GNLY"))
+)
+
+# reverse input and reference
+res <- clustify_lists(
+  pbmc_ref_mm,
+  pbmc_input,
+  metric = "jaccard",
+  input_markers = TRUE
+)
+```
+
+10. **Why is the default setting `per_cell = FALSE`?** While doing
     classification on per cell level is available, it is slow and not
     very accurate. Default settings are also not optimized for per-cell
     classification. `clustifyr` is mainly focused on leveraging results
@@ -311,12 +334,12 @@ clustify_lists(
     overcluster the data and check if `clustify()` results are stable
     (see also `overcluster_test()`).
 
-10. **Can I use multiple references in the same clustify run?** Yes,
+11. **Can I use multiple references in the same clustify run?** Yes,
     simply adding columns to a reference matrix works to expand it. We
     also provide `build_atlas()`, which can be run along the lines of
     `build_atlas(matrix_objs = list(reference1, reference2, reference3, ...), genes_fn = clustifyr::human_genes_10x)`.
 
-11. **Does clustifyr work for spatial scRNA-seq data?** It works
+12. **Does clustifyr work for spatial scRNA-seq data?** It works
     decently on the Seurat tutorial data. See short
     [example](https://github.com/rnabioco/clustifyr/issues/370) for both
     `clustify`(correlation) and `clustify_lists`(gene list enrichment)
@@ -325,7 +348,7 @@ clustify_lists(
     This can now be directly handled by Seurat wrapper, in the GitHub
     devel version and Bioconductor 3.13)
 
-12. **Can I pull out additional information on what gene signatures
+13. **Can I pull out additional information on what gene signatures
     don’t match the reference clusters?** Please add arguments
     `organism = "hsapiens", plot_name = "rank_diffs"` to `clustify()`.
     This saves a “rank\_diffs.pdf”, comparing gene expression of the
@@ -336,7 +359,7 @@ clustify_lists(
     `assess_rank_bias()` for step-by-step generation of the plot outside
     of the `clustify()` wrapper.
 
-13. **How do I cite `clustifyr`?**
+14. **How do I cite `clustifyr`?**
 
 ``` r
 citation("clustifyr")
