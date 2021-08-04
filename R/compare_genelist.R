@@ -228,9 +228,12 @@ compare_lists <- function(bin_mat,
     metric = "hyper",
     output_high = TRUE) {
     # check if matrix is binarized
+    if (is.list(marker_mat)) {
+        message("list of markers instead of matrix, only supports jaccard")
+    } 
     if ((length(unique(bin_mat[, 1])) > 2) & (metric != "gsea")) {
-        warning("non-binarized data, running spearman instead")
-        metric <- "spearman"
+          warning("non-binarized data, running spearman instead")
+          metric <- "spearman"
     }
 
     if (metric == "hyper") {
@@ -259,25 +262,47 @@ compare_lists <- function(bin_mat,
             error("NaN produced, possibly due to wrong n")
         }
     } else if (metric == "jaccard") {
-        out <- lapply(
+        if (is.list(marker_mat)) {
+          out <- lapply(
             colnames(bin_mat),
             function(x) {
-                per_col <- lapply(
-                    colnames(marker_mat),
-                    function(y) {
-                        marker_list <- unlist(marker_mat[, y],
-                            use.names = FALSE
-                        )
-                        bin_temp <- bin_mat[, x][bin_mat[, x] == 1]
-                        list_top <- names(bin_temp)
-
-                        I <- length(intersect(list_top, marker_list))
-                        I / (length(list_top) + length(marker_list) - I)
-                    }
-                )
-                do.call(cbind, per_col)
+              per_col <- lapply(
+                names(marker_mat),
+                function(y) {
+                  marker_list <- unlist(marker_mat[[y]],
+                                        use.names = FALSE
+                  )
+                  bin_temp <- bin_mat[, x][bin_mat[, x] == 1]
+                  list_top <- names(bin_temp)
+                  
+                  I <- length(intersect(list_top, marker_list))
+                  I / (length(list_top) + length(marker_list) - I)
+                }
+              )
+              do.call(cbind, per_col)
             }
-        )
+          )
+        } else {
+          out <- lapply(
+            colnames(bin_mat),
+            function(x) {
+              per_col <- lapply(
+                colnames(marker_mat),
+                function(y) {
+                  marker_list <- unlist(marker_mat[, y],
+                                        use.names = FALSE
+                  )
+                  bin_temp <- bin_mat[, x][bin_mat[, x] == 1]
+                  list_top <- names(bin_temp)
+                  
+                  I <- length(intersect(list_top, marker_list))
+                  I / (length(list_top) + length(marker_list) - I)
+                }
+              )
+              do.call(cbind, per_col)
+            }
+          )
+        }
     } else if (metric == "spearman") {
         out <- lapply(
             colnames(bin_mat),
@@ -334,9 +359,16 @@ compare_lists <- function(bin_mat,
     }
 
     if (metric != "gsea") {
-        res <- do.call(rbind, out)
-        rownames(res) <- colnames(bin_mat)
-        colnames(res) <- colnames(marker_mat)
+        if (!is.list(marker_mat)) {
+          res <- do.call(rbind, out)
+          rownames(res) <- colnames(bin_mat)
+          colnames(res) <- colnames(marker_mat)
+        } else {
+          res <- do.call(rbind, out)
+          rownames(res) <- colnames(bin_mat)
+          colnames(res) <- names(marker_mat)
+        }
+        
     }
 
     if (output_high) {

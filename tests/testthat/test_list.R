@@ -308,3 +308,19 @@ test_that("clustify_lists input_markers mode", {
     )
     expect_equal(2, length(results))
 })
+
+test_that("clustify_lists input_markers mode with uneven number of marker per cluster", {
+    pbmc_mm <- matrixize_markers(pbmc_markers)
+    pbmc_input_mm <- pos_neg_marker(pbmc_mm[1:3,])
+    results <- lapply(
+        c("jaccard"),
+        function(x) {
+            clustify_lists(pbmc_input_mm,
+                           split(pbmc_markers$gene, pbmc_markers$cluster),
+                           metric = x,
+                           input_markers = TRUE
+            )
+        }
+    )
+    expect_equal(1, length(results))
+})
