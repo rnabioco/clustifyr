@@ -43,7 +43,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">clustifyr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.1</span>
       </span>
     </div>
 
@@ -95,11 +95,16 @@
 
 <!-- badges: end -->
 <ul>
+<li>
+<a href="#clustifyr-">clustifyr</a>
+<ul>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#additional-info">Additional info</a></li>
 <li><a href="#example-usage">Example usage</a></li>
 <li><a href="#frequently-asked-questions">Frequently Asked Questions</a></li>
 <li><a href="#code-of-conduct">Code of Conduct</a></li>
+</ul>
+</li>
 </ul>
 <p>clustifyr classifies cells and clusters in single-cell RNA sequencing experiments using reference bulk RNA-seq data sets, sorted microarray expression data, single-cell gene signatures, or lists of marker genes.</p>
 <p>Single cell transcriptomes are difficult to annotate without knowledge of the underlying biology. Even with this knowledge, accurate identification can be challenging due to the lack of detectable expression of common marker genes. clustifyr solves this problem by automatically annotating single cells or clusters of cells using single-cell RNA-seq, bulk RNA-seq data, microarray, or marker gene lists. Additional functions enable exploratory analysis of similarities between single cell RNA-seq datasets and reference data.</p>
@@ -237,26 +242,26 @@
   marker <span class="op">=</span> <span class="va">pbmc_markers</span>,
   marker_inmatrix <span class="op">=</span> <span class="cn">FALSE</span>
 <span class="op">)</span>
-<span class="co">#&gt;                      0        1        2         3         4        5        6</span>
-<span class="co">#&gt; Naive CD4 T  1.5639055 20.19469 31.77095  8.664074 23.844992 19.06931 19.06931</span>
-<span class="co">#&gt; Memory CD4 T 1.5639055 20.19469 31.77095 10.568007 23.844992 17.97875 19.06931</span>
-<span class="co">#&gt; CD14+ Mono   0.9575077 14.70716 76.21353 17.899569 11.687739 49.86699 16.83210</span>
-<span class="co">#&gt; B            0.6564777 12.70976 31.77095 26.422929 13.536295 20.19469 13.53630</span>
-<span class="co">#&gt; CD8 T        1.0785353 17.97875 31.82210 12.584823 31.822099 22.71234 40.45383</span>
-<span class="co">#&gt; FCGR3A+ Mono 0.6564777 13.63321 72.43684 17.899569  9.726346 56.48245 14.61025</span>
-<span class="co">#&gt; NK           0.6564777 14.61025 31.82210  7.757206 31.822099 22.71234 45.05072</span>
-<span class="co">#&gt; DC           0.6564777 15.80598 63.34978 19.069308 13.758144 40.56298 17.97875</span>
-<span class="co">#&gt; Platelet     0.5428889 13.34769 59.94938 14.215244 15.158755 46.92861 19.49246</span>
-<span class="co">#&gt;                      7          8</span>
-<span class="co">#&gt; Naive CD4 T   6.165348  0.6055118</span>
-<span class="co">#&gt; Memory CD4 T  6.165348  0.9575077</span>
-<span class="co">#&gt; CD14+ Mono   25.181595  1.0785353</span>
-<span class="co">#&gt; B            17.899569  0.1401901</span>
-<span class="co">#&gt; CD8 T         7.882145  0.3309153</span>
-<span class="co">#&gt; FCGR3A+ Mono 21.409177  0.3309153</span>
-<span class="co">#&gt; NK            5.358651  0.3309153</span>
-<span class="co">#&gt; DC           45.101877  0.1401901</span>
-<span class="co">#&gt; Platelet     19.492465 59.9493793</span>
+<span class="co">#&gt;                        0          1          2          3          4          5</span>
+<span class="co">#&gt; Naive CD4 T  0.007882883 0.03229527 0.04312354 0.01936219 0.03587963 0.03110599</span>
+<span class="co">#&gt; Memory CD4 T 0.007882883 0.03229527 0.04312354 0.02168950 0.03587963 0.02991945</span>
+<span class="co">#&gt; CD14+ Mono   0.005617978 0.02637615 0.07701564 0.02991945 0.02285714 0.05791962</span>
+<span class="co">#&gt; B            0.005617978 0.02402746 0.04312354 0.03828306 0.02520046 0.03229527</span>
+<span class="co">#&gt; CD8 T        0.006749156 0.02991945 0.04312354 0.02402746 0.04312354 0.03468208</span>
+<span class="co">#&gt; FCGR3A+ Mono 0.005617978 0.02520046 0.07442977 0.02991945 0.02052452 0.06294537</span>
+<span class="co">#&gt; NK           0.005617978 0.02637615 0.04312354 0.01820250 0.04312354 0.03468208</span>
+<span class="co">#&gt; DC           0.005617978 0.02755454 0.06801909 0.03110599 0.02520046 0.05046948</span>
+<span class="co">#&gt; Platelet     0.004228330 0.02370690 0.06263982 0.02481122 0.02591793 0.05321508</span>
+<span class="co">#&gt;                       6          7           8</span>
+<span class="co">#&gt; Naive CD4 T  0.03110599 0.01589103 0.004489338</span>
+<span class="co">#&gt; Memory CD4 T 0.03110599 0.01589103 0.005617978</span>
+<span class="co">#&gt; CD14+ Mono   0.02873563 0.03707995 0.006749156</span>
+<span class="co">#&gt; B            0.02520046 0.02991945 0.002239642</span>
+<span class="co">#&gt; CD8 T        0.05046948 0.01820250 0.003363229</span>
+<span class="co">#&gt; FCGR3A+ Mono 0.02637615 0.03348730 0.003363229</span>
+<span class="co">#&gt; NK           0.05418139 0.01473923 0.003363229</span>
+<span class="co">#&gt; DC           0.02991945 0.05418139 0.002239642</span>
+<span class="co">#&gt; Platelet     0.03036876 0.03036876 0.062639821</span>
 
 <span class="fu"><a href="reference/clustify_lists.html">clustify_lists</a></span><span class="op">(</span>
   input <span class="op">=</span> <span class="va">s_small3</span>,
@@ -389,7 +394,7 @@
 <li><a href="https://codecov.io/gh/rnabioco/clustifyr" class="external-link"><img src="https://codecov.io/gh/rnabioco/clustifyr/branch/master/graph/badge.svg" alt="codecov"></a></li>
 <li><a href="https://bioconductor.org/packages/release/bioc/html/clustifyr.html" class="external-link"><img src="https://bioconductor.org/shields/availability/release/clustifyr.svg" alt="platforms"></a></li>
 <li><a href="https://bioconductor.org/packages/release/bioc/html/clustifyr.html" class="external-link"><img src="https://bioconductor.org/shields/years-in-bioc/clustifyr.svg" alt="bioc"></a></li>
-<li><a href="https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab" class="external-link"><img src="https://img.shields.io/badge/%23%20downloads-2620-brightgreen" alt="#downloads"></a></li>
+<li><a href="https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab" class="external-link"><img src="https://img.shields.io/badge/%23%20downloads-2680-brightgreen" alt="#downloads"></a></li>
 </ul>
 </div>
 
