@@ -7,16 +7,17 @@ status](https://github.com/rnabioco/clustifyr/workflows/R-CMD-check/badge.svg)](
 [![codecov](https://codecov.io/gh/rnabioco/clustifyr/branch/master/graph/badge.svg)](https://codecov.io/gh/rnabioco/clustifyr)
 [![platforms](https://bioconductor.org/shields/availability/release/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
 [![bioc](https://bioconductor.org/shields/years-in-bioc/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
-[![\#downloads](https://img.shields.io/badge/%23%20downloads-2620-brightgreen)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
+[![\#downloads](https://img.shields.io/badge/%23%20downloads-2680-brightgreen)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
 
 <!-- badges: end -->
 
-  -   [Installation](#installation)
-  -   [Additional info](#additional-info)
-  -   [Example usage](#example-usage)
-  -   [Frequently Asked Questions](#frequently-asked-questions)
-  -   [Code of Conduct](#code-of-conduct)
-    
+-   [clustifyr](#clustifyr-)
+    -   [Installation](#installation)
+    -   [Additional info](#additional-info)
+    -   [Example usage](#example-usage)
+    -   [Frequently Asked Questions](#frequently-asked-questions)
+    -   [Code of Conduct](#code-of-conduct)
+
 clustifyr classifies cells and clusters in single-cell RNA sequencing
 experiments using reference bulk RNA-seq data sets, sorted microarray
 expression data, single-cell gene signatures, or lists of marker genes.
@@ -199,26 +200,26 @@ clustify_lists(
   marker = pbmc_markers,
   marker_inmatrix = FALSE
 )
-#>                      0        1        2         3         4        5        6
-#> Naive CD4 T  1.5639055 20.19469 31.77095  8.664074 23.844992 19.06931 19.06931
-#> Memory CD4 T 1.5639055 20.19469 31.77095 10.568007 23.844992 17.97875 19.06931
-#> CD14+ Mono   0.9575077 14.70716 76.21353 17.899569 11.687739 49.86699 16.83210
-#> B            0.6564777 12.70976 31.77095 26.422929 13.536295 20.19469 13.53630
-#> CD8 T        1.0785353 17.97875 31.82210 12.584823 31.822099 22.71234 40.45383
-#> FCGR3A+ Mono 0.6564777 13.63321 72.43684 17.899569  9.726346 56.48245 14.61025
-#> NK           0.6564777 14.61025 31.82210  7.757206 31.822099 22.71234 45.05072
-#> DC           0.6564777 15.80598 63.34978 19.069308 13.758144 40.56298 17.97875
-#> Platelet     0.5428889 13.34769 59.94938 14.215244 15.158755 46.92861 19.49246
-#>                      7          8
-#> Naive CD4 T   6.165348  0.6055118
-#> Memory CD4 T  6.165348  0.9575077
-#> CD14+ Mono   25.181595  1.0785353
-#> B            17.899569  0.1401901
-#> CD8 T         7.882145  0.3309153
-#> FCGR3A+ Mono 21.409177  0.3309153
-#> NK            5.358651  0.3309153
-#> DC           45.101877  0.1401901
-#> Platelet     19.492465 59.9493793
+#>                        0          1          2          3          4          5
+#> Naive CD4 T  0.007882883 0.03229527 0.04312354 0.01936219 0.03587963 0.03110599
+#> Memory CD4 T 0.007882883 0.03229527 0.04312354 0.02168950 0.03587963 0.02991945
+#> CD14+ Mono   0.005617978 0.02637615 0.07701564 0.02991945 0.02285714 0.05791962
+#> B            0.005617978 0.02402746 0.04312354 0.03828306 0.02520046 0.03229527
+#> CD8 T        0.006749156 0.02991945 0.04312354 0.02402746 0.04312354 0.03468208
+#> FCGR3A+ Mono 0.005617978 0.02520046 0.07442977 0.02991945 0.02052452 0.06294537
+#> NK           0.005617978 0.02637615 0.04312354 0.01820250 0.04312354 0.03468208
+#> DC           0.005617978 0.02755454 0.06801909 0.03110599 0.02520046 0.05046948
+#> Platelet     0.004228330 0.02370690 0.06263982 0.02481122 0.02591793 0.05321508
+#>                       6          7           8
+#> Naive CD4 T  0.03110599 0.01589103 0.004489338
+#> Memory CD4 T 0.03110599 0.01589103 0.005617978
+#> CD14+ Mono   0.02873563 0.03707995 0.006749156
+#> B            0.02520046 0.02991945 0.002239642
+#> CD8 T        0.05046948 0.01820250 0.003363229
+#> FCGR3A+ Mono 0.02637615 0.03348730 0.003363229
+#> NK           0.05418139 0.01473923 0.003363229
+#> DC           0.02991945 0.05418139 0.002239642
+#> Platelet     0.03036876 0.03036876 0.062639821
 
 clustify_lists(
   input = s_small3,
