@@ -2108,6 +2108,8 @@ make_comb_ref <- function(ref_mat,
 #' @param res dataframe of idents, such as output of cor_to_call
 #' @param organism for GO term analysis, organism name: human - 'hsapiens', mouse - 'mmusculus'
 #' @param plot_name name for saved pdf, if NULL then no file is written (default)
+#' @param rds_name name for saved rds of rank_diff, if NULL then no file is written (default)
+#' @param expand_unassigned test all ref clusters for unassigned results
 #' @return pdf of ggplot object
 #' @examples
 #' \dontrun{
@@ -2142,7 +2144,9 @@ assess_rank_bias <- function(
     query_genes = NULL,
     res,
     organism,
-    plot_name = NULL) {
+    plot_name = NULL,
+    rds_name = NULL,
+    expand_unassigned = FALSE) {
     rankdiff <- find_rank_bias(
         avg_mat,
         ref_mat,
@@ -2150,7 +2154,19 @@ assess_rank_bias <- function(
     )
     res2 <- purrr::map2(res[[1]], res[[2]], function(a, b) {
         if (b == "unassigned") {
-            return(NULL)
+            if (expand_unassigned) {
+                message("checking unassigned types against every ref type")
+                res3 <<- purrr::map(colnames(ref_mat), function(x) {
+                    query_rank_bias(
+                        rankdiff,
+                        a,
+                        x
+                    ) 
+                })
+                return(NULL)
+            } else {
+                return(NULL)
+            }
         } else {
             qres <- query_rank_bias(
                 rankdiff,
@@ -2160,6 +2176,13 @@ assess_rank_bias <- function(
         }
     })
     
+    if (expand_unassigned) {
+        res2 <- append(res2, res3)
+    }
+    
+    if (!(is.null(rds_name))) {
+        saveRDS(res2, paste0(rds_name, ".rds"))
+    }
     message("Using gprofiler2 for GO analyses (internet connection required)")
     g <- lapply(res2, function(x) {
             if (is.null(x)) {
@@ -2171,7 +2194,7 @@ assess_rank_bias <- function(
     g <- g[!unlist(lapply(g, function(x) is.null(x)))]
     if (!(is.null(plot_name))) {
         g2 <- cowplot::plot_grid(plotlist = g, ncol = 1)      
-        ggplot2::ggsave(paste0(plot_name, ".pdf"), g2, width = 6, height = 4 * length(g2))
+        ggplot2::ggsave(paste0(plot_name, ".pdf"), g2, width = 6, height = 4 * length(res2), limitsize = FALSE)
     }
     g
 }

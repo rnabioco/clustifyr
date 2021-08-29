@@ -10,7 +10,9 @@ assess_rank_bias(
   query_genes = NULL,
   res,
   organism,
-  plot_name = NULL
+  plot_name = NULL,
+  rds_name = NULL,
+  expand_unassigned = FALSE
 )
 }
 \arguments{
@@ -25,6 +27,10 @@ assess_rank_bias(
 \item{organism}{for GO term analysis, organism name: human - 'hsapiens', mouse - 'mmusculus'}
 
 \item{plot_name}{name for saved pdf, if NULL then no file is written (default)}
+
+\item{rds_name}{name for saved rds of rank_diff, if NULL then no file is written (default)}
+
+\item{expand_unassigned}{test all ref clusters for unassigned results}
 }
 \value{
 pdf of ggplot object

@@ -42,6 +42,8 @@ clustify <- function(input, ...) {
 #' averaging will be done on unlogged data
 #' @param organism for GO term analysis, organism name: human - 'hsapiens', mouse - 'mmusculus'
 #' @param plot_name name for saved pdf, if NULL then no file is written (default)
+#' @param rds_name name for saved rds of rank_diff, if NULL then no file is written (default)
+#' @param expand_unassigned test all ref clusters for unassigned results
 #' @param ... additional arguments to pass to compute_method function
 #'
 #' @return single cell object with identity assigned in metadata,
@@ -110,6 +112,8 @@ clustify.default <- function(input,
     if_log = TRUE,
     organism = "hsapiens",
     plot_name = NULL,
+    rds_name = NULL, 
+    expand_unassigned = FALSE,
     ...) {
     if (!compute_method %in% clustifyr_methods) {
         stop(paste(compute_method, "correlation method not implemented"),
@@ -277,7 +281,9 @@ clustify.default <- function(input,
                 query_genes = query_genes,
                 res = df_temp,
                 organism = organism,
-                plot_name = plot_name
+                plot_name = plot_name,
+                rds_name = rds_name,
+                expand_unassigned = expand_unassigned
             )
         }
         return(out)
@@ -308,6 +314,8 @@ clustify.Seurat <- function(input,
     metadata = NULL,
     organism = "hsapiens",
     plot_name = NULL,
+    rds_name = NULL, 
+    expand_unassigned = FALSE,
     ...) {
     s_object <- input
     # for seurat 3.0 +
@@ -382,7 +390,9 @@ clustify.Seurat <- function(input,
                 query_genes = query_genes,
                 res = df_temp,
                 organism = organism,
-                plot_name = plot_name
+                plot_name = plot_name,
+                rds_name = rds_name, 
+                expand_unassigned = expand_unassigned
             )
         }
         
@@ -418,6 +428,8 @@ clustify.SingleCellExperiment <- function(input,
     metadata = NULL,
     organism = "hsapiens",
     plot_name = NULL,
+    rds_name = NULL, 
+    expand_unassigned = FALSE,
     ...) {
     s_object <- input
     expr_mat <- object_data(s_object, "data")
@@ -488,7 +500,9 @@ clustify.SingleCellExperiment <- function(input,
                 query_genes = query_genes,
                 res = df_temp,
                 organism = organism,
-                plot_name = plot_name
+                plot_name = plot_name,
+                rds_name = rds_name, 
+                expand_unassigned = expand_unassigned
             )
         }
         

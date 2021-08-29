@@ -31,6 +31,8 @@ clustify(input, ...)
   if_log = TRUE,
   organism = "hsapiens",
   plot_name = NULL,
+  rds_name = NULL,
+  expand_unassigned = FALSE,
   ...
 )
 
@@ -55,6 +57,8 @@ clustify(input, ...)
   metadata = NULL,
   organism = "hsapiens",
   plot_name = NULL,
+  rds_name = NULL,
+  expand_unassigned = FALSE,
   ...
 )
 
@@ -78,6 +82,8 @@ clustify(input, ...)
   metadata = NULL,
   organism = "hsapiens",
   plot_name = NULL,
+  rds_name = NULL,
+  expand_unassigned = FALSE,
   ...
 )
 }
@@ -137,6 +143,10 @@ averaging will be done on unlogged data}
 \item{organism}{for GO term analysis, organism name: human - 'hsapiens', mouse - 'mmusculus'}
 
 \item{plot_name}{name for saved pdf, if NULL then no file is written (default)}
+
+\item{rds_name}{name for saved rds of rank_diff, if NULL then no file is written (default)}
+
+\item{expand_unassigned}{test all ref clusters for unassigned results}
 
 \item{use_var_genes}{if providing a seurat object, use the variable genes
 (stored in seurat_object@var.genes) as the query_genes.}
