@@ -7,7 +7,7 @@ status](https://github.com/rnabioco/clustifyr/workflows/R-CMD-check/badge.svg)](
 [![codecov](https://codecov.io/gh/rnabioco/clustifyr/branch/master/graph/badge.svg)](https://codecov.io/gh/rnabioco/clustifyr)
 [![platforms](https://bioconductor.org/shields/availability/release/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
 [![bioc](https://bioconductor.org/shields/years-in-bioc/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
-[![\#downloads](https://img.shields.io/badge/%23%20downloads-2814-brightgreen)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
+[![\#downloads](https://img.shields.io/badge/%23%20downloads-2840-brightgreen)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
 
 <!-- badges: end -->
 
@@ -247,7 +247,7 @@ clustify_lists(
     Yes, with the caveat that metadata containing cell type assignments
     must be available, which is frustratingly uncommon (see our
     quantification/monitoring of the issue
-    [here](https://github.com/rnabioco/someta). We now have a Shiny app
+    [here](https://github.com/rnabioco/someta)). We now have a Shiny app
     `run_clustifyr_app()` that can directly preview and use GEO files,
     and `get_ucsc_reference()` to build reference from a
     <https://cells.ucsc.edu/> link.
@@ -259,12 +259,12 @@ clustify_lists(
     if possible. The object wrappers are taking log-normalized data for
     downstream steps. It should be noted that **data slot from
     SCtransform obfuscates the original gene expression ranking, and is
-    probably not ideal for `clustifyr`** - in this case we recommend
-    going directly from raw counts.
+    not ideal for `clustifyr`** - in this case we recommend going
+    directly from raw counts.
 
 4.  **How should I determine parameters?** Please see our published
     [manuscript](https://f1000research.com/articles/9-223/v2) with
-    parameter and usage discussions. In general default settings are
+    parameter and usage discussions. In general, default settings are
     satisfactory in our own internal usage/testing. However, you might
     want to inspect the correlation matrix and call results, instead of
     just the final result (use `obj_out = FALSE` in `clustify()`).
@@ -273,10 +273,10 @@ clustify_lists(
     greatly depends on the datasets in question, we generally have good
     results with \~500-1000 variable genes. This is why we recommend
     running `M3Drop` for this step. It should be noted that Seurat V3
-    onwards automatically stores 2000 (and 3000 for Seurat V4) by
-    default, which may be too many (if the result correlation matrix
-    shows high and similar values for too many cell types). Currently,
-    by default `clustify()` on Seurat objects will use top 1000 genes.
+    onwards automatically stores 2000 by default, which may be too many
+    (if the result correlation matrix shows high and similar values for
+    too many cell types). Currently, by default `clustify()` on Seurat
+    objects will use top 1000 genes.
 
 6.  **I have “CLASH” in many of my final calls, why is that?** “CLASH”
     indicates ties in the correlation values. In practice, this should
@@ -343,11 +343,10 @@ res <- clustify_lists(
 12. **Does clustifyr work for spatial scRNA-seq data?** It works
     decently on the Seurat tutorial data. See short
     [example](https://github.com/rnabioco/clustifyr/issues/370) for both
-    `clustify`(correlation) and `clustify_lists`(gene list enrichment)
-    approaches. (Note, as mentioned above, we recommend avoiding
-    SCtransform data, and opting for using raw data directly instead.
-    This can now be directly handled by Seurat wrapper, in the GitHub
-    devel version and Bioconductor 3.13)
+    `clustify()`(correlation) and `clustify_lists()`(gene list
+    enrichment) approaches. (Note, as mentioned above, we recommend
+    avoiding SCtransform data, and opting for using raw data directly
+    instead. This can now be directly handled by Seurat wrapper.)
 
 13. **Can I pull out additional information on what gene signatures
     don’t match the reference clusters?** Please add arguments
