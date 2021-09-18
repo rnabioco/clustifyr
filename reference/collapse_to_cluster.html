@@ -53,6 +53,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -64,9 +66,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -87,12 +95,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -140,7 +142,7 @@
     <p>From per-cell calls, take highest freq call in each cluster</p>
     </div>
 
-    <pre class="usage"><span class='fu'>collapse_to_cluster</span><span class='op'>(</span><span class='va'>res</span>, <span class='va'>metadata</span>, <span class='va'>cluster_col</span>, threshold <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span></pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>collapse_to_cluster</span><span class='op'>(</span><span class='va'>res</span>, <span class='va'>metadata</span>, <span class='va'>cluster_col</span>, threshold <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,35 +170,39 @@
     <p>new metadata with added columns</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span><span class='op'>(</span>
-    input <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,
-    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,
-    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,
-    ref_mat <span class='op'>=</span> <span class='va'>cbmc_ref</span>,
-    per_cell <span class='op'>=</span> <span class='cn'>TRUE</span>
-<span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>var.features not found, using all genes instead</span></div><div class='output co'>#&gt; <span class='message'>using # of genes: 599</span></div><div class='output co'>#&gt; <span class='message'>similarity computation completed, matrix of 2638 x 13, preparing output</span></div><div class='input'>
-<span class='va'>res2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cor_to_call.html'>cor_to_call</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
-
-<span class='fu'>collapse_to_cluster</span><span class='op'>(</span>
-    <span class='va'>res2</span>,
-    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,
-    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,
-    threshold <span class='op'>=</span> <span class='fl'>0</span>
-<span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 9 × 4</span>
-#&gt; <span style='color: #949494;'># Groups:   classified [9]</span>
-#&gt;   classified   type    sum     n
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> Naive CD4 T  CD4 T 95.3    237
-#&gt; <span style='color: #BCBCBC;'>2</span> Memory CD4 T CD4 T 66.9    165
-#&gt; <span style='color: #BCBCBC;'>3</span> CD14+ Mono   CD4 T 67.2    169
-#&gt; <span style='color: #BCBCBC;'>4</span> B            CD4 T 37.4     95
-#&gt; <span style='color: #BCBCBC;'>5</span> CD8 T        CD4 T 31.1     79
-#&gt; <span style='color: #BCBCBC;'>6</span> FCGR3A+ Mono CD4 T 17.5     44
-#&gt; <span style='color: #BCBCBC;'>7</span> NK           CD4 T 17.7     45
-#&gt; <span style='color: #BCBCBC;'>8</span> DC           NK     3.96     9
-#&gt; <span style='color: #BCBCBC;'>9</span> Platelet     CD4 T  1.62     4</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span><span class='op'>(</span></span>
+<span class='r-in'>    input <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,</span>
+<span class='r-in'>    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,</span>
+<span class='r-in'>    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,</span>
+<span class='r-in'>    ref_mat <span class='op'>=</span> <span class='va'>cbmc_ref</span>,</span>
+<span class='r-in'>    per_cell <span class='op'>=</span> <span class='cn'>TRUE</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> var.features not found, using all genes instead</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> using # of genes: 599</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> similarity computation completed, matrix of 2638 x 13, preparing output</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>res2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cor_to_call.html'>cor_to_call</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>collapse_to_cluster</span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='va'>res2</span>,</span>
+<span class='r-in'>    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,</span>
+<span class='r-in'>    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,</span>
+<span class='r-in'>    threshold <span class='op'>=</span> <span class='fl'>0</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 9 × 4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># Groups:   classified [9]</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   classified   type    sum     n</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;fct&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;int&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>1</span> Naive CD4 T  CD4 T 95.3    237</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>2</span> Memory CD4 T CD4 T 66.9    165</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>3</span> CD14+ Mono   CD4 T 67.2    169</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>4</span> B            CD4 T 37.4     95</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>5</span> CD8 T        CD4 T 31.1     79</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>6</span> FCGR3A+ Mono CD4 T 17.5     44</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>7</span> NK           CD4 T 17.7     45</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>8</span> DC           NK     3.96     9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>9</span> Platelet     CD4 T  1.62     4</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -208,11 +214,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Rui Fu, Kent Riemondy.</p>
+  <p><p>Developed by Rui Fu, Kent Riemondy.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -220,6 +226,8 @@
 
   
 
+
+  
 
   </body>
 </html>

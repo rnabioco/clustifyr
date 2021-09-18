@@ -53,6 +53,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -64,9 +66,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -87,12 +95,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -140,7 +142,7 @@
     <p>Main function to compare scRNA-seq data to gene lists.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>clustify_lists</span><span class='op'>(</span><span class='va'>input</span>, <span class='va'>...</span><span class='op'>)</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>clustify_lists</span><span class='op'>(</span><span class='va'>input</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>clustify_lists</span><span class='op'>(</span>
@@ -211,7 +213,7 @@
   rename_prefix <span class='op'>=</span> <span class='cn'>NULL</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -321,83 +323,89 @@ only used when obj_out = T</p></td>
 cell types from marker_mat as column names</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Annotate a matrix and metadata</span>
-<span class='fu'>clustify_lists</span><span class='op'>(</span>
-    input <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,
-    marker <span class='op'>=</span> <span class='va'>cbmc_m</span>,
-    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,
-    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,
-    verbose <span class='op'>=</span> <span class='cn'>TRUE</span>
-<span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>list of markers instead of matrix, only supports jaccard</span></div><div class='output co'>#&gt; <span class='message'>similarity computation completed, matrix of 9 x 13, preparing output</span></div><div class='output co'>#&gt;                   CD4 T      CD8 T Memory CD4 T CD14+ Mono Naive CD4 T
-#&gt; Naive CD4 T  0.06713589 0.06713589            0   3.609737           0
-#&gt; Memory CD4 T 0.06713589 0.00000000            0   3.609737           0
-#&gt; CD14+ Mono   0.00000000 0.00000000            0   3.609737           0
-#&gt; B            0.00000000 0.00000000            0   3.609737           0
-#&gt; CD8 T        0.06713589 0.00000000            0   1.600060           0
-#&gt; FCGR3A+ Mono 0.00000000 0.00000000            0   3.609737           0
-#&gt; NK           0.00000000 0.06713589            0   3.609737           0
-#&gt; DC           0.00000000 0.00000000            0   3.609737           0
-#&gt; Platelet     0.12621349 0.00000000            0   3.523004           0
-#&gt;                      NK         B CD16+ Mono CD34+ Eryth       Mk        DC
-#&gt; Naive CD4 T  3.60973732 0.0000000 0.00000000     0     0 0.000000 0.0000000
-#&gt; Memory CD4 T 3.60973732 0.0000000 0.00000000     0     0 0.000000 0.0000000
-#&gt; CD14+ Mono   1.60005988 0.0000000 0.00000000     0     0 0.000000 0.0000000
-#&gt; B            1.60005988 1.6000599 0.00000000     0     0 0.000000 0.0000000
-#&gt; CD8 T        3.60973732 0.0000000 0.00000000     0     0 0.000000 0.0000000
-#&gt; FCGR3A+ Mono 0.02934733 0.0000000 0.02934733     0     0 0.000000 0.0000000
-#&gt; NK           3.60973732 0.0000000 0.00000000     0     0 0.000000 0.0000000
-#&gt; DC           1.60005988 0.1085286 0.00000000     0     0 0.000000 0.1085286
-#&gt; Platelet     1.58060198 1.5806020 0.00000000     0     0 3.523004 0.0000000
-#&gt;                 pDCs
-#&gt; Naive CD4 T  0.00000
-#&gt; Memory CD4 T 0.00000
-#&gt; CD14+ Mono   0.00000
-#&gt; B            0.00000
-#&gt; CD8 T        0.00000
-#&gt; FCGR3A+ Mono 0.00000
-#&gt; NK           0.00000
-#&gt; DC           1.60006
-#&gt; Platelet     0.00000</div><div class='input'>
-<span class='co'># Annotate using a different method</span>
-<span class='fu'>clustify_lists</span><span class='op'>(</span>
-    input <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,
-    marker <span class='op'>=</span> <span class='va'>cbmc_m</span>,
-    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,
-    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,
-    verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
-    metric <span class='op'>=</span> <span class='st'>"jaccard"</span>
-<span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>list of markers instead of matrix, only supports jaccard</span></div><div class='output co'>#&gt; <span class='message'>similarity computation completed, matrix of 9 x 13, preparing output</span></div><div class='output co'>#&gt;                    CD4 T       CD8 T Memory CD4 T  CD14+ Mono Naive CD4 T
-#&gt; Naive CD4 T  0.001246883 0.001246883            0 0.003750000           0
-#&gt; Memory CD4 T 0.001246883 0.000000000            0 0.003750000           0
-#&gt; CD14+ Mono   0.000000000 0.000000000            0 0.003750000           0
-#&gt; B            0.000000000 0.000000000            0 0.003750000           0
-#&gt; CD8 T        0.001246883 0.000000000            0 0.002496879           0
-#&gt; FCGR3A+ Mono 0.000000000 0.000000000            0 0.003750000           0
-#&gt; NK           0.000000000 0.001246883            0 0.003750000           0
-#&gt; DC           0.000000000 0.000000000            0 0.003750000           0
-#&gt; Platelet     0.001166861 0.000000000            0 0.003508772           0
-#&gt;                       NK           B  CD16+ Mono CD34+ Eryth          Mk
-#&gt; Naive CD4 T  0.003750000 0.000000000 0.000000000     0     0 0.000000000
-#&gt; Memory CD4 T 0.003750000 0.000000000 0.000000000     0     0 0.000000000
-#&gt; CD14+ Mono   0.002496879 0.000000000 0.000000000     0     0 0.000000000
-#&gt; B            0.002496879 0.002496879 0.000000000     0     0 0.000000000
-#&gt; CD8 T        0.003750000 0.000000000 0.000000000     0     0 0.000000000
-#&gt; FCGR3A+ Mono 0.001246883 0.000000000 0.001246883     0     0 0.000000000
-#&gt; NK           0.003750000 0.000000000 0.000000000     0     0 0.000000000
-#&gt; DC           0.002496879 0.001246883 0.000000000     0     0 0.000000000
-#&gt; Platelet     0.002336449 0.002336449 0.000000000     0     0 0.003508772
-#&gt;                       DC        pDCs
-#&gt; Naive CD4 T  0.000000000 0.000000000
-#&gt; Memory CD4 T 0.000000000 0.000000000
-#&gt; CD14+ Mono   0.000000000 0.000000000
-#&gt; B            0.000000000 0.000000000
-#&gt; CD8 T        0.000000000 0.000000000
-#&gt; FCGR3A+ Mono 0.000000000 0.000000000
-#&gt; NK           0.000000000 0.000000000
-#&gt; DC           0.001246883 0.002496879
-#&gt; Platelet     0.000000000 0.000000000</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># Annotate a matrix and metadata</span></span>
+<span class='r-in'><span class='fu'>clustify_lists</span><span class='op'>(</span></span>
+<span class='r-in'>    input <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,</span>
+<span class='r-in'>    marker <span class='op'>=</span> <span class='va'>cbmc_m</span>,</span>
+<span class='r-in'>    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,</span>
+<span class='r-in'>    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,</span>
+<span class='r-in'>    verbose <span class='op'>=</span> <span class='cn'>TRUE</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> list of markers instead of matrix, only supports jaccard</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> similarity computation completed, matrix of 9 x 13, preparing output</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                   CD4 T      CD8 T Memory CD4 T CD14+ Mono Naive CD4 T</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Naive CD4 T  0.06713589 0.06713589            0   3.609737           0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Memory CD4 T 0.06713589 0.00000000            0   3.609737           0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD14+ Mono   0.00000000 0.00000000            0   3.609737           0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B            0.00000000 0.00000000            0   3.609737           0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD8 T        0.06713589 0.00000000            0   1.600060           0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> FCGR3A+ Mono 0.00000000 0.00000000            0   3.609737           0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NK           0.00000000 0.06713589            0   3.609737           0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> DC           0.00000000 0.00000000            0   3.609737           0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Platelet     0.12621349 0.00000000            0   3.523004           0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      NK         B CD16+ Mono CD34+ Eryth       Mk        DC</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Naive CD4 T  3.60973732 0.0000000 0.00000000     0     0 0.000000 0.0000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Memory CD4 T 3.60973732 0.0000000 0.00000000     0     0 0.000000 0.0000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD14+ Mono   1.60005988 0.0000000 0.00000000     0     0 0.000000 0.0000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B            1.60005988 1.6000599 0.00000000     0     0 0.000000 0.0000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD8 T        3.60973732 0.0000000 0.00000000     0     0 0.000000 0.0000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> FCGR3A+ Mono 0.02934733 0.0000000 0.02934733     0     0 0.000000 0.0000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NK           3.60973732 0.0000000 0.00000000     0     0 0.000000 0.0000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> DC           1.60005988 0.1085286 0.00000000     0     0 0.000000 0.1085286</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Platelet     1.58060198 1.5806020 0.00000000     0     0 3.523004 0.0000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                 pDCs</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Naive CD4 T  0.00000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Memory CD4 T 0.00000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD14+ Mono   0.00000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B            0.00000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD8 T        0.00000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> FCGR3A+ Mono 0.00000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NK           0.00000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> DC           1.60006</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Platelet     0.00000</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Annotate using a different method</span></span>
+<span class='r-in'><span class='fu'>clustify_lists</span><span class='op'>(</span></span>
+<span class='r-in'>    input <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,</span>
+<span class='r-in'>    marker <span class='op'>=</span> <span class='va'>cbmc_m</span>,</span>
+<span class='r-in'>    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,</span>
+<span class='r-in'>    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,</span>
+<span class='r-in'>    verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,</span>
+<span class='r-in'>    metric <span class='op'>=</span> <span class='st'>"jaccard"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> list of markers instead of matrix, only supports jaccard</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> similarity computation completed, matrix of 9 x 13, preparing output</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                    CD4 T       CD8 T Memory CD4 T  CD14+ Mono Naive CD4 T</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Naive CD4 T  0.001246883 0.001246883            0 0.003750000           0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Memory CD4 T 0.001246883 0.000000000            0 0.003750000           0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD14+ Mono   0.000000000 0.000000000            0 0.003750000           0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B            0.000000000 0.000000000            0 0.003750000           0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD8 T        0.001246883 0.000000000            0 0.002496879           0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> FCGR3A+ Mono 0.000000000 0.000000000            0 0.003750000           0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NK           0.000000000 0.001246883            0 0.003750000           0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> DC           0.000000000 0.000000000            0 0.003750000           0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Platelet     0.001166861 0.000000000            0 0.003508772           0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                       NK           B  CD16+ Mono CD34+ Eryth          Mk</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Naive CD4 T  0.003750000 0.000000000 0.000000000     0     0 0.000000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Memory CD4 T 0.003750000 0.000000000 0.000000000     0     0 0.000000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD14+ Mono   0.002496879 0.000000000 0.000000000     0     0 0.000000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B            0.002496879 0.002496879 0.000000000     0     0 0.000000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD8 T        0.003750000 0.000000000 0.000000000     0     0 0.000000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> FCGR3A+ Mono 0.001246883 0.000000000 0.001246883     0     0 0.000000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NK           0.003750000 0.000000000 0.000000000     0     0 0.000000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> DC           0.002496879 0.001246883 0.000000000     0     0 0.000000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Platelet     0.002336449 0.002336449 0.000000000     0     0 0.003508772</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                       DC        pDCs</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Naive CD4 T  0.000000000 0.000000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Memory CD4 T 0.000000000 0.000000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD14+ Mono   0.000000000 0.000000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B            0.000000000 0.000000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD8 T        0.000000000 0.000000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> FCGR3A+ Mono 0.000000000 0.000000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NK           0.000000000 0.000000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> DC           0.001246883 0.002496879</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Platelet     0.000000000 0.000000000</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -409,11 +417,11 @@ cell types from marker_mat as column names</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Rui Fu, Kent Riemondy.</p>
+  <p><p>Developed by Rui Fu, Kent Riemondy.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -421,6 +429,8 @@ cell types from marker_mat as column names</p>
 
   
 
+
+  
 
   </body>
 </html>

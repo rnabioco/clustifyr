@@ -53,6 +53,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -64,9 +66,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -87,12 +95,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -140,7 +142,7 @@
     <p>compare clustering parameters and classification outcomes</p>
     </div>
 
-    <pre class="usage"><span class='fu'>overcluster_test</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>overcluster_test</span><span class='op'>(</span>
   <span class='va'>expr</span>,
   <span class='va'>metadata</span>,
   <span class='va'>ref_mat</span>,
@@ -155,7 +157,7 @@
   do_legend <span class='op'>=</span> <span class='cn'>FALSE</span>,
   newclustering <span class='op'>=</span> <span class='cn'>NULL</span>,
   combine <span class='op'>=</span> <span class='cn'>TRUE</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -227,16 +229,23 @@ FALSE return list of plots (default: TRUE)</p></td>
     <p>faceted ggplot object</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>42</span><span class='op'>)</span>
-<span class='fu'>overcluster_test</span><span class='op'>(</span>
-    expr <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,
-    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,
-    ref_mat <span class='op'>=</span> <span class='va'>cbmc_ref</span>,
-    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,
-    x_col <span class='op'>=</span> <span class='st'>"UMAP_1"</span>,
-    y_col <span class='op'>=</span> <span class='st'>"UMAP_2"</span>
-<span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>using # of genes: 599</span></div><div class='output co'>#&gt; <span class='message'>similarity computation completed, matrix of 9 x 13, preparing output</span></div><div class='output co'>#&gt; <span class='message'>using # of genes: 599</span></div><div class='output co'>#&gt; <span class='message'>similarity computation completed, matrix of 45 x 13, preparing output</span></div><div class='output co'>#&gt; <span class='warning'>Warning: ggrepel: 7 unlabeled data points (too many overlaps). Consider increasing max.overlaps</span></div><div class='output co'>#&gt; <span class='warning'>Warning: ggrepel: 8 unlabeled data points (too many overlaps). Consider increasing max.overlaps</span></div><div class='img'><img src='overcluster_test-1.png' alt='' width='700' height='433' /></div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>42</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>overcluster_test</span><span class='op'>(</span></span>
+<span class='r-in'>    expr <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,</span>
+<span class='r-in'>    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,</span>
+<span class='r-in'>    ref_mat <span class='op'>=</span> <span class='va'>cbmc_ref</span>,</span>
+<span class='r-in'>    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,</span>
+<span class='r-in'>    x_col <span class='op'>=</span> <span class='st'>"UMAP_1"</span>,</span>
+<span class='r-in'>    y_col <span class='op'>=</span> <span class='st'>"UMAP_2"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> using # of genes: 599</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> similarity computation completed, matrix of 9 x 13, preparing output</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> using # of genes: 599</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> similarity computation completed, matrix of 45 x 13, preparing output</span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>ggrepel: 7 unlabeled data points (too many overlaps). Consider increasing max.overlaps</span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>ggrepel: 8 unlabeled data points (too many overlaps). Consider increasing max.overlaps</span>
+<span class='r-plt'><img src='overcluster_test-1.png' alt='' width='700' height='433' /></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -248,11 +257,11 @@ FALSE return list of plots (default: TRUE)</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Rui Fu, Kent Riemondy.</p>
+  <p><p>Developed by Rui Fu, Kent Riemondy.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -260,6 +269,8 @@ FALSE return list of plots (default: TRUE)</p></td>
 
   
 
+
+  
 
   </body>
 </html>

@@ -56,6 +56,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -67,9 +69,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -90,12 +98,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -145,13 +147,13 @@
 (would take a similar place in workflow before average_clusters/binarize)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>calculate_pathway_gsea</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>calculate_pathway_gsea</span><span class='op'>(</span>
   <span class='va'>mat</span>,
   <span class='va'>pathway_list</span>,
   n_perm <span class='op'>=</span> <span class='fl'>1000</span>,
   scale <span class='op'>=</span> <span class='cn'>TRUE</span>,
   no_warnings <span class='op'>=</span> <span class='cn'>TRUE</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -186,31 +188,32 @@ default = FALSE</p></td>
 pathways as column names</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>gl</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-    <span class='st'>"n"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"PPBP"</span>, <span class='st'>"LYZ"</span>, <span class='st'>"S100A9"</span><span class='op'>)</span>,
-    <span class='st'>"a"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"IGLL5"</span>, <span class='st'>"GNLY"</span>, <span class='st'>"FTL"</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='va'>pbmc_avg</span> <span class='op'>&lt;-</span> <span class='fu'><a href='average_clusters.html'>average_clusters</a></span><span class='op'>(</span>
-    mat <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,
-    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,
-    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>
-<span class='op'>)</span>
-
-<span class='fu'>calculate_pathway_gsea</span><span class='op'>(</span>
-    mat <span class='op'>=</span> <span class='va'>pbmc_avg</span>,
-    pathway_list <span class='op'>=</span> <span class='va'>gl</span>
-<span class='op'>)</span>
-</div><div class='output co'>#&gt;                       n          a
-#&gt; Naive CD4 T  -1.1774274 -1.1565701
-#&gt; Memory CD4 T -1.2699026 -1.3115100
-#&gt; CD14+ Mono    1.4836403  0.9923194
-#&gt; B            -1.1131379  1.2192091
-#&gt; CD8 T        -1.3906078 -0.5494581
-#&gt; FCGR3A+ Mono  0.9893043  1.0798741
-#&gt; NK           -1.3801696  1.0742091
-#&gt; DC            1.1088866 -0.8547561
-#&gt; Platelet      1.8248440  1.2914442</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='va'>gl</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='st'>"n"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"PPBP"</span>, <span class='st'>"LYZ"</span>, <span class='st'>"S100A9"</span><span class='op'>)</span>,</span>
+<span class='r-in'>    <span class='st'>"a"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"IGLL5"</span>, <span class='st'>"GNLY"</span>, <span class='st'>"FTL"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>pbmc_avg</span> <span class='op'>&lt;-</span> <span class='fu'><a href='average_clusters.html'>average_clusters</a></span><span class='op'>(</span></span>
+<span class='r-in'>    mat <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,</span>
+<span class='r-in'>    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,</span>
+<span class='r-in'>    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>calculate_pathway_gsea</span><span class='op'>(</span></span>
+<span class='r-in'>    mat <span class='op'>=</span> <span class='va'>pbmc_avg</span>,</span>
+<span class='r-in'>    pathway_list <span class='op'>=</span> <span class='va'>gl</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                       n          a</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Naive CD4 T  -1.1391827 -1.1481628</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Memory CD4 T -1.2806396 -1.2951721</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD14+ Mono    1.4653127  0.9821931</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B            -1.1351175  1.2383419</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD8 T        -1.3989659 -0.5361232</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> FCGR3A+ Mono  0.9786524  1.1031214</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NK           -1.3688792  1.0615793</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> DC            1.1183245 -0.8543530</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Platelet      1.8536334  1.2942972</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -222,11 +225,11 @@ pathways as column names</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Rui Fu, Kent Riemondy.</p>
+  <p><p>Developed by Rui Fu, Kent Riemondy.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -234,6 +237,8 @@ pathways as column names</p>
 
   
 
+
+  
 
   </body>
 </html>

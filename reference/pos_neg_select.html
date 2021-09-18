@@ -53,6 +53,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -64,9 +66,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -87,12 +95,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -140,14 +142,14 @@
     <p>adapt clustify to tweak score for pos and neg markers</p>
     </div>
 
-    <pre class="usage"><span class='fu'>pos_neg_select</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>pos_neg_select</span><span class='op'>(</span>
   <span class='va'>input</span>,
   <span class='va'>ref_mat</span>,
   <span class='va'>metadata</span>,
   cluster_col <span class='op'>=</span> <span class='st'>"cluster"</span>,
   cutoff_n <span class='op'>=</span> <span class='fl'>0</span>,
   cutoff_score <span class='op'>=</span> <span class='fl'>0.5</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -193,28 +195,31 @@ considered as 0 to not influence scores</p></td>
 cell types from ref_mat as column names</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>pn_ref</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
-    <span class='st'>"Myeloid"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.01</span>, <span class='fl'>0</span><span class='op'>)</span>,
-    row.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"CD74"</span>, <span class='st'>"clustifyr0"</span>, <span class='st'>"CD79A"</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='fu'>pos_neg_select</span><span class='op'>(</span>
-    input <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,
-    ref_mat <span class='op'>=</span> <span class='va'>pn_ref</span>,
-    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,
-    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,
-    cutoff_score <span class='op'>=</span> <span class='fl'>0.8</span>
-<span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>using # of genes: 3</span></div><div class='output co'>#&gt; <span class='message'>similarity computation completed, matrix of 2638 x 1, preparing output</span></div><div class='output co'>#&gt;                Myeloid
-#&gt; Naive CD4 T  0.0000000
-#&gt; Memory CD4 T 0.7857143
-#&gt; CD14+ Mono   0.9208333
-#&gt; B            0.0000000
-#&gt; CD8 T        0.8210332
-#&gt; FCGR3A+ Mono 0.9629630
-#&gt; NK           0.8161290
-#&gt; DC           0.9218750
-#&gt; Platelet     0.0000000</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='va'>pn_ref</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='st'>"Myeloid"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.01</span>, <span class='fl'>0</span><span class='op'>)</span>,</span>
+<span class='r-in'>    row.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"CD74"</span>, <span class='st'>"clustifyr0"</span>, <span class='st'>"CD79A"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>pos_neg_select</span><span class='op'>(</span></span>
+<span class='r-in'>    input <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,</span>
+<span class='r-in'>    ref_mat <span class='op'>=</span> <span class='va'>pn_ref</span>,</span>
+<span class='r-in'>    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,</span>
+<span class='r-in'>    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,</span>
+<span class='r-in'>    cutoff_score <span class='op'>=</span> <span class='fl'>0.8</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> using # of genes: 3</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> similarity computation completed, matrix of 2638 x 1, preparing output</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                Myeloid</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Naive CD4 T  0.0000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Memory CD4 T 0.7857143</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD14+ Mono   0.9208333</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B            0.0000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> CD8 T        0.8210332</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> FCGR3A+ Mono 0.9629630</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NK           0.8161290</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> DC           0.9218750</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Platelet     0.0000000</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -226,11 +231,11 @@ cell types from ref_mat as column names</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Rui Fu, Kent Riemondy.</p>
+  <p><p>Developed by Rui Fu, Kent Riemondy.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -238,6 +243,8 @@ cell types from ref_mat as column names</p>
 
   
 
+
+  
 
   </body>
 </html>

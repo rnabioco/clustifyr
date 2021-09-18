@@ -53,6 +53,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -64,9 +66,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -87,12 +95,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -140,7 +142,7 @@
     <p>get ranked calls for each cluster</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cor_to_call_rank</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>cor_to_call_rank</span><span class='op'>(</span>
   <span class='va'>cor_mat</span>,
   metadata <span class='op'>=</span> <span class='cn'>NULL</span>,
   cluster_col <span class='op'>=</span> <span class='st'>"cluster"</span>,
@@ -148,7 +150,7 @@
   threshold <span class='op'>=</span> <span class='fl'>0</span>,
   rename_prefix <span class='op'>=</span> <span class='cn'>NULL</span>,
   top_n <span class='op'>=</span> <span class='cn'>NULL</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -190,29 +192,34 @@ frequent call of entire cluster to color in plot</p></td>
     <p>dataframe of cluster, new ident, and r info</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span><span class='op'>(</span>
-    input <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,
-    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,
-    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,
-    ref_mat <span class='op'>=</span> <span class='va'>cbmc_ref</span>
-<span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>var.features not found, using all genes instead</span></div><div class='output co'>#&gt; <span class='message'>using # of genes: 599</span></div><div class='output co'>#&gt; <span class='message'>similarity computation completed, matrix of 9 x 13, preparing output</span></div><div class='input'>
-<span class='fu'>cor_to_call_rank</span><span class='op'>(</span><span class='va'>res</span>, threshold <span class='op'>=</span> <span class='st'>"auto"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>using threshold of 0.7</span></div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 117 × 4</span>
-#&gt; <span style='color: #949494;'># Groups:   cluster [9]</span>
-#&gt;    cluster      type           r  rank
-#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'> 1</span> B            B          0.909     1
-#&gt; <span style='color: #BCBCBC;'> 2</span> CD14+ Mono   B          0.528   100
-#&gt; <span style='color: #BCBCBC;'> 3</span> CD8 T        B          0.579   100
-#&gt; <span style='color: #BCBCBC;'> 4</span> DC           B          0.609   100
-#&gt; <span style='color: #BCBCBC;'> 5</span> FCGR3A+ Mono B          0.538   100
-#&gt; <span style='color: #BCBCBC;'> 6</span> Memory CD4 T B          0.627   100
-#&gt; <span style='color: #BCBCBC;'> 7</span> Naive CD4 T  B          0.644   100
-#&gt; <span style='color: #BCBCBC;'> 8</span> NK           B          0.504   100
-#&gt; <span style='color: #BCBCBC;'> 9</span> Platelet     B          0.146   100
-#&gt; <span style='color: #BCBCBC;'>10</span> B            CD14+ Mono 0.535   100
-#&gt; <span style='color: #949494;'># … with 107 more rows</span></div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span><span class='op'>(</span></span>
+<span class='r-in'>    input <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,</span>
+<span class='r-in'>    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,</span>
+<span class='r-in'>    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,</span>
+<span class='r-in'>    ref_mat <span class='op'>=</span> <span class='va'>cbmc_ref</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> var.features not found, using all genes instead</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> using # of genes: 599</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> similarity computation completed, matrix of 9 x 13, preparing output</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>cor_to_call_rank</span><span class='op'>(</span><span class='va'>res</span>, threshold <span class='op'>=</span> <span class='st'>"auto"</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> using threshold of 0.7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 117 × 4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># Groups:   cluster [9]</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    cluster      type           r  rank</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span> B            B          0.909     1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span> CD14+ Mono   B          0.528   100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span> CD8 T        B          0.579   100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span> DC           B          0.609   100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span> FCGR3A+ Mono B          0.538   100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span> Memory CD4 T B          0.627   100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span> NK           B          0.504   100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span> Naive CD4 T  B          0.644   100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span> Platelet     B          0.146   100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span> B            CD14+ Mono 0.535   100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># … with 107 more rows</span></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -224,11 +231,11 @@ frequent call of entire cluster to color in plot</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Rui Fu, Kent Riemondy.</p>
+  <p><p>Developed by Rui Fu, Kent Riemondy.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -236,6 +243,8 @@ frequent call of entire cluster to color in plot</p></td>
 
   
 
+
+  
 
   </body>
 </html>
