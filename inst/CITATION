@@ -12,5 +12,5 @@ bibentry(bibtype = "Article",
              person(c('Kent', 'A.'), 'Riemondy', role = c('aut'), email = 'kent.riemondy@gmail.com')
          ),
          journal = 'F1000 Research',
-         doi = '10.12688/f1000research.22969.1'
+         doi = '10.12688/f1000research.22969.2'
 )
