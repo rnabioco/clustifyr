@@ -53,8 +53,6 @@
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -66,15 +64,9 @@
 
 
 
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -95,6 +87,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -142,7 +140,7 @@
     <p>pct of cells in every cluster that express a series of genelists</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>gene_pct_markerm</span><span class='op'>(</span><span class='va'>matrix</span>, <span class='va'>marker_m</span>, <span class='va'>metadata</span>, cluster_col <span class='op'>=</span> <span class='cn'>NULL</span>, norm <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></code></pre></div>
+    <pre class="usage"><span class='fu'>gene_pct_markerm</span><span class='op'>(</span><span class='va'>matrix</span>, <span class='va'>marker_m</span>, <span class='va'>metadata</span>, cluster_col <span class='op'>=</span> <span class='cn'>NULL</span>, norm <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -178,43 +176,42 @@ provide the cluster_col parameters.</p></td>
 cell types from marker_m as column names</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'>gene_pct_markerm</span><span class='op'>(</span></span>
-<span class='r-in'>    matrix <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,</span>
-<span class='r-in'>    marker_m <span class='op'>=</span> <span class='va'>cbmc_m</span>,</span>
-<span class='r-in'>    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,</span>
-<span class='r-in'>    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span></span>
-<span class='r-in'><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                   CD4 T       CD8 T Memory CD4 T CD14+ Mono Naive CD4 T</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Memory CD4 T 0.27122153 0.016563147            0  0.2795031           0</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> B            0.02906977 0.005813953            0  0.2102713           0</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> CD14+ Mono   0.01666667 0.006250000            0  0.9902778           0</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> NK           0.07096774 0.193548387            0  0.2150538           0</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> CD8 T        0.15498155 0.018450185            0  0.2127921           0</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Naive CD4 T  0.18220947 0.045911047            0  0.2333812           0</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> FCGR3A+ Mono 0.01234568 0.080246914            0  0.7860082           0</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> DC           0.09375000 0.000000000            0  0.6458333           0</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Platelet     0.07142857 0.000000000            0  0.3571429           0</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                      NK          B  CD16+ Mono CD34+ Eryth          Mk</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Memory CD4 T 0.14906832 0.05900621 0.006211180     0     0 0.007591442</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> B            0.06782946 0.89534884 0.002906977     0     0 0.005813953</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> CD14+ Mono   0.11597222 0.04895833 0.004166667     0     0 0.015972222</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> NK           0.96989247 0.03870968 0.012903226     0     0 0.006451613</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> CD8 T        0.70233702 0.02952030 0.000000000     0     0 0.009840098</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Naive CD4 T  0.09277857 0.03945481 0.004304161     0     0 0.010999522</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> FCGR3A+ Mono 0.17489712 0.06481481 0.370370370     0     0 0.034979424</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> DC           0.23958333 0.09375000 0.031250000     0     0 0.052083333</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Platelet     0.09523810 0.07142857 0.000000000     0     0 0.904761905</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>                       DC         pDCs</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Memory CD4 T 0.002070393 0.0013802622</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> B            0.000000000 0.0019379845</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> CD14+ Mono   0.005208333 0.0013888889</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> NK           0.000000000 0.0043010753</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> CD8 T        0.000000000 0.0024600246</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Naive CD4 T  0.001434720 0.0004782401</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> FCGR3A+ Mono 0.012345679 0.0000000000</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> DC           0.250000000 0.1041666667</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Platelet     0.000000000 0.0000000000</span>
-</code></pre></div>
+    <pre class="examples"><div class='input'><span class='fu'>gene_pct_markerm</span><span class='op'>(</span>
+    matrix <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,
+    marker_m <span class='op'>=</span> <span class='va'>cbmc_m</span>,
+    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,
+    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>
+<span class='op'>)</span>
+</div><div class='output co'>#&gt;                   CD4 T       CD8 T Memory CD4 T CD14+ Mono Naive CD4 T
+#&gt; Memory CD4 T 0.27122153 0.016563147            0  0.2795031           0
+#&gt; B            0.02906977 0.005813953            0  0.2102713           0
+#&gt; CD14+ Mono   0.01666667 0.006250000            0  0.9902778           0
+#&gt; NK           0.07096774 0.193548387            0  0.2150538           0
+#&gt; CD8 T        0.15498155 0.018450185            0  0.2127921           0
+#&gt; Naive CD4 T  0.18220947 0.045911047            0  0.2333812           0
+#&gt; FCGR3A+ Mono 0.01234568 0.080246914            0  0.7860082           0
+#&gt; DC           0.09375000 0.000000000            0  0.6458333           0
+#&gt; Platelet     0.07142857 0.000000000            0  0.3571429           0
+#&gt;                      NK          B  CD16+ Mono CD34+ Eryth          Mk
+#&gt; Memory CD4 T 0.14906832 0.05900621 0.006211180     0     0 0.007591442
+#&gt; B            0.06782946 0.89534884 0.002906977     0     0 0.005813953
+#&gt; CD14+ Mono   0.11597222 0.04895833 0.004166667     0     0 0.015972222
+#&gt; NK           0.96989247 0.03870968 0.012903226     0     0 0.006451613
+#&gt; CD8 T        0.70233702 0.02952030 0.000000000     0     0 0.009840098
+#&gt; Naive CD4 T  0.09277857 0.03945481 0.004304161     0     0 0.010999522
+#&gt; FCGR3A+ Mono 0.17489712 0.06481481 0.370370370     0     0 0.034979424
+#&gt; DC           0.23958333 0.09375000 0.031250000     0     0 0.052083333
+#&gt; Platelet     0.09523810 0.07142857 0.000000000     0     0 0.904761905
+#&gt;                       DC         pDCs
+#&gt; Memory CD4 T 0.002070393 0.0013802622
+#&gt; B            0.000000000 0.0019379845
+#&gt; CD14+ Mono   0.005208333 0.0013888889
+#&gt; NK           0.000000000 0.0043010753
+#&gt; CD8 T        0.000000000 0.0024600246
+#&gt; Naive CD4 T  0.001434720 0.0004782401
+#&gt; FCGR3A+ Mono 0.012345679 0.0000000000
+#&gt; DC           0.250000000 0.1041666667
+#&gt; Platelet     0.000000000 0.0000000000</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -226,11 +223,11 @@ cell types from marker_m as column names</p>
 
       <footer>
       <div class="copyright">
-  <p><p>Developed by Rui Fu, Kent Riemondy.</p></p>
+  <p>Developed by Rui Fu, Kent Riemondy.</p>
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -238,8 +235,6 @@ cell types from marker_m as column names</p>
 
   
 
-
-  
 
   </body>
 </html>
