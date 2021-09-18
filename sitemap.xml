@@ -1,30 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://rnabioco.github.io/clustifyr/404.html</loc>
-  </url>
-  <url>
-    <loc>http://rnabioco.github.io/clustifyr/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>http://rnabioco.github.io/clustifyr/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>http://rnabioco.github.io/clustifyr/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>http://rnabioco.github.io/clustifyr/articles/clustifyR.html</loc>
-  </url>
-  <url>
-    <loc>http://rnabioco.github.io/clustifyr/articles/geo-annotations.html</loc>
-  </url>
-  <url>
-    <loc>http://rnabioco.github.io/clustifyr/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>http://rnabioco.github.io/clustifyr/authors.html</loc>
-  </url>
-  <url>
     <loc>http://rnabioco.github.io/clustifyr/index.html</loc>
   </url>
   <url>
@@ -146,9 +122,6 @@
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/human_genes_10x.html</loc>
-  </url>
-  <url>
-    <loc>http://rnabioco.github.io/clustifyr/reference/index.html</loc>
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/insert_meta_object.html</loc>
@@ -290,5 +263,11 @@
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/write_meta.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyr/articles/clustifyR.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyr/articles/geo-annotations.html</loc>
   </url>
 </urlset>

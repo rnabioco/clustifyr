@@ -1,10 +1,10 @@
-pandoc: 2.11.4
-pkgdown: 1.6.1.9001
-pkgdown_sha: aebaa72ca333398883e723d9d55ebb4de3402cbf
+pandoc: 2.7.3
+pkgdown: 1.6.1
+pkgdown_sha: ~
 articles:
   clustifyR: clustifyR.html
   geo-annotations: geo-annotations.html
-last_built: 2021-09-18T18:59Z
+last_built: 2021-09-18T19:14Z
 urls:
   reference: http://rnabioco.github.io/clustifyr/reference
   article: http://rnabioco.github.io/clustifyr/articles
