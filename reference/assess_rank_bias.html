@@ -148,7 +148,9 @@
   query_genes <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>res</span>,
   <span class='va'>organism</span>,
-  plot_name <span class='op'>=</span> <span class='cn'>NULL</span>
+  plot_name <span class='op'>=</span> <span class='cn'>NULL</span>,
+  rds_name <span class='op'>=</span> <span class='cn'>NULL</span>,
+  expand_unassigned <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -177,6 +179,14 @@
     <tr>
       <th>plot_name</th>
       <td><p>name for saved pdf, if NULL then no file is written (default)</p></td>
+    </tr>
+    <tr>
+      <th>rds_name</th>
+      <td><p>name for saved rds of rank_diff, if NULL then no file is written (default)</p></td>
+    </tr>
+    <tr>
+      <th>expand_unassigned</th>
+      <td><p>test all ref clusters for unassigned results</p></td>
     </tr>
     </table>
 

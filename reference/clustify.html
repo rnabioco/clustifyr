@@ -167,6 +167,8 @@
   if_log <span class='op'>=</span> <span class='cn'>TRUE</span>,
   organism <span class='op'>=</span> <span class='st'>"hsapiens"</span>,
   plot_name <span class='op'>=</span> <span class='cn'>NULL</span>,
+  rds_name <span class='op'>=</span> <span class='cn'>NULL</span>,
+  expand_unassigned <span class='op'>=</span> <span class='cn'>FALSE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -192,6 +194,8 @@
   metadata <span class='op'>=</span> <span class='cn'>NULL</span>,
   organism <span class='op'>=</span> <span class='st'>"hsapiens"</span>,
   plot_name <span class='op'>=</span> <span class='cn'>NULL</span>,
+  rds_name <span class='op'>=</span> <span class='cn'>NULL</span>,
+  expand_unassigned <span class='op'>=</span> <span class='cn'>FALSE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -216,6 +220,8 @@
   metadata <span class='op'>=</span> <span class='cn'>NULL</span>,
   organism <span class='op'>=</span> <span class='st'>"hsapiens"</span>,
   plot_name <span class='op'>=</span> <span class='cn'>NULL</span>,
+  rds_name <span class='op'>=</span> <span class='cn'>NULL</span>,
+  expand_unassigned <span class='op'>=</span> <span class='cn'>FALSE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></code></pre></div>
 
@@ -321,6 +327,14 @@ averaging will be done on unlogged data</p></td>
     <tr>
       <th>plot_name</th>
       <td><p>name for saved pdf, if NULL then no file is written (default)</p></td>
+    </tr>
+    <tr>
+      <th>rds_name</th>
+      <td><p>name for saved rds of rank_diff, if NULL then no file is written (default)</p></td>
+    </tr>
+    <tr>
+      <th>expand_unassigned</th>
+      <td><p>test all ref clusters for unassigned results</p></td>
     </tr>
     <tr>
       <th>use_var_genes</th>
