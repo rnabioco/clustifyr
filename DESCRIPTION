@@ -37,7 +37,9 @@ Authors@R:
       person(given = "Sidhant",
              family = "Puntambekar",
              role = "ctb",
-             email = "sidhantnp@yahoo.com"))
+             email = "sidhantnp@yahoo.com"),
+      person("RNA Bioscience Initiative", role = c("fnd"))
+      )
 License: MIT + file LICENSE
 Depends:
     R (>= 4.0)

@@ -3,6 +3,7 @@
 ^clustifyR\.Rproj$
 ^\.Rproj\.user$
 ^_pkgdown\.yml$
+^pkgdown$
 ^docs$
 ^\.travis\.yml$
 ^travis_setup\.sh$
