@@ -20,7 +20,6 @@ run_clustifyr_app <- function() {
 #' }
 #' @export
 install_clustifyr_app <- function() {
-  options(repos=structure(c(CRAN="http://cloud.r-project.org/")))
   pack <- read.csv(system.file("shinyapp", "data", "dependencies.csv", package = "clustifyr"))
   inst <- installed.packages()[,"Package"]
   pack_need <- !unlist(vapply(pack$package, function(x) {x %in% inst}, logical(1)))
