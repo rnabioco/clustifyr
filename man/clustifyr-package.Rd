@@ -38,6 +38,7 @@ Other contributors:
   \item Yue Hao \email{haoyuethink@gmail.com} [contributor]
   \item Michelle Daya \email{michelle.daya@ucdenver.edu} [contributor]
   \item Sidhant Puntambekar \email{sidhantnp@yahoo.com} [contributor]
+  \item RNA Bioscience Initiative [funder]
 }
 
 }

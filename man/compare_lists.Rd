@@ -10,7 +10,8 @@ compare_lists(
   marker_mat,
   n = 30000,
   metric = "hyper",
-  output_high = TRUE
+  output_high = TRUE,
+  details_out = FALSE
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ feed in by_cluster mat, if desired}
 
 \item{output_high}{if true (by default to fit with rest of package),
 -log10 transform p-value}
+
+\item{details_out}{whether to also output shared gene list from jaccard}
 }
 \value{
 matrix of numeric values, clusters from expr_mat as row names,

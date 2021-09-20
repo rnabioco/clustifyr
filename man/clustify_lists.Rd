@@ -30,6 +30,7 @@ clustify_lists(input, ...)
   low_threshold_cell = 0,
   verbose = TRUE,
   input_markers = FALSE,
+  details_out = FALSE,
   ...
 )
 
@@ -52,6 +53,7 @@ clustify_lists(input, ...)
   threshold = 0,
   rename_prefix = NULL,
   verbose = TRUE,
+  details_out = FALSE,
   ...
 )
 
@@ -74,6 +76,7 @@ clustify_lists(input, ...)
   threshold = 0,
   rename_prefix = NULL,
   verbose = TRUE,
+  details_out = FALSE,
   ...
 )
 }
@@ -129,6 +132,8 @@ only used when obj_out = T}
 
 \item{input_markers}{whether input is marker data.frame of 0 and 1s (output of pos_neg_marker), and uses alternate enrichment mode}
 
+\item{details_out}{whether to also output shared gene list from jaccard}
+
 \item{dr}{stored dimension reduction}
 }
 \value{
@@ -140,13 +145,6 @@ Main function to compare scRNA-seq data to gene lists.
 }
 \examples{
 # Annotate a matrix and metadata
-clustify_lists(
-    input = pbmc_matrix_small,
-    marker = cbmc_m,
-    metadata = pbmc_meta,
-    cluster_col = "classified",
-    verbose = TRUE
-)
 
 # Annotate using a different method
 clustify_lists(
