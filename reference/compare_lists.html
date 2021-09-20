@@ -150,7 +150,8 @@ or jaccard index</p>
   <span class='va'>marker_mat</span>,
   n <span class='op'>=</span> <span class='fl'>30000</span>,
   metric <span class='op'>=</span> <span class='st'>"hyper"</span>,
-  output_high <span class='op'>=</span> <span class='cn'>TRUE</span>
+  output_high <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  details_out <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -177,6 +178,10 @@ feed in by_cluster mat, if desired</p></td>
       <th>output_high</th>
       <td><p>if true (by default to fit with rest of package),
 -log10 transform p-value</p></td>
+    </tr>
+    <tr>
+      <th>details_out</th>
+      <td><p>whether to also output shared gene list from jaccard</p></td>
     </tr>
     </table>
 
