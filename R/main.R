@@ -577,16 +577,17 @@ clustify_lists <- function(input, ...) {
 #'   (deprecated, use obj_out instead)
 #' @param verbose whether to report certain variables chosen and steps
 #' @param input_markers whether input is marker data.frame of 0 and 1s (output of pos_neg_marker), and uses alternate enrichment mode
+#' @param details_out whether to also output shared gene list from jaccard
 #' @param ... passed to matrixize_markers
 #' @examples
 #' # Annotate a matrix and metadata
-#' clustify_lists(
-#'     input = pbmc_matrix_small,
-#'     marker = cbmc_m,
-#'     metadata = pbmc_meta,
-#'     cluster_col = "classified",
-#'     verbose = TRUE
-#' )
+# clustify_lists(
+#     input = pbmc_matrix_small,
+#     marker = cbmc_m,
+#     metadata = pbmc_meta,
+#     cluster_col = "classified",
+#     verbose = TRUE
+# )
 #'
 #' # Annotate using a different method
 #' clustify_lists(
@@ -621,6 +622,7 @@ clustify_lists.default <- function(input,
     low_threshold_cell = 0,
     verbose = TRUE,
     input_markers = FALSE,
+    details_out = FALSE,
     ...) {
     input_original <- input
     if (!inherits(input, c("matrix", "Matrix", "data.frame"))) {
@@ -712,7 +714,8 @@ clustify_lists.default <- function(input,
             marker_mat = marker,
             n = genome_n,
             metric = metric,
-            output_high = output_high
+            output_high = output_high,
+            details_out = details_out
         )
     } else {
         if (is.data.frame(marker)) {
@@ -786,6 +789,7 @@ clustify_lists.Seurat <- function(input,
     threshold = 0,
     rename_prefix = NULL,
     verbose = TRUE,
+    details_out = FALSE,
     ...) {
     s_object <- input
     # for seurat 3.0 +
@@ -821,6 +825,7 @@ clustify_lists.Seurat <- function(input,
         metric = metric,
         output_high = output_high,
         verbose = verbose,
+        details_out = details_out,
         ...
     )
 
@@ -878,6 +883,7 @@ clustify_lists.SingleCellExperiment <- function(input,
     threshold = 0,
     rename_prefix = NULL,
     verbose = TRUE,
+    details_out = FALSE,
     ...) {
     s_object <- input
     expr_mat <- object_data(s_object, "data")
@@ -910,6 +916,7 @@ clustify_lists.SingleCellExperiment <- function(input,
         genome_n = genome_n,
         metric = metric,
         output_high = output_high,
+        details_out = details_out,
         ...
     )
 

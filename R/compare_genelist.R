@@ -203,6 +203,7 @@ get_vargenes <- function(marker_mat) {
 #' @param metric adjusted p-value for hypergeometric test, or jaccard index
 #' @param output_high if true (by default to fit with rest of package),
 #' -log10 transform p-value
+#' @param details_out whether to also output shared gene list from jaccard
 #' @return matrix of numeric values, clusters from expr_mat as row names,
 #'  cell types from marker_mat as column names
 #' @examples
@@ -226,7 +227,8 @@ compare_lists <- function(bin_mat,
     marker_mat,
     n = 30000,
     metric = "hyper",
-    output_high = TRUE) {
+    output_high = TRUE,
+    details_out = FALSE) {
     # check if matrix is binarized
     if (is.list(marker_mat)) {
         message("list of markers instead of matrix, only supports jaccard")
@@ -236,6 +238,28 @@ compare_lists <- function(bin_mat,
           metric <- "spearman"
     }
 
+    if (details_out) {
+        spe <- lapply(
+            colnames(bin_mat),
+            function(x) {
+                per_col <- lapply(
+                    names(marker_mat),
+                    function(y) {
+                        marker_list <- unlist(marker_mat[[y]],
+                                              use.names = FALSE
+                        )
+                        bin_temp <- bin_mat[, x][bin_mat[, x] == 1]
+                        list_top <- names(bin_temp)
+                        
+                        genes <- paste(intersect(list_top, marker_list), collapse = ",")
+                        genes
+                    }
+                )
+                do.call(cbind, per_col)
+            }
+        )
+    }
+    
     if (metric == "hyper") {
         out <- lapply(
             colnames(bin_mat),
@@ -379,5 +403,13 @@ compare_lists <- function(bin_mat,
         }
     }
 
-    res
+    if (details_out) {
+        spe <- do.call(rbind, spe)
+        rownames(spe) <- colnames(bin_mat)
+        colnames(spe) <- names(marker_mat)
+        list(res = res,
+             details = spe)
+    } else {
+        res
+    }
 }

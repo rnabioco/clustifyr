@@ -41,6 +41,28 @@ test_that("run all gene list functions", {
     expect_equal(4, length(results))
 })
 
+test_that("output intersected genes with details_out option with hyper/jaccard", {
+    pbmc_mm <- matrixize_markers(pbmc_markers)
+    pbmc_avg <- average_clusters(pbmc_matrix_small,
+                                 pbmc_meta,
+                                 cluster_col = "classified"
+    )
+    pbmc_avgb <- binarize_expr(pbmc_avg)
+    gene_list_methods <- c("hyper", "jaccard")
+    results <- lapply(
+        gene_list_methods,
+        function(x) {
+            compare_lists(pbmc_avgb,
+                          pbmc_mm,
+                          metric = x,
+                          details_out = TRUE
+            )
+        }
+    )
+    
+    expect_equal(2, length(results))
+})
+
 test_that("gene list function options", {
     pbmc_mm <- matrixize_markers(pbmc_markers)
     pbmc_avg <- average_clusters(pbmc_matrix_small,
