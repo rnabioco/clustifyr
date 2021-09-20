@@ -432,9 +432,468 @@ returns a list containing results and plot.</p></td>
       <tr>
         
         <td>
-          <p><code><a href="install_clustifyr_app.html">install_clustifyr_app()</a></code> </p>
+          <p><code><a href="append_genes.html">append_genes()</a></code> </p>
         </td>
-        <td><p>Install all packages needed for shiny app</p></td>
+        <td><p>Given a reference matrix and a list of genes, take the union of
+all genes in vector and genes in reference matrix
+and insert zero counts for all remaining genes.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="assess_rank_bias.html">assess_rank_bias()</a></code> </p>
+        </td>
+        <td><p>Find rank bias</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="assign_ident.html">assign_ident()</a></code> </p>
+        </td>
+        <td><p>manually change idents as needed</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="average_clusters.html">average_clusters()</a></code> </p>
+        </td>
+        <td><p>Average expression values per cluster</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="binarize_expr.html">binarize_expr()</a></code> </p>
+        </td>
+        <td><p>Binarize scRNAseq data</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="build_atlas.html">build_atlas()</a></code> </p>
+        </td>
+        <td><p>Function to combine records into single atlas</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="calc_similarity.html">calc_similarity()</a></code> </p>
+        </td>
+        <td><p>compute similarity</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="calculate_pathway_gsea.html">calculate_pathway_gsea()</a></code> </p>
+        </td>
+        <td><p>Convert expression matrix to GSEA pathway scores
+(would take a similar place in workflow before average_clusters/binarize)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="call_consensus.html">call_consensus()</a></code> </p>
+        </td>
+        <td><p>get concensus calls for a list of cor calls</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="call_to_metadata.html">call_to_metadata()</a></code> </p>
+        </td>
+        <td><p>Insert called ident results into metadata</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="cbmc_m.html">cbmc_m</a></code> </p>
+        </td>
+        <td><p>reference marker matrix from seurat citeseq CBMC tutorial</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="cbmc_ref.html">cbmc_ref</a></code> </p>
+        </td>
+        <td><p>reference matrix from seurat citeseq CBMC tutorial</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="check_raw_counts.html">check_raw_counts()</a></code> </p>
+        </td>
+        <td><p>Given a count matrix, determine if the matrix has been either
+log-normalized, normalized, or contains raw counts</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="clustify.html">clustify()</a></code> </p>
+        </td>
+        <td><p>Compare scRNA-seq data to reference data.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="clustify_lists.html">clustify_lists()</a></code> </p>
+        </td>
+        <td><p>Main function to compare scRNA-seq data to gene lists.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="clustify_nudge.html">clustify_nudge()</a></code> </p>
+        </td>
+        <td><p>Combined function to compare scRNA-seq data to
+bulk RNA-seq data and marker list</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="clustifyr_methods.html">clustifyr_methods</a></code> </p>
+        </td>
+        <td><p>Correlation functions available in clustifyr</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="collapse_to_cluster.html">collapse_to_cluster()</a></code> </p>
+        </td>
+        <td><p>From per-cell calls, take highest freq call in each cluster</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="compare_lists.html">compare_lists()</a></code> </p>
+        </td>
+        <td><p>Calculate adjusted p-values for hypergeometric test of gene lists
+or jaccard index</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="cor_to_call.html">cor_to_call()</a></code> </p>
+        </td>
+        <td><p>get best calls for each cluster</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="cor_to_call_rank.html">cor_to_call_rank()</a></code> </p>
+        </td>
+        <td><p>get ranked calls for each cluster</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="cor_to_call_topn.html">cor_to_call_topn()</a></code> </p>
+        </td>
+        <td><p>get top calls for each cluster</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="cosine.html">cosine()</a></code> </p>
+        </td>
+        <td><p>Cosine distance</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="downrefs.html">downrefs</a></code> </p>
+        </td>
+        <td><p>table of references stored in clustifyrdata</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="downsample_matrix.html">downsample_matrix()</a></code> </p>
+        </td>
+        <td><p>downsample matrix by cluster or completely random</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="feature_select_PCA.html">feature_select_PCA()</a></code> </p>
+        </td>
+        <td><p>Returns a list of variable genes based on PCA</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="file_marker_parse.html">file_marker_parse()</a></code> </p>
+        </td>
+        <td><p>takes files with positive and negative markers, as described in garnett,
+and returns list of markers</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="find_rank_bias.html">find_rank_bias()</a></code> </p>
+        </td>
+        <td><p>Find rank bias</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="gene_pct.html">gene_pct()</a></code> </p>
+        </td>
+        <td><p>pct of cells in each cluster that express genelist</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="gene_pct_markerm.html">gene_pct_markerm()</a></code> </p>
+        </td>
+        <td><p>pct of cells in every cluster that express a series of genelists</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_best_match_matrix.html">get_best_match_matrix()</a></code> </p>
+        </td>
+        <td><p>Function to make best call from correlation matrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_best_str.html">get_best_str()</a></code> </p>
+        </td>
+        <td><p>Function to make call and attach score</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_common_elements.html">get_common_elements()</a></code> </p>
+        </td>
+        <td><p>Find entries shared in all vectors</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_similarity.html">get_similarity()</a></code> </p>
+        </td>
+        <td><p>Compute similarity of matrices</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_ucsc_reference.html">get_ucsc_reference()</a></code> </p>
+        </td>
+        <td><p>Build reference atlases from external UCSC cellbrowsers</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_unique_column.html">get_unique_column()</a></code> </p>
+        </td>
+        <td><p>Generate a unique column id for a dataframe</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_vargenes.html">get_vargenes()</a></code> </p>
+        </td>
+        <td><p>Generate variable gene list from marker matrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="gmt_to_list.html">gmt_to_list()</a></code> </p>
+        </td>
+        <td><p>convert gmt format of pathways to list of vectors</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="human_genes_10x.html">human_genes_10x</a></code> </p>
+        </td>
+        <td><p>Vector of human genes for 10x cellranger pipeline</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="insert_meta_object.html">insert_meta_object()</a></code> </p>
+        </td>
+        <td><p>more flexible metadata update of single cell objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="kl_divergence.html">kl_divergence()</a></code> </p>
+        </td>
+        <td><p>KL divergence</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="make_comb_ref.html">make_comb_ref()</a></code> </p>
+        </td>
+        <td><p>make combination ref matrix to assess intermixing</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="marker_select.html">marker_select()</a></code> </p>
+        </td>
+        <td><p>decide for one gene whether it is a marker for a certain cell type</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="matrixize_markers.html">matrixize_markers()</a></code> </p>
+        </td>
+        <td><p>Convert candidate genes list into matrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="mouse_genes_10x.html">mouse_genes_10x</a></code> </p>
+        </td>
+        <td><p>Vector of mouse genes for 10x cellranger pipeline</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="not_pretty_palette.html">not_pretty_palette</a></code> </p>
+        </td>
+        <td><p>black and white palette for plotting continous variables</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="object_data.html">object_data()</a></code> </p>
+        </td>
+        <td><p>Function to access object data</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="object_loc_lookup.html">object_loc_lookup</a></code> </p>
+        </td>
+        <td><p>lookup table for single cell object structures</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="object_ref.html">object_ref()</a></code> </p>
+        </td>
+        <td><p>Function to convert labelled object to avg expression matrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="overcluster.html">overcluster()</a></code> </p>
+        </td>
+        <td><p>Overcluster by kmeans per cluster</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="overcluster_test.html">overcluster_test()</a></code> </p>
+        </td>
+        <td><p>compare clustering parameters and classification outcomes</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="parse_loc_object.html">parse_loc_object()</a></code> </p>
+        </td>
+        <td><p>more flexible parsing of single cell objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pbmc_markers.html">pbmc_markers</a></code> </p>
+        </td>
+        <td><p>Marker genes identified by Seurat from single-cell RNA-seq PBMCs.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pbmc_markers_M3Drop.html">pbmc_markers_M3Drop</a></code> </p>
+        </td>
+        <td><p>Marker genes identified by M3Drop from single-cell RNA-seq PBMCs.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pbmc_matrix_small.html">pbmc_matrix_small</a></code> </p>
+        </td>
+        <td><p>Matrix of single-cell RNA-seq PBMCs.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pbmc_meta.html">pbmc_meta</a></code> </p>
+        </td>
+        <td><p>Meta-data for single-cell RNA-seq PBMCs.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pbmc_vargenes.html">pbmc_vargenes</a></code> </p>
+        </td>
+        <td><p>Variable genes identified by Seurat from single-cell RNA-seq PBMCs.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="percent_clusters.html">percent_clusters()</a></code> </p>
+        </td>
+        <td><p>Percentage detected per cluster</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="permute_similarity.html">permute_similarity()</a></code> </p>
+        </td>
+        <td><p>Compute a p-value for similarity using permutation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot_best_call.html">plot_best_call()</a></code> </p>
+        </td>
+        <td><p>Plot best calls for each cluster on a tSNE or umap</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot_call.html">plot_call()</a></code> </p>
+        </td>
+        <td><p>Plot called clusters on a tSNE or umap, for each reference cluster given</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot_cor.html">plot_cor()</a></code> </p>
+        </td>
+        <td><p>Plot similarity measures on a tSNE or umap</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot_cor_heatmap.html">plot_cor_heatmap()</a></code> </p>
+        </td>
+        <td><p>Plot similarity measures on heatmap</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot_dims.html">plot_dims()</a></code> </p>
+        </td>
+        <td><p>Plot a tSNE or umap colored by feature.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot_gene.html">plot_gene()</a></code> </p>
+        </td>
+        <td><p>Plot gene expression on to tSNE or umap</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot_pathway_gsea.html">plot_pathway_gsea()</a></code> </p>
+        </td>
+        <td><p>plot GSEA pathway scores as heatmap,
+returns a list containing results and plot.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot_rank_bias.html">plot_rank_bias()</a></code> </p>
+        </td>
+        <td><p>Query rank bias results</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pos_neg_marker.html">pos_neg_marker()</a></code> </p>
+        </td>
+        <td><p>generate pos and negative marker expression matrix from a
+list/dataframe of positive markers</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pos_neg_select.html">pos_neg_select()</a></code> </p>
+        </td>
+        <td><p>adapt clustify to tweak score for pos and neg markers</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pretty_palette.html">pretty_palette</a></code> </p>
+        </td>
+        <td><p>Color palette for plotting continous variables</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pretty_palette2.html">pretty_palette2</a></code> </p>
+        </td>
+        <td><p>Color palette for plotting continous variables, starting at gray</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pretty_palette_ramp_d.html">pretty_palette_ramp_d()</a></code> </p>
+        </td>
+        <td><p>Expanded color palette ramp for plotting discrete variables</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="query_rank_bias.html">query_rank_bias()</a></code> </p>
+        </td>
+        <td><p>Query rank bias results</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ref_feature_select.html">ref_feature_select()</a></code> </p>
+        </td>
+        <td><p>feature select from reference matrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ref_marker_select.html">ref_marker_select()</a></code> </p>
+        </td>
+        <td><p>marker selection from reference matrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="reverse_marker_matrix.html">reverse_marker_matrix()</a></code> </p>
+        </td>
+        <td><p>generate negative markers from a list of exclusive positive markers</p></td>
       </tr><tr>
         
         <td>
@@ -442,6 +901,55 @@ returns a list containing results and plot.</p></td>
         </td>
         <td><p>Launch Shiny app version of clustifyr,
 may need to run install_clustifyr_app() at first time to install packages</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="run_gsea.html">run_gsea()</a></code> </p>
+        </td>
+        <td><p>Run GSEA to compare a gene list(s) to per cell or
+per cluster expression data</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="s_small.html">s_small</a></code> </p>
+        </td>
+        <td><p>Small clustered Seurat2 object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="s_small3.html">s_small3</a></code> </p>
+        </td>
+        <td><p>Small clustered Seurat3 object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sce_small.html">sce_small</a></code> </p>
+        </td>
+        <td><p>Small SingleCellExperiment object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="seurat_meta.html">seurat_meta()</a></code> </p>
+        </td>
+        <td><p>Function to convert labelled seurat object to fully prepared metadata</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="seurat_ref.html">seurat_ref()</a></code> </p>
+        </td>
+        <td><p>Function to convert labelled seurat object to avg expression matrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="vector_similarity.html">vector_similarity()</a></code> </p>
+        </td>
+        <td><p>Compute similarity between two vectors</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="write_meta.html">write_meta()</a></code> </p>
+        </td>
+        <td><p>Function to write metadata to object</p></td>
       </tr>
     </tbody><tbody>
       <tr>
