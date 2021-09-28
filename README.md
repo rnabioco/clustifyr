@@ -7,7 +7,7 @@ status](https://github.com/rnabioco/clustifyr/workflows/R-CMD-check/badge.svg)](
 [![codecov](https://codecov.io/gh/rnabioco/clustifyr/branch/master/graph/badge.svg)](https://codecov.io/gh/rnabioco/clustifyr)
 [![platforms](https://bioconductor.org/shields/availability/release/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
 [![bioc](https://bioconductor.org/shields/years-in-bioc/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
-[![\#downloads](https://img.shields.io/badge/%23%20downloads-2840-brightgreen)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
+[![\#downloads](https://img.shields.io/badge/%23%20downloads-3009-brightgreen)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
 
 <!-- badges: end -->
 
@@ -305,7 +305,7 @@ clustify_lists(
 
 ``` r
 # pbmc_markers as FindAllMarkers output gene list
-pbmc_input <- matrixize_markers(pbmc_markers)
+pbmc_input <- split(pbmc_markers$gene, pbmc_markers$cluster)
 # reference gene list that is uneven length
 pbmc_ref_mm <- pos_neg_marker(
   list(B = c("CD79A", "CD79B", "MS4A1"), 
@@ -321,7 +321,25 @@ res <- clustify_lists(
 )
 ```
 
-10. **Why is the default setting `per_cell = FALSE`?** While doing
+10. **Can I extract the overlapping genes from`clustify_lists()`?** This
+    was an requested and added feature. `details_out = TRUE` will output
+    2 matrices, the normal score, and a matrix containing all genes
+    overlapping in the corresponding ref vs query pairs.
+
+``` r
+res <- clustify_lists(
+  pbmc_matrix_small,
+  metadata = pbmc_meta,
+  cluster_col = "classified",
+  marker = cbmc_m,
+  details_out = TRUE
+)
+
+names(res)
+#> [1] "res"     "details"
+```
+
+11. **Why is the default setting `per_cell = FALSE`?** While doing
     classification on per cell level is available, it is slow and not
     very accurate. Default settings are also not optimized for per-cell
     classification. `clustifyr` is mainly focused on leveraging results
@@ -335,12 +353,12 @@ res <- clustify_lists(
     overcluster the data and check if `clustify()` results are stable
     (see also `overcluster_test()`).
 
-11. **Can I use multiple references in the same clustify run?** Yes,
+12. **Can I use multiple references in the same clustify run?** Yes,
     simply adding columns to a reference matrix works to expand it. We
     also provide `build_atlas()`, which can be run along the lines of
     `build_atlas(matrix_objs = list(reference1, reference2, reference3, ...), genes_fn = clustifyr::human_genes_10x)`.
 
-12. **Does clustifyr work for spatial scRNA-seq data?** It works
+13. **Does clustifyr work for spatial scRNA-seq data?** It works
     decently on the Seurat tutorial data. See short
     [example](https://github.com/rnabioco/clustifyr/issues/370) for both
     `clustify()`(correlation) and `clustify_lists()`(gene list
@@ -348,7 +366,7 @@ res <- clustify_lists(
     avoiding SCtransform data, and opting for using raw data directly
     instead. This can now be directly handled by Seurat wrapper.)
 
-13. **Can I pull out additional information on what gene signatures
+14. **Can I pull out additional information on what gene signatures
     don’t match the reference clusters?** Please add arguments
     `organism = "hsapiens", plot_name = "rank_diffs"` to `clustify()`.
     This saves a “rank\_diffs.pdf”, comparing gene expression of the
@@ -359,7 +377,7 @@ res <- clustify_lists(
     `assess_rank_bias()` for step-by-step generation of the plot outside
     of the `clustify()` wrapper.
 
-14. **How do I cite `clustifyr`?**
+15. **How do I cite `clustifyr`?**
 
 ``` r
 citation("clustifyr")
@@ -367,8 +385,8 @@ citation("clustifyr")
 #> Fu R, Gillen A, Sheridan RM, Tian C, Daya M, Hao Y, Hesselberth JR,
 #> Riemondy KA (2019). "clustifyr: An R package for automated single-cell
 #> RNA sequencing cluster classification." _F1000 Research_. doi:
-#> 10.12688/f1000research.22969.1 (URL:
-#> https://doi.org/10.12688/f1000research.22969.1).
+#> 10.12688/f1000research.22969.2 (URL:
+#> https://doi.org/10.12688/f1000research.22969.2).
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
@@ -377,7 +395,7 @@ citation("clustifyr")
 #>     year = {2019},
 #>     author = {Rui Fu and Austin Gillen and Ryan M. Sheridan and Chengzhe Tian and Michelle Daya and Yue Hao and Jay R. Hesselberth and Kent A. Riemondy},
 #>     journal = {F1000 Research},
-#>     doi = {10.12688/f1000research.22969.1},
+#>     doi = {10.12688/f1000research.22969.2},
 #>   }
 ```
 
