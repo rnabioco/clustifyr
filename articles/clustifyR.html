@@ -106,7 +106,7 @@
             <address class="author_afil">
       RNA Bioscience Initative, University of Colorado School of Medicine<br><h4 class="author">Kent Riemondy</h4>
             <address class="author_afil">
-      RNA Bioscience Initative, University of Colorado School of Medicine<br><h4 class="date">2021-09-20</h4>
+      RNA Bioscience Initative, University of Colorado School of Medicine<br><h4 class="date">2021-09-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyr/blob/master/vignettes/clustifyR.Rmd"><code>vignettes/clustifyR.Rmd</code></a></small>
       <div class="hidden name"><code>clustifyR.Rmd</code></div>
@@ -189,6 +189,7 @@
 <span class="co">#&gt; 2 0.5524081  0.9372089  0.8930158 0.5879264 0.5347312</span>
 <span class="co">#&gt; 3 0.8945380  0.5801453  0.6146857 0.6955897 0.6566739</span>
 <span class="co">#&gt; 4 0.5711643  0.5623870  0.5826233 0.6280913 0.7467347</span>
+
 <span class="co"># Call cell types</span>
 <span class="va">res2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cor_to_call.html">cor_to_call</a></span><span class="op">(</span>
   cor_mat <span class="op">=</span> <span class="va">res</span>,                  <span class="co"># matrix correlation coefficients</span>
@@ -204,6 +205,7 @@
 <span class="co">#&gt; 3 5               CD16+ Mono 0.929</span>
 <span class="co">#&gt; 4 0               CD4 T      0.880</span>
 <span class="co">#&gt; 5 1               CD4 T      0.849</span>
+
 <span class="co"># Insert into original metadata as "type" column</span>
 <span class="va">pbmc_meta2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/call_to_metadata.html">call_to_metadata</a></span><span class="op">(</span>
   res <span class="op">=</span> <span class="va">res2</span>,                     <span class="co"># data.frame of called cell type for each cluster</span>
@@ -274,6 +276,7 @@
 <span class="co">#&gt; 1   SPINK2   HBM   PF4  ENHO LILRA4</span>
 <span class="co">#&gt; 2  C1QTNF4  AHSP  SDPR  CD1E   TPM2</span>
 <span class="co">#&gt; 3 KIAA0125   CA1 TUBB1 NDRG2    SCT</span>
+
 <span class="co"># Available metrics include: "hyper", "jaccard", "spearman", "gsea"</span>
 <span class="va">list_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clustify_lists.html">clustify_lists</a></span><span class="op">(</span>
   input <span class="op">=</span> <span class="va">pbmc_matrix</span>,             <span class="co"># matrix of normalized single-cell RNA-seq counts</span>
@@ -292,7 +295,8 @@
 <span class="op">)</span></code></pre></div>
 <p><img src="clustifyR_files/figure-html/clustifyr%20with%20gene%20lists-1.png" width="576" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Downstream functions same as clustify()</span>
+<code class="sourceCode R">
+<span class="co"># Downstream functions same as clustify()</span>
 <span class="co"># Call cell types</span>
 <span class="va">list_res2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cor_to_call.html">cor_to_call</a></span><span class="op">(</span>
   cor_mat <span class="op">=</span> <span class="va">list_res</span>,              <span class="co"># matrix correlation coefficients</span>
@@ -385,6 +389,7 @@
 <span class="co">#&gt; IGLL5   0.03116080 0.05247669 0.2501642</span>
 <span class="co">#&gt; GNLY    0.46041901 4.70481754 0.3845813</span>
 <span class="co">#&gt; FTL     3.35611600 3.38471536 4.5508242</span>
+
 <span class="co"># For further convenience, a shortcut function for generating reference matrix from `SingleCellExperiment` or `seurat` object is used.</span>
 <span class="va">new_ref_matrix_sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/object_ref.html">object_ref</a></span><span class="op">(</span>
   input <span class="op">=</span> <span class="va">sce_small</span>,               <span class="co"># SCE object</span>
@@ -419,7 +424,7 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; R version 4.1.1 (2021-08-10)</span>
 <span class="co">#&gt; Platform: x86_64-pc-linux-gnu (64-bit)</span>
-<span class="co">#&gt; Running under: Ubuntu 18.04.5 LTS</span>
+<span class="co">#&gt; Running under: Ubuntu 18.04.6 LTS</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Matrix products: default</span>
 <span class="co">#&gt; BLAS:   /usr/lib/x86_64-linux-gnu/openblas/libblas.so.3</span>
@@ -449,12 +454,12 @@
 <span class="co">#&gt; [17] tidyselect_1.1.1            gridExtra_2.3              </span>
 <span class="co">#&gt; [19] compiler_4.1.1              textshaping_0.3.5          </span>
 <span class="co">#&gt; [21] cli_3.0.1                   Biobase_2.52.0             </span>
-<span class="co">#&gt; [23] Cairo_1.5-12.2              desc_1.3.0                 </span>
+<span class="co">#&gt; [23] Cairo_1.5-12.2              desc_1.4.0                 </span>
 <span class="co">#&gt; [25] DelayedArray_0.18.0         labeling_0.4.2             </span>
 <span class="co">#&gt; [27] entropy_1.3.0               bookdown_0.24              </span>
 <span class="co">#&gt; [29] sass_0.4.0                  scales_1.1.1               </span>
 <span class="co">#&gt; [31] pkgdown_1.6.1               systemfonts_1.0.2          </span>
-<span class="co">#&gt; [33] stringr_1.4.0               digest_0.6.27              </span>
+<span class="co">#&gt; [33] stringr_1.4.0               digest_0.6.28              </span>
 <span class="co">#&gt; [35] rmarkdown_2.11              XVector_0.32.0             </span>
 <span class="co">#&gt; [37] pkgconfig_2.0.3             htmltools_0.5.2            </span>
 <span class="co">#&gt; [39] MatrixGenerics_1.4.3        highr_0.9                  </span>
@@ -466,22 +471,22 @@
 <span class="co">#&gt; [51] RCurl_1.98-1.5              magrittr_2.0.1             </span>
 <span class="co">#&gt; [53] GenomeInfoDbData_1.2.6      Matrix_1.3-4               </span>
 <span class="co">#&gt; [55] Rcpp_1.0.7                  munsell_0.5.0              </span>
-<span class="co">#&gt; [57] S4Vectors_0.30.0            fansi_0.5.0                </span>
-<span class="co">#&gt; [59] lifecycle_1.0.0             stringi_1.7.4              </span>
+<span class="co">#&gt; [57] S4Vectors_0.30.1            fansi_0.5.0                </span>
+<span class="co">#&gt; [59] lifecycle_1.0.1             stringi_1.7.4              </span>
 <span class="co">#&gt; [61] yaml_2.2.1                  SummarizedExperiment_1.22.0</span>
 <span class="co">#&gt; [63] zlibbioc_1.38.0             grid_4.1.1                 </span>
 <span class="co">#&gt; [65] ggrepel_0.9.1               parallel_4.1.1             </span>
-<span class="co">#&gt; [67] crayon_1.4.1                lattice_0.20-44            </span>
-<span class="co">#&gt; [69] circlize_0.4.13             knitr_1.34                 </span>
-<span class="co">#&gt; [71] ComplexHeatmap_2.8.0        pillar_1.6.2               </span>
+<span class="co">#&gt; [67] crayon_1.4.1                lattice_0.20-45            </span>
+<span class="co">#&gt; [69] circlize_0.4.13             knitr_1.35                 </span>
+<span class="co">#&gt; [71] ComplexHeatmap_2.8.0        pillar_1.6.3               </span>
 <span class="co">#&gt; [73] fgsea_1.18.0                GenomicRanges_1.44.0       </span>
 <span class="co">#&gt; [75] rjson_0.2.20                codetools_0.2-18           </span>
 <span class="co">#&gt; [77] stats4_4.1.1                fastmatch_1.1-3            </span>
 <span class="co">#&gt; [79] glue_1.4.2                  evaluate_0.14              </span>
-<span class="co">#&gt; [81] data.table_1.14.0           BiocManager_1.30.16        </span>
+<span class="co">#&gt; [81] data.table_1.14.2           BiocManager_1.30.16        </span>
 <span class="co">#&gt; [83] vctrs_0.3.8                 png_0.1-7                  </span>
 <span class="co">#&gt; [85] foreach_1.5.1               gtable_0.3.0               </span>
-<span class="co">#&gt; [87] purrr_0.3.4                 tidyr_1.1.3                </span>
+<span class="co">#&gt; [87] purrr_0.3.4                 tidyr_1.1.4                </span>
 <span class="co">#&gt; [89] clue_0.3-59                 cachem_1.0.6               </span>
 <span class="co">#&gt; [91] xfun_0.26                   ragg_1.1.3                 </span>
 <span class="co">#&gt; [93] SingleCellExperiment_1.14.1 tibble_3.1.4               </span>
