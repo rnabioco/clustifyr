@@ -582,16 +582,3 @@ test_that("clustify n_genes options ignored if too large", {
     )
     expect_true(res[1,1] == res2[1,1])
 })
-
-# test_that("clustify finds SCT variable genes if needed", {
-#     s <- CreateSeuratObject(pbmc_matrix_small)
-#     s <- SCTransform(s)
-#     res <- clustify(s,
-#                     cbmc_ref,
-#                     per_cell = TRUE,
-#                     verbose = TRUE,
-#                     dr = "tsne",
-#                     obj_out = FALSE
-#     )
-#     expect_true(res[1,1] == res2[1,1])
-# })

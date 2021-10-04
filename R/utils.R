@@ -49,7 +49,7 @@ overcluster <- function(mat,
 #' @param cluster_col column in metadata with cluster number
 #' @param cell_col if provided, will reorder matrix first
 #' @param low_threshold option to remove clusters with too few cells
-#' @param method whether to take mean (default) or median
+#' @param method whether to take mean (default), median, 10% truncated mean, or trimean
 #' @param output_log whether to report log results
 #' @param subclusterpower whether to get multiple averages per original cluster
 #' @param cut_n set on a limit of genes as expressed, lower ranked genes
@@ -142,7 +142,7 @@ average_clusters <- function(mat,
                 res
             }
         )
-    } else {
+    } else if (method == "median") {
         out <- lapply(
             cluster_ids,
             function(cell_ids) {
@@ -152,12 +152,54 @@ average_clusters <- function(mat,
                     )
                 }
                 mat_data <- mat[, cell_ids, drop = FALSE]
-                mat_data[mat_data == 0] <- NA
+                # mat_data[mat_data == 0] <- NA
                 res <- matrixStats::rowMedians(as.matrix(mat_data),
                     na.rm = TRUE
                 )
                 res[is.na(res)] <- 0
                 names(res) <- rownames(mat_data)
+                res
+            }
+        )
+    } else if (method == "trimean") {
+        out <- lapply(
+            cluster_ids,
+            function(cell_ids) {
+                if (!all(cell_ids %in% colnames(mat))) {
+                    stop("cell ids not found in input matrix",
+                         call. = FALSE
+                    )
+                }
+                mat_data <- mat[, cell_ids, drop = FALSE]
+                # mat_data[mat_data == 0] <- NA
+                res1 <- matrixStats::rowQuantiles(as.matrix(mat_data), 
+                                                  probs = 0.25,
+                                                  na.rm = TRUE)
+                res2 <- matrixStats::rowQuantiles(as.matrix(mat_data), 
+                                                  probs = 0.5,
+                                                  na.rm = TRUE)
+                res3 <- matrixStats::rowQuantiles(as.matrix(mat_data), 
+                                                  probs = 0.75,
+                                                  na.rm = TRUE)
+                res <- 0.5 * res2 + 0.25 * res1 + 0.25 * res3
+                res[is.na(res)] <- 0
+                names(res) <- rownames(mat_data)
+                res
+            }
+        )
+    } else if (method == "truncate") {
+        out <- lapply(
+            cluster_ids,
+            function(cell_ids) {
+                if (!all(cell_ids %in% colnames(mat))) {
+                    stop("cell ids not found in input matrix",
+                         call. = FALSE
+                    )
+                }
+                mat_data <- mat[, cell_ids, drop = FALSE]
+                # mat_data[mat_data == 0] <- NA
+                res <- apply(pbmc_matrix_small, 1, function(x) mean(x, trim = 0.1, na.rm = TRUE))
+                colnames(res) <- names(cell_ids)
                 res
             }
         )

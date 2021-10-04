@@ -42,7 +42,6 @@ reference:
   
 - title: Shiny
   contents:
-  - install_clustifyr_app
   - run_clustifyr_app
   
 - title: Utilities

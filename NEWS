@@ -42,3 +42,7 @@ Changes in version 1.3.3 (2021-02-28)
 Changes in version 1.5.1 (2021-08-04)
 + `clustify_lists()` support for uneven number of markers
 + Deprecated SeuratV2 support
+
+Changes in version 1.5.2 (2021-10-04)
++ `clustify_lists()` support for output of overlapping genes (`details_out = TRUE`)
++ Added truncated mean and trimean modes to `average_clusters()`
