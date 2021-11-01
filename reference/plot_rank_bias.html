@@ -160,31 +160,31 @@
     <p>ggplot object of distribution and annotated GO terms</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='va'>avg</span> <span class='op'>&lt;-</span> <span class='fu'><a href='average_clusters.html'>average_clusters</a></span><span class='op'>(</span>
-    mat <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,
-    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,
-    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,
-    if_log <span class='op'>=</span> <span class='cn'>FALSE</span>
-<span class='op'>)</span>
-
-<span class='va'>rankdiff</span> <span class='op'>&lt;-</span> <span class='fu'><a href='find_rank_bias.html'>find_rank_bias</a></span><span class='op'>(</span>
-    <span class='va'>avg</span>,
-    <span class='va'>cbmc_ref</span>,
-    query_genes <span class='op'>=</span> <span class='va'>pbmc_vargenes</span>
-<span class='op'>)</span>
-
-<span class='va'>qres</span> <span class='op'>&lt;-</span> <span class='fu'><a href='query_rank_bias.html'>query_rank_bias</a></span><span class='op'>(</span>
-    <span class='va'>rankdiff</span>,
-    <span class='st'>"CD14+ Mono"</span>,
-    <span class='st'>"CD14+ Mono"</span>
-<span class='op'>)</span>
-
-<span class='va'>g</span> <span class='op'>&lt;-</span> <span class='fu'>plot_rank_bias</span><span class='op'>(</span>
-    <span class='va'>qres</span>
-<span class='op'>)</span>
-<span class='op'>}</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='va'>avg</span> <span class='op'>&lt;-</span> <span class='fu'><a href='average_clusters.html'>average_clusters</a></span><span class='op'>(</span></span>
+<span class='r-in'>    mat <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,</span>
+<span class='r-in'>    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,</span>
+<span class='r-in'>    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,</span>
+<span class='r-in'>    if_log <span class='op'>=</span> <span class='cn'>FALSE</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>rankdiff</span> <span class='op'>&lt;-</span> <span class='fu'><a href='find_rank_bias.html'>find_rank_bias</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='va'>avg</span>,</span>
+<span class='r-in'>    <span class='va'>cbmc_ref</span>,</span>
+<span class='r-in'>    query_genes <span class='op'>=</span> <span class='va'>pbmc_vargenes</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>qres</span> <span class='op'>&lt;-</span> <span class='fu'><a href='query_rank_bias.html'>query_rank_bias</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='va'>rankdiff</span>,</span>
+<span class='r-in'>    <span class='st'>"CD14+ Mono"</span>,</span>
+<span class='r-in'>    <span class='st'>"CD14+ Mono"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>g</span> <span class='op'>&lt;-</span> <span class='fu'>plot_rank_bias</span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='va'>qres</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

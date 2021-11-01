@@ -199,24 +199,6 @@ default = FALSE</p></td>
 
     <p>dataframe of gsea scores (pval, NES), with clusters as rownames</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>run_gsea</span><span class='op'>(</span>
-    expr_mat <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,
-    query_genes <span class='op'>=</span> <span class='va'>pbmc_vargenes</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>100</span><span class='op'>]</span>,
-    n_perm <span class='op'>=</span> <span class='fl'>10</span>,
-    cluster_ids <span class='op'>=</span> <span class='va'>pbmc_meta</span><span class='op'>$</span><span class='va'>classified</span>,
-    no_warnings <span class='op'>=</span> <span class='cn'>TRUE</span>
-<span class='op'>)</span>
-</div><div class='output co'>#&gt;                  pathway       pval      NES
-#&gt; B            query_genes 0.09090909 1.376519
-#&gt; CD14+ Mono   query_genes 0.09090909 1.380002
-#&gt; CD8 T        query_genes 0.09090909 1.343579
-#&gt; DC           query_genes 0.09090909 1.410047
-#&gt; FCGR3A+ Mono query_genes 0.09090909 1.366121
-#&gt; Memory CD4 T query_genes 0.09090909 1.278387
-#&gt; Naive CD4 T  query_genes 0.09090909 1.243963
-#&gt; NK           query_genes 0.09090909 1.464424
-#&gt; Platelet     query_genes 0.09090909 1.171866</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

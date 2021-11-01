@@ -181,19 +181,20 @@ provide the cluster_col parameters.</p></td>
     <p>new smaller mat with less cell_id columns</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>42</span><span class='op'>)</span>
-<span class='va'>mat</span> <span class='op'>&lt;-</span> <span class='fu'>downsample_matrix</span><span class='op'>(</span>
-    mat <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,
-    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span><span class='op'>$</span><span class='va'>classified</span>,
-    n <span class='op'>=</span> <span class='fl'>10</span>,
-    keep_cluster_proportions <span class='op'>=</span> <span class='cn'>TRUE</span>
-<span class='op'>)</span>
-<span class='va'>mat</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>
-</div><div class='output co'>#&gt; 3 x 3 sparse Matrix of class "dgCMatrix"
-#&gt;        ACGTCGCTTCTCAT TTACCATGTTGTGG CCTGACTGTGTCTT
-#&gt; PPBP                .       .              .       
-#&gt; LYZ                 .       2.633919       2.592335
-#&gt; S100A9              .       .              .       </div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>42</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mat</span> <span class='op'>&lt;-</span> <span class='fu'>downsample_matrix</span><span class='op'>(</span></span>
+<span class='r-in'>    mat <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,</span>
+<span class='r-in'>    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span><span class='op'>$</span><span class='va'>classified</span>,</span>
+<span class='r-in'>    n <span class='op'>=</span> <span class='fl'>10</span>,</span>
+<span class='r-in'>    keep_cluster_proportions <span class='op'>=</span> <span class='cn'>TRUE</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mat</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 x 3 sparse Matrix of class "dgCMatrix"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        ACGTCGCTTCTCAT TTACCATGTTGTGG CCTGACTGTGTCTT</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> PPBP                .       .              .       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> LYZ                 .       2.633919       2.592335</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> S100A9              .       .              .       </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

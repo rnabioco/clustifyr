@@ -206,199 +206,200 @@ cluster, if metadata is dataframe</p></td>
 ranked expression</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>matrixize_markers</span><span class='op'>(</span><span class='va'>pbmc_markers</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;            0        1        2         3        4             5        6
-#&gt; 1      RPS12     IL32   S100A9     CD79A     CCL5        CDKN1C     GZMB
-#&gt; 2      RPS27      LTB   S100A8     MS4A1     NKG7          HES4   FGFBP2
-#&gt; 3       RPS6     CD3D   LGALS2     CD79B     GZMA RP11-290F20.3    SPON2
-#&gt; 4      RPL32     IL7R     FCN1 LINC00926     CST7         MS4A7     PRF1
-#&gt; 5      RPS14     LDHB     CD14     TCL1A     GZMK        FCGR3A     GNLY
-#&gt; 6      RPS25      CD2   TYROBP  HLA-DQA1     CTSW           CKB   AKR1C3
-#&gt; 7       RPL9     AQP3   MS4A6A    VPREB3     CD8A        LILRA3     XCL2
-#&gt; 8      RPL13     CD3E     CST3  HLA-DQB1    KLRG1        IFITM3    CLIC3
-#&gt; 9      RPL31     TPT1      LYZ      CD74     GZMH        MS4A4A     CST7
-#&gt; 10      RPS3    TRAT1     TYMP   HLA-DRA      B2M         PILRA    KLRD1
-#&gt; 11      RPL3    RPS12      CFD     FCER2     LYAR        LRRC25     GZMA
-#&gt; 12     RPL21   SPOCK2     LST1  HLA-DPB1     IL32        LILRB1     NKG7
-#&gt; 13     RPS3A   CD40LG   LGALS1     BANK1    HLA-C          RHOC     CCL4
-#&gt; 14     RPL30   GIMAP7     AIF1  HLA-DRB1     PRF1      SIGLEC10    TTC38
-#&gt; 15      LDHB    TRADD    GSTP1  HLA-DPA1     GZMM         HMOX1   PRSS23
-#&gt; 16    RPS15A    RPS25      GRN   TSPAN13    HLA-A          LST1     XCL1
-#&gt; 17     RPLP2     RPSA     GPX1  HLA-DQA2     CD3D          CTSL     CTSW
-#&gt; 18    RPS27A    PRDX2      FTL     FCRLA  PTPRCAP           HCK   SH2D1B
-#&gt; 19    MALAT1   TTC39C   S100A6      CD37     CCL4         CSF1R   FCGR3A
-#&gt; 20    EEF1A1    RPLP0     FTH1  HLA-DRB5     HOPX      SERPINA1   IGFBP7
-#&gt; 21     RPS13     CD27   FCER1G     HVCN1     CD8B        FCER1G     GZMH
-#&gt; 22    RPL13A      AES     CTSS      PKIG     MATK          CD68    IL2RB
-#&gt; 23    RPL27A      JUN     CD68   HLA-DOB     HCST          AIF1    KLRF1
-#&gt; 24     RPS18   TMEM66    CEBPD       BLK    SAMD3           CFD    S1PR5
-#&gt; 25     RPL11   MYL12A   S100A4   HLA-DMA    HLA-B         IFI30    CD247
-#&gt; 26     RPS29    RPS29   LGALS3    PDLIM1     NCR3          SPI1    APMAP
-#&gt; 27     RPS28     JUNB    AP1S2      GNG7 APOBEC3G        LILRB2     HOPX
-#&gt; 28    RPL35A    ANXA1     NPC2      CD72   FGFBP2         BATF3    GPR56
-#&gt; 29    RPL23A ARHGAP15     OAZ1   HLA-DMB      LCK        LILRA5     MATK
-#&gt; 30     RPS23    HINT1      CDA     P2RX5   MALAT1        STXBP2     GZMM
-#&gt; 31      CCR7      EVL  S100A11      CD40 C12orf75          WARS  C1orf21
-#&gt; 32      TPT1      LCK     PSAP      EAF2     CD99        CXCL16  PLEKHF1
-#&gt; 33     RPS20      LAT     SAT1  PPAPDC1B     GZMB         TPPP3    HLA-C
-#&gt; 34      CD3D    NOSIP     NCF2      IRF8   MYL12A         C5AR1      B2M
-#&gt; 35     RPS4X     CD3G      CFP    RPL18A  RARRES3         COTL1    TBX21
-#&gt; 36      RPL5      VIM    CSF3R  CYB561A3      CD2         CEBPB    PTGDR
-#&gt; 37     RPS16    ITM2A    BLVRB     QRSL1    DUSP2          MAFB      CD7
-#&gt; 38     RPL19     OPTN    COTL1    MARCH1     CD3E          TESC   HAVCR2
-#&gt; 39    RPL10A      MAL SERPINA1     MEF2C   CHST12       SLC31A2    TPST2
-#&gt; 40      RPSA     PLP2    ASGR1     RPS23    HLA-E         TIMP1    HLA-A
-#&gt; 41      RPS5   FLT3LG   NUP214    SMIM14    APMAP        IFITM2    PLAC8
-#&gt; 42     RPS10     SIT1  GABARAP     RPS11 SLC9A3R1           BID    FCRL6
-#&gt; 43     RPL14  TNFAIP8    ALDH2      RPS5    CD247          ABI3    HLA-B
-#&gt; 44     RPS15     RGCC    FCGRT      LY86    ZAP70      C19orf38    ITGB2
-#&gt; 45     RPL18    GSTK1    IFI30   PLEKHF2    LITAF          SAT1     CTSC
-#&gt; 46      NPM1    FXYD5     CYBA      SNX2   MYL12B          BRI3     CD63
-#&gt; 47     RPLP0    CALM1     FPR1       LTB    TPST2          FTH1     NCR3
-#&gt; 48     RPL36  PPP2R5C    FOLR3     ISG20   MT-CYB         CAMK1      ID2
-#&gt; 49      CD3E  ZFP36L2   PYCARD      NCF1     PFN1          PSAP      UBB
-#&gt; 50      RPL4  ALOX5AP      TKT     CXCR4      UBC CTD-2006K23.1 C12orf75
-#&gt; 51     NOSIP   CORO1B     SPI1    RPL13A     CTSC          CTSS     SRGN
-#&gt; 52      LEF1    SUSD3     RAC1     SNHG7     DDX5           LYN     RHOC
-#&gt; 53    RPL36A   PBXIP1     TSPO    LAPTM5     GNLY       S100A11  RARRES3
-#&gt; 54    EEF1B2   GIMAP5   SLC7A7      RPS8      FYN           CFP   ARPC5L
-#&gt; 55     RPL22   IFITM1     RBP7     RPL15    ANXA1          CST3     PFN1
-#&gt; 56      RPL7    IL2RG     BRI3      RPL8   ARPC5L          TYMP    SAMD3
-#&gt; 57      RPS8    HSPA8  S100A12     FAIM3    YWHAQ        TCF7L2     CCL5
-#&gt; 58 PRKCQ-AS1    YWHAQ TNFSF13B     RPL18      ID2           FTL APOBEC3G
-#&gt; 59     RPL17  RPSAP58    IGSF6     RPS27    CALM1        PTP4A3     CD99
-#&gt; 60   PIK3IP1  TNFAIP3   IFITM3    RPL10A    IL2RG        TYROBP    RAP1B
-#&gt; 61      JUNB     CD69   RNF130   PTPRCAP    MYO1F       FAM110A   CX3CR1
-#&gt; 62    TMEM66   GIMAP4    GAPDH      STX7    SEPT7          FGL2   FCER1G
-#&gt; 63   GLTSCR2    CRIP1   TALDO1      CD52 C9orf142      APOBEC3A  PTPRCAP
-#&gt; 64     RPS26  ARL6IP5     VCAN    GNB2L1      LAT           FGR   CHST12
-#&gt; 65      BTG1    MZT2A     BST1     SYPL1     CD53          NPC2    EFHD2
-#&gt; 66       CD7    LIMS1     MNDA      RPSA     SUN2        FAM26F   MYL12A
-#&gt; 67     RPL38     LEF1    PLBD1     LIMD2     PLEK          OAZ1    HLA-E
-#&gt; 68     RPL35      FYB APOBEC3A     BIRC3     BIN2       CD300LF     HCST
-#&gt; 69     RPL24    SEPT1     CTSB     RPS21    HLA-F        SLC7A7     PLEK
-#&gt; 70     RPS21      TXN     CTSH     PRKCB    RAP1B        CPPED1    ZAP70
-#&gt; 71      IL7R    PEBP1     IFI6      SNX3     CD3G        UNC119   CD300A
-#&gt; 72       MAL   OCIAD2    NEAT1      EEF2    ANXA6        S100A4    CLIC1
-#&gt; 73     RPL37  PIK3IP1     CPVL    FAM26F HSP90AA1         NINJ1    ASCL2
-#&gt; 74      TCF7    TSTD1    ODF3B     POLD4     PIM1           CDA   IFITM1
-#&gt; 75   C6orf48     SOD1    AP2S1     PLAC8   TUBA4A        FCGR2A    PDIA3
-#&gt; 76      CD27 ILF3-AS1    TGFBI    EEF1B2   MT-ND2         HSBP1  ABHD17A
-#&gt; 77     RPL34     TCF7    SMCO4   RPL22L1    PTPRC         AP2A1  ALOX5AP
-#&gt; 78    RPS4Y1    SOCS3   LILRA5     RCSD1    ARL4C         PLAUR     CCL3
-#&gt; 79   RPSAP58  ANKRD12 TMEM176B     SEC62  PPP1R18        LGALS1     AOAH
-#&gt; 80  LEPROTL1   DNAJB1 SH3BGRL3     PNISR    DHRS7      TNFRSF1B   IFITM2
-#&gt; 81       AES   HNRNPF  HLA-DRA   BLOC1S2   IFITM1          CUX1  C5orf56
-#&gt; 82      SELL     KLF6     CD33     HMGN1  HSP90B1          EMR2     BST2
-#&gt; 83   TMEM123     PPA1    RAB32   TMEM243   STK17A        FAM49A     CFL1
-#&gt; 84      CD3G LEPROTL1   ARPC1B  RNASEH2B    HSPA5          ACTB  PPP1R18
-#&gt; 85      RGCC    PDCD5 C1orf162    POU2F2  PPP2R5C         ARPC3     RAC2
-#&gt; 86    GIMAP5     SKP1   TMSB10      CD69    PDIA3        GPBAR1     XBP1
-#&gt; 87       LCK    RWDD1    ANXA2     DRAM2      UBB          LYST     ABI3
-#&gt; 88    NDFIP1   SLC2A3    STX11      SELL     GUK1      MAPKAPK3   TYROBP
-#&gt; 89  C12orf57    PSMC5      IL8    EIF4A2     PPIB       SLC11A1    MYO1F
-#&gt; 90     TOMM7   NSMCE1     CAPG   TSC22D3   HNRNPK           ADA    ARL4C
-#&gt; 91    FLT3LG    DDIT4     RGS2   ZFP36L1     XBP1          NAAA     CD53
-#&gt; 92      RHOH    TRAM1    PLAUR  ATP6V1G1    CCND3        TMSB4X    CALM1
-#&gt; 93    DNAJB1    EWSR1    CEBPB     SP100     RPA2         CASP1    UBE2F
-#&gt; 94      GYPC      FUS      VIM      CD53     PPIA        PYCARD    LITAF
-#&gt; 95     TRAT1     NSA2     SRGN       DCK   RASSF5          YBX1    DHRS7
-#&gt;            7             8
-#&gt; 1     FCER1A           GP9
-#&gt; 2   SERPINF1        ITGA2B
-#&gt; 3    CLEC10A        TMEM40
-#&gt; 4       ENHO    AP001189.4
-#&gt; 5      CLIC2        LY6G6F
-#&gt; 6       CD1C         SEPT5
-#&gt; 7   HLA-DQB2         PTCRA
-#&gt; 8   CACNA2D3        TREML1
-#&gt; 9      UPK3A         CLDN5
-#&gt; 10   PHACTR1           HGD
-#&gt; 11  HLA-DQA2 RP11-879F14.2
-#&gt; 12     BASP1       C2orf88
-#&gt; 13      PLD4         SPARC
-#&gt; 14      LGMN           PF4
-#&gt; 15     NDRG2         CMTM5
-#&gt; 16      CPVL         GNG11
-#&gt; 17   CCDC88A         GP1BA
-#&gt; 18  HLA-DQA1         ITGB3
-#&gt; 19      CD33          SDPR
-#&gt; 20       GSN       SCGB1C1
-#&gt; 21   RPS6KA4        CLEC1B
-#&gt; 22     SULF2    AC147651.3
-#&gt; 23   HLA-DOA         PVALB
-#&gt; 24      CD1D         SCN1B
-#&gt; 25    RNASE6       ARHGAP6
-#&gt; 26      LMO2         ACRBP
-#&gt; 27  HLA-DQB1        FAXDC2
-#&gt; 28  HLA-DRB5          MYL9
-#&gt; 29  PPP1R14A           CLU
-#&gt; 30    CSF2RA      C19orf33
-#&gt; 31   HLA-DMA      PDZK1IP1
-#&gt; 32    SEMA4A         TUBA8
-#&gt; 33  HLA-DRB1          CTTN
-#&gt; 34     ALDH2          PPBP
-#&gt; 35     CD302          ESAM
-#&gt; 36  HLA-DPA1  RP11-367G6.3
-#&gt; 37      CST3          NRGN
-#&gt; 38  HLA-DPB1         TUBB1
-#&gt; 39     GNA15         F13A1
-#&gt; 40   SPATS2L         FSTL1
-#&gt; 41       SYK         RGS18
-#&gt; 42      IL1B        ALOX12
-#&gt; 43      KLF4           CA2
-#&gt; 44   HLA-DMB         PTGS1
-#&gt; 45     YIF1B           CD9
-#&gt; 46   HLA-DRA       C6orf25
-#&gt; 47   ZNF385A     HIST1H2AC
-#&gt; 48    LILRB4          SNCA
-#&gt; 49       GRN        GAS2L1
-#&gt; 50      CD74     HIST1H2BJ
-#&gt; 51    TRIM33           MMD
-#&gt; 52  C12orf45          PCP2
-#&gt; 53    HAVCR2       TSC22D1
-#&gt; 54    CCDC50          DMTN
-#&gt; 55     IGSF6        ANKRD9
-#&gt; 56      LAP3         ABCC3
-#&gt; 57      BLNK         RUFY1
-#&gt; 58      CTSH        PGRMC1
-#&gt; 59      CAPG          TPM1
-#&gt; 60    RNF130      MAP3K7CL
-#&gt; 61      ARF3         SENCR
-#&gt; 62       ID1          MPP1
-#&gt; 63     AP1S2       NGFRAP1
-#&gt; 64    SPINT2        TPTEP1
-#&gt; 65      RGS1        PDLIM1
-#&gt; 66   FAM105A          NEXN
-#&gt; 67       VCL          MLH3
-#&gt; 68    LGALS2          TPM4
-#&gt; 69   TNFAIP2         ACTN1
-#&gt; 70      TPM4         SCFD2
-#&gt; 71     MGST2           ILK
-#&gt; 72     H2AFY        FAM63A
-#&gt; 73      LY86           SNN
-#&gt; 74     FABP5         PARVB
-#&gt; 75      UBL7         GRAP2
-#&gt; 76     DDAH2        TMEM91
-#&gt; 77     TGFBI        MARCH2
-#&gt; 78     IFI30     HIST1H2BD
-#&gt; 79      GPX1           FAH
-#&gt; 80     FDFT1      PLA2G12A
-#&gt; 81      FUOM         PNMA1
-#&gt; 82    IGFLR1          ODC1
-#&gt; 83      LSP1         P2RX1
-#&gt; 84      MNDA           GSN
-#&gt; 85     PTPRE         NCOA4
-#&gt; 86     FCGRT         DAAM1
-#&gt; 87     GSTP1          CTSA
-#&gt; 88      SPI1        FERMT3
-#&gt; 89     TAF10          H1F0
-#&gt; 90    RAB22A        TUBA1C
-#&gt; 91 NME1-NME2      KIAA0513
-#&gt; 92       LYZ          MGLL
-#&gt; 93       CFP         CALM3
-#&gt; 94    SCAMP4         UBL4A
-#&gt; 95      CD86         CAPN1</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'>matrixize_markers</span><span class='op'>(</span><span class='va'>pbmc_markers</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            0        1        2         3        4             5        6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1      RPS12     IL32   S100A9     CD79A     CCL5        CDKN1C     GZMB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2      RPS27      LTB   S100A8     MS4A1     NKG7          HES4   FGFBP2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3       RPS6     CD3D   LGALS2     CD79B     GZMA RP11-290F20.3    SPON2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4      RPL32     IL7R     FCN1 LINC00926     CST7         MS4A7     PRF1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5      RPS14     LDHB     CD14     TCL1A     GZMK        FCGR3A     GNLY</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6      RPS25      CD2   TYROBP  HLA-DQA1     CTSW           CKB   AKR1C3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7       RPL9     AQP3   MS4A6A    VPREB3     CD8A        LILRA3     XCL2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8      RPL13     CD3E     CST3  HLA-DQB1    KLRG1        IFITM3    CLIC3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9      RPL31     TPT1      LYZ      CD74     GZMH        MS4A4A     CST7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10      RPS3    TRAT1     TYMP   HLA-DRA      B2M         PILRA    KLRD1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11      RPL3    RPS12      CFD     FCER2     LYAR        LRRC25     GZMA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12     RPL21   SPOCK2     LST1  HLA-DPB1     IL32        LILRB1     NKG7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13     RPS3A   CD40LG   LGALS1     BANK1    HLA-C          RHOC     CCL4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14     RPL30   GIMAP7     AIF1  HLA-DRB1     PRF1      SIGLEC10    TTC38</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15      LDHB    TRADD    GSTP1  HLA-DPA1     GZMM         HMOX1   PRSS23</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16    RPS15A    RPS25      GRN   TSPAN13    HLA-A          LST1     XCL1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17     RPLP2     RPSA     GPX1  HLA-DQA2     CD3D          CTSL     CTSW</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18    RPS27A    PRDX2      FTL     FCRLA  PTPRCAP           HCK   SH2D1B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19    MALAT1   TTC39C   S100A6      CD37     CCL4         CSF1R   FCGR3A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20    EEF1A1    RPLP0     FTH1  HLA-DRB5     HOPX      SERPINA1   IGFBP7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21     RPS13     CD27   FCER1G     HVCN1     CD8B        FCER1G     GZMH</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22    RPL13A      AES     CTSS      PKIG     MATK          CD68    IL2RB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 23    RPL27A      JUN     CD68   HLA-DOB     HCST          AIF1    KLRF1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 24     RPS18   TMEM66    CEBPD       BLK    SAMD3           CFD    S1PR5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25     RPL11   MYL12A   S100A4   HLA-DMA    HLA-B         IFI30    CD247</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 26     RPS29    RPS29   LGALS3    PDLIM1     NCR3          SPI1    APMAP</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 27     RPS28     JUNB    AP1S2      GNG7 APOBEC3G        LILRB2     HOPX</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 28    RPL35A    ANXA1     NPC2      CD72   FGFBP2         BATF3    GPR56</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 29    RPL23A ARHGAP15     OAZ1   HLA-DMB      LCK        LILRA5     MATK</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 30     RPS23    HINT1      CDA     P2RX5   MALAT1        STXBP2     GZMM</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 31      CCR7      EVL  S100A11      CD40 C12orf75          WARS  C1orf21</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 32      TPT1      LCK     PSAP      EAF2     CD99        CXCL16  PLEKHF1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 33     RPS20      LAT     SAT1  PPAPDC1B     GZMB         TPPP3    HLA-C</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 34      CD3D    NOSIP     NCF2      IRF8   MYL12A         C5AR1      B2M</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 35     RPS4X     CD3G      CFP    RPL18A  RARRES3         COTL1    TBX21</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 36      RPL5      VIM    CSF3R  CYB561A3      CD2         CEBPB    PTGDR</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 37     RPS16    ITM2A    BLVRB     QRSL1    DUSP2          MAFB      CD7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 38     RPL19     OPTN    COTL1    MARCH1     CD3E          TESC   HAVCR2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 39    RPL10A      MAL SERPINA1     MEF2C   CHST12       SLC31A2    TPST2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 40      RPSA     PLP2    ASGR1     RPS23    HLA-E         TIMP1    HLA-A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 41      RPS5   FLT3LG   NUP214    SMIM14    APMAP        IFITM2    PLAC8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 42     RPS10     SIT1  GABARAP     RPS11 SLC9A3R1           BID    FCRL6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 43     RPL14  TNFAIP8    ALDH2      RPS5    CD247          ABI3    HLA-B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 44     RPS15     RGCC    FCGRT      LY86    ZAP70      C19orf38    ITGB2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 45     RPL18    GSTK1    IFI30   PLEKHF2    LITAF          SAT1     CTSC</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 46      NPM1    FXYD5     CYBA      SNX2   MYL12B          BRI3     CD63</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 47     RPLP0    CALM1     FPR1       LTB    TPST2          FTH1     NCR3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 48     RPL36  PPP2R5C    FOLR3     ISG20   MT-CYB         CAMK1      ID2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 49      CD3E  ZFP36L2   PYCARD      NCF1     PFN1          PSAP      UBB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 50      RPL4  ALOX5AP      TKT     CXCR4      UBC CTD-2006K23.1 C12orf75</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 51     NOSIP   CORO1B     SPI1    RPL13A     CTSC          CTSS     SRGN</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 52      LEF1    SUSD3     RAC1     SNHG7     DDX5           LYN     RHOC</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 53    RPL36A   PBXIP1     TSPO    LAPTM5     GNLY       S100A11  RARRES3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 54    EEF1B2   GIMAP5   SLC7A7      RPS8      FYN           CFP   ARPC5L</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 55     RPL22   IFITM1     RBP7     RPL15    ANXA1          CST3     PFN1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 56      RPL7    IL2RG     BRI3      RPL8   ARPC5L          TYMP    SAMD3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 57      RPS8    HSPA8  S100A12     FAIM3    YWHAQ        TCF7L2     CCL5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 58 PRKCQ-AS1    YWHAQ TNFSF13B     RPL18      ID2           FTL APOBEC3G</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 59     RPL17  RPSAP58    IGSF6     RPS27    CALM1        PTP4A3     CD99</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 60   PIK3IP1  TNFAIP3   IFITM3    RPL10A    IL2RG        TYROBP    RAP1B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 61      JUNB     CD69   RNF130   PTPRCAP    MYO1F       FAM110A   CX3CR1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 62    TMEM66   GIMAP4    GAPDH      STX7    SEPT7          FGL2   FCER1G</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 63   GLTSCR2    CRIP1   TALDO1      CD52 C9orf142      APOBEC3A  PTPRCAP</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 64     RPS26  ARL6IP5     VCAN    GNB2L1      LAT           FGR   CHST12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 65      BTG1    MZT2A     BST1     SYPL1     CD53          NPC2    EFHD2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 66       CD7    LIMS1     MNDA      RPSA     SUN2        FAM26F   MYL12A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 67     RPL38     LEF1    PLBD1     LIMD2     PLEK          OAZ1    HLA-E</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 68     RPL35      FYB APOBEC3A     BIRC3     BIN2       CD300LF     HCST</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 69     RPL24    SEPT1     CTSB     RPS21    HLA-F        SLC7A7     PLEK</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 70     RPS21      TXN     CTSH     PRKCB    RAP1B        CPPED1    ZAP70</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 71      IL7R    PEBP1     IFI6      SNX3     CD3G        UNC119   CD300A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 72       MAL   OCIAD2    NEAT1      EEF2    ANXA6        S100A4    CLIC1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 73     RPL37  PIK3IP1     CPVL    FAM26F HSP90AA1         NINJ1    ASCL2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 74      TCF7    TSTD1    ODF3B     POLD4     PIM1           CDA   IFITM1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 75   C6orf48     SOD1    AP2S1     PLAC8   TUBA4A        FCGR2A    PDIA3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 76      CD27 ILF3-AS1    TGFBI    EEF1B2   MT-ND2         HSBP1  ABHD17A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 77     RPL34     TCF7    SMCO4   RPL22L1    PTPRC         AP2A1  ALOX5AP</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 78    RPS4Y1    SOCS3   LILRA5     RCSD1    ARL4C         PLAUR     CCL3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 79   RPSAP58  ANKRD12 TMEM176B     SEC62  PPP1R18        LGALS1     AOAH</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 80  LEPROTL1   DNAJB1 SH3BGRL3     PNISR    DHRS7      TNFRSF1B   IFITM2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 81       AES   HNRNPF  HLA-DRA   BLOC1S2   IFITM1          CUX1  C5orf56</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 82      SELL     KLF6     CD33     HMGN1  HSP90B1          EMR2     BST2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 83   TMEM123     PPA1    RAB32   TMEM243   STK17A        FAM49A     CFL1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 84      CD3G LEPROTL1   ARPC1B  RNASEH2B    HSPA5          ACTB  PPP1R18</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 85      RGCC    PDCD5 C1orf162    POU2F2  PPP2R5C         ARPC3     RAC2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 86    GIMAP5     SKP1   TMSB10      CD69    PDIA3        GPBAR1     XBP1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 87       LCK    RWDD1    ANXA2     DRAM2      UBB          LYST     ABI3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 88    NDFIP1   SLC2A3    STX11      SELL     GUK1      MAPKAPK3   TYROBP</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 89  C12orf57    PSMC5      IL8    EIF4A2     PPIB       SLC11A1    MYO1F</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 90     TOMM7   NSMCE1     CAPG   TSC22D3   HNRNPK           ADA    ARL4C</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 91    FLT3LG    DDIT4     RGS2   ZFP36L1     XBP1          NAAA     CD53</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 92      RHOH    TRAM1    PLAUR  ATP6V1G1    CCND3        TMSB4X    CALM1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 93    DNAJB1    EWSR1    CEBPB     SP100     RPA2         CASP1    UBE2F</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 94      GYPC      FUS      VIM      CD53     PPIA        PYCARD    LITAF</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 95     TRAT1     NSA2     SRGN       DCK   RASSF5          YBX1    DHRS7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            7             8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     FCER1A           GP9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2   SERPINF1        ITGA2B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3    CLEC10A        TMEM40</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4       ENHO    AP001189.4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5      CLIC2        LY6G6F</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6       CD1C         SEPT5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7   HLA-DQB2         PTCRA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8   CACNA2D3        TREML1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9      UPK3A         CLDN5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10   PHACTR1           HGD</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11  HLA-DQA2 RP11-879F14.2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12     BASP1       C2orf88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13      PLD4         SPARC</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14      LGMN           PF4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15     NDRG2         CMTM5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16      CPVL         GNG11</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17   CCDC88A         GP1BA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18  HLA-DQA1         ITGB3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19      CD33          SDPR</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20       GSN       SCGB1C1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21   RPS6KA4        CLEC1B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22     SULF2    AC147651.3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 23   HLA-DOA         PVALB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 24      CD1D         SCN1B</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25    RNASE6       ARHGAP6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 26      LMO2         ACRBP</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 27  HLA-DQB1        FAXDC2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 28  HLA-DRB5          MYL9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 29  PPP1R14A           CLU</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 30    CSF2RA      C19orf33</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 31   HLA-DMA      PDZK1IP1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 32    SEMA4A         TUBA8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 33  HLA-DRB1          CTTN</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 34     ALDH2          PPBP</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 35     CD302          ESAM</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 36  HLA-DPA1  RP11-367G6.3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 37      CST3          NRGN</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 38  HLA-DPB1         TUBB1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 39     GNA15         F13A1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 40   SPATS2L         FSTL1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 41       SYK         RGS18</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 42      IL1B        ALOX12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 43      KLF4           CA2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 44   HLA-DMB         PTGS1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 45     YIF1B           CD9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 46   HLA-DRA       C6orf25</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 47   ZNF385A     HIST1H2AC</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 48    LILRB4          SNCA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 49       GRN        GAS2L1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 50      CD74     HIST1H2BJ</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 51    TRIM33           MMD</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 52  C12orf45          PCP2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 53    HAVCR2       TSC22D1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 54    CCDC50          DMTN</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 55     IGSF6        ANKRD9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 56      LAP3         ABCC3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 57      BLNK         RUFY1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 58      CTSH        PGRMC1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 59      CAPG          TPM1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 60    RNF130      MAP3K7CL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 61      ARF3         SENCR</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 62       ID1          MPP1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 63     AP1S2       NGFRAP1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 64    SPINT2        TPTEP1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 65      RGS1        PDLIM1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 66   FAM105A          NEXN</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 67       VCL          MLH3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 68    LGALS2          TPM4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 69   TNFAIP2         ACTN1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 70      TPM4         SCFD2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 71     MGST2           ILK</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 72     H2AFY        FAM63A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 73      LY86           SNN</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 74     FABP5         PARVB</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 75      UBL7         GRAP2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 76     DDAH2        TMEM91</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 77     TGFBI        MARCH2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 78     IFI30     HIST1H2BD</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 79      GPX1           FAH</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 80     FDFT1      PLA2G12A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 81      FUOM         PNMA1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 82    IGFLR1          ODC1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 83      LSP1         P2RX1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 84      MNDA           GSN</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 85     PTPRE         NCOA4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 86     FCGRT         DAAM1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 87     GSTP1          CTSA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 88      SPI1        FERMT3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 89     TAF10          H1F0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 90    RAB22A        TUBA1C</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 91 NME1-NME2      KIAA0513</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 92       LYZ          MGLL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 93       CFP         CALM3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 94    SCAMP4         UBL4A</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 95      CD86         CAPN1</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

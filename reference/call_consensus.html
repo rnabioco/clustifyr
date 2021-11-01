@@ -156,17 +156,22 @@
     <p>dataframe of cluster, new ident, and mean rank</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span><span class='op'>(</span>
-    input <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,
-    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,
-    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,
-    ref_mat <span class='op'>=</span> <span class='va'>cbmc_ref</span>
-<span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>var.features not found, using all genes instead</span></div><div class='output co'>#&gt; <span class='message'>using # of genes: 599</span></div><div class='output co'>#&gt; <span class='message'>similarity computation completed, matrix of 9 x 13, preparing output</span></div><div class='input'>
-<span class='va'>res2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cor_to_call_rank.html'>cor_to_call_rank</a></span><span class='op'>(</span><span class='va'>res</span>, threshold <span class='op'>=</span> <span class='st'>"auto"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>using threshold of 0.7</span></div><div class='input'><span class='va'>res3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cor_to_call_rank.html'>cor_to_call_rank</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span>
-<span class='fu'>call_consensus</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>res2</span>, <span class='va'>res3</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Selecting by rank</span></div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='clustify.html'>clustify</a></span><span class='op'>(</span></span>
+<span class='r-in'>    input <span class='op'>=</span> <span class='va'>pbmc_matrix_small</span>,</span>
+<span class='r-in'>    metadata <span class='op'>=</span> <span class='va'>pbmc_meta</span>,</span>
+<span class='r-in'>    cluster_col <span class='op'>=</span> <span class='st'>"classified"</span>,</span>
+<span class='r-in'>    ref_mat <span class='op'>=</span> <span class='va'>cbmc_ref</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> var.features not found, using all genes instead</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> using # of genes: 599</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> similarity computation completed, matrix of 9 x 13, preparing output</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>res2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cor_to_call_rank.html'>cor_to_call_rank</a></span><span class='op'>(</span><span class='va'>res</span>, threshold <span class='op'>=</span> <span class='st'>"auto"</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> using threshold of 0.7</span>
+<span class='r-in'><span class='va'>res3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cor_to_call_rank.html'>cor_to_call_rank</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>call_consensus</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>res2</span>, <span class='va'>res3</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Selecting by rank</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
