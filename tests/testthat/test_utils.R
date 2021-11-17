@@ -127,6 +127,20 @@ test_that("average_clusters works with truncate option", {
     expect_equal(nrow(pbmc_avg2), 2000)
 })
 
+test_that("average_clusters works with max and min options", {
+    pbmc_avg2 <- average_clusters(pbmc_matrix_small,
+                                  pbmc_meta,
+                                  method = "max",
+                                  cluster_col = "classified"
+    )
+    pbmc_avg3 <- average_clusters(pbmc_matrix_small,
+                                  pbmc_meta,
+                                  method = "min",
+                                  cluster_col = "classified"
+    )
+    expect_equal(nrow(pbmc_avg2), 2000)
+})
+
 test_that("average_clusters works when one cluster contains only 1 cell", {
     pbmc_meta2 <- pbmc_meta
     pbmc_meta2$classified <- as.character(pbmc_meta2$classified)
