@@ -1414,3 +1414,13 @@ test_that("make_comb_ref works as intended", {
 
     expect_true(nrow(ref) == 2000 && ncol(ref) == 91)
 })
+
+test_that("calc_distance works as intended", {
+    res <- calc_distance(
+        s_small3@reductions$tsne@cell.embeddings, 
+        s_small3@meta.data$letter.idents,
+        collapse_to_cluster = T
+        )
+    
+    expect_true(nrow(res) == 2 && ncol(res) == 2)
+})

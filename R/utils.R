@@ -2278,4 +2278,42 @@ assess_rank_bias <- function(
     }
     g
 }
-    
+ 
+#' Distance calculations for spatial coord
+#' @param coord dataframe or matrix of spatial coordinates, cell barcode as rownames
+#' @param metadata data.frame or vector containing cluster assignments per cell.
+#' Order must match column order in supplied matrix. If a data.frame
+#' provide the cluster_col parameters.
+#' @param cluster_col column in metadata with cluster number
+#' @param collapse_to_cluster instead of reporting min distance to cluster per cell, summarize to cluster level
+#' @return min distance matrix
+#' @examples
+#' dist_res <- calc_distance(
+#'     s_small3@reductions$tsne@cell.embeddings, 
+#'     s_small3@meta.data$letter.idents
+#' )
+#' @export
+calc_distance <- function(
+    coord,
+    metadata,
+    cluster_col = "cluster",
+    collapse_to_cluster = FALSE) {
+    distm <- as.matrix(stats::dist(coord))
+    res <- average_clusters(distm,
+                            metadata,
+                            cluster_col,
+                            if_log = FALSE,
+                            output_log = FALSE,
+                            method = "min")
+    if (collapse_to_cluster) {
+        res2 <- average_clusters(t(res),
+                                 metadata,
+                                 cluster_col,
+                                 if_log = FALSE,
+                                 output_log = FALSE,
+                                 method = "min")
+        res2
+    } else {
+        res
+    }
+}
