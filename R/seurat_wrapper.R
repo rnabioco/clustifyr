@@ -38,19 +38,22 @@ object_data.Seurat <- function(object,
                          error = function(e) {
                              object@assays$SCT@var.features 
                          })
-        if (length(vars) == 0) {
+        if (length(vars) <= 1) {
             message("trying to find variable genes in SCT assay")
-            vars <- object@assays$SCT@var.features 
+            vars <- tryCatch(object@assays$SCT@var.features,
+                             error = function(e) {NA})
         } 
-        if (length(vars) == 0) {
+        if (length(vars) <= 1) {
             message("trying to find variable genes in integrated assay")
-            vars <- object@assays$integrated@var.features 
+            vars <- tryCatch(object@assays$integrated@var.features,
+                             error = function(e) {NA})
         }
-        if (length(vars) == 0) {
+        if (length(vars) <= 1) {
             message("trying to find variable genes in Spatial assay")
-            vars <- object@assays$Spatial@var.features 
+            vars <- tryCatch(object@assays$Spatial@var.features,
+                             error = function(e) {NA})
         }
-        if (length(vars) == 0) {
+        if (length(vars) <= 1) {
             message("variable genes not found, please manually specify with query_genes argument")
         }
         if ((length(vars) > n_genes) & (n_genes > 0)) {

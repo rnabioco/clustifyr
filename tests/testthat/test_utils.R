@@ -1346,6 +1346,17 @@ test_that("object_data works with Seuratv3", {
     expect_true(ncol(mat) == 80)
 })
 
+test_that("object_data works with Seuratv4 spatial", {
+    s_small4 <- s_small3
+    s_small4@assays$Spatial <- s_small4@assays$RNA
+    s_small4@assays$RNA@var.features <- NA
+    mat <- object_data(
+        object = s_small4,
+        slot = "var.genes"
+    )
+    expect_true(length(mat) > 1)
+})
+
 test_that("append_genes creates a union reference matrix", {
     mat <- append_genes(
         gene_vector = human_genes_10x,
