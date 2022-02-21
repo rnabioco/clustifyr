@@ -7,7 +7,7 @@ status](https://github.com/rnabioco/clustifyr/workflows/R-CMD-check/badge.svg)](
 [![codecov](https://codecov.io/gh/rnabioco/clustifyr/branch/master/graph/badge.svg)](https://codecov.io/gh/rnabioco/clustifyr)
 [![platforms](https://bioconductor.org/shields/availability/release/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
 [![bioc](https://bioconductor.org/shields/years-in-bioc/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
-[![\#downloads](https://img.shields.io/badge/%23%20downloads-3389-brightgreen)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
+[![\#downloads](https://img.shields.io/badge/%23%20downloads-3989-brightgreen)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
 
 <!-- badges: end -->
 
@@ -17,7 +17,7 @@ status](https://github.com/rnabioco/clustifyr/workflows/R-CMD-check/badge.svg)](
     -   [Example usage](#example-usage)
     -   [Frequently Asked Questions](#frequently-asked-questions)
     -   [Code of Conduct](#code-of-conduct)
-
+    
 clustifyr classifies cells and clusters in single-cell RNA sequencing
 experiments using reference bulk RNA-seq data sets, sorted microarray
 expression data, single-cell gene signatures, or lists of marker genes.
@@ -99,7 +99,7 @@ res <- clustify(
 
 # print assignments
 cor_to_call(res)
-#> # A tibble: 9 x 3
+#> # A tibble: 9 × 3
 #> # Groups:   cluster [9]
 #>   cluster      type           r
 #>   <chr>        <chr>      <dbl>
