@@ -3,10 +3,10 @@ url: http://rnabioco.github.io/clustifyr
 development:
   mode: auto
 
-authors:
-  RNA Bioscience Initiative:
-    href: https://medschool.cuanschutz.edu/rbi
-    
+template:
+  package: rbitemplate
+  bootstrap: 5
+  
 home:
   links:
   - text: External data sets
