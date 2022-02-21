@@ -70,6 +70,7 @@ reference:
   - assign_ident
   - build_atlas
   - calc_similarity
+  - calc_distance
   - check_raw_counts
   - collapse_to_cluster
   - compare_lists
