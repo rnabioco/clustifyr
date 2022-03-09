@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">clustifyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.7.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.7.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,6 +73,7 @@
   rm0 <span class="op">=</span> <span class="cn">FALSE</span>,
   obj_out <span class="op">=</span> <span class="cn">TRUE</span>,
   seurat_out <span class="op">=</span> <span class="cn">TRUE</span>,
+  vec_out <span class="op">=</span> <span class="cn">FALSE</span>,
   rename_prefix <span class="op">=</span> <span class="cn">NULL</span>,
   threshold <span class="op">=</span> <span class="st">"auto"</span>,
   low_threshold_cell <span class="op">=</span> <span class="fl">0</span>,
@@ -99,6 +100,7 @@
   dr <span class="op">=</span> <span class="st">"umap"</span>,
   seurat_out <span class="op">=</span> <span class="cn">TRUE</span>,
   obj_out <span class="op">=</span> <span class="cn">TRUE</span>,
+  vec_out <span class="op">=</span> <span class="cn">FALSE</span>,
   threshold <span class="op">=</span> <span class="st">"auto"</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
   rm0 <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -125,6 +127,7 @@
   dr <span class="op">=</span> <span class="st">"umap"</span>,
   seurat_out <span class="op">=</span> <span class="cn">TRUE</span>,
   obj_out <span class="op">=</span> <span class="cn">TRUE</span>,
+  vec_out <span class="op">=</span> <span class="cn">FALSE</span>,
   threshold <span class="op">=</span> <span class="st">"auto"</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
   rm0 <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -181,6 +184,8 @@ for object parsing</p></dd>
 <dt>seurat_out</dt>
 <dd><p>output cor matrix or called seurat object
 (deprecated, use obj_out instead)</p></dd>
+<dt>vec_out</dt>
+<dd><p>only output a result vector in the same order as metadata</p></dd>
 <dt>rename_prefix</dt>
 <dd><p>prefix to add to type and r column names</p></dd>
 <dt>threshold</dt>

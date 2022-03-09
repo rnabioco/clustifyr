@@ -41,7 +41,7 @@
     
     <a class="navbar-brand me-2" href="index.html">clustifyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.7.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.7.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -202,8 +202,32 @@
 <span class="co">#&gt; An object of class Seurat </span>
 <span class="co">#&gt; 230 features across 80 samples within 1 assay </span>
 <span class="co">#&gt; Active assay: RNA (230 features, 20 variable features)</span>
-<span class="co">#&gt;  2 dimensional reductions calculated: pca, tsne</span></code></pre></div>
-<p>New reference matrix can be made directly from <code>SingleCellExperiment</code> and <code>seurat</code> objects as well. Other scRNAseq experiment object types are supported as well.</p>
+<span class="co">#&gt;  2 dimensional reductions calculated: pca, tsne</span>
+
+<span class="co"># New output option, directly as a vector (in the order of the metadata), which can then be inserted into metadata dataframes and other workflows</span>
+<span class="fu"><a href="reference/clustify.html">clustify</a></span><span class="op">(</span>
+  input <span class="op">=</span> <span class="va">s_small3</span>,
+  cluster_col <span class="op">=</span> <span class="st">"RNA_snn_res.1"</span>,
+  ref_mat <span class="op">=</span> <span class="va">cbmc_ref</span>,
+  vec_out <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span>
+<span class="co">#&gt;  [1] "Mk"         "Mk"         "Mk"         "Mk"         "Mk"        </span>
+<span class="co">#&gt;  [6] "Mk"         "Mk"         "Mk"         "Mk"         "Mk"        </span>
+<span class="co">#&gt; [11] "B"          "B"          "B"          "B"          "B"         </span>
+<span class="co">#&gt; [16] "B"          "B"          "B"          "B"          "B"         </span>
+<span class="co">#&gt; [21] "CD16+ Mono" "CD16+ Mono" "CD16+ Mono" "CD16+ Mono" "CD16+ Mono"</span>
+<span class="co">#&gt; [26] "CD16+ Mono" "CD16+ Mono" "CD16+ Mono" "CD16+ Mono" "CD16+ Mono"</span>
+<span class="co">#&gt; [31] "Mk"         "B"          "Mk"         "Mk"         "Mk"        </span>
+<span class="co">#&gt; [36] "Mk"         "Mk"         "Mk"         "Mk"         "Mk"        </span>
+<span class="co">#&gt; [41] "Mk"         "B"          "Mk"         "Mk"         "B"         </span>
+<span class="co">#&gt; [46] "B"          "Mk"         "Mk"         "Mk"         "Mk"        </span>
+<span class="co">#&gt; [51] "CD16+ Mono" "CD16+ Mono" "B"          "CD16+ Mono" "CD16+ Mono"</span>
+<span class="co">#&gt; [56] "CD16+ Mono" "CD16+ Mono" "CD16+ Mono" "CD16+ Mono" "Mk"        </span>
+<span class="co">#&gt; [61] "B"          "CD16+ Mono" "B"          "CD16+ Mono" "B"         </span>
+<span class="co">#&gt; [66] "CD16+ Mono" "CD16+ Mono" "CD16+ Mono" "CD16+ Mono" "B"         </span>
+<span class="co">#&gt; [71] "Mk"         "Mk"         "Mk"         "Mk"         "Mk"        </span>
+<span class="co">#&gt; [76] "Mk"         "Mk"         "Mk"         "Mk"         "CD16+ Mono"</span></code></pre></div>
+<p>New reference matrix can be made directly from <code>SingleCellExperiment</code> and <code>Seurat</code> objects as well. Other scRNAseq experiment object types are supported as well.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># make reference from SingleCellExperiment objects</span>
 <span class="va">sce_ref</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/object_ref.html">object_ref</a></span><span class="op">(</span>
@@ -383,9 +407,9 @@
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>
-<a href="https://github.com/raysinensis" class="external-link">Rui Fu</a> <br><small class="roles"> Author, maintainer </small>  </li>
+<a href="https://github.com/raysinensis" class="external-link">Rui Fu</a> <br><small class="roles"> Author </small>  </li>
 <li>
-<a href="http://github.com/kriemo" class="external-link">Kent Riemondy</a> <br><small class="roles"> Author </small>  </li>
+<a href="http://github.com/kriemo" class="external-link">Kent Riemondy</a> <br><small class="roles"> Maintainer, author </small>  </li>
 <li>
 <a href="https://medschool.cuanschutz.edu/rbi" class="external-link"><img src="https://rnabioco.github.io/rbitemplate/rbi-logo.png" alt="RBI" width="72"></a> <br><small class="roles"> Funder </small>  </li>
 <li><a href="authors.html">More about authors...</a></li>
@@ -399,7 +423,7 @@
 <li><a href="https://codecov.io/gh/rnabioco/clustifyr" class="external-link"><img src="https://codecov.io/gh/rnabioco/clustifyr/branch/master/graph/badge.svg" alt="codecov"></a></li>
 <li><a href="https://bioconductor.org/packages/release/bioc/html/clustifyr.html" class="external-link"><img src="https://bioconductor.org/shields/availability/release/clustifyr.svg" alt="platforms"></a></li>
 <li><a href="https://bioconductor.org/packages/release/bioc/html/clustifyr.html" class="external-link"><img src="https://bioconductor.org/shields/years-in-bioc/clustifyr.svg" alt="bioc"></a></li>
-<li><a href="https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab" class="external-link"><img src="https://img.shields.io/badge/%23%20downloads-3989-brightgreen" alt="#downloads"></a></li>
+<li><a href="https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab" class="external-link"><img src="https://img.shields.io/badge/%23%20downloads-4139-brightgreen" alt="#downloads"></a></li>
 </ul>
 </div>
 
