@@ -117,9 +117,17 @@ clustify(
   ref_mat = cbmc_ref,
   seurat_out = TRUE
 )
+
+# New output option, directly as a vector (in the order of the metadata), which can then be inserted into metadata dataframes and other workflows
+clustify(
+  input = s_small3,
+  cluster_col = "RNA_snn_res.1",
+  ref_mat = cbmc_ref,
+  vec_out = TRUE
+)
 ```
 
-New reference matrix can be made directly from `SingleCellExperiment` and `seurat` objects as well. Other scRNAseq experiment object types are supported as well.
+New reference matrix can be made directly from `SingleCellExperiment` and `Seurat` objects as well. Other scRNAseq experiment object types are supported as well.
 
 ```{r example_ref_matrix}
 # make reference from SingleCellExperiment objects

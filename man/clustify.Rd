@@ -24,6 +24,7 @@ clustify(input, ...)
   rm0 = FALSE,
   obj_out = TRUE,
   seurat_out = TRUE,
+  vec_out = FALSE,
   rename_prefix = NULL,
   threshold = "auto",
   low_threshold_cell = 0,
@@ -49,6 +50,7 @@ clustify(input, ...)
   dr = "umap",
   seurat_out = TRUE,
   obj_out = TRUE,
+  vec_out = FALSE,
   threshold = "auto",
   verbose = TRUE,
   rm0 = FALSE,
@@ -74,6 +76,7 @@ clustify(input, ...)
   dr = "umap",
   seurat_out = TRUE,
   obj_out = TRUE,
+  vec_out = FALSE,
   threshold = "auto",
   verbose = TRUE,
   rm0 = FALSE,
@@ -127,6 +130,8 @@ for object parsing}
 
 \item{seurat_out}{output cor matrix or called seurat object
 (deprecated, use obj_out instead)}
+
+\item{vec_out}{only output a result vector in the same order as metadata}
 
 \item{rename_prefix}{prefix to add to type and r column names}
 

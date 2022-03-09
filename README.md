@@ -7,7 +7,7 @@ status](https://github.com/rnabioco/clustifyr/workflows/R-CMD-check/badge.svg)](
 [![codecov](https://codecov.io/gh/rnabioco/clustifyr/branch/master/graph/badge.svg)](https://codecov.io/gh/rnabioco/clustifyr)
 [![platforms](https://bioconductor.org/shields/availability/release/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
 [![bioc](https://bioconductor.org/shields/years-in-bioc/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
-[![\#downloads](https://img.shields.io/badge/%23%20downloads-3989-brightgreen)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
+[![\#downloads](https://img.shields.io/badge/%23%20downloads-4139-brightgreen)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
 
 <!-- badges: end -->
 
@@ -159,10 +159,34 @@ clustify(
 #> 230 features across 80 samples within 1 assay 
 #> Active assay: RNA (230 features, 20 variable features)
 #>  2 dimensional reductions calculated: pca, tsne
+
+# New output option, directly as a vector (in the order of the metadata), which can then be inserted into metadata dataframes and other workflows
+clustify(
+  input = s_small3,
+  cluster_col = "RNA_snn_res.1",
+  ref_mat = cbmc_ref,
+  vec_out = TRUE
+)
+#>  [1] "Mk"         "Mk"         "Mk"         "Mk"         "Mk"        
+#>  [6] "Mk"         "Mk"         "Mk"         "Mk"         "Mk"        
+#> [11] "B"          "B"          "B"          "B"          "B"         
+#> [16] "B"          "B"          "B"          "B"          "B"         
+#> [21] "CD16+ Mono" "CD16+ Mono" "CD16+ Mono" "CD16+ Mono" "CD16+ Mono"
+#> [26] "CD16+ Mono" "CD16+ Mono" "CD16+ Mono" "CD16+ Mono" "CD16+ Mono"
+#> [31] "Mk"         "B"          "Mk"         "Mk"         "Mk"        
+#> [36] "Mk"         "Mk"         "Mk"         "Mk"         "Mk"        
+#> [41] "Mk"         "B"          "Mk"         "Mk"         "B"         
+#> [46] "B"          "Mk"         "Mk"         "Mk"         "Mk"        
+#> [51] "CD16+ Mono" "CD16+ Mono" "B"          "CD16+ Mono" "CD16+ Mono"
+#> [56] "CD16+ Mono" "CD16+ Mono" "CD16+ Mono" "CD16+ Mono" "Mk"        
+#> [61] "B"          "CD16+ Mono" "B"          "CD16+ Mono" "B"         
+#> [66] "CD16+ Mono" "CD16+ Mono" "CD16+ Mono" "CD16+ Mono" "B"         
+#> [71] "Mk"         "Mk"         "Mk"         "Mk"         "Mk"        
+#> [76] "Mk"         "Mk"         "Mk"         "Mk"         "CD16+ Mono"
 ```
 
 New reference matrix can be made directly from `SingleCellExperiment`
-and `seurat` objects as well. Other scRNAseq experiment object types are
+and `Seurat` objects as well. Other scRNAseq experiment object types are
 supported as well.
 
 ``` r

@@ -33,6 +33,7 @@ clustify <- function(input, ...) {
 #'  for object parsing
 #' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param obj_out whether to output object instead of cor matrix
+#' @param vec_out only output a result vector in the same order as metadata
 #' @param rename_prefix prefix to add to type and r column names
 #' @param threshold identity calling minimum correlation score threshold,
 #'  only used when obj_out = TRUE
@@ -105,6 +106,7 @@ clustify.default <- function(input,
     rm0 = FALSE,
     obj_out = TRUE,
     seurat_out = TRUE,
+    vec_out = FALSE,
     rename_prefix = NULL,
     threshold = "auto",
     low_threshold_cell = 0,
@@ -248,7 +250,12 @@ clustify.default <- function(input,
             "matrix",
             "Matrix",
             "data.frame"
-        ))) {
+        ))  || (vec_out &&
+        inherits(input_original, c(
+            "matrix",
+            "Matrix",
+            "data.frame"
+        )))) {
         df_temp <- cor_to_call(
             res,
             metadata = metadata,
@@ -264,6 +271,14 @@ clustify.default <- function(input,
             rename_prefix = rename_prefix
         )
 
+        if (vec_out) {
+            if (is.null(rename_prefix)) {
+                return(df_temp_full[["type"]])
+            } else {
+                return(df_temp_full[[paste0(rename_prefix, "_type")]])
+            }
+        }
+            
         out <- insert_meta_object(input_original,
             df_temp_full,
             lookuptable = lookuptable
@@ -306,6 +321,7 @@ clustify.Seurat <- function(input,
     dr = "umap",
     seurat_out = TRUE,
     obj_out = TRUE,
+    vec_out = FALSE,
     threshold = "auto",
     verbose = TRUE,
     rm0 = FALSE,
@@ -359,7 +375,7 @@ clustify.Seurat <- function(input,
         res <- -log(res$p_val + .01, 10)
     }
 
-    if (!(seurat_out && obj_out) || vec) {
+    if (!(seurat_out && obj_out) && !vec_out || vec) {
         res
     } else {
         df_temp <- cor_to_call(
@@ -396,6 +412,14 @@ clustify.Seurat <- function(input,
             )
         }
         
+        if (vec_out) {
+            if (is.null(rename_prefix)) {
+                return(df_temp_full[["type"]])
+            } else {
+                return(df_temp_full[[paste0(rename_prefix, "_type")]])
+            }
+        }
+        
         if ("Seurat" %in% loadedNamespaces()) {
             s_object <- write_meta(s_object, df_temp_full)
             return(s_object)
@@ -420,6 +444,7 @@ clustify.SingleCellExperiment <- function(input,
     dr = "umap",
     seurat_out = TRUE,
     obj_out = TRUE,
+    vec_out = FALSE,
     threshold = "auto",
     verbose = TRUE,
     rm0 = FALSE,
@@ -469,7 +494,7 @@ clustify.SingleCellExperiment <- function(input,
         res <- -log(res$p_val + .01, 10)
     }
 
-    if (!(seurat_out && obj_out)) {
+    if (!(seurat_out && obj_out) && !vec_out) {
         res
     } else {
         df_temp <- cor_to_call(
@@ -504,6 +529,14 @@ clustify.SingleCellExperiment <- function(input,
                 rds_name = rds_name, 
                 expand_unassigned = expand_unassigned
             )
+        }
+        
+        if (vec_out) {
+            if (is.null(rename_prefix)) {
+                return(df_temp_full[["type"]])
+            } else {
+                return(df_temp_full[[paste0(rename_prefix, "_type")]])
+            }
         }
         
         if ("SingleCellExperiment" %in% loadedNamespaces()) {
@@ -568,6 +601,7 @@ clustify_lists <- function(input, ...) {
 #' @param lookuptable if not supplied, will look in built-in table
 #'  for object parsing
 #' @param obj_out whether to output object instead of cor matrix
+#' @param vec_out only output a result vector in the same order as metadata
 #' @param rename_prefix prefix to add to type and r column names
 #' @param threshold identity calling minimum correlation score threshold,
 #' only used when obj_out = T
@@ -617,6 +651,7 @@ clustify_lists.default <- function(input,
     lookuptable = NULL,
     obj_out = TRUE,
     seurat_out = TRUE,
+    vec_out = FALSE,
     rename_prefix = NULL,
     threshold = 0,
     low_threshold_cell = 0,
@@ -738,7 +773,12 @@ clustify_lists.default <- function(input,
     
     if ((!inherits(input_original, c("matrix", "Matrix", "data.frame")) &&
         obj_out &&
-        seurat_out)) {
+        seurat_out) || (vec_out &&
+                        inherits(input_original, c(
+                            "matrix",
+                            "Matrix",
+                            "data.frame"
+                        )))) {
         if (metric != "consensus") {
             df_temp <- cor_to_call(
                 res,
@@ -758,6 +798,14 @@ clustify_lists.default <- function(input,
             df_temp_full <- res
         }
 
+        if (vec_out) {
+            if (is.null(rename_prefix)) {
+                return(df_temp_full[["type"]])
+            } else {
+                return(df_temp_full[[paste0(rename_prefix, "_type")]])
+            }
+        }
+        
         out <- insert_meta_object(input_original,
             df_temp_full,
             lookuptable = lookuptable
@@ -786,6 +834,7 @@ clustify_lists.Seurat <- function(input,
     dr = "umap",
     seurat_out = TRUE,
     obj_out = TRUE,
+    vec_out = FALSE,
     threshold = 0,
     rename_prefix = NULL,
     verbose = TRUE,
@@ -829,7 +878,7 @@ clustify_lists.Seurat <- function(input,
         ...
     )
 
-    if (!(seurat_out && obj_out) || vec) {
+    if (!(seurat_out && obj_out) && !vec_out || vec) {
         res
     } else {
         if (metric != "consensus") {
@@ -852,6 +901,14 @@ clustify_lists.Seurat <- function(input,
             rename_prefix = rename_prefix
         )
 
+        if (vec_out) {
+            if (is.null(rename_prefix)) {
+                return(df_temp_full[["type"]])
+            } else {
+                return(df_temp_full[[paste0(rename_prefix, "_type")]])
+            }
+        }
+        
         if ("Seurat" %in% loadedNamespaces()) {
             s_object <- write_meta(s_object, df_temp_full)
             return(s_object)
@@ -880,6 +937,7 @@ clustify_lists.SingleCellExperiment <- function(input,
     dr = "umap",
     seurat_out = TRUE,
     obj_out = TRUE,
+    vec_out = FALSE,
     threshold = 0,
     rename_prefix = NULL,
     verbose = TRUE,
@@ -920,7 +978,7 @@ clustify_lists.SingleCellExperiment <- function(input,
         ...
     )
 
-    if (!(seurat_out && obj_out) || vec) {
+    if (!(seurat_out && obj_out) && !vec_out || vec) {
         res
     } else {
         df_temp <- cor_to_call(
@@ -937,6 +995,14 @@ clustify_lists.SingleCellExperiment <- function(input,
             per_cell = per_cell,
             rename_prefix = rename_prefix
         )
+        
+        if (vec_out) {
+            if (is.null(rename_prefix)) {
+                return(df_temp_full[["type"]])
+            } else {
+                return(df_temp_full[[paste0(rename_prefix, "_type")]])
+            }
+        }
 
         if ("SingleCellExperiment" %in% loadedNamespaces()) {
             if (!(is.null(rename_prefix))) {

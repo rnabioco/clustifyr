@@ -25,6 +25,7 @@ clustify_lists(input, ...)
   lookuptable = NULL,
   obj_out = TRUE,
   seurat_out = TRUE,
+  vec_out = FALSE,
   rename_prefix = NULL,
   threshold = 0,
   low_threshold_cell = 0,
@@ -50,6 +51,7 @@ clustify_lists(input, ...)
   dr = "umap",
   seurat_out = TRUE,
   obj_out = TRUE,
+  vec_out = FALSE,
   threshold = 0,
   rename_prefix = NULL,
   verbose = TRUE,
@@ -73,6 +75,7 @@ clustify_lists(input, ...)
   dr = "umap",
   seurat_out = TRUE,
   obj_out = TRUE,
+  vec_out = FALSE,
   threshold = 0,
   rename_prefix = NULL,
   verbose = TRUE,
@@ -120,6 +123,8 @@ for object parsing}
 
 \item{seurat_out}{output cor matrix or called seurat object
 (deprecated, use obj_out instead)}
+
+\item{vec_out}{only output a result vector in the same order as metadata}
 
 \item{rename_prefix}{prefix to add to type and r column names}
 

@@ -1435,3 +1435,51 @@ test_that("calc_distance works as intended", {
     
     expect_true(nrow(res) == 2 && ncol(res) == 2)
 })
+
+test_that("vec_out option works for clustify", {
+    res <- clustify(s_small3@assays$RNA@counts,
+                    metadata = s_small3@meta.data,
+                    ref_mat = cbmc_ref,
+                    cluster_col = "RNA_snn_res.1",
+                    vec_out = TRUE
+    )
+    
+    res2 <- clustify(s_small3,
+                    ref_mat = cbmc_ref,
+                    cluster_col = "RNA_snn_res.1",
+                    rename_prefix = "abc",
+                    vec_out = TRUE
+    )
+    
+    res3 <- clustify(sce_small,
+                    cbmc_ref,
+                    cluster_col = "cell_type1",
+                    vec_out = TRUE
+    )
+    
+    expect_true(length(res) == 80 && length(res2) == 80 && length(res3) == 200)
+})
+
+test_that("vec_out option works for clustify_lists", {
+    res <- clustify_lists(s_small3@assays$RNA@counts,
+                          metadata = s_small3@meta.data,
+                          marker = cbmc_m,
+                          cluster_col = "RNA_snn_res.1",
+                          vec_out = TRUE
+    )
+    
+    res2 <- clustify_lists(s_small3,
+                           marker = cbmc_m,
+                           cluster_col = "RNA_snn_res.1",
+                           rename_prefix = "abc",
+                           vec_out = TRUE
+    )
+    
+    res3 <- clustify_lists(sce_small,
+                           marker = cbmc_m,
+                           cluster_col = "cell_type1",
+                           vec_out = TRUE
+    )
+    
+    expect_true(length(res) == 80 && length(res2) == 80 && length(res3) == 200)
+})

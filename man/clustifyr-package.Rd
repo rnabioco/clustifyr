@@ -8,10 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
-Package designed to aid in classifying cells from single-cell RNA sequencing data
-    using external reference data (e.g., bulk RNA-seq, scRNA-seq, microarray, gene lists). A 
-    variety of correlation based methods and gene list enrichment methods are provided to assist cell
-    type assignment.
+Package designed to aid in classifying cells from single-cell RNA sequencing data using external reference data (e.g., bulk RNA-seq, scRNA-seq, microarray, gene lists). A variety of correlation based methods and gene list enrichment methods are provided to assist cell type assignment.
 }
 \seealso{
 Useful links:
@@ -23,11 +20,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Rui Fu \email{raysinensis@gmail.com}
+\strong{Maintainer}: Kent Riemondy \email{kent.riemondy@ucdenver.edu}
 
 Authors:
 \itemize{
-  \item Kent Riemondy \email{kent.riemondy@ucdenver.edu}
+  \item Rui Fu \email{raysinensis@gmail.com}
 }
 
 Other contributors:
