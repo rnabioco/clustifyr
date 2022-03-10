@@ -13,7 +13,7 @@ Authors@R:
       person(given = "Kent",
              family = "Riemondy",
              role = c("cre", "aut"),
-             email = "kent.riemondy@ucdenver.edu"),
+             email = "kent.riemondy@cuanschutz.edu"),
       person(given = "Austin",
              family = "Gillen",
              role = "ctb",
