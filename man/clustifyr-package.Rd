@@ -20,7 +20,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Kent Riemondy \email{kent.riemondy@ucdenver.edu}
+\strong{Maintainer}: Kent Riemondy \email{kent.riemondy@cuanschutz.edu}
 
 Authors:
 \itemize{

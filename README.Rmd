@@ -168,7 +168,7 @@ clustify_lists(
 ## Frequently Asked Questions
 
 1. **What types of data can be used as reference?**
-`clustifyr` uses gene(row)-by-celltype(column) expression matrices. This means bulk RNA-seq and microarray data can be directly used. For scRNA-seq data, we have `average_clusters()` to convert matrix data and metadata. For Seurat and SCE objects, we provide wrapper function `object_ref()`.
+`clustifyr` uses gene(row)-by-celltype(column) expression matrices. This means bulk RNA-seq and microarray data can be directly used. For scRNA-seq data, we have `average_clusters()` to convert matrix data and metadata. For Seurat and SCE objects, we provide wrapper function `object_ref()`. Summarized/pseudobulk transcriptomes (for instance [Gene Expression by Cluster, median from Allen Brain Institute](https://portal.brain-map.org/atlases-and-data/rnaseq/mouse-whole-cortex-and-hippocampus-10x)) can also be used, but note to set `pseudobulk_method = "median"` in `clustify` to match the reference data if summarization/pseudobulk was not by averaging.
 
 2. **Can I directly make references from online scRNA-seq datasets?**
 Yes, with the caveat that metadata containing cell type assignments must be available, which is frustratingly uncommon (see our quantification/monitoring of the issue [here](https://github.com/rnabioco/someta)). We now have a Shiny app `run_clustifyr_app()` that can directly preview and use GEO files, and `get_ucsc_reference()` to build reference from a https://cells.ucsc.edu/ link.

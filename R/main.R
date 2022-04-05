@@ -23,6 +23,7 @@ clustify <- function(input, ...) {
 #' @param per_cell if true run per cell, otherwise per cluster.
 #' @param n_perm number of permutations, set to 0 by default
 #' @param compute_method method(s) for computing similarity scores
+#' @param pseudobulk_method method used for summarizing clusters, options are mean (default), median, truncate (10% truncated mean), or trimean, max, min
 #' @param use_var_genes if providing a seurat object, use the variable genes
 #'   (stored in seurat_object@var.genes) as the query_genes.
 #' @param dr stored dimension reduction
@@ -101,6 +102,7 @@ clustify.default <- function(input,
     per_cell = FALSE,
     n_perm = 0,
     compute_method = "spearman",
+    pseudobulk_method = "mean",
     verbose = TRUE,
     lookuptable = NULL,
     rm0 = FALSE,
@@ -221,6 +223,7 @@ clustify.default <- function(input,
             cluster_ids = cluster_ids,
             per_cell = per_cell,
             compute_method = compute_method,
+            pseudobulk_method = pseudobulk_method,
             rm0 = rm0,
             if_log = if_log,
             low_threshold = low_threshold_cell,
@@ -235,6 +238,7 @@ clustify.default <- function(input,
             n_perm = n_perm,
             per_cell = per_cell,
             compute_method = compute_method,
+            pseudobulk_method = pseudobulk_method,
             rm0 = rm0,
             ...
         )

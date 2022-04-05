@@ -11,6 +11,7 @@ permute_similarity(
   n_perm,
   per_cell = FALSE,
   compute_method,
+  pseudobulk_method = "mean",
   rm0 = FALSE,
   ...
 )
@@ -28,6 +29,8 @@ genes have ALREADY BEEN filtered}
 \item{per_cell}{run per cell?}
 
 \item{compute_method}{method(s) for computing similarity scores}
+
+\item{pseudobulk_method}{method used for summarizing clusters, options are mean (default), median, truncate (10\% truncated mean), or trimean, max, min}
 
 \item{rm0}{consider 0 as missing data, recommended for per_cell}
 

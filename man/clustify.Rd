@@ -19,6 +19,7 @@ clustify(input, ...)
   per_cell = FALSE,
   n_perm = 0,
   compute_method = "spearman",
+  pseudobulk_method = "mean",
   verbose = TRUE,
   lookuptable = NULL,
   rm0 = FALSE,
@@ -118,6 +119,8 @@ set to 0 to use all variable genes (generally not recommended)}
 \item{n_perm}{number of permutations, set to 0 by default}
 
 \item{compute_method}{method(s) for computing similarity scores}
+
+\item{pseudobulk_method}{method used for summarizing clusters, options are mean (default), median, truncate (10\% truncated mean), or trimean, max, min}
 
 \item{verbose}{whether to report certain variables chosen and steps}
 

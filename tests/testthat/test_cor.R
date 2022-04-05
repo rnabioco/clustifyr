@@ -582,3 +582,29 @@ test_that("clustify n_genes options ignored if too large", {
     )
     expect_true(res[1,1] == res2[1,1])
 })
+
+test_that("pseudobulk using median", {
+  res1 <- clustify(
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    ref_mat = cbmc_ref,
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified",
+    pseudobulk_method = "median"
+  )
+  
+  res_full <- clustify(
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    ref_mat = cbmc_ref,
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified",
+    pseudobulk_method = "median",
+    n_perm = 2,
+    return_full = TRUE
+  )
+  
+  expect_equal(res1, res_full$score)
+  expect_equal(length(res_full), 2)
+  expect_true(all(res_full$p_val >= 0 | res_full$p_val <= 0))
+})

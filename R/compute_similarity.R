@@ -4,6 +4,7 @@
 #' @param ref_mat reference expression matrix
 #' @param cluster_ids vector of cluster ids for each cell
 #' @param compute_method method(s) for computing similarity scores
+#' @param pseudobulk_method method used for summarizing clusters, options are mean (default), median, truncate (10% truncated mean), or trimean, max, min
 #' @param per_cell run per cell?
 #' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param if_log input data is natural log,
@@ -16,6 +17,7 @@ get_similarity <- function(expr_mat,
     ref_mat,
     cluster_ids,
     compute_method,
+    pseudobulk_method = "mean",
     per_cell = FALSE,
     rm0 = FALSE,
     if_log = TRUE,
@@ -74,7 +76,8 @@ get_similarity <- function(expr_mat,
             expr_mat,
             cluster_ids,
             if_log = if_log,
-            low_threshold = low_threshold
+            low_threshold = low_threshold,
+            method = pseudobulk_method
         )
     } else {
         sc_clust <- cluster_ids
@@ -109,6 +112,7 @@ get_similarity <- function(expr_mat,
 #' @param n_perm number of permutations
 #' @param per_cell run per cell?
 #' @param compute_method method(s) for computing similarity scores
+#' @param pseudobulk_method method used for summarizing clusters, options are mean (default), median, truncate (10% truncated mean), or trimean, max, min
 #' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param ... additional parameters
 #' @return matrix of numeric values
@@ -118,6 +122,7 @@ permute_similarity <- function(expr_mat,
     n_perm,
     per_cell = FALSE,
     compute_method,
+    pseudobulk_method = "mean",
     rm0 = FALSE,
     ...) {
     ref_clust <- colnames(ref_mat)
@@ -126,7 +131,8 @@ permute_similarity <- function(expr_mat,
         sc_clust <- sort(unique(cluster_ids))
         clust_avg <- average_clusters(
             expr_mat,
-            cluster_ids
+            cluster_ids,
+            method = pseudobulk_method
         )
     } else {
         sc_clust <- colnames(expr_mat)
@@ -156,7 +162,8 @@ permute_similarity <- function(expr_mat,
         if (!per_cell) {
             permuted_avg <- average_clusters(
                 expr_mat,
-                resampled
+                resampled,
+                method = pseudobulk_method
             )
         } else {
             permuted_avg <- expr_mat[, resampled, drop = FALSE]

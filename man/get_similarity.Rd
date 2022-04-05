@@ -9,6 +9,7 @@ get_similarity(
   ref_mat,
   cluster_ids,
   compute_method,
+  pseudobulk_method = "mean",
   per_cell = FALSE,
   rm0 = FALSE,
   if_log = TRUE,
@@ -24,6 +25,8 @@ get_similarity(
 \item{cluster_ids}{vector of cluster ids for each cell}
 
 \item{compute_method}{method(s) for computing similarity scores}
+
+\item{pseudobulk_method}{method used for summarizing clusters, options are mean (default), median, truncate (10\% truncated mean), or trimean, max, min}
 
 \item{per_cell}{run per cell?}
 

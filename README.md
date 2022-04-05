@@ -7,7 +7,7 @@ status](https://github.com/rnabioco/clustifyr/workflows/R-CMD-check/badge.svg)](
 [![codecov](https://codecov.io/gh/rnabioco/clustifyr/branch/master/graph/badge.svg)](https://codecov.io/gh/rnabioco/clustifyr)
 [![platforms](https://bioconductor.org/shields/availability/release/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
 [![bioc](https://bioconductor.org/shields/years-in-bioc/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
-[![\#downloads](https://img.shields.io/badge/%23%20downloads-4139-brightgreen)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
+[![\#downloads](https://img.shields.io/badge/%23%20downloads-4314-brightgreen)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
 
 <!-- badges: end -->
 
@@ -265,7 +265,12 @@ clustify_lists(
     RNA-seq and microarray data can be directly used. For scRNA-seq
     data, we have `average_clusters()` to convert matrix data and
     metadata. For Seurat and SCE objects, we provide wrapper function
-    `object_ref()`.
+    `object_ref()`. Summarized/pseudobulk transcriptomes (for instance
+    [Gene Expression by Cluster, median from Allen Brain
+    Institute](https://portal.brain-map.org/atlases-and-data/rnaseq/mouse-whole-cortex-and-hippocampus-10x))
+    can also be used, but note to set `pseudobulk_method = "median"` in
+    `clustify` to match the reference data if summarization/pseudobulk
+    was not by averaging.
 
 2.  **Can I directly make references from online scRNA-seq datasets?**
     Yes, with the caveat that metadata containing cell type assignments
@@ -393,7 +398,7 @@ names(res)
 14. **Can I pull out additional information on what gene signatures
     don’t match the reference clusters?** Please add arguments
     `organism = "hsapiens", plot_name = "rank_diffs"` to `clustify()`.
-    This saves a “rank\_diffs.pdf”, comparing gene expression of the
+    This saves a “rank_diffs.pdf”, comparing gene expression of the
     queried clusters versus the assigned reference cell gene signature.
     Highlighted in red are genes expressed (ranked) higher in query
     data, and in blue gene expressed (ranked) lower than the reference.
