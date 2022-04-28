@@ -198,7 +198,7 @@ average_clusters <- function(mat,
                 }
                 mat_data <- mat[, cell_ids, drop = FALSE]
                 # mat_data[mat_data == 0] <- NA
-                res <- apply(pbmc_matrix_small, 1, function(x) mean(x, trim = 0.1, na.rm = TRUE))
+                res <- apply(mat_data, 1, function(x) mean(x, trim = 0.1, na.rm = TRUE))
                 colnames(res) <- names(cell_ids)
                 res
             }
