@@ -1,4 +1,10 @@
-# clustifyr <img src="man/figures/logo.png" align="right">
+
+-   [clustifyr](#clustifyr)
+    -   [Installation](#installation)
+    -   [Example usage](#example-usage)
+    -   [Additional resources](#additional-resources)
+
+# clustifyr
 
 <!-- badges: start -->
 
@@ -7,29 +13,13 @@ status](https://github.com/rnabioco/clustifyr/workflows/R-CMD-check/badge.svg)](
 [![codecov](https://codecov.io/gh/rnabioco/clustifyr/branch/master/graph/badge.svg)](https://codecov.io/gh/rnabioco/clustifyr)
 [![platforms](https://bioconductor.org/shields/availability/release/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
 [![bioc](https://bioconductor.org/shields/years-in-bioc/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
-[![\#downloads](https://img.shields.io/badge/%23%20downloads-4314-brightgreen)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
+[![\#downloads](https://img.shields.io/badge/%23%20downloads-4893-brightgreen)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
 
 <!-- badges: end -->
 
--   [clustifyr](#clustifyr-)
-    -   [Installation](#installation)
-    -   [Additional info](#additional-info)
-    -   [Example usage](#example-usage)
-    -   [Frequently Asked Questions](#frequently-asked-questions)
-    -   [Code of Conduct](#code-of-conduct)
-    
 clustifyr classifies cells and clusters in single-cell RNA sequencing
 experiments using reference bulk RNA-seq data sets, sorted microarray
 expression data, single-cell gene signatures, or lists of marker genes.
-
-Single cell transcriptomes are difficult to annotate without knowledge
-of the underlying biology. Even with this knowledge, accurate
-identification can be challenging due to the lack of detectable
-expression of common marker genes. clustifyr solves this problem by
-automatically annotating single cells or clusters of cells using
-single-cell RNA-seq, bulk RNA-seq data, microarray, or marker gene
-lists. Additional functions enable exploratory analysis of similarities
-between single cell RNA-seq datasets and reference data.
 
 ## Installation
 
@@ -49,28 +39,6 @@ Install the development version with:
 remotes::install_github("rnabioco/clustifyr")
 ```
 
-## Additional info
-
-[Intro](https://rnabioco.github.io/clustifyr/articles/clustifyR.html)
-tutorial
-
-[Additional](https://rnabioco.github.io/clustifyrdata/articles/otherformats.html)
-tutorials
-
-[Script](https://github.com/rnabioco/clustifyrdata/blob/master/inst/run_clustifyr.R)
-for benchmarking, compatible with
-[`scRNAseq_Benchmark`](https://github.com/tabdelaal/scRNAseq_Benchmark)
-
-More reference data (including tabula muris, immgen, etc) are available
-at supplement package
-[`clustifyrdatahub`](https://github.com/rnabioco/clustifyrdatahub). Also
-see
-[list](https://rnabioco.github.io/clustifyrdata/articles/download_refs.html)
-for individual downloads.
-
-[Publication](https://f1000research.com/articles/9-223/v2) with
-parameter and usage discussions has passed peer review on F1000Research.
-
 ## Example usage
 
 In this example we use the following built-in input data:
@@ -81,7 +49,7 @@ In this example we use the following built-in input data:
     (`"classified"`)
 -   a vector of variable genes (`pbmc_vargenes`)
 -   a matrix of mean normalized scRNA-seq UMI counts by cell type
-    (`cbmc_ref`):
+    (`cbmc_ref`)
 
 We then calculate correlation coefficients and plot them on a
 pre-calculated projection (stored in `pbmc_meta`).
@@ -123,8 +91,8 @@ plot_best_call(
 
 ![](man/figures/readme_example-1.png)<!-- -->
 
-`clustify()` can also take a clustered `SingleCellExperiment` or
-`seurat` object (both v2 and v3) and assign identities.
+`clustify()` can take a clustered `SingleCellExperiment` or `seurat`
+object (both v2 and v3) and assign identities.
 
 ``` r
 # for SingleCellExperiment
@@ -258,179 +226,19 @@ clustify_lists(
 #>  2 dimensional reductions calculated: pca, tsne
 ```
 
-## Frequently Asked Questions
+## Additional resources
 
-1.  **What types of data can be used as reference?** `clustifyr` uses
-    gene(row)-by-celltype(column) expression matrices. This means bulk
-    RNA-seq and microarray data can be directly used. For scRNA-seq
-    data, we have `average_clusters()` to convert matrix data and
-    metadata. For Seurat and SCE objects, we provide wrapper function
-    `object_ref()`. Summarized/pseudobulk transcriptomes (for instance
-    [Gene Expression by Cluster, median from Allen Brain
-    Institute](https://portal.brain-map.org/atlases-and-data/rnaseq/mouse-whole-cortex-and-hippocampus-10x))
-    can also be used, but note to set `pseudobulk_method = "median"` in
-    `clustify` to match the reference data if summarization/pseudobulk
-    was not by averaging.
+-   [Script](https://github.com/rnabioco/clustifyrdata/blob/master/inst/run_clustifyr.R)
+    for benchmarking, compatible with
+    [`scRNAseq_Benchmark`](https://github.com/tabdelaal/scRNAseq_Benchmark)
 
-2.  **Can I directly make references from online scRNA-seq datasets?**
-    Yes, with the caveat that metadata containing cell type assignments
-    must be available, which is frustratingly uncommon (see our
-    quantification/monitoring of the issue
-    [here](https://github.com/rnabioco/someta)). We now have a Shiny app
-    `run_clustifyr_app()` that can directly preview and use GEO files,
-    and `get_ucsc_reference()` to build reference from a
-    <https://cells.ucsc.edu/> link.
+-   Additional reference data (including tabula muris, immgen, etc) are
+    available in a supplemental package
+    [`clustifyrdatahub`](https://github.com/rnabioco/clustifyrdatahub).
+    Also see
+    [list](https://rnabioco.github.io/clustifyrdata/articles/download_refs.html)
+    for individual downloads.
 
-3.  **Should the input/reference data be normalized?** The default
-    metric for `clustifyr` is ranked correlation, so it does tolerate
-    mixed raw/normalized expression fairly well. Still, we recommend
-    matching the input and ref matrices to the same normalization method
-    if possible. The object wrappers are taking log-normalized data for
-    downstream steps. It should be noted that **data slot from
-    SCtransform obfuscates the original gene expression ranking, and is
-    not ideal for `clustifyr`** - in this case we recommend going
-    directly from raw counts.
-
-4.  **How should I determine parameters?** Please see our published
-    [manuscript](https://f1000research.com/articles/9-223/v2) with
-    parameter and usage discussions. In general, default settings are
-    satisfactory in our own internal usage/testing. However, you might
-    want to inspect the correlation matrix and call results, instead of
-    just the final result (use `obj_out = FALSE` in `clustify()`).
-
-5.  **How many variable genes should I provide?** While this of course
-    greatly depends on the datasets in question, we generally have good
-    results with \~500-1000 variable genes. This is why we recommend
-    running `M3Drop` for this step. It should be noted that Seurat V3
-    onwards automatically stores 2000 by default, which may be too many
-    (if the result correlation matrix shows high and similar values for
-    too many cell types). Currently, by default `clustify()` on Seurat
-    objects will use top 1000 genes.
-
-6.  **I have “CLASH” in many of my final calls, why is that?** “CLASH”
-    indicates ties in the correlation values. In practice, this should
-    be very rare unless the amount of query genes is very (dangerously)
-    low (use `verbose = TRUE` in `clustify()` for more information).
-    Query genes take the intersection of provided gene list (or
-    autodetected from Seurat objects) and genes in the reference.
-
-7.  **I need help troubleshooting unknown errors in my reference
-    building/clustifying.** As we try to provide better error messaging,
-    it is still important to note that, in general, the most error-prone
-    step is at designating the column in the metadata that contains
-    clustering information. This is generally the `cluster_col`
-    argument.
-
-8.  **What if I only have marker gene lists instead of full
-    transcriptome references?** Please see `clustify_lists()`, which
-    implements several simple methods. In particular, if both positive
-    and negative markers are available, set argument
-    `metric = "posneg"`.
-
-9.  **Do I need to have equal number of marker genes per cell type?**
-    Better support will be our next focus. Currently `metric = "posneg"`
-    works with uneven numbers of markers. An alternative workflow can be
-    used with argument `input_markers = TRUE`:
-
-``` r
-# pbmc_markers as FindAllMarkers output gene list
-pbmc_input <- split(pbmc_markers$gene, pbmc_markers$cluster)
-# reference gene list that is uneven length
-pbmc_ref_mm <- pos_neg_marker(
-  list(B = c("CD79A", "CD79B", "MS4A1"), 
-       NK = c("GZMB", "GNLY"))
-)
-
-# reverse input and reference
-res <- clustify_lists(
-  pbmc_ref_mm,
-  pbmc_input,
-  metric = "jaccard",
-  input_markers = TRUE
-)
-```
-
-10. **Can I extract the overlapping genes from`clustify_lists()`?** This
-    was an requested and added feature. `details_out = TRUE` will output
-    2 matrices, the normal score, and a matrix containing all genes
-    overlapping in the corresponding ref vs query pairs.
-
-``` r
-res <- clustify_lists(
-  pbmc_matrix_small,
-  metadata = pbmc_meta,
-  cluster_col = "classified",
-  marker = cbmc_m,
-  details_out = TRUE
-)
-
-names(res)
-#> [1] "res"     "details"
-```
-
-11. **Why is the default setting `per_cell = FALSE`?** While doing
-    classification on per cell level is available, it is slow and not
-    very accurate. Default settings are also not optimized for per-cell
-    classification. `clustifyr` is mainly focused on leveraging results
-    from clustering techniques. As other aspects of scRNA-seq analysis
-    is often focused on clusters, we have set our focus on this
-    resolution as well. This does mean that improper clustering of
-    either the query or ref datasets will lead to issues, as well as
-    cases of continuous cellular transitions where discrete clusters are
-    not present. From benchmarking, even 15 cells per cluster is still
-    performing well, and in our internal usage we would intentionally
-    overcluster the data and check if `clustify()` results are stable
-    (see also `overcluster_test()`).
-
-12. **Can I use multiple references in the same clustify run?** Yes,
-    simply adding columns to a reference matrix works to expand it. We
-    also provide `build_atlas()`, which can be run along the lines of
-    `build_atlas(matrix_objs = list(reference1, reference2, reference3, ...), genes_fn = clustifyr::human_genes_10x)`.
-
-13. **Does clustifyr work for spatial scRNA-seq data?** It works
-    decently on the Seurat tutorial data. See short
-    [example](https://github.com/rnabioco/clustifyr/issues/370) for both
-    `clustify()`(correlation) and `clustify_lists()`(gene list
-    enrichment) approaches. (Note, as mentioned above, we recommend
-    avoiding SCtransform data, and opting for using raw data directly
-    instead. This can now be directly handled by Seurat wrapper.)
-
-14. **Can I pull out additional information on what gene signatures
-    don’t match the reference clusters?** Please add arguments
-    `organism = "hsapiens", plot_name = "rank_diffs"` to `clustify()`.
-    This saves a “rank_diffs.pdf”, comparing gene expression of the
-    queried clusters versus the assigned reference cell gene signature.
-    Highlighted in red are genes expressed (ranked) higher in query
-    data, and in blue gene expressed (ranked) lower than the reference.
-    Top 10 GO-BP terms are also included. See the function
-    `assess_rank_bias()` for step-by-step generation of the plot outside
-    of the `clustify()` wrapper.
-
-15. **How do I cite `clustifyr`?**
-
-``` r
-citation("clustifyr")
-#> 
-#> Fu R, Gillen A, Sheridan RM, Tian C, Daya M, Hao Y, Hesselberth JR,
-#> Riemondy KA (2019). "clustifyr: An R package for automated single-cell
-#> RNA sequencing cluster classification." _F1000 Research_. doi:
-#> 10.12688/f1000research.22969.2 (URL:
-#> https://doi.org/10.12688/f1000research.22969.2).
-#> 
-#> A BibTeX entry for LaTeX users is
-#> 
-#>   @Article{,
-#>     title = {clustifyr: An R package for automated single-cell RNA sequencing cluster classification},
-#>     year = {2019},
-#>     author = {Rui Fu and Austin Gillen and Ryan M. Sheridan and Chengzhe Tian and Michelle Daya and Yue Hao and Jay R. Hesselberth and Kent A. Riemondy},
-#>     journal = {F1000 Research},
-#>     doi = {10.12688/f1000research.22969.2},
-#>   }
-```
-
-## Code of Conduct
-
-Please note that the clustifyr project is released with a [Contributor
-Code of
-Conduct](http://rnabioco.github.io/clustifyr/CODE_OF_CONDUCT.html). By
-contributing to this project, you agree to abide by its terms.
+-   See the
+    [FAQ](https://github.com/rnabioco/clustifyr/wiki/Frequently-asked-questions)
+    for more details.
