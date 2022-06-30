@@ -83,6 +83,10 @@ average_clusters <- function(mat,
         }
     }
     
+    if(is.null(colnames(mat))){
+      stop("The input matrix does not have colnames.\n", 
+           "Check colnames() of input object")
+    }
     if (is.vector(cluster_info)) {
         if (ncol(mat) != length(cluster_info)) {
             stop("vector of cluster assignments does not match the number of columns in the matrix",

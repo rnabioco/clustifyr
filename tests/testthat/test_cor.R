@@ -608,3 +608,16 @@ test_that("pseudobulk using median", {
   expect_equal(length(res_full), 2)
   expect_true(all(res_full$p_val >= 0 | res_full$p_val <= 0))
 })
+
+test_that("an informative error if matrix lacks colnames", {
+  tmp_mat <- pbmc_matrix_small
+  colnames(tmp_mat) <- NULL
+  expect_error(clustify(
+    input = tmp_mat,
+    metadata = pbmc_meta,
+    ref_mat = cbmc_ref,
+    query_genes = pbmc_vargenes,
+    cluster_col = "classified", 
+    verbose = FALSE
+  ))
+})
