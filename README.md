@@ -1,9 +1,4 @@
 
--   [clustifyr](#clustifyr)
-    -   [Installation](#installation)
-    -   [Example usage](#example-usage)
-    -   [Additional resources](#additional-resources)
-
 # clustifyr
 
 <!-- badges: start -->

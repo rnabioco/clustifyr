@@ -1,7 +1,5 @@
 ---
-output: 
-  github_document:
-    toc: true
+output: github_document
 ---
 
 ```{r, echo = FALSE, message = FALSE}
