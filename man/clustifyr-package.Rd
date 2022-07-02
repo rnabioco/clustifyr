@@ -6,14 +6,12 @@
 \alias{_PACKAGE}
 \title{clustifyr: Classifier for Single-cell RNA-seq Using Cell Clusters}
 \description{
-\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
-
 Package designed to aid in classifying cells from single-cell RNA sequencing data using external reference data (e.g., bulk RNA-seq, scRNA-seq, microarray, gene lists). A variety of correlation based methods and gene list enrichment methods are provided to assist cell type assignment.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{http://github.com/rnabioco/clustifyr#readme}
+  \item \url{https://github.com/rnabioco/clustifyr}
   \item \url{https://rnabioco.github.io/clustifyr/}
   \item Report bugs at \url{https://github.com/rnabioco/clustifyr/issues}
 }
@@ -35,7 +33,7 @@ Other contributors:
   \item Yue Hao \email{haoyuethink@gmail.com} [contributor]
   \item Michelle Daya \email{michelle.daya@ucdenver.edu} [contributor]
   \item Sidhant Puntambekar \email{sidhantnp@yahoo.com} [contributor]
-  \item RNA Bioscience Initiative [funder]
+  \item RNA Bioscience Initiative [funder, copyright holder]
 }
 
 }

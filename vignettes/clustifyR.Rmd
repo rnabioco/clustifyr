@@ -297,7 +297,7 @@ get_ext_reference(cb_url = "http://cells.ucsc.edu/?ds=kidney-atlas%2FFetal_Immun
 
 More reference data, including tabula muris, and code used to generate them are available at https://github.com/rnabioco/clustifyrdata
 
-Also see list for individual downloads at https://rnabioco.github.io/clustifyr/articles/download_refs.html
+Also see list for individual downloads at https://rnabioco.github.io/clustifyrdata/articles/download_refs.html
 
 Additional tutorials at
 https://rnabioco.github.io/clustifyrdata/articles/otherformats.html
