@@ -67,28 +67,33 @@ and insert zero counts for all remaining genes.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">append_genes</span><span class="op">(</span><span class="va">gene_vector</span>, <span class="va">ref_matrix</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">append_genes</span><span class="op">(</span><span class="va">gene_vector</span>, <span class="va">ref_matrix</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>gene_vector</dt>
 <dd><p>char vector with gene names</p></dd>
+
+
 <dt>ref_matrix</dt>
 <dd><p>Reference matrix containing cell types vs.
 gene expression values</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Reference matrix with union of all genes</p>
+    
+
+<p>Reference matrix with union of all genes</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">mat</span> <span class="op">&lt;-</span> <span class="fu">append_genes</span><span class="op">(</span></span>
-<span class="r-in">    gene_vector <span class="op">=</span> <span class="va">human_genes_10x</span>,</span>
-<span class="r-in">    ref_matrix <span class="op">=</span> <span class="va">cbmc_ref</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">mat</span> <span class="op">&lt;-</span> <span class="fu">append_genes</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    gene_vector <span class="op">=</span> <span class="va">human_genes_10x</span>,</span></span>
+<span class="r-in"><span>    ref_matrix <span class="op">=</span> <span class="va">cbmc_ref</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -100,7 +105,7 @@ gene expression values</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

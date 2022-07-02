@@ -55,30 +55,37 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">overcluster</span><span class="op">(</span><span class="va">mat</span>, <span class="va">cluster_id</span>, power <span class="op">=</span> <span class="fl">0.15</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">overcluster</span><span class="op">(</span><span class="va">mat</span>, <span class="va">cluster_id</span>, power <span class="op">=</span> <span class="fl">0.15</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>mat</dt>
 <dd><p>expression matrix</p></dd>
+
+
 <dt>cluster_id</dt>
 <dd><p>list of ids per cluster</p></dd>
+
+
 <dt>power</dt>
 <dd><p>decides the number of clusters for kmeans</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>new cluster_id list of more clusters</p>
+    
+
+<p>new cluster_id list of more clusters</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">overcluster</span><span class="op">(</span></span>
-<span class="r-in">    mat <span class="op">=</span> <span class="va">pbmc_matrix_small</span>,</span>
-<span class="r-in">    cluster_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">pbmc_matrix_small</span><span class="op">)</span>, <span class="va">pbmc_meta</span><span class="op">$</span><span class="va">classified</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">overcluster</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    mat <span class="op">=</span> <span class="va">pbmc_matrix_small</span>,</span></span>
+<span class="r-in"><span>    cluster_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">pbmc_matrix_small</span><span class="op">)</span>, <span class="va">pbmc_meta</span><span class="op">$</span><span class="va">classified</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 16</span>
 </code></pre></div>
     </div>
@@ -91,7 +98,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

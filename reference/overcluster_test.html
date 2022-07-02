@@ -55,75 +55,104 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">overcluster_test</span><span class="op">(</span>
-  <span class="va">expr</span>,
-  <span class="va">metadata</span>,
-  <span class="va">ref_mat</span>,
-  <span class="va">cluster_col</span>,
-  x_col <span class="op">=</span> <span class="st">"UMAP_1"</span>,
-  y_col <span class="op">=</span> <span class="st">"UMAP_2"</span>,
-  n <span class="op">=</span> <span class="fl">5</span>,
-  ngenes <span class="op">=</span> <span class="cn">NULL</span>,
-  query_genes <span class="op">=</span> <span class="cn">NULL</span>,
-  threshold <span class="op">=</span> <span class="fl">0</span>,
-  do_label <span class="op">=</span> <span class="cn">TRUE</span>,
-  do_legend <span class="op">=</span> <span class="cn">FALSE</span>,
-  newclustering <span class="op">=</span> <span class="cn">NULL</span>,
-  combine <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">overcluster_test</span><span class="op">(</span></span>
+<span>  <span class="va">expr</span>,</span>
+<span>  <span class="va">metadata</span>,</span>
+<span>  <span class="va">ref_mat</span>,</span>
+<span>  <span class="va">cluster_col</span>,</span>
+<span>  x_col <span class="op">=</span> <span class="st">"UMAP_1"</span>,</span>
+<span>  y_col <span class="op">=</span> <span class="st">"UMAP_2"</span>,</span>
+<span>  n <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  ngenes <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  query_genes <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  threshold <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  do_label <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  do_legend <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  newclustering <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  combine <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>expr</dt>
 <dd><p>expression matrix</p></dd>
+
+
 <dt>metadata</dt>
 <dd><p>metadata including cluster info and
 dimension reduction plotting</p></dd>
+
+
 <dt>ref_mat</dt>
 <dd><p>reference matrix</p></dd>
+
+
 <dt>cluster_col</dt>
 <dd><p>column of clustering from metadata</p></dd>
+
+
 <dt>x_col</dt>
 <dd><p>column of metadata for x axis plotting</p></dd>
+
+
 <dt>y_col</dt>
 <dd><p>column of metadata for y axis plotting</p></dd>
+
+
 <dt>n</dt>
 <dd><p>expand n-fold for over/under clustering</p></dd>
+
+
 <dt>ngenes</dt>
 <dd><p>number of genes to use for feature selection,
 use all genes if NULL</p></dd>
+
+
 <dt>query_genes</dt>
 <dd><p>vector, otherwise genes with be recalculated</p></dd>
+
+
 <dt>threshold</dt>
 <dd><p>type calling threshold</p></dd>
+
+
 <dt>do_label</dt>
 <dd><p>whether to label each cluster at median center</p></dd>
+
+
 <dt>do_legend</dt>
 <dd><p>whether to draw legend</p></dd>
+
+
 <dt>newclustering</dt>
 <dd><p>use kmeans if NULL on dr
 or col name for second column of clustering</p></dd>
+
+
 <dt>combine</dt>
 <dd><p>if TRUE return a single plot with combined panels, if
 FALSE return list of plots (default: TRUE)</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>faceted ggplot object</p>
+    
+
+<p>faceted ggplot object</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">overcluster_test</span><span class="op">(</span></span>
-<span class="r-in">    expr <span class="op">=</span> <span class="va">pbmc_matrix_small</span>,</span>
-<span class="r-in">    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,</span>
-<span class="r-in">    ref_mat <span class="op">=</span> <span class="va">cbmc_ref</span>,</span>
-<span class="r-in">    cluster_col <span class="op">=</span> <span class="st">"classified"</span>,</span>
-<span class="r-in">    x_col <span class="op">=</span> <span class="st">"UMAP_1"</span>,</span>
-<span class="r-in">    y_col <span class="op">=</span> <span class="st">"UMAP_2"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">overcluster_test</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    expr <span class="op">=</span> <span class="va">pbmc_matrix_small</span>,</span></span>
+<span class="r-in"><span>    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,</span></span>
+<span class="r-in"><span>    ref_mat <span class="op">=</span> <span class="va">cbmc_ref</span>,</span></span>
+<span class="r-in"><span>    cluster_col <span class="op">=</span> <span class="st">"classified"</span>,</span></span>
+<span class="r-in"><span>    x_col <span class="op">=</span> <span class="st">"UMAP_1"</span>,</span></span>
+<span class="r-in"><span>    y_col <span class="op">=</span> <span class="st">"UMAP_2"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> using # of genes: 599</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> similarity computation completed, matrix of 9 x 13, preparing output</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> using # of genes: 599</span>
@@ -142,7 +171,7 @@ FALSE return list of plots (default: TRUE)</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

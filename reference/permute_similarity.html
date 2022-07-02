@@ -55,44 +55,63 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">permute_similarity</span><span class="op">(</span>
-  <span class="va">expr_mat</span>,
-  <span class="va">ref_mat</span>,
-  <span class="va">cluster_ids</span>,
-  <span class="va">n_perm</span>,
-  per_cell <span class="op">=</span> <span class="cn">FALSE</span>,
-  <span class="va">compute_method</span>,
-  pseudobulk_method <span class="op">=</span> <span class="st">"mean"</span>,
-  rm0 <span class="op">=</span> <span class="cn">FALSE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">permute_similarity</span><span class="op">(</span></span>
+<span>  <span class="va">expr_mat</span>,</span>
+<span>  <span class="va">ref_mat</span>,</span>
+<span>  <span class="va">cluster_ids</span>,</span>
+<span>  <span class="va">n_perm</span>,</span>
+<span>  per_cell <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">compute_method</span>,</span>
+<span>  pseudobulk_method <span class="op">=</span> <span class="st">"mean"</span>,</span>
+<span>  rm0 <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>expr_mat</dt>
 <dd><p>single-cell expression matrix</p></dd>
+
+
 <dt>ref_mat</dt>
 <dd><p>reference expression matrix</p></dd>
+
+
 <dt>cluster_ids</dt>
 <dd><p>clustering info of single-cell data assume that
 genes have ALREADY BEEN filtered</p></dd>
+
+
 <dt>n_perm</dt>
 <dd><p>number of permutations</p></dd>
+
+
 <dt>per_cell</dt>
 <dd><p>run per cell?</p></dd>
+
+
 <dt>compute_method</dt>
 <dd><p>method(s) for computing similarity scores</p></dd>
+
+
 <dt>pseudobulk_method</dt>
 <dd><p>method used for summarizing clusters, options are mean (default), median, truncate (10% truncated mean), or trimean, max, min</p></dd>
+
+
 <dt>rm0</dt>
 <dd><p>consider 0 as missing data, recommended for per_cell</p></dd>
+
+
 <dt>...</dt>
 <dd><p>additional parameters</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>matrix of numeric values</p>
+    
+
+<p>matrix of numeric values</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -104,7 +123,7 @@ genes have ALREADY BEEN filtered</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

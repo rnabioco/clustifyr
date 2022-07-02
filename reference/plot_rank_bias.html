@@ -55,47 +55,52 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plot_rank_bias</span><span class="op">(</span><span class="va">bias_df</span>, organism <span class="op">=</span> <span class="st">"hsapiens"</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_rank_bias</span><span class="op">(</span><span class="va">bias_df</span>, organism <span class="op">=</span> <span class="st">"hsapiens"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>bias_df</dt>
 <dd><p>data.frame of rank diff matrix between cluster and reference cell types</p></dd>
+
+
 <dt>organism</dt>
 <dd><p>for GO term analysis, organism name: human - 'hsapiens', mouse - 'mmusculus'</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>ggplot object of distribution and annotated GO terms</p>
+    
+
+<p>ggplot object of distribution and annotated GO terms</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="va">avg</span> <span class="op">&lt;-</span> <span class="fu"><a href="average_clusters.html">average_clusters</a></span><span class="op">(</span></span>
-<span class="r-in">    mat <span class="op">=</span> <span class="va">pbmc_matrix_small</span>,</span>
-<span class="r-in">    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,</span>
-<span class="r-in">    cluster_col <span class="op">=</span> <span class="st">"classified"</span>,</span>
-<span class="r-in">    if_log <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">rankdiff</span> <span class="op">&lt;-</span> <span class="fu"><a href="find_rank_bias.html">find_rank_bias</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="va">avg</span>,</span>
-<span class="r-in">    <span class="va">cbmc_ref</span>,</span>
-<span class="r-in">    query_genes <span class="op">=</span> <span class="va">pbmc_vargenes</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">qres</span> <span class="op">&lt;-</span> <span class="fu"><a href="query_rank_bias.html">query_rank_bias</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="va">rankdiff</span>,</span>
-<span class="r-in">    <span class="st">"CD14+ Mono"</span>,</span>
-<span class="r-in">    <span class="st">"CD14+ Mono"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu">plot_rank_bias</span><span class="op">(</span></span>
-<span class="r-in">    <span class="va">qres</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="va">avg</span> <span class="op">&lt;-</span> <span class="fu"><a href="average_clusters.html">average_clusters</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    mat <span class="op">=</span> <span class="va">pbmc_matrix_small</span>,</span></span>
+<span class="r-in"><span>    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,</span></span>
+<span class="r-in"><span>    cluster_col <span class="op">=</span> <span class="st">"classified"</span>,</span></span>
+<span class="r-in"><span>    if_log <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">rankdiff</span> <span class="op">&lt;-</span> <span class="fu"><a href="find_rank_bias.html">find_rank_bias</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="va">avg</span>,</span></span>
+<span class="r-in"><span>    <span class="va">cbmc_ref</span>,</span></span>
+<span class="r-in"><span>    query_genes <span class="op">=</span> <span class="va">pbmc_vargenes</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">qres</span> <span class="op">&lt;-</span> <span class="fu"><a href="query_rank_bias.html">query_rank_bias</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="va">rankdiff</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"CD14+ Mono"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"CD14+ Mono"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu">plot_rank_bias</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="va">qres</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -107,7 +112,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

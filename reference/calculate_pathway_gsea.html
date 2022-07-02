@@ -61,63 +61,74 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">calculate_pathway_gsea</span><span class="op">(</span>
-  <span class="va">mat</span>,
-  <span class="va">pathway_list</span>,
-  n_perm <span class="op">=</span> <span class="fl">1000</span>,
-  scale <span class="op">=</span> <span class="cn">TRUE</span>,
-  no_warnings <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">calculate_pathway_gsea</span><span class="op">(</span></span>
+<span>  <span class="va">mat</span>,</span>
+<span>  <span class="va">pathway_list</span>,</span>
+<span>  n_perm <span class="op">=</span> <span class="fl">1000</span>,</span>
+<span>  scale <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  no_warnings <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>mat</dt>
 <dd><p>expression matrix</p></dd>
+
+
 <dt>pathway_list</dt>
 <dd><p>a list of vectors, each named for a specific pathway,
 or dataframe</p></dd>
+
+
 <dt>n_perm</dt>
 <dd><p>Number of permutation for fgsea function. Defaults to 1000.</p></dd>
+
+
 <dt>scale</dt>
 <dd><p>convert expr_mat into zscores prior to running GSEA?,
 default = FALSE</p></dd>
+
+
 <dt>no_warnings</dt>
 <dd><p>suppress warnings from gsea ties</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>matrix of GSEA NES values, cell types as row names,
+    
+
+<p>matrix of GSEA NES values, cell types as row names,
 pathways as column names</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">gl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="st">"n"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PPBP"</span>, <span class="st">"LYZ"</span>, <span class="st">"S100A9"</span><span class="op">)</span>,</span>
-<span class="r-in">    <span class="st">"a"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"IGLL5"</span>, <span class="st">"GNLY"</span>, <span class="st">"FTL"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">pbmc_avg</span> <span class="op">&lt;-</span> <span class="fu"><a href="average_clusters.html">average_clusters</a></span><span class="op">(</span></span>
-<span class="r-in">    mat <span class="op">=</span> <span class="va">pbmc_matrix_small</span>,</span>
-<span class="r-in">    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,</span>
-<span class="r-in">    cluster_col <span class="op">=</span> <span class="st">"classified"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">calculate_pathway_gsea</span><span class="op">(</span></span>
-<span class="r-in">    mat <span class="op">=</span> <span class="va">pbmc_avg</span>,</span>
-<span class="r-in">    pathway_list <span class="op">=</span> <span class="va">gl</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">gl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"n"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PPBP"</span>, <span class="st">"LYZ"</span>, <span class="st">"S100A9"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"a"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"IGLL5"</span>, <span class="st">"GNLY"</span>, <span class="st">"FTL"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">pbmc_avg</span> <span class="op">&lt;-</span> <span class="fu"><a href="average_clusters.html">average_clusters</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    mat <span class="op">=</span> <span class="va">pbmc_matrix_small</span>,</span></span>
+<span class="r-in"><span>    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,</span></span>
+<span class="r-in"><span>    cluster_col <span class="op">=</span> <span class="st">"classified"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">calculate_pathway_gsea</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    mat <span class="op">=</span> <span class="va">pbmc_avg</span>,</span></span>
+<span class="r-in"><span>    pathway_list <span class="op">=</span> <span class="va">gl</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       n          a</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Naive CD4 T  -1.1607650 -1.1591764</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Memory CD4 T -1.2818956 -1.3279719</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> CD14+ Mono    1.4839371  0.9932481</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> B            -1.1081821  1.2373410</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> CD8 T        -1.3700504 -0.5624580</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> FCGR3A+ Mono  0.9727617  1.0654595</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NK           -1.4003317  1.0700351</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> DC            1.0881703 -0.8585416</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Platelet      1.8380446  1.2871342</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Naive CD4 T  -1.1445190 -1.1478627</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Memory CD4 T -1.2655455 -1.3150930</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> CD14+ Mono    1.4657048  0.9732379</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> B            -1.1109279  1.2101648</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> CD8 T        -1.3950908 -0.5385627</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> FCGR3A+ Mono  0.9785679  1.0730911</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NK           -1.3898491  1.0781376</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DC            1.1170289 -0.8514460</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Platelet      1.8346098  1.3359438</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -129,7 +140,7 @@ pathways as column names</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

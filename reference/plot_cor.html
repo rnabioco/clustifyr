@@ -55,70 +55,87 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plot_cor</span><span class="op">(</span>
-  <span class="va">cor_mat</span>,
-  <span class="va">metadata</span>,
-  data_to_plot <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">cor_mat</span><span class="op">)</span>,
-  cluster_col <span class="op">=</span> <span class="cn">NULL</span>,
-  x <span class="op">=</span> <span class="st">"UMAP_1"</span>,
-  y <span class="op">=</span> <span class="st">"UMAP_2"</span>,
-  scale_legends <span class="op">=</span> <span class="cn">FALSE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_cor</span><span class="op">(</span></span>
+<span>  <span class="va">cor_mat</span>,</span>
+<span>  <span class="va">metadata</span>,</span>
+<span>  data_to_plot <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">cor_mat</span><span class="op">)</span>,</span>
+<span>  cluster_col <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  x <span class="op">=</span> <span class="st">"UMAP_1"</span>,</span>
+<span>  y <span class="op">=</span> <span class="st">"UMAP_2"</span>,</span>
+<span>  scale_legends <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>cor_mat</dt>
 <dd><p>input similarity matrix</p></dd>
+
+
 <dt>metadata</dt>
 <dd><p>input metadata with per cell tsne or
 umap coordinates and cluster ids</p></dd>
+
+
 <dt>data_to_plot</dt>
 <dd><p>colname of data to plot, defaults to all</p></dd>
+
+
 <dt>cluster_col</dt>
 <dd><p>colname of clustering data in metadata, defaults
 to rownames of the metadata if not supplied.</p></dd>
+
+
 <dt>x</dt>
 <dd><p>metadata column name with 1st axis dimension.
 defaults to "UMAP_1".</p></dd>
+
+
 <dt>y</dt>
 <dd><p>metadata column name with 2nd axis dimension.
 defaults to "UMAP_2".</p></dd>
+
+
 <dt>scale_legends</dt>
 <dd><p>if TRUE scale all legends to maximum values in entire
 correlation matrix. if FALSE scale legends to maximum for each plot. A
 two-element numeric vector can also be passed to supply
 custom values i.e. c(0, 1)</p></dd>
+
+
 <dt>...</dt>
 <dd><p>passed to plot_dims</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>list of ggplot objects, cells projected by dr,
+    
+
+<p>list of ggplot objects, cells projected by dr,
 colored by cor values</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="clustify.html">clustify</a></span><span class="op">(</span></span>
-<span class="r-in">    input <span class="op">=</span> <span class="va">pbmc_matrix_small</span>,</span>
-<span class="r-in">    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,</span>
-<span class="r-in">    ref_mat <span class="op">=</span> <span class="va">cbmc_ref</span>,</span>
-<span class="r-in">    query_genes <span class="op">=</span> <span class="va">pbmc_vargenes</span>,</span>
-<span class="r-in">    cluster_col <span class="op">=</span> <span class="st">"classified"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="clustify.html">clustify</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    input <span class="op">=</span> <span class="va">pbmc_matrix_small</span>,</span></span>
+<span class="r-in"><span>    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,</span></span>
+<span class="r-in"><span>    ref_mat <span class="op">=</span> <span class="va">cbmc_ref</span>,</span></span>
+<span class="r-in"><span>    query_genes <span class="op">=</span> <span class="va">pbmc_vargenes</span>,</span></span>
+<span class="r-in"><span>    cluster_col <span class="op">=</span> <span class="st">"classified"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> using # of genes: 599</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> similarity computation completed, matrix of 9 x 13, preparing output</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">plot_cor</span><span class="op">(</span></span>
-<span class="r-in">    cor_mat <span class="op">=</span> <span class="va">res</span>,</span>
-<span class="r-in">    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,</span>
-<span class="r-in">    data_to_plot <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>,</span>
-<span class="r-in">    cluster_col <span class="op">=</span> <span class="st">"classified"</span>,</span>
-<span class="r-in">    x <span class="op">=</span> <span class="st">"UMAP_1"</span>,</span>
-<span class="r-in">    y <span class="op">=</span> <span class="st">"UMAP_2"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">plot_cor</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    cor_mat <span class="op">=</span> <span class="va">res</span>,</span></span>
+<span class="r-in"><span>    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,</span></span>
+<span class="r-in"><span>    data_to_plot <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span>    cluster_col <span class="op">=</span> <span class="st">"classified"</span>,</span></span>
+<span class="r-in"><span>    x <span class="op">=</span> <span class="st">"UMAP_1"</span>,</span></span>
+<span class="r-in"><span>    y <span class="op">=</span> <span class="st">"UMAP_2"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-plt img"><img src="plot_cor-1.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -136,7 +153,7 @@ colored by cor values</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

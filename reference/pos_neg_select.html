@@ -55,60 +55,73 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">pos_neg_select</span><span class="op">(</span>
-  <span class="va">input</span>,
-  <span class="va">ref_mat</span>,
-  <span class="va">metadata</span>,
-  cluster_col <span class="op">=</span> <span class="st">"cluster"</span>,
-  cutoff_n <span class="op">=</span> <span class="fl">0</span>,
-  cutoff_score <span class="op">=</span> <span class="fl">0.5</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pos_neg_select</span><span class="op">(</span></span>
+<span>  <span class="va">input</span>,</span>
+<span>  <span class="va">ref_mat</span>,</span>
+<span>  <span class="va">metadata</span>,</span>
+<span>  cluster_col <span class="op">=</span> <span class="st">"cluster"</span>,</span>
+<span>  cutoff_n <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  cutoff_score <span class="op">=</span> <span class="fl">0.5</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>input</dt>
 <dd><p>single-cell expression matrix</p></dd>
+
+
 <dt>ref_mat</dt>
 <dd><p>reference expression matrix with positive and
 negative markers(set expression at 0)</p></dd>
+
+
 <dt>metadata</dt>
 <dd><p>cell cluster assignments,
 supplied as a vector or data.frame. If
 data.frame is supplied then <code>cluster_col</code> needs to be set.
 Not required if running correlation per cell.</p></dd>
+
+
 <dt>cluster_col</dt>
 <dd><p>column in metadata that contains cluster ids per cell.
 Will default to first
 column of metadata if not supplied.
 Not required if running correlation per cell.</p></dd>
+
+
 <dt>cutoff_n</dt>
 <dd><p>expression cutoff where genes ranked below n are
 considered non-expressing</p></dd>
+
+
 <dt>cutoff_score</dt>
 <dd><p>positive score lower than this cutoff will be
 considered as 0 to not influence scores</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>matrix of numeric values, clusters from input as row names,
+    
+
+<p>matrix of numeric values, clusters from input as row names,
 cell types from ref_mat as column names</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">pn_ref</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="st">"Myeloid"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0.01</span>, <span class="fl">0</span><span class="op">)</span>,</span>
-<span class="r-in">    row.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CD74"</span>, <span class="st">"clustifyr0"</span>, <span class="st">"CD79A"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">pos_neg_select</span><span class="op">(</span></span>
-<span class="r-in">    input <span class="op">=</span> <span class="va">pbmc_matrix_small</span>,</span>
-<span class="r-in">    ref_mat <span class="op">=</span> <span class="va">pn_ref</span>,</span>
-<span class="r-in">    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,</span>
-<span class="r-in">    cluster_col <span class="op">=</span> <span class="st">"classified"</span>,</span>
-<span class="r-in">    cutoff_score <span class="op">=</span> <span class="fl">0.8</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">pn_ref</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"Myeloid"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0.01</span>, <span class="fl">0</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    row.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CD74"</span>, <span class="st">"clustifyr0"</span>, <span class="st">"CD79A"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">pos_neg_select</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    input <span class="op">=</span> <span class="va">pbmc_matrix_small</span>,</span></span>
+<span class="r-in"><span>    ref_mat <span class="op">=</span> <span class="va">pn_ref</span>,</span></span>
+<span class="r-in"><span>    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,</span></span>
+<span class="r-in"><span>    cluster_col <span class="op">=</span> <span class="st">"classified"</span>,</span></span>
+<span class="r-in"><span>    cutoff_score <span class="op">=</span> <span class="fl">0.8</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> using # of genes: 3</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> similarity computation completed, matrix of 2638 x 1, preparing output</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                Myeloid</span>
@@ -132,7 +145,7 @@ cell types from ref_mat as column names</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

@@ -55,52 +55,65 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plot_cor_heatmap</span><span class="op">(</span>
-  <span class="va">cor_mat</span>,
-  metadata <span class="op">=</span> <span class="cn">NULL</span>,
-  cluster_col <span class="op">=</span> <span class="cn">NULL</span>,
-  col <span class="op">=</span> <span class="va">not_pretty_palette</span>,
-  legend_title <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_cor_heatmap</span><span class="op">(</span></span>
+<span>  <span class="va">cor_mat</span>,</span>
+<span>  metadata <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  cluster_col <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  col <span class="op">=</span> <span class="va">not_pretty_palette</span>,</span>
+<span>  legend_title <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>cor_mat</dt>
 <dd><p>input similarity matrix</p></dd>
+
+
 <dt>metadata</dt>
 <dd><p>input metadata with per cell tsne
 or umap cooordinates and cluster ids</p></dd>
+
+
 <dt>cluster_col</dt>
 <dd><p>colname of clustering data in metadata,
 defaults to rownames of the metadata if not supplied.</p></dd>
+
+
 <dt>col</dt>
 <dd><p>color ramp to use</p></dd>
+
+
 <dt>legend_title</dt>
 <dd><p>legend title to pass to Heatmap</p></dd>
+
+
 <dt>...</dt>
 <dd><p>passed to Heatmap</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>complexheatmap object</p>
+    
+
+<p>complexheatmap object</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="clustify.html">clustify</a></span><span class="op">(</span></span>
-<span class="r-in">    input <span class="op">=</span> <span class="va">pbmc_matrix_small</span>,</span>
-<span class="r-in">    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,</span>
-<span class="r-in">    ref_mat <span class="op">=</span> <span class="va">cbmc_ref</span>,</span>
-<span class="r-in">    query_genes <span class="op">=</span> <span class="va">pbmc_vargenes</span>,</span>
-<span class="r-in">    cluster_col <span class="op">=</span> <span class="st">"classified"</span>,</span>
-<span class="r-in">    per_cell <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="clustify.html">clustify</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    input <span class="op">=</span> <span class="va">pbmc_matrix_small</span>,</span></span>
+<span class="r-in"><span>    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,</span></span>
+<span class="r-in"><span>    ref_mat <span class="op">=</span> <span class="va">cbmc_ref</span>,</span></span>
+<span class="r-in"><span>    query_genes <span class="op">=</span> <span class="va">pbmc_vargenes</span>,</span></span>
+<span class="r-in"><span>    cluster_col <span class="op">=</span> <span class="st">"classified"</span>,</span></span>
+<span class="r-in"><span>    per_cell <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> using # of genes: 599</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> similarity computation completed, matrix of 9 x 13, preparing output</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">plot_cor_heatmap</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">plot_cor_heatmap</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_cor_heatmap-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
@@ -113,7 +126,7 @@ defaults to rownames of the metadata if not supplied.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

@@ -61,57 +61,70 @@ returns a list containing results and plot.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plot_pathway_gsea</span><span class="op">(</span>
-  <span class="va">mat</span>,
-  <span class="va">pathway_list</span>,
-  n_perm <span class="op">=</span> <span class="fl">1000</span>,
-  scale <span class="op">=</span> <span class="cn">TRUE</span>,
-  topn <span class="op">=</span> <span class="fl">5</span>,
-  returning <span class="op">=</span> <span class="st">"both"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_pathway_gsea</span><span class="op">(</span></span>
+<span>  <span class="va">mat</span>,</span>
+<span>  <span class="va">pathway_list</span>,</span>
+<span>  n_perm <span class="op">=</span> <span class="fl">1000</span>,</span>
+<span>  scale <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  topn <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  returning <span class="op">=</span> <span class="st">"both"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>mat</dt>
 <dd><p>expression matrix</p></dd>
+
+
 <dt>pathway_list</dt>
 <dd><p>a list of vectors, each named for a specific pathway,
 or dataframe</p></dd>
+
+
 <dt>n_perm</dt>
 <dd><p>Number of permutation for fgsea function. Defaults to 1000.</p></dd>
+
+
 <dt>scale</dt>
 <dd><p>convert expr_mat into zscores prior to running GSEA?,
 default = TRUE</p></dd>
+
+
 <dt>topn</dt>
 <dd><p>number of top pathways to plot</p></dd>
+
+
 <dt>returning</dt>
 <dd><p>to return "both" list and plot, or either one</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>list of matrix and plot, or just plot, matrix of GSEA NES values,
+    
+
+<p>list of matrix and plot, or just plot, matrix of GSEA NES values,
 cell types as row names, pathways as column names</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">gl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="st">"n"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PPBP"</span>, <span class="st">"LYZ"</span>, <span class="st">"S100A9"</span><span class="op">)</span>,</span>
-<span class="r-in">    <span class="st">"a"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"IGLL5"</span>, <span class="st">"GNLY"</span>, <span class="st">"FTL"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">pbmc_avg</span> <span class="op">&lt;-</span> <span class="fu"><a href="average_clusters.html">average_clusters</a></span><span class="op">(</span></span>
-<span class="r-in">    mat <span class="op">=</span> <span class="va">pbmc_matrix_small</span>,</span>
-<span class="r-in">    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,</span>
-<span class="r-in">    cluster_col <span class="op">=</span> <span class="st">"classified"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">plot_pathway_gsea</span><span class="op">(</span></span>
-<span class="r-in">    <span class="va">pbmc_avg</span>,</span>
-<span class="r-in">    <span class="va">gl</span>,</span>
-<span class="r-in">    <span class="fl">5</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">gl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"n"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PPBP"</span>, <span class="st">"LYZ"</span>, <span class="st">"S100A9"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"a"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"IGLL5"</span>, <span class="st">"GNLY"</span>, <span class="st">"FTL"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">pbmc_avg</span> <span class="op">&lt;-</span> <span class="fu"><a href="average_clusters.html">average_clusters</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    mat <span class="op">=</span> <span class="va">pbmc_matrix_small</span>,</span></span>
+<span class="r-in"><span>    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,</span></span>
+<span class="r-in"><span>    cluster_col <span class="op">=</span> <span class="st">"classified"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">plot_pathway_gsea</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="va">pbmc_avg</span>,</span></span>
+<span class="r-in"><span>    <span class="va">gl</span>,</span></span>
+<span class="r-in"><span>    <span class="fl">5</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       n          a</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Naive CD4 T  -1.2483719 -1.0456654</span>
@@ -138,7 +151,7 @@ cell types as row names, pathways as column names</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

@@ -55,53 +55,64 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">call_to_metadata</span><span class="op">(</span>
-  <span class="va">res</span>,
-  <span class="va">metadata</span>,
-  <span class="va">cluster_col</span>,
-  per_cell <span class="op">=</span> <span class="cn">FALSE</span>,
-  rename_prefix <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">call_to_metadata</span><span class="op">(</span></span>
+<span>  <span class="va">res</span>,</span>
+<span>  <span class="va">metadata</span>,</span>
+<span>  <span class="va">cluster_col</span>,</span>
+<span>  per_cell <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  rename_prefix <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>res</dt>
 <dd><p>dataframe of idents, such as output of cor_to_call</p></dd>
+
+
 <dt>metadata</dt>
 <dd><p>input metadata with tsne or umap coordinates and cluster ids</p></dd>
+
+
 <dt>cluster_col</dt>
 <dd><p>metadata column, can be cluster or cellid</p></dd>
+
+
 <dt>per_cell</dt>
 <dd><p>whether the res dataframe is listed per cell</p></dd>
+
+
 <dt>rename_prefix</dt>
 <dd><p>prefix to add to type and r column names</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>new metadata with added columns</p>
+    
+
+<p>new metadata with added columns</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="clustify.html">clustify</a></span><span class="op">(</span></span>
-<span class="r-in">    input <span class="op">=</span> <span class="va">pbmc_matrix_small</span>,</span>
-<span class="r-in">    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,</span>
-<span class="r-in">    cluster_col <span class="op">=</span> <span class="st">"classified"</span>,</span>
-<span class="r-in">    ref_mat <span class="op">=</span> <span class="va">cbmc_ref</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="clustify.html">clustify</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    input <span class="op">=</span> <span class="va">pbmc_matrix_small</span>,</span></span>
+<span class="r-in"><span>    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,</span></span>
+<span class="r-in"><span>    cluster_col <span class="op">=</span> <span class="st">"classified"</span>,</span></span>
+<span class="r-in"><span>    ref_mat <span class="op">=</span> <span class="va">cbmc_ref</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> var.features not found, using all genes instead</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> using # of genes: 599</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> similarity computation completed, matrix of 9 x 13, preparing output</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">res2</span> <span class="op">&lt;-</span> <span class="fu"><a href="cor_to_call.html">cor_to_call</a></span><span class="op">(</span><span class="va">res</span>, cluster_col <span class="op">=</span> <span class="st">"classified"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">call_to_metadata</span><span class="op">(</span></span>
-<span class="r-in">    res <span class="op">=</span> <span class="va">res2</span>,</span>
-<span class="r-in">    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,</span>
-<span class="r-in">    cluster_col <span class="op">=</span> <span class="st">"classified"</span>,</span>
-<span class="r-in">    rename_prefix <span class="op">=</span> <span class="st">"assigned"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">res2</span> <span class="op">&lt;-</span> <span class="fu"><a href="cor_to_call.html">cor_to_call</a></span><span class="op">(</span><span class="va">res</span>, cluster_col <span class="op">=</span> <span class="st">"classified"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">call_to_metadata</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    res <span class="op">=</span> <span class="va">res2</span>,</span></span>
+<span class="r-in"><span>    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,</span></span>
+<span class="r-in"><span>    cluster_col <span class="op">=</span> <span class="st">"classified"</span>,</span></span>
+<span class="r-in"><span>    rename_prefix <span class="op">=</span> <span class="st">"assigned"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                orig.ident nCount_RNA nFeature_RNA percent.mt</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> AAACATACAACCAC     pbmc3k       2419          779  3.0177759</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> AAACATTGAGCTAC     pbmc3k       4903         1352  3.7935958</span>
@@ -8030,7 +8041,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

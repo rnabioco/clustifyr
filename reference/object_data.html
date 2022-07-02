@@ -55,13 +55,13 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">object_data</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for Seurat</span>
-<span class="fu">object_data</span><span class="op">(</span><span class="va">object</span>, <span class="va">slot</span>, n_genes <span class="op">=</span> <span class="fl">1000</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for SingleCellExperiment</span>
-<span class="fu">object_data</span><span class="op">(</span><span class="va">object</span>, <span class="va">slot</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">object_data</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for Seurat</span></span>
+<span><span class="fu">object_data</span><span class="op">(</span><span class="va">object</span>, <span class="va">slot</span>, n_genes <span class="op">=</span> <span class="fl">1000</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for SingleCellExperiment</span></span>
+<span><span class="fu">object_data</span><span class="op">(</span><span class="va">object</span>, <span class="va">slot</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -69,37 +69,46 @@
     <dl><dt>object</dt>
 <dd><p>object after tsne or umap projections
 and clustering</p></dd>
+
+
 <dt>...</dt>
 <dd><p>additional arguments</p></dd>
+
+
 <dt>slot</dt>
 <dd><p>data to access</p></dd>
+
+
 <dt>n_genes</dt>
 <dd><p>number of genes limit for Seurat variable genes, by default 1000,
 set to 0 to use all variable genes (generally not recommended)</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>expression matrix, with genes as row names,
+    
+
+<p>expression matrix, with genes as row names,
 and cell types as column names</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">mat</span> <span class="op">&lt;-</span> <span class="fu">object_data</span><span class="op">(</span></span>
-<span class="r-in">    object <span class="op">=</span> <span class="va">s_small3</span>,</span>
-<span class="r-in">    slot <span class="op">=</span> <span class="st">"data"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="va">mat</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">mat</span> <span class="op">&lt;-</span> <span class="fu">object_data</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    object <span class="op">=</span> <span class="va">s_small3</span>,</span></span>
+<span class="r-in"><span>    slot <span class="op">=</span> <span class="st">"data"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mat</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3 x 3 sparse Matrix of class "dgCMatrix"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       ATGCCAGAACGACT CATGGCCTGTGCAT GAACCTGATGAACC</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> MS4A1       .                     .              .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CD79B       4.968821              .              .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CD79A       .                     .              .</span>
-<span class="r-in"><span class="va">mat</span> <span class="op">&lt;-</span> <span class="fu">object_data</span><span class="op">(</span></span>
-<span class="r-in">    object <span class="op">=</span> <span class="va">sce_small</span>,</span>
-<span class="r-in">    slot <span class="op">=</span> <span class="st">"data"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="va">mat</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
+<span class="r-in"><span><span class="va">mat</span> <span class="op">&lt;-</span> <span class="fu">object_data</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    object <span class="op">=</span> <span class="va">sce_small</span>,</span></span>
+<span class="r-in"><span>    slot <span class="op">=</span> <span class="st">"data"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mat</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       AZ_A1   AZ_A10 AZ_A11</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SGIP1     0 0.000000      0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> AZIN2     0 0.000000      0</span>
@@ -115,7 +124,7 @@ and cell types as column names</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>
