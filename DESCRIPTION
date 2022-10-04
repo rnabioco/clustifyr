@@ -41,8 +41,6 @@ Authors@R:
       person("RNA Bioscience Initiative", role = c("fnd", "cph"))
       )
 License: MIT + file LICENSE
-Depends:
-    R (>= 4.0)
 Imports: 
     cowplot,
     dplyr,

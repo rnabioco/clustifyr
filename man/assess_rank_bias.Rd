@@ -40,7 +40,7 @@ Find rank bias
 }
 \examples{
 \dontrun{
-avg2 <- average_clusters(
+avg <- average_clusters(
     pbmc_matrix_small, 
     pbmc_meta$seurat_clusters
 )
@@ -51,7 +51,7 @@ res <- clustify(
     query_genes = pbmc_vargenes,
     cluster_col = "seurat_clusters"
 )
-call1 <- cor_to_call(
+top_call <- cor_to_call(
     res,
     metadata = pbmc_meta,
     cluster_col = "seurat_clusters",
@@ -59,9 +59,9 @@ call1 <- cor_to_call(
     threshold = 0.8
 )
 res_rank <- assess_rank_bias(
-    avg2, 
+    avg, 
     cbmc_ref, 
-    res = call1
+    res = top_call
 )
 }
 }

@@ -5,10 +5,10 @@
 
 [![R build
 status](https://github.com/rnabioco/clustifyr/workflows/R-CMD-check/badge.svg)](https://github.com/rnabioco/clustifyr/actions)
-[![codecov](https://app.codecov.io/gh/rnabioco/clustifyr/branch/master/graph/badge.svg)](https://app.codecov.io/gh/rnabioco/clustifyr)
+[![test-coverage](https://github.com/rnabioco/clustifyr/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/rnabioco/clustifyr/actions/workflows/test-coverage.yaml)
 [![platforms](https://bioconductor.org/shields/availability/release/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
 [![bioc](https://bioconductor.org/shields/years-in-bioc/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
-[![\#downloads](https://img.shields.io/badge/%23%20downloads-4893-brightgreen)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
+[![\#downloads](https://img.shields.io/badge/%23%20downloads-5356-brightgreen)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
 
 <!-- badges: end -->
 
