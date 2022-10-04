@@ -29,8 +29,14 @@ min distance matrix
 Distance calculations for spatial coord
 }
 \examples{
+cbs <- paste0("cb_", 1:100)
+
+spatial_coords <- data.frame(row.names = cbs,
+                             X = runif(100),
+                             Y = runif(100))
+group_ids <- sample(c("A", "B"), 100, replace = TRUE)
 dist_res <- calc_distance(
-    s_small3@reductions$tsne@cell.embeddings, 
-    s_small3@meta.data$letter.idents
+    spatial_coords, 
+    group_ids
 )
 }

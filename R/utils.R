@@ -2197,7 +2197,7 @@ make_comb_ref <- function(ref_mat,
 #' @return pdf of ggplot object
 #' @examples
 #' \dontrun{
-#' avg2 <- average_clusters(
+#' avg <- average_clusters(
 #'     pbmc_matrix_small, 
 #'     pbmc_meta$seurat_clusters
 #' )
@@ -2208,7 +2208,7 @@ make_comb_ref <- function(ref_mat,
 #'     query_genes = pbmc_vargenes,
 #'     cluster_col = "seurat_clusters"
 #' )
-#' call1 <- cor_to_call(
+#' top_call <- cor_to_call(
 #'     res,
 #'     metadata = pbmc_meta,
 #'     cluster_col = "seurat_clusters",
@@ -2216,9 +2216,9 @@ make_comb_ref <- function(ref_mat,
 #'     threshold = 0.8
 #' )
 #' res_rank <- assess_rank_bias(
-#'     avg2, 
+#'     avg, 
 #'     cbmc_ref, 
-#'     res = call1
+#'     res = top_call
 #' )
 #' }
 #' @export
@@ -2236,51 +2236,56 @@ assess_rank_bias <- function(
         ref_mat,
         query_genes = query_genes
     )
-    res2 <- purrr::map2(res[[1]], res[[2]], function(a, b) {
-        if (b == "unassigned") {
-            if (expand_unassigned) {
-                message("checking unassigned types against every ref type")
-                res3 <<- purrr::map(colnames(ref_mat), function(x) {
-                    query_rank_bias(
-                        rankdiff,
-                        a,
-                        x
-                    ) 
-                })
-                return(NULL)
-            } else {
-                return(NULL)
-            }
-        } else {
-            qres <- query_rank_bias(
-                rankdiff,
-                a,
-                b
+    rbiases <- list()
+    for(i in seq_len(nrow(res))){
+      id <- res[[1]][i]
+      ct <- res[[2]][i]
+      if (ct == "unassigned") {
+        if (expand_unassigned) {
+          message("checking unassigned types against every ref type")
+          rb <- lapply(colnames(ref_mat), function(x) {
+            query_rank_bias(
+              rankdiff,
+              id,
+              x
             ) 
+          })
+          rbiases[i] <- list(NULL)
+          rbiases <- append(rbiases, rb)
+        } else {
+          rbiases[i] <- list(NULL)
         }
-    })
-    
-    if (expand_unassigned) {
-        res2 <- append(res2, res3)
+      } else {
+        rb <- query_rank_bias(
+          rankdiff,
+          id,
+          ct
+        )
+        rbiases <- append(rbiases, list(rb))
+      }
     }
     
     if (!(is.null(rds_name))) {
-        saveRDS(res2, paste0(rds_name, ".rds"))
+        saveRDS(rbiases, paste0(rds_name, ".rds"))
     }
     message("Using gprofiler2 for GO analyses (internet connection required)")
-    g <- lapply(res2, function(x) {
+    plts <- lapply(rbiases, function(x) {
             if (is.null(x)) {
                 return(NULL)
             } else {
                 plot_rank_bias(x, organism = organism)
             }
     })
-    g <- g[!unlist(lapply(g, function(x) is.null(x)))]
+    plts <- plts[!unlist(lapply(plts, function(x) is.null(x)))]
     if (!(is.null(plot_name))) {
-        g2 <- cowplot::plot_grid(plotlist = g, ncol = 1)      
-        ggplot2::ggsave(paste0(plot_name, ".pdf"), g2, width = 6, height = 4 * length(res2), limitsize = FALSE)
+        p <- cowplot::plot_grid(plotlist = plts, ncol = 1)      
+        ggplot2::ggsave(paste0(plot_name, ".pdf"),
+                        p, 
+                        width = 6, 
+                        height = 4 * length(rbiases), 
+                        limitsize = FALSE)
     }
-    g
+    plts
 }
  
 #' Distance calculations for spatial coord
@@ -2292,9 +2297,15 @@ assess_rank_bias <- function(
 #' @param collapse_to_cluster instead of reporting min distance to cluster per cell, summarize to cluster level
 #' @return min distance matrix
 #' @examples
+#' cbs <- paste0("cb_", 1:100)
+#' 
+#' spatial_coords <- data.frame(row.names = cbs,
+#'                              X = runif(100),
+#'                              Y = runif(100))
+#' group_ids <- sample(c("A", "B"), 100, replace = TRUE)
 #' dist_res <- calc_distance(
-#'     s_small3@reductions$tsne@cell.embeddings, 
-#'     s_small3@meta.data$letter.idents
+#'     spatial_coords, 
+#'     group_ids
 #' )
 #' @export
 calc_distance <- function(
