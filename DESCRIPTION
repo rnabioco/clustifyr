@@ -38,7 +38,7 @@ Authors@R:
              family = "Puntambekar",
              role = "ctb",
              email = "sidhantnp@yahoo.com"),
-      person("RNA Bioscience Initiative", role = c("fnd"))
+      person("RNA Bioscience Initiative", role = c("fnd", "cph"))
       )
 License: MIT + file LICENSE
 Depends:
@@ -76,18 +76,19 @@ Suggests:
     BiocManager,
     remotes,
     shiny,
+    Seurat,
     gprofiler2,
     purrr
 biocViews: SingleCell, Annotation, Sequencing, Microarray, GeneExpression
 BugReports: https://github.com/rnabioco/clustifyr/issues
-URL: http://github.com/rnabioco/clustifyr#readme,
+URL: https://github.com/rnabioco/clustifyr,
     https://rnabioco.github.io/clustifyr/
 VignetteBuilder: 
     knitr
 ByteCompile: true
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0
 LazyData: true
 Config/Needs/website:
     pkgdown,
