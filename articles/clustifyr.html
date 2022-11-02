@@ -34,7 +34,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">clustifyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.9.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.11.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,21 +82,37 @@
       <img src="" class="logo" alt=""><h1>Introduction to clustifyr</h1>
                         <h4 data-toc-skip class="author">Rui Fu</h4>
             <address class="author_afil">
-      RNA Bioscience Initative, University of Colorado School of Medicine<br><h4 data-toc-skip class="author">Austin Gillen</h4>
+      RNA Bioscience Initative, University of Colorado School of
+Medicine<br><h4 data-toc-skip class="author">Austin
+Gillen</h4>
             <address class="author_afil">
-      RNA Bioscience Initative, University of Colorado School of Medicine<br><h4 data-toc-skip class="author">Ryan Sheridan</h4>
+      RNA Bioscience Initative, University of Colorado School of
+Medicine<br><h4 data-toc-skip class="author">Ryan
+Sheridan</h4>
             <address class="author_afil">
-      RNA Bioscience Initative, University of Colorado School of Medicine<br><h4 data-toc-skip class="author">Chengzhe Tian</h4>
+      RNA Bioscience Initative, University of Colorado School of
+Medicine<br><h4 data-toc-skip class="author">Chengzhe
+Tian</h4>
             <address class="author_afil">
-      Department of Biochemistry, University of Colorado Boulder<br><h4 data-toc-skip class="author">Michelle Daya</h4>
+      Department of Biochemistry, University of Colorado
+Boulder<br><h4 data-toc-skip class="author">Michelle
+Daya</h4>
             <address class="author_afil">
-      Biomedical Informatics &amp; Personalized Medicine, University of Colorado Anschutz Medical Campus<br><h4 data-toc-skip class="author">Yue Hao</h4>
+      Biomedical Informatics &amp; Personalized Medicine, University of
+Colorado Anschutz Medical
+Campus<br><h4 data-toc-skip class="author">Yue
+Hao</h4>
             <address class="author_afil">
-      Bioinformatics Research Center, North Carolina State University<br><h4 data-toc-skip class="author">Jay Hesselberth</h4>
+      Bioinformatics Research Center, North Carolina State
+University<br><h4 data-toc-skip class="author">Jay
+Hesselberth</h4>
             <address class="author_afil">
-      RNA Bioscience Initative, University of Colorado School of Medicine<br><h4 data-toc-skip class="author">Kent Riemondy</h4>
+      RNA Bioscience Initative, University of Colorado School of
+Medicine<br><h4 data-toc-skip class="author">Kent
+Riemondy</h4>
             <address class="author_afil">
-      RNA Bioscience Initative, University of Colorado School of Medicine<br><h4 data-toc-skip class="date">2022-10-04</h4>
+      RNA Bioscience Initative, University of Colorado School of
+Medicine<br><h4 data-toc-skip class="date">2022-11-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyr/blob/HEAD/vignettes/clustifyr.Rmd" class="external-link"><code>vignettes/clustifyr.Rmd</code></a></small>
       <div class="d-none name"><code>clustifyr.Rmd</code></div>
@@ -115,8 +131,17 @@
 <div class="section level2">
 <h2 id="introduction-why-use-clustifyr">Introduction: Why use <code>clustifyr</code>?<a class="anchor" aria-label="anchor" href="#introduction-why-use-clustifyr"></a>
 </h2>
-<p>Single cell transcriptomes are difficult to annotate without extensive knowledge of the underlying biology of the system in question. Even with this knowledge, accurate identification can be challenging due to the lack of detectable expression of common marker genes defined by bulk RNA-seq, flow cytometry, other single cell RNA-seq platforms, etc.</p>
-<p><code>clustifyr</code> solves this problem by providing functions to automatically annotate single cells or clusters using bulk RNA-seq data or marker gene lists (ranked or unranked). Additional functions allow for exploratory analysis of calculated similarities between single cell RNA-seq datasets and reference data.</p>
+<p>Single cell transcriptomes are difficult to annotate without
+extensive knowledge of the underlying biology of the system in question.
+Even with this knowledge, accurate identification can be challenging due
+to the lack of detectable expression of common marker genes defined by
+bulk RNA-seq, flow cytometry, other single cell RNA-seq platforms,
+etc.</p>
+<p><code>clustifyr</code> solves this problem by providing functions to
+automatically annotate single cells or clusters using bulk RNA-seq data
+or marker gene lists (ranked or unranked). Additional functions allow
+for exploratory analysis of calculated similarities between single cell
+RNA-seq datasets and reference data.</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -130,7 +155,10 @@
 <div class="section level2">
 <h2 id="a-simple-example-10x-genomics-pbmcs">A simple example: 10x Genomics PBMCs<a class="anchor" aria-label="anchor" href="#a-simple-example-10x-genomics-pbmcs"></a>
 </h2>
-<p>In this example, we take a 10x Genomics 3’ scRNA-seq dataset from peripheral blood mononuclear cells (PBMCs) and annotate the cell clusters (identified using <code>Seurat</code>) using scRNA-seq cell clusters assigned from a CITE-seq experiment.</p>
+<p>In this example, we take a 10x Genomics 3’ scRNA-seq dataset from
+peripheral blood mononuclear cells (PBMCs) and annotate the cell
+clusters (identified using <code>Seurat</code>) using scRNA-seq cell
+clusters assigned from a CITE-seq experiment.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rnabioco/clustifyr" class="external-link">clustifyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
@@ -146,18 +174,26 @@
 <div class="section level2">
 <h2 id="calculate-correlation-coefficients">Calculate correlation coefficients<a class="anchor" aria-label="anchor" href="#calculate-correlation-coefficients"></a>
 </h2>
-<p>To identify cell types, the <code>clustifyr()</code> function requires several inputs:</p>
+<p>To identify cell types, the <code>clustifyr()</code> function
+requires several inputs:</p>
 <ul>
 <li>
-<code>input</code>: an SingleCellExperiment or Seurat object or a matrix of normalized single-cell RNA-seq counts</li>
+<code>input</code>: an SingleCellExperiment or Seurat object or a
+matrix of normalized single-cell RNA-seq counts</li>
 <li>
-<code>metadata</code>: a meta.data table containing the cluster assignments for each cell (not required if a Seurat object is given)</li>
+<code>metadata</code>: a meta.data table containing the cluster
+assignments for each cell (not required if a Seurat object is
+given)</li>
 <li>
-<code>ref_mat</code>: a reference matrix containing RNA-seq expression data for each cell type of interest</li>
+<code>ref_mat</code>: a reference matrix containing RNA-seq
+expression data for each cell type of interest</li>
 <li>
-<code>query_genes</code>: a list of genes to use for comparison (optional but recommended)</li>
+<code>query_genes</code>: a list of genes to use for comparison
+(optional but recommended)</li>
 </ul>
-<p>When using a matrix of scRNA-seq counts <code>clustifyr()</code> will return a matrix of correlation coefficients for each cell type and cluster, with the rownames corresponding to the cluster number.</p>
+<p>When using a matrix of scRNA-seq counts <code>clustifyr()</code> will
+return a matrix of correlation coefficients for each cell type and
+cluster, with the rownames corresponding to the cluster number.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Calculate correlation coefficients for each cluster (spearman by default)</span></span>
 <span><span class="va">vargenes</span> <span class="op">&lt;-</span> <span class="va">pbmc_vargenes</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">500</span><span class="op">]</span></span>
@@ -201,7 +237,9 @@
 <span>  metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,           <span class="co"># original meta.data table containing cell clusters</span></span>
 <span>  cluster_col <span class="op">=</span> <span class="st">"seurat_clusters"</span> <span class="co"># name of column in meta.data containing cell clusters</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>To visualize the <code>clustifyr()</code> results we can use the <code><a href="../reference/plot_cor_heatmap.html">plot_cor_heatmap()</a></code> function to plot the correlation coefficients for each cluster and each cell type.</p>
+<p>To visualize the <code>clustifyr()</code> results we can use the
+<code><a href="../reference/plot_cor_heatmap.html">plot_cor_heatmap()</a></code> function to plot the correlation
+coefficients for each cluster and each cell type.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create heatmap of correlation coefficients using clustifyr() output</span></span>
 <span><span class="fu"><a href="../reference/plot_cor_heatmap.html">plot_cor_heatmap</a></span><span class="op">(</span>cor_mat <span class="op">=</span> <span class="va">res</span><span class="op">)</span></span></code></pre></div>
@@ -210,7 +248,9 @@
 <div class="section level2">
 <h2 id="plot-cluster-identities-and-correlation-coefficients">Plot cluster identities and correlation coefficients<a class="anchor" aria-label="anchor" href="#plot-cluster-identities-and-correlation-coefficients"></a>
 </h2>
-<p><code>clustifyr</code> also provides functions to overlay correlation coefficients on pre-calculated tSNE embeddings (or those from any other dimensionality reduction method).</p>
+<p><code>clustifyr</code> also provides functions to overlay correlation
+coefficients on pre-calculated tSNE embeddings (or those from any other
+dimensionality reduction method).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Overlay correlation coefficients on UMAPs for the first two cell types</span></span>
 <span><span class="va">corr_umaps</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_cor.html">plot_cor</a></span><span class="op">(</span></span>
@@ -226,7 +266,14 @@
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="clustifyr_files/figure-html/Overlay%20corr%20coefficients%20on%20UMAP-1.png" width="864" style="display: block; margin: auto;"></p>
 <p><br></p>
-<p>The <code><a href="../reference/plot_best_call.html">plot_best_call()</a></code> function can be used to label each cluster with the cell type that gives the highest corelation coefficient. Using the <code><a href="../reference/plot_dims.html">plot_dims()</a></code> function, we can also plot the known identities of each cluster, which were stored in the “classified” column of the meta.data table. The plots below show that the highest correlations between the reference RNA-seq data and the 10x Genomics scRNA-seq dataset are restricted to the correct cell clusters.</p>
+<p>The <code><a href="../reference/plot_best_call.html">plot_best_call()</a></code> function can be used to label each
+cluster with the cell type that gives the highest corelation
+coefficient. Using the <code><a href="../reference/plot_dims.html">plot_dims()</a></code> function, we can also
+plot the known identities of each cluster, which were stored in the
+“classified” column of the meta.data table. The plots below show that
+the highest correlations between the reference RNA-seq data and the 10x
+Genomics scRNA-seq dataset are restricted to the correct cell
+clusters.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Label clusters with clustifyr cell identities</span></span>
 <span><span class="va">clustifyr_types</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_best_call.html">plot_best_call</a></span><span class="op">(</span></span>
@@ -253,7 +300,11 @@
 <div class="section level2">
 <h2 id="classify-cells-using-known-marker-genes">Classify cells using known marker genes<a class="anchor" aria-label="anchor" href="#classify-cells-using-known-marker-genes"></a>
 </h2>
-<p>The <code><a href="../reference/clustify_lists.html">clustify_lists()</a></code> function allows cell types to be assigned based on known marker genes. This function requires a table containing markers for each cell type of interest. Cell types can be assigned using several statistical tests including, hypergeometric, Jaccard, Spearman, and GSEA.</p>
+<p>The <code><a href="../reference/clustify_lists.html">clustify_lists()</a></code> function allows cell types to be
+assigned based on known marker genes. This function requires a table
+containing markers for each cell type of interest. Cell types can be
+assigned using several statistical tests including, hypergeometric,
+Jaccard, Spearman, and GSEA.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Take a peek at marker gene table</span></span>
 <span><span class="va">cbmc_m</span></span>
@@ -303,7 +354,10 @@
 <div class="section level2">
 <h2 id="direct-handling-of-singlecellexperiment-objects">Direct handling of <code>SingleCellExperiment</code> objects<a class="anchor" aria-label="anchor" href="#direct-handling-of-singlecellexperiment-objects"></a>
 </h2>
-<p><code>clustifyr</code> can also use a <code>SingleCellExperiment</code> object as input and return a new <code>SingleCellExperiment</code> object with the cell types added as a column in the colData.</p>
+<p><code>clustifyr</code> can also use a
+<code>SingleCellExperiment</code> object as input and return a new
+<code>SingleCellExperiment</code> object with the cell types added as a
+column in the colData.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clustify.html">clustify</a></span><span class="op">(</span></span>
 <span>  input <span class="op">=</span> <span class="va">sce_small</span>,          <span class="co"># an SCE object</span></span>
@@ -330,7 +384,9 @@
 <div class="section level2">
 <h2 id="direct-handling-of-seurat-v2-and-v3-objects">Direct handling of <code>seurat</code> v2 and v3 objects<a class="anchor" aria-label="anchor" href="#direct-handling-of-seurat-v2-and-v3-objects"></a>
 </h2>
-<p><code>clustifyr</code> can also use a <code>Seurat</code> object as input and return a new <code>Seurat</code> object with the cell types added as a column in the meta.data.</p>
+<p><code>clustifyr</code> can also use a <code>Seurat</code> object as
+input and return a new <code>Seurat</code> object with the cell types
+added as a column in the meta.data.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clustify.html">clustify</a></span><span class="op">(</span></span>
 <span>  input <span class="op">=</span> <span class="va">s_small3</span>,       <span class="co"># a Seurat object</span></span>
@@ -355,7 +411,10 @@
 <div class="section level2">
 <h2 id="building-reference-matrix-from-single-cell-expression-matrix">Building reference matrix from single cell expression matrix<a class="anchor" aria-label="anchor" href="#building-reference-matrix-from-single-cell-expression-matrix"></a>
 </h2>
-<p>In its simplest form, a reference matrix is built by averaging expression (also includes an option to take the median) of a single cell RNA-seq expression matrix by cluster. Both log transformed or raw count matrices are supported.</p>
+<p>In its simplest form, a reference matrix is built by averaging
+expression (also includes an option to take the median) of a single cell
+RNA-seq expression matrix by cluster. Both log transformed or raw count
+matrices are supported.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">new_ref_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/average_clusters.html">average_clusters</a></span><span class="op">(</span></span>
 <span>  mat <span class="op">=</span> <span class="va">pbmc_matrix</span>,</span>
@@ -402,7 +461,8 @@
 <code class="sourceCode R"><span><span class="co"># There's also the option to pull UCSC cell browser data.</span></span>
 <span><span class="fu">get_ext_reference</span><span class="op">(</span>cb_url <span class="op">=</span> <span class="st">"http://cells.ucsc.edu/?ds=kidney-atlas%2FFetal_Immune"</span>,</span>
 <span>                  cluster_col <span class="op">=</span> <span class="st">"celltype"</span><span class="op">)</span></span></code></pre></div>
-<p>More reference data, including tabula muris, and code used to generate them are available at <a href="https://github.com/rnabioco/clustifyrdata" class="external-link uri">https://github.com/rnabioco/clustifyrdata</a></p>
+<p>More reference data, including tabula muris, and code used to
+generate them are available at <a href="https://github.com/rnabioco/clustifyrdata" class="external-link uri">https://github.com/rnabioco/clustifyrdata</a></p>
 <p>Also see list for individual downloads at <a href="https://rnabioco.github.io/clustifyrdata/articles/download_refs.html" class="external-link uri">https://rnabioco.github.io/clustifyrdata/articles/download_refs.html</a></p>
 <p>Additional tutorials at <a href="https://rnabioco.github.io/clustifyrdata/articles/otherformats.html" class="external-link uri">https://rnabioco.github.io/clustifyrdata/articles/otherformats.html</a></p>
 </div>
@@ -411,7 +471,7 @@
 </h2>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; R version 4.2.1 (2022-06-23)</span></span>
+<span><span class="co">#&gt; R version 4.2.2 (2022-10-31)</span></span>
 <span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
 <span><span class="co">#&gt; Running under: Ubuntu 20.04.5 LTS</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -429,58 +489,58 @@
 <span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt; [1] cowplot_1.1.1    ggplot2_3.3.6    clustifyr_1.9.1  BiocStyle_2.24.0</span></span>
+<span><span class="co">#&gt; [1] cowplot_1.1.1    ggplot2_3.3.6    clustifyr_1.11.0 BiocStyle_2.24.0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
 <span><span class="co">#&gt;  [1] bitops_1.0-7                matrixStats_0.62.0         </span></span>
 <span><span class="co">#&gt;  [3] fs_1.5.2                    doParallel_1.0.17          </span></span>
 <span><span class="co">#&gt;  [5] RColorBrewer_1.1-3          httr_1.4.4                 </span></span>
 <span><span class="co">#&gt;  [7] rprojroot_2.0.3             GenomeInfoDb_1.32.4        </span></span>
-<span><span class="co">#&gt;  [9] tools_4.2.1                 bslib_0.4.0                </span></span>
+<span><span class="co">#&gt;  [9] tools_4.2.2                 bslib_0.4.0                </span></span>
 <span><span class="co">#&gt; [11] utf8_1.2.2                  R6_2.5.1                   </span></span>
 <span><span class="co">#&gt; [13] BiocGenerics_0.42.0         colorspace_2.0-3           </span></span>
 <span><span class="co">#&gt; [15] GetoptLong_1.0.5            withr_2.5.0                </span></span>
-<span><span class="co">#&gt; [17] tidyselect_1.1.2            gridExtra_2.3              </span></span>
-<span><span class="co">#&gt; [19] compiler_4.2.1              textshaping_0.3.6          </span></span>
+<span><span class="co">#&gt; [17] tidyselect_1.2.0            gridExtra_2.3              </span></span>
+<span><span class="co">#&gt; [19] compiler_4.2.2              textshaping_0.3.6          </span></span>
 <span><span class="co">#&gt; [21] cli_3.4.1                   Biobase_2.56.0             </span></span>
 <span><span class="co">#&gt; [23] desc_1.4.2                  DelayedArray_0.22.0        </span></span>
 <span><span class="co">#&gt; [25] labeling_0.4.2              entropy_1.3.1              </span></span>
 <span><span class="co">#&gt; [27] bookdown_0.29               sass_0.4.2                 </span></span>
 <span><span class="co">#&gt; [29] scales_1.2.1                pkgdown_2.0.6              </span></span>
 <span><span class="co">#&gt; [31] systemfonts_1.0.4           stringr_1.4.1              </span></span>
-<span><span class="co">#&gt; [33] digest_0.6.29               rmarkdown_2.16             </span></span>
+<span><span class="co">#&gt; [33] digest_0.6.30               rmarkdown_2.17             </span></span>
 <span><span class="co">#&gt; [35] XVector_0.36.0              pkgconfig_2.0.3            </span></span>
 <span><span class="co">#&gt; [37] htmltools_0.5.3             MatrixGenerics_1.8.1       </span></span>
 <span><span class="co">#&gt; [39] highr_0.9                   fastmap_1.1.0              </span></span>
 <span><span class="co">#&gt; [41] rlang_1.0.6                 GlobalOptions_0.1.2        </span></span>
 <span><span class="co">#&gt; [43] farver_2.1.1                shape_1.4.6                </span></span>
 <span><span class="co">#&gt; [45] jquerylib_0.1.4             generics_0.1.3             </span></span>
-<span><span class="co">#&gt; [47] jsonlite_1.8.0              BiocParallel_1.30.3        </span></span>
+<span><span class="co">#&gt; [47] jsonlite_1.8.3              BiocParallel_1.30.4        </span></span>
 <span><span class="co">#&gt; [49] dplyr_1.0.10                RCurl_1.98-1.9             </span></span>
 <span><span class="co">#&gt; [51] magrittr_2.0.3              GenomeInfoDbData_1.2.8     </span></span>
 <span><span class="co">#&gt; [53] Matrix_1.5-1                Rcpp_1.0.9                 </span></span>
 <span><span class="co">#&gt; [55] munsell_0.5.0               S4Vectors_0.34.0           </span></span>
-<span><span class="co">#&gt; [57] fansi_1.0.3                 lifecycle_1.0.2            </span></span>
-<span><span class="co">#&gt; [59] stringi_1.7.8               yaml_2.3.5                 </span></span>
+<span><span class="co">#&gt; [57] fansi_1.0.3                 lifecycle_1.0.3            </span></span>
+<span><span class="co">#&gt; [59] stringi_1.7.8               yaml_2.3.6                 </span></span>
 <span><span class="co">#&gt; [61] SummarizedExperiment_1.26.1 zlibbioc_1.42.0            </span></span>
-<span><span class="co">#&gt; [63] grid_4.2.1                  ggrepel_0.9.1              </span></span>
-<span><span class="co">#&gt; [65] parallel_4.2.1              crayon_1.5.2               </span></span>
+<span><span class="co">#&gt; [63] grid_4.2.2                  ggrepel_0.9.1              </span></span>
+<span><span class="co">#&gt; [65] parallel_4.2.2              crayon_1.5.2               </span></span>
 <span><span class="co">#&gt; [67] lattice_0.20-45             circlize_0.4.15            </span></span>
 <span><span class="co">#&gt; [69] knitr_1.40                  ComplexHeatmap_2.12.1      </span></span>
 <span><span class="co">#&gt; [71] pillar_1.8.1                fgsea_1.22.0               </span></span>
 <span><span class="co">#&gt; [73] GenomicRanges_1.48.0        rjson_0.2.21               </span></span>
-<span><span class="co">#&gt; [75] codetools_0.2-18            stats4_4.2.1               </span></span>
+<span><span class="co">#&gt; [75] codetools_0.2-18            stats4_4.2.2               </span></span>
 <span><span class="co">#&gt; [77] fastmatch_1.1-3             glue_1.6.2                 </span></span>
-<span><span class="co">#&gt; [79] evaluate_0.16               data.table_1.14.2          </span></span>
-<span><span class="co">#&gt; [81] BiocManager_1.30.18         vctrs_0.4.2                </span></span>
+<span><span class="co">#&gt; [79] evaluate_0.17               data.table_1.14.4          </span></span>
+<span><span class="co">#&gt; [81] BiocManager_1.30.19         vctrs_0.5.0                </span></span>
 <span><span class="co">#&gt; [83] png_0.1-7                   foreach_1.5.2              </span></span>
-<span><span class="co">#&gt; [85] gtable_0.3.1                purrr_0.3.4                </span></span>
-<span><span class="co">#&gt; [87] tidyr_1.2.1                 clue_0.3-61                </span></span>
-<span><span class="co">#&gt; [89] cachem_1.0.6                xfun_0.33                  </span></span>
-<span><span class="co">#&gt; [91] ragg_1.2.3                  SingleCellExperiment_1.18.1</span></span>
+<span><span class="co">#&gt; [85] gtable_0.3.1                purrr_0.3.5                </span></span>
+<span><span class="co">#&gt; [87] tidyr_1.2.1                 clue_0.3-62                </span></span>
+<span><span class="co">#&gt; [89] cachem_1.0.6                xfun_0.34                  </span></span>
+<span><span class="co">#&gt; [91] ragg_1.2.4                  SingleCellExperiment_1.18.1</span></span>
 <span><span class="co">#&gt; [93] tibble_3.1.8                iterators_1.0.14           </span></span>
 <span><span class="co">#&gt; [95] memoise_2.0.1               IRanges_2.30.1             </span></span>
-<span><span class="co">#&gt; [97] cluster_2.1.3               ellipsis_0.3.2</span></span></code></pre></div>
+<span><span class="co">#&gt; [97] cluster_2.1.4               ellipsis_0.3.2</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
