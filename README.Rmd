@@ -20,12 +20,11 @@ cl <- as.numeric(readr::read_tsv("https://raw.githubusercontent.com/raysinensis/
 # clustifyr 
 
 <!-- badges: start -->
-[![R build status](https://github.com/rnabioco/clustifyr/workflows/R-CMD-check/badge.svg)](https://github.com/rnabioco/clustifyr/actions)
+[![R-CMD-check](https://github.com/rnabioco/clustifyr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rnabioco/clustifyr/actions/workflows/R-CMD-check.yaml)
 [![test-coverage](https://github.com/rnabioco/clustifyr/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/rnabioco/clustifyr/actions/workflows/test-coverage.yaml)
 [![platforms](https://bioconductor.org/shields/availability/release/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
 [![bioc](https://bioconductor.org/shields/years-in-bioc/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
 [![#downloads](`r paste0("https://img.shields.io/badge/%23%20downloads-", sum(st_all[[4]]) + cl, "-brightgreen")`)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
-
 <!-- badges: end -->
 
 clustifyr classifies cells and clusters in single-cell RNA sequencing experiments using reference bulk RNA-seq data sets, sorted microarray expression data, single-cell gene signatures, or lists of marker genes. 
