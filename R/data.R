@@ -58,7 +58,7 @@
 #' Small SingleCellExperiment object
 #'
 #' @family data
-#' @source \url{"https://scrnaseq-public-datasets.s3.amazonaws.com/scater-objects/segerstolpe.rds"}
+#' @source \url{https://github.com/hemberg-lab/scRNA.seq.datasets/blob/master/R/segerstolpe.R}
 "sce_small"
 
 #' reference matrix from seurat citeseq CBMC tutorial

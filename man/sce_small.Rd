@@ -8,7 +8,7 @@
 An object of class \code{SingleCellExperiment} with 200 rows and 200 columns.
 }
 \source{
-\url{"https://scrnaseq-public-datasets.s3.amazonaws.com/scater-objects/segerstolpe.rds"}
+\url{https://github.com/hemberg-lab/scRNA.seq.datasets/blob/master/R/segerstolpe.R}
 }
 \usage{
 sce_small
