@@ -3,7 +3,7 @@
 
 <!-- badges: start -->
 
-\[![[R-CMD-check-bioc](https://github.com/rnabioco/clustifyr/actions/workflows/check-bioc.yml/badge.svg)](https://github.com/rnabioco/clustifyr/actions/workflows/check-bioc.yml)
+[![R-CMD-check-bioc](https://github.com/rnabioco/clustifyr/actions/workflows/check-bioc.yml/badge.svg)](https://github.com/rnabioco/clustifyr/actions/workflows/check-bioc.yml)
 [![Codecov test
 coverage](https://codecov.io/gh/rnabioco/clustifyr/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/rnabioco/clustifyr?branch=devel)
 [![platforms](https://bioconductor.org/shields/availability/release/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
