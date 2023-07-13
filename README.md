@@ -3,11 +3,12 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/rnabioco/clustifyr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rnabioco/clustifyr/actions/workflows/R-CMD-check.yaml)
-[![test-coverage](https://github.com/rnabioco/clustifyr/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/rnabioco/clustifyr/actions/workflows/test-coverage.yaml)
+\[![[R-CMD-check-bioc](https://github.com/rnabioco/clustifyr/actions/workflows/check-bioc.yml/badge.svg)](https://github.com/rnabioco/clustifyr/actions/workflows/check-bioc.yml)
+[![Codecov test
+coverage](https://codecov.io/gh/rnabioco/clustifyr/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/rnabioco/clustifyr?branch=devel)
 [![platforms](https://bioconductor.org/shields/availability/release/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
 [![bioc](https://bioconductor.org/shields/years-in-bioc/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
-[![\#downloads](https://img.shields.io/badge/%23%20downloads-5545-brightgreen)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
+[![\#downloads](https://img.shields.io/badge/%23%20downloads-7329-brightgreen)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
 <!-- badges: end -->
 
 clustifyr classifies cells and clusters in single-cell RNA sequencing
@@ -36,13 +37,12 @@ remotes::install_github("rnabioco/clustifyr")
 
 In this example we use the following built-in input data:
 
--   an expression matrix of single cell RNA-seq data
-    (`pbmc_matrix_small`)
--   a metadata data.frame (`pbmc_meta`), with cluster information stored
-    (`"classified"`)
--   a vector of variable genes (`pbmc_vargenes`)
--   a matrix of mean normalized scRNA-seq UMI counts by cell type
-    (`cbmc_ref`)
+- an expression matrix of single cell RNA-seq data (`pbmc_matrix_small`)
+- a metadata data.frame (`pbmc_meta`), with cluster information stored
+  (`"classified"`)
+- a vector of variable genes (`pbmc_vargenes`)
+- a matrix of mean normalized scRNA-seq UMI counts by cell type
+  (`cbmc_ref`)
 
 We then calculate correlation coefficients and plot them on a
 pre-calculated projection (stored in `pbmc_meta`).
@@ -221,17 +221,17 @@ clustify_lists(
 
 ## Additional resources
 
--   [Script](https://github.com/rnabioco/clustifyrdata/blob/master/inst/run_clustifyr.R)
-    for benchmarking, compatible with
-    [`scRNAseq_Benchmark`](https://github.com/tabdelaal/scRNAseq_Benchmark)
+- [Script](https://github.com/rnabioco/clustifyrdata/blob/master/inst/run_clustifyr.R)
+  for benchmarking, compatible with
+  [`scRNAseq_Benchmark`](https://github.com/tabdelaal/scRNAseq_Benchmark)
 
--   Additional reference data (including tabula muris, immgen, etc) are
-    available in a supplemental package
-    [`clustifyrdatahub`](https://github.com/rnabioco/clustifyrdatahub).
-    Also see
-    [list](https://rnabioco.github.io/clustifyrdata/articles/download_refs.html)
-    for individual downloads.
+- Additional reference data (including tabula muris, immgen, etc) are
+  available in a supplemental package
+  [`clustifyrdatahub`](https://github.com/rnabioco/clustifyrdatahub).
+  Also see
+  [list](https://rnabioco.github.io/clustifyrdata/articles/download_refs.html)
+  for individual downloads.
 
--   See the
-    [FAQ](https://github.com/rnabioco/clustifyr/wiki/Frequently-asked-questions)
-    for more details.
+- See the
+  [FAQ](https://github.com/rnabioco/clustifyr/wiki/Frequently-asked-questions)
+  for more details.

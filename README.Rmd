@@ -20,8 +20,8 @@ cl <- as.numeric(data.table::fread("https://raw.githubusercontent.com/raysinensi
 # clustifyr 
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/rnabioco/clustifyr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rnabioco/clustifyr/actions/workflows/R-CMD-check.yaml)
-[![test-coverage](https://github.com/rnabioco/clustifyr/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/rnabioco/clustifyr/actions/workflows/test-coverage.yaml)
+[![[R-CMD-check-bioc](https://github.com/rnabioco/clustifyr/actions/workflows/check-bioc.yml/badge.svg)](https://github.com/rnabioco/clustifyr/actions/workflows/check-bioc.yml)
+[![Codecov test coverage](https://codecov.io/gh/rnabioco/clustifyr/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/rnabioco/clustifyr?branch=devel)
 [![platforms](https://bioconductor.org/shields/availability/release/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
 [![bioc](https://bioconductor.org/shields/years-in-bioc/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
 [![#downloads](`r paste0("https://img.shields.io/badge/%23%20downloads-", sum(st_all[[4]]) + cl, "-brightgreen")`)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
