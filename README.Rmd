@@ -12,9 +12,9 @@ knitr::opts_chunk$set(
 ```
 
 ```{r, echo=FALSE, message=FALSE}
-st <- readr::read_tsv("https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab")
+st <- data.table::fread("https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab", data.table = FALSE, verbose = FALSE)
 st_all <- dplyr::filter(st, Month == "all")
-cl <- as.numeric(readr::read_tsv("https://raw.githubusercontent.com/raysinensis/clone_counts_public/main/clustifyr_total.txt", col_names = c("count")))
+cl <- as.numeric(data.table::fread("https://raw.githubusercontent.com/raysinensis/clone_counts_public/main/clustifyr_total.txt", verbose = FALSE))
 ```
 
 # clustifyr 

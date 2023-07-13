@@ -23,7 +23,15 @@ Build reference atlases from external UCSC cellbrowsers
 }
 \examples{
 \dontrun{
-get_ucsc_reference(cb_url = "http://cells.ucsc.edu/?ds=kidney-atlas\%2FFetal_Immune",
-                   cluster_col = "celltype")
+
+# many datasets hosted by UCSC have UMI counts in the expression matrix
+# set if_log = FALSE if the expression matrix has not been natural log transformed
+
+get_ucsc_reference(cb_url = "https://cells.ucsc.edu/?ds=evocell+mus-musculus+marrow",
+                   cluster_col = "Clusters", if_log = FALSE)
+                   
+get_ucsc_reference(cb_url = "http://cells.ucsc.edu/?ds=muscle-cell-atlas",
+                   cluster_col = "cell_annotation",
+                   if_log = FALSE)
 }
 }

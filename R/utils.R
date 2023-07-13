@@ -1357,16 +1357,18 @@ feature_select_PCA <- function(mat = NULL,
 #'     package = "clustifyr"
 #' )
 #'
-#' gl <- gmt_to_list(path = gmt_file)
-#' length(gl)
+#' gene.lists <- gmt_to_list(path = gmt_file)
+#' length(gene.lists)
 #' @export
 gmt_to_list <- function(path,
     cutoff = 0,
     sep = "\thttp://www.broadinstitute.org/gsea/msigdb/cards/.*?\t") {
-    df <- readr::read_csv(path,
-        col_names = FALSE
+  
+    df <- read.csv(path, sep = ",", 
+        header = FALSE,
+        col.names = "V1"
     )
-    df <- tidyr::separate(df, !!dplyr::sym("X1"),
+    df <- tidyr::separate(df, !!dplyr::sym("V1"),
         sep = sep,
         into = c("path", "genes")
     )
