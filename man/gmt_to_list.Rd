@@ -30,6 +30,6 @@ gmt_file <- system.file(
     package = "clustifyr"
 )
 
-gl <- gmt_to_list(path = gmt_file)
-length(gl)
+gene.lists <- gmt_to_list(path = gmt_file)
+length(gene.lists)
 }
