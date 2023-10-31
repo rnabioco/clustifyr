@@ -110,12 +110,12 @@ write_meta <- function(object, ...) {
 write_meta.Seurat <- function(object,
     meta,
     ...) {
-    if ("Seurat" %in% loadedNamespaces()) {
+    if ("SeuratObject" %in% loadedNamespaces()) {
         object_new <- object
         object_new@meta.data <- meta
         return(object_new)
     } else {
-        message("Seurat not loaded")
+        message("SeuratObject not loaded")
     }
 }
 

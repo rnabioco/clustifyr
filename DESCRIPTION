@@ -73,7 +73,7 @@ Suggests:
     BiocManager,
     remotes,
     shiny,
-    Seurat,
+    SeuratObject,
     gprofiler2,
     purrr,
     data.table,

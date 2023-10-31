@@ -1,4 +1,8 @@
 context("compare_list")
+# use capture.output to quiet progress bar from fgsea
+shush <- function(...) {
+  capture.output(..., file = nullfile())
+}
 
 test_that("warning if matrix is not binarized", {
     pbmc_mm <- matrixize_markers(pbmc_markers)
@@ -8,7 +12,7 @@ test_that("warning if matrix is not binarized", {
     )
     pbmc_avgb <- binarize_expr(pbmc_avg)
     gene_list_methods <- c("hyper")
-    expect_warning(results <- lapply(
+    expect_warning(shush(results <- lapply(
         gene_list_methods,
         function(x) {
             compare_lists(pbmc_avg,
@@ -16,7 +20,7 @@ test_that("warning if matrix is not binarized", {
                 metric = x
             )
         }
-    ))
+    )))
 })
 
 
@@ -28,7 +32,7 @@ test_that("run all gene list functions", {
     )
     pbmc_avgb <- binarize_expr(pbmc_avg)
     gene_list_methods <- c("spearman", "hyper", "jaccard", "gsea")
-    results <- lapply(
+    shush(results <- lapply(
         gene_list_methods,
         function(x) {
             compare_lists(pbmc_avgb,
@@ -36,6 +40,7 @@ test_that("run all gene list functions", {
                 metric = x
             )
         }
+      )
     )
 
     expect_equal(4, length(results))
@@ -49,7 +54,7 @@ test_that("output intersected genes with details_out option with hyper/jaccard",
     )
     pbmc_avgb <- binarize_expr(pbmc_avg)
     gene_list_methods <- c("hyper", "jaccard")
-    results <- lapply(
+    shush(results <- lapply(
         gene_list_methods,
         function(x) {
             compare_lists(pbmc_avgb,
@@ -58,6 +63,7 @@ test_that("output intersected genes with details_out option with hyper/jaccard",
                           details_out = TRUE
             )
         }
+      )
     )
     
     expect_equal(2, length(results))
@@ -83,7 +89,7 @@ test_that("gene list function options", {
 
 test_that("run all gene list functions in clustify_lists", {
     gene_list_methods <- c("spearman", "hyper", "jaccard", "gsea")
-    results <- lapply(
+    shush(results <- lapply(
         gene_list_methods,
         function(x) {
             clustify_lists(
@@ -96,13 +102,14 @@ test_that("run all gene list functions in clustify_lists", {
                 metric = x
             )
         }
+      )
     )
 
     expect_equal(4, length(results))
 })
 
 test_that("gsea outputs in cor matrix format", {
-    res <- clustify_lists(
+    shush(res <- clustify_lists(
         pbmc_matrix_small,
         per_cell = FALSE,
         metadata = pbmc_meta,
@@ -110,7 +117,8 @@ test_that("gsea outputs in cor matrix format", {
         marker = pbmc_markers,
         marker_inmatrix = FALSE,
         metric = "gsea"
-    )
+    ))
+  
     res2 <- cor_to_call(res)
 
     expect_equal(9, nrow(res2))
@@ -233,7 +241,7 @@ test_that("clustify_lists inserts seurat3 metadata correctly", {
         seurat_out = TRUE,
         dr = "tsne"
     )
-    if ("Seurat" %in% loadedNamespaces()) {
+    if ("SeuratObject" %in% loadedNamespaces()) {
         expect_true(class(res) %in% c("Seurat"))
     } else {
         expect_true(is.matrix(res))
@@ -248,7 +256,7 @@ test_that("run all gene list functions and then use consensus_call", {
     )
     pbmc_avgb <- binarize_expr(pbmc_avg)
     gene_list_methods <- c("spearman", "hyper", "jaccard", "gsea")
-    results <- lapply(
+    shush(results <- lapply(
         gene_list_methods,
         function(x) {
             compare_lists(pbmc_avgb,
@@ -256,7 +264,7 @@ test_that("run all gene list functions and then use consensus_call", {
                 metric = x
             )
         }
-    )
+    ))
     call_list <- lapply(
         results,
         cor_to_call_rank
