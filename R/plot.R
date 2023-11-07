@@ -40,13 +40,11 @@ plot_dims <- function(data,
     do_legend = TRUE,
     do_repel = TRUE) {
     # add backticks to allow special characters in column names
-    x_col <- paste0("`", x, "`")
-    y_col <- paste0("`", y, "`")
 
     # If feature is not provided return unlabeled plot
     if (is.null(feature)) {
-        p <- ggplot2::ggplot(data, ggplot2::aes_string(x_col, y_col)) +
-            ggplot2::geom_point(size = pt_size) +
+        p <- ggplot(data, aes(.data[[x]], .data[[y]])) +
+            geom_point(size = pt_size) +
             cowplot::theme_cowplot()
 
         if (!is.null(d_cols)) {
@@ -79,21 +77,17 @@ plot_dims <- function(data,
     data <- dplyr::arrange(data, !!dplyr::sym(feature))
 
     if (!is.null(alpha_col)) {
-        p <- ggplot2::ggplot(data, ggplot2::aes_string(x_col, y_col)) +
-            geom_point(ggplot2::aes_string(
-                color = paste0("`", feature, "`"),
-                alpha = paste0("`", alpha_col, "`")
+        p <- ggplot(data, aes(.data[[x]], .data[[y]])) +
+            geom_point(aes(
+                color = .data[[feature]],
+                alpha = .data[[alpha_col]]
             ), # backticks protect special character gene names
             size = pt_size
             ) +
             scale_alpha_continuous(range = c(0, 1))
     } else {
-        p <- ggplot2::ggplot(data, ggplot2::aes_string(x_col, y_col)) +
-            ggplot2::geom_point(ggplot2::aes_string(color = paste0(
-                "`",
-                feature,
-                "`"
-            )),
+        p <- ggplot(data, aes(.data[[x]], .data[[y]])) +
+            geom_point(aes(color = .data[[feature]]),
             size = pt_size
             )
     }
@@ -177,7 +171,7 @@ plot_dims <- function(data,
             colnames(alldata) <- colnames(centers)
             alldata <- rbind(alldata, centers)
             p <- p +
-                ggplot2::geom_point(
+                geom_point(
                     data = alldata,
                     mapping = aes(
                         x = !!dplyr::sym("t1"),
@@ -200,7 +194,7 @@ plot_dims <- function(data,
                 )
         } else {
             p <- p +
-                ggplot2::geom_text(
+                geom_text(
                     data = centers,
                     mapping = aes(
                         x = !!dplyr::sym("t1"),

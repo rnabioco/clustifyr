@@ -1000,7 +1000,7 @@ clustify_nudge.Seurat <- function(input,
             rename_prefix = rename_prefix
         )
 
-        if ("Seurat" %in% loadedNamespaces()) {
+        if ("SeuratObject" %in% loadedNamespaces()) {
             input <- write_meta(input, df_temp_full)
             return(input)
         } else {
@@ -1359,6 +1359,7 @@ feature_select_PCA <- function(mat = NULL,
 #'
 #' gene.lists <- gmt_to_list(path = gmt_file)
 #' length(gene.lists)
+#' @importFrom utils read.csv
 #' @export
 gmt_to_list <- function(path,
     cutoff = 0,

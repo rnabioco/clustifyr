@@ -50,3 +50,6 @@ Changes in version 1.5.2 (2021-10-04)
 Changes in version 1.7.3 (2022-03-09)
 + `vec_out` option for directly getting classification results as a vector, to be inserted into other metadata/workflow
 + Maintainer change
+
+Changes in version 1.15.1 (2023-10-31)
++ Replace `Seurat` dependency with `SeuratObject`

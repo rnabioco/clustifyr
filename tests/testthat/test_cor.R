@@ -244,7 +244,7 @@ test_that("clustify reinserts seurat3 metadata correctly", {
         seurat_out = TRUE,
         dr = "tsne"
     )
-    if ("Seurat" %in% loadedNamespaces()) {
+    if ("SeuratObject" %in% loadedNamespaces()) {
         expect_true(class(res) %in% c("Seurat"))
     } else {
         expect_true(is.matrix(res))
@@ -392,7 +392,7 @@ test_that("correct error message is displayed for nonexistent cluster_col", {
 })
 
 test_that("input Seurat metadata columns are not changed (type, r, rn, etc). #259", {
-    skip_if_not_installed("Seurat")
+    skip_if_not_installed("SeuratObject")
     tmp <- s_small3
     tmp@meta.data$type <- 0L
     tmp@meta.data$rn <- 0L

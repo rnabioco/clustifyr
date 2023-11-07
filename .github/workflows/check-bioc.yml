@@ -53,8 +53,8 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { os: ubuntu-latest, r: '4.3', bioc: '3.17', cont: "bioconductor/bioconductor_docker:RELEASE_3_17", rspm: "https://packagemanager.posit.co/cran/__linux__/jammy/latest" }
-          - { os: windows-latest, r: '4.3', bioc: '3.17'}
+          - { os: ubuntu-latest, r: '4.3', bioc: '3.18', cont: "bioconductor/bioconductor_docker:RELEASE_3_18", rspm: "https://packagemanager.posit.co/cran/__linux__/jammy/latest" }
+          - { os: windows-latest, r: '4.3', bioc: '3.18'}
           ## Check https://github.com/r-lib/actions/tree/master/examples
           ## for examples using the http-user-agent
     env:
@@ -106,16 +106,16 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ${{ env.cache-version }}-${{ runner.os }}-biocversion-RELEASE_3_17-r-4.3-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ env.cache-version }}-${{ runner.os }}-biocversion-RELEASE_3_17-r-4.3-
+          key: ${{ env.cache-version }}-${{ runner.os }}-biocversion-RELEASE_3_18-r-4.3-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ env.cache-version }}-${{ runner.os }}-biocversion-RELEASE_3_18-r-4.3-
 
       - name: Cache R packages on Linux
         if: "!contains(github.event.head_commit.message, '/nocache') && runner.os == 'Linux' "
         uses: actions/cache@v3
         with:
           path: /home/runner/work/_temp/Library
-          key: ${{ env.cache-version }}-${{ runner.os }}-biocversion-RELEASE_3_17-r-4.3-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ env.cache-version }}-${{ runner.os }}-biocversion-RELEASE_3_17-r-4.3-
+          key: ${{ env.cache-version }}-${{ runner.os }}-biocversion-RELEASE_3_18-r-4.3-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ env.cache-version }}-${{ runner.os }}-biocversion-RELEASE_3_18-r-4.3-
 
       - name: Install Linux system dependencies
         if: runner.os == 'Linux'
@@ -289,7 +289,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@master
         with:
-          name: ${{ runner.os }}-biocversion-RELEASE_3_17-r-4.3-results
+          name: ${{ runner.os }}-biocversion-RELEASE_3_18-r-4.3-results
           path: check
 
         ## Note that DOCKER_PASSWORD is really a token for your dockerhub

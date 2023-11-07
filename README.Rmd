@@ -43,8 +43,7 @@ BiocManager::install("clustifyr")
 Install the development version with:
 
 ``` r
-# install.packages("remotes")
-remotes::install_github("rnabioco/clustifyr")
+BiocManager::install("rnabioco/clustifyr")
 ```
  
 ## Example usage

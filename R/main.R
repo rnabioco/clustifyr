@@ -426,7 +426,7 @@ clustify.Seurat <- function(input,
             }
         }
         
-        if ("Seurat" %in% loadedNamespaces()) {
+        if ("SeuratObject" %in% loadedNamespaces()) {
             s_object <- write_meta(s_object, df_temp_full)
             return(s_object)
         } else {
@@ -917,7 +917,7 @@ clustify_lists.Seurat <- function(input,
             }
         }
         
-        if ("Seurat" %in% loadedNamespaces()) {
+        if ("SeuratObject" %in% loadedNamespaces()) {
             s_object <- write_meta(s_object, df_temp_full)
             return(s_object)
         } else {
