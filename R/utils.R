@@ -598,7 +598,8 @@ cor_to_call_topn <- function(cor_mat,
                 dplyr::select(df_temp_full, -c(
                     !!dplyr::sym("type"), !!dplyr::sym("r")
                 )),
-                by = stats::setNames(collapse_to_cluster, "type2")
+                by = stats::setNames(collapse_to_cluster, "type2"),
+                relationship = "many-to-many"
             )
         df_temp_full <-
             dplyr::mutate(df_temp_full2, type = tidyr::replace_na(

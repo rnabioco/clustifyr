@@ -310,7 +310,8 @@ plot_cor <- function(cor_mat,
     if (cor_df[[cluster_col]][1] %in% metadata[[cluster_col]]) {
         plt_data <- dplyr::left_join(cor_df_long,
             metadata,
-            by = cluster_col
+            by = cluster_col,
+            relationship = "many-to-many"
         )
     } else {
         plt_data <- dplyr::left_join(cor_df_long,
