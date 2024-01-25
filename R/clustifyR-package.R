@@ -17,5 +17,6 @@
 #' @importFrom cowplot theme_cowplot
 #' @importFrom fgsea fgsea
 #' @importFrom methods is
+#' @importFrom SeuratObject Key Key<- DefaultAssay DefaultAssay<-
 ## usethis namespace: end
 NULL

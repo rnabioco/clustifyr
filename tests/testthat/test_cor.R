@@ -115,140 +115,74 @@ test_that("test permutation", {
     expect_true(all(res_full$p_val >= 0 | res_full$p_val <= 0))
 })
 
-# test_that("seurat object clustifying", {
-#     res <- clustify(s_small,
-#         cbmc_ref,
-#         cluster_col = "res.1",
-#         dr = "tsne"
-#     )
-# 
-#     res <- clustify(s_small,
-#         cbmc_ref,
-#         cluster_col = "res.1",
-#         seurat_out = FALSE,
-#         per_cell = TRUE,
-#         dr = "tsne"
-#     )
-# 
-#     res <- clustify(s_small,
-#         cbmc_ref,
-#         cluster_col = "res.1",
-#         seurat_out = FALSE,
-#         dr = "tsne"
-#     )
-#     g <- plot_best_call(
-#         res,
-#         seurat_meta(s_small,
-#             dr = "tsne"
-#         ),
-#         cluster_col = "res.1",
-#         plot_r = TRUE,
-#         x = "tSNE_1",
-#         y = "tSNE_2"
-#     )
-#     expect_true(ggplot2::is.ggplot(g[[1]]))
-# })
+so <- so_pbmc()
 
-# test_that("clustify reinserts seurat metadata correctly", {
-#     res <- clustify(s_small,
-#         cbmc_ref,
-#         cluster_col = "res.1",
-#         seurat_out = TRUE,
-#         per_cell = TRUE,
-#         dr = "tsne"
-#     )
-#     res2 <- clustify(s_small,
-#         cbmc_ref,
-#         cluster_col = "res.1",
-#         seurat_out = TRUE,
-#         dr = "tsne"
-#     )
-#     if ("Seurat" %in% loadedNamespaces()) {
-#         expect_true(class(res) %in% c("seurat"))
-#     } else {
-#         expect_true(is.matrix(res))
-#     }
-# })
+test_that("seurat object clustifying", {
 
-test_that("seurat3 object clustifying", {
-    res <- clustify(s_small3,
+    res <- clustify(so,
         cbmc_ref,
-        cluster_col = "RNA_snn_res.1",
-        dr = "tsne"
+        cluster_col = "seurat_clusters",
+        dr = "umap"
     )
-    res <- clustify(s_small3,
+    res <- clustify(so,
         cbmc_ref,
-        cluster_col = "RNA_snn_res.1",
+        cluster_col = "seurat_clusters",
         seurat_out = FALSE,
         per_cell = TRUE,
-        dr = "tsne"
+        dr = "umap"
     )
-    res <- clustify(s_small3,
+    res <- clustify(so,
         cbmc_ref,
-        cluster_col = "RNA_snn_res.1",
+        cluster_col = "seurat_clusters",
         seurat_out = FALSE,
-        dr = "tsne"
+        dr = "umap"
     )
     g <- plot_best_call(res,
-        seurat_meta(s_small3,
-            dr = "tsne"
+        seurat_meta(so,
+            dr = "umap"
         ),
-        cluster_col = "RNA_snn_res.1",
-        plot_r = TRUE
+        cluster_col = "seurat_clusters",
+        plot_r = TRUE,
+        x = "umap_1",
+        y = "umap_2"
     )
     expect_true(ggplot2::is.ggplot(g[[1]]))
 })
 
 test_that("object with passing vector as metadata", {
-    res <- clustify(s_small3,
+    res <- clustify(so,
                     cbmc_ref,
-                    metadata = s_small3@meta.data$RNA_snn_res.1,
-                    dr = "tsne"
+                    metadata = so$seurat_clusters,
+                    dr = "umap"
     )
     res <- clustify_lists(
-        s_small3,
+        so,
         marker = cbmc_m,
-        metadata = s_small3@meta.data$RNA_snn_res.1,
-        dr = "tsne",
+        metadata = so$seurat_clusters,
+        dr = "umap",
         metric = "posneg",
         seurat_out = FALSE
     )
-    # res <- clustify(s_small,
-    #                 cbmc_ref,
-    #                 metadata = s_small@meta.data$res.1,
-    #                 dr = "tsne"
-    # )
-    # res <- clustify_lists(
-    #     s_small,
-    #     marker = cbmc_m,
-    #     metadata = s_small@meta.data$res.1,
-    #     dr = "tsne",
-    #     metric = "posneg",
-    #     seurat_out = FALSE
-    # )
+
     expect_true(is.matrix(res))
 })
 
-test_that("clustify reinserts seurat3 metadata correctly", {
-    res <- clustify(s_small3,
+test_that("clustify reinserts seurat metadata correctly", {
+    res <- clustify(so,
         cbmc_ref,
-        cluster_col = "RNA_snn_res.1",
+        cluster_col = "seurat_clusters",
         seurat_out = TRUE,
         per_cell = TRUE,
-        dr = "tsne"
+        dr = "umap"
     )
 
-    res2 <- clustify(s_small3,
-        cbmc_ref,
-        cluster_col = "RNA_snn_res.1",
-        seurat_out = TRUE,
-        dr = "tsne"
-    )
-    if ("SeuratObject" %in% loadedNamespaces()) {
-        expect_true(class(res) %in% c("Seurat"))
-    } else {
-        expect_true(is.matrix(res))
-    }
+    expect_true(is(res, "Seurat"))
+    # all input data identical on return
+    expect_true(all(so@meta.data == res@meta.data[, colnames(so@meta.data)]))
+    # clustifyr results present
+    expect_true(all(c("umap_1", "umap_2", "type", "r") %in% 
+                      colnames(res@meta.data)))
+
 })
 
 test_that("get_similarity handles NA entries", {
@@ -369,21 +303,22 @@ test_that("cor throws readable error when ref_mat has 0 cols", {
 
 test_that("sparse matrix is accepted as input", {
     res <- clustify(
-        input = s_small3@assays$RNA@counts,
-        metadata = s_small3@meta.data,
+        input = as(pbmc_matrix_small, "sparseMatrix"),
+        metadata = pbmc_meta,
         ref_mat = cbmc_ref,
         query_genes = pbmc_vargenes,
-        cluster_col = "letter.idents",
+        cluster_col = "seurat_clusters",
         verbose = TRUE
     )
-
-    expect_equal(2, nrow(res))
+    ex <- c(length(unique(pbmc_meta$seurat_clusters)), 
+            ncol(cbmc_ref))
+    expect_equal(dim(res), ex)
 })
 
 test_that("correct error message is displayed for nonexistent cluster_col", {
     expect_error(res <- clustify(
-        input = s_small3@assays$RNA@counts,
-        metadata = s_small3@meta.data,
+        input = so@assays$RNA@counts,
+        metadata = so@meta.data,
         ref_mat = cbmc_ref,
         query_genes = pbmc_vargenes,
         cluster_col = "a",
@@ -392,8 +327,7 @@ test_that("correct error message is displayed for nonexistent cluster_col", {
 })
 
 test_that("input Seurat metadata columns are not changed (type, r, rn, etc). #259", {
-    skip_if_not_installed("SeuratObject")
-    tmp <- s_small3
+    tmp <- so
     tmp@meta.data$type <- 0L
     tmp@meta.data$rn <- 0L
     tmp@meta.data$r <- 0L
@@ -401,8 +335,8 @@ test_that("input Seurat metadata columns are not changed (type, r, rn, etc). #25
     res <- clustify(
         input = tmp,
         ref_mat = cbmc_ref,
-        cluster_col = "RNA_snn_res.1",
-        dr = "tsne"
+        cluster_col = "seurat_clusters",
+        dr = "umap"
     )
 
     expect_true(all(c("type", "rn", "r") %in% colnames(res@meta.data)))
@@ -411,63 +345,63 @@ test_that("input Seurat metadata columns are not changed (type, r, rn, etc). #25
     expect_true(all(res@meta.data$r == 0L))
 })
 
-test_that("clustify_lists works with pos_neg_select and Seurat3 object", {
+test_that("clustify_lists works with pos_neg_select and Seurat object", {
     res <- clustify_lists(
-        s_small3,
+        so,
         marker = cbmc_m,
-        cluster_col = "RNA_snn_res.1",
-        dr = "tsne",
+        cluster_col = "seurat_clusters",
+        dr = "umap",
         metric = "posneg",
         seurat_out = FALSE
     )
-    expect_true(nrow(res) == 3)
+    expect_true(nrow(res) == length(unique(so$seurat_clusters)))
 })
 
-test_that("clustify_lists works with pos_neg_select, Seurat3 object, and lists of genes", {
+test_that("clustify_lists works with pos_neg_select, Seurat object, and lists of genes", {
     res <- clustify_lists(
-        s_small3,
+        so,
         marker = as.list(cbmc_m),
         marker_inmatrix = FALSE,
-        cluster_col = "RNA_snn_res.1",
-        dr = "tsne",
+        cluster_col = "seurat_clusters",
+        dr = "umap",
         metric = "posneg",
         seurat_out = FALSE
     )
-    expect_true(nrow(res) == 3)
+    expect_true(nrow(res) == length(unique(so$seurat_clusters)))
 })
 
-test_that("clustify_lists works with pos_neg_select, Seurat3 object, and matrix preprocessed by pos_neg_marker", {
+test_that("clustify_lists works with pos_neg_select, Seurat object, and matrix preprocessed by pos_neg_marker", {
     res <- clustify_lists(
-        s_small3,
+        so,
         marker = pos_neg_marker(as.list(cbmc_m)),
         marker_inmatrix = FALSE,
-        cluster_col = "RNA_snn_res.1",
-        dr = "tsne",
+        cluster_col = "seurat_clusters",
+        dr = "umap",
         metric = "posneg",
         seurat_out = FALSE
     )
-    expect_true(nrow(res) == 3)
+    expect_true(nrow(res) == length(unique(so$seurat_clusters)))
 })
 
-test_that("clustify_lists works with pct and Seurat3 object", {
+test_that("clustify_lists works with pct and Seurat object", {
     res <- clustify_lists(
-        s_small3,
+        so,
         marker = cbmc_m,
-        cluster_col = "RNA_snn_res.1",
-        dr = "tsne",
+        cluster_col = "seurat_clusters",
+        dr = "umap",
         metric = "pct",
         seurat_out = FALSE
     )
-    expect_true(nrow(res) == 3)
+    expect_true(nrow(res) == length(unique(so$seurat_clusters)))
 })
 
 test_that("clustify_lists gives correct error message upon unrecognized method", {
     expect_error(
         res <- clustify_lists(
-            s_small3,
+            so,
             marker = cbmc_m,
-            cluster_col = "RNA_snn_res.1",
-            dr = "tsne",
+            cluster_col = "seurat_clusters",
+            dr = "umap",
             metric = "ptc",
             seurat_out = FALSE
         )
@@ -495,13 +429,14 @@ test_that("clustify takes factor for metadata", {
     expect_true(res[1, 1] != res2[1, 1])
 })
 
+sce <- sce_pbmc()
 test_that("sce object clustifying", {
-    res <- clustify(sce_small,
+    res <- clustify(sce,
         cbmc_ref,
-        cluster_col = "cell_type1",
+        cluster_col = "clusters",
         obj_out = FALSE
     )
-    expect_true(nrow(res) == 13)
+    expect_true(nrow(res) == nlevels(sce$clusters))
 })
 
 test_that("sce object clustify_lists", {
@@ -510,14 +445,14 @@ test_that("sce object clustify_lists", {
     panm <- data.frame(other, delta)
 
     res <- clustify_lists(
-        sce_small,
+      sce,
         marker = panm,
-        cluster_col = "cell_type1",
+        cluster_col = "clusters",
         obj_out = FALSE,
         n = 100,
         metric = "pct"
     )
-    expect_true(nrow(res) == 13)
+    expect_true(nrow(res) == nlevels(sce$clusters))
 })
 
 test_that("clustify filters low cell number clusters", {
@@ -528,7 +463,7 @@ test_that("clustify filters low cell number clusters", {
         metadata = pbmc_meta2$classified,
         ref_mat = cbmc_ref,
         query_genes = pbmc_vargenes,
-        dr = "tsne",
+        dr = "umap",
         low_threshold_cell = 2,
         seurat_out = FALSE
     )
@@ -542,7 +477,7 @@ test_that("clustify_lists filters low cell number clusters", {
         input = pbmc_matrix_small,
         metadata = pbmc_meta2$classified,
         marker = cbmc_m,
-        dr = "tsne",
+        dr = "umap",
         low_threshold_cell = 2,
         seurat_out = FALSE
     )
@@ -550,37 +485,38 @@ test_that("clustify_lists filters low cell number clusters", {
 })
 
 test_that("clustify n_genes options limits number of variable genes", {
-    res <- clustify(s_small3,
+    res <- clustify(so,
                     cbmc_ref,
-                    cluster_col = "RNA_snn_res.1",
-                    dr = "tsne",
+                    cluster_col = "seurat_clusters",
+                    dr = "umap",
                     obj_out = FALSE
     )
-    res2 <- clustify(s_small3,
+    res2 <- clustify(so,
                      cbmc_ref,
                      n_genes = 2,
-                     cluster_col = "RNA_snn_res.1",
-                     dr = "tsne",
+                     cluster_col = "seurat_clusters",
+                     dr = "umap",
                      obj_out = FALSE
     )
     expect_true(res[1,1] != res2[1,1])
 })
 
 test_that("clustify n_genes options ignored if too large", {
-    res <- clustify(s_small3,
+    res <- clustify(so,
                     cbmc_ref,
-                    cluster_col = "RNA_snn_res.1",
-                    dr = "tsne",
+                    cluster_col = "seurat_clusters",
+                    dr = "umap",
+                    n_genes = 2e3,
                     obj_out = FALSE
     )
-    res2 <- clustify(s_small3,
+    res2 <- clustify(so,
                      cbmc_ref,
-                     n_genes = 20,
-                     cluster_col = "RNA_snn_res.1",
-                     dr = "tsne",
+                     n_genes = 2e6,
+                     cluster_col = "seurat_clusters",
+                     dr = "umap",
                      obj_out = FALSE
     )
-    expect_true(res[1,1] == res2[1,1])
+    expect_true(all.equal(res, res2))
 })
 
 test_that("pseudobulk using median", {

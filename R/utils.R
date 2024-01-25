@@ -1,3 +1,32 @@
+#' Check package is installed
+#' @param pkg package to query
+#' @return logical(1) indicating if package is available.
+#' @export 
+is_pkg_available <- function(pkg, 
+                             action = c("none", "message", "warn", "error"),
+                             msg = "") {
+  has_pkg <- requireNamespace(pkg, quietly = TRUE)
+  action <- match.arg(action)
+  
+  if(!has_pkg) {
+    switch(action, 
+           message = message(pkg,
+                             " not installed ",
+                             msg),
+           warn    = warning(pkg, 
+                             " not installed ",
+                             msg, 
+                             call. = FALSE),
+           error   = stop(pkg, 
+                          " not installed and is required for this function ",
+                          msg,
+                          call. = FALSE),
+    )
+  }
+  has_pkg
+}
+
+
 #' Overcluster by kmeans per cluster
 #'
 #' @param mat expression matrix
@@ -372,7 +401,7 @@ get_best_str <- function(name,
 #' Find entries shared in all vectors
 #' @description return entries found in all supplied vectors.
 #'  If the vector supplied is NULL or NA, then it will be excluded
-#'  from the comparision.
+#'  from the comparison.
 #' @param ... vectors
 #' @return vector of shared elements
 get_common_elements <- function(...) {
@@ -727,7 +756,7 @@ gene_pct_markerm <- function(matrix,
 #'     marker = cbmc_m,
 #'     cluster_col = "RNA_snn_res.1",
 #'     threshold = 0.8,
-#'     seurat_out = FALSE,
+#'     obj_out = FALSE,
 #'     mode = "pct",
 #'     dr = "tsne"
 #' )
@@ -775,7 +804,7 @@ clustify_nudge <- function(input, ...) {
 #'  in preprocessed matrix form
 #' @param mode use marker expression pct or ranked cor score for nudging
 #' @param obj_out whether to output object instead of cor matrix
-#' @param seurat_out output cor matrix or called seurat object
+#' @param seurat_out output cor matrix or called seurat object (deprecated, use obj_out)
 #' @param rename_prefix prefix to add to type and r column names
 #' @param lookuptable if not supplied, will look in built-in
 #' table for object parsing
@@ -793,7 +822,6 @@ clustify_nudge.default <- function(input,
     query_genes = NULL,
     compute_method = "spearman",
     weight = 1,
-    seurat_out = FALSE,
     threshold = -Inf,
     dr = "umap",
     norm = "diff",
@@ -801,6 +829,7 @@ clustify_nudge.default <- function(input,
     marker_inmatrix = TRUE,
     mode = "rank",
     obj_out = FALSE,
+    seurat_out = obj_out,
     rename_prefix = NULL,
     lookuptable = NULL,
     ...) {
@@ -843,7 +872,7 @@ clustify_nudge.default <- function(input,
         metadata = metadata,
         cluster_col = cluster_col,
         query_genes = query_genes,
-        seurat_out = FALSE,
+        obj_out = FALSE,
         per_cell = FALSE
     )
 
@@ -877,9 +906,8 @@ clustify_nudge.default <- function(input,
 
     res <- resa[order(rownames(resa)), order(colnames(resa))] +
         resb[order(rownames(resb)), order(colnames(resb))] * weight
-
-    if ((obj_out ||
-        seurat_out) &&
+    obj_out <- seurat_out
+    if (obj_out &&
         !inherits(input_original, c("matrix", "Matrix", "data.frame"))) {
         df_temp <- cor_to_call(
             res,
@@ -924,8 +952,8 @@ clustify_nudge.Seurat <- function(input,
     query_genes = NULL,
     compute_method = "spearman",
     weight = 1,
-    seurat_out = TRUE,
-    obj_out = FALSE,
+    obj_out = TRUE,
+    seurat_out = obj_out,
     threshold = -Inf,
     dr = "umap",
     norm = "diff",
@@ -944,7 +972,7 @@ clustify_nudge.Seurat <- function(input,
         ref_mat = ref_mat,
         cluster_col = cluster_col,
         query_genes = query_genes,
-        seurat_out = FALSE,
+        obj_out = FALSE,
         per_cell = FALSE,
         dr = dr
     )
@@ -981,8 +1009,8 @@ clustify_nudge.Seurat <- function(input,
 
     res <- resa[order(rownames(resa)), order(colnames(resa))] +
         resb[order(rownames(resb)), order(colnames(resb))] * weight
-
-    if (!(seurat_out || obj_out)) {
+    obj_out <- seurat_out
+    if (!obj_out) {
         res
     } else {
         df_temp <- cor_to_call(
@@ -1180,7 +1208,7 @@ overcluster_test <- function(expr,
         metadata,
         query_genes = genes,
         cluster_col = cluster_col,
-        seurat_out = FALSE
+        obj_out = FALSE
     )
     res2 <- clustify(
         expr,
@@ -1188,7 +1216,7 @@ overcluster_test <- function(expr,
         metadata,
         query_genes = genes,
         cluster_col = "new_clusters",
-        seurat_out = FALSE
+        obj_out = FALSE
     )
     o1 <- plot_dims(
         metadata,
@@ -1993,38 +2021,20 @@ plot_rank_bias <- function(
 #' )
 #' @export
 append_genes <- function(gene_vector, ref_matrix) {
-    rownamesGSEMatrix <- rownames(ref_matrix)
-    # Get rownames from GSEMatrix (new GSE file)
-
-    rowCountHumanGenes <- length(gene_vector)
-    # Calculate number of rows from list of full human genes
-    rowCountNewGSEFile <- nrow(ref_matrix)
-    # Calculate number of rows of GSE matrix
-
-    missing_rows <- setdiff(gene_vector, rownamesGSEMatrix)
-    # Use setdiff function to figure out rows which are different/missing
-    # from GSE matrix
-
+    missing_rows <- setdiff(gene_vector, rownames(ref_matrix))
+    
     zeroExpressionMatrix <- matrix(
         0,
         nrow = length(missing_rows),
         ncol = ncol(ref_matrix)
     )
-    # Create a placeholder matrix with zeroes and missing_rows length
 
     rownames(zeroExpressionMatrix) <- missing_rows
-    # Assign row names
     colnames(zeroExpressionMatrix) <- colnames(ref_matrix)
-    # Assign column names
-
+    
     full_matrix <- rbind(ref_matrix, zeroExpressionMatrix)
-    # Bind GSEMatrix and zeroExpressionMatrix together
-
-    # Reorder matrix
     full_matrix <- full_matrix[gene_vector, ]
-    # Reorder fullMatrix to preserve gene order
-    return(full_matrix)
-    # Return fullMatrix
+    full_matrix
 }
 
 #' Given a count matrix, determine if the matrix has been either

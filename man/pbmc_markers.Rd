@@ -27,10 +27,7 @@ Other data:
 \code{\link{pbmc_markers_M3Drop}},
 \code{\link{pbmc_matrix_small}},
 \code{\link{pbmc_meta}},
-\code{\link{pbmc_vargenes}},
-\code{\link{s_small3}},
-\code{\link{s_small}},
-\code{\link{sce_small}}
+\code{\link{pbmc_vargenes}}
 }
 \concept{data}
 \keyword{datasets}

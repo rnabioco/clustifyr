@@ -59,7 +59,7 @@ clustify <- function(input, ...) {
 #'     metadata = pbmc_meta,
 #'     ref_mat = cbmc_ref,
 #'     query_genes = pbmc_vargenes,
-#'     cluster_col = "classified",
+#'     cluster_col = "RNA_snn_res.0.5",
 #'     verbose = TRUE
 #' )
 #'
@@ -69,28 +69,40 @@ clustify <- function(input, ...) {
 #'     metadata = pbmc_meta,
 #'     ref_mat = cbmc_ref,
 #'     query_genes = pbmc_vargenes,
-#'     cluster_col = "classified",
+#'     cluster_col = "RNA_snn_res.0.5",
 #'     compute_method = "cosine"
 #' )
-#'
-#' # Annotate a Seurat object
+#' 
+#' # Annotate a SingleCellExperiment object
+#' sce <- sce_pbmc()
 #' clustify(
-#'     s_small3,
+#'     sce,
 #'     cbmc_ref,
-#'     cluster_col = "RNA_snn_res.1",
+#'     cluster_col = "clusters",
 #'     obj_out = TRUE,
 #'     per_cell = FALSE,
-#'     dr = "tsne"
+#'     dr = "umap"
+#' )
+#' 
+#' # Annotate a Seurat object
+#' so <- so_pbmc()
+#' clustify(
+#'     so,
+#'     cbmc_ref,
+#'     cluster_col = "seurat_clusters",
+#'     obj_out = TRUE,
+#'     per_cell = FALSE,
+#'     dr = "umap"
 #' )
 #'
 #' # Annotate (and return) a Seurat object per-cell
 #' clustify(
-#'     input = s_small3,
+#'     input = so,
 #'     ref_mat = cbmc_ref,
-#'     cluster_col = "RNA_snn_res.1",
+#'     cluster_col = "seurat_clusters",
 #'     obj_out = TRUE,
 #'     per_cell = TRUE,
-#'     dr = "tsne"
+#'     dr = "umap"
 #' )
 #' @export
 clustify.default <- function(input,
@@ -107,7 +119,7 @@ clustify.default <- function(input,
     lookuptable = NULL,
     rm0 = FALSE,
     obj_out = TRUE,
-    seurat_out = TRUE,
+    seurat_out = obj_out,
     vec_out = FALSE,
     rename_prefix = NULL,
     threshold = "auto",
@@ -161,8 +173,9 @@ clustify.default <- function(input,
         stop("given `cluster_col` is not a column in `metadata`", call. = FALSE)
     }
 
-    if (length(query_genes) == 0) {
-        message("var.features not found, using all genes instead")
+    if (is.null(query_genes) || length(query_genes) == 0) {
+        message("Variable features not available, using all genes instead\n",
+                "consider supplying variable features to `query_genes` argument.")
         query_genes <- NULL
     }
 
@@ -248,8 +261,8 @@ clustify.default <- function(input,
         message("similarity computation completed, matrix of ", dim(res)[1], " x ", dim(res)[2], ", preparing output")
     }
     
-    if ((obj_out &&
-        seurat_out) &&
+    obj_out <- seurat_out
+    if (obj_out &&
         !inherits(input_original, c(
             "matrix",
             "Matrix",
@@ -324,8 +337,8 @@ clustify.Seurat <- function(input,
     pseudobulk_method = "mean",
     use_var_genes = TRUE,
     dr = "umap",
-    seurat_out = TRUE,
     obj_out = TRUE,
+    seurat_out = obj_out,
     vec_out = FALSE,
     threshold = "auto",
     verbose = TRUE,
@@ -380,8 +393,8 @@ clustify.Seurat <- function(input,
     if (n_perm != 0) {
         res <- -log(res$p_val + .01, 10)
     }
-
-    if (!(seurat_out && obj_out) && !vec_out || vec) {
+    obj_out <- seurat_out
+    if (!obj_out && !vec_out || vec) {
         res
     } else {
         df_temp <- cor_to_call(
@@ -449,8 +462,8 @@ clustify.SingleCellExperiment <- function(input,
     pseudobulk_method = "mean",
     use_var_genes = TRUE,
     dr = "umap",
-    seurat_out = TRUE,
     obj_out = TRUE,
+    seurat_out = obj_out,
     vec_out = FALSE,
     threshold = "auto",
     verbose = TRUE,
@@ -501,8 +514,8 @@ clustify.SingleCellExperiment <- function(input,
     if (n_perm != 0) {
         res <- -log(res$p_val + .01, 10)
     }
-
-    if (!(seurat_out && obj_out) && !vec_out) {
+    obj_out <- seurat_out
+    if (!obj_out && !vec_out) {
         res
     } else {
         df_temp <- cor_to_call(
@@ -588,7 +601,7 @@ clustify_lists <- function(input, ...) {
 }
 
 #' @rdname clustify_lists
-#' @param input single-cell expression matrix or Seurat object
+#' @param input single-cell expression matrix, Seurat object, or SingleCellExperiment
 #' @param marker matrix or dataframe of candidate genes for each cluster
 #' @param marker_inmatrix whether markers genes are already in preprocessed
 #'   matrix form
@@ -658,7 +671,7 @@ clustify_lists.default <- function(input,
     output_high = TRUE,
     lookuptable = NULL,
     obj_out = TRUE,
-    seurat_out = TRUE,
+    seurat_out = obj_out,
     vec_out = FALSE,
     rename_prefix = NULL,
     threshold = 0,
@@ -778,10 +791,9 @@ clustify_lists.default <- function(input,
     if (verbose) {
         message("similarity computation completed, matrix of ", dim(res)[1], " x ", dim(res)[2], ", preparing output")
     }
-    
+    obj_out <- seurat_out
     if ((!inherits(input_original, c("matrix", "Matrix", "data.frame")) &&
-        obj_out &&
-        seurat_out) || (vec_out &&
+        obj_out ) || (vec_out &&
                         inherits(input_original, c(
                             "matrix",
                             "Matrix",
@@ -840,8 +852,8 @@ clustify_lists.Seurat <- function(input,
     metric = "hyper",
     output_high = TRUE,
     dr = "umap",
-    seurat_out = TRUE,
     obj_out = TRUE,
+    seurat_out = obj_out,
     vec_out = FALSE,
     threshold = 0,
     rename_prefix = NULL,
@@ -885,8 +897,8 @@ clustify_lists.Seurat <- function(input,
         details_out = details_out,
         ...
     )
-
-    if (!(seurat_out && obj_out) && !vec_out || vec) {
+    obj_out <- seurat_out
+    if (!obj_out && !vec_out || vec) {
         res
     } else {
         if (metric != "consensus") {
@@ -943,8 +955,8 @@ clustify_lists.SingleCellExperiment <- function(input,
     metric = "hyper",
     output_high = TRUE,
     dr = "umap",
-    seurat_out = TRUE,
     obj_out = TRUE,
+    seurat_out = obj_out,
     vec_out = FALSE,
     threshold = 0,
     rename_prefix = NULL,
@@ -986,7 +998,7 @@ clustify_lists.SingleCellExperiment <- function(input,
         ...
     )
 
-    if (!(seurat_out && obj_out) && !vec_out || vec) {
+    if (!obj_out && !vec_out || vec) {
         res
     } else {
         df_temp <- cor_to_call(

@@ -24,7 +24,7 @@ clustify_lists(input, ...)
   output_high = TRUE,
   lookuptable = NULL,
   obj_out = TRUE,
-  seurat_out = TRUE,
+  seurat_out = obj_out,
   vec_out = FALSE,
   rename_prefix = NULL,
   threshold = 0,
@@ -49,8 +49,8 @@ clustify_lists(input, ...)
   metric = "hyper",
   output_high = TRUE,
   dr = "umap",
-  seurat_out = TRUE,
   obj_out = TRUE,
+  seurat_out = obj_out,
   vec_out = FALSE,
   threshold = 0,
   rename_prefix = NULL,
@@ -73,8 +73,8 @@ clustify_lists(input, ...)
   metric = "hyper",
   output_high = TRUE,
   dr = "umap",
-  seurat_out = TRUE,
   obj_out = TRUE,
+  seurat_out = obj_out,
   vec_out = FALSE,
   threshold = 0,
   rename_prefix = NULL,
@@ -84,7 +84,7 @@ clustify_lists(input, ...)
 )
 }
 \arguments{
-\item{input}{single-cell expression matrix or Seurat object}
+\item{input}{single-cell expression matrix, Seurat object, or SingleCellExperiment}
 
 \item{...}{passed to matrixize_markers}
 

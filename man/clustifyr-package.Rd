@@ -2,8 +2,8 @@
 % Please edit documentation in R/clustifyR-package.R
 \docType{package}
 \name{clustifyr-package}
+\alias{clustifyr}
 \alias{clustifyr-package}
-\alias{_PACKAGE}
 \title{clustifyr: Classifier for Single-cell RNA-seq Using Cell Clusters}
 \description{
 Package designed to aid in classifying cells from single-cell RNA sequencing data using external reference data (e.g., bulk RNA-seq, scRNA-seq, microarray, gene lists). A variety of correlation based methods and gene list enrichment methods are provided to assist cell type assignment.

@@ -57,6 +57,7 @@ Imports:
     methods,
     SingleCellExperiment,
     SummarizedExperiment,
+    SeuratObject,
     matrixStats,
     S4Vectors,
     proxy,
@@ -73,7 +74,6 @@ Suggests:
     BiocManager,
     remotes,
     shiny,
-    SeuratObject,
     gprofiler2,
     purrr,
     data.table,
@@ -87,7 +87,7 @@ VignetteBuilder:
 ByteCompile: true
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.0
 LazyData: true
 Config/Needs/website:
     pkgdown,

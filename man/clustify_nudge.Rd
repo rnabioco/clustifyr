@@ -18,7 +18,6 @@ clustify_nudge(input, ...)
   query_genes = NULL,
   compute_method = "spearman",
   weight = 1,
-  seurat_out = FALSE,
   threshold = -Inf,
   dr = "umap",
   norm = "diff",
@@ -26,6 +25,7 @@ clustify_nudge(input, ...)
   marker_inmatrix = TRUE,
   mode = "rank",
   obj_out = FALSE,
+  seurat_out = obj_out,
   rename_prefix = NULL,
   lookuptable = NULL,
   ...
@@ -39,8 +39,8 @@ clustify_nudge(input, ...)
   query_genes = NULL,
   compute_method = "spearman",
   weight = 1,
-  seurat_out = TRUE,
-  obj_out = FALSE,
+  obj_out = TRUE,
+  seurat_out = obj_out,
   threshold = -Inf,
   dr = "umap",
   norm = "diff",
@@ -77,8 +77,6 @@ the expr_mat and ref_mat will be used for comparision.}
 \item{weight}{relative weight for the gene list scores,
 when added to correlation score}
 
-\item{seurat_out}{output cor matrix or called seurat object}
-
 \item{threshold}{identity calling minimum score threshold,
 only used when obj_out = T}
 
@@ -94,6 +92,8 @@ in preprocessed matrix form}
 \item{mode}{use marker expression pct or ranked cor score for nudging}
 
 \item{obj_out}{whether to output object instead of cor matrix}
+
+\item{seurat_out}{output cor matrix or called seurat object (deprecated, use obj_out)}
 
 \item{rename_prefix}{prefix to add to type and r column names}
 
@@ -117,7 +117,7 @@ clustify_nudge(
     marker = cbmc_m,
     cluster_col = "RNA_snn_res.1",
     threshold = 0.8,
-    seurat_out = FALSE,
+    obj_out = FALSE,
     mode = "pct",
     dr = "tsne"
 )

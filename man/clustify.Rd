@@ -24,7 +24,7 @@ clustify(input, ...)
   lookuptable = NULL,
   rm0 = FALSE,
   obj_out = TRUE,
-  seurat_out = TRUE,
+  seurat_out = obj_out,
   vec_out = FALSE,
   rename_prefix = NULL,
   threshold = "auto",
@@ -50,8 +50,8 @@ clustify(input, ...)
   pseudobulk_method = "mean",
   use_var_genes = TRUE,
   dr = "umap",
-  seurat_out = TRUE,
   obj_out = TRUE,
+  seurat_out = obj_out,
   vec_out = FALSE,
   threshold = "auto",
   verbose = TRUE,
@@ -77,8 +77,8 @@ clustify(input, ...)
   pseudobulk_method = "mean",
   use_var_genes = TRUE,
   dr = "umap",
-  seurat_out = TRUE,
   obj_out = TRUE,
+  seurat_out = obj_out,
   vec_out = FALSE,
   threshold = "auto",
   verbose = TRUE,
@@ -178,7 +178,7 @@ clustify(
     metadata = pbmc_meta,
     ref_mat = cbmc_ref,
     query_genes = pbmc_vargenes,
-    cluster_col = "classified",
+    cluster_col = "RNA_snn_res.0.5",
     verbose = TRUE
 )
 
@@ -188,27 +188,39 @@ clustify(
     metadata = pbmc_meta,
     ref_mat = cbmc_ref,
     query_genes = pbmc_vargenes,
-    cluster_col = "classified",
+    cluster_col = "RNA_snn_res.0.5",
     compute_method = "cosine"
 )
 
-# Annotate a Seurat object
+# Annotate a SingleCellExperiment object
+sce <- sce_pbmc()
 clustify(
-    s_small3,
+    sce,
     cbmc_ref,
-    cluster_col = "RNA_snn_res.1",
+    cluster_col = "clusters",
     obj_out = TRUE,
     per_cell = FALSE,
-    dr = "tsne"
+    dr = "umap"
+)
+
+# Annotate a Seurat object
+so <- so_pbmc()
+clustify(
+    so,
+    cbmc_ref,
+    cluster_col = "seurat_clusters",
+    obj_out = TRUE,
+    per_cell = FALSE,
+    dr = "umap"
 )
 
 # Annotate (and return) a Seurat object per-cell
 clustify(
-    input = s_small3,
+    input = so,
     ref_mat = cbmc_ref,
-    cluster_col = "RNA_snn_res.1",
+    cluster_col = "seurat_clusters",
     obj_out = TRUE,
     per_cell = TRUE,
-    dr = "tsne"
+    dr = "umap"
 )
 }

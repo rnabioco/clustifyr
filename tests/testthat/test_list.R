@@ -124,95 +124,34 @@ test_that("gsea outputs in cor matrix format", {
     expect_equal(9, nrow(res2))
 })
 
-# test_that("seurat object clustify_lists-ing", {
-#     res <- clustify_lists(
-#         s_small,
-#         per_cell = FALSE,
-#         marker = pbmc_markers,
-#         marker_inmatrix = FALSE,
-#         metric = "jaccard",
-#         cluster_col = "res.1",
-#         seurat_out = FALSE,
-#         dr = "tsne"
-#     )
-#     res <- clustify_lists(
-#         s_small,
-#         per_cell = FALSE,
-#         marker = pbmc_markers,
-#         marker_inmatrix = FALSE,
-#         metric = "jaccard",
-#         cluster_col = "res.1",
-#         seurat_out = FALSE,
-#         dr = "tsne"
-#     )
-#     g <- plot_best_call(
-#         res,
-#         seurat_meta(s_small,
-#             dr = "tsne"
-#         ),
-#         cluster_col = "res.1",
-#         plot_r = TRUE,
-#         x = "tSNE_1",
-#         y = "tSNE_2"
-#     )
-#     expect_true(ggplot2::is.ggplot(g[[1]]))
-# })
-
-# test_that("clustify_lists inserts seurat metadata correctly", {
-#     res <- clustify_lists(
-#         s_small,
-#         per_cell = FALSE,
-#         marker = pbmc_markers,
-#         marker_inmatrix = FALSE,
-#         metric = "jaccard",
-#         cluster_col = "res.1",
-#         seurat_out = TRUE,
-#         dr = "tsne"
-#     )
-#     res2 <- clustify_lists(
-#         s_small,
-#         per_cell = TRUE,
-#         marker = pbmc_markers,
-#         marker_inmatrix = FALSE,
-#         metric = "jaccard",
-#         cluster_col = "res.1",
-#         seurat_out = TRUE,
-#         dr = "tsne"
-#     )
-#     if ("Seurat" %in% loadedNamespaces()) {
-#         expect_true(class(res) %in% c("seurat"))
-#     } else {
-#         expect_true(is.matrix(res))
-#     }
-# })
-
+so <- so_pbmc()
 test_that("seurat3 object clustify_lists-ing", {
     res <- clustify_lists(
-        s_small3,
+        so,
         per_cell = FALSE,
         marker = pbmc_markers,
         marker_inmatrix = FALSE,
         metric = "jaccard",
-        cluster_col = "RNA_snn_res.1",
+        cluster_col = "seurat_clusters",
         seurat_out = TRUE,
         dr = "tsne"
     )
     res <- clustify_lists(
-        s_small3,
+        so,
         per_cell = FALSE,
         marker = pbmc_markers,
         marker_inmatrix = FALSE,
         metric = "jaccard",
-        cluster_col = "RNA_snn_res.1",
+        cluster_col = "seurat_clusters",
         seurat_out = FALSE,
         dr = "tsne"
     )
     g <- plot_best_call(
         res,
-        seurat_meta(s_small3,
+        seurat_meta(so,
             dr = "tsne"
         ),
-        cluster_col = "RNA_snn_res.1",
+        cluster_col = "seurat_clusters",
         plot_r = TRUE,
         x = "tSNE_1",
         y = "tSNE_2"
@@ -222,22 +161,22 @@ test_that("seurat3 object clustify_lists-ing", {
 
 test_that("clustify_lists inserts seurat3 metadata correctly", {
     res <- clustify_lists(
-        s_small3,
+        so,
         per_cell = FALSE,
         marker = pbmc_markers,
         marker_inmatrix = FALSE,
         metric = "jaccard",
-        cluster_col = "RNA_snn_res.1",
+        cluster_col = "seurat_clusters",
         seurat_out = TRUE,
         dr = "tsne"
     )
     res2 <- clustify_lists(
-        s_small3,
+        so,
         per_cell = TRUE,
         marker = pbmc_markers,
         marker_inmatrix = FALSE,
         metric = "jaccard",
-        cluster_col = "RNA_snn_res.1",
+        cluster_col = "seurat_clusters",
         seurat_out = TRUE,
         dr = "tsne"
     )
@@ -286,27 +225,15 @@ test_that("run all gene list functions in clustify_lists", {
 
 test_that("run all gene list functions in clustify_lists and seurat object", {
     res <- clustify_lists(
-        s_small3,
+        so,
         marker = cbmc_m,
         dr = "tsne",
-        cluster_col = "RNA_snn_res.1",
+        cluster_col = "seurat_clusters",
         metric = "consensus",
         seurat_out = TRUE
     )
     expect_true(is.data.frame(res) | "Seurat" %in% class(res))
 })
-
-# test_that("run all gene list functions in clustify_lists and seurat object", {
-#     res <- clustify_lists(
-#         s_small,
-#         marker = cbmc_m,
-#         dr = "tsne",
-#         cluster_col = "res.1",
-#         metric = "consensus",
-#         seurat_out = TRUE
-#     )
-#     expect_true(is.data.frame(res) | "seurat" %in% class(res))
-# })
 
 test_that("lists of genes will work with posneg", {
     lst_of_markers <- split(pbmc_markers$gene, pbmc_markers$cluster)
@@ -354,3 +281,4 @@ test_that("clustify_lists input_markers mode with uneven number of marker per cl
     )
     expect_equal(1, length(results))
 })
+

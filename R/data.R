@@ -43,24 +43,6 @@
 #' @source `[pbmc_matrix]` processed by Seurat
 "pbmc_vargenes"
 
-#' Small clustered Seurat2 object
-#'
-#' @family data
-#' @source  `[pbmc_small]` processed by seurat
-"s_small"
-
-#' Small clustered Seurat3 object
-#'
-#' @family data
-#' @source  `[pbmc_small]` processed by Seurat
-"s_small3"
-
-#' Small SingleCellExperiment object
-#'
-#' @family data
-#' @source \url{https://github.com/hemberg-lab/scRNA.seq.datasets/blob/master/R/segerstolpe.R}
-"sce_small"
-
 #' reference matrix from seurat citeseq CBMC tutorial
 #'
 #' @family data

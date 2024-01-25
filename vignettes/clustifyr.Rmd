@@ -151,6 +151,7 @@ clustifyr_types <- plot_best_call(
   metadata = pbmc_meta,   # meta.data table containing UMAP or tSNE data
   do_label = TRUE,        # should the feature label be shown on each cluster?
   do_legend = FALSE,      # should the legend be shown?
+  do_repel = FALSE,       # use ggrepel to avoid overlapping labels
   cluster_col = "seurat_clusters"
 ) +
   ggtitle("clustifyr cell types")
@@ -160,7 +161,8 @@ known_types <- plot_dims(
   data = pbmc_meta,       # meta.data table containing UMAP or tSNE data
   feature = "classified", # name of column in meta.data to color clusters by
   do_label = TRUE,        # should the feature label be shown on each cluster?
-  do_legend = FALSE       # should the legend be shown?
+  do_legend = FALSE,      # should the legend be shown?
+  do_repel = FALSE
 ) +
   ggtitle("Known cell types")
 
@@ -211,54 +213,33 @@ pbmc_meta3 <- call_to_metadata(
 # Direct handling of `SingleCellExperiment` objects
 `clustifyr` can also use a `SingleCellExperiment` object as input and return a new `SingleCellExperiment` object with the cell types added as a column in the colData. 
 
-``` r
+```{r}
+library(SingleCellExperiment)
+sce <- sce_pbmc()
 res <- clustify(
-  input = sce_small,          # an SCE object
+  input = sce,                # an SCE object
   ref_mat = cbmc_ref,         # matrix of RNA-seq expression data for each cell type
-  cluster_col = "cell_type1", # name of column in meta.data containing cell clusters
+  cluster_col = "clusters",   # name of column in meta.data containing cell clusters
   obj_out = TRUE              # output SCE object with cell type inserted as "type" column
 )
 
-SingleCellExperiment::colData(res)[1:10,c("type", "r")]
-#> DataFrame with 10 rows and 2 columns
-#>               type                 r
-#>        <character>         <numeric>
-#> AZ_A1        CD34+ 0.557678024919381
-#> AZ_A10       CD34+ 0.624777701661225
-#> AZ_A11       CD4 T 0.695067885340303
-#> AZ_A12       CD34+ 0.624777701661225
-#> AZ_A2        CD4 T 0.602804908958642
-#> AZ_A3        CD34+ 0.557678024919381
-#> AZ_A4        CD34+ 0.557678024919381
-#> AZ_A5        CD34+ 0.645378073051508
-#> AZ_A6        CD4 T 0.695067885340303
-#> AZ_A7        CD34+ 0.671644883893203
+colData(res)[1:10, c("type", "r")]
 ```
 
-# Direct handling of `seurat` v2 and v3 objects
+# Direct handling of `Seurat`  objects
 
 `clustifyr` can also use a `Seurat` object as input and return a new `Seurat` object with the cell types added as a column in the meta.data. 
 
-``` r
+```{r}
+so <- so_pbmc()
 res <- clustify(
-  input = s_small3,       # a Seurat object
-  ref_mat = cbmc_ref,    # matrix of RNA-seq expression data for each cell type
-  cluster_col = "RNA_snn_res.1", # name of column in meta.data containing cell clusters
-  obj_out = TRUE      # output Seurat object with cell type inserted as "type" column
+  input = so,      # a Seurat object
+  ref_mat = cbmc_ref,   # matrix of RNA-seq expression data for each cell type
+  cluster_col = "seurat_clusters", # name of column in meta.data containing cell clusters
+  obj_out = TRUE  # output Seurat object with cell type inserted as "type" column
 )
 
-res@meta.data[1:10, ]
-#>                nGene nUMI    orig.ident res.0.8 res.1         type         r
-#> ATGCCAGAACGACT    47   70 SeuratProject       0     0 Memory CD4 T 0.7047302
-#> CATGGCCTGTGCAT    52   85 SeuratProject       0     0 Memory CD4 T 0.7047302
-#> GAACCTGATGAACC    50   87 SeuratProject       0     0 Memory CD4 T 0.7047302
-#> TGACTGGATTCTCA    56  127 SeuratProject       0     0 Memory CD4 T 0.7047302
-#> AGTCAGACTGCACA    53  173 SeuratProject       0     0 Memory CD4 T 0.7047302
-#> TCTGATACACGTGT    48   70 SeuratProject       0     0 Memory CD4 T 0.7047302
-#> TGGTATCTAAACAG    36   64 SeuratProject       0     0 Memory CD4 T 0.7047302
-#> GCAGCTCTGTTTCT    45   72 SeuratProject       0     0 Memory CD4 T 0.7047302
-#> GATATAACACGCAT    36   52 SeuratProject       0     0 Memory CD4 T 0.7047302
-#> AATGTTGACAGTCA    41  100 SeuratProject       0     0 Memory CD4 T 0.7047302
+res@meta.data[1:10, c("type", "r")]
 ```
 
 # Building reference matrix from single cell expression matrix
@@ -276,22 +257,16 @@ head(new_ref_matrix)
 
 # For further convenience, a shortcut function for generating reference matrix from `SingleCellExperiment` or `seurat` object is used.
 new_ref_matrix_sce <- object_ref(
-  input = sce_small,               # SCE object
-  cluster_col = "cell_type1"       # name of column in colData containing cell identities
+  input = sce,                     # SCE object
+  cluster_col = "clusters"       # name of column in colData containing cell identities
 )
 
-new_ref_matrix_v3 <- seurat_ref(
-  seurat_object = s_small3,        # SeuratV3 object
-  cluster_col = "RNA_snn_res.1"    # name of column in meta.data containing cell identities
+new_ref_matrix_so <- seurat_ref(
+  seurat_object = so,        # Seurat object
+  cluster_col = "seurat_clusters"    # name of column in meta.data containing cell identities
 )
 
-tail(new_ref_matrix_v3)
-```
-
-```{r "ucsc", eval = FALSE}
-# There's also the option to pull UCSC cell browser data.
-get_ext_reference(cb_url = "http://cells.ucsc.edu/?ds=kidney-atlas%2FFetal_Immune",
-                  cluster_col = "celltype")
+tail(new_ref_matrix_so)
 ```
 
 
