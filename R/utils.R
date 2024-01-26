@@ -1,7 +1,7 @@
 #' Check package is installed
 #' @param pkg package to query
 #' @return logical(1) indicating if package is available.
-#' @export 
+#' @noRd
 is_pkg_available <- function(pkg, 
                              action = c("none", "message", "warn", "error"),
                              msg = "") {
@@ -750,16 +750,17 @@ gene_pct_markerm <- function(matrix,
 #'
 #' @examples
 #'
-#' # Seurat3
+#' # Seurat
+#' so <- so_pbmc()
 #' clustify_nudge(
-#'     input = s_small3,
+#'     input = so,
 #'     ref_mat = cbmc_ref,
 #'     marker = cbmc_m,
-#'     cluster_col = "RNA_snn_res.1",
+#'     cluster_col = "seurat_clusters",
 #'     threshold = 0.8,
 #'     obj_out = FALSE,
 #'     mode = "pct",
-#'     dr = "tsne"
+#'     dr = "umap"
 #' )
 #'
 #' # Matrix
@@ -1039,19 +1040,77 @@ clustify_nudge.Seurat <- function(input,
         input
     }
 }
+#' lookup table for single cell object structures
+#' @importFrom SummarizedExperiment colData<-
+#' @export
+object_loc_lookup <- function() {
+  l <- list()
+  
+  l$SingleCellExperiment <- c(
+    expr = function(x) object_data(x, "data"),
+    meta = function(x) object_data(x, "meta.data"),
+    add_meta = function(x, md) { 
+      colData(x) <- md
+      x},
+    var = NULL,
+    col = "cell_type1"
+  )
+  
+  l$Seurat <- c(
+    expr = function(x) object_data(x, "data"),
+    meta = function(x) object_data(x, "meta.data"),
+    add_meta = function(x, md) { 
+      x@meta.data <- md
+      x},
+    var = function(x) object_data(x, "var.genes"),
+    col = "RNA_snn_res.1"
+  )
+  
+  l$URD <- c(
+    expr = function(x) x@logupx.data,
+    meta = function(x) x@meta,
+    add_meta = function(x, md) { 
+      x@meta <- md
+      x},
+    var = function(x) x@var.genes,
+    col = "cluster"
+  )
+  
+  l$FunctionalSingleCellExperiment <- c(
+    expr = function(x) x@ExperimentList$rnaseq@assays$data$logcounts,
+    meta = function(x) x@ExperimentList$rnaseq@colData,
+    add_meta = function(x, md) { 
+      x@ExperimentList$rnaseq@colData <- md
+      x},
+    var = NULL,
+    col = "leiden_cluster"
+  )
+  
+  l$CellDataSet <- c(
+    expr = function(x) do.call(function(x) {row.names(x) <- x@featureData@data$gene_short_name; return(x)}, list(x@assayData$exprs)),
+    meta = function(x) as.data.frame(x@phenoData@data),
+    add_meta = function(x, md) { 
+      x@phenoData@data <- md
+      x},
+    var = function(x) as.character(x@featureData@data$gene_short_name[x@featureData@data$use_for_ordering == T]),
+    col = "Main_Cluster"
+  )
+  l
+}
 
 #' more flexible parsing of single cell objects
 #'
 #' @param input input object
 #' @param type look up predefined slots/loc
-#' @param expr_loc expression matrix location
-#' @param meta_loc metadata location
-#' @param var_loc variable genes location
+#' @param expr_loc function that extracts expression matrix 
+#' @param meta_loc function that extracts metadata 
+#' @param var_loc function that extracts variable genes 
 #' @param cluster_col column of clustering from metadata
-#' @param lookuptable if not supplied, will look in built-in table for object parsing
+#' @param lookuptable if not supplied, will use object_loc_lookup() for parsing. 
 #' @return list of expression, metadata, vargenes, cluster_col info from object
 #' @examples
-#' obj <- parse_loc_object(s_small3)
+#' so <- so_pbmc() 
+#' obj <- parse_loc_object(so)
 #' length(obj)
 #' @export
 parse_loc_object <- function(input,
@@ -1061,19 +1120,25 @@ parse_loc_object <- function(input,
     var_loc = NULL,
     cluster_col = NULL,
     lookuptable = NULL) {
+    if(!type %in% c("SingleCellExperiment", "Seurat")) {
+      warning("Support for ", type, " objects is deprecated ",
+              "and will be removed from clustifyr in the next version")
+    }
+    
     if (is.null(lookuptable)) {
-        object_loc_lookup1 <- clustifyr::object_loc_lookup
+        lookup <- object_loc_lookup()
     } else {
-        object_loc_lookup1 <- lookuptable
+        warning("Support for supplying custom objects is deprecated ",
+                "and will be removed from clustifyr in the next version")
+        lookup <- lookuptable
     }
 
-    if (length(intersect(type, colnames(object_loc_lookup1))) > 0) {
-        type <- intersect(type, colnames(object_loc_lookup1))[1]
+    if (type %in% names(lookup)) {
         parsed <- list(
-            eval(parse(text = object_loc_lookup1[[type]][1])),
-            as.data.frame(eval(parse(text = object_loc_lookup1[[type]][2]))),
-            eval(parse(text = object_loc_lookup1[[type]][3])),
-            object_loc_lookup1[[type]][4]
+            expr = lookup[[type]]$expr(input),
+            meta = as.data.frame(lookup[[type]]$meta(input)),
+            var = lookup[[type]]$var(input),
+            col = lookup[[type]]$col
         )
     } else {
         parsed <- list(NULL, NULL, NULL, NULL)
@@ -1082,18 +1147,15 @@ parse_loc_object <- function(input,
     names(parsed) <- c("expr", "meta", "var", "col")
 
     if (!(is.null(expr_loc))) {
-        parsed[["expr"]] <- eval(parse(text = paste0("input", expr_loc)))
+        parsed[["expr"]] <- expr_loc(input)
     }
 
     if (!(is.null(meta_loc))) {
-        parsed[["meta"]] <-
-            as.data.frame(eval(parse(text = paste0(
-                "input", meta_loc
-            ))))
+        parsed[["meta"]] <- as.data.frame(meta_loc(input))
     }
 
     if (!(is.null(var_loc))) {
-        parsed[["var"]] <- eval(parse(text = paste0("input", var_loc)))
+        parsed[["var"]] <- var_loc(input)
     }
 
     if (!(is.null(cluster_col))) {
@@ -1113,9 +1175,8 @@ parse_loc_object <- function(input,
 #' will look in built-in table for object parsing
 #' @return new object with new metadata inserted
 #' @examples
-#' \dontrun{
-#' insert_meta_object(s_small3, seurat_meta(s_small3, dr = "tsne"))
-#' }
+#' so <- so_pbmc()
+#' insert_meta_object(so, seurat_meta(so, dr = "umap"))
 #' @export
 insert_meta_object <- function(input,
     new_meta,
@@ -1123,16 +1184,15 @@ insert_meta_object <- function(input,
     meta_loc = NULL,
     lookuptable = NULL) {
     if (is.null(lookuptable)) {
-        object_loc_lookup1 <- clustifyr::object_loc_lookup
+        lookup <- object_loc_lookup()
     } else {
-        object_loc_lookup1 <- lookuptable
+        lookup <- lookuptable
     }
 
-    if (!type %in% colnames(object_loc_lookup1)) {
+    if (!type %in% names(lookup)) {
         stop("unrecognized object type", call. = FALSE)
     } else {
-        text1 <- paste0(object_loc_lookup1[[type]][2], " <- ", "new_meta")
-        eval(parse(text = text1))
+        input <- lookup[[type]]$add_meta(input, new_meta)
         return(input)
     }
 }

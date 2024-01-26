@@ -72,8 +72,9 @@ and cell types as column names
 Function to convert labelled object to avg expression matrix
 }
 \examples{
+so <- so_pbmc()
 object_ref(
-    s_small3,
-    cluster_col = "RNA_snn_res.1"
+    so,
+    cluster_col = "seurat_clusters"
 )
 }

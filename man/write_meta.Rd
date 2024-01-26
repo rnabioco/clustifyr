@@ -27,12 +27,14 @@ object with newly inserted metadata columns
 Function to write metadata to object
 }
 \examples{
+so <- so_pbmc()
 obj <- write_meta(
-    object = s_small3,
-    meta = seurat_meta(s_small3)
+    object = so,
+    meta = seurat_meta(so)
 )
+sce <- sce_pbmc()
 obj <- write_meta(
-    object = sce_small,
-    meta = object_data(sce_small, "meta.data")
+    object = sce,
+    meta = object_data(sce, "meta.data")
 )
 }

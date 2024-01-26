@@ -55,12 +55,6 @@
 #' @source \url{https://satijalab.org/seurat/v3.0/multimodal_vignette.html#identify-differentially-expressed-proteins-between-clusters}
 "cbmc_m"
 
-#' lookup table for single cell object structures
-#'
-#' @family data
-#' @source  various packages
-"object_loc_lookup"
-
 #' table of references stored in clustifyrdata
 #'
 #' @family data

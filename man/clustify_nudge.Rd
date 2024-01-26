@@ -110,16 +110,17 @@ bulk RNA-seq data and marker list
 }
 \examples{
 
-# Seurat3
+# Seurat
+so <- so_pbmc()
 clustify_nudge(
-    input = s_small3,
+    input = so,
     ref_mat = cbmc_ref,
     marker = cbmc_m,
-    cluster_col = "RNA_snn_res.1",
+    cluster_col = "seurat_clusters",
     threshold = 0.8,
     obj_out = FALSE,
     mode = "pct",
-    dr = "tsne"
+    dr = "umap"
 )
 
 # Matrix

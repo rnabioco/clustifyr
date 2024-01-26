@@ -31,13 +31,15 @@ and cell types as column names
 Function to access object data
 }
 \examples{
+so <- so_pbmc()
 mat <- object_data(
-    object = s_small3,
+    object = so,
     slot = "data"
 )
 mat[1:3, 1:3]
+sce <- sce_pbmc()
 mat <- object_data(
-    object = sce_small,
+    object = sce,
     slot = "data"
 )
 mat[1:3, 1:3]

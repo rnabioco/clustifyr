@@ -31,7 +31,6 @@ new object with new metadata inserted
 more flexible metadata update of single cell objects
 }
 \examples{
-\dontrun{
-insert_meta_object(s_small3, seurat_meta(s_small3, dr = "tsne"))
-}
+so <- so_pbmc()
+insert_meta_object(so, seurat_meta(so, dr = "umap"))
 }

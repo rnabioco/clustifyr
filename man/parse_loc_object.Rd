@@ -19,15 +19,15 @@ parse_loc_object(
 
 \item{type}{look up predefined slots/loc}
 
-\item{expr_loc}{expression matrix location}
+\item{expr_loc}{function that extracts expression matrix}
 
-\item{meta_loc}{metadata location}
+\item{meta_loc}{function that extracts metadata}
 
-\item{var_loc}{variable genes location}
+\item{var_loc}{function that extracts variable genes}
 
 \item{cluster_col}{column of clustering from metadata}
 
-\item{lookuptable}{if not supplied, will look in built-in table for object parsing}
+\item{lookuptable}{if not supplied, will use object_loc_lookup() for parsing.}
 }
 \value{
 list of expression, metadata, vargenes, cluster_col info from object
@@ -36,6 +36,7 @@ list of expression, metadata, vargenes, cluster_col info from object
 more flexible parsing of single cell objects
 }
 \examples{
-obj <- parse_loc_object(s_small3)
+so <- so_pbmc() 
+obj <- parse_loc_object(so)
 length(obj)
 }
