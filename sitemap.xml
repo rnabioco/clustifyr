@@ -271,19 +271,16 @@
     <loc>http://rnabioco.github.io/clustifyr/reference/run_gsea.html</loc>
   </url>
   <url>
-    <loc>http://rnabioco.github.io/clustifyr/reference/s_small.html</loc>
-  </url>
-  <url>
-    <loc>http://rnabioco.github.io/clustifyr/reference/s_small3.html</loc>
-  </url>
-  <url>
-    <loc>http://rnabioco.github.io/clustifyr/reference/sce_small.html</loc>
+    <loc>http://rnabioco.github.io/clustifyr/reference/sce_pbmc.html</loc>
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/seurat_meta.html</loc>
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/seurat_ref.html</loc>
+  </url>
+  <url>
+    <loc>http://rnabioco.github.io/clustifyr/reference/so_pbmc.html</loc>
   </url>
   <url>
     <loc>http://rnabioco.github.io/clustifyr/reference/vector_similarity.html</loc>
