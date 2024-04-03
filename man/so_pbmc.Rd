@@ -7,7 +7,7 @@
 so_pbmc()
 }
 \value{
-a SingleCellExperiment object populated with data
+a Seurat object populated with data
 from the \link{pbmc_matrix_small} scRNA-seq dataset, additionally
 annotated with cluster assignments.
 }

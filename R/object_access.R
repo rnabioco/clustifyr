@@ -1,6 +1,6 @@
 #' An example Seurat object
 #' 
-#' @return a SingleCellExperiment object populated with data
+#' @return a Seurat object populated with data
 #' from the [pbmc_matrix_small] scRNA-seq dataset, additionally
 #' annotated with cluster assignments.
 #' 
