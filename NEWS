@@ -55,4 +55,4 @@ Changes in version 1.15.1 (2023-10-31)
 + Replace `Seurat` dependency with `SeuratObject`
 
 Changes in version 1.15.2 (2024-04-03)
-+ Add support for Seurat version 5 objects
++ Add support for `Seurat` version 5 objects
