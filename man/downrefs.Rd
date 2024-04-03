@@ -22,8 +22,8 @@ Other data:
 \code{\link{cbmc_ref}},
 \code{\link{human_genes_10x}},
 \code{\link{mouse_genes_10x}},
-\code{\link{pbmc_markers_M3Drop}},
 \code{\link{pbmc_markers}},
+\code{\link{pbmc_markers_M3Drop}},
 \code{\link{pbmc_matrix_small}},
 \code{\link{pbmc_meta}},
 \code{\link{pbmc_vargenes}}

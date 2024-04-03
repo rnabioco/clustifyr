@@ -4,6 +4,7 @@ context("run_gsea")
 shush <- function(...) {
   capture.output(..., file = nullfile())
 }
+
 test_that("output is correctly formatted", {
     data("pbmc_vargenes")
    
