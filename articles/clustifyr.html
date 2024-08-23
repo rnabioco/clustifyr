@@ -15,8 +15,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.4.9/font.css" rel="stylesheet">
-<link href="../deps/Source_Code_Pro-0.4.9/font.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Atkinson_Hyperlegible-0.4.9/font.css" rel="stylesheet">
+<link href="../deps/Fira_Code-0.4.9/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to clustifyr">
@@ -30,11 +30,11 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-dark" data-bs-theme="dark"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">clustifyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.15.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.17.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -112,7 +112,7 @@ Medicine<br><h4 data-toc-skip class="author">Kent
 Riemondy</h4>
             <address class="author_afil">
       RNA Bioscience Initative, University of Colorado School of
-Medicine<br><h4 data-toc-skip class="date">2024-04-22</h4>
+Medicine<br><h4 data-toc-skip class="date">2024-08-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyr/blob/HEAD/vignettes/clustifyr.Rmd" class="external-link"><code>vignettes/clustifyr.Rmd</code></a></small>
       <div class="d-none name"><code>clustifyr.Rmd</code></div>
@@ -428,20 +428,20 @@ matrices are supported.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">new_ref_matrix</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                 B CD14+ Mono      CD8 T         DC FCGR3A+ Mono</span></span>
-<span><span class="co">#&gt; PPBP   0.09375021 0.28763857 0.35662599 0.06527347    0.2442300</span></span>
-<span><span class="co">#&gt; LYZ    1.42699419 5.21550849 1.35146753 4.84714962    3.4034309</span></span>
-<span><span class="co">#&gt; S100A9 0.62123058 4.91453355 0.58823794 2.53310734    2.6277996</span></span>
-<span><span class="co">#&gt; IGLL5  2.44576997 0.02434753 0.03284986 0.10986617    0.2581198</span></span>
-<span><span class="co">#&gt; GNLY   0.37877736 0.53592906 2.53161887 0.46959958    0.2903092</span></span>
-<span><span class="co">#&gt; FTL    3.66698837 5.86217774 3.37056910 4.21848878    5.9518479</span></span>
-<span><span class="co">#&gt;        Memory CD4 T Naive CD4 T         NK  Platelet</span></span>
-<span><span class="co">#&gt; PPBP     0.06494743  0.04883837 0.00000000 6.0941782</span></span>
-<span><span class="co">#&gt; LYZ      1.39466552  1.40165143 1.32701580 2.5303912</span></span>
-<span><span class="co">#&gt; S100A9   0.58080250  0.55679700 0.52098541 1.6775692</span></span>
-<span><span class="co">#&gt; IGLL5    0.04826212  0.03116080 0.05247669 0.2501642</span></span>
-<span><span class="co">#&gt; GNLY     0.41001072  0.46041901 4.70481754 0.3845813</span></span>
-<span><span class="co">#&gt; FTL      3.31062958  3.35611600 3.38471536 4.5508242</span></span>
+<span><span class="co">#&gt;                 B CD14+ Mono      CD8 T         DC FCGR3A+ Mono Memory CD4 T</span></span>
+<span><span class="co">#&gt; PPBP   0.09375021 0.28763857 0.35662599 0.06527347    0.2442300   0.06494743</span></span>
+<span><span class="co">#&gt; LYZ    1.42699419 5.21550849 1.35146753 4.84714962    3.4034309   1.39466552</span></span>
+<span><span class="co">#&gt; S100A9 0.62123058 4.91453355 0.58823794 2.53310734    2.6277996   0.58080250</span></span>
+<span><span class="co">#&gt; IGLL5  2.44576997 0.02434753 0.03284986 0.10986617    0.2581198   0.04826212</span></span>
+<span><span class="co">#&gt; GNLY   0.37877736 0.53592906 2.53161887 0.46959958    0.2903092   0.41001072</span></span>
+<span><span class="co">#&gt; FTL    3.66698837 5.86217774 3.37056910 4.21848878    5.9518479   3.31062958</span></span>
+<span><span class="co">#&gt;        Naive CD4 T         NK  Platelet</span></span>
+<span><span class="co">#&gt; PPBP    0.04883837 0.00000000 6.0941782</span></span>
+<span><span class="co">#&gt; LYZ     1.40165143 1.32701580 2.5303912</span></span>
+<span><span class="co">#&gt; S100A9  0.55679700 0.52098541 1.6775692</span></span>
+<span><span class="co">#&gt; IGLL5   0.03116080 0.05247669 0.2501642</span></span>
+<span><span class="co">#&gt; GNLY    0.46041901 4.70481754 0.3845813</span></span>
+<span><span class="co">#&gt; FTL     3.35611600 3.38471536 4.5508242</span></span>
 <span></span>
 <span><span class="co"># For further convenience, a shortcut function for generating reference matrix from `SingleCellExperiment` or `seurat` object is used.</span></span>
 <span><span class="va">new_ref_matrix_sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/object_ref.html">object_ref</a></span><span class="op">(</span></span>
@@ -455,20 +455,20 @@ matrices are supported.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">new_ref_matrix_so</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                  0          1           2          3          4</span></span>
-<span><span class="co">#&gt; RHOC   0.245754269 0.40431050 0.590053057 0.37702525 0.86466156</span></span>
-<span><span class="co">#&gt; CISH   0.492444272 0.54773003 0.079843557 0.08962348 0.66024943</span></span>
-<span><span class="co">#&gt; CD27   1.195370020 1.28719850 0.100562312 0.54487892 1.28322681</span></span>
-<span><span class="co">#&gt; LILRA3 0.004576215 0.03686387 0.544743180 0.00000000 0.03409087</span></span>
-<span><span class="co">#&gt; CLIC2  0.007570624 0.00000000 0.021200958 0.00000000 0.00000000</span></span>
-<span><span class="co">#&gt; HEMGN  0.034099324 0.04619359 0.006467157 0.00000000 0.00000000</span></span>
-<span><span class="co">#&gt;                 5         6          7        8</span></span>
-<span><span class="co">#&gt; RHOC   2.20162898 1.6518448 0.72661911 1.465067</span></span>
-<span><span class="co">#&gt; CISH   0.10588034 0.1339815 0.18231747 0.000000</span></span>
-<span><span class="co">#&gt; CD27   0.09640885 0.1600911 0.04639912 0.000000</span></span>
-<span><span class="co">#&gt; LILRA3 1.35418074 0.0000000 0.00000000 0.000000</span></span>
-<span><span class="co">#&gt; CLIC2  0.00000000 0.0000000 0.46542832 0.000000</span></span>
-<span><span class="co">#&gt; HEMGN  0.00000000 0.0000000 0.00000000 1.079083</span></span></code></pre></div>
+<span><span class="co">#&gt;                  0          1           2          3          4          5</span></span>
+<span><span class="co">#&gt; RHOC   0.245754269 0.40431050 0.590053057 0.37702525 0.86466156 2.20162898</span></span>
+<span><span class="co">#&gt; CISH   0.492444272 0.54773003 0.079843557 0.08962348 0.66024943 0.10588034</span></span>
+<span><span class="co">#&gt; CD27   1.195370020 1.28719850 0.100562312 0.54487892 1.28322681 0.09640885</span></span>
+<span><span class="co">#&gt; LILRA3 0.004576215 0.03686387 0.544743180 0.00000000 0.03409087 1.35418074</span></span>
+<span><span class="co">#&gt; CLIC2  0.007570624 0.00000000 0.021200958 0.00000000 0.00000000 0.00000000</span></span>
+<span><span class="co">#&gt; HEMGN  0.034099324 0.04619359 0.006467157 0.00000000 0.00000000 0.00000000</span></span>
+<span><span class="co">#&gt;                6          7        8</span></span>
+<span><span class="co">#&gt; RHOC   1.6518448 0.72661911 1.465067</span></span>
+<span><span class="co">#&gt; CISH   0.1339815 0.18231747 0.000000</span></span>
+<span><span class="co">#&gt; CD27   0.1600911 0.04639912 0.000000</span></span>
+<span><span class="co">#&gt; LILRA3 0.0000000 0.00000000 0.000000</span></span>
+<span><span class="co">#&gt; CLIC2  0.0000000 0.46542832 0.000000</span></span>
+<span><span class="co">#&gt; HEMGN  0.0000000 0.00000000 1.079083</span></span></code></pre></div>
 <p>More reference data, including tabula muris, and code used to
 generate them are available at <a href="https://github.com/rnabioco/clustifyrdata" class="external-link uri">https://github.com/rnabioco/clustifyrdata</a></p>
 <p>Also see list for individual downloads at <a href="https://rnabioco.github.io/clustifyrdata/articles/download_refs.html" class="external-link uri">https://rnabioco.github.io/clustifyrdata/articles/download_refs.html</a></p>
@@ -509,57 +509,41 @@ generate them are available at <a href="https://github.com/rnabioco/clustifyrdat
 <span><span class="co">#&gt;  [7] S4Vectors_0.40.2            BiocGenerics_0.48.1        </span></span>
 <span><span class="co">#&gt;  [9] MatrixGenerics_1.14.0       matrixStats_1.3.0          </span></span>
 <span><span class="co">#&gt; [11] cowplot_1.1.3               ggplot2_3.5.0              </span></span>
-<span><span class="co">#&gt; [13] clustifyr_1.15.4            BiocStyle_2.30.0           </span></span>
+<span><span class="co">#&gt; [13] clustifyr_1.17.0            BiocStyle_2.30.0           </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span><span class="co">#&gt;  [1] bitops_1.0-7            rlang_1.1.3            </span></span>
-<span><span class="co">#&gt;  [3] magrittr_2.0.3          clue_0.3-65            </span></span>
-<span><span class="co">#&gt;  [5] GetoptLong_1.0.5        compiler_4.3.3         </span></span>
-<span><span class="co">#&gt;  [7] png_0.1-8               systemfonts_1.0.6      </span></span>
-<span><span class="co">#&gt;  [9] vctrs_0.6.5             shape_1.4.6.1          </span></span>
-<span><span class="co">#&gt; [11] pkgconfig_2.0.3         crayon_1.5.2           </span></span>
-<span><span class="co">#&gt; [13] fastmap_1.1.1           XVector_0.42.0         </span></span>
-<span><span class="co">#&gt; [15] labeling_0.4.3          utf8_1.2.4             </span></span>
-<span><span class="co">#&gt; [17] rmarkdown_2.26          ragg_1.3.0             </span></span>
-<span><span class="co">#&gt; [19] purrr_1.0.2             xfun_0.43              </span></span>
-<span><span class="co">#&gt; [21] zlibbioc_1.48.2         cachem_1.0.8           </span></span>
-<span><span class="co">#&gt; [23] jsonlite_1.8.8          highr_0.10             </span></span>
-<span><span class="co">#&gt; [25] DelayedArray_0.28.0     BiocParallel_1.36.0    </span></span>
-<span><span class="co">#&gt; [27] cluster_2.1.6           parallel_4.3.3         </span></span>
-<span><span class="co">#&gt; [29] R6_2.5.1                bslib_0.7.0            </span></span>
-<span><span class="co">#&gt; [31] RColorBrewer_1.1-3      parallelly_1.37.1      </span></span>
-<span><span class="co">#&gt; [33] jquerylib_0.1.4         Rcpp_1.0.12            </span></span>
-<span><span class="co">#&gt; [35] bookdown_0.39           iterators_1.0.14       </span></span>
-<span><span class="co">#&gt; [37] knitr_1.46              future.apply_1.11.2    </span></span>
-<span><span class="co">#&gt; [39] Matrix_1.6-5            tidyselect_1.2.1       </span></span>
-<span><span class="co">#&gt; [41] abind_1.4-5             yaml_2.3.8             </span></span>
-<span><span class="co">#&gt; [43] doParallel_1.0.17       codetools_0.2-20       </span></span>
-<span><span class="co">#&gt; [45] listenv_0.9.1           lattice_0.22-6         </span></span>
-<span><span class="co">#&gt; [47] tibble_3.2.1            withr_3.0.0            </span></span>
-<span><span class="co">#&gt; [49] evaluate_0.23           future_1.33.2          </span></span>
-<span><span class="co">#&gt; [51] desc_1.4.3              circlize_0.4.16        </span></span>
-<span><span class="co">#&gt; [53] pillar_1.9.0            BiocManager_1.30.22    </span></span>
-<span><span class="co">#&gt; [55] foreach_1.5.2           generics_0.1.3         </span></span>
-<span><span class="co">#&gt; [57] sp_2.1-3                RCurl_1.98-1.14        </span></span>
-<span><span class="co">#&gt; [59] munsell_0.5.1           scales_1.3.0           </span></span>
-<span><span class="co">#&gt; [61] globals_0.16.3          glue_1.7.0             </span></span>
-<span><span class="co">#&gt; [63] tools_4.3.3             data.table_1.15.4      </span></span>
-<span><span class="co">#&gt; [65] fgsea_1.28.0            fs_1.6.3               </span></span>
-<span><span class="co">#&gt; [67] dotCall64_1.1-1         fastmatch_1.1-4        </span></span>
-<span><span class="co">#&gt; [69] grid_4.3.3              tidyr_1.3.1            </span></span>
-<span><span class="co">#&gt; [71] colorspace_2.1-0        GenomeInfoDbData_1.2.11</span></span>
-<span><span class="co">#&gt; [73] cli_3.6.2               textshaping_0.3.7      </span></span>
-<span><span class="co">#&gt; [75] spam_2.10-0             fansi_1.0.6            </span></span>
-<span><span class="co">#&gt; [77] S4Arrays_1.2.1          ComplexHeatmap_2.18.0  </span></span>
-<span><span class="co">#&gt; [79] dplyr_1.1.4             gtable_0.3.4           </span></span>
-<span><span class="co">#&gt; [81] sass_0.4.9              digest_0.6.35          </span></span>
-<span><span class="co">#&gt; [83] progressr_0.14.0        SparseArray_1.2.4      </span></span>
-<span><span class="co">#&gt; [85] farver_2.1.1            rjson_0.2.21           </span></span>
-<span><span class="co">#&gt; [87] htmlwidgets_1.6.4       SeuratObject_5.0.1     </span></span>
-<span><span class="co">#&gt; [89] memoise_2.0.1           entropy_1.3.1          </span></span>
-<span><span class="co">#&gt; [91] htmltools_0.5.8.1       pkgdown_2.0.9          </span></span>
-<span><span class="co">#&gt; [93] lifecycle_1.0.4         httr_1.4.7             </span></span>
-<span><span class="co">#&gt; [95] GlobalOptions_0.1.2</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] bitops_1.0-7            rlang_1.1.3             magrittr_2.0.3         </span></span>
+<span><span class="co">#&gt;  [4] clue_0.3-65             GetoptLong_1.0.5        compiler_4.3.3         </span></span>
+<span><span class="co">#&gt;  [7] png_0.1-8               systemfonts_1.0.6       vctrs_0.6.5            </span></span>
+<span><span class="co">#&gt; [10] shape_1.4.6.1           pkgconfig_2.0.3         crayon_1.5.2           </span></span>
+<span><span class="co">#&gt; [13] fastmap_1.1.1           XVector_0.42.0          labeling_0.4.3         </span></span>
+<span><span class="co">#&gt; [16] utf8_1.2.4              rmarkdown_2.26          ragg_1.3.0             </span></span>
+<span><span class="co">#&gt; [19] purrr_1.0.2             xfun_0.43               zlibbioc_1.48.2        </span></span>
+<span><span class="co">#&gt; [22] cachem_1.0.8            jsonlite_1.8.8          highr_0.10             </span></span>
+<span><span class="co">#&gt; [25] DelayedArray_0.28.0     BiocParallel_1.36.0     cluster_2.1.6          </span></span>
+<span><span class="co">#&gt; [28] parallel_4.3.3          R6_2.5.1                bslib_0.7.0            </span></span>
+<span><span class="co">#&gt; [31] RColorBrewer_1.1-3      parallelly_1.37.1       jquerylib_0.1.4        </span></span>
+<span><span class="co">#&gt; [34] Rcpp_1.0.12             bookdown_0.39           iterators_1.0.14       </span></span>
+<span><span class="co">#&gt; [37] knitr_1.46              future.apply_1.11.2     Matrix_1.6-5           </span></span>
+<span><span class="co">#&gt; [40] tidyselect_1.2.1        abind_1.4-5             yaml_2.3.8             </span></span>
+<span><span class="co">#&gt; [43] doParallel_1.0.17       codetools_0.2-20        listenv_0.9.1          </span></span>
+<span><span class="co">#&gt; [46] lattice_0.22-6          tibble_3.2.1            withr_3.0.0            </span></span>
+<span><span class="co">#&gt; [49] evaluate_0.23           future_1.33.2           desc_1.4.3             </span></span>
+<span><span class="co">#&gt; [52] circlize_0.4.16         pillar_1.9.0            BiocManager_1.30.22    </span></span>
+<span><span class="co">#&gt; [55] foreach_1.5.2           generics_0.1.3          sp_2.1-3               </span></span>
+<span><span class="co">#&gt; [58] RCurl_1.98-1.14         munsell_0.5.1           scales_1.3.0           </span></span>
+<span><span class="co">#&gt; [61] globals_0.16.3          glue_1.7.0              tools_4.3.3            </span></span>
+<span><span class="co">#&gt; [64] data.table_1.15.4       fgsea_1.28.0            fs_1.6.3               </span></span>
+<span><span class="co">#&gt; [67] dotCall64_1.1-1         fastmatch_1.1-4         grid_4.3.3             </span></span>
+<span><span class="co">#&gt; [70] tidyr_1.3.1             colorspace_2.1-0        GenomeInfoDbData_1.2.11</span></span>
+<span><span class="co">#&gt; [73] cli_3.6.2               textshaping_0.3.7       spam_2.10-0            </span></span>
+<span><span class="co">#&gt; [76] fansi_1.0.6             S4Arrays_1.2.1          ComplexHeatmap_2.18.0  </span></span>
+<span><span class="co">#&gt; [79] dplyr_1.1.4             gtable_0.3.5            sass_0.4.9             </span></span>
+<span><span class="co">#&gt; [82] digest_0.6.35           progressr_0.14.0        SparseArray_1.2.4      </span></span>
+<span><span class="co">#&gt; [85] farver_2.1.1            rjson_0.2.21            htmlwidgets_1.6.4      </span></span>
+<span><span class="co">#&gt; [88] SeuratObject_5.0.1      memoise_2.0.1           entropy_1.3.1          </span></span>
+<span><span class="co">#&gt; [91] htmltools_0.5.8.1       pkgdown_2.0.9           lifecycle_1.0.4        </span></span>
+<span><span class="co">#&gt; [94] httr_1.4.7              GlobalOptions_0.1.2</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
