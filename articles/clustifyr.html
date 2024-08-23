@@ -5,7 +5,6 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="clustifyr">
 <title>Introduction to clustifyr • clustifyr</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
@@ -13,64 +12,58 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Atkinson_Hyperlegible-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/Fira_Code-0.4.9/font.css" rel="stylesheet">
-<!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to clustifyr">
-<meta property="og:description" content="clustifyr">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]--><script defer data-domain="rnabioco.github.io" src="https://plausible.io/js/plausible.js"></script>
+<link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to clustifyr">
+<script defer data-domain="rnabioco.github.io" src="https://plausible.io/js/plausible.js"></script>
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top " aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="../index.html">clustifyr</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.17.0</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="active nav-item">
-  <a class="nav-link" href="../articles/clustifyr.html">Get started</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
-</li>
+<li class="active nav-item"><a class="nav-link" href="../articles/clustifyr.html">Get started</a></li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/geo-annotations.html">Improving NCBI GEO submissions of scRNA-seq data</a>
-  </div>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="../articles/geo-annotations.html">Improving NCBI GEO submissions of scRNA-seq data</a></li>
+  </ul>
 </li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav">
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/rnabioco/clustifyr/" aria-label="github">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
-  </a>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
+</form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/rnabioco/clustifyr/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch">
+<li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
+    <li><button class="dropdown-item" data-bs-theme-value="dark"><span class="fa fa-moon"></span> Dark</button></li>
+    <li><button class="dropdown-item" data-bs-theme-value="auto"><span class="fa fa-adjust"></span> Auto</button></li>
+  </ul>
 </li>
       </ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-article">
 
@@ -79,7 +72,8 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Introduction to clustifyr</h1>
+
+      <h1>Introduction to clustifyr</h1>
                         <h4 data-toc-skip class="author">Rui Fu</h4>
             <address class="author_afil">
       RNA Bioscience Initative, University of Colorado School of
@@ -114,7 +108,7 @@ Riemondy</h4>
       RNA Bioscience Initative, University of Colorado School of
 Medicine<br><h4 data-toc-skip class="date">2024-08-23</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyr/blob/HEAD/vignettes/clustifyr.Rmd" class="external-link"><code>vignettes/clustifyr.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyr/blob/devel/vignettes/clustifyr.Rmd" class="external-link"><code>vignettes/clustifyr.Rmd</code></a></small>
       <div class="d-none name"><code>clustifyr.Rmd</code></div>
     </address>
 </address>
@@ -199,11 +193,11 @@ cluster, with the rownames corresponding to the cluster number.</p>
 <span><span class="va">vargenes</span> <span class="op">&lt;-</span> <span class="va">pbmc_vargenes</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">500</span><span class="op">]</span></span>
 <span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clustify.html">clustify</a></span><span class="op">(</span></span>
-<span>  input <span class="op">=</span> <span class="va">pbmc_matrix</span>, <span class="co"># matrix of normalized scRNA-seq counts (or SCE/Seurat object)</span></span>
-<span>  metadata <span class="op">=</span> <span class="va">pbmc_meta</span>, <span class="co"># meta.data table containing cell clusters</span></span>
-<span>  cluster_col <span class="op">=</span> <span class="st">"seurat_clusters"</span>, <span class="co"># name of column in meta.data containing cell clusters</span></span>
-<span>  ref_mat <span class="op">=</span> <span class="va">cbmc_ref</span>, <span class="co"># matrix of RNA-seq expression data for each cell type</span></span>
-<span>  query_genes <span class="op">=</span> <span class="va">vargenes</span> <span class="co"># list of highly varible genes identified with Seurat</span></span>
+<span>    input <span class="op">=</span> <span class="va">pbmc_matrix</span>, <span class="co"># matrix of normalized scRNA-seq counts (or SCE/Seurat object)</span></span>
+<span>    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>, <span class="co"># meta.data table containing cell clusters</span></span>
+<span>    cluster_col <span class="op">=</span> <span class="st">"seurat_clusters"</span>, <span class="co"># name of column in meta.data containing cell clusters</span></span>
+<span>    ref_mat <span class="op">=</span> <span class="va">cbmc_ref</span>, <span class="co"># matrix of RNA-seq expression data for each cell type</span></span>
+<span>    query_genes <span class="op">=</span> <span class="va">vargenes</span> <span class="co"># list of highly varible genes identified with Seurat</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Peek at correlation matrix</span></span>
@@ -217,8 +211,8 @@ cluster, with the rownames corresponding to the cluster number.</p>
 <span></span>
 <span><span class="co"># Call cell types</span></span>
 <span><span class="va">res2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cor_to_call.html">cor_to_call</a></span><span class="op">(</span></span>
-<span>  cor_mat <span class="op">=</span> <span class="va">res</span>,                  <span class="co"># matrix correlation coefficients</span></span>
-<span>  cluster_col <span class="op">=</span> <span class="st">"seurat_clusters"</span> <span class="co"># name of column in meta.data containing cell clusters</span></span>
+<span>    cor_mat <span class="op">=</span> <span class="va">res</span>, <span class="co"># matrix correlation coefficients</span></span>
+<span>    cluster_col <span class="op">=</span> <span class="st">"seurat_clusters"</span> <span class="co"># name of column in meta.data containing cell clusters</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">res2</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="op">]</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 3</span></span></span>
@@ -233,9 +227,9 @@ cluster, with the rownames corresponding to the cluster number.</p>
 <span></span>
 <span><span class="co"># Insert into original metadata as "type" column</span></span>
 <span><span class="va">pbmc_meta2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/call_to_metadata.html">call_to_metadata</a></span><span class="op">(</span></span>
-<span>  res <span class="op">=</span> <span class="va">res2</span>,                     <span class="co"># data.frame of called cell type for each cluster</span></span>
-<span>  metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,           <span class="co"># original meta.data table containing cell clusters</span></span>
-<span>  cluster_col <span class="op">=</span> <span class="st">"seurat_clusters"</span> <span class="co"># name of column in meta.data containing cell clusters</span></span>
+<span>    res <span class="op">=</span> <span class="va">res2</span>, <span class="co"># data.frame of called cell type for each cluster</span></span>
+<span>    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>, <span class="co"># original meta.data table containing cell clusters</span></span>
+<span>    cluster_col <span class="op">=</span> <span class="st">"seurat_clusters"</span> <span class="co"># name of column in meta.data containing cell clusters</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>To visualize the <code><a href="../reference/clustifyr-package.html">clustifyr()</a></code> results we can use the
 <code><a href="../reference/plot_cor_heatmap.html">plot_cor_heatmap()</a></code> function to plot the correlation
@@ -254,15 +248,15 @@ dimensionality reduction method).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Overlay correlation coefficients on UMAPs for the first two cell types</span></span>
 <span><span class="va">corr_umaps</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_cor.html">plot_cor</a></span><span class="op">(</span></span>
-<span>  cor_mat <span class="op">=</span> <span class="va">res</span>,                     <span class="co"># matrix of correlation coefficients from clustifyr()</span></span>
-<span>  metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,              <span class="co"># meta.data table containing UMAP or tSNE data</span></span>
-<span>  data_to_plot <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="co"># name of cell type(s) to plot correlation coefficients</span></span>
-<span>  cluster_col <span class="op">=</span> <span class="st">"seurat_clusters"</span>    <span class="co"># name of column in meta.data containing cell clusters</span></span>
+<span>    cor_mat <span class="op">=</span> <span class="va">res</span>, <span class="co"># matrix of correlation coefficients from clustifyr()</span></span>
+<span>    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>, <span class="co"># meta.data table containing UMAP or tSNE data</span></span>
+<span>    data_to_plot <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="co"># name of cell type(s) to plot correlation coefficients</span></span>
+<span>    cluster_col <span class="op">=</span> <span class="st">"seurat_clusters"</span> <span class="co"># name of column in meta.data containing cell clusters</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html" class="external-link">plot_grid</a></span><span class="op">(</span></span>
-<span>  plotlist <span class="op">=</span> <span class="va">corr_umaps</span>,</span>
-<span>  rel_widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.47</span>, <span class="fl">0.53</span><span class="op">)</span></span>
+<span>    plotlist <span class="op">=</span> <span class="va">corr_umaps</span>,</span>
+<span>    rel_widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.47</span>, <span class="fl">0.53</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="clustifyr_files/figure-html/Overlay%20corr%20coefficients%20on%20UMAP-1.png" width="864" style="display: block; margin: auto;"></p>
 <p><br></p>
@@ -277,24 +271,24 @@ clusters.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Label clusters with clustifyr cell identities</span></span>
 <span><span class="va">clustifyr_types</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_best_call.html">plot_best_call</a></span><span class="op">(</span></span>
-<span>  cor_mat <span class="op">=</span> <span class="va">res</span>,          <span class="co"># matrix of correlation coefficients from clustifyr()</span></span>
-<span>  metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,   <span class="co"># meta.data table containing UMAP or tSNE data</span></span>
-<span>  do_label <span class="op">=</span> <span class="cn">TRUE</span>,        <span class="co"># should the feature label be shown on each cluster?</span></span>
-<span>  do_legend <span class="op">=</span> <span class="cn">FALSE</span>,      <span class="co"># should the legend be shown?</span></span>
-<span>  do_repel <span class="op">=</span> <span class="cn">FALSE</span>,       <span class="co"># use ggrepel to avoid overlapping labels</span></span>
-<span>  cluster_col <span class="op">=</span> <span class="st">"seurat_clusters"</span></span>
+<span>    cor_mat <span class="op">=</span> <span class="va">res</span>, <span class="co"># matrix of correlation coefficients from clustifyr()</span></span>
+<span>    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>, <span class="co"># meta.data table containing UMAP or tSNE data</span></span>
+<span>    do_label <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># should the feature label be shown on each cluster?</span></span>
+<span>    do_legend <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># should the legend be shown?</span></span>
+<span>    do_repel <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># use ggrepel to avoid overlapping labels</span></span>
+<span>    cluster_col <span class="op">=</span> <span class="st">"seurat_clusters"</span></span>
 <span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"clustifyr cell types"</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"clustifyr cell types"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Compare clustifyr results with known cell identities</span></span>
 <span><span class="va">known_types</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_dims.html">plot_dims</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="va">pbmc_meta</span>,       <span class="co"># meta.data table containing UMAP or tSNE data</span></span>
-<span>  feature <span class="op">=</span> <span class="st">"classified"</span>, <span class="co"># name of column in meta.data to color clusters by</span></span>
-<span>  do_label <span class="op">=</span> <span class="cn">TRUE</span>,        <span class="co"># should the feature label be shown on each cluster?</span></span>
-<span>  do_legend <span class="op">=</span> <span class="cn">FALSE</span>,      <span class="co"># should the legend be shown?</span></span>
-<span>  do_repel <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>    data <span class="op">=</span> <span class="va">pbmc_meta</span>, <span class="co"># meta.data table containing UMAP or tSNE data</span></span>
+<span>    feature <span class="op">=</span> <span class="st">"classified"</span>, <span class="co"># name of column in meta.data to color clusters by</span></span>
+<span>    do_label <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># should the feature label be shown on each cluster?</span></span>
+<span>    do_legend <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># should the legend be shown?</span></span>
+<span>    do_repel <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Known cell types"</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Known cell types"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html" class="external-link">plot_grid</a></span><span class="op">(</span><span class="va">known_types</span>, <span class="va">clustifyr_types</span><span class="op">)</span></span></code></pre></div>
 <p><img src="clustifyr_files/figure-html/Label%20clusters-1.png" width="1152" style="display: block; margin: auto;"></p>
@@ -321,19 +315,19 @@ Jaccard, Spearman, and GSEA.</p>
 <span></span>
 <span><span class="co"># Available metrics include: "hyper", "jaccard", "spearman", "gsea"</span></span>
 <span><span class="va">list_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clustify_lists.html">clustify_lists</a></span><span class="op">(</span></span>
-<span>  input <span class="op">=</span> <span class="va">pbmc_matrix</span>,             <span class="co"># matrix of normalized single-cell RNA-seq counts</span></span>
-<span>  metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,            <span class="co"># meta.data table containing cell clusters</span></span>
-<span>  cluster_col <span class="op">=</span> <span class="st">"seurat_clusters"</span>, <span class="co"># name of column in meta.data containing cell clusters</span></span>
-<span>  marker <span class="op">=</span> <span class="va">cbmc_m</span>,                 <span class="co"># list of known marker genes</span></span>
-<span>  metric <span class="op">=</span> <span class="st">"pct"</span>                   <span class="co"># test to use for assigning cell types</span></span>
+<span>    input <span class="op">=</span> <span class="va">pbmc_matrix</span>, <span class="co"># matrix of normalized single-cell RNA-seq counts</span></span>
+<span>    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>, <span class="co"># meta.data table containing cell clusters</span></span>
+<span>    cluster_col <span class="op">=</span> <span class="st">"seurat_clusters"</span>, <span class="co"># name of column in meta.data containing cell clusters</span></span>
+<span>    marker <span class="op">=</span> <span class="va">cbmc_m</span>, <span class="co"># list of known marker genes</span></span>
+<span>    metric <span class="op">=</span> <span class="st">"pct"</span> <span class="co"># test to use for assigning cell types</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># View as heatmap, or plot_best_call</span></span>
 <span><span class="fu"><a href="../reference/plot_cor_heatmap.html">plot_cor_heatmap</a></span><span class="op">(</span></span>
-<span>  cor_mat <span class="op">=</span> <span class="va">list_res</span>,              <span class="co"># matrix of correlation coefficients from clustify_lists()</span></span>
-<span>  cluster_rows <span class="op">=</span> <span class="cn">FALSE</span>,            <span class="co"># cluster by row?</span></span>
-<span>  cluster_columns <span class="op">=</span> <span class="cn">FALSE</span>,         <span class="co"># cluster by column?</span></span>
-<span>  legend_title <span class="op">=</span> <span class="st">"% expressed"</span>     <span class="co"># title of heatmap legend</span></span>
+<span>    cor_mat <span class="op">=</span> <span class="va">list_res</span>, <span class="co"># matrix of correlation coefficients from clustify_lists()</span></span>
+<span>    cluster_rows <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># cluster by row?</span></span>
+<span>    cluster_columns <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># cluster by column?</span></span>
+<span>    legend_title <span class="op">=</span> <span class="st">"% expressed"</span> <span class="co"># title of heatmap legend</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="clustifyr_files/figure-html/clustifyr%20with%20gene%20lists-1.png" width="576" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -341,16 +335,16 @@ Jaccard, Spearman, and GSEA.</p>
 <span><span class="co"># Downstream functions same as clustify()</span></span>
 <span><span class="co"># Call cell types</span></span>
 <span><span class="va">list_res2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cor_to_call.html">cor_to_call</a></span><span class="op">(</span></span>
-<span>  cor_mat <span class="op">=</span> <span class="va">list_res</span>,              <span class="co"># matrix correlation coefficients</span></span>
-<span>  cluster_col <span class="op">=</span> <span class="st">"seurat_clusters"</span>  <span class="co"># name of column in meta.data containing cell clusters</span></span>
+<span>    cor_mat <span class="op">=</span> <span class="va">list_res</span>, <span class="co"># matrix correlation coefficients</span></span>
+<span>    cluster_col <span class="op">=</span> <span class="st">"seurat_clusters"</span> <span class="co"># name of column in meta.data containing cell clusters</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Insert into original metadata as "list_type" column</span></span>
 <span><span class="va">pbmc_meta3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/call_to_metadata.html">call_to_metadata</a></span><span class="op">(</span></span>
-<span>  res <span class="op">=</span> <span class="va">list_res2</span>,                 <span class="co"># data.frame of called cell type for each cluster</span></span>
-<span>  metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,            <span class="co"># original meta.data table containing cell clusters</span></span>
-<span>  cluster_col <span class="op">=</span> <span class="st">"seurat_clusters"</span>, <span class="co"># name of column in meta.data containing cell clusters</span></span>
-<span>  rename_prefix <span class="op">=</span> <span class="st">"list_"</span>          <span class="co"># set a prefix for the new column</span></span>
+<span>    res <span class="op">=</span> <span class="va">list_res2</span>, <span class="co"># data.frame of called cell type for each cluster</span></span>
+<span>    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>, <span class="co"># original meta.data table containing cell clusters</span></span>
+<span>    cluster_col <span class="op">=</span> <span class="st">"seurat_clusters"</span>, <span class="co"># name of column in meta.data containing cell clusters</span></span>
+<span>    rename_prefix <span class="op">=</span> <span class="st">"list_"</span> <span class="co"># set a prefix for the new column</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -364,10 +358,10 @@ column in the colData.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">SingleCellExperiment</span><span class="op">)</span></span>
 <span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sce_pbmc.html">sce_pbmc</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clustify.html">clustify</a></span><span class="op">(</span></span>
-<span>  input <span class="op">=</span> <span class="va">sce</span>,                <span class="co"># an SCE object</span></span>
-<span>  ref_mat <span class="op">=</span> <span class="va">cbmc_ref</span>,         <span class="co"># matrix of RNA-seq expression data for each cell type</span></span>
-<span>  cluster_col <span class="op">=</span> <span class="st">"clusters"</span>,   <span class="co"># name of column in meta.data containing cell clusters</span></span>
-<span>  obj_out <span class="op">=</span> <span class="cn">TRUE</span>              <span class="co"># output SCE object with cell type inserted as "type" column</span></span>
+<span>    input <span class="op">=</span> <span class="va">sce</span>, <span class="co"># an SCE object</span></span>
+<span>    ref_mat <span class="op">=</span> <span class="va">cbmc_ref</span>, <span class="co"># matrix of RNA-seq expression data for each cell type</span></span>
+<span>    cluster_col <span class="op">=</span> <span class="st">"clusters"</span>, <span class="co"># name of column in meta.data containing cell clusters</span></span>
+<span>    obj_out <span class="op">=</span> <span class="cn">TRUE</span> <span class="co"># output SCE object with cell type inserted as "type" column</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"type"</span>, <span class="st">"r"</span><span class="op">)</span><span class="op">]</span></span>
@@ -394,13 +388,14 @@ added as a column in the meta.data.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">so</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/so_pbmc.html">so_pbmc</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clustify.html">clustify</a></span><span class="op">(</span></span>
-<span>  input <span class="op">=</span> <span class="va">so</span>,      <span class="co"># a Seurat object</span></span>
-<span>  ref_mat <span class="op">=</span> <span class="va">cbmc_ref</span>,   <span class="co"># matrix of RNA-seq expression data for each cell type</span></span>
-<span>  cluster_col <span class="op">=</span> <span class="st">"seurat_clusters"</span>, <span class="co"># name of column in meta.data containing cell clusters</span></span>
-<span>  obj_out <span class="op">=</span> <span class="cn">TRUE</span>  <span class="co"># output Seurat object with cell type inserted as "type" column</span></span>
+<span>    input <span class="op">=</span> <span class="va">so</span>, <span class="co"># a Seurat object</span></span>
+<span>    ref_mat <span class="op">=</span> <span class="va">cbmc_ref</span>, <span class="co"># matrix of RNA-seq expression data for each cell type</span></span>
+<span>    cluster_col <span class="op">=</span> <span class="st">"seurat_clusters"</span>, <span class="co"># name of column in meta.data containing cell clusters</span></span>
+<span>    obj_out <span class="op">=</span> <span class="cn">TRUE</span> <span class="co"># output Seurat object with cell type inserted as "type" column</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">res</span><span class="op">@</span><span class="va">meta.data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"type"</span>, <span class="st">"r"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co"># type and r are stored in the meta.data</span></span>
+<span><span class="va">res</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"type"</span>, <span class="st">"r"</span><span class="op">)</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span></span>
 <span><span class="co">#&gt;                      type         r</span></span>
 <span><span class="co">#&gt; AAACATACAACCAC      CD4 T 0.8424452</span></span>
 <span><span class="co">#&gt; AAACATTGAGCTAC          B 0.8984684</span></span>
@@ -422,9 +417,9 @@ RNA-seq expression matrix by cluster. Both log transformed or raw count
 matrices are supported.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">new_ref_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/average_clusters.html">average_clusters</a></span><span class="op">(</span></span>
-<span>  mat <span class="op">=</span> <span class="va">pbmc_matrix</span>,</span>
-<span>  metadata <span class="op">=</span> <span class="va">pbmc_meta</span><span class="op">$</span><span class="va">classified</span>, <span class="co"># or use metadata = pbmc_meta, cluster_col = "classified"</span></span>
-<span>  if_log <span class="op">=</span> <span class="cn">TRUE</span>                    <span class="co"># whether the expression matrix is already log transformed</span></span>
+<span>    mat <span class="op">=</span> <span class="va">pbmc_matrix</span>,</span>
+<span>    metadata <span class="op">=</span> <span class="va">pbmc_meta</span><span class="op">$</span><span class="va">classified</span>, <span class="co"># or use metadata = pbmc_meta, cluster_col = "classified"</span></span>
+<span>    if_log <span class="op">=</span> <span class="cn">TRUE</span> <span class="co"># whether the expression matrix is already log transformed</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">new_ref_matrix</span><span class="op">)</span></span>
@@ -445,13 +440,13 @@ matrices are supported.</p>
 <span></span>
 <span><span class="co"># For further convenience, a shortcut function for generating reference matrix from `SingleCellExperiment` or `seurat` object is used.</span></span>
 <span><span class="va">new_ref_matrix_sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/object_ref.html">object_ref</a></span><span class="op">(</span></span>
-<span>  input <span class="op">=</span> <span class="va">sce</span>,                     <span class="co"># SCE object</span></span>
-<span>  cluster_col <span class="op">=</span> <span class="st">"clusters"</span>       <span class="co"># name of column in colData containing cell identities</span></span>
+<span>    input <span class="op">=</span> <span class="va">sce</span>, <span class="co"># SCE object</span></span>
+<span>    cluster_col <span class="op">=</span> <span class="st">"clusters"</span> <span class="co"># name of column in colData containing cell identities</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">new_ref_matrix_so</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/seurat_ref.html">seurat_ref</a></span><span class="op">(</span></span>
-<span>  seurat_object <span class="op">=</span> <span class="va">so</span>,        <span class="co"># Seurat object</span></span>
-<span>  cluster_col <span class="op">=</span> <span class="st">"seurat_clusters"</span>    <span class="co"># name of column in meta.data containing cell identities</span></span>
+<span>    seurat_object <span class="op">=</span> <span class="va">so</span>, <span class="co"># Seurat object</span></span>
+<span>    cluster_col <span class="op">=</span> <span class="st">"seurat_clusters"</span> <span class="co"># name of column in meta.data containing cell identities</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">new_ref_matrix_so</span><span class="op">)</span></span>
@@ -479,8 +474,8 @@ generate them are available at <a href="https://github.com/rnabioco/clustifyrdat
 </h2>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; R version 4.3.3 (2024-02-29)</span></span>
-<span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
+<span><span class="co">#&gt; R version 4.4.1 (2024-06-14)</span></span>
+<span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu</span></span>
 <span><span class="co">#&gt; Running under: Ubuntu 22.04.4 LTS</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Matrix products: default</span></span>
@@ -503,49 +498,48 @@ generate them are available at <a href="https://github.com/rnabioco/clustifyrdat
 <span><span class="co">#&gt; [8] base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt;  [1] SingleCellExperiment_1.24.0 SummarizedExperiment_1.32.0</span></span>
-<span><span class="co">#&gt;  [3] Biobase_2.62.0              GenomicRanges_1.54.1       </span></span>
-<span><span class="co">#&gt;  [5] GenomeInfoDb_1.38.8         IRanges_2.36.0             </span></span>
-<span><span class="co">#&gt;  [7] S4Vectors_0.40.2            BiocGenerics_0.48.1        </span></span>
-<span><span class="co">#&gt;  [9] MatrixGenerics_1.14.0       matrixStats_1.3.0          </span></span>
-<span><span class="co">#&gt; [11] cowplot_1.1.3               ggplot2_3.5.0              </span></span>
-<span><span class="co">#&gt; [13] clustifyr_1.17.0            BiocStyle_2.30.0           </span></span>
+<span><span class="co">#&gt;  [1] SingleCellExperiment_1.27.2 SummarizedExperiment_1.35.1</span></span>
+<span><span class="co">#&gt;  [3] Biobase_2.65.0              GenomicRanges_1.57.1       </span></span>
+<span><span class="co">#&gt;  [5] GenomeInfoDb_1.41.1         IRanges_2.39.2             </span></span>
+<span><span class="co">#&gt;  [7] S4Vectors_0.43.2            BiocGenerics_0.51.0        </span></span>
+<span><span class="co">#&gt;  [9] MatrixGenerics_1.17.0       matrixStats_1.3.0          </span></span>
+<span><span class="co">#&gt; [11] cowplot_1.1.3               ggplot2_3.5.1              </span></span>
+<span><span class="co">#&gt; [13] clustifyr_1.17.0            BiocStyle_2.33.1           </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span><span class="co">#&gt;  [1] bitops_1.0-7            rlang_1.1.3             magrittr_2.0.3         </span></span>
-<span><span class="co">#&gt;  [4] clue_0.3-65             GetoptLong_1.0.5        compiler_4.3.3         </span></span>
-<span><span class="co">#&gt;  [7] png_0.1-8               systemfonts_1.0.6       vctrs_0.6.5            </span></span>
-<span><span class="co">#&gt; [10] shape_1.4.6.1           pkgconfig_2.0.3         crayon_1.5.2           </span></span>
-<span><span class="co">#&gt; [13] fastmap_1.1.1           XVector_0.42.0          labeling_0.4.3         </span></span>
-<span><span class="co">#&gt; [16] utf8_1.2.4              rmarkdown_2.26          ragg_1.3.0             </span></span>
-<span><span class="co">#&gt; [19] purrr_1.0.2             xfun_0.43               zlibbioc_1.48.2        </span></span>
-<span><span class="co">#&gt; [22] cachem_1.0.8            jsonlite_1.8.8          highr_0.10             </span></span>
-<span><span class="co">#&gt; [25] DelayedArray_0.28.0     BiocParallel_1.36.0     cluster_2.1.6          </span></span>
-<span><span class="co">#&gt; [28] parallel_4.3.3          R6_2.5.1                bslib_0.7.0            </span></span>
-<span><span class="co">#&gt; [31] RColorBrewer_1.1-3      parallelly_1.37.1       jquerylib_0.1.4        </span></span>
-<span><span class="co">#&gt; [34] Rcpp_1.0.12             bookdown_0.39           iterators_1.0.14       </span></span>
-<span><span class="co">#&gt; [37] knitr_1.46              future.apply_1.11.2     Matrix_1.6-5           </span></span>
-<span><span class="co">#&gt; [40] tidyselect_1.2.1        abind_1.4-5             yaml_2.3.8             </span></span>
+<span><span class="co">#&gt;  [1] rlang_1.1.4             magrittr_2.0.3          clue_0.3-65            </span></span>
+<span><span class="co">#&gt;  [4] GetoptLong_1.0.5        compiler_4.4.1          png_0.1-8              </span></span>
+<span><span class="co">#&gt;  [7] systemfonts_1.1.0       vctrs_0.6.5             shape_1.4.6.1          </span></span>
+<span><span class="co">#&gt; [10] pkgconfig_2.0.3         crayon_1.5.3            fastmap_1.2.0          </span></span>
+<span><span class="co">#&gt; [13] XVector_0.45.0          labeling_0.4.3          utf8_1.2.4             </span></span>
+<span><span class="co">#&gt; [16] rmarkdown_2.28          UCSC.utils_1.1.0        ragg_1.3.2             </span></span>
+<span><span class="co">#&gt; [19] purrr_1.0.2             xfun_0.47               zlibbioc_1.51.1        </span></span>
+<span><span class="co">#&gt; [22] cachem_1.1.0            jsonlite_1.8.8          highr_0.11             </span></span>
+<span><span class="co">#&gt; [25] DelayedArray_0.31.11    BiocParallel_1.39.0     cluster_2.1.6          </span></span>
+<span><span class="co">#&gt; [28] parallel_4.4.1          R6_2.5.1                bslib_0.8.0            </span></span>
+<span><span class="co">#&gt; [31] RColorBrewer_1.1-3      parallelly_1.38.0       jquerylib_0.1.4        </span></span>
+<span><span class="co">#&gt; [34] Rcpp_1.0.13             bookdown_0.40           iterators_1.0.14       </span></span>
+<span><span class="co">#&gt; [37] knitr_1.48              future.apply_1.11.2     Matrix_1.7-0           </span></span>
+<span><span class="co">#&gt; [40] tidyselect_1.2.1        abind_1.4-5             yaml_2.3.10            </span></span>
 <span><span class="co">#&gt; [43] doParallel_1.0.17       codetools_0.2-20        listenv_0.9.1          </span></span>
-<span><span class="co">#&gt; [46] lattice_0.22-6          tibble_3.2.1            withr_3.0.0            </span></span>
-<span><span class="co">#&gt; [49] evaluate_0.23           future_1.33.2           desc_1.4.3             </span></span>
-<span><span class="co">#&gt; [52] circlize_0.4.16         pillar_1.9.0            BiocManager_1.30.22    </span></span>
-<span><span class="co">#&gt; [55] foreach_1.5.2           generics_0.1.3          sp_2.1-3               </span></span>
-<span><span class="co">#&gt; [58] RCurl_1.98-1.14         munsell_0.5.1           scales_1.3.0           </span></span>
-<span><span class="co">#&gt; [61] globals_0.16.3          glue_1.7.0              tools_4.3.3            </span></span>
-<span><span class="co">#&gt; [64] data.table_1.15.4       fgsea_1.28.0            fs_1.6.3               </span></span>
-<span><span class="co">#&gt; [67] dotCall64_1.1-1         fastmatch_1.1-4         grid_4.3.3             </span></span>
-<span><span class="co">#&gt; [70] tidyr_1.3.1             colorspace_2.1-0        GenomeInfoDbData_1.2.11</span></span>
-<span><span class="co">#&gt; [73] cli_3.6.2               textshaping_0.3.7       spam_2.10-0            </span></span>
-<span><span class="co">#&gt; [76] fansi_1.0.6             S4Arrays_1.2.1          ComplexHeatmap_2.18.0  </span></span>
-<span><span class="co">#&gt; [79] dplyr_1.1.4             gtable_0.3.5            sass_0.4.9             </span></span>
-<span><span class="co">#&gt; [82] digest_0.6.35           progressr_0.14.0        SparseArray_1.2.4      </span></span>
-<span><span class="co">#&gt; [85] farver_2.1.1            rjson_0.2.21            htmlwidgets_1.6.4      </span></span>
-<span><span class="co">#&gt; [88] SeuratObject_5.0.1      memoise_2.0.1           entropy_1.3.1          </span></span>
-<span><span class="co">#&gt; [91] htmltools_0.5.8.1       pkgdown_2.0.9           lifecycle_1.0.4        </span></span>
-<span><span class="co">#&gt; [94] httr_1.4.7              GlobalOptions_0.1.2</span></span></code></pre></div>
+<span><span class="co">#&gt; [46] lattice_0.22-6          tibble_3.2.1            withr_3.0.1            </span></span>
+<span><span class="co">#&gt; [49] evaluate_0.24.0         future_1.34.0           desc_1.4.3             </span></span>
+<span><span class="co">#&gt; [52] circlize_0.4.16         pillar_1.9.0            BiocManager_1.30.24    </span></span>
+<span><span class="co">#&gt; [55] foreach_1.5.2           generics_0.1.3          sp_2.1-4               </span></span>
+<span><span class="co">#&gt; [58] munsell_0.5.1           scales_1.3.0            globals_0.16.3         </span></span>
+<span><span class="co">#&gt; [61] glue_1.7.0              tools_4.4.1             data.table_1.15.4      </span></span>
+<span><span class="co">#&gt; [64] fgsea_1.31.0            fs_1.6.4                dotCall64_1.1-1        </span></span>
+<span><span class="co">#&gt; [67] fastmatch_1.1-4         grid_4.4.1              tidyr_1.3.1            </span></span>
+<span><span class="co">#&gt; [70] colorspace_2.1-1        GenomeInfoDbData_1.2.12 cli_3.6.3              </span></span>
+<span><span class="co">#&gt; [73] textshaping_0.4.0       spam_2.10-0             fansi_1.0.6            </span></span>
+<span><span class="co">#&gt; [76] S4Arrays_1.5.7          ComplexHeatmap_2.21.0   dplyr_1.1.4            </span></span>
+<span><span class="co">#&gt; [79] gtable_0.3.5            sass_0.4.9              digest_0.6.37          </span></span>
+<span><span class="co">#&gt; [82] progressr_0.14.0        SparseArray_1.5.31      farver_2.1.2           </span></span>
+<span><span class="co">#&gt; [85] rjson_0.2.22            htmlwidgets_1.6.4       SeuratObject_5.0.2     </span></span>
+<span><span class="co">#&gt; [88] entropy_1.3.1           htmltools_0.5.8.1       pkgdown_2.1.0          </span></span>
+<span><span class="co">#&gt; [91] lifecycle_1.0.4         httr_1.4.7              GlobalOptions_0.1.2</span></span></code></pre></div>
 </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
 
@@ -556,15 +550,15 @@ generate them are available at <a href="https://github.com/rnabioco/clustifyrdat
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>
