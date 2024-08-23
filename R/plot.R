@@ -25,7 +25,8 @@
 #'     feature = "classified"
 #' )
 #' @export
-plot_dims <- function(data,
+plot_dims <- function(
+    data,
     x = "UMAP_1",
     y = "UMAP_2",
     feature = NULL,
@@ -78,17 +79,18 @@ plot_dims <- function(data,
 
     if (!is.null(alpha_col)) {
         p <- ggplot(data, aes(.data[[x]], .data[[y]])) +
-            geom_point(aes(
-                color = .data[[feature]],
-                alpha = .data[[alpha_col]]
-            ), # backticks protect special character gene names
-            size = pt_size
+            geom_point(
+                aes(
+                    color = .data[[feature]],
+                    alpha = .data[[alpha_col]]
+                ), # backticks protect special character gene names
+                size = pt_size
             ) +
             scale_alpha_continuous(range = c(0, 1))
     } else {
         p <- ggplot(data, aes(.data[[x]], .data[[y]])) +
             geom_point(aes(color = .data[[feature]]),
-            size = pt_size
+                size = pt_size
             )
     }
 
@@ -272,7 +274,8 @@ pretty_palette_ramp_d <-
 #'     y = "UMAP_2"
 #' )
 #' @export
-plot_cor <- function(cor_mat,
+plot_cor <- function(
+    cor_mat,
     metadata,
     data_to_plot = colnames(cor_mat),
     cluster_col = NULL,
@@ -381,7 +384,8 @@ plot_cor <- function(cor_mat,
 #'     cell_col = "rn"
 #' )
 #' @export
-plot_gene <- function(expr_mat,
+plot_gene <- function(
+    expr_mat,
     metadata,
     genes,
     cell_col = NULL,
@@ -441,7 +445,8 @@ plot_gene <- function(expr_mat,
 #' @param ... passed to plot_dims
 #' @return list of ggplot object, cells projected by dr,
 #' colored by cell type classification
-plot_call <- function(cor_mat,
+plot_call <- function(
+    cor_mat,
     metadata,
     data_to_plot = colnames(cor_mat),
     ...) {
@@ -489,7 +494,8 @@ plot_call <- function(cor_mat,
 #'     cluster_col = "classified"
 #' )
 #' @export
-plot_best_call <- function(cor_mat,
+plot_best_call <- function(
+    cor_mat,
     metadata,
     cluster_col = "cluster",
     collapse_to_cluster = FALSE,
@@ -573,7 +579,8 @@ plot_best_call <- function(cor_mat,
 #'
 #' plot_cor_heatmap(res)
 #' @export
-plot_cor_heatmap <- function(cor_mat,
+plot_cor_heatmap <- function(
+    cor_mat,
     metadata = NULL,
     cluster_col = NULL,
     col = not_pretty_palette,

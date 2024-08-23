@@ -19,7 +19,8 @@
 #'
 #' cor_to_call(res)
 #' @export
-cor_to_call <- function(cor_mat,
+cor_to_call <- function(
+    cor_mat,
     metadata = NULL,
     cluster_col = "cluster",
     collapse_to_cluster = FALSE,
@@ -131,9 +132,9 @@ cor_to_call <- function(cor_mat,
 #'     cluster_col = "classified",
 #'     ref_mat = cbmc_ref
 #' )
-#' 
+#'
 #' res2 <- cor_to_call(res, cluster_col = "classified")
-#' 
+#'
 #' call_to_metadata(
 #'     res = res2,
 #'     metadata = pbmc_meta,
@@ -141,7 +142,8 @@ cor_to_call <- function(cor_mat,
 #'     rename_prefix = "assigned"
 #' )
 #' @export
-call_to_metadata <- function(res,
+call_to_metadata <- function(
+    res,
     metadata,
     cluster_col,
     per_cell = FALSE,
@@ -255,7 +257,8 @@ call_to_metadata <- function(res,
 #'     threshold = 0
 #' )
 #' @export
-collapse_to_cluster <- function(res,
+collapse_to_cluster <- function(
+    res,
     metadata,
     cluster_col,
     threshold = 0) {
@@ -331,7 +334,8 @@ collapse_to_cluster <- function(res,
 #'
 #' cor_to_call_rank(res, threshold = "auto")
 #' @export
-cor_to_call_rank <- function(cor_mat,
+cor_to_call_rank <- function(
+    cor_mat,
     metadata = NULL,
     cluster_col = "cluster",
     collapse_to_cluster = FALSE,

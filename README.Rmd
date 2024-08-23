@@ -4,10 +4,10 @@ output: github_document
 
 ```{r, echo = FALSE, message = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/",
-  dpi = 300
+    collapse = TRUE,
+    comment = "#>",
+    fig.path = "man/figures/",
+    dpi = 300
 )
 ```
 
@@ -62,10 +62,10 @@ library(clustifyr)
 
 # calculate correlation
 res <- clustify(
-  input = pbmc_matrix_small,
-  metadata = pbmc_meta$classified,
-  ref_mat = cbmc_ref,
-  query_genes = pbmc_vargenes
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta$classified,
+    ref_mat = cbmc_ref,
+    query_genes = pbmc_vargenes
 )
 
 # print assignments
@@ -73,9 +73,9 @@ cor_to_call(res)
 
 # plot assignments on a projection
 plot_best_call(
-  cor_mat = res,
-  metadata = pbmc_meta,
-  cluster_col = "classified"
+    cor_mat = res,
+    metadata = pbmc_meta,
+    cluster_col = "classified"
 )
 ```
 
@@ -84,27 +84,27 @@ plot_best_call(
 ```{r example_seurat, warning=F, message=F}
 # for SingleCellExperiment
 clustify(
-  input = sce_small,          # an SCE object
-  ref_mat = cbmc_ref,         # matrix of RNA-seq expression data for each cell type
-  cluster_col = "cell_type1", # name of column in meta.data containing cell clusters
-  obj_out = TRUE              # output SCE object with cell type inserted as "type" column
-) 
+    input = sce_small, # an SCE object
+    ref_mat = cbmc_ref, # matrix of RNA-seq expression data for each cell type
+    cluster_col = "cell_type1", # name of column in meta.data containing cell clusters
+    obj_out = TRUE # output SCE object with cell type inserted as "type" column
+)
 
 library(Seurat)
 # for Seurat3/4
 clustify(
-  input = s_small3,
-  cluster_col = "RNA_snn_res.1",
-  ref_mat = cbmc_ref,
-  seurat_out = TRUE
+    input = s_small3,
+    cluster_col = "RNA_snn_res.1",
+    ref_mat = cbmc_ref,
+    seurat_out = TRUE
 )
 
 # New output option, directly as a vector (in the order of the metadata), which can then be inserted into metadata dataframes and other workflows
 clustify(
-  input = s_small3,
-  cluster_col = "RNA_snn_res.1",
-  ref_mat = cbmc_ref,
-  vec_out = TRUE
+    input = s_small3,
+    cluster_col = "RNA_snn_res.1",
+    ref_mat = cbmc_ref,
+    vec_out = TRUE
 )
 ```
 
@@ -113,14 +113,14 @@ New reference matrix can be made directly from `SingleCellExperiment` and `Seura
 ```{r example_ref_matrix}
 # make reference from SingleCellExperiment objects
 sce_ref <- object_ref(
-  input = sce_small,               # SCE object
-  cluster_col = "cell_type1"       # name of column in colData containing cell identities
+    input = sce_small, # SCE object
+    cluster_col = "cell_type1" # name of column in colData containing cell identities
 )
 
 # make reference from seurat objects
 s_ref <- seurat_ref(
-  seurat_object = s_small3,
-  cluster_col = "RNA_snn_res.1"
+    seurat_object = s_small3,
+    cluster_col = "RNA_snn_res.1"
 )
 
 head(s_ref)
@@ -130,19 +130,19 @@ head(s_ref)
  
 ```{r example_seurat3, warning=F, message=F}
 clustify_lists(
-  input = pbmc_matrix_small,
-  metadata = pbmc_meta,
-  cluster_col = "classified",
-  marker = pbmc_markers,
-  marker_inmatrix = FALSE
+    input = pbmc_matrix_small,
+    metadata = pbmc_meta,
+    cluster_col = "classified",
+    marker = pbmc_markers,
+    marker_inmatrix = FALSE
 )
 
 clustify_lists(
-  input = s_small3,
-  marker = pbmc_markers,
-  marker_inmatrix = FALSE,
-  cluster_col = "RNA_snn_res.1",
-  seurat_out = TRUE
+    input = s_small3,
+    marker = pbmc_markers,
+    marker_inmatrix = FALSE,
+    cluster_col = "RNA_snn_res.1",
+    seurat_out = TRUE
 )
 ```
 

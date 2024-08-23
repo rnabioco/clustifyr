@@ -1,7 +1,7 @@
 context("compare_list")
 # use capture.output to quiet progress bar from fgsea
 shush <- function(...) {
-  capture.output(..., file = nullfile())
+    capture.output(..., file = nullfile())
 }
 
 test_that("warning if matrix is not binarized", {
@@ -40,8 +40,7 @@ test_that("run all gene list functions", {
                 metric = x
             )
         }
-      )
-    )
+    ))
 
     expect_equal(4, length(results))
 })
@@ -49,8 +48,8 @@ test_that("run all gene list functions", {
 test_that("output intersected genes with details_out option with hyper/jaccard", {
     pbmc_mm <- matrixize_markers(pbmc_markers)
     pbmc_avg <- average_clusters(pbmc_matrix_small,
-                                 pbmc_meta,
-                                 cluster_col = "classified"
+        pbmc_meta,
+        cluster_col = "classified"
     )
     pbmc_avgb <- binarize_expr(pbmc_avg)
     gene_list_methods <- c("hyper", "jaccard")
@@ -58,14 +57,13 @@ test_that("output intersected genes with details_out option with hyper/jaccard",
         gene_list_methods,
         function(x) {
             compare_lists(pbmc_avgb,
-                          pbmc_mm,
-                          metric = x,
-                          details_out = TRUE
+                pbmc_mm,
+                metric = x,
+                details_out = TRUE
             )
         }
-      )
-    )
-    
+    ))
+
     expect_equal(2, length(results))
 })
 
@@ -102,8 +100,7 @@ test_that("run all gene list functions in clustify_lists", {
                 metric = x
             )
         }
-      )
-    )
+    ))
 
     expect_equal(4, length(results))
 })
@@ -118,7 +115,7 @@ test_that("gsea outputs in cor matrix format", {
         marker_inmatrix = FALSE,
         metric = "gsea"
     ))
-  
+
     res2 <- cor_to_call(res)
 
     expect_equal(9, nrow(res2))
@@ -252,14 +249,14 @@ test_that("lists of genes will work with posneg", {
 
 test_that("clustify_lists input_markers mode", {
     pbmc_mm <- matrixize_markers(pbmc_markers)
-    pbmc_input_mm <- pos_neg_marker(pbmc_mm[1:3,])
+    pbmc_input_mm <- pos_neg_marker(pbmc_mm[1:3, ])
     results <- lapply(
         c("hyper", "spearman"),
         function(x) {
             clustify_lists(pbmc_input_mm,
-                          pbmc_mm,
-                          metric = x,
-                          input_markers = TRUE
+                pbmc_mm,
+                metric = x,
+                input_markers = TRUE
             )
         }
     )
@@ -268,17 +265,16 @@ test_that("clustify_lists input_markers mode", {
 
 test_that("clustify_lists input_markers mode with uneven number of marker per cluster", {
     pbmc_mm <- matrixize_markers(pbmc_markers)
-    pbmc_input_mm <- pos_neg_marker(pbmc_mm[1:3,])
+    pbmc_input_mm <- pos_neg_marker(pbmc_mm[1:3, ])
     results <- lapply(
         c("jaccard"),
         function(x) {
             clustify_lists(pbmc_input_mm,
-                           split(pbmc_markers$gene, pbmc_markers$cluster),
-                           metric = x,
-                           input_markers = TRUE
+                split(pbmc_markers$gene, pbmc_markers$cluster),
+                metric = x,
+                input_markers = TRUE
             )
         }
     )
     expect_equal(1, length(results))
 })
-

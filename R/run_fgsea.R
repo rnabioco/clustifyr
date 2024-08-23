@@ -17,7 +17,8 @@
 #' @param no_warnings suppress warnings from gsea ties
 #' @return dataframe of gsea scores (pval, NES), with clusters as rownames
 #' @export
-run_gsea <- function(expr_mat,
+run_gsea <- function(
+    expr_mat,
     query_genes,
     cluster_ids = NULL,
     n_perm = 1000,

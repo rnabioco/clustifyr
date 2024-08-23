@@ -72,7 +72,7 @@ clustify <- function(input, ...) {
 #'     cluster_col = "RNA_snn_res.0.5",
 #'     compute_method = "cosine"
 #' )
-#' 
+#'
 #' # Annotate a SingleCellExperiment object
 #' sce <- sce_pbmc()
 #' clustify(
@@ -83,7 +83,7 @@ clustify <- function(input, ...) {
 #'     per_cell = FALSE,
 #'     dr = "umap"
 #' )
-#' 
+#'
 #' # Annotate a Seurat object
 #' so <- so_pbmc()
 #' clustify(
@@ -105,7 +105,8 @@ clustify <- function(input, ...) {
 #'     dr = "umap"
 #' )
 #' @export
-clustify.default <- function(input,
+clustify.default <- function(
+    input,
     ref_mat,
     metadata = NULL,
     cluster_col = NULL,
@@ -128,7 +129,7 @@ clustify.default <- function(input,
     if_log = TRUE,
     organism = "hsapiens",
     plot_name = NULL,
-    rds_name = NULL, 
+    rds_name = NULL,
     expand_unassigned = FALSE,
     ...) {
     if (!compute_method %in% clustifyr_methods) {
@@ -174,8 +175,10 @@ clustify.default <- function(input,
     }
 
     if (is.null(query_genes) || length(query_genes) == 0) {
-        message("Variable features not available, using all genes instead\n",
-                "consider supplying variable features to `query_genes` argument.")
+        message(
+            "Variable features not available, using all genes instead\n",
+            "consider supplying variable features to `query_genes` argument."
+        )
         query_genes <- NULL
     }
 
@@ -256,18 +259,18 @@ clustify.default <- function(input,
             ...
         )
     }
-    
+
     if (verbose) {
         message("similarity computation completed, matrix of ", dim(res)[1], " x ", dim(res)[2], ", preparing output")
     }
-    
+
     obj_out <- seurat_out
     if (obj_out &&
         !inherits(input_original, c(
             "matrix",
             "Matrix",
             "data.frame"
-        ))  || (vec_out &&
+        )) || (vec_out &&
         inherits(input_original, c(
             "matrix",
             "Matrix",
@@ -295,7 +298,7 @@ clustify.default <- function(input,
                 return(df_temp_full[[paste0(rename_prefix, "_type")]])
             }
         }
-            
+
         out <- insert_meta_object(input_original,
             df_temp_full,
             lookuptable = lookuptable
@@ -326,7 +329,8 @@ clustify.default <- function(input,
 
 #' @rdname clustify
 #' @export
-clustify.Seurat <- function(input,
+clustify.Seurat <- function(
+    input,
     ref_mat,
     cluster_col = NULL,
     query_genes = NULL,
@@ -348,7 +352,7 @@ clustify.Seurat <- function(input,
     metadata = NULL,
     organism = "hsapiens",
     plot_name = NULL,
-    rds_name = NULL, 
+    rds_name = NULL,
     expand_unassigned = FALSE,
     ...) {
     s_object <- input
@@ -373,7 +377,7 @@ clustify.Seurat <- function(input,
     if (verbose) {
         message("object data retrieval complete, moving to similarity computation")
     }
-    
+
     res <- clustify(
         expr_mat,
         ref_mat,
@@ -426,11 +430,11 @@ clustify.Seurat <- function(input,
                 res = df_temp,
                 organism = organism,
                 plot_name = plot_name,
-                rds_name = rds_name, 
+                rds_name = rds_name,
                 expand_unassigned = expand_unassigned
             )
         }
-        
+
         if (vec_out) {
             if (is.null(rename_prefix)) {
                 return(df_temp_full[["type"]])
@@ -438,7 +442,7 @@ clustify.Seurat <- function(input,
                 return(df_temp_full[[paste0(rename_prefix, "_type")]])
             }
         }
-        
+
         if ("SeuratObject" %in% loadedNamespaces()) {
             s_object <- write_meta(s_object, df_temp_full)
             return(s_object)
@@ -452,7 +456,8 @@ clustify.Seurat <- function(input,
 
 #' @rdname clustify
 #' @export
-clustify.SingleCellExperiment <- function(input,
+clustify.SingleCellExperiment <- function(
+    input,
     ref_mat,
     cluster_col = NULL,
     query_genes = NULL,
@@ -473,7 +478,7 @@ clustify.SingleCellExperiment <- function(input,
     metadata = NULL,
     organism = "hsapiens",
     plot_name = NULL,
-    rds_name = NULL, 
+    rds_name = NULL,
     expand_unassigned = FALSE,
     ...) {
     s_object <- input
@@ -490,11 +495,11 @@ clustify.SingleCellExperiment <- function(input,
         metadata <- object_data(s_object, "meta.data")
     }
 
-    
+
     if (verbose) {
         message("object data retrieval complete, moving to similarity computation")
     }
-    
+
     res <- clustify(
         expr_mat,
         ref_mat,
@@ -547,11 +552,11 @@ clustify.SingleCellExperiment <- function(input,
                 res = df_temp,
                 organism = organism,
                 plot_name = plot_name,
-                rds_name = rds_name, 
+                rds_name = rds_name,
                 expand_unassigned = expand_unassigned
             )
         }
-        
+
         if (vec_out) {
             if (is.null(rename_prefix)) {
                 return(df_temp_full[["type"]])
@@ -559,7 +564,7 @@ clustify.SingleCellExperiment <- function(input,
                 return(df_temp_full[[paste0(rename_prefix, "_type")]])
             }
         }
-        
+
         if ("SingleCellExperiment" %in% loadedNamespaces()) {
             if (!(is.null(rename_prefix))) {
                 col_type <- stringr::str_c(rename_prefix, "_type")
@@ -657,7 +662,8 @@ clustify_lists <- function(input, ...) {
 #' cell types from marker_mat as column names
 
 #' @export
-clustify_lists.default <- function(input,
+clustify_lists.default <- function(
+    input,
     marker,
     marker_inmatrix = TRUE,
     metadata = NULL,
@@ -793,12 +799,12 @@ clustify_lists.default <- function(input,
     }
     obj_out <- seurat_out
     if ((!inherits(input_original, c("matrix", "Matrix", "data.frame")) &&
-        obj_out ) || (vec_out &&
-                        inherits(input_original, c(
-                            "matrix",
-                            "Matrix",
-                            "data.frame"
-                        )))) {
+        obj_out) || (vec_out &&
+        inherits(input_original, c(
+            "matrix",
+            "Matrix",
+            "data.frame"
+        )))) {
         if (metric != "consensus") {
             df_temp <- cor_to_call(
                 res,
@@ -825,7 +831,7 @@ clustify_lists.default <- function(input,
                 return(df_temp_full[[paste0(rename_prefix, "_type")]])
             }
         }
-        
+
         out <- insert_meta_object(input_original,
             df_temp_full,
             lookuptable = lookuptable
@@ -839,7 +845,8 @@ clustify_lists.default <- function(input,
 
 #' @rdname clustify_lists
 #' @export
-clustify_lists.Seurat <- function(input,
+clustify_lists.Seurat <- function(
+    input,
     metadata = NULL,
     cluster_col = NULL,
     if_log = TRUE,
@@ -875,11 +882,11 @@ clustify_lists.Seurat <- function(input,
         metadata <- object_data(s_object, "meta.data")
     }
     cluster_info <- metadata
-    
+
     if (verbose) {
         message("object data retrieval complete, moving to similarity computation")
     }
-    
+
     res <- clustify_lists(
         input,
         per_cell = per_cell,
@@ -928,7 +935,7 @@ clustify_lists.Seurat <- function(input,
                 return(df_temp_full[[paste0(rename_prefix, "_type")]])
             }
         }
-        
+
         if ("SeuratObject" %in% loadedNamespaces()) {
             s_object <- write_meta(s_object, df_temp_full)
             return(s_object)
@@ -942,7 +949,8 @@ clustify_lists.Seurat <- function(input,
 
 #' @rdname clustify_lists
 #' @export
-clustify_lists.SingleCellExperiment <- function(input,
+clustify_lists.SingleCellExperiment <- function(
+    input,
     metadata = NULL,
     cluster_col = NULL,
     if_log = TRUE,
@@ -976,7 +984,7 @@ clustify_lists.SingleCellExperiment <- function(input,
     } else {
         metadata <- object_data(s_object, "meta.data")
     }
-    
+
     if (verbose) {
         message("object data retrieval complete, moving to similarity computation")
     }
@@ -1015,7 +1023,7 @@ clustify_lists.SingleCellExperiment <- function(input,
             per_cell = per_cell,
             rename_prefix = rename_prefix
         )
-        
+
         if (vec_out) {
             if (is.null(rename_prefix)) {
                 return(df_temp_full[["type"]])

@@ -13,7 +13,8 @@
 #' @param ... additional parameters not used yet
 #' @return matrix of numeric values, clusters from expr_mat as row names,
 #'  cell types from ref_mat as column names
-get_similarity <- function(expr_mat,
+get_similarity <- function(
+    expr_mat,
     ref_mat,
     cluster_ids,
     compute_method,
@@ -116,7 +117,8 @@ get_similarity <- function(expr_mat,
 #' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param ... additional parameters
 #' @return matrix of numeric values
-permute_similarity <- function(expr_mat,
+permute_similarity <- function(
+    expr_mat,
     ref_mat,
     cluster_ids,
     n_perm,
@@ -198,7 +200,8 @@ permute_similarity <- function(expr_mat,
 #' @param rm0 consider 0 as missing data, recommended for per_cell
 #' @param ...  additional parameters
 #' @return matrix of numeric values
-calc_similarity <- function(query_mat,
+calc_similarity <- function(
+    query_mat,
     ref_mat,
     compute_method,
     rm0 = FALSE,
@@ -228,8 +231,8 @@ calc_similarity <- function(query_mat,
             return(similarity_score)
         }
         if (compute_method == "cosine") {
-                res <- proxy::simil(as.matrix(query_mat),ref_mat, method = "cosine", by_rows = FALSE)
-                similarity_score <- matrix(res, nrow = nrow(res))
+            res <- proxy::simil(as.matrix(query_mat), ref_mat, method = "cosine", by_rows = FALSE)
+            similarity_score <- matrix(res, nrow = nrow(res))
             return(similarity_score)
         }
     }
@@ -321,7 +324,8 @@ cosine <- function(vec1, vec2) {
 #' @param max_KL Maximal allowed value of KL-divergence.
 #' @return numeric value, with additional attributes, of kl divergence
 #'  between the vectors
-kl_divergence <- function(vec1,
+kl_divergence <- function(
+    vec1,
     vec2,
     if_log = FALSE,
     total_reads = 1000,

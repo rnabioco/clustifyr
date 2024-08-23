@@ -14,7 +14,8 @@
 #' mat <- binarize_expr(pbmc_avg)
 #' mat[1:3, 1:3]
 #' @export
-binarize_expr <- function(mat,
+binarize_expr <- function(
+    mat,
     n = 1000,
     cut = 0) {
     expr_mat <- mat
@@ -57,7 +58,8 @@ binarize_expr <- function(mat,
 #' @examples
 #' matrixize_markers(pbmc_markers)
 #' @export
-matrixize_markers <- function(marker_df,
+matrixize_markers <- function(
+    marker_df,
     ranked = FALSE,
     n = NULL,
     step_weight = 1,
@@ -223,7 +225,8 @@ get_vargenes <- function(marker_mat) {
 #'     metric = "spearman"
 #' )
 #' @export
-compare_lists <- function(bin_mat,
+compare_lists <- function(
+    bin_mat,
     marker_mat,
     n = 30000,
     metric = "hyper",
@@ -232,10 +235,10 @@ compare_lists <- function(bin_mat,
     # check if matrix is binarized
     if (is.list(marker_mat)) {
         message("list of markers instead of matrix, only supports jaccard")
-    } 
+    }
     if ((length(unique(bin_mat[, 1])) > 2) & (metric != "gsea")) {
-          warning("non-binarized data, running spearman instead")
-          metric <- "spearman"
+        warning("non-binarized data, running spearman instead")
+        metric <- "spearman"
     }
 
     if (details_out) {
@@ -246,11 +249,11 @@ compare_lists <- function(bin_mat,
                     names(marker_mat),
                     function(y) {
                         marker_list <- unlist(marker_mat[[y]],
-                                              use.names = FALSE
+                            use.names = FALSE
                         )
                         bin_temp <- bin_mat[, x][bin_mat[, x] == 1]
                         list_top <- names(bin_temp)
-                        
+
                         genes <- paste(intersect(list_top, marker_list), collapse = ",")
                         genes
                     }
@@ -259,7 +262,7 @@ compare_lists <- function(bin_mat,
             }
         )
     }
-    
+
     if (metric == "hyper") {
         out <- lapply(
             colnames(bin_mat),
@@ -287,45 +290,45 @@ compare_lists <- function(bin_mat,
         }
     } else if (metric == "jaccard") {
         if (is.list(marker_mat)) {
-          out <- lapply(
-            colnames(bin_mat),
-            function(x) {
-              per_col <- lapply(
-                names(marker_mat),
-                function(y) {
-                  marker_list <- unlist(marker_mat[[y]],
-                                        use.names = FALSE
-                  )
-                  bin_temp <- bin_mat[, x][bin_mat[, x] == 1]
-                  list_top <- names(bin_temp)
-                  
-                  I <- length(intersect(list_top, marker_list))
-                  I / (length(list_top) + length(marker_list) - I)
+            out <- lapply(
+                colnames(bin_mat),
+                function(x) {
+                    per_col <- lapply(
+                        names(marker_mat),
+                        function(y) {
+                            marker_list <- unlist(marker_mat[[y]],
+                                use.names = FALSE
+                            )
+                            bin_temp <- bin_mat[, x][bin_mat[, x] == 1]
+                            list_top <- names(bin_temp)
+
+                            I <- length(intersect(list_top, marker_list))
+                            I / (length(list_top) + length(marker_list) - I)
+                        }
+                    )
+                    do.call(cbind, per_col)
                 }
-              )
-              do.call(cbind, per_col)
-            }
-          )
+            )
         } else {
-          out <- lapply(
-            colnames(bin_mat),
-            function(x) {
-              per_col <- lapply(
-                colnames(marker_mat),
-                function(y) {
-                  marker_list <- unlist(marker_mat[, y],
-                                        use.names = FALSE
-                  )
-                  bin_temp <- bin_mat[, x][bin_mat[, x] == 1]
-                  list_top <- names(bin_temp)
-                  
-                  I <- length(intersect(list_top, marker_list))
-                  I / (length(list_top) + length(marker_list) - I)
+            out <- lapply(
+                colnames(bin_mat),
+                function(x) {
+                    per_col <- lapply(
+                        colnames(marker_mat),
+                        function(y) {
+                            marker_list <- unlist(marker_mat[, y],
+                                use.names = FALSE
+                            )
+                            bin_temp <- bin_mat[, x][bin_mat[, x] == 1]
+                            list_top <- names(bin_temp)
+
+                            I <- length(intersect(list_top, marker_list))
+                            I / (length(list_top) + length(marker_list) - I)
+                        }
+                    )
+                    do.call(cbind, per_col)
                 }
-              )
-              do.call(cbind, per_col)
-            }
-          )
+            )
         }
     } else if (metric == "spearman") {
         out <- lapply(
@@ -384,15 +387,14 @@ compare_lists <- function(bin_mat,
 
     if (metric != "gsea") {
         if (!is.list(marker_mat)) {
-          res <- do.call(rbind, out)
-          rownames(res) <- colnames(bin_mat)
-          colnames(res) <- colnames(marker_mat)
+            res <- do.call(rbind, out)
+            rownames(res) <- colnames(bin_mat)
+            colnames(res) <- colnames(marker_mat)
         } else {
-          res <- do.call(rbind, out)
-          rownames(res) <- colnames(bin_mat)
-          colnames(res) <- names(marker_mat)
+            res <- do.call(rbind, out)
+            rownames(res) <- colnames(bin_mat)
+            colnames(res) <- names(marker_mat)
         }
-        
     }
 
     if (output_high) {
@@ -407,8 +409,10 @@ compare_lists <- function(bin_mat,
         spe <- do.call(rbind, spe)
         rownames(spe) <- colnames(bin_mat)
         colnames(spe) <- names(marker_mat)
-        list(res = res,
-             details = spe)
+        list(
+            res = res,
+            details = spe
+        )
     } else {
         res
     }

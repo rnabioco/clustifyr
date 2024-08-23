@@ -111,32 +111,32 @@ test_that("average_clusters works with median option", {
 
 test_that("average_clusters works with trimean option", {
     pbmc_avg2 <- average_clusters(pbmc_matrix_small,
-                                  pbmc_meta,
-                                  method = "trimean",
-                                  cluster_col = "classified"
+        pbmc_meta,
+        method = "trimean",
+        cluster_col = "classified"
     )
     expect_equal(nrow(pbmc_avg2), 2000)
 })
 
 test_that("average_clusters works with truncate option", {
     pbmc_avg2 <- average_clusters(pbmc_matrix_small,
-                                  pbmc_meta,
-                                  method = "truncate",
-                                  cluster_col = "classified"
+        pbmc_meta,
+        method = "truncate",
+        cluster_col = "classified"
     )
     expect_equal(nrow(pbmc_avg2), 2000)
 })
 
 test_that("average_clusters works with max and min options", {
     pbmc_avg2 <- average_clusters(pbmc_matrix_small,
-                                  pbmc_meta,
-                                  method = "max",
-                                  cluster_col = "classified"
+        pbmc_meta,
+        method = "max",
+        cluster_col = "classified"
     )
     pbmc_avg3 <- average_clusters(pbmc_matrix_small,
-                                  pbmc_meta,
-                                  method = "min",
-                                  cluster_col = "classified"
+        pbmc_meta,
+        method = "min",
+        cluster_col = "classified"
     )
     expect_equal(nrow(pbmc_avg2), 2000)
 })
@@ -366,7 +366,6 @@ test_that("gene_pct_markerm norm options work", {
 so <- so_pbmc()
 sce <- sce_pbmc()
 test_that("clustify_nudge works with seurat_out", {
-
     res <- clustify_nudge(
         input = so,
         ref_mat = cbmc_ref,
@@ -409,7 +408,7 @@ test_that("clustify_nudge.Seurat works with seurat_out option", {
         dr = "umap"
     )
     expect_true(is(res, "Seurat"))
-    
+
     res <- clustify_nudge(
         input = so,
         ref_mat = cbmc_ref,
@@ -425,7 +424,6 @@ test_that("clustify_nudge.Seurat works with seurat_out option", {
 })
 
 test_that("clustify_nudge works with obj_out option", {
-    
     res <- clustify_nudge(
         input = so,
         ref_mat = cbmc_ref,
@@ -437,7 +435,7 @@ test_that("clustify_nudge works with obj_out option", {
         mode = "pct",
         dr = "umap"
     )
-    
+
     expect_true(is(res, "Seurat"))
 
     res2 <- clustify_nudge(
@@ -604,14 +602,16 @@ test_that("object_ref with SingleCellExperiment", {
     avg <- object_ref(sce,
         cluster_col = "clusters"
     )
-    expect_equal(dim(avg), 
-                 c(nrow(sce), length(unique(sce$clusters))))
+    expect_equal(
+        dim(avg),
+        c(nrow(sce), length(unique(sce$clusters)))
+    )
 })
 
 
 test_that("object_ref gets correct averages", {
     avg <- object_ref(so,
-                      cluster_col = "seurat_clusters",
+        cluster_col = "seurat_clusters",
         var_genes_only = TRUE
     )
     expect_true(ncol(avg) == length(unique(so$seurat_clusters)))
@@ -628,7 +628,7 @@ test_that("seurat_ref gets correct averages with Seurat object", {
     rna_assay <- tmp[["RNA"]]
     Key(rna_assay) <- "rna2_"
     tmp[["RNA2"]] <- rna_assay
-    
+
     avg2 <- seurat_ref(
         tmp,
         cluster_col = "seurat_clusters",
@@ -639,9 +639,8 @@ test_that("seurat_ref gets correct averages with Seurat object", {
 })
 
 test_that("object parsing works for custom object", {
-
     res2 <- clustify(so,
-        cbmc_ref, 
+        cbmc_ref,
         cluster_col = "seurat_clusters",
         obj_out = FALSE
     )
@@ -703,7 +702,6 @@ test_that("cor_to_call renaming with suffix input works as intended, per_cell or
 })
 
 test_that("renaming with suffix input works as intended with clusify wrapper", {
-
     res <- clustify(
         input = so,
         ref_mat = cbmc_ref,
@@ -785,7 +783,7 @@ test_that("clustify_nudge works with pos_neg_select", {
         cluster_col = "classified",
         norm = 0.5
     )
-    expect_true(all(dim(res) == c(length(unique(so$classified)), 3))) 
+    expect_true(all(dim(res) == c(length(unique(so$classified)), 3)))
 })
 
 test_that("reverse_marker_matrix takes matrix of markers input", {
@@ -1071,7 +1069,7 @@ test_that("find_rank_bias and query_rank_bias run correctly", {
         "CD14+ Mono",
         "CD14+ Mono"
     )
-    expect_true(all(dim(qres) == c(599,2)))
+    expect_true(all(dim(qres) == c(599, 2)))
 })
 
 
@@ -1149,18 +1147,18 @@ test_that("object_data respects DefaultAssay in seurat object", {
 
 test_that("append_genes pads matrix with supplied genes", {
     mat <- append_genes(
-      gene_vector = human_genes_10x,
-      ref_matrix = cbmc_ref
+        gene_vector = human_genes_10x,
+        ref_matrix = cbmc_ref
     )
-    
+
     expect_equal(nrow(mat), length(human_genes_10x))
-    
+
     mat <- append_genes(
-      gene_vector = human_genes_10x,
-      ref_matrix = pbmc_matrix_small
+        gene_vector = human_genes_10x,
+        ref_matrix = pbmc_matrix_small
     )
     expect_equal(nrow(mat), length(human_genes_10x))
-    
+
     og_mat <- get_seurat_matrix(so)
     mat <- append_genes(
         gene_vector = human_genes_10x,
@@ -1170,25 +1168,25 @@ test_that("append_genes pads matrix with supplied genes", {
 })
 
 test_that("check data type of matrices", {
-  mat_type <- check_raw_counts(
-    counts_matrix = pbmc_matrix_small,
-    max_log_value = 50
-  )
-  expect_equal(mat_type, "log-normalized")
-  
-  m <- matrix(sample(10:200, 100, replace = TRUE))
-  mat_type <- check_raw_counts(
-    counts_matrix = m,
-    max_log_value = 50
-  )
-  expect_equal(mat_type, "raw counts")
-  
-  og_mat <- get_seurat_matrix(so)
-  mat_type <- check_raw_counts(
-    counts_matrix = og_mat,
-    max_log_value = 50
-  )
-  expect_true(mat_type == "log-normalized")
+    mat_type <- check_raw_counts(
+        counts_matrix = pbmc_matrix_small,
+        max_log_value = 50
+    )
+    expect_equal(mat_type, "log-normalized")
+
+    m <- matrix(sample(10:200, 100, replace = TRUE))
+    mat_type <- check_raw_counts(
+        counts_matrix = m,
+        max_log_value = 50
+    )
+    expect_equal(mat_type, "raw counts")
+
+    og_mat <- get_seurat_matrix(so)
+    mat_type <- check_raw_counts(
+        counts_matrix = og_mat,
+        max_log_value = 50
+    )
+    expect_true(mat_type == "log-normalized")
 })
 
 test_that("check atlas successfully built", {
@@ -1207,82 +1205,81 @@ test_that("make_comb_ref works as intended", {
     ref <- make_comb_ref(
         cbmc_ref,
         sep = "_+_"
-        )
+    )
 
     expect_true(nrow(ref) == 2000 && ncol(ref) == 91)
 })
 
 test_that("calc_distance works as intended", {
     res <- calc_distance(
-        SeuratObject::Embeddings(so, "umap"), 
+        SeuratObject::Embeddings(so, "umap"),
         so$seurat_clusters,
         collapse_to_cluster = T
-        )
+    )
     n_grps <- length(unique(so$seurat_clusters))
     ex_dim <- c(n_grps, n_grps)
     expect_equal(dim(res), ex_dim)
 })
 
 test_that("vec_out option works for clustify", {
-  if(is_seurat_v5()) {
-    mat <- SeuratObject::LayerData(so, "data")
-  } else{
-    mat <- SeuratObject::GetAssayData(so, "data")
-  }
-  
+    if (is_seurat_v5()) {
+        mat <- SeuratObject::LayerData(so, "data")
+    } else {
+        mat <- SeuratObject::GetAssayData(so, "data")
+    }
+
     res <- clustify(mat,
-                    metadata = so@meta.data,
-                    ref_mat = cbmc_ref,
-                    cluster_col = "seurat_clusters",
-                    vec_out = TRUE
+        metadata = so@meta.data,
+        ref_mat = cbmc_ref,
+        cluster_col = "seurat_clusters",
+        vec_out = TRUE
     )
-    
+
     res2 <- clustify(so,
-                    ref_mat = cbmc_ref,
-                    cluster_col = "seurat_clusters",
-                    rename_prefix = "abc",
-                    vec_out = TRUE
+        ref_mat = cbmc_ref,
+        cluster_col = "seurat_clusters",
+        rename_prefix = "abc",
+        vec_out = TRUE
     )
-    
+
     res3 <- clustify(sce,
-                    cbmc_ref,
-                    cluster_col = "clusters",
-                    vec_out = TRUE
+        cbmc_ref,
+        cluster_col = "clusters",
+        vec_out = TRUE
     )
-    
+
     expect_equal(length(res), ncol(mat))
     expect_equal(length(res2), ncol(so))
     expect_equal(length(res3), ncol(sce))
 })
 
 test_that("vec_out option works for clustify_lists", {
-    if(is_seurat_v5()) {
-      mat <- SeuratObject::LayerData(so, "data")
-    } else{
-      mat <- SeuratObject::GetAssayData(so, "data")
+    if (is_seurat_v5()) {
+        mat <- SeuratObject::LayerData(so, "data")
+    } else {
+        mat <- SeuratObject::GetAssayData(so, "data")
     }
     res <- clustify_lists(mat,
-                          metadata = so@meta.data,
-                          marker = cbmc_m,
-                          cluster_col = "seurat_clusters",
-                          vec_out = TRUE
+        metadata = so@meta.data,
+        marker = cbmc_m,
+        cluster_col = "seurat_clusters",
+        vec_out = TRUE
     )
-    
+
     res2 <- clustify_lists(so,
-                           marker = cbmc_m,
-                           cluster_col = "seurat_clusters",
-                           rename_prefix = "abc",
-                           vec_out = TRUE
+        marker = cbmc_m,
+        cluster_col = "seurat_clusters",
+        rename_prefix = "abc",
+        vec_out = TRUE
     )
-    
+
     res3 <- clustify_lists(sce,
-                           marker = cbmc_m,
-                           cluster_col = "clusters",
-                           vec_out = TRUE
+        marker = cbmc_m,
+        cluster_col = "clusters",
+        vec_out = TRUE
     )
-    
+
     expect_equal(length(res), ncol(mat))
     expect_equal(length(res2), ncol(so))
     expect_equal(length(res3), ncol(sce))
-    
 })

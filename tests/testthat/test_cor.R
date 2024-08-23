@@ -118,7 +118,6 @@ test_that("test permutation", {
 so <- so_pbmc()
 
 test_that("seurat object clustifying", {
-
     res <- clustify(so,
         cbmc_ref,
         cluster_col = "seurat_clusters",
@@ -151,9 +150,9 @@ test_that("seurat object clustifying", {
 
 test_that("object with passing vector as metadata", {
     res <- clustify(so,
-                    cbmc_ref,
-                    metadata = so$seurat_clusters,
-                    dr = "umap"
+        cbmc_ref,
+        metadata = so$seurat_clusters,
+        dr = "umap"
     )
     res <- clustify_lists(
         so,
@@ -180,9 +179,8 @@ test_that("clustify reinserts seurat metadata correctly", {
     # all input data identical on return
     expect_true(all(so@meta.data == res@meta.data[, colnames(so@meta.data)]))
     # clustifyr results present
-    expect_true(all(c("umap_1", "umap_2", "type", "r") %in% 
-                      colnames(res@meta.data)))
-
+    expect_true(all(c("umap_1", "umap_2", "type", "r") %in%
+        colnames(res@meta.data)))
 })
 
 test_that("get_similarity handles NA entries", {
@@ -310,8 +308,10 @@ test_that("sparse matrix is accepted as input", {
         cluster_col = "seurat_clusters",
         verbose = TRUE
     )
-    ex <- c(length(unique(pbmc_meta$seurat_clusters)), 
-            ncol(cbmc_ref))
+    ex <- c(
+        length(unique(pbmc_meta$seurat_clusters)),
+        ncol(cbmc_ref)
+    )
     expect_equal(dim(res), ex)
 })
 
@@ -445,7 +445,7 @@ test_that("sce object clustify_lists", {
     panm <- data.frame(other, delta)
 
     res <- clustify_lists(
-      sce,
+        sce,
         marker = panm,
         cluster_col = "clusters",
         obj_out = FALSE,
@@ -486,74 +486,74 @@ test_that("clustify_lists filters low cell number clusters", {
 
 test_that("clustify n_genes options limits number of variable genes", {
     res <- clustify(so,
-                    cbmc_ref,
-                    cluster_col = "seurat_clusters",
-                    dr = "umap",
-                    obj_out = FALSE
+        cbmc_ref,
+        cluster_col = "seurat_clusters",
+        dr = "umap",
+        obj_out = FALSE
     )
     res2 <- clustify(so,
-                     cbmc_ref,
-                     n_genes = 2,
-                     cluster_col = "seurat_clusters",
-                     dr = "umap",
-                     obj_out = FALSE
+        cbmc_ref,
+        n_genes = 2,
+        cluster_col = "seurat_clusters",
+        dr = "umap",
+        obj_out = FALSE
     )
-    expect_true(res[1,1] != res2[1,1])
+    expect_true(res[1, 1] != res2[1, 1])
 })
 
 test_that("clustify n_genes options ignored if too large", {
     res <- clustify(so,
-                    cbmc_ref,
-                    cluster_col = "seurat_clusters",
-                    dr = "umap",
-                    n_genes = 2e3,
-                    obj_out = FALSE
+        cbmc_ref,
+        cluster_col = "seurat_clusters",
+        dr = "umap",
+        n_genes = 2e3,
+        obj_out = FALSE
     )
     res2 <- clustify(so,
-                     cbmc_ref,
-                     n_genes = 2e6,
-                     cluster_col = "seurat_clusters",
-                     dr = "umap",
-                     obj_out = FALSE
+        cbmc_ref,
+        n_genes = 2e6,
+        cluster_col = "seurat_clusters",
+        dr = "umap",
+        obj_out = FALSE
     )
     expect_true(all.equal(res, res2))
 })
 
 test_that("pseudobulk using median", {
-  res1 <- clustify(
-    input = pbmc_matrix_small,
-    metadata = pbmc_meta,
-    ref_mat = cbmc_ref,
-    query_genes = pbmc_vargenes,
-    cluster_col = "classified",
-    pseudobulk_method = "median"
-  )
-  
-  res_full <- clustify(
-    input = pbmc_matrix_small,
-    metadata = pbmc_meta,
-    ref_mat = cbmc_ref,
-    query_genes = pbmc_vargenes,
-    cluster_col = "classified",
-    pseudobulk_method = "median",
-    n_perm = 2,
-    return_full = TRUE
-  )
-  
-  expect_equal(res1, res_full$score)
-  expect_equal(length(res_full), 2)
-  expect_true(all(res_full$p_val >= 0 | res_full$p_val <= 0))
+    res1 <- clustify(
+        input = pbmc_matrix_small,
+        metadata = pbmc_meta,
+        ref_mat = cbmc_ref,
+        query_genes = pbmc_vargenes,
+        cluster_col = "classified",
+        pseudobulk_method = "median"
+    )
+
+    res_full <- clustify(
+        input = pbmc_matrix_small,
+        metadata = pbmc_meta,
+        ref_mat = cbmc_ref,
+        query_genes = pbmc_vargenes,
+        cluster_col = "classified",
+        pseudobulk_method = "median",
+        n_perm = 2,
+        return_full = TRUE
+    )
+
+    expect_equal(res1, res_full$score)
+    expect_equal(length(res_full), 2)
+    expect_true(all(res_full$p_val >= 0 | res_full$p_val <= 0))
 })
 
 test_that("an informative error if matrix lacks colnames", {
-  tmp_mat <- pbmc_matrix_small
-  colnames(tmp_mat) <- NULL
-  expect_error(clustify(
-    input = tmp_mat,
-    metadata = pbmc_meta,
-    ref_mat = cbmc_ref,
-    query_genes = pbmc_vargenes,
-    cluster_col = "classified", 
-    verbose = FALSE
-  ))
+    tmp_mat <- pbmc_matrix_small
+    colnames(tmp_mat) <- NULL
+    expect_error(clustify(
+        input = tmp_mat,
+        metadata = pbmc_meta,
+        ref_mat = cbmc_ref,
+        query_genes = pbmc_vargenes,
+        cluster_col = "classified",
+        verbose = FALSE
+    ))
 })

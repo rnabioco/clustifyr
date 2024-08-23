@@ -2,12 +2,12 @@ context("run_gsea")
 
 # use capture.output to quiet progress bar from fgsea
 shush <- function(...) {
-  capture.output(..., file = nullfile())
+    capture.output(..., file = nullfile())
 }
 
 test_that("output is correctly formatted", {
     data("pbmc_vargenes")
-   
+
     shush(res <- run_gsea(
         pbmc_matrix_small,
         query_genes = pbmc_vargenes[1:100],
@@ -37,29 +37,27 @@ test_that("run_gsea warns slow runs", {
     data("pbmc_vargenes")
 
     expect_warning(
-      shush(res <- run_gsea(pbmc_matrix_small[, 1:3],
-        query_genes = pbmc_vargenes[1:2],
-        n_perm = 10001,
-        per_cell = TRUE,
-        cluster_ids = pbmc_meta$classified,
-        no_warnings = TRUE
-        )
-      ) 
+        shush(res <- run_gsea(pbmc_matrix_small[, 1:3],
+            query_genes = pbmc_vargenes[1:2],
+            n_perm = 10001,
+            per_cell = TRUE,
+            cluster_ids = pbmc_meta$classified,
+            no_warnings = TRUE
+        ))
     )
 })
 
 test_that("run_gsea warning suppression", {
     data("pbmc_vargenes")
     expect_warning(
-      shush(res <- run_gsea(
+        shush(res <- run_gsea(
             pbmc_matrix_small[, 1:3],
             query_genes = pbmc_vargenes[1:2],
             n_perm = 1,
             per_cell = TRUE,
             cluster_ids = pbmc_meta$classified,
             no_warnings = FALSE
-        )
-      ) 
+        ))
     )
 })
 
@@ -101,6 +99,6 @@ test_that("plot_pathway_gsea gives output depending on returning option", {
     )
     shush(g <- plot_pathway_gsea(pbmc_avg, gl, 5, returning = "plot"))
     shush(g2 <- plot_pathway_gsea(pbmc_avg, gl, 5, returning = "res"))
-    
+
     expect_true(is(g, "Heatmap") & is.data.frame(g2))
 })

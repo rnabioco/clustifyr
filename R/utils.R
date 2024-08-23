@@ -2,28 +2,32 @@
 #' @param pkg package to query
 #' @return logical(1) indicating if package is available.
 #' @noRd
-is_pkg_available <- function(pkg, 
+is_pkg_available <- function(pkg,
                              action = c("none", "message", "warn", "error"),
                              msg = "") {
-  has_pkg <- requireNamespace(pkg, quietly = TRUE)
-  action <- match.arg(action)
-  
-  if(!has_pkg) {
-    switch(action, 
-           message = message(pkg,
-                             " not installed ",
-                             msg),
-           warn    = warning(pkg, 
-                             " not installed ",
-                             msg, 
-                             call. = FALSE),
-           error   = stop(pkg, 
-                          " not installed and is required for this function ",
-                          msg,
-                          call. = FALSE),
-    )
-  }
-  has_pkg
+    has_pkg <- requireNamespace(pkg, quietly = TRUE)
+    action <- match.arg(action)
+
+    if (!has_pkg) {
+        switch(action,
+            message = message(
+                pkg,
+                " not installed ",
+                msg
+            ),
+            warn = warning(pkg,
+                " not installed ",
+                msg,
+                call. = FALSE
+            ),
+            error = stop(pkg,
+                " not installed and is required for this function ",
+                msg,
+                call. = FALSE
+            ),
+        )
+    }
+    has_pkg
 }
 
 
@@ -40,7 +44,8 @@ is_pkg_available <- function(pkg,
 #' )
 #' length(res)
 #' @export
-overcluster <- function(mat,
+overcluster <- function(
+    mat,
     cluster_id,
     power = 0.15) {
     mat <- as.matrix(mat)
@@ -95,7 +100,8 @@ overcluster <- function(mat,
 #' mat[1:3, 1:3]
 #' @importFrom matrixStats rowMaxs rowMedians colRanks
 #' @export
-average_clusters <- function(mat,
+average_clusters <- function(
+    mat,
     metadata,
     cluster_col = "cluster",
     if_log = TRUE,
@@ -111,10 +117,12 @@ average_clusters <- function(mat,
             mat <- mat[, cluster_info[[cell_col]]]
         }
     }
-    
-    if(is.null(colnames(mat))){
-      stop("The input matrix does not have colnames.\n", 
-           "Check colnames() of input object")
+
+    if (is.null(colnames(mat))) {
+        stop(
+            "The input matrix does not have colnames.\n",
+            "Check colnames() of input object"
+        )
     }
     if (is.vector(cluster_info)) {
         if (ncol(mat) != length(cluster_info)) {
@@ -128,7 +136,7 @@ average_clusters <- function(mat,
             !(cluster_col %in% colnames(metadata))) {
             stop("given `cluster_col` is not a column in `metadata`", call. = FALSE)
         }
-        
+
         cluster_info_temp <- cluster_info[[cluster_col]]
         if (is.factor(cluster_info_temp)) {
             cluster_info_temp <- droplevels(cluster_info_temp)
@@ -200,20 +208,23 @@ average_clusters <- function(mat,
             function(cell_ids) {
                 if (!all(cell_ids %in% colnames(mat))) {
                     stop("cell ids not found in input matrix",
-                         call. = FALSE
+                        call. = FALSE
                     )
                 }
                 mat_data <- mat[, cell_ids, drop = FALSE]
                 # mat_data[mat_data == 0] <- NA
-                res1 <- matrixStats::rowQuantiles(as.matrix(mat_data), 
-                                                  probs = 0.25,
-                                                  na.rm = TRUE)
-                res2 <- matrixStats::rowQuantiles(as.matrix(mat_data), 
-                                                  probs = 0.5,
-                                                  na.rm = TRUE)
-                res3 <- matrixStats::rowQuantiles(as.matrix(mat_data), 
-                                                  probs = 0.75,
-                                                  na.rm = TRUE)
+                res1 <- matrixStats::rowQuantiles(as.matrix(mat_data),
+                    probs = 0.25,
+                    na.rm = TRUE
+                )
+                res2 <- matrixStats::rowQuantiles(as.matrix(mat_data),
+                    probs = 0.5,
+                    na.rm = TRUE
+                )
+                res3 <- matrixStats::rowQuantiles(as.matrix(mat_data),
+                    probs = 0.75,
+                    na.rm = TRUE
+                )
                 res <- 0.5 * res2 + 0.25 * res1 + 0.25 * res3
                 res[is.na(res)] <- 0
                 names(res) <- rownames(mat_data)
@@ -226,7 +237,7 @@ average_clusters <- function(mat,
             function(cell_ids) {
                 if (!all(cell_ids %in% colnames(mat))) {
                     stop("cell ids not found in input matrix",
-                         call. = FALSE
+                        call. = FALSE
                     )
                 }
                 mat_data <- mat[, cell_ids, drop = FALSE]
@@ -242,13 +253,13 @@ average_clusters <- function(mat,
             function(cell_ids) {
                 if (!all(cell_ids %in% colnames(mat))) {
                     stop("cell ids not found in input matrix",
-                         call. = FALSE
+                        call. = FALSE
                     )
                 }
                 mat_data <- mat[, cell_ids, drop = FALSE]
                 # mat_data[mat_data == 0] <- NA
                 res <- matrixStats::rowMins(as.matrix(mat_data),
-                                               na.rm = TRUE
+                    na.rm = TRUE
                 )
                 res[is.na(res)] <- 0
                 names(res) <- rownames(mat_data)
@@ -261,13 +272,13 @@ average_clusters <- function(mat,
             function(cell_ids) {
                 if (!all(cell_ids %in% colnames(mat))) {
                     stop("cell ids not found in input matrix",
-                         call. = FALSE
+                        call. = FALSE
                     )
                 }
                 mat_data <- mat[, cell_ids, drop = FALSE]
                 # mat_data[mat_data == 0] <- NA
                 res <- matrixStats::rowMaxs(as.matrix(mat_data),
-                                            na.rm = TRUE
+                    na.rm = TRUE
                 )
                 res[is.na(res)] <- 0
                 names(res) <- rownames(mat_data)
@@ -326,7 +337,8 @@ average_clusters <- function(mat,
 #' @param cut_num binary cutoff for detection
 #' @return matrix of numeric values, with genes for row names,
 #' and clusters for column names
-percent_clusters <- function(mat,
+percent_clusters <- function(
+    mat,
     metadata,
     cluster_col = "cluster",
     cut_num = 0.5) {
@@ -361,7 +373,8 @@ get_best_match_matrix <- function(cor_mat) {
 #' @param cor_mat correlation matrix
 #' @param carry_cor whether the correlation score gets reported
 #' @return string with ident call and possibly cor value
-get_best_str <- function(name,
+get_best_str <- function(
+    name,
     best_mat,
     cor_mat,
     carry_cor = TRUE) {
@@ -443,7 +456,8 @@ get_common_elements <- function(...) {
 #'     pathway_list = gl
 #' )
 #' @export
-calculate_pathway_gsea <- function(mat,
+calculate_pathway_gsea <- function(
+    mat,
     pathway_list,
     n_perm = 1000,
     scale = TRUE,
@@ -483,7 +497,8 @@ calculate_pathway_gsea <- function(mat,
 #' @param idents new idents to assign, must be length of 1 or
 #' same as clusters
 #' @return new dataframe of metadata
-assign_ident <- function(metadata,
+assign_ident <- function(
+    metadata,
     cluster_col = "cluster",
     ident_col = "type",
     clusters,
@@ -535,7 +550,8 @@ assign_ident <- function(metadata,
 #'     threshold = 0.5
 #' )
 #' @export
-cor_to_call_topn <- function(cor_mat,
+cor_to_call_topn <- function(
+    cor_mat,
     metadata = NULL,
     col = "cluster",
     collapse_to_cluster = FALSE,
@@ -638,7 +654,8 @@ cor_to_call_topn <- function(cor_mat,
 #' @param returning whether to return mean, min,
 #' or max of the gene pct in the gene list
 #' @return vector of numeric values
-gene_pct <- function(matrix,
+gene_pct <- function(
+    matrix,
     genelist,
     clusters,
     returning = "mean") {
@@ -694,7 +711,8 @@ gene_pct <- function(matrix,
 #'     cluster_col = "classified"
 #' )
 #' @export
-gene_pct_markerm <- function(matrix,
+gene_pct_markerm <- function(
+    matrix,
     marker_m,
     metadata,
     cluster_col = NULL,
@@ -816,7 +834,8 @@ clustify_nudge <- function(input, ...) {
 #' @return single cell object, or matrix of numeric values,
 #'  clusters from input as row names, cell types from ref_mat as column names
 #' @export
-clustify_nudge.default <- function(input,
+clustify_nudge.default <- function(
+    input,
     ref_mat,
     marker,
     metadata = NULL,
@@ -947,7 +966,8 @@ clustify_nudge.default <- function(input,
 
 #' @rdname clustify_nudge
 #' @export
-clustify_nudge.Seurat <- function(input,
+clustify_nudge.Seurat <- function(
+    input,
     ref_mat,
     marker,
     cluster_col = NULL,
@@ -1042,96 +1062,111 @@ clustify_nudge.Seurat <- function(input,
 }
 #' lookup table for single cell object structures
 #' @importFrom SummarizedExperiment colData<-
-#' @returns A list populated with standardized functions to 
-#' access relevant data structures in multiple single cell 
-#' data formats. 
+#' @returns A list populated with standardized functions to
+#' access relevant data structures in multiple single cell
+#' data formats.
 object_loc_lookup <- function() {
-  l <- list()
-  
-  l$SingleCellExperiment <- c(
-    expr = function(x) object_data(x, "data"),
-    meta = function(x) object_data(x, "meta.data"),
-    add_meta = function(x, md) { 
-      colData(x) <- md
-      x},
-    var = NULL,
-    col = "cell_type1"
-  )
-  
-  l$Seurat <- c(
-    expr = function(x) object_data(x, "data"),
-    meta = function(x) object_data(x, "meta.data"),
-    add_meta = function(x, md) { 
-      x@meta.data <- md
-      x},
-    var = function(x) object_data(x, "var.genes"),
-    col = "RNA_snn_res.1"
-  )
-  
-  l$URD <- c(
-    expr = function(x) x@logupx.data,
-    meta = function(x) x@meta,
-    add_meta = function(x, md) { 
-      x@meta <- md
-      x},
-    var = function(x) x@var.genes,
-    col = "cluster"
-  )
-  
-  l$FunctionalSingleCellExperiment <- c(
-    expr = function(x) x@ExperimentList$rnaseq@assays$data$logcounts,
-    meta = function(x) x@ExperimentList$rnaseq@colData,
-    add_meta = function(x, md) { 
-      x@ExperimentList$rnaseq@colData <- md
-      x},
-    var = NULL,
-    col = "leiden_cluster"
-  )
-  
-  l$CellDataSet <- c(
-    expr = function(x) do.call(function(x) {row.names(x) <- x@featureData@data$gene_short_name; return(x)}, list(x@assayData$exprs)),
-    meta = function(x) as.data.frame(x@phenoData@data),
-    add_meta = function(x, md) { 
-      x@phenoData@data <- md
-      x},
-    var = function(x) as.character(x@featureData@data$gene_short_name[x@featureData@data$use_for_ordering == TRUE]),
-    col = "Main_Cluster"
-  )
-  l
+    l <- list()
+
+    l$SingleCellExperiment <- c(
+        expr = function(x) object_data(x, "data"),
+        meta = function(x) object_data(x, "meta.data"),
+        add_meta = function(x, md) {
+            colData(x) <- md
+            x
+        },
+        var = NULL,
+        col = "cell_type1"
+    )
+
+    l$Seurat <- c(
+        expr = function(x) object_data(x, "data"),
+        meta = function(x) object_data(x, "meta.data"),
+        add_meta = function(x, md) {
+            x@meta.data <- md
+            x
+        },
+        var = function(x) object_data(x, "var.genes"),
+        col = "RNA_snn_res.1"
+    )
+
+    l$URD <- c(
+        expr = function(x) x@logupx.data,
+        meta = function(x) x@meta,
+        add_meta = function(x, md) {
+            x@meta <- md
+            x
+        },
+        var = function(x) x@var.genes,
+        col = "cluster"
+    )
+
+    l$FunctionalSingleCellExperiment <- c(
+        expr = function(x) x@ExperimentList$rnaseq@assays$data$logcounts,
+        meta = function(x) x@ExperimentList$rnaseq@colData,
+        add_meta = function(x, md) {
+            x@ExperimentList$rnaseq@colData <- md
+            x
+        },
+        var = NULL,
+        col = "leiden_cluster"
+    )
+
+    l$CellDataSet <- c(
+        expr = function(x) {
+            do.call(function(x) {
+                row.names(x) <- x@featureData@data$gene_short_name
+                return(x)
+            }, list(x@assayData$exprs))
+        },
+        meta = function(x) as.data.frame(x@phenoData@data),
+        add_meta = function(x, md) {
+            x@phenoData@data <- md
+            x
+        },
+        var = function(x) as.character(x@featureData@data$gene_short_name[x@featureData@data$use_for_ordering == TRUE]),
+        col = "Main_Cluster"
+    )
+    l
 }
 
 #' more flexible parsing of single cell objects
 #'
 #' @param input input object
 #' @param type look up predefined slots/loc
-#' @param expr_loc function that extracts expression matrix 
-#' @param meta_loc function that extracts metadata 
-#' @param var_loc function that extracts variable genes 
+#' @param expr_loc function that extracts expression matrix
+#' @param meta_loc function that extracts metadata
+#' @param var_loc function that extracts variable genes
 #' @param cluster_col column of clustering from metadata
-#' @param lookuptable if not supplied, will use object_loc_lookup() for parsing. 
+#' @param lookuptable if not supplied, will use object_loc_lookup() for parsing.
 #' @return list of expression, metadata, vargenes, cluster_col info from object
 #' @examples
-#' so <- so_pbmc() 
+#' so <- so_pbmc()
 #' obj <- parse_loc_object(so)
 #' length(obj)
 #' @export
-parse_loc_object <- function(input,
+parse_loc_object <- function(
+    input,
     type = class(input),
     expr_loc = NULL,
     meta_loc = NULL,
     var_loc = NULL,
     cluster_col = NULL,
     lookuptable = NULL) {
-    if(!type %in% c("SingleCellExperiment", "Seurat")) {
-      warning("Support for ", type, " objects is deprecated ",
-              "and will be removed from clustifyr in the next version")
+    if (!type %in% c("SingleCellExperiment", "Seurat")) {
+        warning(
+            "Support for ", type, " objects is deprecated ",
+            "and will be removed from clustifyr in the next version"
+        )
     }
-    
+
     if (is.null(lookuptable)) {
         lookup <- object_loc_lookup()
     } else {
-        warning("Support for supplying custom objects is deprecated ",
-                "and will be removed from clustifyr in the next version")
+        warning(
+            "Support for supplying custom objects is deprecated ",
+            "and will be removed from clustifyr in the next version"
+        )
         lookup <- lookuptable
     }
 
@@ -1180,7 +1215,8 @@ parse_loc_object <- function(input,
 #' so <- so_pbmc()
 #' insert_meta_object(so, seurat_meta(so, dr = "umap"))
 #' @export
-insert_meta_object <- function(input,
+insert_meta_object <- function(
+    input,
     new_meta,
     type = class(input),
     meta_loc = NULL,
@@ -1231,7 +1267,8 @@ insert_meta_object <- function(input,
 #'     y_col = "UMAP_2"
 #' )
 #' @export
-overcluster_test <- function(expr,
+overcluster_test <- function(
+    expr,
     metadata,
     ref_mat,
     cluster_col,
@@ -1358,7 +1395,8 @@ overcluster_test <- function(expr,
 #'     n = 5
 #' )
 #' @export
-ref_feature_select <- function(mat,
+ref_feature_select <- function(
+    mat,
     n = 3000,
     mode = "var",
     rm.lowvar = TRUE) {
@@ -1409,7 +1447,8 @@ ref_feature_select <- function(mat,
 #'     if_log = FALSE
 #' )
 #' @export
-feature_select_PCA <- function(mat = NULL,
+feature_select_PCA <- function(
+    mat = NULL,
     pcs = NULL,
     n_pcs = 10,
     percentile = 0.99,
@@ -1452,11 +1491,12 @@ feature_select_PCA <- function(mat = NULL,
 #' length(gene.lists)
 #' @importFrom utils read.csv
 #' @export
-gmt_to_list <- function(path,
+gmt_to_list <- function(
+    path,
     cutoff = 0,
     sep = "\thttp://www.broadinstitute.org/gsea/msigdb/cards/.*?\t") {
-  
-    df <- read.csv(path, sep = ",", 
+    df <- read.csv(path,
+        sep = ",",
         header = FALSE,
         col.names = "V1"
     )
@@ -1513,7 +1553,8 @@ gmt_to_list <- function(path,
 #'     5
 #' )
 #' @export
-plot_pathway_gsea <- function(mat,
+plot_pathway_gsea <- function(
+    mat,
     pathway_list,
     n_perm = 1000,
     scale = TRUE,
@@ -1562,7 +1603,8 @@ plot_pathway_gsea <- function(mat,
 #' )
 #' mat[1:3, 1:3]
 #' @export
-downsample_matrix <- function(mat,
+downsample_matrix <- function(
+    mat,
     n = 1,
     keep_cluster_proportions = TRUE,
     metadata = NULL,
@@ -1615,10 +1657,11 @@ downsample_matrix <- function(mat,
 #' )
 #' @export
 ref_marker_select <-
-    function(mat,
-    cut = 0.5,
-    arrange = TRUE,
-    compto = 1) {
+    function(
+        mat,
+        cut = 0.5,
+        arrange = TRUE,
+        compto = 1) {
         mat <- mat[!is.na(rownames(mat)), ]
         mat <- mat[Matrix::rowSums(mat) != 0, ]
         ref_cols <- colnames(mat)
@@ -1674,7 +1717,8 @@ ref_marker_select <-
 #'     cols = names(pbmc_avg["PPBP", ])
 #' )
 #' @export
-marker_select <- function(row1,
+marker_select <- function(
+    row1,
     cols,
     cut = 1,
     compto = 1) {
@@ -1718,7 +1762,8 @@ marker_select <- function(row1,
 #'     cutoff_score = 0.8
 #' )
 #' @export
-pos_neg_select <- function(input,
+pos_neg_select <- function(
+    input,
     ref_mat,
     metadata,
     cluster_col = "cluster",
@@ -1891,7 +1936,7 @@ get_unique_column <- function(df, id = NULL) {
 #'     cluster_col = "classified",
 #'     if_log = FALSE
 #' )
-#' 
+#'
 #' rankdiff <- find_rank_bias(
 #'     avg,
 #'     cbmc_ref,
@@ -1931,15 +1976,19 @@ find_rank_bias <- function(
     ))
     rownames(r1) <- query_genes
     colnames(r1) <- colnames(ref_mat)
-    
+
     # actual diff calculations
-    rdiff <- lapply(rownames(r1), 
-                    function(x) {res <- outer(r2[x, ], r1[x, ], FUN = "-")
-                                 # rownames(res) <- colnames(r1)
-                                 # colnames(res) <- colnames(r2)
-                                 res})
+    rdiff <- lapply(
+        rownames(r1),
+        function(x) {
+            res <- outer(r2[x, ], r1[x, ], FUN = "-")
+            # rownames(res) <- colnames(r1)
+            # colnames(res) <- colnames(r2)
+            res
+        }
+    )
     names(rdiff) <- rownames(r1)
-    
+
     rdiff
 }
 
@@ -1955,13 +2004,13 @@ find_rank_bias <- function(
 #'     cluster_col = "classified",
 #'     if_log = FALSE
 #' )
-#' 
+#'
 #' rankdiff <- find_rank_bias(
 #'     avg,
 #'     cbmc_ref,
 #'     query_genes = pbmc_vargenes
 #' )
-#' 
+#'
 #' qres <- query_rank_bias(
 #'     rankdiff,
 #'     "CD14+ Mono",
@@ -1973,7 +2022,8 @@ query_rank_bias <- function(
     id_mat,
     id_ref) {
     res <- lapply(bias_list, function(x) {
-        x[id_mat, id_ref]})
+        x[id_mat, id_ref]
+    })
     resdf <- data.frame(unlist(res))
     colnames(resdf) <- paste0(id_mat, "_vs_ ", id_ref)
     tibble::rownames_to_column(resdf, "gene")
@@ -1991,19 +2041,19 @@ query_rank_bias <- function(
 #'     cluster_col = "classified",
 #'     if_log = FALSE
 #' )
-#' 
+#'
 #' rankdiff <- find_rank_bias(
 #'     avg,
 #'     cbmc_ref,
 #'     query_genes = pbmc_vargenes
 #' )
-#' 
+#'
 #' qres <- query_rank_bias(
 #'     rankdiff,
 #'     "CD14+ Mono",
 #'     "CD14+ Mono"
 #' )
-#' 
+#'
 #' g <- plot_rank_bias(
 #'     qres
 #' )
@@ -2018,55 +2068,69 @@ plot_rank_bias <- function(
     if (nrow(genes_high) == 0) {
         go_high <- ""
     } else {
-        res_high <- suppressMessages(gprofiler2::gost(query = genes_high$gene, 
-                                     organism = "hsapiens",
-                                     sources = "GO:BP", 
-                                     correction_method = "fdr",
-                                     evcodes = TRUE))
+        res_high <- suppressMessages(gprofiler2::gost(
+            query = genes_high$gene,
+            organism = "hsapiens",
+            sources = "GO:BP",
+            correction_method = "fdr",
+            evcodes = TRUE
+        ))
         if (is.null(res_high)) {
             go_high <- ""
         } else {
-            go_high <- paste0(dplyr::slice(dplyr::filter(res_high[[1]], intersection_size > 1), seq_len(10))$term_name, 
-                              collapse = "\n")
+            go_high <- paste0(dplyr::slice(dplyr::filter(res_high[[1]], intersection_size > 1), seq_len(10))$term_name,
+                collapse = "\n"
+            )
         }
     }
     if (nrow(genes_low) == 0) {
         go_low <- ""
     } else {
-        res_low <- suppressMessages(gprofiler2::gost(query = genes_low$gene,
-                                    organism = "hsapiens",
-                                    sources = "GO:BP",
-                                    correction_method = "fdr",
-                                    evcodes = TRUE))
+        res_low <- suppressMessages(gprofiler2::gost(
+            query = genes_low$gene,
+            organism = "hsapiens",
+            sources = "GO:BP",
+            correction_method = "fdr",
+            evcodes = TRUE
+        ))
         if (is.null(res_low)) {
             go_low <- ""
         } else {
-            go_low <- paste0(dplyr::slice(dplyr::filter(res_low[[1]], intersection_size > 1), seq_len(10))$term_name, 
-                              collapse = "\n")
+            go_low <- paste0(dplyr::slice(dplyr::filter(res_low[[1]], intersection_size > 1), seq_len(10))$term_name,
+                collapse = "\n"
+            )
         }
     }
-    
+
     col <- colnames(bias_df)[2]
-    g <- ggplot2::ggplot(bias_df,  ggplot2::aes(!!dplyr::sym(col))) + 
+    g <- ggplot2::ggplot(bias_df, ggplot2::aes(!!dplyr::sym(col))) +
         ggplot2::geom_bar() +
         ggplot2::geom_bar(data = genes_high, color = "red", fill = "red") +
         ggplot2::geom_bar(data = genes_low, color = "blue", fill = "blue") +
-        cowplot::theme_cowplot() + 
-        ggplot2::theme(axis.line.y = ggplot2::element_blank(),
-                       axis.title.y = ggplot2::element_blank(),
-                       axis.text.y = ggplot2::element_blank(), 
-                       axis.ticks.y = ggplot2::element_blank()) +
-        ggplot2::annotate("text", 
-                          x = max(bias_df[[2]]) * 1.1, y = nrow(bias_df)/70, 
-                          label= go_high, color = "red", size = 2,
-                          hjust = 0) +
+        cowplot::theme_cowplot() +
+        ggplot2::theme(
+            axis.line.y = ggplot2::element_blank(),
+            axis.title.y = ggplot2::element_blank(),
+            axis.text.y = ggplot2::element_blank(),
+            axis.ticks.y = ggplot2::element_blank()
+        ) +
         ggplot2::annotate("text",
-                          x = min(bias_df[[2]]) * 1.1, y = nrow(bias_df)/70,
-                          label= go_low, color = "blue", size = 2,
-                          hjust = 1) +
-        ggplot2::coord_cartesian(clip = "off", xlim = c(-max(abs(bias_df[[2]])) * 3,
-                                                        max(abs(bias_df[[2]])) * 3),
-                                 ylim = c(0, nrow(bias_df)/50))
+            x = max(bias_df[[2]]) * 1.1, y = nrow(bias_df) / 70,
+            label = go_high, color = "red", size = 2,
+            hjust = 0
+        ) +
+        ggplot2::annotate("text",
+            x = min(bias_df[[2]]) * 1.1, y = nrow(bias_df) / 70,
+            label = go_low, color = "blue", size = 2,
+            hjust = 1
+        ) +
+        ggplot2::coord_cartesian(
+            clip = "off", xlim = c(
+                -max(abs(bias_df[[2]])) * 3,
+                max(abs(bias_df[[2]])) * 3
+            ),
+            ylim = c(0, nrow(bias_df) / 50)
+        )
 }
 
 
@@ -2085,7 +2149,7 @@ plot_rank_bias <- function(
 #' @export
 append_genes <- function(gene_vector, ref_matrix) {
     missing_rows <- setdiff(gene_vector, rownames(ref_matrix))
-    
+
     zeroExpressionMatrix <- matrix(
         0,
         nrow = length(missing_rows),
@@ -2094,7 +2158,7 @@ append_genes <- function(gene_vector, ref_matrix) {
 
     rownames(zeroExpressionMatrix) <- missing_rows
     colnames(zeroExpressionMatrix) <- colnames(ref_matrix)
-    
+
     full_matrix <- rbind(ref_matrix, zeroExpressionMatrix)
     full_matrix <- full_matrix[gene_vector, ]
     full_matrix
@@ -2117,22 +2181,18 @@ check_raw_counts <- function(counts_matrix, max_log_value = 50) {
     }
     if (is.integer(counts_matrix)) {
         return("raw counts")
-    }
-    else if (is.double(counts_matrix)) {
+    } else if (is.double(counts_matrix)) {
         if (all(counts_matrix == floor(counts_matrix))) {
             return("raw counts")
         }
         if (max(counts_matrix) > max_log_value) {
             return("normalized")
-        }
-        else if (min(counts_matrix) < 0) {
+        } else if (min(counts_matrix) < 0) {
             stop("negative values detected, likely scaled data")
-        }
-        else {
+        } else {
             return("log-normalized")
         }
-    }
-    else {
+    } else {
         stop("unknown matrix format: ", typeof(counts_matrix))
     }
 }
@@ -2152,15 +2212,16 @@ check_raw_counts <- function(counts_matrix, max_log_value = 50) {
 #' @return Combined matrix with all genes given
 #' @examples
 #' pbmc_ref_matrix <- average_clusters(
-#' mat = pbmc_matrix_small,
-#' metadata = pbmc_meta,
-#' cluster_col = "classified",
-#' if_log = TRUE # whether the expression matrix is already log transformed
+#'     mat = pbmc_matrix_small,
+#'     metadata = pbmc_meta,
+#'     cluster_col = "classified",
+#'     if_log = TRUE # whether the expression matrix is already log transformed
 #' )
 #' references_to_combine <- list(pbmc_ref_matrix, cbmc_ref)
 #' atlas <- build_atlas(NULL, human_genes_10x, references_to_combine, NULL)
 #' @export
-build_atlas <- function(matrix_fns = NULL,
+build_atlas <- function(
+    matrix_fns = NULL,
     genes_fn,
     matrix_objs = NULL,
     output_fn = NULL) {
@@ -2169,12 +2230,10 @@ build_atlas <- function(matrix_fns = NULL,
         ref_mats <- lapply(matrix_fns, readRDS)
         if (is.null(names(matrix_fns))) {
             names(ref_mats) <- stringr::str_remove(basename(matrix_fns), ".rds$")
-        }
-        else {
+        } else {
             names(ref_mats) <- names(matrix_fns)
         }
-    }
-    else if (is.null(matrix_fns) && !is.null(matrix_objs)) {
+    } else if (is.null(matrix_fns) && !is.null(matrix_objs)) {
         ref_mats <- matrix_objs
         if (is.null(names(matrix_objs))) {
             names(ref_mats) <- seq_len(length(matrix_objs))
@@ -2209,8 +2268,7 @@ build_atlas <- function(matrix_fns = NULL,
 
     if (!is.null(output_fn)) {
         saveRDS(atlas, output_fn)
-    }
-    else {
+    } else {
         return(atlas)
     }
 }
@@ -2274,7 +2332,7 @@ make_comb_ref <- function(ref_mat,
 #' @examples
 #' \dontrun{
 #' avg <- average_clusters(
-#'     pbmc_matrix_small, 
+#'     pbmc_matrix_small,
 #'     pbmc_meta$seurat_clusters
 #' )
 #' res <- clustify(
@@ -2292,8 +2350,8 @@ make_comb_ref <- function(ref_mat,
 #'     threshold = 0.8
 #' )
 #' res_rank <- assess_rank_bias(
-#'     avg, 
-#'     cbmc_ref, 
+#'     avg,
+#'     cbmc_ref,
 #'     res = top_call
 #' )
 #' }
@@ -2313,57 +2371,58 @@ assess_rank_bias <- function(
         query_genes = query_genes
     )
     rbiases <- list()
-    for(i in seq_len(nrow(res))){
-      id <- res[[1]][i]
-      ct <- res[[2]][i]
-      if (ct == "unassigned") {
-        if (expand_unassigned) {
-          message("checking unassigned types against every ref type")
-          rb <- lapply(colnames(ref_mat), function(x) {
-            query_rank_bias(
-              rankdiff,
-              id,
-              x
-            ) 
-          })
-          rbiases[i] <- list(NULL)
-          rbiases <- append(rbiases, rb)
+    for (i in seq_len(nrow(res))) {
+        id <- res[[1]][i]
+        ct <- res[[2]][i]
+        if (ct == "unassigned") {
+            if (expand_unassigned) {
+                message("checking unassigned types against every ref type")
+                rb <- lapply(colnames(ref_mat), function(x) {
+                    query_rank_bias(
+                        rankdiff,
+                        id,
+                        x
+                    )
+                })
+                rbiases[i] <- list(NULL)
+                rbiases <- append(rbiases, rb)
+            } else {
+                rbiases[i] <- list(NULL)
+            }
         } else {
-          rbiases[i] <- list(NULL)
+            rb <- query_rank_bias(
+                rankdiff,
+                id,
+                ct
+            )
+            rbiases <- append(rbiases, list(rb))
         }
-      } else {
-        rb <- query_rank_bias(
-          rankdiff,
-          id,
-          ct
-        )
-        rbiases <- append(rbiases, list(rb))
-      }
     }
-    
+
     if (!(is.null(rds_name))) {
         saveRDS(rbiases, paste0(rds_name, ".rds"))
     }
     message("Using gprofiler2 for GO analyses (internet connection required)")
     plts <- lapply(rbiases, function(x) {
-            if (is.null(x)) {
-                return(NULL)
-            } else {
-                plot_rank_bias(x, organism = organism)
-            }
+        if (is.null(x)) {
+            return(NULL)
+        } else {
+            plot_rank_bias(x, organism = organism)
+        }
     })
     plts <- plts[!unlist(lapply(plts, function(x) is.null(x)))]
     if (!(is.null(plot_name))) {
-        p <- cowplot::plot_grid(plotlist = plts, ncol = 1)      
+        p <- cowplot::plot_grid(plotlist = plts, ncol = 1)
         ggplot2::ggsave(paste0(plot_name, ".pdf"),
-                        p, 
-                        width = 6, 
-                        height = 4 * length(rbiases), 
-                        limitsize = FALSE)
+            p,
+            width = 6,
+            height = 4 * length(rbiases),
+            limitsize = FALSE
+        )
     }
     plts
 }
- 
+
 #' Distance calculations for spatial coord
 #' @param coord dataframe or matrix of spatial coordinates, cell barcode as rownames
 #' @param metadata data.frame or vector containing cluster assignments per cell.
@@ -2374,13 +2433,15 @@ assess_rank_bias <- function(
 #' @return min distance matrix
 #' @examples
 #' cbs <- paste0("cb_", 1:100)
-#' 
-#' spatial_coords <- data.frame(row.names = cbs,
-#'                              X = runif(100),
-#'                              Y = runif(100))
+#'
+#' spatial_coords <- data.frame(
+#'     row.names = cbs,
+#'     X = runif(100),
+#'     Y = runif(100)
+#' )
 #' group_ids <- sample(c("A", "B"), 100, replace = TRUE)
 #' dist_res <- calc_distance(
-#'     spatial_coords, 
+#'     spatial_coords,
 #'     group_ids
 #' )
 #' @export
@@ -2391,18 +2452,20 @@ calc_distance <- function(
     collapse_to_cluster = FALSE) {
     distm <- as.matrix(stats::dist(coord))
     res <- average_clusters(distm,
-                            metadata,
-                            cluster_col,
-                            if_log = FALSE,
-                            output_log = FALSE,
-                            method = "min")
+        metadata,
+        cluster_col,
+        if_log = FALSE,
+        output_log = FALSE,
+        method = "min"
+    )
     if (collapse_to_cluster) {
         res2 <- average_clusters(t(res),
-                                 metadata,
-                                 cluster_col,
-                                 if_log = FALSE,
-                                 output_log = FALSE,
-                                 method = "min")
+            metadata,
+            cluster_col,
+            if_log = FALSE,
+            output_log = FALSE,
+            method = "min"
+        )
         res2
     } else {
         res
