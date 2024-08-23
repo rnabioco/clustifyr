@@ -1042,6 +1042,9 @@ clustify_nudge.Seurat <- function(input,
 }
 #' lookup table for single cell object structures
 #' @importFrom SummarizedExperiment colData<-
+#' @returns A list populated with standardized functions to 
+#' access relevant data structures in multiple single cell 
+#' data formats. 
 object_loc_lookup <- function() {
   l <- list()
   
