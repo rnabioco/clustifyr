@@ -239,7 +239,8 @@ res <- clustify(
   obj_out = TRUE  # output Seurat object with cell type inserted as "type" column
 )
 
-res@meta.data[1:10, c("type", "r")]
+# type and r are stored in the meta.data 
+res[[c("type", "r")]][1:10, ]
 ```
 
 # Building reference matrix from single cell expression matrix

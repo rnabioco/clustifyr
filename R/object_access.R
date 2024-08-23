@@ -38,7 +38,17 @@ so_pbmc <- function() {
 #' @export
 sce_pbmc <- function() {
   x <- pbmc_example_data()
-  md <- x$metadata[, c(1:5, 7)]
+  
+  cols_to_keep <- c(
+    "orig.ident",
+    "nCount_RNA",
+    "nFeature_RNA",
+    "percent.mt",
+    "RNA_snn_res.0.5",
+    "classified"
+  )
+  
+  md <- x$metadata[, cols_to_keep]
   # rename to more sce-like names
   colnames(md) <- c("cell_source", 
                     "sum",
@@ -295,7 +305,7 @@ seurat_ref.Seurat <- function(seurat_object,
             SeuratObject::DefaultAssay(seurat_object) <- og_assay
         }
     } else {
-        stop("warning, not seurat3 object")
+        stop("Input is not a compatible Seurat object")
     }
 
     temp_res <- average_clusters(

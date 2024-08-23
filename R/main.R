@@ -132,7 +132,7 @@ clustify.default <- function(input,
     expand_unassigned = FALSE,
     ...) {
     if (!compute_method %in% clustifyr_methods) {
-        stop(paste(compute_method, "correlation method not implemented"),
+        stop(compute_method, " correlation method not implemented",
             call. = FALSE
         )
     }

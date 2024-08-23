@@ -282,7 +282,7 @@ vector_similarity <- function(vec1, vec2, compute_method, ...) {
     }
 
     if (!(compute_method %in% c("cosine", "kl_divergence"))) {
-        stop(paste(compute_method, "not implemented"), call. = FALSE)
+        stop(compute_method, " not implemented", call. = FALSE)
     }
 
     if (compute_method == "kl_divergence") {
