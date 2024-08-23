@@ -1091,7 +1091,7 @@ object_loc_lookup <- function() {
     add_meta = function(x, md) { 
       x@phenoData@data <- md
       x},
-    var = function(x) as.character(x@featureData@data$gene_short_name[x@featureData@data$use_for_ordering == T]),
+    var = function(x) as.character(x@featureData@data$gene_short_name[x@featureData@data$use_for_ordering == TRUE]),
     col = "Main_Cluster"
   )
   l
