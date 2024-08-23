@@ -18,7 +18,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Kent Riemondy \email{kent.riemondy@cuanschutz.edu}
+\strong{Maintainer}: Kent Riemondy \email{kent.riemondy@gmail.com}
 
 Authors:
 \itemize{
