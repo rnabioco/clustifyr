@@ -42,3 +42,9 @@ Moving forward, we suggest two remedies to this issue:
 2. For single-cell mRNA-seq data, in addition to standard count matrices (genes-by-cells), we expect users to deposit metadata annotations generated during the course of analysis.
 
 Encouraging previous depositors of single-cell mRNA-seq data to update their GEO records with metadata, if it was not included in the original submission.
+
+# Session info
+
+```{r}
+sessionInfo()
+```
