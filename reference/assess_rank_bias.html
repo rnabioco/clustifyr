@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">clustifyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.17.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.17.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -106,7 +106,7 @@
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="va">avg</span> <span class="op">&lt;-</span> <span class="fu"><a href="average_clusters.html">average_clusters</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="va">pbmc_matrix_small</span>, </span></span>
+<span class="r-in"><span>    <span class="va">pbmc_matrix_small</span>,</span></span>
 <span class="r-in"><span>    <span class="va">pbmc_meta</span><span class="op">$</span><span class="va">seurat_clusters</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="clustify.html">clustify</a></span><span class="op">(</span></span></span>
@@ -124,8 +124,8 @@
 <span class="r-in"><span>    threshold <span class="op">=</span> <span class="fl">0.8</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">res_rank</span> <span class="op">&lt;-</span> <span class="fu">assess_rank_bias</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="va">avg</span>, </span></span>
-<span class="r-in"><span>    <span class="va">cbmc_ref</span>, </span></span>
+<span class="r-in"><span>    <span class="va">avg</span>,</span></span>
+<span class="r-in"><span>    <span class="va">cbmc_ref</span>,</span></span>
 <span class="r-in"><span>    res <span class="op">=</span> <span class="va">top_call</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
