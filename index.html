@@ -104,10 +104,10 @@
 <span></span>
 <span><span class="co"># calculate correlation</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/clustify.html">clustify</a></span><span class="op">(</span></span>
-<span>  input <span class="op">=</span> <span class="va">pbmc_matrix_small</span>,</span>
-<span>  metadata <span class="op">=</span> <span class="va">pbmc_meta</span><span class="op">$</span><span class="va">classified</span>,</span>
-<span>  ref_mat <span class="op">=</span> <span class="va">cbmc_ref</span>,</span>
-<span>  query_genes <span class="op">=</span> <span class="va">pbmc_vargenes</span></span>
+<span>    input <span class="op">=</span> <span class="va">pbmc_matrix_small</span>,</span>
+<span>    metadata <span class="op">=</span> <span class="va">pbmc_meta</span><span class="op">$</span><span class="va">classified</span>,</span>
+<span>    ref_mat <span class="op">=</span> <span class="va">cbmc_ref</span>,</span>
+<span>    query_genes <span class="op">=</span> <span class="va">pbmc_vargenes</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># print assignments</span></span>
@@ -128,100 +128,97 @@
 <span></span>
 <span><span class="co"># plot assignments on a projection</span></span>
 <span><span class="fu"><a href="reference/plot_best_call.html">plot_best_call</a></span><span class="op">(</span></span>
-<span>  cor_mat <span class="op">=</span> <span class="va">res</span>,</span>
-<span>  metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,</span>
-<span>  cluster_col <span class="op">=</span> <span class="st">"classified"</span></span>
+<span>    cor_mat <span class="op">=</span> <span class="va">res</span>,</span>
+<span>    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,</span>
+<span>    cluster_col <span class="op">=</span> <span class="st">"classified"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/readme_example-1.png"><!-- --></p>
 <p><code><a href="reference/clustify.html">clustify()</a></code> can take a clustered <code>SingleCellExperiment</code> or <code>seurat</code> object (both v2 and v3) and assign identities.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># for SingleCellExperiment</span></span>
+<span><span class="va">sce_small</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/sce_pbmc.html">sce_pbmc</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/clustify.html">clustify</a></span><span class="op">(</span></span>
-<span>  input <span class="op">=</span> <span class="va">sce_small</span>,          <span class="co"># an SCE object</span></span>
-<span>  ref_mat <span class="op">=</span> <span class="va">cbmc_ref</span>,         <span class="co"># matrix of RNA-seq expression data for each cell type</span></span>
-<span>  cluster_col <span class="op">=</span> <span class="st">"cell_type1"</span>, <span class="co"># name of column in meta.data containing cell clusters</span></span>
-<span>  obj_out <span class="op">=</span> <span class="cn">TRUE</span>              <span class="co"># output SCE object with cell type inserted as "type" column</span></span>
-<span><span class="op">)</span> </span>
+<span>    input <span class="op">=</span> <span class="va">sce_small</span>, <span class="co"># an SCE object</span></span>
+<span>    ref_mat <span class="op">=</span> <span class="va">cbmc_ref</span>, <span class="co"># matrix of RNA-seq expression data for each cell type</span></span>
+<span>    cluster_col <span class="op">=</span> <span class="st">"cell_type"</span>, <span class="co"># name of column in meta.data containing cell clusters</span></span>
+<span>    obj_out <span class="op">=</span> <span class="cn">TRUE</span> <span class="co"># output SCE object with cell type inserted as "type" column</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt; class: SingleCellExperiment </span></span>
-<span><span class="co">#&gt; dim: 200 200 </span></span>
+<span><span class="co">#&gt; dim: 2000 2638 </span></span>
 <span><span class="co">#&gt; metadata(0):</span></span>
 <span><span class="co">#&gt; assays(2): counts logcounts</span></span>
-<span><span class="co">#&gt; rownames(200): SGIP1 AZIN2 ... TAF12 SNHG3</span></span>
-<span><span class="co">#&gt; rowData names(10): feature_symbol is_feature_control ... total_counts</span></span>
-<span><span class="co">#&gt;   log10_total_counts</span></span>
-<span><span class="co">#&gt; colnames(200): AZ_A1 AZ_A10 ... HP1502401_E18 HP1502401_E19</span></span>
-<span><span class="co">#&gt; colData names(35): cell_quality cell_type1 ... type r</span></span>
-<span><span class="co">#&gt; reducedDimNames(0):</span></span>
+<span><span class="co">#&gt; rownames(2000): PPBP LYZ ... CLIC2 HEMGN</span></span>
+<span><span class="co">#&gt; rowData names(0):</span></span>
+<span><span class="co">#&gt; colnames(2638): AAACATACAACCAC AAACATTGAGCTAC ... TTTGCATGAGAGGC</span></span>
+<span><span class="co">#&gt;   TTTGCATGCCTCAC</span></span>
+<span><span class="co">#&gt; colData names(8): cell_source sum ... type r</span></span>
+<span><span class="co">#&gt; reducedDimNames(1): UMAP</span></span>
 <span><span class="co">#&gt; mainExpName: NULL</span></span>
 <span><span class="co">#&gt; altExpNames(0):</span></span>
 <span></span>
+<span><span class="co"># for Seurat</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://satijalab.org/seurat" class="external-link">Seurat</a></span><span class="op">)</span></span>
-<span><span class="co"># for Seurat3/4</span></span>
+<span><span class="va">s_small</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/so_pbmc.html">so_pbmc</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/clustify.html">clustify</a></span><span class="op">(</span></span>
-<span>  input <span class="op">=</span> <span class="va">s_small3</span>,</span>
-<span>  cluster_col <span class="op">=</span> <span class="st">"RNA_snn_res.1"</span>,</span>
-<span>  ref_mat <span class="op">=</span> <span class="va">cbmc_ref</span>,</span>
-<span>  seurat_out <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>    input <span class="op">=</span> <span class="va">s_small</span>,</span>
+<span>    cluster_col <span class="op">=</span> <span class="st">"RNA_snn_res.0.5"</span>,</span>
+<span>    ref_mat <span class="op">=</span> <span class="va">cbmc_ref</span>,</span>
+<span>    seurat_out <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; An object of class Seurat </span></span>
-<span><span class="co">#&gt; 230 features across 80 samples within 1 assay </span></span>
-<span><span class="co">#&gt; Active assay: RNA (230 features, 20 variable features)</span></span>
-<span><span class="co">#&gt;  2 dimensional reductions calculated: pca, tsne</span></span>
+<span><span class="co">#&gt; 2000 features across 2638 samples within 1 assay </span></span>
+<span><span class="co">#&gt; Active assay: RNA (2000 features, 2000 variable features)</span></span>
+<span><span class="co">#&gt;  2 layers present: counts, data</span></span>
+<span><span class="co">#&gt;  1 dimensional reduction calculated: umap</span></span>
 <span></span>
 <span><span class="co"># New output option, directly as a vector (in the order of the metadata), which can then be inserted into metadata dataframes and other workflows</span></span>
 <span><span class="fu"><a href="reference/clustify.html">clustify</a></span><span class="op">(</span></span>
-<span>  input <span class="op">=</span> <span class="va">s_small3</span>,</span>
-<span>  cluster_col <span class="op">=</span> <span class="st">"RNA_snn_res.1"</span>,</span>
-<span>  ref_mat <span class="op">=</span> <span class="va">cbmc_ref</span>,</span>
-<span>  vec_out <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] "Mk"         "Mk"         "Mk"         "Mk"         "Mk"        </span></span>
-<span><span class="co">#&gt;  [6] "Mk"         "Mk"         "Mk"         "Mk"         "Mk"        </span></span>
-<span><span class="co">#&gt; [11] "B"          "B"          "B"          "B"          "B"         </span></span>
-<span><span class="co">#&gt; [16] "B"          "B"          "B"          "B"          "B"         </span></span>
-<span><span class="co">#&gt; [21] "CD16+ Mono" "CD16+ Mono" "CD16+ Mono" "CD16+ Mono" "CD16+ Mono"</span></span>
-<span><span class="co">#&gt; [26] "CD16+ Mono" "CD16+ Mono" "CD16+ Mono" "CD16+ Mono" "CD16+ Mono"</span></span>
-<span><span class="co">#&gt; [31] "Mk"         "B"          "Mk"         "Mk"         "Mk"        </span></span>
-<span><span class="co">#&gt; [36] "Mk"         "Mk"         "Mk"         "Mk"         "Mk"        </span></span>
-<span><span class="co">#&gt; [41] "Mk"         "B"          "Mk"         "Mk"         "B"         </span></span>
-<span><span class="co">#&gt; [46] "B"          "Mk"         "Mk"         "Mk"         "Mk"        </span></span>
-<span><span class="co">#&gt; [51] "CD16+ Mono" "CD16+ Mono" "B"          "CD16+ Mono" "CD16+ Mono"</span></span>
-<span><span class="co">#&gt; [56] "CD16+ Mono" "CD16+ Mono" "CD16+ Mono" "CD16+ Mono" "Mk"        </span></span>
-<span><span class="co">#&gt; [61] "B"          "CD16+ Mono" "B"          "CD16+ Mono" "B"         </span></span>
-<span><span class="co">#&gt; [66] "CD16+ Mono" "CD16+ Mono" "CD16+ Mono" "CD16+ Mono" "B"         </span></span>
-<span><span class="co">#&gt; [71] "Mk"         "Mk"         "Mk"         "Mk"         "Mk"        </span></span>
-<span><span class="co">#&gt; [76] "Mk"         "Mk"         "Mk"         "Mk"         "CD16+ Mono"</span></span></code></pre></div>
+<span>    input <span class="op">=</span> <span class="va">s_small</span>,</span>
+<span>    cluster_col <span class="op">=</span> <span class="st">"RNA_snn_res.0.5"</span>,</span>
+<span>    ref_mat <span class="op">=</span> <span class="va">cbmc_ref</span>,</span>
+<span>    vec_out <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span>
+<span><span class="co">#&gt;  [1] "CD4 T"      "B"          "CD4 T"      "CD14+ Mono" "NK"        </span></span>
+<span><span class="co">#&gt;  [6] "CD4 T"      "NK"         "NK"         "CD4 T"      "CD16+ Mono"</span></span></code></pre></div>
 <p>New reference matrix can be made directly from <code>SingleCellExperiment</code> and <code>Seurat</code> objects as well. Other scRNAseq experiment object types are supported as well.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># make reference from SingleCellExperiment objects</span></span>
+<span><span class="va">sce_small</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/sce_pbmc.html">sce_pbmc</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">sce_ref</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/object_ref.html">object_ref</a></span><span class="op">(</span></span>
-<span>  input <span class="op">=</span> <span class="va">sce_small</span>,               <span class="co"># SCE object</span></span>
-<span>  cluster_col <span class="op">=</span> <span class="st">"cell_type1"</span>       <span class="co"># name of column in colData containing cell identities</span></span>
+<span>    input <span class="op">=</span> <span class="va">sce_small</span>, <span class="co"># SCE object</span></span>
+<span>    cluster_col <span class="op">=</span> <span class="st">"cell_type"</span> <span class="co"># name of column in colData containing cell identities</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; The following clusters have less than 10 cells for this analysis: co-expression, ductal, endothelial, epsilon, MHC class II, PSC. Classification is likely inaccurate.</span></span>
 <span></span>
 <span><span class="co"># make reference from seurat objects</span></span>
+<span><span class="va">s_small</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/so_pbmc.html">so_pbmc</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">s_ref</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/seurat_ref.html">seurat_ref</a></span><span class="op">(</span></span>
-<span>  seurat_object <span class="op">=</span> <span class="va">s_small3</span>,</span>
-<span>  cluster_col <span class="op">=</span> <span class="st">"RNA_snn_res.1"</span></span>
+<span>    seurat_object <span class="op">=</span> <span class="va">s_small</span>,</span>
+<span>    cluster_col <span class="op">=</span> <span class="st">"RNA_snn_res.0.5"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">s_ref</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                 0        1        2</span></span>
-<span><span class="co">#&gt; MS4A1    0.000000 1.126047 5.151065</span></span>
-<span><span class="co">#&gt; CD79B    2.469341 2.920407 5.031316</span></span>
-<span><span class="co">#&gt; CD79A    0.000000 2.535151 5.375681</span></span>
-<span><span class="co">#&gt; HLA-DRA  3.640368 6.008446 7.055386</span></span>
-<span><span class="co">#&gt; TCL1A    0.000000 1.495867 4.963367</span></span>
-<span><span class="co">#&gt; HLA-DQB1 1.603068 3.836290 5.137422</span></span></code></pre></div>
+<span><span class="co">#&gt;                 0          1          2          3          4         5</span></span>
+<span><span class="co">#&gt; PPBP   0.04883837 0.06494743 0.28763857 0.09375021 0.35662599 0.2442300</span></span>
+<span><span class="co">#&gt; LYZ    1.40165143 1.39466552 5.21550849 1.42699419 1.35146753 3.4034309</span></span>
+<span><span class="co">#&gt; S100A9 0.55679700 0.58080250 4.91453355 0.62123058 0.58823794 2.6277996</span></span>
+<span><span class="co">#&gt; IGLL5  0.03116080 0.04826212 0.02434753 2.44576997 0.03284986 0.2581198</span></span>
+<span><span class="co">#&gt; GNLY   0.46041901 0.41001072 0.53592906 0.37877736 2.53161887 0.2903092</span></span>
+<span><span class="co">#&gt; FTL    3.35611600 3.31062958 5.86217774 3.66698837 3.37056910 5.9518479</span></span>
+<span><span class="co">#&gt;                 6          7         8</span></span>
+<span><span class="co">#&gt; PPBP   0.00000000 0.06527347 6.0941782</span></span>
+<span><span class="co">#&gt; LYZ    1.32701580 4.84714962 2.5303912</span></span>
+<span><span class="co">#&gt; S100A9 0.52098541 2.53310734 1.6775692</span></span>
+<span><span class="co">#&gt; IGLL5  0.05247669 0.10986617 0.2501642</span></span>
+<span><span class="co">#&gt; GNLY   4.70481754 0.46959958 0.3845813</span></span>
+<span><span class="co">#&gt; FTL    3.38471536 4.21848878 4.5508242</span></span></code></pre></div>
 <p><code><a href="reference/clustify_lists.html">clustify_lists()</a></code> handles identity assignment of matrix or <code>SingleCellExperiment</code> and <code>seurat</code> objects based on marker gene lists.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/clustify_lists.html">clustify_lists</a></span><span class="op">(</span></span>
-<span>  input <span class="op">=</span> <span class="va">pbmc_matrix_small</span>,</span>
-<span>  metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,</span>
-<span>  cluster_col <span class="op">=</span> <span class="st">"classified"</span>,</span>
-<span>  marker <span class="op">=</span> <span class="va">pbmc_markers</span>,</span>
-<span>  marker_inmatrix <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>    input <span class="op">=</span> <span class="va">pbmc_matrix_small</span>,</span>
+<span>    metadata <span class="op">=</span> <span class="va">pbmc_meta</span>,</span>
+<span>    cluster_col <span class="op">=</span> <span class="st">"classified"</span>,</span>
+<span>    marker <span class="op">=</span> <span class="va">pbmc_markers</span>,</span>
+<span>    marker_inmatrix <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;                      0        1        2         3         4        5        6</span></span>
 <span><span class="co">#&gt; Naive CD4 T  1.5639055 20.19469 31.77095  8.664074 23.844992 19.06931 19.06931</span></span>
@@ -245,16 +242,17 @@
 <span><span class="co">#&gt; Platelet     19.492465 59.9493793</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/clustify_lists.html">clustify_lists</a></span><span class="op">(</span></span>
-<span>  input <span class="op">=</span> <span class="va">s_small3</span>,</span>
-<span>  marker <span class="op">=</span> <span class="va">pbmc_markers</span>,</span>
-<span>  marker_inmatrix <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  cluster_col <span class="op">=</span> <span class="st">"RNA_snn_res.1"</span>,</span>
-<span>  seurat_out <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>    input <span class="op">=</span> <span class="va">s_small</span>,</span>
+<span>    marker <span class="op">=</span> <span class="va">pbmc_markers</span>,</span>
+<span>    marker_inmatrix <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    cluster_col <span class="op">=</span> <span class="st">"RNA_snn_res.0.5"</span>,</span>
+<span>    seurat_out <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; An object of class Seurat </span></span>
-<span><span class="co">#&gt; 230 features across 80 samples within 1 assay </span></span>
-<span><span class="co">#&gt; Active assay: RNA (230 features, 20 variable features)</span></span>
-<span><span class="co">#&gt;  2 dimensional reductions calculated: pca, tsne</span></span></code></pre></div>
+<span><span class="co">#&gt; 2000 features across 2638 samples within 1 assay </span></span>
+<span><span class="co">#&gt; Active assay: RNA (2000 features, 2000 variable features)</span></span>
+<span><span class="co">#&gt;  2 layers present: counts, data</span></span>
+<span><span class="co">#&gt;  1 dimensional reduction calculated: umap</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="additional-resources">Additional resources<a class="anchor" aria-label="anchor" href="#additional-resources"></a>
