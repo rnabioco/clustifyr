@@ -38,7 +38,8 @@ Authors@R:
              family = "Puntambekar",
              role = "ctb",
              email = "sidhantnp@yahoo.com"),
-      person("RNA Bioscience Initiative", role = c("fnd", "cph"))
+      person("RNA Bioscience Initiative", role = c("fnd", "cph"),
+           comment = c(ROR = "https://ror.org/03wmf1y16"))
       )
 License: MIT + file LICENSE
 Depends: R (>= 2.10)
