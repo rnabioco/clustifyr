@@ -16,8 +16,8 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Atkinson_Hyperlegible-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/Fira_Code-0.4.9/font.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Improving NCBI GEO submissions of scRNA-seq data">
 <script defer data-domain="rnabioco.github.io" src="https://plausible.io/js/plausible.js"></script>
 </head>
@@ -154,13 +154,13 @@ original submission.</p>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; R version 4.4.1 (2024-06-14)</span></span>
+<span><span class="co">#&gt; R version 4.4.2 (2024-10-31)</span></span>
 <span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu</span></span>
-<span><span class="co">#&gt; Running under: Ubuntu 22.04.4 LTS</span></span>
+<span><span class="co">#&gt; Running under: Ubuntu 24.04.1 LTS</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Matrix products: default</span></span>
 <span><span class="co">#&gt; BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
-<span><span class="co">#&gt; LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.20.so;  LAPACK version 3.10.0</span></span>
+<span><span class="co">#&gt; LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; locale:</span></span>
 <span><span class="co">#&gt;  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span></span>
@@ -177,13 +177,13 @@ original submission.</p>
 <span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span><span class="co">#&gt;  [1] digest_0.6.37     desc_1.4.3        R6_2.5.1          fastmap_1.2.0    </span></span>
-<span><span class="co">#&gt;  [5] xfun_0.47         cachem_1.1.0      knitr_1.48        htmltools_0.5.8.1</span></span>
-<span><span class="co">#&gt;  [9] rmarkdown_2.28    lifecycle_1.0.4   cli_3.6.3         sass_0.4.9       </span></span>
-<span><span class="co">#&gt; [13] pkgdown_2.1.0     textshaping_0.4.0 jquerylib_0.1.4   systemfonts_1.1.0</span></span>
-<span><span class="co">#&gt; [17] compiler_4.4.1    tools_4.4.1       ragg_1.3.2        evaluate_0.24.0  </span></span>
-<span><span class="co">#&gt; [21] bslib_0.8.0       yaml_2.3.10       jsonlite_1.8.8    rlang_1.1.4      </span></span>
-<span><span class="co">#&gt; [25] fs_1.6.4          htmlwidgets_1.6.4</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] digest_0.6.37     desc_1.4.3        R6_2.6.1          fastmap_1.2.0    </span></span>
+<span><span class="co">#&gt;  [5] xfun_0.51         cachem_1.1.0      knitr_1.49        htmltools_0.5.8.1</span></span>
+<span><span class="co">#&gt;  [9] rmarkdown_2.29    lifecycle_1.0.4   cli_3.6.4         sass_0.4.9       </span></span>
+<span><span class="co">#&gt; [13] pkgdown_2.1.1     textshaping_1.0.0 jquerylib_0.1.4   systemfonts_1.2.1</span></span>
+<span><span class="co">#&gt; [17] compiler_4.4.2    tools_4.4.2       ragg_1.3.3        evaluate_1.0.3   </span></span>
+<span><span class="co">#&gt; [21] bslib_0.9.0       yaml_2.3.10       jsonlite_1.9.0    rlang_1.1.5      </span></span>
+<span><span class="co">#&gt; [25] fs_1.6.5          htmlwidgets_1.6.4</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
@@ -192,11 +192,11 @@ original submission.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>An R package developed by the <a href="https://medschool.cuanschutz.edu/rbi" class="external-link">RNA Bioscience Initiative</a></p>
+  <p>An R package developed by the <a href="https://github.com/rnabioco" class="external-link">RNA Bioscience Initiative</a></p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>

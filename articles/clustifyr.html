@@ -16,8 +16,8 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Atkinson_Hyperlegible-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/Fira_Code-0.4.9/font.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to clustifyr">
 <script defer data-domain="rnabioco.github.io" src="https://plausible.io/js/plausible.js"></script>
 </head>
@@ -106,7 +106,7 @@ Medicine<br><h4 data-toc-skip class="author">Kent
 Riemondy</h4>
             <address class="author_afil">
       RNA Bioscience Initative, University of Colorado School of
-Medicine<br><h4 data-toc-skip class="date">2024-08-29</h4>
+Medicine<br><h4 data-toc-skip class="date">2025-03-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rnabioco/clustifyr/blob/devel/vignettes/clustifyr.Rmd" class="external-link"><code>vignettes/clustifyr.Rmd</code></a></small>
       <div class="d-none name"><code>clustifyr.Rmd</code></div>
@@ -474,13 +474,13 @@ generate them are available at <a href="https://github.com/rnabioco/clustifyrdat
 </h2>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; R version 4.4.1 (2024-06-14)</span></span>
+<span><span class="co">#&gt; R version 4.4.2 (2024-10-31)</span></span>
 <span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu</span></span>
-<span><span class="co">#&gt; Running under: Ubuntu 22.04.4 LTS</span></span>
+<span><span class="co">#&gt; Running under: Ubuntu 24.04.1 LTS</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Matrix products: default</span></span>
 <span><span class="co">#&gt; BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
-<span><span class="co">#&gt; LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.20.so;  LAPACK version 3.10.0</span></span>
+<span><span class="co">#&gt; LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; locale:</span></span>
 <span><span class="co">#&gt;  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span></span>
@@ -498,46 +498,46 @@ generate them are available at <a href="https://github.com/rnabioco/clustifyrdat
 <span><span class="co">#&gt; [8] base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt;  [1] SingleCellExperiment_1.27.2 SummarizedExperiment_1.35.1</span></span>
-<span><span class="co">#&gt;  [3] Biobase_2.65.1              GenomicRanges_1.57.1       </span></span>
-<span><span class="co">#&gt;  [5] GenomeInfoDb_1.41.1         IRanges_2.39.2             </span></span>
-<span><span class="co">#&gt;  [7] S4Vectors_0.43.2            BiocGenerics_0.51.0        </span></span>
-<span><span class="co">#&gt;  [9] MatrixGenerics_1.17.0       matrixStats_1.3.0          </span></span>
+<span><span class="co">#&gt;  [1] SingleCellExperiment_1.28.1 SummarizedExperiment_1.36.0</span></span>
+<span><span class="co">#&gt;  [3] Biobase_2.66.0              GenomicRanges_1.58.0       </span></span>
+<span><span class="co">#&gt;  [5] GenomeInfoDb_1.42.3         IRanges_2.40.1             </span></span>
+<span><span class="co">#&gt;  [7] S4Vectors_0.44.0            BiocGenerics_0.52.0        </span></span>
+<span><span class="co">#&gt;  [9] MatrixGenerics_1.18.1       matrixStats_1.5.0          </span></span>
 <span><span class="co">#&gt; [11] cowplot_1.1.3               ggplot2_3.5.1              </span></span>
-<span><span class="co">#&gt; [13] clustifyr_1.17.2            BiocStyle_2.33.1           </span></span>
+<span><span class="co">#&gt; [13] clustifyr_1.17.2            BiocStyle_2.34.0           </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span><span class="co">#&gt;  [1] rlang_1.1.4             magrittr_2.0.3          clue_0.3-65            </span></span>
-<span><span class="co">#&gt;  [4] GetoptLong_1.0.5        compiler_4.4.1          png_0.1-8              </span></span>
-<span><span class="co">#&gt;  [7] systemfonts_1.1.0       vctrs_0.6.5             shape_1.4.6.1          </span></span>
-<span><span class="co">#&gt; [10] pkgconfig_2.0.3         crayon_1.5.3            fastmap_1.2.0          </span></span>
-<span><span class="co">#&gt; [13] XVector_0.45.0          labeling_0.4.3          utf8_1.2.4             </span></span>
-<span><span class="co">#&gt; [16] rmarkdown_2.28          UCSC.utils_1.1.0        ragg_1.3.2             </span></span>
-<span><span class="co">#&gt; [19] purrr_1.0.2             xfun_0.47               zlibbioc_1.51.1        </span></span>
-<span><span class="co">#&gt; [22] cachem_1.1.0            jsonlite_1.8.8          highr_0.11             </span></span>
-<span><span class="co">#&gt; [25] DelayedArray_0.31.11    BiocParallel_1.39.0     cluster_2.1.6          </span></span>
-<span><span class="co">#&gt; [28] parallel_4.4.1          R6_2.5.1                bslib_0.8.0            </span></span>
-<span><span class="co">#&gt; [31] RColorBrewer_1.1-3      parallelly_1.38.0       jquerylib_0.1.4        </span></span>
-<span><span class="co">#&gt; [34] Rcpp_1.0.13             bookdown_0.40           iterators_1.0.14       </span></span>
-<span><span class="co">#&gt; [37] knitr_1.48              future.apply_1.11.2     Matrix_1.7-0           </span></span>
-<span><span class="co">#&gt; [40] tidyselect_1.2.1        abind_1.4-5             yaml_2.3.10            </span></span>
-<span><span class="co">#&gt; [43] doParallel_1.0.17       codetools_0.2-20        listenv_0.9.1          </span></span>
-<span><span class="co">#&gt; [46] lattice_0.22-6          tibble_3.2.1            withr_3.0.1            </span></span>
-<span><span class="co">#&gt; [49] evaluate_0.24.0         future_1.34.0           desc_1.4.3             </span></span>
-<span><span class="co">#&gt; [52] circlize_0.4.16         pillar_1.9.0            BiocManager_1.30.25    </span></span>
-<span><span class="co">#&gt; [55] foreach_1.5.2           generics_0.1.3          sp_2.1-4               </span></span>
-<span><span class="co">#&gt; [58] munsell_0.5.1           scales_1.3.0            globals_0.16.3         </span></span>
-<span><span class="co">#&gt; [61] glue_1.7.0              tools_4.4.1             data.table_1.16.0      </span></span>
-<span><span class="co">#&gt; [64] fgsea_1.31.0            fs_1.6.4                dotCall64_1.1-1        </span></span>
-<span><span class="co">#&gt; [67] fastmatch_1.1-4         grid_4.4.1              tidyr_1.3.1            </span></span>
-<span><span class="co">#&gt; [70] colorspace_2.1-1        GenomeInfoDbData_1.2.12 cli_3.6.3              </span></span>
-<span><span class="co">#&gt; [73] textshaping_0.4.0       spam_2.10-0             fansi_1.0.6            </span></span>
-<span><span class="co">#&gt; [76] S4Arrays_1.5.7          ComplexHeatmap_2.21.0   dplyr_1.1.4            </span></span>
-<span><span class="co">#&gt; [79] gtable_0.3.5            sass_0.4.9              digest_0.6.37          </span></span>
-<span><span class="co">#&gt; [82] progressr_0.14.0        SparseArray_1.5.31      farver_2.1.2           </span></span>
-<span><span class="co">#&gt; [85] rjson_0.2.22            htmlwidgets_1.6.4       SeuratObject_5.0.2     </span></span>
-<span><span class="co">#&gt; [88] entropy_1.3.1           htmltools_0.5.8.1       pkgdown_2.1.0          </span></span>
-<span><span class="co">#&gt; [91] lifecycle_1.0.4         httr_1.4.7              GlobalOptions_0.1.2</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] rlang_1.1.5             magrittr_2.0.3          clue_0.3-66            </span></span>
+<span><span class="co">#&gt;  [4] GetoptLong_1.0.5        compiler_4.4.2          png_0.1-8              </span></span>
+<span><span class="co">#&gt;  [7] systemfonts_1.2.1       vctrs_0.6.5             pkgconfig_2.0.3        </span></span>
+<span><span class="co">#&gt; [10] shape_1.4.6.1           crayon_1.5.3            fastmap_1.2.0          </span></span>
+<span><span class="co">#&gt; [13] XVector_0.46.0          labeling_0.4.3          utf8_1.2.4             </span></span>
+<span><span class="co">#&gt; [16] rmarkdown_2.29          UCSC.utils_1.2.0        ragg_1.3.3             </span></span>
+<span><span class="co">#&gt; [19] purrr_1.0.4             xfun_0.51               zlibbioc_1.52.0        </span></span>
+<span><span class="co">#&gt; [22] cachem_1.1.0            jsonlite_1.9.0          DelayedArray_0.32.0    </span></span>
+<span><span class="co">#&gt; [25] BiocParallel_1.40.0     parallel_4.4.2          cluster_2.1.8          </span></span>
+<span><span class="co">#&gt; [28] R6_2.6.1                bslib_0.9.0             RColorBrewer_1.1-3     </span></span>
+<span><span class="co">#&gt; [31] parallelly_1.42.0       jquerylib_0.1.4         Rcpp_1.0.14            </span></span>
+<span><span class="co">#&gt; [34] bookdown_0.42           iterators_1.0.14        knitr_1.49             </span></span>
+<span><span class="co">#&gt; [37] future.apply_1.11.3     Matrix_1.7-2            tidyselect_1.2.1       </span></span>
+<span><span class="co">#&gt; [40] abind_1.4-8             yaml_2.3.10             doParallel_1.0.17      </span></span>
+<span><span class="co">#&gt; [43] codetools_0.2-20        listenv_0.9.1           lattice_0.22-6         </span></span>
+<span><span class="co">#&gt; [46] tibble_3.2.1            withr_3.0.2             evaluate_1.0.3         </span></span>
+<span><span class="co">#&gt; [49] future_1.34.0           desc_1.4.3              circlize_0.4.16        </span></span>
+<span><span class="co">#&gt; [52] pillar_1.10.1           BiocManager_1.30.25     foreach_1.5.2          </span></span>
+<span><span class="co">#&gt; [55] generics_0.1.3          sp_2.2-0                munsell_0.5.1          </span></span>
+<span><span class="co">#&gt; [58] scales_1.3.0            globals_0.16.3          glue_1.8.0             </span></span>
+<span><span class="co">#&gt; [61] tools_4.4.2             data.table_1.17.0       fgsea_1.32.2           </span></span>
+<span><span class="co">#&gt; [64] fs_1.6.5                dotCall64_1.2           fastmatch_1.1-6        </span></span>
+<span><span class="co">#&gt; [67] grid_4.4.2              tidyr_1.3.1             colorspace_2.1-1       </span></span>
+<span><span class="co">#&gt; [70] GenomeInfoDbData_1.2.13 cli_3.6.4               textshaping_1.0.0      </span></span>
+<span><span class="co">#&gt; [73] spam_2.11-1             S4Arrays_1.6.0          ComplexHeatmap_2.22.0  </span></span>
+<span><span class="co">#&gt; [76] dplyr_1.1.4             gtable_0.3.6            sass_0.4.9             </span></span>
+<span><span class="co">#&gt; [79] digest_0.6.37           progressr_0.15.1        SparseArray_1.6.2      </span></span>
+<span><span class="co">#&gt; [82] farver_2.1.2            rjson_0.2.23            htmlwidgets_1.6.4      </span></span>
+<span><span class="co">#&gt; [85] SeuratObject_5.0.2      entropy_1.3.1           htmltools_0.5.8.1      </span></span>
+<span><span class="co">#&gt; [88] pkgdown_2.1.1           lifecycle_1.0.4         httr_1.4.7             </span></span>
+<span><span class="co">#&gt; [91] GlobalOptions_0.1.2</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
@@ -546,11 +546,11 @@ generate them are available at <a href="https://github.com/rnabioco/clustifyrdat
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>An R package developed by the <a href="https://medschool.cuanschutz.edu/rbi" class="external-link">RNA Bioscience Initiative</a></p>
+  <p>An R package developed by the <a href="https://github.com/rnabioco" class="external-link">RNA Bioscience Initiative</a></p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>
