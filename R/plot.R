@@ -26,197 +26,200 @@
 #' )
 #' @export
 plot_dims <- function(
-    data,
-    x = "UMAP_1",
-    y = "UMAP_2",
-    feature = NULL,
-    legend_name = "",
-    c_cols = pretty_palette2,
-    d_cols = NULL,
-    pt_size = 0.25,
-    alpha_col = NULL,
-    group_col = NULL,
-    scale_limits = NULL,
-    do_label = FALSE,
-    do_legend = TRUE,
-    do_repel = TRUE) {
-    # add backticks to allow special characters in column names
+  data,
+  x = "UMAP_1",
+  y = "UMAP_2",
+  feature = NULL,
+  legend_name = "",
+  c_cols = pretty_palette2,
+  d_cols = NULL,
+  pt_size = 0.25,
+  alpha_col = NULL,
+  group_col = NULL,
+  scale_limits = NULL,
+  do_label = FALSE,
+  do_legend = TRUE,
+  do_repel = TRUE
+) {
+  # add backticks to allow special characters in column names
 
-    # If feature is not provided return unlabeled plot
-    if (is.null(feature)) {
-        p <- ggplot(data, aes(.data[[x]], .data[[y]])) +
-            geom_point(size = pt_size) +
-            cowplot::theme_cowplot()
+  # If feature is not provided return unlabeled plot
+  if (is.null(feature)) {
+    p <- ggplot(data, aes(.data[[x]], .data[[y]])) +
+      geom_point(size = pt_size) +
+      cowplot::theme_cowplot()
 
-        if (!is.null(d_cols)) {
-            p <- p +
-                scale_color_manual(values = d_cols)
-        }
-
-        return(p)
+    if (!is.null(d_cols)) {
+      p <- p +
+        scale_color_manual(values = d_cols)
     }
 
-    # Retrieve features from data
-    feature_data <- data[[feature]]
-    n_features <- length(unique(feature_data))
+    return(p)
+  }
 
-    feature_types <- c(
-        "character",
-        "logical",
-        "factor"
-    )
+  # Retrieve features from data
+  feature_data <- data[[feature]]
+  n_features <- length(unique(feature_data))
 
-    # If there are too many features, add more colors for pretty_palette2
-    if (identical(c_cols, pretty_palette2) &
-        (n_features > length(pretty_palette2)) &
-        (typeof(feature_data) %in% feature_types)) {
-        c_cols <- pretty_palette_ramp_d(n_features)
-        d_cols <- pretty_palette_ramp_d(n_features)
-    }
+  feature_types <- c(
+    "character",
+    "logical",
+    "factor"
+  )
 
-    # sort data to avoid plotting null values over colors
-    data <- dplyr::arrange(data, !!dplyr::sym(feature))
+  # If there are too many features, add more colors for pretty_palette2
+  if (
+    identical(c_cols, pretty_palette2) &
+      (n_features > length(pretty_palette2)) &
+      (typeof(feature_data) %in% feature_types)
+  ) {
+    c_cols <- pretty_palette_ramp_d(n_features)
+    d_cols <- pretty_palette_ramp_d(n_features)
+  }
 
-    if (!is.null(alpha_col)) {
-        p <- ggplot(data, aes(.data[[x]], .data[[y]])) +
-            geom_point(
-                aes(
-                    color = .data[[feature]],
-                    alpha = .data[[alpha_col]]
-                ), # backticks protect special character gene names
-                size = pt_size
-            ) +
-            scale_alpha_continuous(range = c(0, 1))
+  # sort data to avoid plotting null values over colors
+  data <- dplyr::arrange(data, !!dplyr::sym(feature))
+
+  if (!is.null(alpha_col)) {
+    p <- ggplot(data, aes(.data[[x]], .data[[y]])) +
+      geom_point(
+        aes(
+          color = .data[[feature]],
+          alpha = .data[[alpha_col]]
+        ), # backticks protect special character gene names
+        size = pt_size
+      ) +
+      scale_alpha_continuous(range = c(0, 1))
+  } else {
+    p <- ggplot(data, aes(.data[[x]], .data[[y]])) +
+      geom_point(aes(color = .data[[feature]]), size = pt_size)
+  }
+
+  # discrete values
+  if (!is.numeric(feature_data)) {
+    # use colors provided
+    if (!is.null(d_cols)) {
+      p <- p +
+        scale_color_manual(
+          values = d_cols,
+          name = legend_name
+        )
     } else {
-        p <- ggplot(data, aes(.data[[x]], .data[[y]])) +
-            geom_point(aes(color = .data[[feature]]),
-                size = pt_size
-            )
+      p <- p +
+        scale_color_brewer(
+          palette = "Paired",
+          name = legend_name
+        )
     }
 
-    # discrete values
-    if (!is.numeric(feature_data)) {
-        # use colors provided
-        if (!is.null(d_cols)) {
-            p <- p +
-                scale_color_manual(
-                    values = d_cols,
-                    name = legend_name
-                )
-        } else {
-            p <- p +
-                scale_color_brewer(
-                    palette = "Paired",
-                    name = legend_name
-                )
-        }
-
-        # continuous values
-    } else {
-        if (is.null(scale_limits)) {
-            scale_limits <- c(
-                ifelse(min(feature_data) < 0, min(feature_data), 0),
-                max(feature_data)
-            )
-        }
-
-        p <- p +
-            scale_color_gradientn(
-                colors = c_cols,
-                name = legend_name,
-                limits = scale_limits
-            )
-    }
-
-    if (do_label) {
-        if (is.null(group_col)) {
-            centers <- dplyr::group_by(data, !!sym(feature))
-        } else {
-            centers <- dplyr::group_by(data, !!sym(feature), !!sym(group_col))
-        }
-
-        if (!(is.null(alpha_col))) {
-            centers <-
-                dplyr::summarize(centers,
-                    t1 = median(!!dplyr::sym(x)),
-                    t2 = median(!!dplyr::sym(y)),
-                    a = median(!!dplyr::sym(alpha_col))
-                )
-            centers <- dplyr::ungroup(centers)
-
-            if (!(is.null(group_col))) {
-                centers <- dplyr::select(centers, -!!sym(group_col))
-            }
-        } else {
-            centers <-
-                dplyr::summarize(centers,
-                    t1 = median(!!dplyr::sym(x)),
-                    t2 = median(!!dplyr::sym(y)),
-                    a = 1
-                )
-            centers <- dplyr::ungroup(centers)
-
-            if (!(is.null(group_col))) {
-                centers <- dplyr::select(centers, -!!sym(group_col))
-            }
-        }
-
-        if (do_repel) {
-            alldata <- dplyr::select(
-                data,
-                !!dplyr::sym(feature),
-                !!dplyr::sym(x),
-                !!dplyr::sym(y)
-            )
-            alldata[[1]] <- ""
-            alldata$a <- 0
-            colnames(alldata) <- colnames(centers)
-            alldata <- rbind(alldata, centers)
-            p <- p +
-                geom_point(
-                    data = alldata,
-                    mapping = aes(
-                        x = !!dplyr::sym("t1"),
-                        y = !!dplyr::sym("t2")
-                    ),
-                    size = 3,
-                    alpha = 0
-                ) +
-                ggrepel::geom_text_repel(
-                    data = alldata,
-                    mapping = aes(
-                        x = !!dplyr::sym("t1"),
-                        y = !!dplyr::sym("t2"),
-                        alpha = !!dplyr::sym("a"),
-                        label = .data[[feature]]
-                    ),
-                    point.padding = 0.5,
-                    box.padding = 0.5,
-                    max.iter = 50000
-                )
-        } else {
-            p <- p +
-                geom_text(
-                    data = centers,
-                    mapping = aes(
-                        x = !!dplyr::sym("t1"),
-                        y = !!dplyr::sym("t2"),
-                        label = centers[[feature]]
-                    ),
-                    alpha = centers[["a"]]
-                )
-        }
+    # continuous values
+  } else {
+    if (is.null(scale_limits)) {
+      scale_limits <- c(
+        ifelse(min(feature_data) < 0, min(feature_data), 0),
+        max(feature_data)
+      )
     }
 
     p <- p +
-        cowplot::theme_cowplot()
+      scale_color_gradientn(
+        colors = c_cols,
+        name = legend_name,
+        limits = scale_limits
+      )
+  }
 
-    if (!do_legend) {
-        p <- p +
-            theme(legend.position = "none")
+  if (do_label) {
+    if (is.null(group_col)) {
+      centers <- dplyr::group_by(data, !!sym(feature))
+    } else {
+      centers <- dplyr::group_by(data, !!sym(feature), !!sym(group_col))
     }
 
-    p
+    if (!(is.null(alpha_col))) {
+      centers <-
+        dplyr::summarize(
+          centers,
+          t1 = median(!!dplyr::sym(x)),
+          t2 = median(!!dplyr::sym(y)),
+          a = median(!!dplyr::sym(alpha_col))
+        )
+      centers <- dplyr::ungroup(centers)
+
+      if (!(is.null(group_col))) {
+        centers <- dplyr::select(centers, -!!sym(group_col))
+      }
+    } else {
+      centers <-
+        dplyr::summarize(
+          centers,
+          t1 = median(!!dplyr::sym(x)),
+          t2 = median(!!dplyr::sym(y)),
+          a = 1
+        )
+      centers <- dplyr::ungroup(centers)
+
+      if (!(is.null(group_col))) {
+        centers <- dplyr::select(centers, -!!sym(group_col))
+      }
+    }
+
+    if (do_repel) {
+      alldata <- dplyr::select(
+        data,
+        !!dplyr::sym(feature),
+        !!dplyr::sym(x),
+        !!dplyr::sym(y)
+      )
+      alldata[[1]] <- ""
+      alldata$a <- 0
+      colnames(alldata) <- colnames(centers)
+      alldata <- rbind(alldata, centers)
+      p <- p +
+        geom_point(
+          data = alldata,
+          mapping = aes(
+            x = !!dplyr::sym("t1"),
+            y = !!dplyr::sym("t2")
+          ),
+          size = 3,
+          alpha = 0
+        ) +
+        ggrepel::geom_text_repel(
+          data = alldata,
+          mapping = aes(
+            x = !!dplyr::sym("t1"),
+            y = !!dplyr::sym("t2"),
+            alpha = !!dplyr::sym("a"),
+            label = .data[[feature]]
+          ),
+          point.padding = 0.5,
+          box.padding = 0.5,
+          max.iter = 50000
+        )
+    } else {
+      p <- p +
+        geom_text(
+          data = centers,
+          mapping = aes(
+            x = !!dplyr::sym("t1"),
+            y = !!dplyr::sym("t2"),
+            label = centers[[feature]]
+          ),
+          alpha = centers[["a"]]
+        )
+    }
+  }
+
+  p <- p +
+    cowplot::theme_cowplot()
+
+  if (!do_legend) {
+    p <- p +
+      theme(legend.position = "none")
+  }
+
+  p
 }
 
 #' Color palette for plotting continous variables
@@ -235,7 +238,7 @@ not_pretty_palette <- scales::brewer_pal(palette = "Greys")(9)
 #' @param n number of colors to use
 #' @return color ramp
 pretty_palette_ramp_d <-
-    grDevices::colorRampPalette(scales::brewer_pal(palette = "Paired")(12))
+  grDevices::colorRampPalette(scales::brewer_pal(palette = "Paired")(12))
 
 #' Plot similarity measures on a tSNE or umap
 #'
@@ -275,90 +278,92 @@ pretty_palette_ramp_d <-
 #' )
 #' @export
 plot_cor <- function(
-    cor_mat,
-    metadata,
-    data_to_plot = colnames(cor_mat),
-    cluster_col = NULL,
-    x = "UMAP_1",
-    y = "UMAP_2",
-    scale_legends = FALSE,
-    ...) {
-    cor_matrix <- cor_mat
-    if (!any(data_to_plot %in% colnames(cor_matrix))) {
-        stop("cluster ids not shared between metadata and correlation matrix",
-            call. = FALSE
-        )
-    }
+  cor_mat,
+  metadata,
+  data_to_plot = colnames(cor_mat),
+  cluster_col = NULL,
+  x = "UMAP_1",
+  y = "UMAP_2",
+  scale_legends = FALSE,
+  ...
+) {
+  cor_matrix <- cor_mat
+  if (!any(data_to_plot %in% colnames(cor_matrix))) {
+    stop(
+      "cluster ids not shared between metadata and correlation matrix",
+      call. = FALSE
+    )
+  }
 
-    if (is.null(cluster_col)) {
-        cluster_col <- "rownames"
-        metadata <- tibble::rownames_to_column(metadata, cluster_col)
-    }
+  if (is.null(cluster_col)) {
+    cluster_col <- "rownames"
+    metadata <- tibble::rownames_to_column(metadata, cluster_col)
+  }
 
-    cor_df <- as.data.frame(cor_matrix)
-    cor_df <- tibble::rownames_to_column(cor_df, cluster_col)
-    cor_df_long <- tidyr::gather(
-        cor_df,
-        "ref_cluster",
-        "expr", -dplyr::matches(cluster_col)
+  cor_df <- as.data.frame(cor_matrix)
+  cor_df <- tibble::rownames_to_column(cor_df, cluster_col)
+  cor_df_long <- tidyr::gather(
+    cor_df,
+    "ref_cluster",
+    "expr",
+    -dplyr::matches(cluster_col)
+  )
+
+  # If cluster_col is factor, convert to character
+  if (is.factor(metadata[, cluster_col])) {
+    metadata[, cluster_col] <- as.character(metadata[, cluster_col])
+  }
+
+  # checks matrix rownames,
+  # 2 branches for cluster number (avg) or cell bar code (each cell)
+  if (cor_df[[cluster_col]][1] %in% metadata[[cluster_col]]) {
+    plt_data <- dplyr::left_join(
+      cor_df_long,
+      metadata,
+      by = cluster_col,
+      relationship = "many-to-many"
+    )
+  } else {
+    plt_data <- dplyr::left_join(
+      cor_df_long,
+      metadata,
+      by = structure(names = cluster_col, "rn")
+    )
+  }
+
+  # determine scaling method, either same for all plots,
+  # or per plot (default)
+  if (is.logical(scale_legends) && scale_legends) {
+    scale_limits <- c(
+      ifelse(min(plt_data$expr) < 0, min(plt_data$expr), 0),
+      max(max(plt_data$expr))
+    )
+  } else if (is.logical(scale_legends) && !scale_legends) {
+    scale_limits <- NULL
+  } else {
+    scale_limits <- scale_legends
+  }
+
+  plts <- vector("list", length(data_to_plot))
+
+  for (i in seq_along(data_to_plot)) {
+    tmp_data <- dplyr::filter(
+      plt_data,
+      !!dplyr::sym("ref_cluster") == data_to_plot[i]
     )
 
-    # If cluster_col is factor, convert to character
-    if (is.factor(metadata[, cluster_col])) {
-        metadata[, cluster_col] <- as.character(metadata[, cluster_col])
-    }
+    plts[[i]] <- plot_dims(
+      data = tmp_data,
+      x = x,
+      y = y,
+      feature = "expr",
+      legend_name = data_to_plot[i],
+      scale_limits = scale_limits,
+      ...
+    )
+  }
 
-    # checks matrix rownames,
-    # 2 branches for cluster number (avg) or cell bar code (each cell)
-    if (cor_df[[cluster_col]][1] %in% metadata[[cluster_col]]) {
-        plt_data <- dplyr::left_join(cor_df_long,
-            metadata,
-            by = cluster_col,
-            relationship = "many-to-many"
-        )
-    } else {
-        plt_data <- dplyr::left_join(cor_df_long,
-            metadata,
-            by = structure(names = cluster_col, "rn")
-        )
-    }
-
-    # determine scaling method, either same for all plots,
-    # or per plot (default)
-    if (is.logical(scale_legends) && scale_legends) {
-        scale_limits <- c(
-            ifelse(min(plt_data$expr) < 0,
-                min(plt_data$expr),
-                0
-            ),
-            max(max(plt_data$expr))
-        )
-    } else if (is.logical(scale_legends) && !scale_legends) {
-        scale_limits <- NULL
-    } else {
-        scale_limits <- scale_legends
-    }
-
-    plts <- vector("list", length(data_to_plot))
-
-    for (i in seq_along(data_to_plot)) {
-        tmp_data <- dplyr::filter(
-            plt_data,
-            !!dplyr::sym("ref_cluster") == data_to_plot[i]
-        )
-
-        plts[[i]] <- plot_dims(
-            data = tmp_data,
-            x = x,
-            y = y,
-            feature = "expr",
-            legend_name = data_to_plot[i],
-            scale_limits = scale_limits,
-            ...
-        )
-    }
-
-    plts
+  plts
 }
 
 #' Plot gene expression on to tSNE or umap
@@ -385,55 +390,48 @@ plot_cor <- function(
 #' )
 #' @export
 plot_gene <- function(
-    expr_mat,
-    metadata,
-    genes,
-    cell_col = NULL,
-    ...) {
-    genes_to_plot <- genes[genes %in% rownames(expr_mat)]
-    genes_missing <- setdiff(genes, genes_to_plot)
+  expr_mat,
+  metadata,
+  genes,
+  cell_col = NULL,
+  ...
+) {
+  genes_to_plot <- genes[genes %in% rownames(expr_mat)]
+  genes_missing <- setdiff(genes, genes_to_plot)
 
-    if (length(genes_missing) != 0) {
-        message(
-            "the following genes were not present in the input matrix ",
-            paste(genes_missing, collapse = ",")
-        )
-    }
-
-    if (length(genes_to_plot) == 0) {
-        stop("no genes present to plot", call. = FALSE)
-    }
-    expr_dat <- t(as.matrix(expr_mat[genes_to_plot, , drop = FALSE]))
-    expr_dat <-
-        tibble::rownames_to_column(as.data.frame(expr_dat), "cell")
-
-    if (is.null(cell_col)) {
-        mdata <- tibble::rownames_to_column(metadata, "cell")
-        cell_col <- "cell"
-    } else {
-        mdata <- metadata
-    }
-
-    if (!cell_col %in% colnames(mdata)) {
-        stop("please supply a cell_col that is present in metadata",
-            call. = FALSE
-        )
-    }
-
-    plt_dat <- dplyr::left_join(expr_dat, mdata,
-        by = c("cell" = cell_col)
+  if (length(genes_missing) != 0) {
+    message(
+      "the following genes were not present in the input matrix ",
+      paste(genes_missing, collapse = ",")
     )
+  }
 
-    lapply(
-        genes_to_plot,
-        function(gene) {
-            plot_dims(plt_dat,
-                feature = gene,
-                legend_name = gene,
-                ...
-            )
-        }
-    )
+  if (length(genes_to_plot) == 0) {
+    stop("no genes present to plot", call. = FALSE)
+  }
+  expr_dat <- t(as.matrix(expr_mat[genes_to_plot, , drop = FALSE]))
+  expr_dat <-
+    tibble::rownames_to_column(as.data.frame(expr_dat), "cell")
+
+  if (is.null(cell_col)) {
+    mdata <- tibble::rownames_to_column(metadata, "cell")
+    cell_col <- "cell"
+  } else {
+    mdata <- metadata
+  }
+
+  if (!cell_col %in% colnames(mdata)) {
+    stop("please supply a cell_col that is present in metadata", call. = FALSE)
+  }
+
+  plt_dat <- dplyr::left_join(expr_dat, mdata, by = c("cell" = cell_col))
+
+  lapply(
+    genes_to_plot,
+    function(gene) {
+      plot_dims(plt_dat, feature = gene, legend_name = gene, ...)
+    }
+  )
 }
 
 #' Plot called clusters on a tSNE or umap, for each reference cluster given
@@ -446,21 +444,22 @@ plot_gene <- function(
 #' @return list of ggplot object, cells projected by dr,
 #' colored by cell type classification
 plot_call <- function(
-    cor_mat,
+  cor_mat,
+  metadata,
+  data_to_plot = colnames(cor_mat),
+  ...
+) {
+  cor_matrix <- cor_mat
+  df_temp <-
+    as.data.frame(cor_matrix - matrixStats::rowMaxs(as.matrix(cor_matrix)))
+  df_temp[df_temp == 0] <- "1"
+  df_temp[df_temp != "1"] <- "0"
+  plot_cor(
+    df_temp,
     metadata,
-    data_to_plot = colnames(cor_mat),
-    ...) {
-    cor_matrix <- cor_mat
-    df_temp <-
-        as.data.frame(cor_matrix - matrixStats::rowMaxs(as.matrix(cor_matrix)))
-    df_temp[df_temp == 0] <- "1"
-    df_temp[df_temp != "1"] <- "0"
-    plot_cor(
-        df_temp,
-        metadata,
-        data_to_plot,
-        ...
-    )
+    data_to_plot,
+    ...
+  )
 }
 
 #' Plot best calls for each cluster on a tSNE or umap
@@ -495,65 +494,57 @@ plot_call <- function(
 #' )
 #' @export
 plot_best_call <- function(
-    cor_mat,
-    metadata,
-    cluster_col = "cluster",
-    collapse_to_cluster = FALSE,
-    threshold = 0,
-    x = "UMAP_1",
-    y = "UMAP_2",
-    plot_r = FALSE,
-    per_cell = FALSE,
-    ...) {
-    cor_matrix <- cor_mat
-    col_meta <- colnames(metadata)
-    if ("type" %in% col_meta | "type2" %in% col_meta) {
-        warning('metadata column name clash of "type"/"type2"')
-        return()
-    }
-    df_temp <- cor_to_call(
-        cor_matrix,
-        metadata = metadata,
-        cluster_col = cluster_col,
-        threshold = threshold
+  cor_mat,
+  metadata,
+  cluster_col = "cluster",
+  collapse_to_cluster = FALSE,
+  threshold = 0,
+  x = "UMAP_1",
+  y = "UMAP_2",
+  plot_r = FALSE,
+  per_cell = FALSE,
+  ...
+) {
+  cor_matrix <- cor_mat
+  col_meta <- colnames(metadata)
+  if ("type" %in% col_meta | "type2" %in% col_meta) {
+    warning('metadata column name clash of "type"/"type2"')
+    return()
+  }
+  df_temp <- cor_to_call(
+    cor_matrix,
+    metadata = metadata,
+    cluster_col = cluster_col,
+    threshold = threshold
+  )
+
+  df_temp_full <- call_to_metadata(
+    df_temp,
+    metadata = metadata,
+    cluster_col = cluster_col,
+    per_cell = per_cell
+  )
+
+  if (collapse_to_cluster != FALSE) {
+    df_temp_full <- collapse_to_cluster(
+      df_temp_full,
+      metadata,
+      collapse_to_cluster,
+      threshold = threshold
     )
+  }
 
-    df_temp_full <- call_to_metadata(
-        df_temp,
-        metadata = metadata,
-        cluster_col = cluster_col,
-        per_cell = per_cell
-    )
+  g <- plot_dims(df_temp_full, feature = "type", x = x, y = y, ...)
 
-    if (collapse_to_cluster != FALSE) {
-        df_temp_full <- collapse_to_cluster(df_temp_full,
-            metadata,
-            collapse_to_cluster,
-            threshold = threshold
-        )
-    }
+  if (plot_r) {
+    l <- list()
+    l[[1]] <- g
+    l[[2]] <- plot_dims(df_temp_full, feature = "r", x = x, y = y, ...)
+  } else {
+    l <- g
+  }
 
-    g <- plot_dims(df_temp_full,
-        feature = "type",
-        x = x,
-        y = y,
-        ...
-    )
-
-    if (plot_r) {
-        l <- list()
-        l[[1]] <- g
-        l[[2]] <- plot_dims(df_temp_full,
-            feature = "r",
-            x = x,
-            y = y,
-            ...
-        )
-    } else {
-        l <- g
-    }
-
-    l
+  l
 }
 
 #' Plot similarity measures on heatmap
@@ -580,17 +571,18 @@ plot_best_call <- function(
 #' plot_cor_heatmap(res)
 #' @export
 plot_cor_heatmap <- function(
-    cor_mat,
-    metadata = NULL,
-    cluster_col = NULL,
-    col = not_pretty_palette,
-    legend_title = NULL,
-    ...) {
-    cor_matrix <- cor_mat
-    ComplexHeatmap::Heatmap(
-        cor_matrix,
-        col = col,
-        heatmap_legend_param = list(title = legend_title),
-        ...
-    )
+  cor_mat,
+  metadata = NULL,
+  cluster_col = NULL,
+  col = not_pretty_palette,
+  legend_title = NULL,
+  ...
+) {
+  cor_matrix <- cor_mat
+  ComplexHeatmap::Heatmap(
+    cor_matrix,
+    col = col,
+    heatmap_legend_param = list(title = legend_title),
+    ...
+  )
 }

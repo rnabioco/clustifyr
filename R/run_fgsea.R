@@ -18,83 +18,77 @@
 #' @return dataframe of gsea scores (pval, NES), with clusters as rownames
 #' @export
 run_gsea <- function(
-    expr_mat,
-    query_genes,
-    cluster_ids = NULL,
-    n_perm = 1000,
-    per_cell = FALSE,
-    scale = FALSE,
-    no_warnings = TRUE) {
-    if (!is.list(query_genes)) {
-        geneset_list <- list("query_genes" = query_genes)
+  expr_mat,
+  query_genes,
+  cluster_ids = NULL,
+  n_perm = 1000,
+  per_cell = FALSE,
+  scale = FALSE,
+  no_warnings = TRUE
+) {
+  if (!is.list(query_genes)) {
+    geneset_list <- list("query_genes" = query_genes)
+  } else {
+    geneset_list <- query_genes
+  }
+
+  if (!per_cell & (ncol(expr_mat) != length(cluster_ids))) {
+    stop(
+      "cluster_ids do not match number of cells (columns) ",
+      "in expr_mat",
+      call. = FALSE
+    )
+  }
+
+  if (n_perm > 1e4 & per_cell) {
+    warning(
+      "run_gsea() take a long time if running many ",
+      "permutations and running per cell"
+    )
+  }
+
+  if (scale) {
+    expr_mat <- t(scale(t(as.matrix(expr_mat))))
+  }
+
+  if (!per_cell) {
+    avg_mat <- average_clusters(expr_mat, metadata = cluster_ids)
+  } else {
+    avg_mat <- expr_mat
+  }
+
+  res <- list()
+  for (i in seq_along(colnames(avg_mat))) {
+    if (!(no_warnings)) {
+      gsea_res <- fgsea::fgsea(
+        geneset_list,
+        avg_mat[, i],
+        minSize = 1,
+        maxSize = max(vapply(geneset_list, length, FUN.VALUE = numeric(1))),
+        nproc = 1,
+        nperm = n_perm
+      )
     } else {
-        geneset_list <- query_genes
-    }
-
-    if (!per_cell & (ncol(expr_mat) != length(cluster_ids))) {
-        stop("cluster_ids do not match number of cells (columns) ",
-            "in expr_mat",
-            call. = FALSE
+      suppressWarnings(
+        gsea_res <- fgsea::fgsea(
+          geneset_list,
+          avg_mat[, i],
+          minSize = 1,
+          maxSize = max(vapply(geneset_list, length, FUN.VALUE = numeric(1))),
+          nproc = 1,
+          nperm = n_perm
         )
+      )
     }
+    res[[i]] <- gsea_res[, c("pathway", "pval", "NES")]
+  }
+  gsea_res <- dplyr::bind_rows(res)
+  gsea_res <-
+    as.data.frame(dplyr::mutate(gsea_res, cell = colnames(avg_mat)))
+  if (tibble::has_rownames(gsea_res)) {
+    gsea_res <- tibble::remove_rownames(gsea_res)
+  }
+  gsea_res <- tibble::column_to_rownames(gsea_res, "cell")
 
-    if (n_perm > 1e4 & per_cell) {
-        warning(
-            "run_gsea() take a long time if running many ",
-            "permutations and running per cell"
-        )
-    }
-
-    if (scale) {
-        expr_mat <- t(scale(t(as.matrix(expr_mat))))
-    }
-
-    if (!per_cell) {
-        avg_mat <- average_clusters(expr_mat,
-            metadata = cluster_ids
-        )
-    } else {
-        avg_mat <- expr_mat
-    }
-
-    res <- list()
-    for (i in seq_along(colnames(avg_mat))) {
-        if (!(no_warnings)) {
-            gsea_res <- fgsea::fgsea(
-                geneset_list,
-                avg_mat[, i],
-                minSize = 1,
-                maxSize = max(vapply(geneset_list,
-                    length,
-                    FUN.VALUE = numeric(1)
-                )),
-                nproc = 1,
-                nperm = n_perm
-            )
-        } else {
-            suppressWarnings(
-                gsea_res <- fgsea::fgsea(
-                    geneset_list,
-                    avg_mat[, i],
-                    minSize = 1,
-                    maxSize = max(vapply(geneset_list,
-                        length,
-                        FUN.VALUE = numeric(1)
-                    )),
-                    nproc = 1,
-                    nperm = n_perm
-                )
-            )
-        }
-        res[[i]] <- gsea_res[, c("pathway", "pval", "NES")]
-    }
-    gsea_res <- dplyr::bind_rows(res)
-    gsea_res <-
-        as.data.frame(dplyr::mutate(gsea_res, cell = colnames(avg_mat)))
-    if (tibble::has_rownames(gsea_res)) {
-        gsea_res <- tibble::remove_rownames(gsea_res)
-    }
-    gsea_res <- tibble::column_to_rownames(gsea_res, "cell")
-
-    gsea_res
+  gsea_res
 }
