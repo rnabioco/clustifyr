@@ -4,16 +4,20 @@ dl_url <- "http://software.broadinstitute.org/gsea/msigdb/download_file.jsp?file
 
 proj_dir <- here()
 
-download.file(dl_url,
-              file.path(proj_dir,
-                        "inst/extdata/c2.cp.reactome.v6.2.symbols.gmt"))
+download.file(
+  dl_url,
+  file.path(proj_dir, "inst/extdata/c2.cp.reactome.v6.2.symbols.gmt")
+)
 
-R.utils::gzip(file.path(proj_dir,
-                        "inst/extdata/c2.cp.reactome.v6.2.symbols.gmt"))
+R.utils::gzip(file.path(
+  proj_dir,
+  "inst/extdata/c2.cp.reactome.v6.2.symbols.gmt"
+))
 # hsPBMC_markers.txt taken from garnett website
 
 dl_url <- "https://cole-trapnell-lab.github.io/garnett/marker_files/hsPBMC_markers.txt"
 
-download.file(dl_url,
-              file.path(proj_dir,
-                        "inst/extdata/c2.cp.reactome.v6.2.symbols.gmt"))
+download.file(
+  dl_url,
+  file.path(proj_dir, "inst/extdata/c2.cp.reactome.v6.2.symbols.gmt")
+)

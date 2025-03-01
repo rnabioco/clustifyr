@@ -7,6 +7,6 @@
 #' }
 #' @export
 run_clustifyr_app <- function() {
-    appDir <- system.file("shinyapp", package = "clustifyr")
-    shiny::runApp(appDir, display.mode = "normal")
+  appDir <- system.file("shinyapp", package = "clustifyr")
+  shiny::runApp(appDir, display.mode = "normal")
 }

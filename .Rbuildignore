@@ -12,3 +12,5 @@
 ^inst/manuscript$
 ^\.github$
 ^CODE_OF_CONDUCT\.md$
+^air.toml$
+^\.vscode$
