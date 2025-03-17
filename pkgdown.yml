@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   clustifyr: clustifyr.html
   geo-annotations: geo-annotations.html
-last_built: 2025-03-01T14:55Z
+last_built: 2025-03-17T12:07Z
 urls:
   reference: http://rnabioco.github.io/clustifyr/reference
   article: http://rnabioco.github.io/clustifyr/articles
