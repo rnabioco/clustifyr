@@ -8,7 +8,7 @@
 coverage](https://codecov.io/gh/rnabioco/clustifyr/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/rnabioco/clustifyr?branch=devel)
 [![platforms](https://bioconductor.org/shields/availability/release/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
 [![bioc](https://bioconductor.org/shields/years-in-bioc/clustifyr.svg)](https://bioconductor.org/packages/release/bioc/html/clustifyr.html)
-[![\#downloads](https://img.shields.io/badge/%23%20downloads-11608-brightgreen)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
+[![\#downloads](https://img.shields.io/badge/%23%20downloads-14330-brightgreen)](https://bioconductor.org/packages/stats/bioc/clustifyr/clustifyr_stats.tab)
 <!-- badges: end -->
 
 clustifyr classifies cells and clusters in single-cell RNA sequencing
@@ -72,6 +72,9 @@ cor_to_call(res)
 #> 7 Platelet     Mk         0.732
 #> 8 CD8 T        NK         0.826
 #> 9 NK           NK         0.894
+```
+
+``` r
 
 # plot assignments on a projection
 plot_best_call(
@@ -84,7 +87,7 @@ plot_best_call(
 ![](man/figures/readme_example-1.png)<!-- -->
 
 `clustify()` can take a clustered `SingleCellExperiment` or `seurat`
-object (both v2 and v3) and assign identities.
+object (from v2 up to v5) and assign identities.
 
 ``` r
 # for SingleCellExperiment
@@ -107,6 +110,9 @@ clustify(
 #> reducedDimNames(1): UMAP
 #> mainExpName: NULL
 #> altExpNames(0):
+```
+
+``` r
 
 # for Seurat
 library(Seurat)
@@ -122,6 +128,9 @@ clustify(
 #> Active assay: RNA (2000 features, 2000 variable features)
 #>  2 layers present: counts, data
 #>  1 dimensional reduction calculated: umap
+```
+
+``` r
 
 # New output option, directly as a vector (in the order of the metadata), which can then be inserted into metadata dataframes and other workflows
 clustify(
@@ -201,6 +210,9 @@ clustify_lists(
 #> NK            5.358651  0.3309153
 #> DC           45.101877  0.1401901
 #> Platelet     19.492465 59.9493793
+```
+
+``` r
 
 clustify_lists(
     input = s_small,
